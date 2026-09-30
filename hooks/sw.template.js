@@ -75,13 +75,9 @@ async function pageStrategy(event) {
   } catch (err) {
     const cached = await matchAny(request);
     if (cached) return cached;
-    if (request.mode === "navigate") {
-      const offline = await caches.match(OFFLINE_URL);
-      if (offline) {
-        // served under another URL: pin relative links/styles to /offline/ with a <base> tag
-        const html = (await offline.text()).replace(/<head([^>]*)>/i, `<head$1><base href="${OFFLINE_URL}">`);
-        return new Response(html, { status: 200, headers: { "Content-Type": "text/html; charset=utf-8" } });
-      }
+    if (request.mode === "navigate" && (await caches.match(OFFLINE_URL))) {
+      // redirect so the offline page keeps correct relative links; remember where the reader wanted to go
+      return Response.redirect(`${OFFLINE_URL}?from=${encodeURIComponent(request.url)}`, 302);
     }
     return new Response("Offline", { status: 503, headers: { "Content-Type": "text/plain" } });
   }
@@ -95,7 +91,7 @@ async function staleWhileRevalidate(event, cacheName) {
       if (response && (response.ok || response.type === "opaque")) cache.put(event.request, response.clone());
       return response;
     })
-    .catch(() => cached);
+    .catch(() => cached || new Response("", { status: 504, statusText: "Offline" }));
   if (cached) {
     event.waitUntil(network.catch(() => {}));
     return cached;

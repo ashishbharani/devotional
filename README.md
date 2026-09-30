@@ -30,6 +30,24 @@ The site installs as an app and works offline:
   header, offline banner, app shortcuts (Master Index, Find, Library) and store-style screenshots
   in `manifest.webmanifest`.
 
+## Accessibility (WCAG 2.2 AA)
+
+Built so elderly readers and people using screen readers, keyboards, switches or magnification can use it:
+
+* **"Aa" button** in the header (saved per device): text size (4 steps, up to 150% — large text switches
+  the tables to easy-to-read cards), **high contrast** (light and dark), **readable spacing**
+  (dyslexia-friendly letter/word/line spacing), **underline links**, **stop animations**.
+* **Screen readers (VoiceOver, TalkBack, NVDA):** every works table has a caption and real column/row
+  headers, and keeps them in the phone card layout; YouTube links say they open a new tab; empty fields
+  read "none"; buttons like *PREVIOUS* / *OPEN* / *LISTEN* have full names ("Listen to Bhagavad Gita on YouTube");
+  search results are announced; focus moves to the new page heading after navigation.
+* **Keyboard:** skip link, logical tab order, strong two-tone focus ring, dialogs trap focus and return it.
+* **Colour:** all text meets 4.5:1 contrast in both themes (category colours are darkened for text
+  automatically, `cat_ink()` in the hook); Windows High Contrast / forced colours supported;
+  respects *reduce motion*.
+* Checked with axe-core on every page type, light and dark, phone and desktop (0 issues; the only report
+  is a known false positive caused by off-screen `content-visibility` sections).
+
 ## Phones & tablets
 
 Tuned for Safari (iPhone / iPad) and Chrome (Android phones & tablets):

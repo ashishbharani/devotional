@@ -50,6 +50,7 @@
 
   /* ------------------------------------------------------ service worker */
   let swReg = null;
+  let updating = false;
   if ("serviceWorker" in navigator && location.protocol !== "file:") {
     window.addEventListener("load", async () => {
       try {
@@ -57,7 +58,7 @@
         const promptUpdate = (worker) =>
           toast("A new version of the collection is available.", [
             ["Later", null],
-            ["Update", () => worker.postMessage({ type: "SKIP_WAITING" }), true],
+            ["Update", () => { updating = true; worker.postMessage({ type: "SKIP_WAITING" }); }, true],
           ]);
         if (swReg.waiting && navigator.serviceWorker.controller) promptUpdate(swReg.waiting);
         swReg.addEventListener("updatefound", () => {
@@ -66,9 +67,10 @@
             if (w.state === "installed" && navigator.serviceWorker.controller) promptUpdate(w);
           });
         });
+        // reload only when the user chose "Update" (not when the first-ever service worker takes control)
         let reloaded = false;
         navigator.serviceWorker.addEventListener("controllerchange", () => {
-          if (!reloaded) { reloaded = true; location.reload(); }
+          if (updating && !reloaded) { reloaded = true; location.reload(); }
         });
         // check for updates when the app comes back to the foreground
         document.addEventListener("visibilitychange", () => { if (document.visibilityState === "visible") swReg.update().catch(() => {}); });

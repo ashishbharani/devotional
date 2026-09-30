@@ -24,6 +24,18 @@
 {% endblock %}
 
 {% block extrahead %}
+  {#- apply saved accessibility preferences before first paint (no flash) -#}
+  <script>
+    try {
+      var a = JSON.parse(localStorage.getItem("abp-a11y") || "{}"), c = document.documentElement.classList;
+      if (a.text) c.add("abp-text-" + a.text);
+      if (a.contrast) c.add("abp-hc");
+      if (a.spacing) c.add("abp-spacing");
+      if (a.underline) c.add("abp-underline");
+      if (a.motion) c.add("abp-still");
+      if (a.text >= 2) c.add("abp-cards");
+    } catch (e) {}
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Noto+Serif:wght@500;600;700&display=swap">
@@ -36,7 +48,7 @@
 
 {% block content %}
   {%- set m = page.meta or {} -%}
-  <div class="abp-page{% if m.abp_color %} abp-page--cat{% endif %}"{% if m.abp_color %} style="--abp-cat: {{ m.abp_color }}"{% endif %}>
+  <div class="abp-page{% if m.abp_color %} abp-page--cat{% endif %}"{% if m.abp_color %} style="--abp-cat: {{ m.abp_color }}; --abp-cat-ink: {{ m.abp_color_ink }}"{% endif %}>
     {% if m.abp_category %}
       {% include "partials/abp-breadcrumb.html" %}
     {% endif %}

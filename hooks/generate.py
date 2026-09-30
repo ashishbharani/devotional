@@ -51,8 +51,47 @@ _pages: list[dict] = []  # linear reading order
 # --------------------------------------------------------------------------- helpers
 
 
+def sr(text: str) -> str:
+    """Text for screen readers only."""
+    return f'<span class="abp-sr">{text}</span>'
+
+
 def esc(s: str) -> str:
     return html.escape(s or "", quote=True)
+
+
+def _rgb(h):
+    h = h.lstrip("#")
+    return [int(h[i : i + 2], 16) for i in (0, 2, 4)]
+
+
+def _lum(rgb):
+    def ch(v):
+        v /= 255
+        return v / 12.92 if v <= 0.03928 else ((v + 0.055) / 1.055) ** 2.4
+
+    r, g, b = map(ch, rgb)
+    return 0.2126 * r + 0.7152 * g + 0.0722 * b
+
+
+def _contrast(a, b):
+    la, lb = _lum(a), _lum(b)
+    return (max(la, lb) + 0.05) / (min(la, lb) + 0.05)
+
+
+def cat_ink(color: str, ratio: float = 4.8) -> str:
+    """Darken a category colour until it reads as text (WCAG AA) on its own tinted background."""
+    c = _rgb(color)
+    paper = _rgb("#fbf6e8")
+    bg = [round(c[i] * 0.17 + paper[i] * 0.83) for i in range(3)]
+    bg = [round(255 * 0.25 + v * 0.75) for v in bg]  # lighter, glossy top half of bars
+    t = 1.0
+    while t > 0.2:
+        ink = [round(v * t) for v in c]
+        if _contrast(ink, bg) >= ratio:
+            return "#%02x%02x%02x" % tuple(ink)
+        t -= 0.02
+    return "#2e241a"
 
 
 def slugify(s: str) -> str:
@@ -165,7 +204,7 @@ def url_of(src: str) -> str:
 
 def titlebar(title: str, subtitle: str = "", kind: str = "") -> str:
     sub = f'<p class="abp-titlebar__sub">{esc(subtitle)}</p>' if subtitle else ""
-    return f'<header class="abp-titlebar {kind}" markdown="0"><h1>{esc(title)}</h1>{sub}</header>\n\n'
+    return f'<header class="abp-titlebar {kind}" markdown="0"><h1 tabindex="-1">{esc(title)}</h1>{sub}</header>\n\n'
 
 
 def paragraphs(lines):
@@ -190,7 +229,7 @@ def page_foreword(d):
     box = [ln for ln in body if ln["bold"] and ln["y"] > 500]
     body = [ln for ln in body if ln not in box]
     out = ['<article class="abp-foreword" markdown="0">']
-    out.append('<header class="abp-foreword__band"><h1>FOREWORD</h1><p>HINDU DEVOTIONAL LIBRARY</p></header>')
+    out.append('<header class="abp-foreword__band"><h1 tabindex="-1">FOREWORD</h1><p>HINDU DEVOTIONAL LIBRARY</p></header>')
     out.append(f'<h2 class="abp-foreword__dedication">{esc(head["text"])}</h2>')
     out.append('<div class="abp-foreword__body">')
     for p in paragraphs(body):
@@ -261,7 +300,7 @@ def numbered_items(lines):
 def page_legend(d):
     items = [it for pg in d["front"]["legend"] for it in numbered_items(pg)]
     cards = "\n".join(
-        f'<div class="abp-card"><span class="abp-card__num">{n}</span><div><h3>{esc(h)}</h3><p>{esc(t)}</p></div></div>'
+        f'<div class="abp-card"><span class="abp-card__num" aria-hidden="true">{n}</span>{sr(f"Note {n}: ")}<div><h2 class="abp-card__title">{esc(h)}</h2><p>{esc(t)}</p></div></div>'
         for n, h, t in items
     )
     return titlebar("Legend — Publication Method", f"Guide · {len(items)} notes", "abp-titlebar--sand") + (
@@ -272,7 +311,7 @@ def page_legend(d):
 def page_rules(d):
     items = [it for pg in d["front"]["rules"] for it in numbered_items(pg)]
     cards = "\n".join(
-        f'<div class="abp-card abp-card--rule"><span class="abp-card__num">{n}</span><div><p>{esc(t)}</p></div></div>'
+        f'<div class="abp-card abp-card--rule"><span class="abp-card__num" aria-hidden="true">{n}</span><div><p>{sr(f"Rule {n}: ")}{esc(t)}</p></div></div>'
         for n, h, t in items
     )
     return titlebar("Final Reconciliation Rules Applied", f"Rules 1–{len(items)}", "abp-titlebar--sage") + (
@@ -286,13 +325,15 @@ def page_library(d):
         out.append(f'<h2 class="abp-shelf">{esc(shelf["subtitle"].title().replace("•", "·"))}</h2>\n')
         cards = []
         for b in shelf["books"]:
+            names = {"open": "Open {t}", "english": "{t} in English", "hindi": "{t} in Hindi", "listen": "Listen to {t} on YouTube"}
             btns = "".join(
-                f'<a class="abp-btn" href="{esc(b["links"][k])}" target="_blank" rel="noopener">{k.upper()}</a>'
+                f'<a class="abp-btn" href="{esc(b["links"][k])}" target="_blank" rel="noopener" '
+                f'aria-label="{esc(names[k].format(t=b["title"]))} (opens in a new tab)">{k.upper()}</a>'
                 for k in ("open", "english", "hindi", "listen")
                 if k in b["links"]
             )
             cards.append(
-                f'<div class="abp-book"><div class="abp-book__cover" style="--cover:{b["cover"]}">'
+                f'<div class="abp-book"><div class="abp-book__cover" aria-hidden="true" style="--cover:{b["cover"]}">'
                 f'<span>SACRED TEXT</span><i></i></div><h3>{esc(b["title"])}</h3>'
                 f'<div class="abp-book__btns">{btns}</div></div>'
             )
@@ -304,12 +345,12 @@ def category_bars(d, prefix=""):
     rows = []
     for c in d["categories"]:
         rows.append(
-            f'<a class="abp-catbar" style="--abp-cat:{c["color"]}" href="{prefix}{c["dir"]}/">'
-            f'<span class="abp-catbar__num">{c["num"]}</span>'
+            f'<a class="abp-catbar" style="--abp-cat:{c["color"]};--abp-cat-ink:{cat_ink(c["color"])}" href="{prefix}{c["dir"]}/">'
+            f'<span class="abp-catbar__num">{c["num"]}<span class="abp-sr">.</span></span>'
             f'<span class="abp-catbar__title">{esc(c["title"])}</span>'
-            f'<span class="abp-catbar__stats">{fmt(c["works_stated"])} works | {fmt(c["sections_stated"])} sections</span></a>'
+            f'<span class="abp-catbar__stats"><span class="abp-sr">, </span>{fmt(c["works_stated"])} works <span aria-hidden="true">|</span><span class="abp-sr">,</span> {fmt(c["sections_stated"])} sections</span></a>'
         )
-    return '<nav class="abp-catbars" markdown="0">\n' + "\n".join(rows) + "\n</nav>\n"
+    return '<nav class="abp-catbars" markdown="0" aria-label="42 categories">\n' + "\n".join(rows) + "\n</nav>\n"
 
 
 def page_master(d):
@@ -365,18 +406,25 @@ def page_category(c):
     out.append('<div class="abp-subindex" markdown="0">')
     for g in c["merged"]:
         chips = "".join(
-            f'<a href="{rel(c["url"], f["url"])}#{f["anchor"]}">{esc(f["name"])}<small>{len(f["works"])}</small></a>'
+            f'<a href="{rel(c["url"], f["url"])}#{f["anchor"]}">{esc(f["name"])}'
+            f'<small><span class="abp-sr">, </span>{len(f["works"])}<span class="abp-sr"> {"work" if len(f["works"]) == 1 else "works"}</span></small></a>'
             for f in g["forms"]
         )
         parts = f' · {len(g["parts"])} pages' if len(g["parts"]) > 1 else ""
         out.append(
-            f'<section class="abp-group"><a class="abp-group__bar" href="{rel(c["url"], g["url"])}">'
-            f'<span>{esc(g["name"])}</span><small>{fmt(g["count"])} works{parts}</small></a>'
-            f'<div class="abp-group__forms">{chips}</div></section>'
+            f'<section class="abp-group"><h2 class="abp-group__h"><a class="abp-group__bar" href="{rel(c["url"], g["url"])}">'
+            f'<span>{esc(g["name"])}</span><small><span class="abp-sr">, </span>{fmt(g["count"])} works{parts}</small></a></h2>'
+            f'<nav class="abp-group__forms" aria-label="Forms of {esc(g["name"])}">{chips}</nav></section>'
         )
     out.append("</div>\n")
     return "\n".join(out)
 
+
+SR_HEAD = (
+    '<thead class="abp-sr-head"><tr>'
+    + "".join(f'<th scope="col">{"Number" if h == "#" else html.escape(h)}</th>' for h, _ in COLUMNS)
+    + "</tr></thead>"
+)
 
 COLGROUP = (
     '<colgroup><col class="c-n"><col class="c-w"><col class="c-lang"><col class="c-form"><col class="c-tier">'
@@ -390,17 +438,18 @@ def cell(v: str, cls: str, label: str) -> str:
     return f'<td class="{cls}" data-label="{label}">{esc(v)}</td>'
 
 
-def part_nav(g, part) -> str:
+def part_nav(g, part, where="top") -> str:
     if len(g["parts"]) == 1:
         return ""
     links = []
     for p in g["parts"]:
         label = f'{p["num"]}'
         if p is part:
-            links.append(f'<span class="abp-parts__cur" aria-current="page">{label}</span>')
+            links.append(f'<span class="abp-parts__cur" aria-current="page"><span class="abp-sr">Page </span>{label}</span>')
         else:
-            links.append(f'<a href="{rel(part["url"], p["url"])}">{label}</a>')
-    return f'<nav class="abp-parts" markdown="0" aria-label="Pages of this section"><span>Page</span>{"".join(links)}</nav>\n'
+            links.append(f'<a href="{rel(part["url"], p["url"])}"><span class="abp-sr">Page </span>{label}</a>')
+    label = "Pages of this section" + (" (bottom)" if where == "bottom" else "")
+    return f'<nav class="abp-parts" markdown="0" aria-label="{label}"><span aria-hidden="true">Page</span>{"".join(links)}</nav>\n'
 
 
 def page_group(c, g, part):
@@ -411,7 +460,7 @@ def page_group(c, g, part):
     if len(g["parts"]) > 1:
         info = f'Page {part["num"]} of {len(g["parts"])} · works {fmt(first)}–{fmt(last)} of {fmt(g["count"])} · {len(g["forms"])} forms'
     out.append(
-        f'<div class="abp-sheet abp-sheet--head" markdown="0" data-search-exclude><table class="abp-table abp-table--head">{COLGROUP}'
+        f'<div class="abp-sheet abp-sheet--head" markdown="0" aria-hidden="true" data-search-exclude><table class="abp-table abp-table--head" role="presentation">{COLGROUP}'
         f"<thead><tr>{head}</tr></thead></table></div>\n"
         f'<div class="abp-groupbar" markdown="0"><h2>{esc(g["name"])}</h2><p>{info}</p></div>\n'
     )
@@ -422,7 +471,11 @@ def page_group(c, g, part):
         for f in g["forms"]:
             href = ("" if f["url"] == part["url"] else rel(part["url"], f["url"])) + "#" + f["anchor"]
             cls = ' class="is-here"' if f["name"] in here else ""
-            chips.append(f'<a href="{href}"{cls}>{esc(f["name"])}<small>{len(f["works"])}</small></a>')
+            n_works = len(f["works"])
+            chips.append(
+                f'<a href="{href}"{cls}>{esc(f["name"])}<small><span class="abp-sr">, </span>{n_works}'
+                f'<span class="abp-sr"> {"work" if n_works == 1 else "works"}</span></small></a>'
+            )
         chips = "".join(chips)
         out.append(
             f'<details class="abp-jumpbox" open markdown="0"><summary>Jump to a form ({len(g["forms"])})</summary>'
@@ -436,8 +489,8 @@ def page_group(c, g, part):
             rows.append(
                 "<tr>"
                 f'<td class="n">{n}</td>'
-                f'<td class="w"><a href="{esc(w["url"])}" target="_blank" rel="noopener" title="Search YouTube for this work">'
-                f'<span class="abp-play" aria-hidden="true"></span>{esc(w["title"])}</a></td>'
+                f'<th scope="row" class="w"><a href="{esc(w["url"])}" target="_blank" rel="noopener" title="Search YouTube for this work">'
+                f'<span class="abp-play" aria-hidden="true"></span>{esc(w["title"])}</a></th>'
                 + cell(w["language"], "lang", "Language")
                 + cell(w["form"], "form", "Form")
                 + f'<td class="tier" data-label="Tier"><span class="abp-tier abp-tier--{esc(w["tier"].lower())}">{esc(w["tier"] or "—")}</span></td>'
@@ -450,11 +503,14 @@ def page_group(c, g, part):
             )
         out.append(
             f'<div class="abp-sheet abp-sheet--body" style="--rows:{len(f["works"])}" markdown="0">'
-            f'<table class="abp-table" data-search-exclude>{COLGROUP}<tbody>\n'
+            f'<table class="abp-table" role="table" data-search-exclude>'
+            f'<caption class="abp-sr">{esc(g["name"])} — {esc(name)}, {len(f["works"])} {"work" if len(f["works"]) == 1 else "works"}</caption>'
+            f'{COLGROUP}{SR_HEAD}<tbody>\n'
             + "\n".join(rows)
             + "\n</tbody></table></div>\n"
         )
-    out.append(part_nav(g, part))
+    out.append(part_nav(g, part, "bottom"))
+    out.append('<p id="abp-yt-desc" class="abp-sr" markdown="0">Opens a YouTube search for this work in a new tab.</p>\n')
     return "\n".join(out)
 
 
@@ -468,7 +524,7 @@ def page_offline(d):
         '<p class="abp-home-links"><a class="abp-btn abp-btn--big" href="../">Home</a>'
         '<a class="abp-btn abp-btn--big" href="../master-index/">Integrated Master Index</a>'
         '<a class="abp-btn abp-btn--big" href="../find/">Find a Work</a>'
-        '<button type="button" class="abp-btn abp-btn--big" onclick="location.reload()">Try again</button></p>\n'
+        '<button type="button" class="abp-btn abp-btn--big" onclick="var f=new URLSearchParams(location.search).get(&quot;from&quot;);location.href=f||location.href">Try again</button></p>\n'
         f"<div id=\"abp-saved\" data-cats='{esc(json.dumps(cats, ensure_ascii=False))}'></div>\n"
         "</div>\n"
     )
@@ -484,10 +540,12 @@ def page_find(d):
         '<select id="abp-lang" aria-label="Language"><option value="">All languages</option></select>'
         '<select id="abp-tier" aria-label="Tier"><option value="">All tiers</option><option>T1</option><option>T2</option><option>T3</option><option>T4</option></select>'
         "</div>\n"
-        '<p class="abp-finder__status" id="abp-status">Loading index…</p>\n'
-        '<div class="abp-sheet"><table class="abp-table abp-table--finder"><thead><tr><th class="n">#</th><th class="w">Works</th>'
-        '<th class="lang">Language</th><th class="form">Form</th><th class="tier">Tier</th><th class="where">Found in</th></tr></thead>'
-        '<tbody id="abp-results"></tbody></table></div>\n'
+        '<p class="abp-finder__status" id="abp-status" role="status" aria-live="polite">Loading index…</p>\n'
+        '<div class="abp-sheet"><table class="abp-table abp-table--finder" role="table"><caption class="abp-sr">Search results</caption>'
+        '<thead role="rowgroup"><tr role="row"><th role="columnheader" scope="col" class="n">Number</th><th role="columnheader" scope="col" class="w">Works</th>'
+        '<th role="columnheader" scope="col" class="lang">Language</th><th role="columnheader" scope="col" class="form">Form</th>'
+        '<th role="columnheader" scope="col" class="tier">Tier</th><th role="columnheader" scope="col" class="where">Found in</th></tr></thead>'
+        '<tbody id="abp-results" role="rowgroup"></tbody></table></div>\n'
         '<p class="abp-finder__more"><button type="button" class="abp-btn abp-btn--big" id="abp-more" hidden>Show more results</button></p>\n'
         "</div>\n"
     )
@@ -602,6 +660,7 @@ def on_files(files, config, **kw):
         }
         if "cat" in p:
             meta["abp_color"] = p["cat"]["color"]
+            meta["abp_color_ink"] = cat_ink(p["cat"]["color"])
             meta["abp_category"] = f'{p["cat"]["num"]}. {title_case(p["cat"]["title"])}'
             meta["abp_category_url"] = url_of(f'{p["cat"]["dir"]}/index.md')
         if "group" in p or src == "index.md":
@@ -642,8 +701,8 @@ def on_post_build(config, **kw):
 
     # app shell: pages + assets needed to open the app and search offline
     shell = ["./", "master-index/", "find/", "library/", "foreword/", "legend/", "offline/", "manifest.webmanifest",
-             "assets/works-index.json", "assets/offline-packs.json", "search/search_index.json",
-             "stylesheets/abp.css", "javascripts/abp.js", "javascripts/abp-pwa.js",
+             "assets/works-index.json", "assets/offline-packs.json", "search/search_index.json", "sitemap.xml",
+             "stylesheets/abp.css", "javascripts/abp.js", "javascripts/abp-pwa.js", "javascripts/abp-a11y.js",
              "assets/images/logo.svg", "assets/images/icon-192.png", "assets/images/apple-touch-icon.png",
              "assets/images/cover-640.webp", "assets/images/cover-1024.webp", "assets/images/signature.png"]
     for pattern in ("assets/stylesheets/*.css", "assets/javascripts/bundle.*.js", "assets/javascripts/workers/*.js"):

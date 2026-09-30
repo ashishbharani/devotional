@@ -54,13 +54,14 @@
       const href = w[1] === 0 ? YT + encodeURIComponent(w[0]).replace(/%20/g, "+") : w[1];
       const [grp, form] = place[2].split(" › ");
       return (
-        `<tr><td class="n">${i + 1}</td>` +
-        `<td class="w"><a href="${esc(href)}" target="_blank" rel="noopener"><span class="abp-play" aria-hidden="true"></span>${esc(w[0])}</a></td>` +
-        `<td class="lang" data-label="Language">${esc(data.langs[w[2]] || "—")}</td>` +
-        `<td class="form" data-label="Form">${esc(data.forms[w[3]] || "—")}</td>` +
-        `<td class="tier" data-label="Tier"><span class="abp-tier abp-tier--${esc((w[4] || "").toLowerCase())}">${esc(w[4] || "—")}</span></td>` +
-        `<td class="where" data-label="Found in"><a href="${new URL(place[0], siteRoot).href}">${esc(grp)}</a>` +
-        `<small>${place[1]}. ${esc(form || "")}</small></td></tr>`
+        `<tr role="row"><td role="cell" class="n">${i + 1}</td>` +
+        `<th role="rowheader" scope="row" class="w"><a href="${esc(href)}" target="_blank" rel="noopener"><span class="abp-play" aria-hidden="true"></span>${esc(w[0])}` +
+        `<span class="abp-sr"> — search on YouTube, opens in a new tab</span></a></th>` +
+        `<td role="cell" class="lang" data-label="Language">${esc(data.langs[w[2]] || "—")}</td>` +
+        `<td role="cell" class="form" data-label="Form">${esc(data.forms[w[3]] || "—")}</td>` +
+        `<td role="cell" class="tier" data-label="Tier"><span class="abp-tier abp-tier--${esc((w[4] || "").toLowerCase())}">${esc(w[4] || "—")}</span></td>` +
+        `<td role="cell" class="where" data-label="Found in"><a href="${new URL(place[0], siteRoot).href}">${esc(grp)}<span class="abp-sr">, ${esc(form || "")}</span></a>` +
+        `<small aria-hidden="true">${place[1]}. ${esc(form || "")}</small></td></tr>`
       );
     }
 

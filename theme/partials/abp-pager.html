@@ -1,18 +1,18 @@
 {#- The seven-button footer used on every page of the PDF edition -#}
 {%- set m = page.meta or {} -%}
-{%- macro btn(key, label, cls, rel="") -%}
+{%- macro btn(key, label, cls, rel="", name="") -%}
   {%- if m.get(key) is not none -%}
-    <a class="abp-btn {{ cls }}" href="{{ base_url }}/{{ m[key] }}"{% if rel %} rel="{{ rel }}"{% endif %}>{{ label }}</a>
+    <a class="abp-btn {{ cls }}" href="{{ base_url }}/{{ m[key] }}"{% if rel %} rel="{{ rel }}"{% endif %} aria-label="{{ name }}">{{ label }}</a>
   {%- else -%}
-    <span class="abp-btn {{ cls }} is-disabled" aria-disabled="true">{{ label }}</span>
+    <span class="abp-btn {{ cls }} is-disabled" aria-hidden="true">{{ label }}</span>
   {%- endif -%}
 {%- endmacro -%}
 <nav class="abp-pager" aria-label="Page navigation">
-  {{ btn("abp_prev_section", "&lt;&lt;&lt; Previous section", "abp-pager__ps") }}
-  {{ btn("abp_prev", "&lt;&lt; Previous", "abp-pager__p", "prev") }}
-  <a class="abp-btn abp-pager__top" href="#" onclick="window.scrollTo({top:0,behavior:'smooth'});return false">Top</a>
+  {{ btn("abp_prev_section", "&lt;&lt;&lt; Previous section", "abp-pager__ps", "", "Previous section") }}
+  {{ btn("abp_prev", "&lt;&lt; Previous", "abp-pager__p", "prev", "Previous page") }}
+  <a class="abp-btn abp-pager__top" href="#" aria-label="Back to top of page" onclick="window.scrollTo({top:0,behavior:'smooth'});(document.querySelector('.md-content h1')||document.body).focus({preventScroll:true});return false">Top</a>
   <a class="abp-btn abp-pager__home" href="{{ base_url }}/">Home</a>
-  <a class="abp-btn abp-pager__idx" href="{{ base_url }}/master-index/">Back to index</a>
-  {{ btn("abp_next", "Next &gt;&gt;", "abp-pager__n", "next") }}
-  {{ btn("abp_next_section", "Next section &gt;&gt;&gt;", "abp-pager__ns") }}
+  <a class="abp-btn abp-pager__idx" href="{{ base_url }}/master-index/" aria-label="Back to index (Integrated Master Index)">Back to index</a>
+  {{ btn("abp_next", "Next &gt;&gt;", "abp-pager__n", "next", "Next page") }}
+  {{ btn("abp_next_section", "Next section &gt;&gt;&gt;", "abp-pager__ns", "", "Next section") }}
 </nav>

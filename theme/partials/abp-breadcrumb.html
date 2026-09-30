@@ -2,10 +2,10 @@
   <a href="{{ base_url }}/master-index/">Integrated Master Index</a>
   <span aria-hidden="true">›</span>
   {%- if page.url.rstrip('/') ~ '/' == page.meta.abp_category_url %}
-  <span>{{ page.meta.abp_category }}</span>
+  <span aria-current="page">{{ page.meta.abp_category }}</span>
   {%- else %}
   <a href="{{ base_url }}/{{ page.meta.abp_category_url }}">{{ page.meta.abp_category }}</a>
   <span aria-hidden="true">›</span>
-  <span>{{ page.title }}</span>
+  <span aria-current="page">{{ page.title }}</span>
   {%- endif %}
 </nav>

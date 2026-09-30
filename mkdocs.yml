@@ -45,6 +45,7 @@ extra_css:
 extra_javascript:
   - javascripts/abp.js
   - javascripts/abp-pwa.js
+  - javascripts/abp-a11y.js
 
 plugins:
   - search:
