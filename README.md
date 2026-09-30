@@ -41,7 +41,12 @@ Built so elderly readers and people using screen readers, keyboards, switches or
   headers, and keeps them in the phone card layout; YouTube links say they open a new tab; empty fields
   read "none"; buttons like *PREVIOUS* / *OPEN* / *LISTEN* have full names ("Listen to Bhagavad Gita on YouTube");
   search results are announced; focus moves to the new page heading after navigation.
-* **Keyboard:** skip link, logical tab order, strong two-tone focus ring, dialogs trap focus and return it.
+* **Keyboard:** skip link on every page, logical tab order (also in the phone footer grid), strong two-tone
+  focus ring, focused items never hidden under the sticky header or search overlay, dialogs trap and return focus,
+  single-key shortcuts (S, N, P…) can be switched off in the Aa panel for voice-control users.
+* **Structure:** one `h1` per page and no skipped heading levels (category → group → form), landmarks,
+  status messages (search results, saving progress) announced, notices pause while hovered/focused.
+* **Touch:** every control is at least 24×24 px (44 px on touch screens); links inside text are underlined.
 * **Colour:** all text meets 4.5:1 contrast in both themes (category colours are darkened for text
   automatically, `cat_ink()` in the hook); Windows High Contrast / forced colours supported;
   respects *reduce motion*.

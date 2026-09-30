@@ -10,7 +10,7 @@
 <nav class="abp-pager" aria-label="Page navigation">
   {{ btn("abp_prev_section", "&lt;&lt;&lt; Previous section", "abp-pager__ps", "", "Previous section") }}
   {{ btn("abp_prev", "&lt;&lt; Previous", "abp-pager__p", "prev", "Previous page") }}
-  <a class="abp-btn abp-pager__top" href="#" aria-label="Back to top of page" onclick="window.scrollTo({top:0,behavior:'smooth'});(document.querySelector('.md-content h1')||document.body).focus({preventScroll:true});return false">Top</a>
+  <a class="abp-btn abp-pager__top" href="#" aria-label="Back to top of page" onclick="window.scrollTo({top:0,behavior:matchMedia('(prefers-reduced-motion: reduce)').matches||document.documentElement.classList.contains('abp-still')?'auto':'smooth'});(document.querySelector('.md-content h1')||document.body).focus({preventScroll:true});return false">Top</a>
   <a class="abp-btn abp-pager__home" href="{{ base_url }}/">Home</a>
   <a class="abp-btn abp-pager__idx" href="{{ base_url }}/master-index/" aria-label="Back to index (Integrated Master Index)">Back to index</a>
   {{ btn("abp_next", "Next &gt;&gt;", "abp-pager__n", "next", "Next page") }}

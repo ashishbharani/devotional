@@ -70,6 +70,7 @@
       out.insertAdjacentHTML("beforeend", next.map((w, i) => row(w, shown + i)).join(""));
       shown += next.length;
       more.hidden = shown >= hits.length;
+      if (hits.length) status.textContent = `${hits.length.toLocaleString()} matching works — showing ${shown.toLocaleString()}.`;
       more.textContent = `Show more results (${(hits.length - shown).toLocaleString()} left)`;
     }
 

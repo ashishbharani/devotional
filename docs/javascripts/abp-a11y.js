@@ -20,8 +20,7 @@
     root.classList.toggle("abp-spacing", !!p.spacing);
     root.classList.toggle("abp-underline", !!p.underline);
     root.classList.toggle("abp-still", !!p.motion);
-    const btn = document.querySelector(".abp-a11y-btn");
-    if (btn) btn.setAttribute("aria-pressed", String(Object.values(p).some(Boolean)));
+    root.classList.toggle("abp-noshortcuts", !!p.noshortcuts);
   }
 
   const SIZES = [["0", "A", "Normal text"], ["1", "A+", "Large text"], ["2", "A++", "Larger text"], ["3", "A+++", "Largest text"]];
@@ -30,6 +29,7 @@
     ["spacing", "Readable spacing", "More space between letters, words and lines"],
     ["underline", "Underline links", "Makes every link easy to spot"],
     ["motion", "Stop animations", "No sliding or fading effects"],
+    ["noshortcuts", "Turn off single-key shortcuts", "Stops keys like S, N and P from searching or changing page (helps voice control)"],
   ];
 
   function openPanel() {
@@ -91,10 +91,49 @@
     apply(load());
   }
 
+  /* WCAG 2.1.4: Material binds single-character keys (s, f, /, n, p, ",", ".") — let people switch them off */
+  document.addEventListener("keydown", (e) => {
+    if (!root.classList.contains("abp-noshortcuts")) return;
+    if (e.ctrlKey || e.metaKey || e.altKey || e.key.length !== 1) return;
+    const t = e.target;
+    if (t && (t.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName))) return;
+    e.stopImmediatePropagation();
+  }, true);
+
+  /* 2.4.11: Material keeps its dark search overlay open after focus leaves the search box,
+     covering whatever the keyboard user tabs to next — close it when focus moves away */
+  document.addEventListener("focusin", (e) => {
+    const toggle = document.getElementById("__search");
+    const search = document.querySelector(".md-search");
+    if (toggle && toggle.checked && search && !search.contains(e.target)) {
+      toggle.checked = false;
+      toggle.dispatchEvent(new Event("change", { bubbles: true }));
+    }
+  });
+
+  /* 2.4.1: make sure every page has a working "Skip to content" link */
+  function ensureSkipLink() {
+    const page = document.querySelector(".abp-page");
+    if (!page) return;
+    if (!page.id) page.id = "abp-main";
+    let skip = document.querySelector(".md-skip");
+    if (!skip) {
+      skip = document.createElement("a");
+      skip.className = "md-skip";
+      skip.textContent = "Skip to content";
+      document.body.insertBefore(skip, document.body.firstChild);
+    }
+    skip.setAttribute("href", "#abp-main");
+    page.setAttribute("tabindex", "-1");
+  }
+
   /* label widgets Material leaves unnamed; hide the decorative loading bar from assistive tech */
   function fixMaterial() {
     const search = document.querySelector(".md-search");
     if (search && !search.getAttribute("aria-label")) search.setAttribute("aria-label", "Search");
+    document.querySelectorAll(".md-logo img, .md-header__button.md-logo img").forEach((i) => i.setAttribute("alt", ""));
+    const drawer = document.querySelector('label.md-header__button[for="__drawer"]');
+    if (drawer && !drawer.querySelector(".abp-sr")) drawer.insertAdjacentHTML("beforeend", '<span class="abp-sr">Menu</span>');
     document.querySelectorAll(".md-progress").forEach((p) => p.setAttribute("aria-hidden", "true"));
     // move focus to the new page's heading after instant navigation, so screen readers announce it
     const h1 = document.querySelector(".md-content h1");
@@ -124,6 +163,7 @@
   let first = true;
   function onPage() {
     addButton();
+    ensureSkipLink();
     fixMaterial();
     enhanceTables();
     if (!first) {

@@ -44,7 +44,23 @@
       t.querySelector(".abp-toast__actions").appendChild(b);
     });
     document.body.appendChild(t);
-    if (timeoutMs) setTimeout(() => t.remove(), timeoutMs);
+    document.documentElement.classList.add("abp-has-toast");
+    const cleanup = new MutationObserver(() => {
+      if (!document.body.contains(t)) { document.documentElement.classList.toggle("abp-has-toast", !!document.querySelector(".abp-toast")); cleanup.disconnect(); }
+    });
+    cleanup.observe(document.body, { childList: true });
+    if (timeoutMs) {
+      // WCAG 2.2.1: give readers enough time — pause while hovered or focused
+      let left = Math.max(timeoutMs, 8000), started = Date.now(), timer = null;
+      const run = () => { started = Date.now(); timer = setTimeout(() => t.remove(), left); };
+      const pause = () => { clearTimeout(timer); left -= Date.now() - started; };
+      t.addEventListener("mouseenter", pause); t.addEventListener("focusin", pause);
+      t.addEventListener("mouseleave", run); t.addEventListener("focusout", run);
+      const close = el('<button type="button" class="abp-toast__close" aria-label="Dismiss">×</button>');
+      close.addEventListener("click", () => t.remove());
+      t.appendChild(close);
+      run();
+    }
     return t;
   }
 
@@ -125,7 +141,7 @@
     const dlg = el(
       '<dialog class="abp-sheet-dialog" aria-label="Install the app">' +
       '<div class="abp-install__icon"><img src="' + url(isIOS ? "assets/images/apple-touch-icon.png" : "assets/images/icon-192.png") + '" alt="" width="56" height="56"></div>' +
-      "<h3>Install the Devotional app</h3>" +
+      "<h2>Install the Devotional app</h2>" +
       "<p>Opens full-screen from your home screen, loads instantly and keeps working offline.</p>" +
       body +
       '<form method="dialog"><button class="abp-btn abp-btn--big abp-btn--primary" value="ok">Got it</button></form></dialog>'
@@ -165,7 +181,7 @@
     if (deferredPrompt) {
       slot.innerHTML =
         '<div class="abp-install__icon"><img src="' + url("assets/images/icon-192.png") + '" alt="" width="56" height="56"></div>' +
-        '<div class="abp-install__body"><h3>Install the Devotional app</h3>' +
+        '<div class="abp-install__body"><h2>Install the Devotional app</h2>' +
         "<p>Add it to your home screen: opens full-screen, loads instantly and keeps working offline.</p></div>" +
         '<div class="abp-install__cta"><button type="button" class="abp-btn abp-btn--big abp-btn--primary" data-install>Install app</button></div>';
       slot.querySelector("[data-install]").addEventListener("click", promptInstall);
@@ -174,7 +190,7 @@
       const safari = /Safari/.test(ua) && !/CriOS|FxiOS|EdgiOS/.test(ua);
       slot.innerHTML =
         '<div class="abp-install__icon"><img src="' + url("assets/images/apple-touch-icon.png") + '" alt="" width="56" height="56"></div>' +
-        '<div class="abp-install__body"><h3>Add to your Home Screen</h3>' +
+        '<div class="abp-install__body"><h2>Add to your Home Screen</h2>' +
         (safari || /CriOS|EdgiOS/.test(ua)
           ? iosSteps()
           : "<p>Open this page in <b>Safari</b>, then use <b>Share → Add to Home Screen</b>.</p>") +
@@ -185,7 +201,7 @@
     } else if (isAndroid) {
       slot.innerHTML =
         '<div class="abp-install__icon"><img src="' + url("assets/images/icon-192.png") + '" alt="" width="56" height="56"></div>' +
-        '<div class="abp-install__body"><h3>Install the Devotional app</h3>' +
+        '<div class="abp-install__body"><h2>Install the Devotional app</h2>' +
         "<p>In Chrome, open the <b>⋮</b> menu and tap <b>Install app</b> (or <b>Add to Home screen</b>).</p></div>" +
         '<div class="abp-install__cta"><button type="button" class="abp-btn abp-btn--big abp-btn--primary" data-install>Install app</button></div>';
       slot.querySelector("[data-install]").addEventListener("click", installClicked);
@@ -193,7 +209,7 @@
     } else {
       slot.innerHTML =
         '<div class="abp-install__icon"><img src="' + url("assets/images/icon-192.png") + '" alt="" width="56" height="56"></div>' +
-        '<div class="abp-install__body"><h3>Install the Devotional app</h3>' +
+        '<div class="abp-install__body"><h2>Install the Devotional app</h2>' +
         "<p>Works on iPhone, iPad, Android and computers — full-screen and available offline.</p></div>" +
         '<div class="abp-install__cta"><button type="button" class="abp-btn abp-btn--big abp-btn--primary" data-install>Install app</button></div>';
       slot.querySelector("[data-install]").addEventListener("click", installClicked);
@@ -293,10 +309,10 @@
       "</div>" +
       '<div class="abp-offline__body">' +
       `<b>${done ? "Saved for offline" : "Read offline"}</b>` +
-      `<span class="abp-offline__meta">${done
+      `<span class="abp-offline__meta" role="status" aria-live="polite">${done
         ? `All ${total.toLocaleString()} pages of ${label} are on this device.`
         : `Save ${label} (${total.toLocaleString()} pages, ≈ ${fmtMB(pack.bytes)}) to read without internet${saved ? ` — ${saved.toLocaleString()} already saved` : ""}.`}</span>` +
-      '<progress hidden max="1" value="0"></progress>' +
+      '<progress hidden max="1" value="0" aria-label="Saving pages for offline use"></progress>' +
       "</div>" +
       '<div class="abp-offline__cta">' +
       (done

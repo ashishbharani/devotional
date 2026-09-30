@@ -202,9 +202,11 @@ def url_of(src: str) -> str:
 # --------------------------------------------------------------------------- page builders
 
 
-def titlebar(title: str, subtitle: str = "", kind: str = "") -> str:
+def titlebar(title: str, subtitle: str = "", kind: str = "", level: int = 1) -> str:
     sub = f'<p class="abp-titlebar__sub">{esc(subtitle)}</p>' if subtitle else ""
-    return f'<header class="abp-titlebar {kind}" markdown="0"><h1 tabindex="-1">{esc(title)}</h1>{sub}</header>\n\n'
+    focus = ' tabindex="-1"' if level == 1 else ""
+    tag = "header" if level == 1 else "div"
+    return f'<{tag} class="abp-titlebar {kind}" markdown="0"><h{level}{focus} class="abp-titlebar__h">{esc(title)}</h{level}>{sub}</{tag}>\n\n'
 
 
 def paragraphs(lines):
@@ -366,7 +368,8 @@ def page_home(d):
     total = sum(c["works_stated"] for c in d["categories"])
     groups = sum(len(c["merged"]) for c in d["categories"])
     return (
-        '<section class="abp-cover" markdown="0">\n'
+        '<h1 class="abp-sr" tabindex="-1">Ultimate Hindu Devotional Collection</h1>\n'
+        '<section class="abp-cover" markdown="0" aria-label="Cover">\n'
         "<picture>"
         '<source type="image/webp" sizes="(min-width: 90rem) 1400px, 100vw" '
         'srcset="assets/images/cover-640.webp 640w, assets/images/cover-1024.webp 1024w, assets/images/cover-1491.webp 1491w">'
@@ -378,20 +381,20 @@ def page_home(d):
         '<a class="abp-cover__hot abp-cover__hot--left" href="library/" title="Scriptures &amp; Books Library"><span>Scriptures &amp; Books Library</span></a>\n'
         '<a class="abp-cover__hot abp-cover__hot--right" href="master-index/" title="Integrated Master Index"><span>Integrated Master Index</span></a>\n'
         "</section>\n\n"
-        '<div class="abp-stats" markdown="0">'
-        f"<div><b>{fmt(total)}</b><span>works</span></div>"
-        f"<div><b>42</b><span>categories</span></div>"
-        f"<div><b>{fmt(groups)}</b><span>deities, traditions &amp; groups</span></div>"
-        f'<div><b>{fmt(d["pages"])}</b><span>pages in the PDF edition</span></div>'
-        "</div>\n\n"
+        '<ul class="abp-stats" markdown="0" aria-label="The collection in numbers">'
+        f"<li><b>{fmt(total)}</b> <span>works</span></li>"
+        f"<li><b>42</b> <span>categories</span></li>"
+        f"<li><b>{fmt(groups)}</b> <span>deities, traditions &amp; groups</span></li>"
+        f'<li><b>{fmt(d["pages"])}</b> <span>pages in the PDF edition</span></li>'
+        "</ul>\n\n"
         '<div id="abp-install" class="abp-install" markdown="0" hidden></div>\n\n'
-        '<div class="abp-home-links" markdown="0">'
+        '<nav class="abp-home-links" markdown="0" aria-label="Main sections">'
         '<a class="abp-btn abp-btn--big" href="foreword/">Foreword</a>'
         '<a class="abp-btn abp-btn--big" href="library/">Scriptures &amp; Books Library</a>'
         '<a class="abp-btn abp-btn--big" href="master-index/">Integrated Master Index</a>'
         '<a class="abp-btn abp-btn--big" href="find/">Find a Work</a>'
-        "</div>\n\n"
-        + titlebar("Integrated Master Index", "Choose a category", "abp-titlebar--plum")
+        "</nav>\n\n"
+        + titlebar("Integrated Master Index", "Choose a category", "abp-titlebar--plum", level=2)
         + category_bars(d)
     )
 
@@ -483,7 +486,7 @@ def page_group(c, g, part):
         )
     for f in part["forms"]:
         name = f["name"] + (" — CONTINUED" if f["continued"] else "")
-        out.append(f'\n## {name} {{ #{f["anchor"]} .abp-formbar }}\n')
+        out.append(f'\n### {name} {{ #{f["anchor"]} .abp-formbar }}\n')
         rows = []
         for n, w in enumerate(f["works"], f["start"] + 1):
             rows.append(
