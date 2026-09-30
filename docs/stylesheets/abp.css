@@ -329,7 +329,7 @@ body { background: var(--abp-paper); }
 .abp-cover__hot--right { left: 68.2%; }
 .abp-cover__hot:hover, .abp-cover__hot:focus-visible { background: rgba(255, 230, 150, .18); box-shadow: 0 0 0 2px #f5d27a, 0 0 22px rgba(255, 210, 110, .8); }
 .abp-cover__hot span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
-.abp-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: .7rem; margin: 0 0 1rem; }
+.abp-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: .7rem; margin: 0 0 1rem; }
 .abp-stats li {
   text-align: center; padding: .7rem .4rem; border-radius: .5rem;
   border: 1px solid color-mix(in srgb, var(--abp-gold) 70%, transparent);
