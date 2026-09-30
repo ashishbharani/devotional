@@ -8,7 +8,7 @@
 const VERSION = "__VERSION__";
 const SHELL_CACHE = `abp-shell-${VERSION}`;
 const PAGES_CACHE = "abp-pages";
-const STATIC_CACHE = "abp-static";
+const STATIC_CACHE = `abp-static-${VERSION}`;
 const FONT_CACHE = "abp-fonts";
 const SHELL = __SHELL__;
 const SCOPE = new URL("./", self.location).href;
@@ -33,7 +33,10 @@ self.addEventListener("activate", (event) => {
   event.waitUntil(
     (async () => {
       const keys = await caches.keys();
-      await Promise.all(keys.filter((k) => k.startsWith("abp-shell-") && k !== SHELL_CACHE).map((k) => caches.delete(k)));
+      await Promise.all(keys.filter((k) =>
+        (k.startsWith("abp-shell-") && k !== SHELL_CACHE) ||
+        (k.startsWith("abp-static") && k !== STATIC_CACHE)
+      ).map((k) => caches.delete(k)));
       if (self.registration.navigationPreload) await self.registration.navigationPreload.enable();
       await self.clients.claim();
     })()

@@ -57,7 +57,7 @@
       const [grp, form] = place[2].split(" › ");
       return (
         `<tr role="row"><td role="cell" class="n">${i + 1}</td>` +
-        `<th role="rowheader" scope="row" class="w"><a href="${esc(href)}" target="_blank" rel="noopener"><span class="abp-play" aria-hidden="true"></span>${esc(w[0])}` +
+        `<th role="rowheader" scope="row" class="w"><a href="${esc(href)}" target="_blank" rel="noopener"><span class="abp-play" aria-hidden="true"></span><span class="abp-work-title">${esc(w[0])}</span>` +
         `<span class="abp-sr"> — search on YouTube, opens in a new tab</span></a></th>` +
         `<td role="cell" class="lang" data-label="${esc(t("language"))}" data-i18n-label="language">${esc(data.langs[w[2]] || "—")}</td>` +
         `<td role="cell" class="form" data-label="${esc(t("form"))}" data-i18n-label="form">${esc(data.forms[w[3]] || "—")}</td>` +
