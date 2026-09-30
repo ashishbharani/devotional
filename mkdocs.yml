@@ -3,8 +3,6 @@ site_description: A Pan-India Multilingual Devotional Reference — collected & 
 site_author: Advocate Ashish Bharani
 # GitHub Actions passes the real Pages URL in SITE_URL; the default is used for local builds
 site_url: !ENV [SITE_URL, "https://ashishbharani.github.io/devotional/"]
-repo_url: https://github.com/ashishbharani/devotional
-repo_name: ashishbharani/devotional
 copyright: Collected &amp; compiled by Advocate Ashish Bharani · Reworked Publication 2026
 
 # Every page is generated from data/collection.json by hooks/generate.py.
