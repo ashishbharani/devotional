@@ -14,7 +14,7 @@ theme:
   custom_dir: theme            # the "ABP Devotional" theme: templates + partials
   language: en
   logo: assets/images/logo.svg
-  favicon: assets/images/logo.svg
+  favicon: assets/images/favicon-32.png
   font: false                  # fonts are loaded by the theme (Noto Serif / Noto Sans)
   palette:
     - media: "(prefers-color-scheme: light)"

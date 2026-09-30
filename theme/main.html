@@ -1,11 +1,37 @@
 {#- ABP Devotional theme — extends Material for MkDocs -#}
 {% extends "base.html" %}
 
+{#- Mobile-first head: notch-aware viewport, home-screen icons, per-scheme browser chrome colour -#}
+{% block site_meta %}
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="description" content="{{ (page.meta and page.meta.description) or config.site_description }}">
+  <meta name="author" content="{{ config.site_author }}">
+  {% if page.canonical_url %}<link rel="canonical" href="{{ page.canonical_url }}">{% endif %}
+  <meta name="format-detection" content="telephone=no">
+  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#82382f">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#331512">
+  <meta name="color-scheme" content="light dark">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Devotional">
+  <link rel="icon" href="{{ 'assets/images/logo.svg' | url }}" type="image/svg+xml">
+  <link rel="icon" href="{{ 'assets/images/favicon-32.png' | url }}" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="{{ 'assets/images/apple-touch-icon.png' | url }}">
+  <link rel="manifest" href="{{ 'manifest.webmanifest' | url }}">
+  <meta name="generator" content="mkdocs-{{ mkdocs_version }}, mkdocs-material">
+{% endblock %}
+
 {% block extrahead %}
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Noto+Serif:wght@500;600;700&display=swap">
-  <meta name="theme-color" content="#82382f">
+  {% if page.is_homepage %}
+  <link rel="preload" as="image" type="image/webp"
+        imagesrcset="{{ 'assets/images/cover-640.webp' | url }} 640w, {{ 'assets/images/cover-1024.webp' | url }} 1024w, {{ 'assets/images/cover-1491.webp' | url }} 1491w"
+        imagesizes="(min-width: 90rem) 1400px, 100vw">
+  {% endif %}
 {% endblock %}
 
 {% block content %}

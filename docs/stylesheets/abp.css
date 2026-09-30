@@ -99,25 +99,15 @@ body { background: var(--abp-paper); }
 /* ---------- page canvas (frame + soft circles, as on every PDF page) ------ */
 .abp-page {
   position: relative;
-  isolation: isolate;
   padding: .6rem .2rem 1rem;
+  /* the two soft circles of every PDF page, drawn as backgrounds so they can never cause sideways scroll */
+  --abp-circle-1: rgba(184, 138, 58, .08);
+  --abp-circle-2: rgba(216, 199, 164, .22);
+  background:
+    radial-gradient(circle at 100% 0, var(--abp-circle-1) 0 11rem, transparent 11.05rem) no-repeat,
+    radial-gradient(circle at 0 100%, var(--abp-circle-2) 0 7rem, transparent 7.05rem) no-repeat;
 }
-.abp-page::before,
-.abp-page::after {
-  content: "";
-  position: absolute;
-  z-index: -1;
-  border-radius: 50%;
-  pointer-events: none;
-}
-.abp-page::before {           /* top-right circle tinted by the category */
-  width: 15rem; height: 15rem; right: -3.5rem; top: -5rem;
-  background: color-mix(in srgb, var(--abp-cat) 9%, transparent);
-}
-.abp-page::after {            /* bottom-left sand circle */
-  width: 11rem; height: 11rem; left: -3rem; bottom: -2rem;
-  background: color-mix(in srgb, #d8c7a4 22%, transparent);
-}
+.abp-page--cat { --abp-circle-1: color-mix(in srgb, var(--abp-cat) 9%, transparent); }
 .md-content { box-shadow: inset 0 0 0 .5px color-mix(in srgb, var(--abp-gold) 70%, transparent); border-radius: 2px; }
 .md-content__inner { margin-top: .6rem; }
 .md-content__inner::before { display: none; }
@@ -448,49 +438,200 @@ body { background: var(--abp-paper); }
 .abp-table--finder td.where small { display: block; color: var(--abp-ink-3); }
 .abp-finder { --abp-cat: #244f86; }
 
-/* ---------- responsive: tables become cards on narrow screens -------------- */
-@media screen and (max-width: 76.25em) {
-  .abp-sheet--head { top: 2.4rem; }
+.md-main__inner { margin-top: .8rem; }
+
+/* ==========================================================================
+   Mobile, tablet & cross-browser layer
+   Targets: iPhone / iPad (Safari, WebKit) and Android phones / tablets (Chrome)
+   ========================================================================== */
+
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+a, button, select, input, .abp-btn { -webkit-tap-highlight-color: rgba(130, 56, 47, .15); touch-action: manipulation; }
+.md-typeset .abp-table td { overflow-wrap: anywhere; }
+
+/* notch / rounded-corner safe areas (viewport-fit=cover) */
+.md-header, .md-main, .md-footer {
+  padding-left: env(safe-area-inset-left, 0px);
+  padding-right: env(safe-area-inset-right, 0px);
 }
+.md-footer-meta { padding-bottom: env(safe-area-inset-bottom, 0px); }
+
+/* big tables: let the browser skip rendering off-screen sections (Chrome 85+, Safari 18+) */
+.abp-sheet--body {
+  content-visibility: auto;
+  contain-intrinsic-size: auto calc(var(--rows, 5) * 2.45rem);
+}
+
+/* finder: 16px inputs stop iOS Safari from zooming on focus */
+.abp-finder input, .abp-finder select { font-size: max(16px, .7rem); -webkit-appearance: none; appearance: none; }
+.abp-finder select {
+  padding-right: 1.8rem;
+  background-image: linear-gradient(45deg, transparent 50%, var(--abp-btn) 50%), linear-gradient(135deg, var(--abp-btn) 50%, transparent 50%);
+  background-position: calc(100% - 1rem) 55%, calc(100% - .7rem) 55%;
+  background-size: .3rem .3rem;
+  background-repeat: no-repeat;
+}
+.abp-finder input[type="search"]::-webkit-search-decoration { -webkit-appearance: none; }
+.abp-finder__more { text-align: center; }
+button.abp-btn { cursor: pointer; }
+
+/* pressed feedback everywhere; lift/hover effects only where a real hover exists */
+.abp-btn:active, a.abp-catbar:active, a.abp-group__bar:active, .abp-jump a:active, .abp-group__forms a:active { filter: brightness(.94); transform: translateY(1px); }
+@media (hover: none) {
+  .md-typeset a.abp-catbar:hover, .md-typeset a.abp-btn:hover { transform: none; filter: none; }
+  .md-typeset .abp-table tbody tr:hover td { background: var(--abp-row); }
+}
+
+/* touch devices: 44px tap targets (Apple HIG / Material guidance) */
+@media (pointer: coarse) {
+  .md-typeset .abp-btn, .abp-btn { min-height: 44px; font-size: .56rem; }
+  .md-typeset .abp-group__forms a, .md-typeset .abp-jump a { min-height: 36px; padding: .2rem .7rem; font-size: .6rem; }
+  .abp-group__forms, .abp-jump { gap: .45rem; }
+  .md-typeset a.abp-catbar { min-height: 56px; }
+  .md-typeset a.abp-group__bar { min-height: 48px; align-items: center; }
+  .abp-cover__hot:active { background: rgba(255, 230, 150, .25); box-shadow: 0 0 0 2px #f5d27a; }
+  .md-typeset .abp-table td.w a { min-height: 32px; align-items: center; }
+  .md-typeset .abp-table td.w .abp-play { margin-top: 0; }
+}
+
+/* ---------- tablets (iPad portrait, Android tablets) & large phones landscape: 2-column cards */
 @media screen and (max-width: 60em) {
   .abp-books { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .abp-stats { grid-template-columns: repeat(2, 1fr); }
   .abp-finder__controls { grid-template-columns: 1fr 1fr; }
   .abp-finder__controls input { grid-column: 1 / -1; }
-  .md-typeset a.abp-catbar { grid-template-columns: 2rem 1fr; }
-  .abp-catbar__stats { grid-column: 2; min-width: 0; }
+  .md-typeset a.abp-catbar { grid-template-columns: 2rem 1fr; padding: .7rem 1rem; }
+  .abp-catbar__stats { grid-column: 2; min-width: 0; white-space: normal; }
 
   .abp-sheet--head { display: none; }
-  .md-typeset table.abp-table, .md-typeset .abp-table tbody, .md-typeset .abp-table tr { display: block; width: 100%; }
-  .abp-table colgroup, .abp-table--finder thead { display: none; }
+  .md-typeset table.abp-table, .md-typeset .abp-table tr { display: block; width: 100%; }
+  .abp-table colgroup, .abp-table thead { display: none; }
+  .md-typeset .abp-table tbody { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .6rem; }
+  .abp-sheet--body { contain-intrinsic-size: auto calc(var(--rows, 5) * 4.6rem); }
   .md-typeset .abp-table tr {
-    margin: 0 0 .6rem; padding: .5rem .7rem;
+    display: grid; grid-template-columns: 1fr 1fr; align-content: start; gap: .15rem .8rem;
+    padding: .55rem .75rem;
+    border: 1px solid var(--abp-cat);
     border: 1px solid color-mix(in srgb, var(--abp-cat) 70%, transparent);
-    border-radius: .5rem; background: var(--abp-row);
-    display: grid; grid-template-columns: 1fr 1fr; gap: .1rem .8rem;
+    border-radius: .5rem;
+    background: var(--abp-row);
+    box-shadow: 0 1px 0 var(--abp-shadow);
   }
   .md-typeset .abp-table td, .md-typeset .abp-table tr:first-child td, .md-typeset .abp-table td:first-child {
-    display: block; border: 0; padding: .1rem 0; text-align: left; background: transparent;
+    display: block; border: 0; padding: .1rem 0; text-align: left; background: transparent; font-size: .6rem;
   }
-  .md-typeset .abp-table td.n { display: none; }
+  .md-typeset .abp-table tr td.n, .md-typeset .abp-table tr:first-child td.n { display: none; }
   .md-typeset .abp-table td.w, .md-typeset .abp-table td.where { grid-column: 1 / -1; padding-bottom: .3rem; }
+  .md-typeset .abp-table td.w a { font-size: .8rem; }
   .md-typeset .abp-table td[data-label]::before {
     content: attr(data-label); display: block;
-    font-size: .48rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: var(--abp-ink-3);
+    font-size: .5rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: var(--abp-ink-3);
   }
+  /* hide empty "—" evidence-limited fields in cards to keep them short */
+  .md-typeset .abp-table tr td.is-empty, .md-typeset .abp-table tr:first-child td.is-empty { display: none; }
+  .md-typeset h2.abp-formbar { scroll-margin-top: 3.4rem; }
+  .abp-foreword__body { padding: 0 1rem; }
 }
-@media screen and (max-width: 30em) {
-  .abp-books { grid-template-columns: 1fr; }
+
+/* ---------- phones (portrait): single column, compact chrome ---------------- */
+@media screen and (max-width: 37.5em) {
+  .md-typeset .abp-table tbody { grid-template-columns: minmax(0, 1fr); }
+  .abp-sheet--body { contain-intrinsic-size: auto calc(var(--rows, 5) * 6.8rem); }
+  .abp-books { grid-template-columns: minmax(0, 1fr); }
+  .abp-book { flex-direction: row; flex-wrap: wrap; justify-content: center; gap: .2rem .9rem; }
+  .abp-book__cover { width: 3.2rem; height: 4.3rem; padding: .5rem 0 1rem; }
+  .md-typeset .abp-book h3 { flex: 1 1 8rem; text-align: left; }
+  .abp-book__btns { flex: 1 1 100%; grid-template-columns: repeat(4, 1fr); }
+
+  .abp-page { padding-inline: 0; }
+  .abp-titlebar { padding: .6rem .8rem .65rem; margin-bottom: 1rem; }
   .md-typeset .abp-titlebar h1 { font-size: .95rem; }
-  .abp-pager .abp-btn { flex: 1 1 30%; padding-inline: .3rem; }
+  .md-typeset .abp-titlebar--cat h1 { font-size: .8rem; }
+  .abp-stats b { font-size: 1.05rem; }
+  .abp-home-links .abp-btn { flex: 1 1 45%; }
+  .abp-finder__controls { grid-template-columns: minmax(0, 1fr); }
+  .abp-crumbs { font-size: .6rem; }
+  .abp-foreword__band h1 { font-size: 1.05rem; }
+  .md-typeset h2.abp-foreword__dedication { margin-inline: 1rem; }
   .abp-foreword__indent { padding-left: 1rem; }
+  .abp-foreword__box { margin-inline: .8rem; padding: .6rem .8rem; }
+  .abp-foreword__sign { width: 9rem; margin-right: 1rem; }
+  .abp-card { grid-template-columns: 1.8rem 1fr; padding: .7rem .8rem; }
+  .abp-notice p { text-align: left; }
+
+  /* 7-button footer as a thumb-friendly grid */
+  .abp-pager { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: .4rem; }
+  .abp-pager .abp-btn { padding-inline: .3rem; text-align: center; }
+  .abp-pager__ps, .abp-pager__p, .abp-pager__n, .abp-pager__ns { grid-column: span 3; }
+  .abp-pager__top, .abp-pager__home, .abp-pager__idx { grid-column: span 2; }
+  .abp-pager__ps { order: 1; } .abp-pager__ns { order: 2; }
+  .abp-pager__p { order: 3; }  .abp-pager__n { order: 4; }
+  .abp-pager__top { order: 5; } .abp-pager__home { order: 6; } .abp-pager__idx { order: 7; }
+}
+
+/* ---------- older Safari (iOS < 16.2) / Chrome < 111: no color-mix() -------- */
+@supports not (color: color-mix(in srgb, red 50%, blue)) {
+  .abp-titlebar, .abp-groupbar, .md-typeset a.abp-group__bar, .md-typeset h2.abp-formbar,
+  .md-typeset a.abp-catbar, .md-typeset .abp-table th {
+    background: linear-gradient(180deg, var(--abp-gloss) 0 45%, transparent 45%), var(--abp-row);
+  }
+  .abp-titlebar::after { border-bottom-color: var(--tb); }
+  .md-typeset .abp-table td, .md-typeset .abp-table tr:first-child td, .md-typeset .abp-table td:first-child { border-color: var(--abp-cat); }
+  .md-typeset .abp-group__forms a, .md-typeset .abp-jump a { background: var(--abp-row); border-color: var(--abp-cat); }
+  .abp-btn, .md-typeset .abp-btn { background: var(--abp-row); }
+  .abp-stats div { background: var(--abp-row); }
+  .abp-page--cat { --abp-circle-1: rgba(184, 138, 58, .08); }
+  .abp-foreword__box { background: var(--abp-paper); }
 }
 
 @media print {
   .abp-pager, .abp-sheet--head, .abp-jump { display: none; }
-  .abp-page::before, .abp-page::after { display: none; }
+  .abp-page { background: none; }
+  .abp-sheet--body { content-visibility: visible; }
 }
 
-/* keep decorative circles from creating horizontal scroll */
-.md-container { overflow-x: clip; }
-.md-main__inner { margin-top: .8rem; }
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; scroll-behavior: auto !important; }
+}
+
+/* ---------- page switcher for very large sections (split into parts of ~250 works) */
+.abp-parts { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: .35rem; margin: .8rem 0; font-size: .6rem; }
+.abp-parts > span:first-child { color: var(--abp-ink-3); font-weight: 600; text-transform: uppercase; letter-spacing: .06em; margin-right: .2rem; }
+.md-typeset .abp-parts a, .abp-parts__cur {
+  display: inline-grid; place-items: center; min-width: 2rem; min-height: 2rem; padding: 0 .4rem;
+  font-weight: 700; border-radius: .35rem; border: 1.2px solid var(--abp-cat); color: var(--abp-ink);
+  background: var(--abp-row);
+}
+.abp-parts__cur { background: var(--abp-cat); color: #fff; }
+.md-typeset .abp-jump a.is-here { border-width: 1.6px; color: var(--abp-ink); }
+@media (pointer: coarse) { .md-typeset .abp-parts a, .abp-parts__cur { min-width: 44px; min-height: 44px; } }
+
+/* "Jump to form" chip list: collapsible so long lists don't push the works off-screen on phones */
+.abp-jumpbox { margin: 0; }
+.abp-jumpbox > summary {
+  display: none; cursor: pointer; list-style: none;
+  margin: .5rem 0 0; padding: .45rem .8rem; min-height: 44px; align-items: center; justify-content: space-between;
+  font-weight: 700; font-size: .62rem; letter-spacing: .04em; text-transform: uppercase; color: var(--abp-ink);
+  border: 1.2px solid var(--abp-cat); border-radius: .4rem; background: var(--abp-row);
+}
+.abp-jumpbox > summary::-webkit-details-marker { display: none; }
+.abp-jumpbox > summary::after { content: "▾"; transition: transform .15s; }
+.abp-jumpbox[open] > summary::after { transform: rotate(180deg); }
+@media screen and (max-width: 60em) { .abp-jumpbox > summary { display: flex; } }
+/* neutralise Material's admonition styling of <details> for the jump box */
+.md-typeset details.abp-jumpbox {
+  margin: 0; padding: 0; border: 0; border-radius: 0; box-shadow: none; background: none;
+  font-size: inherit; overflow: visible; display: block;
+}
+.md-typeset details.abp-jumpbox > summary {
+  margin: .5rem 0 0; padding: .45rem .8rem; border: 1.2px solid var(--abp-cat); border-radius: .4rem;
+  background: var(--abp-row); font-weight: 700;
+}
+.md-typeset details.abp-jumpbox > summary::before { display: none; }
+.md-typeset details.abp-jumpbox > summary::after {
+  content: "▾"; position: static; width: auto; height: auto; background: none;
+  -webkit-mask-image: none; mask-image: none; transform: none; color: var(--abp-cat);
+}
+.md-typeset details.abp-jumpbox[open] > summary::after { transform: rotate(180deg); }
+.md-typeset details.abp-jumpbox > .abp-jump { margin: 0; }
+@media screen and (min-width: 60.0625em) { .md-typeset details.abp-jumpbox > summary { display: none; } }

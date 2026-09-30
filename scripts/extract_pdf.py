@@ -258,22 +258,28 @@ def extract_tables(doc, categories):
 
 
 def extract_images(doc):
+    """Cover art as responsive WebP/JPEG sizes + a web-sized signature (needs Pillow)."""
+    import io
+
+    from PIL import Image
+
     IMAGES.mkdir(parents=True, exist_ok=True)
-    cover = doc[0].get_images(full=True)[0][0]
-    pix = pymupdf.Pixmap(doc, cover)
+    pix = pymupdf.Pixmap(doc, doc[0].get_images(full=True)[0][0])
     if pix.n > 3:
         pix = pymupdf.Pixmap(pymupdf.csRGB, pix)
-    pix.save(IMAGES / "cover.jpg", jpg_quality=86)
-    for img in doc[1].get_images(full=True):
-        info = doc.extract_image(img[0])
-        (IMAGES / f"signature.{info['ext']}").write_bytes(info["image"])
-        if img[1]:  # smask -> build transparent png
-            base = pymupdf.Pixmap(doc, img[0])
-            mask = pymupdf.Pixmap(doc, img[1])
-            pymupdf.Pixmap(base, mask).save(IMAGES / "signature.png")
-        else:
-            pymupdf.Pixmap(doc, img[0]).save(IMAGES / "signature.png")
-        break
+    cover = Image.open(io.BytesIO(pix.tobytes("png"))).convert("RGB")
+    for w in (640, 1024, 1491):
+        im = cover.resize((w, round(cover.height * w / cover.width)), Image.LANCZOS)
+        im.save(IMAGES / f"cover-{w}.webp", quality=80, method=6)
+        im.save(IMAGES / f"cover-{w}.jpg", quality=82, optimize=True, progressive=True)
+
+    xref, smask = doc[1].get_images(full=True)[0][:2]
+    sig = pymupdf.Pixmap(doc, xref)
+    if smask:
+        sig = pymupdf.Pixmap(sig, pymupdf.Pixmap(doc, smask))
+    im = Image.open(io.BytesIO(sig.tobytes("png")))
+    im = im.resize((720, round(im.height * 720 / im.width)), Image.LANCZOS)
+    im.save(IMAGES / "signature.png", optimize=True)
 
 
 def main():

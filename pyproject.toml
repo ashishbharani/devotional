@@ -13,6 +13,7 @@ dependencies = [
 # Only needed to re-extract data/collection.json from the source PDF.
 extract = [
     "pymupdf>=1.24",
+    "pillow>=10",
 ]
 
 [tool.uv]

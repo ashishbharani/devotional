@@ -5,7 +5,8 @@
 (function () {
   "use strict";
   const YT = "https://www.youtube.com/results?search_query=";
-  const LIMIT = 300;
+  // smaller batches on phones keep the DOM light; "Show more" appends the next batch
+  const BATCH = () => (window.matchMedia("(max-width: 37.5em)").matches ? 60 : 200);
   let cache = null;
 
   const esc = (s) =>
@@ -42,61 +43,89 @@
     lang.insertAdjacentHTML("beforeend", langOrder.map(([l, i]) => `<option value="${i}">${esc(l || "—")}</option>`).join(""));
 
     const params = new URLSearchParams(location.search);
-    if (params.get("q")) q.value = params.get("q");
+    // "?w=" (not "?q=", which Material reserves for its own search overlay)
+    if (params.get("w")) q.value = params.get("w");
+
+    const more = $("abp-more");
+    let hits = [], shown = 0;
+
+    function row(w, i) {
+      const place = data.places[w[5]];
+      const href = w[1] === 0 ? YT + encodeURIComponent(w[0]).replace(/%20/g, "+") : w[1];
+      const [grp, form] = place[2].split(" › ");
+      return (
+        `<tr><td class="n">${i + 1}</td>` +
+        `<td class="w"><a href="${esc(href)}" target="_blank" rel="noopener"><span class="abp-play" aria-hidden="true"></span>${esc(w[0])}</a></td>` +
+        `<td class="lang" data-label="Language">${esc(data.langs[w[2]] || "—")}</td>` +
+        `<td class="form" data-label="Form">${esc(data.forms[w[3]] || "—")}</td>` +
+        `<td class="tier" data-label="Tier"><span class="abp-tier abp-tier--${esc((w[4] || "").toLowerCase())}">${esc(w[4] || "—")}</span></td>` +
+        `<td class="where" data-label="Found in"><a href="${new URL(place[0], siteRoot).href}">${esc(grp)}</a>` +
+        `<small>${place[1]}. ${esc(form || "")}</small></td></tr>`
+      );
+    }
+
+    function renderMore() {
+      const next = hits.slice(shown, shown + BATCH());
+      out.insertAdjacentHTML("beforeend", next.map((w, i) => row(w, shown + i)).join(""));
+      shown += next.length;
+      more.hidden = shown >= hits.length;
+      more.textContent = `Show more results (${(hits.length - shown).toLocaleString()} left)`;
+    }
 
     function run() {
       const terms = fold(q.value.trim()).split(/\s+/).filter(Boolean);
       const c = cat.value ? +cat.value : null;
       const l = lang.value !== "" ? +lang.value : null;
       const t = tier.value || null;
+      out.innerHTML = "";
+      hits = [];
+      shown = 0;
       if (!terms.length && c === null && l === null && !t) {
         status.textContent = `${data.works.length.toLocaleString()} works indexed — start typing to search.`;
-        out.innerHTML = "";
+        more.hidden = true;
         return;
       }
-      const hits = [];
-      let total = 0;
       for (const w of data.works) {
         if (l !== null && w[2] !== l) continue;
         if (t && w[4] !== t) continue;
-        const place = data.places[w[5]];
-        if (c !== null && place[1] !== c) continue;
+        if (c !== null && data.places[w[5]][1] !== c) continue;
         if (terms.length && !terms.every((x) => w.key.includes(x))) continue;
-        total++;
-        if (hits.length < LIMIT) hits.push(w);
+        hits.push(w);
       }
-      status.textContent = total
-        ? `${total.toLocaleString()} matching works${total > LIMIT ? ` — showing the first ${LIMIT}` : ""}.`
+      status.textContent = hits.length
+        ? `${hits.length.toLocaleString()} matching works.`
         : "No works match. Try fewer words or a different spelling.";
-      out.innerHTML = hits
-        .map((w, i) => {
-          const place = data.places[w[5]];
-          const href = w[1] === 0 ? YT + encodeURIComponent(w[0]).replace(/%20/g, "+") : w[1];
-          const [grp, form] = place[2].split(" › ");
-          return (
-            `<tr><td class="n">${i + 1}</td>` +
-            `<td class="w"><a href="${esc(href)}" target="_blank" rel="noopener"><span class="abp-play" aria-hidden="true"></span>${esc(w[0])}</a></td>` +
-            `<td class="lang" data-label="Language">${esc(data.langs[w[2]] || "—")}</td>` +
-            `<td class="form" data-label="Form">${esc(data.forms[w[3]] || "—")}</td>` +
-            `<td class="tier" data-label="Tier"><span class="abp-tier abp-tier--${esc((w[4] || "").toLowerCase())}">${esc(w[4] || "—")}</span></td>` +
-            `<td class="where" data-label="Found in"><a href="${new URL(place[0], siteRoot).href}">${esc(grp)}</a>` +
-            `<small>${place[1]}. ${esc(form || "")}</small></td></tr>`
-          );
-        })
-        .join("");
+      renderMore();
     }
+
+    more.addEventListener("click", renderMore);
+    q.addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); q.blur(); } });
 
     let timer;
     const debounced = () => { clearTimeout(timer); timer = setTimeout(run, 140); };
     q.addEventListener("input", debounced);
     [cat, lang, tier].forEach((el) => el.addEventListener("change", run));
     run();
-    if (!("ontouchstart" in window)) q.focus();
+    if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) q.focus();
+  }
+
+  /* collapse the "jump to form" chips on phones & tablets; keep them open on desktop */
+  function initJumpbox() {
+    if (!window.matchMedia("(max-width: 60em)").matches) return;
+    document.querySelectorAll("details.abp-jumpbox[open]").forEach((d) => d.removeAttribute("open"));
+    document.querySelectorAll(".abp-jumpbox .abp-jump a").forEach((a) =>
+      a.addEventListener("click", () => a.closest("details").removeAttribute("open"))
+    );
+  }
+
+  function init() {
+    initJumpbox();
+    initFinder();
   }
 
   if (window.document$ && typeof window.document$.subscribe === "function") {
-    window.document$.subscribe(initFinder);
+    window.document$.subscribe(init);
   } else {
-    document.addEventListener("DOMContentLoaded", initFinder);
+    document.addEventListener("DOMContentLoaded", init);
   }
 })();

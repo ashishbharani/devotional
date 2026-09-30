@@ -11,6 +11,23 @@ collected & compiled by Advocate Ashish Bharani.
   (`<<< Previous section · << Previous · Top · Home · Back to index · Next >> · Next section >>>`)
 * Light "parchment" and dark "lamp-light" colour schemes, responsive card layout on phones
 * **Find a Work** page: instant client-side search over all works with category / language / tier filters
+  (link straight to a search with `find/?w=hanuman+chalisa`)
+
+## Phones & tablets
+
+Tuned for Safari (iPhone / iPad) and Chrome (Android phones & tablets):
+
+* **Phones** – every work becomes a card; empty "—" fields are hidden; the seven footer buttons become a
+  thumb-friendly grid; the long "jump to form" list folds into a *Jump to a form* button.
+* **Tablets** (iPad portrait, Android tablets, phones in landscape) – two cards per row; full table from
+  ~960 px up (iPad landscape, desktops) with a sticky column header.
+* **Fast on mobile** – sections with more than ~250 works are split into numbered pages (a form that spans
+  pages is marked "— CONTINUED", as in the PDF), off-screen tables are skipped by the browser
+  (`content-visibility`), the cover is served as responsive WebP, and the finder renders results in batches.
+* **Touch & Safari details** – 44 px tap targets, 16 px inputs (no iOS zoom-on-focus), hover effects only on
+  devices that can hover, notch-safe layout (`viewport-fit=cover`), fall-back colours for older iOS without
+  `color-mix()`, no sideways scrolling.
+* **Add to Home Screen** – web-app manifest, iOS touch icon and Android maskable icon, light/dark browser-bar colours.
 
 ## Quick start (uv)
 
@@ -29,7 +46,8 @@ hooks/generate.py         MkDocs hook: builds every page from the JSON at build 
 theme/                    ABP Devotional theme (Material custom_dir: main.html + partials)
 docs/stylesheets/abp.css  theme styles and colour tokens (sampled from the PDF)
 docs/javascripts/abp.js   Find a Work page logic
-docs/assets/images/       cover art, signature, diya logo
+docs/assets/images/       cover art (WebP/JPEG sizes), signature, diya logo, app icons
+docs/manifest.webmanifest Add-to-Home-Screen manifest
 mkdocs.yml                site configuration
 ```
 
@@ -55,7 +73,7 @@ checks itself against the counts printed in the PDF's Integrated Master Index.
 | `/library/` | Hindu Scriptures & Books Library, pp. 11–13 |
 | `/master-index/` | Integrated Master Index, pp. 14–19 |
 | `/categories/NN-…/` | Category sub-index (sections and deity subsections) |
-| `/categories/NN-…/<group>/` | Works tables, pp. 759–4356 |
+| `/categories/NN-…/<group>/` (+ `part-N/`) | Works tables, pp. 759–4356 |
 | `/find/` | Search across every work |
 
 > Note: Material for MkDocs prints a notice about MkDocs 2.0. This project pins `mkdocs<2`, which is what

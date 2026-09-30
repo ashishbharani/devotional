@@ -16,6 +16,7 @@ creates virtual pages at build time:
 from __future__ import annotations
 
 import html
+import posixpath
 import json
 import re
 from collections import OrderedDict
@@ -27,6 +28,7 @@ from mkdocs.structure.files import File
 ROOT = Path(__file__).resolve().parent.parent
 DATA_FILE = ROOT / "data" / "collection.json"
 YT = "https://www.youtube.com/results?search_query="
+PART_SIZE = 250  # works per page; bigger groups are split into parts
 CONTINUED = re.compile(r"\s*[-–—]\s*CONTINUED\s*$", re.I)
 
 COLUMNS = [
@@ -94,19 +96,59 @@ def load():
                 forms = [{"name": k, "anchor": slugify(k), "works": v} for k, v in g["forms"].items() if v]
                 if not forms:
                     continue
-                groups.append(
-                    {
-                        "name": g["name"],
-                        "slug": slug,
-                        "page": g["page"],
-                        "forms": forms,
-                        "count": sum(len(f["works"]) for f in forms),
-                    }
-                )
+                group = {
+                    "name": g["name"],
+                    "slug": slug,
+                    "page": g["page"],
+                    "forms": forms,
+                    "count": sum(len(f["works"]) for f in forms),
+                }
+                groups.append(group)
             cat["merged"] = groups
             cat["slug"] = f"{cat['num']:02d}-{slugify(cat['title'])}"
             cat["dir"] = f"categories/{cat['slug']}"
+            cat["url"] = cat["dir"] + "/"
+            for group in groups:
+                split_parts(cat, group)
     return _data
+
+
+def split_parts(cat: dict, g: dict) -> None:
+    """Split very large groups into pages of ~PART_SIZE works so phones stay fast.
+
+    A form that crosses a page boundary continues on the next page, exactly like the
+    "— CONTINUED" headings of the PDF. Part 1 keeps the group URL; later parts live at
+    <group>/part-N/.
+    """
+    parts, cur, count, n = [], None, 0, 0
+    for f in g["forms"]:
+        works, i, first = f["works"], 0, True
+        while i < len(works):
+            remaining = len(works) - i
+            if cur is None or count >= PART_SIZE:
+                cur, count = {"forms": [], "start": n}, 0
+                parts.append(cur)
+            take = remaining if count + remaining <= PART_SIZE * 1.25 else PART_SIZE - count
+            cur["forms"].append({"name": f["name"], "anchor": f["anchor"], "works": works[i : i + take],
+                                 "start": n, "continued": not first})
+            if first:
+                f["part"] = len(parts)
+            n, i, count, first = n + take, i + take, count + take, False
+    for k, part in enumerate(parts, 1):
+        part["num"] = k
+        part["src"] = f'{cat["dir"]}/{g["slug"]}.md' if k == 1 else f'{cat["dir"]}/{g["slug"]}/part-{k}.md'
+        part["url"] = url_of(part["src"])
+        part["count"] = sum(len(f["works"]) for f in part["forms"])
+    for f in g["forms"]:
+        f["url"] = parts[f["part"] - 1]["url"]
+    g["parts"] = parts
+    g["url"] = parts[0]["url"]
+
+
+def rel(from_url: str, to_url: str) -> str:
+    """Relative link between two directory-style site URLs (raw HTML is not rewritten by MkDocs)."""
+    r = posixpath.relpath("/" + to_url, "/" + from_url)
+    return "./" if r == "." else r.rstrip("/") + "/"
 
 
 def url_of(src: str) -> str:
@@ -158,7 +200,7 @@ def page_foreword(d):
         out.append(f'<p class="{cls}">{esc(p["text"])}</p>')
     out.append("</div>")
     out.append('<div class="abp-foreword__box">' + "".join(f"<p>{esc(b['text'])}</p>" for b in box) + "</div>")
-    out.append('<img class="abp-foreword__sign" src="../assets/images/signature.png" alt="Signature — Advocate Ashish Bharani">')
+    out.append('<img class="abp-foreword__sign" src="../assets/images/signature.png" width="720" height="240" loading="lazy" decoding="async" alt="Signature — Advocate Ashish Bharani">')
     out.append("</article>")
     return "\n".join(out)
 
@@ -280,7 +322,14 @@ def page_home(d):
     groups = sum(len(c["merged"]) for c in d["categories"])
     return (
         '<section class="abp-cover" markdown="0">\n'
-        '<img src="assets/images/cover.jpg" alt="Ultimate Hindu Devotional Collection — a pan-India multilingual devotional reference, collected and compiled by Advocate Ashish Bharani">\n'
+        "<picture>"
+        '<source type="image/webp" sizes="(min-width: 90rem) 1400px, 100vw" '
+        'srcset="assets/images/cover-640.webp 640w, assets/images/cover-1024.webp 1024w, assets/images/cover-1491.webp 1491w">'
+        '<img src="assets/images/cover-1024.jpg" sizes="(min-width: 90rem) 1400px, 100vw" '
+        'srcset="assets/images/cover-640.jpg 640w, assets/images/cover-1024.jpg 1024w, assets/images/cover-1491.jpg 1491w" '
+        'width="1491" height="1055" fetchpriority="high" decoding="async" '
+        'alt="Ultimate Hindu Devotional Collection — a pan-India multilingual devotional reference, collected and compiled by Advocate Ashish Bharani">'
+        "</picture>\n"
         '<a class="abp-cover__hot abp-cover__hot--left" href="library/" title="Scriptures &amp; Books Library"><span>Scriptures &amp; Books Library</span></a>\n'
         '<a class="abp-cover__hot abp-cover__hot--right" href="master-index/" title="Integrated Master Index"><span>Integrated Master Index</span></a>\n'
         "</section>\n\n"
@@ -310,11 +359,13 @@ def page_category(c):
     out.append('<div class="abp-subindex" markdown="0">')
     for g in c["merged"]:
         chips = "".join(
-            f'<a href="{g["slug"]}/#{f["anchor"]}">{esc(f["name"])}<small>{len(f["works"])}</small></a>' for f in g["forms"]
+            f'<a href="{rel(c["url"], f["url"])}#{f["anchor"]}">{esc(f["name"])}<small>{len(f["works"])}</small></a>'
+            for f in g["forms"]
         )
+        parts = f' · {len(g["parts"])} pages' if len(g["parts"]) > 1 else ""
         out.append(
-            f'<section class="abp-group"><a class="abp-group__bar" href="{g["slug"]}/">'
-            f'<span>{esc(g["name"])}</span><small>{fmt(g["count"])} works</small></a>'
+            f'<section class="abp-group"><a class="abp-group__bar" href="{rel(c["url"], g["url"])}">'
+            f'<span>{esc(g["name"])}</span><small>{fmt(g["count"])} works{parts}</small></a>'
             f'<div class="abp-group__forms">{chips}</div></section>'
         )
     out.append("</div>\n")
@@ -328,28 +379,54 @@ COLGROUP = (
 
 
 def cell(v: str, cls: str, label: str) -> str:
-    v = v or "—"
+    if not v:
+        return f'<td class="{cls} is-empty" data-label="{label}">—</td>'
     return f'<td class="{cls}" data-label="{label}">{esc(v)}</td>'
 
 
-def page_group(c, g):
+def part_nav(g, part) -> str:
+    if len(g["parts"]) == 1:
+        return ""
+    links = []
+    for p in g["parts"]:
+        label = f'{p["num"]}'
+        if p is part:
+            links.append(f'<span class="abp-parts__cur" aria-current="page">{label}</span>')
+        else:
+            links.append(f'<a href="{rel(part["url"], p["url"])}">{label}</a>')
+    return f'<nav class="abp-parts" markdown="0" aria-label="Pages of this section"><span>Page</span>{"".join(links)}</nav>\n'
+
+
+def page_group(c, g, part):
     out = [titlebar(f"{c['num']}. {c['title']}", "", "abp-titlebar--cat")]
     head = "".join(f'<th class="{k}">{esc(h)}</th>' for h, k in COLUMNS)
+    first, last = part["start"] + 1, part["start"] + part["count"]
+    info = f'{fmt(g["count"])} works · {len(g["forms"])} forms'
+    if len(g["parts"]) > 1:
+        info = f'Page {part["num"]} of {len(g["parts"])} · works {fmt(first)}–{fmt(last)} of {fmt(g["count"])} · {len(g["forms"])} forms'
     out.append(
         f'<div class="abp-sheet abp-sheet--head" markdown="0" data-search-exclude><table class="abp-table abp-table--head">{COLGROUP}'
         f"<thead><tr>{head}</tr></thead></table></div>\n"
-        f'<div class="abp-groupbar" markdown="0"><h2>{esc(g["name"])}</h2>'
-        f'<p>{fmt(g["count"])} works · {len(g["forms"])} forms</p></div>\n'
+        f'<div class="abp-groupbar" markdown="0"><h2>{esc(g["name"])}</h2><p>{info}</p></div>\n'
     )
+    out.append(part_nav(g, part))
     if len(g["forms"]) > 1:
-        chips = "".join(f'<a href="#{f["anchor"]}">{esc(f["name"])}<small>{len(f["works"])}</small></a>' for f in g["forms"])
-        out.append(f'<nav class="abp-jump" markdown="0" aria-label="Forms in this section">{chips}</nav>\n')
-    n = 0
-    for f in g["forms"]:
-        out.append(f'\n## {f["name"]} {{ #{f["anchor"]} .abp-formbar }}\n')
+        here = {f["name"] for f in part["forms"]}
+        chips = []
+        for f in g["forms"]:
+            href = ("" if f["url"] == part["url"] else rel(part["url"], f["url"])) + "#" + f["anchor"]
+            cls = ' class="is-here"' if f["name"] in here else ""
+            chips.append(f'<a href="{href}"{cls}>{esc(f["name"])}<small>{len(f["works"])}</small></a>')
+        chips = "".join(chips)
+        out.append(
+            f'<details class="abp-jumpbox" open markdown="0"><summary>Jump to a form ({len(g["forms"])})</summary>'
+            f'<nav class="abp-jump" aria-label="Forms in this section">{chips}</nav></details>\n'
+        )
+    for f in part["forms"]:
+        name = f["name"] + (" — CONTINUED" if f["continued"] else "")
+        out.append(f'\n## {name} {{ #{f["anchor"]} .abp-formbar }}\n')
         rows = []
-        for w in f["works"]:
-            n += 1
+        for n, w in enumerate(f["works"], f["start"] + 1):
             rows.append(
                 "<tr>"
                 f'<td class="n">{n}</td>'
@@ -366,10 +443,12 @@ def page_group(c, g):
                 + "</tr>"
             )
         out.append(
-            f'<div class="abp-sheet" markdown="0"><table class="abp-table" data-search-exclude>{COLGROUP}<tbody>\n'
+            f'<div class="abp-sheet abp-sheet--body" style="--rows:{len(f["works"])}" markdown="0">'
+            f'<table class="abp-table" data-search-exclude>{COLGROUP}<tbody>\n'
             + "\n".join(rows)
             + "\n</tbody></table></div>\n"
         )
+    out.append(part_nav(g, part))
     return "\n".join(out)
 
 
@@ -378,15 +457,16 @@ def page_find(d):
     return titlebar("Find a Work", "Search all works by title, language, form or tier", "abp-titlebar--slate") + (
         '<div class="abp-finder" markdown="0" data-index="../assets/works-index.json">\n'
         '<div class="abp-finder__controls">'
-        '<input type="search" id="abp-q" placeholder="Type a title, e.g. Hanuman Chalisa, Ganesha Ashtakam…" autocomplete="off">'
-        f'<select id="abp-cat"><option value="">All categories</option>{opts}</select>'
-        '<select id="abp-lang"><option value="">All languages</option></select>'
-        '<select id="abp-tier"><option value="">All tiers</option><option>T1</option><option>T2</option><option>T3</option><option>T4</option></select>'
+        '<input type="search" id="abp-q" inputmode="search" enterkeyhint="search" autocapitalize="off" autocorrect="off" spellcheck="false" aria-label="Search works" placeholder="Type a title, e.g. Hanuman Chalisa, Ganesha Ashtakam…" autocomplete="off">'
+        f'<select id="abp-cat" aria-label="Category"><option value="">All categories</option>{opts}</select>'
+        '<select id="abp-lang" aria-label="Language"><option value="">All languages</option></select>'
+        '<select id="abp-tier" aria-label="Tier"><option value="">All tiers</option><option>T1</option><option>T2</option><option>T3</option><option>T4</option></select>'
         "</div>\n"
         '<p class="abp-finder__status" id="abp-status">Loading index…</p>\n'
         '<div class="abp-sheet"><table class="abp-table abp-table--finder"><thead><tr><th class="n">#</th><th class="w">Works</th>'
         '<th class="lang">Language</th><th class="form">Form</th><th class="tier">Tier</th><th class="where">Found in</th></tr></thead>'
         '<tbody id="abp-results"></tbody></table></div>\n'
+        '<p class="abp-finder__more"><button type="button" class="abp-btn abp-btn--big" id="abp-more" hidden>Show more results</button></p>\n'
         "</div>\n"
     )
 
@@ -398,8 +478,9 @@ def works_index(d) -> str:
     rows = []
     for c in d["categories"]:
         for g in c["merged"]:
-            for f in g["forms"]:
-                key = f'{c["dir"]}/{g["slug"]}/#{f["anchor"]}'
+          for part in g["parts"]:
+            for f in part["forms"]:
+                key = f'{part["url"]}#{f["anchor"]}'
                 if key not in pi:
                     pi[key] = len(places)
                     places.append([key, c["num"], f"{g['name']} › {f['name']}"])
@@ -435,7 +516,9 @@ def on_config(config, **kw):
     for c in d["categories"]:
         add(f'{c["dir"]}/index.md', f'{c["num"]}. {title_case(c["title"])}', c["num"], cat=c)
         for g in c["merged"]:
-            add(f'{c["dir"]}/{g["slug"]}.md', g["name"], c["num"], cat=c, group=g)
+            for part in g["parts"]:
+                title = g["name"] if len(g["parts"]) == 1 else f'{g["name"]} (page {part["num"]} of {len(g["parts"])})'
+                add(part["src"], title, c["num"], cat=c, group=g, part=part)
     add("find.md", "Find a Work", "tools")
 
     config["nav"] = [
@@ -482,7 +565,7 @@ def on_files(files, config, **kw):
         if files.get_file_from_path(src):
             continue  # a hand-written page overrides the generated one
         if "group" in p:
-            body = page_group(p["cat"], p["group"])
+            body = page_group(p["cat"], p["group"], p["part"])
         elif "cat" in p:
             body = page_category(p["cat"])
         else:
