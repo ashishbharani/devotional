@@ -533,7 +533,6 @@ def page_home(d):
         f'<li><b>{fmt(total)}</b> <span data-i18n="works">works</span></li>'
         f'<li><b>42</b> <span data-i18n="categories">categories</span></li>'
         f"<li><b>{fmt(groups)}</b> <span>deities, traditions &amp; groups</span></li>"
-        f'<li><b>{fmt(d["pages"])}</b> <span>pages in the PDF edition</span></li>'
         "</ul>\n\n"
         '<div id="abp-install" class="abp-install" markdown="0" hidden></div>\n\n'
         '<nav class="abp-home-links" markdown="0" aria-label="Main sections">'
