@@ -918,6 +918,46 @@ html.abp-hc .md-header { background: var(--md-primary-fg-color); border-bottom-c
   .abp-a11y-dialog { margin: auto 0 0; width: 100vw; max-width: 100vw; border-radius: 1rem 1rem 0 0; border-width: 2px 0 0; }
 }
 
+/* ---------- Indian language picker ------------------------------------------ */
+.abp-language-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: .3rem;
+  width: auto; min-width: 2.4rem; max-width: 8rem; padding-inline: .45rem;
+  color: inherit; cursor: pointer;
+}
+.abp-language-btn svg { width: 1.2rem; height: 1.2rem; flex: none; }
+.abp-language-btn span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: .62rem; font-weight: 700; }
+.abp-language-dialog {
+  width: min(42rem, calc(100vw - 1.5rem)); max-height: calc(100dvh - 1.5rem); overflow: auto;
+  padding: 1.1rem 1.2rem calc(1rem + env(safe-area-inset-bottom, 0px));
+  border: 2px solid var(--abp-gold); border-radius: 1rem; color: var(--abp-ink); background: var(--abp-paper);
+  box-shadow: 0 20px 60px rgba(0,0,0,.35); font-size: .72rem;
+}
+.abp-language-dialog::backdrop { background: rgba(30, 18, 12, .55); }
+.abp-language-dialog__head { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+.abp-language-dialog h2 { margin: 0; font: 700 1rem var(--abp-serif); color: var(--abp-maroon); }
+.abp-language-dialog__close {
+  display: grid; place-items: center; width: 44px; height: 44px; padding: 0; border: 0; border-radius: 50%;
+  color: var(--abp-ink); background: var(--abp-row); font: 700 1.25rem/1 sans-serif; cursor: pointer;
+}
+.abp-language-dialog__note { margin: .45rem 0 .8rem; color: var(--abp-ink-3); }
+.abp-language-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .45rem; }
+.abp-language-grid button {
+  display: flex; align-items: center; justify-content: space-between; gap: .35rem; min-height: 48px; padding: .55rem .7rem;
+  border: 2px solid var(--abp-btn); border-radius: .55rem; color: var(--abp-btn-ink); background: var(--abp-row);
+  font: 600 .72rem/1.25 var(--abp-sans); text-align: start; cursor: pointer;
+}
+.abp-language-grid button:hover { background: color-mix(in srgb, var(--abp-row) 75%, var(--abp-gold)); }
+.abp-language-grid button[aria-current="true"] { border-color: var(--abp-maroon); background: var(--abp-maroon); color: #fff; }
+[data-md-color-scheme="abp-dark"] .abp-language-grid button[aria-current="true"] { color: #1d1611; }
+.abp-language-grid small { font-size: .52rem; font-weight: 500; opacity: .8; }
+html[dir="rtl"] .abp-language-btn, html[dir="rtl"] .abp-language-dialog { direction: rtl; }
+html[dir="rtl"] .abp-table :is(td, th), html[dir="rtl"] .abp-titlebar__h { unicode-bidi: plaintext; }
+@media screen and (max-width: 37.5em) {
+  .abp-language-btn span { display: none; }
+  .abp-language-dialog { margin: auto 0 0; width: 100vw; max-width: 100vw; border-radius: 1rem 1rem 0 0; border-width: 2px 0 0; }
+  .abp-language-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
 
 /* ==========================================================================
    WCAG 2.2 AA — remaining criteria

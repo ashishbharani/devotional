@@ -8,6 +8,8 @@
   // smaller batches on phones keep the DOM light; "Show more" appends the next batch
   const BATCH = () => (window.matchMedia("(max-width: 37.5em)").matches ? 60 : 200);
   let cache = null;
+  const t = (key) => (window.abpI18n ? window.abpI18n.t(key) : key);
+  const translated = () => window.abpI18n && window.abpI18n.language !== "en";
 
   const esc = (s) =>
     String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
@@ -57,10 +59,10 @@
         `<tr role="row"><td role="cell" class="n">${i + 1}</td>` +
         `<th role="rowheader" scope="row" class="w"><a href="${esc(href)}" target="_blank" rel="noopener"><span class="abp-play" aria-hidden="true"></span>${esc(w[0])}` +
         `<span class="abp-sr"> — search on YouTube, opens in a new tab</span></a></th>` +
-        `<td role="cell" class="lang" data-label="Language">${esc(data.langs[w[2]] || "—")}</td>` +
-        `<td role="cell" class="form" data-label="Form">${esc(data.forms[w[3]] || "—")}</td>` +
-        `<td role="cell" class="tier" data-label="Tier"><span class="abp-tier abp-tier--${esc((w[4] || "").toLowerCase())}">${esc(w[4] || "—")}</span></td>` +
-        `<td role="cell" class="where" data-label="Found in"><a href="${new URL(place[0], siteRoot).href}">${esc(grp)}<span class="abp-sr">, ${esc(form || "")}</span></a>` +
+        `<td role="cell" class="lang" data-label="${esc(t("language"))}" data-i18n-label="language">${esc(data.langs[w[2]] || "—")}</td>` +
+        `<td role="cell" class="form" data-label="${esc(t("form"))}" data-i18n-label="form">${esc(data.forms[w[3]] || "—")}</td>` +
+        `<td role="cell" class="tier" data-label="${esc(t("tier"))}" data-i18n-label="tier"><span class="abp-tier abp-tier--${esc((w[4] || "").toLowerCase())}">${esc(w[4] || "—")}</span></td>` +
+        `<td role="cell" class="where" data-label="${esc(t("foundIn"))}" data-i18n-label="foundIn"><a href="${new URL(place[0], siteRoot).href}">${esc(grp)}<span class="abp-sr">, ${esc(form || "")}</span></a>` +
         `<small aria-hidden="true">${place[1]}. ${esc(form || "")}</small></td></tr>`
       );
     }
@@ -68,35 +70,42 @@
     function renderMore() {
       const next = hits.slice(shown, shown + BATCH());
       out.insertAdjacentHTML("beforeend", next.map((w, i) => row(w, shown + i)).join(""));
+      if (window.abpI18n) window.abpI18n.translate(out);
       shown += next.length;
       more.hidden = shown >= hits.length;
-      if (hits.length) status.textContent = `${hits.length.toLocaleString()} matching works — showing ${shown.toLocaleString()}.`;
-      more.textContent = `Show more results (${(hits.length - shown).toLocaleString()} left)`;
+      if (hits.length) status.textContent = translated()
+        ? `${hits.length.toLocaleString()} ${t("works")} · ${shown.toLocaleString()}`
+        : `${hits.length.toLocaleString()} matching works — showing ${shown.toLocaleString()}.`;
+      more.textContent = translated()
+        ? `${t("showMore")} (${(hits.length - shown).toLocaleString()})`
+        : `Show more results (${(hits.length - shown).toLocaleString()} left)`;
     }
 
     function run() {
       const terms = fold(q.value.trim()).split(/\s+/).filter(Boolean);
       const c = cat.value ? +cat.value : null;
       const l = lang.value !== "" ? +lang.value : null;
-      const t = tier.value || null;
+      const selectedTier = tier.value || null;
       out.innerHTML = "";
       hits = [];
       shown = 0;
-      if (!terms.length && c === null && l === null && !t) {
-        status.textContent = `${data.works.length.toLocaleString()} works indexed — start typing to search.`;
+      if (!terms.length && c === null && l === null && !selectedTier) {
+        status.textContent = translated()
+          ? `${data.works.length.toLocaleString()} ${t("works")} · ${t("search")}`
+          : `${data.works.length.toLocaleString()} works indexed — start typing to search.`;
         more.hidden = true;
         return;
       }
       for (const w of data.works) {
         if (l !== null && w[2] !== l) continue;
-        if (t && w[4] !== t) continue;
+        if (selectedTier && w[4] !== selectedTier) continue;
         if (c !== null && data.places[w[5]][1] !== c) continue;
         if (terms.length && !terms.every((x) => w.key.includes(x))) continue;
         hits.push(w);
       }
-      status.textContent = hits.length
-        ? `${hits.length.toLocaleString()} matching works.`
-        : "No works match. Try fewer words or a different spelling.";
+      status.textContent = translated()
+        ? `${hits.length.toLocaleString()} ${t("works")}`
+        : (hits.length ? `${hits.length.toLocaleString()} matching works.` : "No works match. Try fewer words or a different spelling.");
       renderMore();
     }
 
@@ -107,6 +116,7 @@
     const debounced = () => { clearTimeout(timer); timer = setTimeout(run, 140); };
     q.addEventListener("input", debounced);
     [cat, lang, tier].forEach((el) => el.addEventListener("change", run));
+    document.addEventListener("abp-languagechange", run);
     run();
     if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) q.focus();
   }
