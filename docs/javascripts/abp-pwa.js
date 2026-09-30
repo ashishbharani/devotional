@@ -4,13 +4,11 @@
  *  - Android / desktop Chrome: "Install app" button from the beforeinstallprompt event
  *  - iPhone / iPad Safari: step-by-step "Add to Home Screen" guide (iOS has no install prompt)
  *  - installed app: back button in the header (iOS standalone has no browser back button)
- *  - "Save for offline" per category (and for the whole collection) with size + progress
  *  - offline banner, and a toast when a new version of the site is ready
  */
 (function () {
   "use strict";
 
-  const PAGES_CACHE = "abp-pages";
   const DISMISS_KEY = "abp-install-dismissed";
   const ROOT = (function () {
     const s = document.querySelector('script[src*="javascripts/abp-pwa.js"]');
@@ -31,7 +29,6 @@
     window.matchMedia("(display-mode: minimal-ui)").matches ||
     navigator.standalone === true;
 
-  const fmtMB = (bytes) => (bytes < 1e6 ? `${Math.max(1, Math.round(bytes / 1e3))} KB` : `${(bytes / 1e6).toFixed(bytes < 1e7 ? 1 : 0)} MB`);
   const el = (html) => { const t = document.createElement("template"); t.innerHTML = html.trim(); return t.content.firstElementChild; };
 
   /* ------------------------------------------------------------------ toast */
@@ -265,110 +262,6 @@
     update();
   }
 
-  /* ------------------------------------------------------ save for offline */
-  let packsPromise = null;
-  const loadPacks = () => (packsPromise = packsPromise || fetch(url("assets/offline-packs.json")).then((r) => r.json()));
-
-  function packFor(id, packs) {
-    if (id !== "all") return packs[id] && { ...packs[id], pages: packs[id].pages.map(url) };
-    const pages = [], seen = new Set();
-    let bytes = 0;
-    Object.values(packs).forEach((p) => { bytes += p.bytes; p.pages.forEach((u) => { if (!seen.has(u)) { seen.add(u); pages.push(url(u)); } }); });
-    return { title: "the whole collection", pages, bytes };
-  }
-
-  async function countSaved(pages) {
-    const cache = await caches.open(PAGES_CACHE);
-    const keys = new Set((await cache.keys()).map((r) => r.url));
-    return pages.filter((u) => keys.has(u)).length;
-  }
-
-  async function estimate() {
-    try {
-      if (!navigator.storage || !navigator.storage.estimate) return null;
-      const { usage, quota } = await navigator.storage.estimate();
-      return { usage, quota };
-    } catch (e) { return null; }
-  }
-
-  async function renderOffline(box) {
-    if (!("caches" in window) || !("serviceWorker" in navigator)) return;
-    let packs;
-    try { packs = await loadPacks(); } catch (e) { return; }
-    const id = box.dataset.pack;
-    const pack = packFor(id, packs);
-    if (!pack) return;
-    const saved = await countSaved(pack.pages);
-    const total = pack.pages.length;
-    const done = saved === total;
-    const label = id === "all" ? "the whole collection" : "this category";
-    box.innerHTML =
-      '<div class="abp-offline__icon" aria-hidden="true">' +
-      (done ? '<svg viewBox="0 0 24 24"><path fill="currentColor" d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg>'
-            : '<svg viewBox="0 0 24 24"><path fill="currentColor" d="M19.35 10.04A7.49 7.49 0 0 0 12 4C9.11 4 6.6 5.64 5.35 8.04A5.994 5.994 0 0 0 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM17 13l-5 5-5-5h3V9h4v4h3z"/></svg>') +
-      "</div>" +
-      '<div class="abp-offline__body">' +
-      `<b>${done ? "Saved for offline" : "Read offline"}</b>` +
-      `<span class="abp-offline__meta" role="status" aria-live="polite">${done
-        ? `All ${total.toLocaleString()} pages of ${label} are on this device.`
-        : `Save ${label} (${total.toLocaleString()} pages, ≈ ${fmtMB(pack.bytes)}) to read without internet${saved ? ` — ${saved.toLocaleString()} already saved` : ""}.`}</span>` +
-      '<progress hidden max="1" value="0" aria-label="Saving pages for offline use"></progress>' +
-      "</div>" +
-      '<div class="abp-offline__cta">' +
-      (done
-        ? '<button type="button" class="abp-btn" data-act="refresh">Refresh</button><button type="button" class="abp-btn" data-act="remove">Remove</button>'
-        : '<button type="button" class="abp-btn abp-btn--primary" data-act="save">Save for offline</button>') +
-      "</div>";
-    box.hidden = false;
-    box.querySelectorAll("[data-act]").forEach((b) =>
-      b.addEventListener("click", () => (b.dataset.act === "remove" ? removePack(box, pack) : savePack(box, pack, b.dataset.act === "refresh")))
-    );
-  }
-
-  async function savePack(box, pack, refresh) {
-    if (!navigator.onLine) { toast("You're offline. Connect to the internet to save pages.", [], 4000); return; }
-    if (navigator.storage && navigator.storage.persist) navigator.storage.persist().catch(() => {});
-    const est = await estimate();
-    if (est && est.quota && est.quota - est.usage < pack.bytes * 1.3) {
-      toast(`Not enough free space on this device for ${fmtMB(pack.bytes)}.`, [], 5000);
-      return;
-    }
-    const cache = await caches.open(PAGES_CACHE);
-    const have = refresh ? new Set() : new Set((await cache.keys()).map((r) => r.url));
-    const todo = pack.pages.filter((u) => !have.has(u));
-    const bar = box.querySelector("progress");
-    const meta = box.querySelector(".abp-offline__meta");
-    const btns = box.querySelectorAll("button");
-    btns.forEach((b) => (b.disabled = true));
-    bar.hidden = false;
-    bar.max = todo.length || 1;
-    let n = 0, failed = 0, i = 0;
-    const worker = async () => {
-      while (i < todo.length) {
-        const u = todo[i++];
-        try {
-          const r = await fetch(u, { cache: "no-cache" });
-          if (!r.ok) throw new Error(r.status);
-          await cache.put(u, r);
-        } catch (e) { failed++; }
-        n++;
-        bar.value = n;
-        meta.textContent = `Saving… ${n.toLocaleString()} of ${todo.length.toLocaleString()} pages`;
-      }
-    };
-    await Promise.all(Array.from({ length: 4 }, worker));
-    if (failed) toast(`${failed} page${failed > 1 ? "s" : ""} could not be saved. Tap Save again to retry.`, [], 5000);
-    else toast(`Saved — ${pack.title} is available offline.`, [], 3500);
-    renderOffline(box);
-  }
-
-  async function removePack(box, pack) {
-    const cache = await caches.open(PAGES_CACHE);
-    await Promise.all(pack.pages.map((u) => cache.delete(u)));
-    toast("Removed the saved copy from this device.", [], 3000);
-    renderOffline(box);
-  }
-
   /* offline page: list categories that have saved pages */
   async function renderSavedList() {
     const box = document.getElementById("abp-saved");
@@ -391,15 +284,13 @@
       .map((d) => `<a class="abp-catbar" href="${url(d)}"><span class="abp-catbar__title">${cats[d]}</span><span class="abp-catbar__stats">${counts[d]} saved page${counts[d] > 1 ? "s" : ""}</span></a>`);
     box.innerHTML = rows.length
       ? `<h2 class="abp-shelf">Saved on this device</h2><nav class="abp-catbars abp-catbars--saved">${rows.join("")}</nav>`
-      : '<p class="abp-lede">Nothing is saved yet. When you are online, open a category and tap <b>Save for offline</b>.</p>';
+      : '<p class="abp-lede">Nothing is available offline yet. Visit pages while online to make them available on this device.</p>';
   }
 
   /* ------------------------------------------------------ per-page init (Material instant navigation) */
   function initPage() {
     headerButtons();
     renderInstall();
-    //
-   document.querySelectorAll(".abp-offline[data-pack]").forEach(renderOffline);
     renderSavedList();
   }
 

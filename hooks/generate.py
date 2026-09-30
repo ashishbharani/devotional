@@ -507,7 +507,6 @@ def page_master(d):
     total = sum(c["works_stated"] for c in d["categories"])
     return (
         titlebar("Integrated Master Index", f"42 categories · {fmt(total)} works", "abp-titlebar--plum")
-        + '<div class="abp-offline" data-pack="all" markdown="0" hidden></div>\n'
         + category_bars(d, "../")
     )
 
@@ -552,7 +551,6 @@ def page_category(c):
         f'<p class="abp-lede" markdown="0">{fmt(c["works_stated"])} <span data-i18n="works">works</span> · {fmt(len(c["merged"]))} groups · '
         f'{fmt(c["sections_stated"])} <span data-i18n="sections">sections</span></p>\n'
     )
-    out.append(f'<div class="abp-offline" data-pack="{c["num"]}" markdown="0" hidden></div>\n')
     out.append('<div class="abp-subindex" markdown="0">')
     for g in c["merged"]:
         chips = "".join(
@@ -670,8 +668,7 @@ def page_offline(d):
     return titlebar("You're offline", "Saved pages are still available", "abp-titlebar--sand") + (
         '<div class="abp-offline-page" markdown="0">\n'
         "<p>This page isn't saved on this device yet, so it can't be shown without an internet connection.</p>\n"
-        "<p>Everything you have opened before, and every category you saved with <b>Save for offline</b>, "
-        "still works. Pick one below, or try again when you're back online.</p>\n"
+        "<p>Pages you opened before may still work. Pick one below, or try again when you're back online.</p>\n"
         '<p class="abp-home-links"><a class="abp-btn abp-btn--big" href="../" data-i18n="home">Home</a>'
         '<a class="abp-btn abp-btn--big" href="../master-index/" data-i18n="index">Integrated Master Index</a>'
         '<a class="abp-btn abp-btn--big" href="../find/" data-i18n="find">Find a Work</a>'
@@ -827,32 +824,18 @@ def on_files(files, config, **kw):
     return files
 
 
-# --------------------------------------------------------------------------- PWA: service worker + offline packs
+# --------------------------------------------------------------------------- PWA: service worker
 
 
 def on_post_build(config, **kw):
-    """Write sw.js (versioned app-shell precache) and assets/offline-packs.json (per-category page lists)."""
+    """Write sw.js with a versioned app-shell precache."""
     import hashlib
 
-    d = load()
     site = Path(config["site_dir"])
-
-    # offline packs: every page of a category, with its size so the UI can show "≈ 12 MB"
-    packs = {}
-    for p in _pages:
-        if "cat" not in p:
-            continue
-        c = p["cat"]
-        pack = packs.setdefault(str(c["num"]), {"title": f'{c["num"]}. {title_case(c["title"])}', "pages": [], "bytes": 0})
-        url = url_of(p["src"])
-        f = site / url / "index.html"
-        pack["pages"].append(url)
-        pack["bytes"] += f.stat().st_size if f.exists() else 0
-    (site / "assets" / "offline-packs.json").write_text(json.dumps(packs, ensure_ascii=False, separators=(",", ":")))
 
     # app shell: pages + assets needed to open the app and search offline
     shell = ["./", "master-index/", "find/", "library/", "foreword/", "legend/", "offline/", "manifest.webmanifest",
-             "assets/works-index.json", "assets/offline-packs.json", "search/search_index.json", "sitemap.xml",
+             "assets/works-index.json", "search/search_index.json", "sitemap.xml",
              "stylesheets/abp.css", "javascripts/abp-transliterate.js", "javascripts/abp-i18n.js",
              "javascripts/abp.js", "javascripts/abp-pwa.js", "javascripts/abp-a11y.js",
              "assets/images/logo.svg", "assets/images/icon-192.png", "assets/images/apple-touch-icon.png",
