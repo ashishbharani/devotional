@@ -642,7 +642,7 @@ def page_group(c, g, part):
                 "<tr>"
                 f'<td class="n">{n}</td>'
                 f'<th scope="row" class="w"><a href="{esc(w["url"])}" target="_blank" rel="noopener" title="Search YouTube for this work">'
-                f'<span class="abp-play" aria-hidden="true"></span>{esc(w["title"])}</a></th>'
+                f'<span class="abp-play" aria-hidden="true"></span><span class="abp-work-title">{esc(w["title"])}</span></a></th>'
                 + cell(w["language"], "lang", "Language")
                 + cell(w["form"], "form", "Form")
                 + f'<td class="tier" data-label="Tier" data-i18n-label="tier"><span class="abp-tier abp-tier--{esc(w["tier"].lower())}">{esc(w["tier"] or "—")}</span></td>'
@@ -854,7 +854,8 @@ def on_post_build(config, **kw):
     # app shell: pages + assets needed to open the app and search offline
     shell = ["./", "master-index/", "find/", "library/", "foreword/", "legend/", "offline/", "manifest.webmanifest",
              "assets/works-index.json", "assets/offline-packs.json", "search/search_index.json", "sitemap.xml",
-             "stylesheets/abp.css", "javascripts/abp.js", "javascripts/abp-pwa.js", "javascripts/abp-a11y.js",
+             "stylesheets/abp.css", "javascripts/abp-transliterate.js", "javascripts/abp-i18n.js",
+             "javascripts/abp.js", "javascripts/abp-pwa.js", "javascripts/abp-a11y.js",
              "assets/images/logo.svg", "assets/images/icon-192.png", "assets/images/apple-touch-icon.png",
              "assets/images/cover-640.webp", "assets/images/cover-1024.webp", "assets/images/signature.png"]
     for pattern in ("assets/stylesheets/*.css", "assets/javascripts/bundle.*.js", "assets/javascripts/workers/*.js"):

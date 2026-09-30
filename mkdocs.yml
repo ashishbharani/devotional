@@ -43,6 +43,7 @@ theme:
 extra_css:
   - stylesheets/abp.css
 extra_javascript:
+  - javascripts/abp-transliterate.js
   - javascripts/abp-i18n.js
   - javascripts/abp.js
   - javascripts/abp-pwa.js
