@@ -1,16 +1,37 @@
 {
+  "id": "./",
   "name": "Ultimate Hindu Devotional Collection",
   "short_name": "Devotional",
-  "description": "A Pan-India Multilingual Devotional Reference — collected & compiled by Advocate Ashish Bharani",
+  "description": "A Pan-India Multilingual Devotional Reference — 43,085 prayers, mantras, stotras, bhajans and aartis in 42 categories. Collected & compiled by Advocate Ashish Bharani.",
+  "lang": "en",
+  "dir": "ltr",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
+  "display_override": ["standalone", "minimal-ui"],
   "orientation": "any",
   "background_color": "#fbf6e8",
   "theme_color": "#82382f",
+  "categories": ["books", "education", "lifestyle", "reference"],
+  "prefer_related_applications": false,
   "icons": [
     { "src": "assets/images/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
     { "src": "assets/images/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
-    { "src": "assets/images/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+    { "src": "assets/images/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" },
+    { "src": "assets/images/logo.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ],
+  "shortcuts": [
+    { "name": "Integrated Master Index", "short_name": "Master Index", "url": "master-index/",
+      "icons": [{ "src": "assets/images/icon-192.png", "sizes": "192x192", "type": "image/png" }] },
+    { "name": "Find a Work", "short_name": "Find", "url": "find/",
+      "icons": [{ "src": "assets/images/icon-192.png", "sizes": "192x192", "type": "image/png" }] },
+    { "name": "Scriptures & Books Library", "short_name": "Library", "url": "library/",
+      "icons": [{ "src": "assets/images/icon-192.png", "sizes": "192x192", "type": "image/png" }] }
+  ],
+  "screenshots": [
+    { "src": "assets/images/screenshots/phone-home.webp", "sizes": "1080x2340", "type": "image/webp", "form_factor": "narrow", "label": "Home — cover and master index" },
+    { "src": "assets/images/screenshots/phone-works.webp", "sizes": "1080x2340", "type": "image/webp", "form_factor": "narrow", "label": "Works for Ganesha with YouTube links" },
+    { "src": "assets/images/screenshots/phone-find.webp", "sizes": "1080x2340", "type": "image/webp", "form_factor": "narrow", "label": "Find a Work across 43,085 works" },
+    { "src": "assets/images/screenshots/wide-works.webp", "sizes": "1920x1080", "type": "image/webp", "form_factor": "wide", "label": "Works table on a tablet or desktop" }
   ]
 }

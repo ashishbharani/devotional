@@ -314,7 +314,11 @@ def category_bars(d, prefix=""):
 
 def page_master(d):
     total = sum(c["works_stated"] for c in d["categories"])
-    return titlebar("Integrated Master Index", f"42 categories · {fmt(total)} works", "abp-titlebar--plum") + category_bars(d, "../")
+    return (
+        titlebar("Integrated Master Index", f"42 categories · {fmt(total)} works", "abp-titlebar--plum")
+        + '<div class="abp-offline" data-pack="all" markdown="0" hidden></div>\n'
+        + category_bars(d, "../")
+    )
 
 
 def page_home(d):
@@ -339,6 +343,7 @@ def page_home(d):
         f"<div><b>{fmt(groups)}</b><span>deities, traditions &amp; groups</span></div>"
         f'<div><b>{fmt(d["pages"])}</b><span>pages in the PDF edition</span></div>'
         "</div>\n\n"
+        '<div id="abp-install" class="abp-install" markdown="0" hidden></div>\n\n'
         '<div class="abp-home-links" markdown="0">'
         '<a class="abp-btn abp-btn--big" href="foreword/">Foreword</a>'
         '<a class="abp-btn abp-btn--big" href="library/">Scriptures &amp; Books Library</a>'
@@ -356,6 +361,7 @@ def page_category(c):
         f'<p class="abp-lede" markdown="0">{fmt(c["works_stated"])} works · {fmt(len(c["merged"]))} groups · '
         f'{fmt(c["sections_stated"])} sections</p>\n'
     )
+    out.append(f'<div class="abp-offline" data-pack="{c["num"]}" markdown="0" hidden></div>\n')
     out.append('<div class="abp-subindex" markdown="0">')
     for g in c["merged"]:
         chips = "".join(
@@ -450,6 +456,22 @@ def page_group(c, g, part):
         )
     out.append(part_nav(g, part))
     return "\n".join(out)
+
+
+def page_offline(d):
+    cats = {c["dir"] + "/": f'{c["num"]}. {title_case(c["title"])}' for c in d["categories"]}
+    return titlebar("You're offline", "Saved pages are still available", "abp-titlebar--sand") + (
+        '<div class="abp-offline-page" markdown="0">\n'
+        "<p>This page isn't saved on this device yet, so it can't be shown without an internet connection.</p>\n"
+        "<p>Everything you have opened before, and every category you saved with <b>Save for offline</b>, "
+        "still works. Pick one below, or try again when you're back online.</p>\n"
+        '<p class="abp-home-links"><a class="abp-btn abp-btn--big" href="../">Home</a>'
+        '<a class="abp-btn abp-btn--big" href="../master-index/">Integrated Master Index</a>'
+        '<a class="abp-btn abp-btn--big" href="../find/">Find a Work</a>'
+        '<button type="button" class="abp-btn abp-btn--big" onclick="location.reload()">Try again</button></p>\n'
+        f"<div id=\"abp-saved\" data-cats='{esc(json.dumps(cats, ensure_ascii=False))}'></div>\n"
+        "</div>\n"
+    )
 
 
 def page_find(d):
@@ -589,5 +611,54 @@ def on_files(files, config, **kw):
         meta = {k: v for k, v in meta.items() if v is not None}
         files.append(File.generated(config, src, content=front_matter(**meta) + body))
 
+    offline_meta = {"title": "Offline", "hide": ["navigation", "toc"], "search": {"exclude": True}}
+    files.append(File.generated(config, "offline.md", content=front_matter(**offline_meta) + page_offline(d)))
     files.append(File.generated(config, "assets/works-index.json", content=works_index(d)))
     return files
+
+
+# --------------------------------------------------------------------------- PWA: service worker + offline packs
+
+
+def on_post_build(config, **kw):
+    """Write sw.js (versioned app-shell precache) and assets/offline-packs.json (per-category page lists)."""
+    import hashlib
+
+    d = load()
+    site = Path(config["site_dir"])
+
+    # offline packs: every page of a category, with its size so the UI can show "≈ 12 MB"
+    packs = {}
+    for p in _pages:
+        if "cat" not in p:
+            continue
+        c = p["cat"]
+        pack = packs.setdefault(str(c["num"]), {"title": f'{c["num"]}. {title_case(c["title"])}', "pages": [], "bytes": 0})
+        url = url_of(p["src"])
+        f = site / url / "index.html"
+        pack["pages"].append(url)
+        pack["bytes"] += f.stat().st_size if f.exists() else 0
+    (site / "assets" / "offline-packs.json").write_text(json.dumps(packs, ensure_ascii=False, separators=(",", ":")))
+
+    # app shell: pages + assets needed to open the app and search offline
+    shell = ["./", "master-index/", "find/", "library/", "foreword/", "legend/", "offline/", "manifest.webmanifest",
+             "assets/works-index.json", "assets/offline-packs.json", "search/search_index.json",
+             "stylesheets/abp.css", "javascripts/abp.js", "javascripts/abp-pwa.js",
+             "assets/images/logo.svg", "assets/images/icon-192.png", "assets/images/apple-touch-icon.png",
+             "assets/images/cover-640.webp", "assets/images/cover-1024.webp", "assets/images/signature.png"]
+    for pattern in ("assets/stylesheets/*.css", "assets/javascripts/bundle.*.js", "assets/javascripts/workers/*.js"):
+        shell += sorted(str(f.relative_to(site)) for f in site.glob(pattern))
+    shell = [u for u in shell if (site / (u if not u.endswith("/") else u + "index.html")).exists() or u == "./"]
+
+    h = hashlib.sha256()
+    for u in shell:
+        f = site / (u + "index.html" if u.endswith("/") else u)
+        if u == "./":
+            f = site / "index.html"
+        h.update(u.encode())
+        h.update(f.read_bytes())
+    version = h.hexdigest()[:12]
+
+    tpl = (ROOT / "hooks" / "sw.template.js").read_text(encoding="utf-8")
+    sw = tpl.replace("__VERSION__", version).replace("__SHELL__", json.dumps(shell, indent=2))
+    (site / "sw.js").write_text(sw, encoding="utf-8")

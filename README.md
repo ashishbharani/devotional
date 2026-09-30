@@ -13,6 +13,23 @@ collected & compiled by Advocate Ashish Bharani.
 * **Find a Work** page: instant client-side search over all works with category / language / tier filters
   (link straight to a search with `find/?w=hanuman+chalisa`)
 
+## Progressive Web App (iPhone, iPad, Android)
+
+The site installs as an app and works offline:
+
+* **Install app** button in the header and an install card on the home page.
+  * Android / Chrome / Edge: opens the browser's native install prompt.
+  * iPhone / iPad (Safari has no prompt): shows the *Share → Add to Home Screen* steps.
+* **Offline:** a service worker (`sw.js`, generated from `hooks/sw.template.js` on every build) precaches
+  the app shell — home, master index, library, Find a Work with the full works index, and site search.
+  Every page you open is kept for offline use; anything else shows a friendly offline page.
+* **Save for offline:** each category page (and the Integrated Master Index for everything) has a
+  *Save for offline* button showing the download size, with progress, *Refresh* and *Remove*.
+* **Updates:** when a new version is deployed the app shows *"A new version is available — Update"*.
+* Installed-app polish: back button in the header (iOS has no browser back button), notch-safe
+  header, offline banner, app shortcuts (Master Index, Find, Library) and store-style screenshots
+  in `manifest.webmanifest`.
+
 ## Phones & tablets
 
 Tuned for Safari (iPhone / iPad) and Chrome (Android phones & tablets):
