@@ -1,0 +1,57 @@
+site_name: Ultimate Hindu Devotional Collection
+site_description: A Pan-India Multilingual Devotional Reference — collected & compiled by Advocate Ashish Bharani
+site_author: Advocate Ashish Bharani
+copyright: Collected &amp; compiled by Advocate Ashish Bharani · Reworked Publication 2026
+
+# Every page is generated from data/collection.json by hooks/generate.py.
+# A hand-written file placed in docs/ with the same path overrides the generated page.
+docs_dir: docs
+hooks:
+  - hooks/generate.py
+
+theme:
+  name: material
+  custom_dir: theme            # the "ABP Devotional" theme: templates + partials
+  language: en
+  logo: assets/images/logo.svg
+  favicon: assets/images/logo.svg
+  font: false                  # fonts are loaded by the theme (Noto Serif / Noto Sans)
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: abp-light
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark (lamp-light) mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: abp-dark
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light (parchment) mode
+  features:
+    - navigation.instant
+    - navigation.instant.progress
+    - navigation.tracking
+    - navigation.top
+    - search.suggest
+    - search.highlight
+    - toc.follow
+
+extra_css:
+  - stylesheets/abp.css
+extra_javascript:
+  - javascripts/abp.js
+
+plugins:
+  - search:
+      separator: '[\s\-,:!=\[\]()"/]+|(?!\b)(?=[A-Z][a-z])'
+
+markdown_extensions:
+  - attr_list
+  - md_in_html
+  - toc:
+      permalink: false
+      toc_depth: 2
+
+validation:
+  nav:
+    omitted_files: ignore      # group pages are reached from category pages, not the sidebar

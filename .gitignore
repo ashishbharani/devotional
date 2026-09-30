@@ -1,0 +1,9 @@
+# build output
+site/
+# python / uv
+.venv/
+__pycache__/
+*.pyc
+# source publication (large binary, kept outside git)
+*.pdf
+.DS_Store

@@ -1,0 +1,18 @@
+{#- The seven-button footer used on every page of the PDF edition -#}
+{%- set m = page.meta or {} -%}
+{%- macro btn(key, label, rel="") -%}
+  {%- if m.get(key) is not none -%}
+    <a class="abp-btn" href="{{ base_url }}/{{ m[key] }}"{% if rel %} rel="{{ rel }}"{% endif %}>{{ label }}</a>
+  {%- else -%}
+    <span class="abp-btn is-disabled" aria-disabled="true">{{ label }}</span>
+  {%- endif -%}
+{%- endmacro -%}
+<nav class="abp-pager" aria-label="Page navigation">
+  {{ btn("abp_prev_section", "&lt;&lt;&lt; Previous section") }}
+  {{ btn("abp_prev", "&lt;&lt; Previous", "prev") }}
+  <a class="abp-btn" href="#" onclick="window.scrollTo({top:0,behavior:'smooth'});return false">Top</a>
+  <a class="abp-btn" href="{{ base_url }}/">Home</a>
+  <a class="abp-btn" href="{{ base_url }}/master-index/">Back to index</a>
+  {{ btn("abp_next", "Next &gt;&gt;", "next") }}
+  {{ btn("abp_next_section", "Next section &gt;&gt;&gt;") }}
+</nav>

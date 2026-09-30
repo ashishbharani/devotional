@@ -1,0 +1,19 @@
+[project]
+name = "abp"
+version = "0.1.0"
+description = "Ultimate Hindu Devotional Collection — MkDocs site generated from the PDF publication"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "mkdocs>=1.6,<2",
+    "mkdocs-material>=9.5,<10",
+]
+
+[dependency-groups]
+# Only needed to re-extract data/collection.json from the source PDF.
+extract = [
+    "pymupdf>=1.24",
+]
+
+[tool.uv]
+package = false
