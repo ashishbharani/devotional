@@ -7,3 +7,6 @@ __pycache__/
 # source publication (large binary, kept outside git)
 *.pdf
 .DS_Store
+# local Codex workspace files
+work/
+outputs/

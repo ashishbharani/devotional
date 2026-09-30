@@ -60,6 +60,17 @@ COLUMNS = [
     ("Horoscope Affliction", "aff"),
 ]
 
+I18N_TEXT = {
+    "Hindu Scriptures & Books Library": "library",
+    "Integrated Master Index": "index",
+    "Find a Work": "find",
+    "Works": "works",
+    "Language": "language",
+    "Form": "form",
+    "Tier": "tier",
+    "Found in": "foundIn",
+}
+
 _data: dict | None = None
 _pages: list[dict] = []  # linear reading order
 
@@ -332,11 +343,18 @@ def url_of(src: str) -> str:
 # --------------------------------------------------------------------------- page builders
 
 
+def i18n_attr(text: str, name: str = "data-i18n") -> str:
+    """Translation marker for interface labels that have a native language equivalent."""
+    key = I18N_TEXT.get(text)
+    return f' {name}="{key}"' if key else ""
+
+
 def titlebar(title: str, subtitle: str = "", kind: str = "", level: int = 1) -> str:
     sub = f'<p class="abp-titlebar__sub">{esc(subtitle)}</p>' if subtitle else ""
     focus = ' tabindex="-1"' if level == 1 else ""
     tag = "header" if level == 1 else "div"
-    return f'<{tag} class="abp-titlebar {kind}" markdown="0"><h{level}{focus} class="abp-titlebar__h">{esc(title)}</h{level}>{sub}</{tag}>\n\n'
+    i18n = i18n_attr(title)
+    return f'<{tag} class="abp-titlebar {kind}" markdown="0"><h{level}{focus} class="abp-titlebar__h"{i18n}>{esc(title)}</h{level}>{sub}</{tag}>\n\n'
 
 
 def paragraphs(lines):
@@ -361,7 +379,7 @@ def page_foreword(d):
     box = [ln for ln in body if ln["bold"] and ln["y"] > 500]
     body = [ln for ln in body if ln not in box]
     out = ['<article class="abp-foreword" markdown="0">']
-    out.append('<header class="abp-foreword__band"><h1 tabindex="-1">FOREWORD</h1><p>HINDU DEVOTIONAL LIBRARY</p></header>')
+    out.append('<header class="abp-foreword__band"><h1 tabindex="-1" data-i18n="foreword">FOREWORD</h1><p>HINDU DEVOTIONAL LIBRARY</p></header>')
     out.append(f'<h2 class="abp-foreword__dedication">{esc(head["text"])}</h2>')
     out.append('<div class="abp-foreword__body">')
     for p in paragraphs(body):
@@ -480,7 +498,7 @@ def category_bars(d, prefix=""):
             f'<a class="abp-catbar" style="--abp-cat:{c["color"]};--abp-cat-ink:{cat_ink(c["color"])}" href="{prefix}{c["dir"]}/">'
             f'<span class="abp-catbar__num">{c["num"]}<span class="abp-sr">.</span></span>'
             f'<span class="abp-catbar__title">{esc(c["title"])}</span>'
-            f'<span class="abp-catbar__stats"><span class="abp-sr">, </span>{fmt(c["works_stated"])} works <span aria-hidden="true">|</span><span class="abp-sr">,</span> {fmt(c["sections_stated"])} sections</span></a>'
+            f'<span class="abp-catbar__stats"><span class="abp-sr">, </span>{fmt(c["works_stated"])} <span data-i18n="works">works</span> <span aria-hidden="true">|</span><span class="abp-sr">,</span> {fmt(c["sections_stated"])} <span data-i18n="sections">sections</span></span></a>'
         )
     return '<nav class="abp-catbars" markdown="0" aria-label="42 categories">\n' + "\n".join(rows) + "\n</nav>\n"
 
@@ -508,21 +526,21 @@ def page_home(d):
         'width="1491" height="1055" fetchpriority="high" decoding="async" '
         'alt="Ultimate Hindu Devotional Collection — a pan-India multilingual devotional reference, collected and compiled by Advocate Ashish Bharani">'
         "</picture>\n"
-        '<a class="abp-cover__hot abp-cover__hot--left" href="library/" title="Scriptures &amp; Books Library"><span>Scriptures &amp; Books Library</span></a>\n'
-        '<a class="abp-cover__hot abp-cover__hot--right" href="master-index/" title="Integrated Master Index"><span>Integrated Master Index</span></a>\n'
+        '<a class="abp-cover__hot abp-cover__hot--left" href="library/" title="Scriptures &amp; Books Library" data-i18n-title="library"><span data-i18n="library">Scriptures &amp; Books Library</span></a>\n'
+        '<a class="abp-cover__hot abp-cover__hot--right" href="master-index/" title="Integrated Master Index" data-i18n-title="index"><span data-i18n="index">Integrated Master Index</span></a>\n'
         "</section>\n\n"
         '<ul class="abp-stats" markdown="0" aria-label="The collection in numbers">'
-        f"<li><b>{fmt(total)}</b> <span>works</span></li>"
-        f"<li><b>42</b> <span>categories</span></li>"
+        f'<li><b>{fmt(total)}</b> <span data-i18n="works">works</span></li>'
+        f'<li><b>42</b> <span data-i18n="categories">categories</span></li>'
         f"<li><b>{fmt(groups)}</b> <span>deities, traditions &amp; groups</span></li>"
         f'<li><b>{fmt(d["pages"])}</b> <span>pages in the PDF edition</span></li>'
         "</ul>\n\n"
         '<div id="abp-install" class="abp-install" markdown="0" hidden></div>\n\n'
         '<nav class="abp-home-links" markdown="0" aria-label="Main sections">'
-        '<a class="abp-btn abp-btn--big" href="foreword/">Foreword</a>'
-        '<a class="abp-btn abp-btn--big" href="library/">Scriptures &amp; Books Library</a>'
-        '<a class="abp-btn abp-btn--big" href="master-index/">Integrated Master Index</a>'
-        '<a class="abp-btn abp-btn--big" href="find/">Find a Work</a>'
+        '<a class="abp-btn abp-btn--big" href="foreword/" data-i18n="foreword">Foreword</a>'
+        '<a class="abp-btn abp-btn--big" href="library/" data-i18n="library">Scriptures &amp; Books Library</a>'
+        '<a class="abp-btn abp-btn--big" href="master-index/" data-i18n="index">Integrated Master Index</a>'
+        '<a class="abp-btn abp-btn--big" href="find/" data-i18n="find">Find a Work</a>'
         "</nav>\n\n"
         + titlebar("Integrated Master Index", "Choose a category", "abp-titlebar--plum", level=2)
         + category_bars(d)
@@ -532,8 +550,8 @@ def page_home(d):
 def page_category(c):
     out = [titlebar(f"{c['num']}. {c['title']}", "Sections and deity subsections", "abp-titlebar--cat")]
     out.append(
-        f'<p class="abp-lede" markdown="0">{fmt(c["works_stated"])} works · {fmt(len(c["merged"]))} groups · '
-        f'{fmt(c["sections_stated"])} sections</p>\n'
+        f'<p class="abp-lede" markdown="0">{fmt(c["works_stated"])} <span data-i18n="works">works</span> · {fmt(len(c["merged"]))} groups · '
+        f'{fmt(c["sections_stated"])} <span data-i18n="sections">sections</span></p>\n'
     )
     out.append(f'<div class="abp-offline" data-pack="{c["num"]}" markdown="0" hidden></div>\n')
     out.append('<div class="abp-subindex" markdown="0">')
@@ -555,7 +573,7 @@ def page_category(c):
 
 SR_HEAD = (
     '<thead class="abp-sr-head"><tr>'
-    + "".join(f'<th scope="col">{"Number" if h == "#" else html.escape(h)}</th>' for h, _ in COLUMNS)
+    + "".join(f'<th scope="col"{i18n_attr(h)}>{"Number" if h == "#" else html.escape(h)}</th>' for h, _ in COLUMNS)
     + "</tr></thead>"
 )
 
@@ -566,9 +584,10 @@ COLGROUP = (
 
 
 def cell(v: str, cls: str, label: str) -> str:
+    i18n = i18n_attr(label, "data-i18n-label")
     if not v:
-        return f'<td class="{cls} is-empty" data-label="{label}">—</td>'
-    return f'<td class="{cls}" data-label="{label}">{esc(v)}</td>'
+        return f'<td class="{cls} is-empty" data-label="{label}"{i18n}>—</td>'
+    return f'<td class="{cls}" data-label="{label}"{i18n}>{esc(v)}</td>'
 
 
 def part_nav(g, part, where="top") -> str:
@@ -587,7 +606,7 @@ def part_nav(g, part, where="top") -> str:
 
 def page_group(c, g, part):
     out = [titlebar(f"{c['num']}. {c['title']}", "", "abp-titlebar--cat")]
-    head = "".join(f'<th class="{k}">{esc(h)}</th>' for h, k in COLUMNS)
+    head = "".join(f'<th class="{k}"{i18n_attr(h)}>{esc(h)}</th>' for h, k in COLUMNS)
     first, last = part["start"] + 1, part["start"] + part["count"]
     info = f'{fmt(g["count"])} works · {len(g["forms"])} forms'
     if len(g["parts"]) > 1:
@@ -626,7 +645,7 @@ def page_group(c, g, part):
                 f'<span class="abp-play" aria-hidden="true"></span>{esc(w["title"])}</a></th>'
                 + cell(w["language"], "lang", "Language")
                 + cell(w["form"], "form", "Form")
-                + f'<td class="tier" data-label="Tier"><span class="abp-tier abp-tier--{esc(w["tier"].lower())}">{esc(w["tier"] or "—")}</span></td>'
+                + f'<td class="tier" data-label="Tier" data-i18n-label="tier"><span class="abp-tier abp-tier--{esc(w["tier"].lower())}">{esc(w["tier"] or "—")}</span></td>'
                 + cell(w["singer"], "singer", "Preferred Singer / Recitation")
                 + cell(w["purposes"], "purp", "Traditional Purposes")
                 + cell(w["best_time"], "time", "Best Time")
@@ -654,9 +673,9 @@ def page_offline(d):
         "<p>This page isn't saved on this device yet, so it can't be shown without an internet connection.</p>\n"
         "<p>Everything you have opened before, and every category you saved with <b>Save for offline</b>, "
         "still works. Pick one below, or try again when you're back online.</p>\n"
-        '<p class="abp-home-links"><a class="abp-btn abp-btn--big" href="../">Home</a>'
-        '<a class="abp-btn abp-btn--big" href="../master-index/">Integrated Master Index</a>'
-        '<a class="abp-btn abp-btn--big" href="../find/">Find a Work</a>'
+        '<p class="abp-home-links"><a class="abp-btn abp-btn--big" href="../" data-i18n="home">Home</a>'
+        '<a class="abp-btn abp-btn--big" href="../master-index/" data-i18n="index">Integrated Master Index</a>'
+        '<a class="abp-btn abp-btn--big" href="../find/" data-i18n="find">Find a Work</a>'
         '<button type="button" class="abp-btn abp-btn--big" onclick="var f=new URLSearchParams(location.search).get(&quot;from&quot;);location.href=f||location.href">Try again</button></p>\n'
         f"<div id=\"abp-saved\" data-cats='{esc(json.dumps(cats, ensure_ascii=False))}'></div>\n"
         "</div>\n"
@@ -669,17 +688,17 @@ def page_find(d):
         '<div class="abp-finder" markdown="0" data-index="../assets/works-index.json">\n'
         '<div class="abp-finder__controls">'
         '<input type="search" id="abp-q" inputmode="search" enterkeyhint="search" autocapitalize="off" autocorrect="off" spellcheck="false" aria-label="Search works" placeholder="Type a title, e.g. Hanuman Chalisa, Ganesha Ashtakam…" autocomplete="off">'
-        f'<select id="abp-cat" aria-label="Category"><option value="">All categories</option>{opts}</select>'
-        '<select id="abp-lang" aria-label="Language"><option value="">All languages</option></select>'
-        '<select id="abp-tier" aria-label="Tier"><option value="">All tiers</option><option>T1</option><option>T2</option><option>T3</option><option>T4</option></select>'
+        f'<select id="abp-cat" aria-label="Category"><option value="" data-i18n-all="categories">All categories</option>{opts}</select>'
+        '<select id="abp-lang" aria-label="Language"><option value="" data-i18n-all="language">All languages</option></select>'
+        '<select id="abp-tier" aria-label="Tier"><option value="" data-i18n-all="tier">All tiers</option><option>T1</option><option>T2</option><option>T3</option><option>T4</option></select>'
         "</div>\n"
-        '<p class="abp-finder__status" id="abp-status" role="status" aria-live="polite">Loading index…</p>\n'
+        '<p class="abp-finder__status" id="abp-status" role="status" aria-live="polite" data-i18n="loading">Loading index…</p>\n'
         '<div class="abp-sheet"><table class="abp-table abp-table--finder" role="table"><caption class="abp-sr">Search results</caption>'
-        '<thead role="rowgroup"><tr role="row"><th role="columnheader" scope="col" class="n">Number</th><th role="columnheader" scope="col" class="w">Works</th>'
-        '<th role="columnheader" scope="col" class="lang">Language</th><th role="columnheader" scope="col" class="form">Form</th>'
-        '<th role="columnheader" scope="col" class="tier">Tier</th><th role="columnheader" scope="col" class="where">Found in</th></tr></thead>'
+        '<thead role="rowgroup"><tr role="row"><th role="columnheader" scope="col" class="n">Number</th><th role="columnheader" scope="col" class="w" data-i18n="works">Works</th>'
+        '<th role="columnheader" scope="col" class="lang" data-i18n="language">Language</th><th role="columnheader" scope="col" class="form" data-i18n="form">Form</th>'
+        '<th role="columnheader" scope="col" class="tier" data-i18n="tier">Tier</th><th role="columnheader" scope="col" class="where" data-i18n="foundIn">Found in</th></tr></thead>'
         '<tbody id="abp-results" role="rowgroup"></tbody></table></div>\n'
-        '<p class="abp-finder__more"><button type="button" class="abp-btn abp-btn--big" id="abp-more" hidden>Show more results</button></p>\n'
+        '<p class="abp-finder__more"><button type="button" class="abp-btn abp-btn--big" id="abp-more" data-i18n="showMore" hidden>Show more results</button></p>\n'
         "</div>\n"
     )
 
