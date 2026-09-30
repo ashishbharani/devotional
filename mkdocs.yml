@@ -1,6 +1,10 @@
 site_name: Ultimate Hindu Devotional Collection
 site_description: A Pan-India Multilingual Devotional Reference — collected & compiled by Advocate Ashish Bharani
 site_author: Advocate Ashish Bharani
+# GitHub Actions passes the real Pages URL in SITE_URL; the default is used for local builds
+site_url: !ENV [SITE_URL, "https://ashishbharani.github.io/ashishbharanai.github.io/"]
+repo_url: https://github.com/ashishbharani/ashishbharanai.github.io
+repo_name: ashishbharani/ashishbharanai.github.io
 copyright: Collected &amp; compiled by Advocate Ashish Bharani · Reworked Publication 2026
 
 # Every page is generated from data/collection.json by hooks/generate.py.

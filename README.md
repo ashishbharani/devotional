@@ -29,6 +29,12 @@ Tuned for Safari (iPhone / iPad) and Chrome (Android phones & tablets):
   `color-mix()`, no sideways scrolling.
 * **Add to Home Screen** – web-app manifest, iOS touch icon and Android maskable icon, light/dark browser-bar colours.
 
+## Hosting (GitHub Pages)
+
+Every push to `main` builds the site with uv and publishes it through GitHub Actions
+(`.github/workflows/deploy.yml`). One-time setup on GitHub: **Settings → Pages → Build and deployment →
+Source: GitHub Actions**.
+
 ## Quick start (uv)
 
 ```bash
