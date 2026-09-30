@@ -399,7 +399,7 @@
     headerButtons();
     renderInstall();
     //
-    document.querySelectorAll(".abp-offline[data-pack]").forEach(renderOffline);
+   document.querySelectorAll(".abp-offline[data-pack]").forEach(renderOffline);
     renderSavedList();
   }
 
