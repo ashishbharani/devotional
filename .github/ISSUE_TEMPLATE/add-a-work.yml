@@ -1,0 +1,34 @@
+name: Add a missing work
+description: Suggest a prayer, mantra, stotra, bhajan, aarti… that is missing
+title: "Add: "
+labels: ["addition"]
+body:
+  - type: input
+    id: title
+    attributes:
+      label: Title
+      placeholder: Ganpati Bappa Morya Aarti
+    validations:
+      required: true
+  - type: input
+    id: where
+    attributes:
+      label: Where should it go?
+      description: Category and deity / tradition as shown on the site
+      placeholder: 1. Deities → GANESHA → Aarti
+    validations:
+      required: true
+  - type: input
+    id: language
+    attributes:
+      label: Language
+      placeholder: Marathi
+  - type: input
+    id: link
+    attributes:
+      label: A good YouTube link (optional)
+      placeholder: https://www.youtube.com/watch?v=…
+  - type: textarea
+    id: notes
+    attributes:
+      label: Anything else? (singer, purpose, best time, source)

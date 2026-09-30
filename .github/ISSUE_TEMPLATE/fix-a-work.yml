@@ -1,0 +1,37 @@
+name: Fix a work
+description: A title, language, tier, singer or YouTube link is wrong
+title: "Fix: "
+labels: ["correction"]
+body:
+  - type: markdown
+    attributes:
+      value: Thank you! Copy the details from the website page where you saw the mistake.
+  - type: input
+    id: page
+    attributes:
+      label: Page link
+      description: Copy the address of the page from your browser
+      placeholder: https://ashishbharani.github.io/devotional/categories/01-…/ganesha/
+    validations:
+      required: true
+  - type: input
+    id: title
+    attributes:
+      label: Work title (exactly as shown)
+      placeholder: Sukhkarta Dukhharta
+    validations:
+      required: true
+  - type: dropdown
+    id: field
+    attributes:
+      label: What is wrong?
+      options: [Title / spelling, Language, Form, Tier, Preferred singer / recitation, Traditional purposes, Best time, Jyotisha, Horoscope affliction, YouTube link, It should be removed (duplicate / wrong)]
+    validations:
+      required: true
+  - type: textarea
+    id: correct
+    attributes:
+      label: What should it be?
+      description: The correct text or link, and a source if you have one
+    validations:
+      required: true

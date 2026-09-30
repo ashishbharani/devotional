@@ -1,0 +1,9 @@
+# ADDITIONS — add a work that is missing.  One work per line.  See CONTRIBUTING.md.
+#
+# category, group, form and title are required; everything else is optional.
+# tier defaults to T2; youtube defaults to a YouTube search for the title.
+# If the group does not exist yet in that category it is created.
+#
+# Example (lines starting with # are ignored — copy it below the header and remove the #):
+# 1,GANESHA,Aarti,Ganpati Bappa Morya Aarti,Marathi,T2,Traditional Aarti Singing,Morning worship,,,,
+category,group,form,title,language,tier,singer,purposes,best time,jyotisha,affliction,youtube

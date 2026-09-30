@@ -1,0 +1,32 @@
+name: Check pull request
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Build the site (strict)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          enable-cache: true
+      - name: Build MkDocs site (every warning fails the check)
+        run: uv run mkdocs build --strict 2>&1 | tee build.log
+        shell: bash
+      - name: Explain problems in plain language
+        if: failure()
+        shell: bash
+        run: |
+          {
+            echo "### ❌ The website could not be built"
+            echo "Fix the lines below (usually in data/corrections.csv or data/additions.csv), then push again:"
+            echo '```'
+            grep -E "WARNING|ERROR" build.log || tail -n 20 build.log
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"

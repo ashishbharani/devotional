@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: How to contribute (short guide)
+    url: https://github.com/ashishbharani/devotional/blob/main/CONTRIBUTING.md
+    about: Fix or add works yourself, or with ChatGPT / Codex.

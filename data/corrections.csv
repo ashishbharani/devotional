@@ -1,0 +1,14 @@
+# CORRECTIONS — fix a mistake in an existing work.  One fix per line.  See CONTRIBUTING.md.
+#
+# category   = category number 1–42 (shown on the Integrated Master Index)
+# group      = optional: deity / tradition name exactly as on the site, e.g. GANESHA (leave empty to fix it everywhere in the category)
+# title      = the work's title exactly as it appears on the site now
+# field      = what to change: title, language, form, tier, singer, purposes, best time, jyotisha, affliction, youtube — or delete
+# new value  = the corrected text (leave empty for delete)
+#
+# Examples (lines starting with # are ignored — copy one below the header and remove the #):
+# 1,GANESHA,Sukhkarta Dukhharta,language,Marathi
+# 1,GANESHA,Ganesha Kilaka Stotram,tier,T1
+# 1,,Shendur Lal Chadhayo,title,Shendur Lal Chadhayo Aarti
+# 1,GANESHA,Some Duplicate Title,delete,
+category,group,title,field,new value

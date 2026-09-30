@@ -1,0 +1,28 @@
+name: Website problem
+description: Something looks broken, is hard to read, or hard to use
+title: "Website: "
+labels: ["website"]
+body:
+  - type: input
+    id: page
+    attributes:
+      label: Page link
+    validations:
+      required: true
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+      description: What you tried and what went wrong. A screenshot helps a lot.
+    validations:
+      required: true
+  - type: input
+    id: device
+    attributes:
+      label: Phone / computer and browser
+      placeholder: iPhone 13, Safari  ·  Samsung A54, Chrome  ·  Windows laptop, Edge
+  - type: dropdown
+    id: access
+    attributes:
+      label: Do you use any accessibility settings?
+      options: ["No", Larger text, Screen reader (VoiceOver / TalkBack / NVDA), High contrast, Keyboard only, Voice control, Other]

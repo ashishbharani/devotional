@@ -23,10 +23,26 @@ from collections import OrderedDict
 from pathlib import Path
 from urllib.parse import quote_plus
 
+import csv
+import logging
+import os
+
 from mkdocs.structure.files import File
+
+log = logging.getLogger("mkdocs.hooks.abp")
 
 ROOT = Path(__file__).resolve().parent.parent
 DATA_FILE = ROOT / "data" / "collection.json"
+CORRECTIONS_FILE = ROOT / "data" / "corrections.csv"  # community fixes (see CONTRIBUTING.md)
+ADDITIONS_FILE = ROOT / "data" / "additions.csv"  # community additions
+EDITABLE = {
+    "title": "title", "language": "language", "form": "form", "tier": "tier",
+    "singer": "singer", "preferred singer": "singer", "recitation": "singer",
+    "purposes": "purposes", "traditional purposes": "purposes",
+    "best time": "best_time", "best_time": "best_time", "jyotisha": "jyotisha",
+    "affliction": "affliction", "horoscope affliction": "affliction",
+    "youtube": "url", "url": "url", "link": "url",
+}
 YT = "https://www.youtube.com/results?search_query="
 PART_SIZE = 250  # works per page; bigger groups are split into parts
 CONTINUED = re.compile(r"\s*[-–—]\s*CONTINUED\s*$", re.I)
@@ -112,10 +128,121 @@ def front_matter(**kw) -> str:
     return "---\n" + "\n".join(f"{k}: {json.dumps(v, ensure_ascii=False)}" for k, v in kw.items()) + "\n---\n\n"
 
 
+def _read_csv(path: Path):
+    """Rows of a community CSV as dicts with lower-case keys; '#' lines and blank lines are ignored."""
+    if not path.exists():
+        return []
+    rows = []
+    with path.open(encoding="utf-8-sig", newline="") as fh:
+        lines = [ln for ln in fh if ln.strip() and not ln.lstrip().startswith("#")]
+    for n, row in enumerate(csv.DictReader(lines), start=2):
+        clean = {(k or "").strip().lower(): (v or "").strip() for k, v in row.items()}
+        if any(clean.values()):
+            clean["_line"] = n
+            rows.append(clean)
+    return rows
+
+
+def _norm(s: str) -> str:
+    return re.sub(r"\s+", " ", (s or "")).strip().casefold()
+
+
+def apply_community_edits(cat: dict, merged: "OrderedDict[str, dict]", report: dict) -> None:
+    """Apply data/corrections.csv and data/additions.csv to one category (before pages are built)."""
+    num = str(cat["num"])
+    # ---- corrections: category, group (optional), title, field, new value
+    for row in report["corrections"]:
+        if row.get("category", "").split(".")[0].strip() != num:
+            continue
+        where = f'corrections.csv line {row["_line"]}'
+        field = _norm(row.get("field", ""))
+        title = _norm(row.get("title", ""))
+        group = _norm(row.get("group", ""))
+        new = row.get("new value", row.get("new_value", ""))
+        if not title or not field:
+            log.warning(f"{where}: needs at least a title and a field")
+            continue
+        if field not in EDITABLE and field not in ("delete", "remove"):
+            log.warning(f"{where}: unknown field '{row.get('field')}'. Use one of: {', '.join(sorted(set(EDITABLE)))} or delete")
+            continue
+        hits = 0
+        for g in merged.values():
+            if group and _norm(g["name"]) != group:
+                continue
+            for form, works in g["forms"].items():
+                for w in list(works):
+                    if _norm(w["title"]) != title:
+                        continue
+                    hits += 1
+                    if field in ("delete", "remove"):
+                        works.remove(w)
+                        continue
+                    key = EDITABLE[field]
+                    if key == "title":
+                        if w["url"] == YT + quote_plus(w["title"]):
+                            w["url"] = YT + quote_plus(new)
+                        w["title"] = new
+                    elif key == "tier" and new and new.upper() not in ("T1", "T2", "T3", "T4"):
+                        log.warning(f"{where}: tier must be T1, T2, T3 or T4 (got '{new}')")
+                    elif key == "url" and new and not new.startswith(("https://", "http://")):
+                        log.warning(f"{where}: the link must start with https://")
+                    else:
+                        w[key] = new.upper() if key == "tier" else new
+        if hits:
+            report["applied"] += 1
+        else:
+            log.warning(f"{where}: no work titled '{row.get('title')}' found in category {num}"
+                        + (f" / group '{row.get('group')}'" if group else "") + " (check the spelling)")
+
+    # ---- additions: category, group, form, title, language, tier, singer, purposes, best time, jyotisha, affliction, youtube
+    for row in report["additions"]:
+        if row.get("category", "").split(".")[0].strip() != num:
+            continue
+        where = f'additions.csv line {row["_line"]}'
+        title, gname, fname = row.get("title", ""), row.get("group", ""), row.get("form", "")
+        if not (title and gname and fname):
+            log.warning(f"{where}: category, group, form and title are required")
+            continue
+        g = next((g for g in merged.values() if _norm(g["name"]) == _norm(gname)), None)
+        if g is None:
+            g = merged.setdefault(gname.upper(), {"name": gname.upper(), "page": 0, "forms": OrderedDict()})
+            log.info(f"{where}: new group '{gname.upper()}' created in category {num}")
+        fkey = next((k for k in g["forms"] if _norm(k) == _norm(fname)), fname.upper())
+        tier = (row.get("tier") or "T2").upper()
+        if tier not in ("T1", "T2", "T3", "T4"):
+            log.warning(f"{where}: tier must be T1, T2, T3 or T4 (got '{row.get('tier')}')")
+            continue
+        url = row.get("youtube") or row.get("url") or YT + quote_plus(title)
+        g["forms"].setdefault(fkey, []).append({
+            "title": title, "url": url, "page": 0,
+            "language": row.get("language", ""), "form": row.get("form", "").title(), "tier": tier,
+            "singer": row.get("singer", row.get("preferred singer", "")),
+            "purposes": row.get("purposes", row.get("traditional purposes", "")),
+            "best_time": row.get("best time", row.get("best_time", "")),
+            "jyotisha": row.get("jyotisha", ""), "affliction": row.get("affliction", row.get("horoscope affliction", "")),
+        })
+        report["added"] += 1
+
+
+def _summary(report: dict) -> None:
+    msg = f"Community edits: {report['applied']} correction(s) applied, {report['added']} work(s) added."
+    log.info(msg)
+    step = os.environ.get("GITHUB_STEP_SUMMARY")
+    if step:
+        with open(step, "a", encoding="utf-8") as fh:
+            fh.write(f"### {msg}\n")
+
+
 def load():
     global _data
     if _data is None:
         _data = json.loads(DATA_FILE.read_text(encoding="utf-8"))
+        report = {"corrections": _read_csv(CORRECTIONS_FILE), "additions": _read_csv(ADDITIONS_FILE), "applied": 0, "added": 0}
+        known = {str(c["num"]) for c in _data["categories"]}
+        for name in ("corrections", "additions"):
+            for row in report[name]:
+                if row.get("category", "").split(".")[0].strip() not in known:
+                    log.warning(f'{name}.csv line {row["_line"]}: category must be a number from 1 to 42 (got "{row.get("category")}")')
         for cat in _data["categories"]:
             merged: OrderedDict[str, dict] = OrderedDict()
             for g in cat["groups"]:
@@ -123,6 +250,7 @@ def load():
                 for f in g["forms"]:
                     base = CONTINUED.sub("", f["name"]).strip()
                     tgt["forms"].setdefault(base, []).extend(f["works"])
+            apply_community_edits(cat, merged, report)
             used = set()
             groups = []
             for g in merged.values():
@@ -144,11 +272,13 @@ def load():
                 }
                 groups.append(group)
             cat["merged"] = groups
+            cat["works_stated"] = sum(g["count"] for g in groups)  # live count (includes community edits)
             cat["slug"] = f"{cat['num']:02d}-{slugify(cat['title'])}"
             cat["dir"] = f"categories/{cat['slug']}"
             cat["url"] = cat["dir"] + "/"
             for group in groups:
                 split_parts(cat, group)
+        _summary(report)
     return _data
 
 

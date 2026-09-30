@@ -69,6 +69,12 @@ Tuned for Safari (iPhone / iPad) and Chrome (Android phones & tablets):
   `color-mix()`, no sideways scrolling.
 * **Add to Home Screen** – web-app manifest, iOS touch icon and Android maskable icon, light/dark browser-bar colours.
 
+## Contributing
+
+Not a programmer? Start with **[SETUP.md](SETUP.md)** (one-time, ~10 minutes) and **[CONTRIBUTING.md](CONTRIBUTING.md)**
+(the short guide). Fixes and new works go into `data/corrections.csv` and `data/additions.csv`, which are applied on
+every build; every pull request is checked automatically. AI agents (Codex, ChatGPT, Claude…) follow **[AGENTS.md](AGENTS.md)**.
+
 ## Hosting (GitHub Pages)
 
 Live at **https://ashishbharani.github.io/devotional/** (repo `ashishbharani/devotional`).
