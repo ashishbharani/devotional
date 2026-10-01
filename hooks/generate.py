@@ -580,6 +580,10 @@ def page_home(d):
         '<p class="abp-home-index__link"><a href="master-index/" data-i18n="viewFullIndex">View the full Integrated Master Index page</a></p>'
         + category_bars(d)
         + "</details>\n"
+        '<nav class="abp-home-utility" markdown="0" aria-label="Tools" data-i18n-aria="tools">'
+        '<a class="abp-btn abp-btn--big" href="japa-counter/">'
+        '<span aria-hidden="true">📿</span><span data-i18n="japa">Japa / Devotional Counter</span></a>'
+        "</nav>\n"
     )
 
 

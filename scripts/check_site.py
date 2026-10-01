@@ -38,6 +38,8 @@ def main() -> int:
     require('<details class="abp-home-index" open' not in home, "homepage index must start collapsed", errors)
     for route in ("foreword/", "disclaimer/", "find/", "a-z/", "library/", "master-index/"):
         require(f'href="{route}"' in home, f"homepage does not link to {route}", errors)
+    require('href="japa-counter/"' in home, "homepage does not link to the Japa counter", errors)
+    require('class="abp-home-utility"' in home, "homepage Japa utility control is missing", errors)
     require("abp-install" not in home, "retired install UI remains on the homepage", errors)
     require("Save for Offline" not in home, "retired offline UI remains on the homepage", errors)
 
