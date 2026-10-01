@@ -33,9 +33,12 @@ def main() -> int:
         require(page.is_file(), f"missing route /{route}/", errors)
 
     home = (site / "index.html").read_text(encoding="utf-8")
-    require('class="abp-home-index"' in home, "homepage disclosure is missing", errors)
+    require(home.count('<details class="abp-home-index') == 2, "homepage must have matching Library and Religious Music disclosures", errors)
+    require('class="abp-home-index abp-home-library"' in home, "homepage Library disclosure is missing", errors)
     require('<details class="abp-home-index"' in home, "homepage index is not a native details element", errors)
-    require('<details class="abp-home-index" open' not in home, "homepage index must start collapsed", errors)
+    require('<details class="abp-home-index" open' not in home, "homepage Religious Music control must start collapsed", errors)
+    require('<details class="abp-home-index abp-home-library" open' not in home, "homepage Library control must start collapsed", errors)
+    require('data-i18n="index">Religious Music</span>' in home, "Religious Music label is missing", errors)
     for route in ("foreword/", "disclaimer/", "find/", "a-z/", "library/", "master-index/"):
         require(f'href="{route}"' in home, f"homepage does not link to {route}", errors)
     require('href="japa-counter/"' in home, "homepage does not link to the Japa counter", errors)
