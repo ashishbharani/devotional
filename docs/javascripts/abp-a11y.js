@@ -8,6 +8,7 @@
   "use strict";
   const KEY = "abp-a11y";
   const root = document.documentElement;
+  const t = (key) => window.abpI18n ? window.abpI18n.t(key) : key;
 
   const load = () => { try { return JSON.parse(localStorage.getItem(KEY) || "{}"); } catch (e) { return {}; } };
   const save = (p) => { try { localStorage.setItem(KEY, JSON.stringify(p)); } catch (e) {} };
@@ -23,13 +24,13 @@
     root.classList.toggle("abp-noshortcuts", !!p.noshortcuts);
   }
 
-  const SIZES = [["0", "A", "Normal text"], ["1", "A+", "Large text"], ["2", "A++", "Larger text"], ["3", "A+++", "Largest text"]];
+  const SIZES = [["0", "A", "normalText"], ["1", "A+", "largeText"], ["2", "A++", "largerText"], ["3", "A+++", "largestText"]];
   const TOGGLES = [
-    ["contrast", "High contrast", "Black and white, stronger borders"],
-    ["spacing", "Readable spacing", "More space between letters, words and lines"],
-    ["underline", "Underline links", "Makes every link easy to spot"],
-    ["motion", "Stop animations", "No sliding or fading effects"],
-    ["noshortcuts", "Turn off single-key shortcuts", "Stops keys like S, N and P from searching or changing page (helps voice control)"],
+    ["contrast", "highContrast", "highContrastHint"],
+    ["spacing", "readableSpacing", "spacingHint"],
+    ["underline", "underlineLinks", "underlineHint"],
+    ["motion", "stopAnimations", "motionHint"],
+    ["noshortcuts", "disableShortcuts", "shortcutsHint"],
   ];
 
   function openPanel() {
@@ -38,19 +39,19 @@
     dlg.className = "abp-a11y-dialog";
     dlg.setAttribute("aria-labelledby", "abp-a11y-title");
     dlg.innerHTML =
-      '<h2 id="abp-a11y-title">Reading &amp; accessibility</h2>' +
-      '<fieldset><legend>Text size</legend><div class="abp-a11y-sizes">' +
-      SIZES.map(([v, label, name], i) =>
-        `<label><input type="radio" name="abp-size" value="${v}" aria-label="${name}"${String(p.text || 0) === v ? " checked" : ""}>` +
+      `<h2 id="abp-a11y-title">${t("readingAccessibility")}</h2>` +
+      `<fieldset><legend>${t("textSize")}</legend><div class="abp-a11y-sizes">` +
+      SIZES.map(([v, label, nameKey], i) =>
+        `<label><input type="radio" name="abp-size" value="${v}" aria-label="${t(nameKey)}"${String(p.text || 0) === v ? " checked" : ""}>` +
         `<span aria-hidden="true" style="font-size:${0.8 + i * 0.14}rem">${label}</span></label>`).join("") +
       "</div></fieldset>" +
-      '<fieldset><legend class="abp-sr">Display options</legend>' +
-      TOGGLES.map(([k, label, hint]) =>
-        `<label class="abp-a11y-toggle"><span>${label}<small>${hint}</small></span>` +
+      `<fieldset><legend class="abp-sr">${t("displayOptions")}</legend>` +
+      TOGGLES.map(([k, labelKey, hintKey]) =>
+        `<label class="abp-a11y-toggle"><span>${t(labelKey)}<small>${t(hintKey)}</small></span>` +
         `<input type="checkbox" role="switch" name="${k}"${p[k] ? " checked" : ""}></label>`).join("") +
       "</fieldset>" +
-      '<div class="abp-a11y-actions"><button type="button" class="abp-btn abp-btn--big" data-reset>Reset</button>' +
-      '<button type="button" class="abp-btn abp-btn--big abp-btn--primary" data-close>Done</button></div>';
+      `<div class="abp-a11y-actions"><button type="button" class="abp-btn abp-btn--big" data-reset>${t("reset")}</button>` +
+      `<button type="button" class="abp-btn abp-btn--big abp-btn--primary" data-close>${t("done")}</button></div>`;
 
     const update = () => {
       const next = { text: +dlg.querySelector('input[name="abp-size"]:checked').value };
@@ -81,8 +82,10 @@
     const b = document.createElement("button");
     b.type = "button";
     b.className = "abp-a11y-btn md-header__button";
-    b.title = "Text size & accessibility";
-    b.setAttribute("aria-label", "Text size and accessibility settings");
+    b.title = t("textSizeSettings");
+    b.setAttribute("aria-label", t("textSizeSettings"));
+    b.setAttribute("data-i18n-title", "textSizeSettings");
+    b.setAttribute("data-i18n-aria", "textSizeSettings");
     b.setAttribute("aria-haspopup", "dialog");
     b.innerHTML = '<span aria-hidden="true">A<small>a</small></span>';
     b.addEventListener("click", openPanel);
@@ -120,7 +123,8 @@
     if (!skip) {
       skip = document.createElement("a");
       skip.className = "md-skip";
-      skip.textContent = "Skip to content";
+      skip.textContent = t("skipContent");
+      skip.setAttribute("data-i18n", "skipContent");
       document.body.insertBefore(skip, document.body.firstChild);
     }
     skip.setAttribute("href", "#abp-main");
@@ -130,10 +134,13 @@
   /* label widgets Material leaves unnamed; hide the decorative loading bar from assistive tech */
   function fixMaterial() {
     const search = document.querySelector(".md-search");
-    if (search && !search.getAttribute("aria-label")) search.setAttribute("aria-label", "Search");
+    if (search && !search.getAttribute("aria-label")) {
+      search.setAttribute("aria-label", t("search"));
+      search.setAttribute("data-i18n-aria", "search");
+    }
     document.querySelectorAll(".md-logo img, .md-header__button.md-logo img").forEach((i) => i.setAttribute("alt", ""));
     const drawer = document.querySelector('label.md-header__button[for="__drawer"]');
-    if (drawer && !drawer.querySelector(".abp-sr")) drawer.insertAdjacentHTML("beforeend", '<span class="abp-sr">Menu</span>');
+    if (drawer && !drawer.querySelector(".abp-sr")) drawer.insertAdjacentHTML("beforeend", `<span class="abp-sr" data-i18n="menu">${t("menu")}</span>`);
     document.querySelectorAll(".md-progress").forEach((p) => p.setAttribute("aria-hidden", "true"));
     // move focus to the new page's heading after instant navigation, so screen readers announce it
     const h1 = document.querySelector(".md-content h1");
@@ -143,19 +150,19 @@
   /* Card layouts (display:block/grid on table parts) make some browsers, notably Safari/VoiceOver,
      drop table semantics. Explicit ARIA roles keep "row 3 of 12, Language: Hindi" announcements. */
   function enhanceTables() {
-    document.querySelectorAll("table.abp-table:not(.abp-table--head):not([data-a11y])").forEach((t) => {
-      t.setAttribute("data-a11y", "");
-      t.setAttribute("role", "table");
-      t.querySelectorAll("thead, tbody").forEach((g) => g.setAttribute("role", "rowgroup"));
-      t.querySelectorAll("tr").forEach((r) => r.setAttribute("role", "row"));
-      t.querySelectorAll("thead th").forEach((h) => h.setAttribute("role", "columnheader"));
-      t.querySelectorAll("tbody th").forEach((h) => h.setAttribute("role", "rowheader"));
-      t.querySelectorAll("td").forEach((c) => c.setAttribute("role", "cell"));
-      t.querySelectorAll("td.is-empty").forEach((c) => {
-        c.innerHTML = '<span aria-hidden="true">—</span><span class="abp-sr">none</span>';
+    document.querySelectorAll("table.abp-table:not(.abp-table--head):not([data-a11y])").forEach((table) => {
+      table.setAttribute("data-a11y", "");
+      table.setAttribute("role", "table");
+      table.querySelectorAll("thead, tbody").forEach((g) => g.setAttribute("role", "rowgroup"));
+      table.querySelectorAll("tr").forEach((r) => r.setAttribute("role", "row"));
+      table.querySelectorAll("thead th").forEach((h) => h.setAttribute("role", "columnheader"));
+      table.querySelectorAll("tbody th").forEach((h) => h.setAttribute("role", "rowheader"));
+      table.querySelectorAll("td").forEach((c) => c.setAttribute("role", "cell"));
+      table.querySelectorAll("td.is-empty").forEach((c) => {
+        c.innerHTML = `<span aria-hidden="true">—</span><span class="abp-sr" data-i18n="none">${t("none")}</span>`;
       });
       if (document.getElementById("abp-yt-desc"))
-        t.querySelectorAll("tbody th a[target=_blank]").forEach((a) => a.setAttribute("aria-describedby", "abp-yt-desc"));
+        table.querySelectorAll("tbody th a[target=_blank]").forEach((a) => a.setAttribute("aria-describedby", "abp-yt-desc"));
     });
   }
   window.abpEnhanceTables = enhanceTables;

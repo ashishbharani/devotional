@@ -9,7 +9,6 @@
   const BATCH = () => (window.matchMedia("(max-width: 37.5em)").matches ? 60 : 200);
   let cache = null;
   const t = (key) => (window.abpI18n ? window.abpI18n.t(key) : key);
-  const translated = () => window.abpI18n && window.abpI18n.language !== "en";
 
   const esc = (s) =>
     String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
@@ -38,7 +37,7 @@
     try {
       data = await loadIndex(indexUrl.href);
     } catch (e) {
-      status.textContent = "Could not load the works index.";
+      status.textContent = t("errorIndex");
       return;
     }
     const langOrder = data.langs.map((l, i) => [l, i]).sort((a, b) => a[0].localeCompare(b[0]));
@@ -57,8 +56,7 @@
       const [grp, form] = place[2].split(" › ");
       return (
         `<tr role="row"><td role="cell" class="n">${i + 1}</td>` +
-        `<th role="rowheader" scope="row" class="w"><a href="${esc(href)}" target="_blank" rel="noopener"><span class="abp-play" aria-hidden="true"></span><span class="abp-work-title">${esc(w[0])}</span>` +
-        `<span class="abp-sr"> — search on YouTube, opens in a new tab</span></a></th>` +
+        `<th role="rowheader" scope="row" class="w"><a href="${esc(href)}" target="_blank" rel="noopener" aria-label="${esc(w[0])} — ${esc(t("searchYoutube"))}, ${esc(t("newTab"))}"><span class="abp-play" aria-hidden="true"></span><span class="abp-work-title">${esc(w[0])}</span></a></th>` +
         `<td role="cell" class="lang" data-label="${esc(t("language"))}" data-i18n-label="language">${esc(data.langs[w[2]] || "—")}</td>` +
         `<td role="cell" class="form" data-label="${esc(t("form"))}" data-i18n-label="form">${esc(data.forms[w[3]] || "—")}</td>` +
         `<td role="cell" class="tier" data-label="${esc(t("tier"))}" data-i18n-label="tier"><span class="abp-tier abp-tier--${esc((w[4] || "").toLowerCase())}">${esc(w[4] || "—")}</span></td>` +
@@ -73,12 +71,8 @@
       if (window.abpI18n) window.abpI18n.translate(out);
       shown += next.length;
       more.hidden = shown >= hits.length;
-      if (hits.length) status.textContent = translated()
-        ? `${hits.length.toLocaleString()} ${t("works")} · ${shown.toLocaleString()}`
-        : `${hits.length.toLocaleString()} matching works — showing ${shown.toLocaleString()}.`;
-      more.textContent = translated()
-        ? `${t("showMore")} (${(hits.length - shown).toLocaleString()})`
-        : `Show more results (${(hits.length - shown).toLocaleString()} left)`;
+      if (hits.length) status.textContent = `${hits.length.toLocaleString()} ${t("works")} · ${shown.toLocaleString()} ${t("shown")}`;
+      more.textContent = `${t("showMore")} (${(hits.length - shown).toLocaleString()})`;
     }
 
     function run() {
@@ -90,9 +84,7 @@
       hits = [];
       shown = 0;
       if (!terms.length && c === null && l === null && !selectedTier) {
-        status.textContent = translated()
-          ? `${data.works.length.toLocaleString()} ${t("works")} · ${t("search")}`
-          : `${data.works.length.toLocaleString()} works indexed — start typing to search.`;
+        status.textContent = `${data.works.length.toLocaleString()} ${t("works")} · ${t("search")}`;
         more.hidden = true;
         return;
       }
@@ -103,9 +95,7 @@
         if (terms.length && !terms.every((x) => w.key.includes(x))) continue;
         hits.push(w);
       }
-      status.textContent = translated()
-        ? `${hits.length.toLocaleString()} ${t("works")}`
-        : (hits.length ? `${hits.length.toLocaleString()} matching works.` : "No works match. Try fewer words or a different spelling.");
+      status.textContent = `${hits.length.toLocaleString()} ${t("works")}`;
       renderMore();
     }
 
