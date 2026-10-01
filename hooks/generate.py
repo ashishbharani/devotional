@@ -8,6 +8,8 @@ creates virtual pages at build time:
     library.md                            Hindu Scriptures & Books Library
     master-index.md                       Integrated Master Index (42 categories)
     find.md                               full-text work finder
+    a-z.md                                alphabetical work directory
+    japa-counter.md                       local-only devotional counter
     categories/NN-slug/index.md           category sub-index (groups + forms)
     categories/NN-slug/<group>.md         one table page per deity / group
     assets/works-index.json               compact index used by the finder
@@ -26,12 +28,17 @@ from urllib.parse import quote_plus
 import csv
 import logging
 import os
+import sys
 
 from mkdocs.structure.files import File
 
+ROOT = Path(__file__).resolve().parent.parent
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+from scripts.check_i18n import audit_catalogue  # noqa: E402
+
 log = logging.getLogger("mkdocs.hooks.abp")
 
-ROOT = Path(__file__).resolve().parent.parent
 DATA_FILE = ROOT / "data" / "collection.json"
 CORRECTIONS_FILE = ROOT / "data" / "corrections.csv"  # community fixes (see CONTRIBUTING.md)
 ADDITIONS_FILE = ROOT / "data" / "additions.csv"  # community additions
@@ -64,11 +71,34 @@ I18N_TEXT = {
     "Hindu Scriptures & Books Library": "library",
     "Integrated Master Index": "index",
     "Find a Work": "find",
+    "A–Z Work Directory": "directoryTitle",
+    "Japa / Devotional Counter": "japaTitle",
+    "Important Disclaimer & Terms of Access": "disclaimerTitle",
     "Works": "works",
     "Language": "language",
     "Form": "form",
     "Tier": "tier",
+    "Preferred Singer / Recitation": "singer",
+    "Traditional Purposes": "purposes",
+    "Best Time": "bestTime",
+    "Jyotisha": "jyotisha",
+    "Horoscope Affliction": "affliction",
     "Found in": "foundIn",
+}
+
+VALUE_I18N = {
+    "daily": "daily",
+    "any time": "anyTime",
+    "morning": "morning",
+    "afternoon": "afternoon",
+    "evening": "evening",
+    "night": "night",
+    "sunrise": "sunrise",
+    "sunset": "sunset",
+    "weekly": "weekly",
+    "monthly": "monthly",
+    "special occasions": "specialOccasions",
+    "as needed": "asNeeded",
 }
 
 _data: dict | None = None
@@ -497,17 +527,16 @@ def category_bars(d, prefix=""):
         rows.append(
             f'<a class="abp-catbar" style="--abp-cat:{c["color"]};--abp-cat-ink:{cat_ink(c["color"])}" href="{prefix}{c["dir"]}/">'
             f'<span class="abp-catbar__num">{c["num"]}<span class="abp-sr">.</span></span>'
-            f'<span class="abp-catbar__title">{esc(c["title"])}</span>'
+            f'<span class="abp-catbar__title" data-category-name="{c["num"]}">{esc(c["title"])}</span>'
             f'<span class="abp-catbar__stats"><span class="abp-sr">, </span>{fmt(c["works_stated"])} <span data-i18n="works">works</span> <span aria-hidden="true">|</span><span class="abp-sr">,</span> {fmt(c["sections_stated"])} <span data-i18n="sections">sections</span></span></a>'
         )
-    return '<nav class="abp-catbars" markdown="0" aria-label="42 categories">\n' + "\n".join(rows) + "\n</nav>\n"
+    return '<nav class="abp-catbars" markdown="0" aria-label="Categories" data-i18n-aria="categories">\n' + "\n".join(rows) + "\n</nav>\n"
 
 
 def page_master(d):
     total = sum(c["works_stated"] for c in d["categories"])
     return (
         titlebar("Integrated Master Index", f"42 categories · {fmt(total)} works", "abp-titlebar--plum")
-        + '<div class="abp-offline" data-pack="all" markdown="0" hidden></div>\n'
         + category_bars(d, "../")
     )
 
@@ -532,17 +561,25 @@ def page_home(d):
         '<ul class="abp-stats" markdown="0" aria-label="The collection in numbers">'
         f'<li><b>{fmt(total)}</b> <span data-i18n="works">works</span></li>'
         f'<li><b>42</b> <span data-i18n="categories">categories</span></li>'
-        f"<li><b>{fmt(groups)}</b> <span>deities, traditions &amp; groups</span></li>"
+        f'<li><b>{fmt(groups)}</b> <span data-i18n="deitiesGroups">deities, traditions &amp; groups</span></li>'
         "</ul>\n\n"
-        '<div id="abp-install" class="abp-install" markdown="0" hidden></div>\n\n'
-        '<nav class="abp-home-links" markdown="0" aria-label="Main sections">'
+        '<nav class="abp-home-actions" markdown="0" aria-label="Main sections" data-i18n-aria="mainSections">'
+        '<div class="abp-home-actions__row">'
         '<a class="abp-btn abp-btn--big" href="foreword/" data-i18n="foreword">Foreword</a>'
-        '<a class="abp-btn abp-btn--big" href="library/" data-i18n="library">Scriptures &amp; Books Library</a>'
-        '<a class="abp-btn abp-btn--big" href="master-index/" data-i18n="index">Integrated Master Index</a>'
+        '<a class="abp-btn abp-btn--big" href="disclaimer/" data-i18n="disclaimer">Disclaimer</a>'
+        "</div>"
+        '<div class="abp-home-actions__row">'
         '<a class="abp-btn abp-btn--big" href="find/" data-i18n="find">Find a Work</a>'
+        '<a class="abp-btn abp-btn--big" href="a-z/" data-i18n="directory">A–Z Directory</a>'
+        "</div>"
+        '<a class="abp-btn abp-btn--big abp-home-actions__wide" href="library/">'
+        '<span aria-hidden="true">📚</span><span data-i18n="library">Scriptures &amp; Books Library</span></a>'
         "</nav>\n\n"
-        + titlebar("Integrated Master Index", "Choose a category", "abp-titlebar--plum", level=2)
+        '<details class="abp-home-index" markdown="0">'
+        '<summary><span aria-hidden="true">🕉</span><span data-i18n="index">Integrated Master Index</span></summary>'
+        '<p class="abp-home-index__link"><a href="master-index/" data-i18n="viewFullIndex">View the full Integrated Master Index page</a></p>'
         + category_bars(d)
+        + "</details>\n"
     )
 
 
@@ -552,18 +589,17 @@ def page_category(c):
         f'<p class="abp-lede" markdown="0">{fmt(c["works_stated"])} <span data-i18n="works">works</span> · {fmt(len(c["merged"]))} groups · '
         f'{fmt(c["sections_stated"])} <span data-i18n="sections">sections</span></p>\n'
     )
-    out.append(f'<div class="abp-offline" data-pack="{c["num"]}" markdown="0" hidden></div>\n')
     out.append('<div class="abp-subindex" markdown="0">')
     for g in c["merged"]:
         chips = "".join(
-            f'<a href="{rel(c["url"], f["url"])}#{f["anchor"]}">{esc(f["name"])}'
+            f'<a href="{rel(c["url"], f["url"])}#{f["anchor"]}"><span data-transliterate-ui>{esc(f["name"])}</span>'
             f'<small><span class="abp-sr">, </span>{len(f["works"])}<span class="abp-sr"> {"work" if len(f["works"]) == 1 else "works"}</span></small></a>'
             for f in g["forms"]
         )
         parts = f' · {len(g["parts"])} pages' if len(g["parts"]) > 1 else ""
         out.append(
             f'<section class="abp-group"><h2 class="abp-group__h"><a class="abp-group__bar" href="{rel(c["url"], g["url"])}">'
-            f'<span>{esc(g["name"])}</span><small><span class="abp-sr">, </span>{fmt(g["count"])} works{parts}</small></a></h2>'
+            f'<span data-transliterate-ui>{esc(g["name"])}</span><small><span class="abp-sr">, </span>{fmt(g["count"])} works{parts}</small></a></h2>'
             f'<nav class="abp-group__forms" aria-label="Forms of {esc(g["name"])}">{chips}</nav></section>'
         )
     out.append("</div>\n")
@@ -586,7 +622,10 @@ def cell(v: str, cls: str, label: str) -> str:
     i18n = i18n_attr(label, "data-i18n-label")
     if not v:
         return f'<td class="{cls} is-empty" data-label="{label}"{i18n}>—</td>'
-    return f'<td class="{cls}" data-label="{label}"{i18n}>{esc(v)}</td>'
+    value_key = VALUE_I18N.get(_norm(v))
+    value_i18n = f' data-i18n-value="{value_key}"' if value_key else ""
+    transliterate = " data-transliterate-ui" if cls in ("form",) and not value_key else ""
+    return f'<td class="{cls}" data-label="{label}"{i18n}{value_i18n}{transliterate}>{esc(v)}</td>'
 
 
 def part_nav(g, part, where="top") -> str:
@@ -613,7 +652,7 @@ def page_group(c, g, part):
     out.append(
         f'<div class="abp-sheet abp-sheet--head" markdown="0" aria-hidden="true" data-search-exclude><table class="abp-table abp-table--head" role="presentation">{COLGROUP}'
         f"<thead><tr>{head}</tr></thead></table></div>\n"
-        f'<div class="abp-groupbar" markdown="0"><h2>{esc(g["name"])}</h2><p>{info}</p></div>\n'
+        f'<div class="abp-groupbar" markdown="0"><h2 data-transliterate-ui>{esc(g["name"])}</h2><p>{info}</p></div>\n'
     )
     out.append(part_nav(g, part))
     if len(g["forms"]) > 1:
@@ -624,7 +663,7 @@ def page_group(c, g, part):
             cls = ' class="is-here"' if f["name"] in here else ""
             n_works = len(f["works"])
             chips.append(
-                f'<a href="{href}"{cls}>{esc(f["name"])}<small><span class="abp-sr">, </span>{n_works}'
+                f'<a href="{href}"{cls}><span data-transliterate-ui>{esc(f["name"])}</span><small><span class="abp-sr">, </span>{n_works}'
                 f'<span class="abp-sr"> {"work" if n_works == 1 else "works"}</span></small></a>'
             )
         chips = "".join(chips)
@@ -634,7 +673,7 @@ def page_group(c, g, part):
         )
     for f in part["forms"]:
         name = f["name"] + (" — CONTINUED" if f["continued"] else "")
-        out.append(f'\n### {name} {{ #{f["anchor"]} .abp-formbar }}\n')
+        out.append(f'\n<h3 id="{f["anchor"]}" class="abp-formbar" data-transliterate-ui>{esc(name)}</h3>\n')
         rows = []
         for n, w in enumerate(f["works"], f["start"] + 1):
             rows.append(
@@ -665,39 +704,75 @@ def page_group(c, g, part):
     return "\n".join(out)
 
 
-def page_offline(d):
-    cats = {c["dir"] + "/": f'{c["num"]}. {title_case(c["title"])}' for c in d["categories"]}
-    return titlebar("You're offline", "Saved pages are still available", "abp-titlebar--sand") + (
-        '<div class="abp-offline-page" markdown="0">\n'
-        "<p>This page isn't saved on this device yet, so it can't be shown without an internet connection.</p>\n"
-        "<p>Everything you have opened before, and every category you saved with <b>Save for offline</b>, "
-        "still works. Pick one below, or try again when you're back online.</p>\n"
-        '<p class="abp-home-links"><a class="abp-btn abp-btn--big" href="../" data-i18n="home">Home</a>'
-        '<a class="abp-btn abp-btn--big" href="../master-index/" data-i18n="index">Integrated Master Index</a>'
-        '<a class="abp-btn abp-btn--big" href="../find/" data-i18n="find">Find a Work</a>'
-        '<button type="button" class="abp-btn abp-btn--big" onclick="var f=new URLSearchParams(location.search).get(&quot;from&quot;);location.href=f||location.href">Try again</button></p>\n'
-        f"<div id=\"abp-saved\" data-cats='{esc(json.dumps(cats, ensure_ascii=False))}'></div>\n"
-        "</div>\n"
-    )
-
-
 def page_find(d):
     opts = "".join(f'<option value="{c["num"]}">{c["num"]}. {esc(title_case(c["title"]))}</option>' for c in d["categories"])
     return titlebar("Find a Work", "Search all works by title, language, form or tier", "abp-titlebar--slate") + (
         '<div class="abp-finder" markdown="0" data-index="../assets/works-index.json">\n'
         '<div class="abp-finder__controls">'
-        '<input type="search" id="abp-q" inputmode="search" enterkeyhint="search" autocapitalize="off" autocorrect="off" spellcheck="false" aria-label="Search works" placeholder="Type a title, e.g. Hanuman Chalisa, Ganesha Ashtakam…" autocomplete="off">'
-        f'<select id="abp-cat" aria-label="Category"><option value="" data-i18n-all="categories">All categories</option>{opts}</select>'
-        '<select id="abp-lang" aria-label="Language"><option value="" data-i18n-all="language">All languages</option></select>'
-        '<select id="abp-tier" aria-label="Tier"><option value="" data-i18n-all="tier">All tiers</option><option>T1</option><option>T2</option><option>T3</option><option>T4</option></select>'
+        '<input type="search" id="abp-q" inputmode="search" enterkeyhint="search" autocapitalize="off" autocorrect="off" spellcheck="false" aria-label="Search works" data-i18n-aria="searchWorks" placeholder="Type a title, e.g. Hanuman Chalisa, Ganesha Ashtakam…" autocomplete="off">'
+        f'<select id="abp-cat" aria-label="Category" data-i18n-aria="category"><option value="" data-i18n="allCategories">All categories</option>{opts}</select>'
+        '<select id="abp-lang" aria-label="Language" data-i18n-aria="language"><option value="" data-i18n="allLanguages">All languages</option></select>'
+        '<select id="abp-tier" aria-label="Tier" data-i18n-aria="tier"><option value="" data-i18n="allTiers">All tiers</option><option>T1</option><option>T2</option><option>T3</option><option>T4</option></select>'
         "</div>\n"
         '<p class="abp-finder__status" id="abp-status" role="status" aria-live="polite" data-i18n="loading">Loading index…</p>\n'
-        '<div class="abp-sheet"><table class="abp-table abp-table--finder" role="table"><caption class="abp-sr">Search results</caption>'
+        '<div class="abp-sheet"><table class="abp-table abp-table--finder" role="table"><caption class="abp-sr" data-i18n="searchResults">Search results</caption>'
         '<thead role="rowgroup"><tr role="row"><th role="columnheader" scope="col" class="n">Number</th><th role="columnheader" scope="col" class="w" data-i18n="works">Works</th>'
         '<th role="columnheader" scope="col" class="lang" data-i18n="language">Language</th><th role="columnheader" scope="col" class="form" data-i18n="form">Form</th>'
         '<th role="columnheader" scope="col" class="tier" data-i18n="tier">Tier</th><th role="columnheader" scope="col" class="where" data-i18n="foundIn">Found in</th></tr></thead>'
         '<tbody id="abp-results" role="rowgroup"></tbody></table></div>\n'
         '<p class="abp-finder__more"><button type="button" class="abp-btn abp-btn--big" id="abp-more" data-i18n="showMore" hidden>Show more results</button></p>\n'
+        "</div>\n"
+    )
+
+
+def page_az(d):
+    letters = "".join(
+        f'<button type="button" class="abp-directory__letter" data-letter="{letter}" aria-pressed="false">{letter}</button>'
+        for letter in "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    )
+    return titlebar("A–Z Work Directory", "Browse the canonical collection alphabetically", "abp-titlebar--slate") + (
+        '<div class="abp-directory" markdown="0" data-index="../assets/works-index.json">\n'
+        '<p class="abp-lede" data-i18n="directoryIntro">Choose a letter to browse works. Results are shown in small batches for speed.</p>\n'
+        '<nav class="abp-directory__letters" aria-label="Choose a starting letter" data-i18n-aria="chooseLetter">'
+        + letters
+        + '<button type="button" class="abp-directory__letter" data-letter="#" aria-pressed="false">#</button>'
+        + '<button type="button" class="abp-directory__letter abp-directory__letter--other" data-letter="other" aria-pressed="false" data-i18n="other">Other</button>'
+        + "</nav>\n"
+        '<p class="abp-directory__status" id="abp-directory-status" role="status" aria-live="polite" data-i18n="chooseLetter">Choose a starting letter.</p>\n'
+        '<ol class="abp-directory__results" id="abp-directory-results"></ol>\n'
+        '<p class="abp-directory__more"><button type="button" class="abp-btn abp-btn--big" id="abp-directory-more" data-i18n="showMore" hidden>Show more</button></p>\n'
+        "</div>\n"
+    )
+
+
+def page_japa(d):
+    presets = "".join(f'<button type="button" class="abp-japa__preset" data-target="{n}">{n}</button>' for n in (11, 21, 51, 108, 1008))
+    return titlebar("Japa / Devotional Counter", "A private counter stored only on this device", "abp-titlebar--sand") + (
+        '<div class="abp-japa" id="abp-japa" markdown="0">\n'
+        '<label class="abp-japa__name"><span data-i18n="practiceName">Practice name (optional)</span>'
+        '<input id="abp-japa-name" type="text" maxlength="80" autocomplete="off" data-i18n-placeholder="practicePlaceholder" placeholder="Om Namah Shivaya, Gayatri Mantra, Prayer…"></label>\n'
+        '<section class="abp-japa__dashboard" aria-label="Current counter" data-i18n-aria="currentCount">'
+        '<div><span data-i18n="currentCount">Current count</span><strong id="abp-japa-count">0</strong></div>'
+        '<div><span data-i18n="malasCompleted">Completed malas</span><strong id="abp-japa-malas">0</strong></div>'
+        '<div><span data-i18n="remainder">Current mala</span><strong id="abp-japa-remainder">0 / 108</strong></div>'
+        '<div><span data-i18n="todayTotal">Today’s total</span><strong id="abp-japa-today">0</strong></div>'
+        "</section>\n"
+        '<button type="button" class="abp-japa__tap" id="abp-japa-tap"><span aria-hidden="true">ॐ</span><b data-i18n="tapToCount">Tap to count +1</b></button>\n'
+        '<p class="abp-japa__announcement abp-sr" id="abp-japa-announcement" role="status" aria-live="polite"></p>\n'
+        '<div class="abp-japa__progress"><label for="abp-japa-progress" data-i18n="target">Target</label>'
+        '<progress id="abp-japa-progress" max="108" value="0"></progress><span id="abp-japa-progress-text">0 / 108</span></div>\n'
+        '<fieldset class="abp-japa__targets"><legend data-i18n="targetPresets">Target presets</legend><div>' + presets + '</div>'
+        '<label><span data-i18n="customTarget">Custom target</span><input id="abp-japa-custom" type="number" min="1" max="1000000000" inputmode="numeric">'
+        '<button type="button" class="abp-btn" id="abp-japa-set-target" data-i18n="setTarget">Set target</button></label></fieldset>\n'
+        '<div class="abp-japa__options"><label><input type="checkbox" id="abp-japa-haptic"><span data-i18n="haptic">Vibration</span></label>'
+        '<label><input type="checkbox" id="abp-japa-sound"><span data-i18n="sound">Sound</span></label></div>\n'
+        '<div class="abp-japa__actions"><button type="button" class="abp-btn abp-btn--big" id="abp-japa-undo" data-i18n="undo">Undo last tap</button>'
+        '<button type="button" class="abp-btn abp-btn--big" id="abp-japa-fresh" data-i18n="freshSession">Fresh session</button>'
+        '<button type="button" class="abp-btn abp-btn--big" id="abp-japa-reset" data-i18n="reset">Reset</button></div>\n'
+        '<p class="abp-japa__privacy" data-i18n="counterPrivacy">Your counter stays in this browser. No account, tracking, or server is used.</p>\n'
+        '<dialog class="abp-japa__dialog" id="abp-japa-dialog" aria-labelledby="abp-japa-dialog-title"><h2 id="abp-japa-dialog-title" data-i18n="confirm">Confirm</h2>'
+        '<p id="abp-japa-dialog-message"></p><div><button type="button" class="abp-btn" data-cancel data-i18n="cancel">Cancel</button>'
+        '<button type="button" class="abp-btn abp-btn--primary" data-confirm data-i18n="confirm">Confirm</button></div></dialog>\n'
         "</div>\n"
     )
 
@@ -732,6 +807,11 @@ def works_index(d) -> str:
 
 def on_config(config, **kw):
     d = load()
+    translation_report, translation_errors = audit_catalogue(ROOT / "docs" / "assets" / "i18n.json")
+    for line in translation_report:
+        log.info(line)
+    for error in translation_errors:
+        log.warning(f"Translation audit: {error}")
     _pages.clear()
 
     def add(src, title, section, **meta):
@@ -751,6 +831,8 @@ def on_config(config, **kw):
                 title = g["name"] if len(g["parts"]) == 1 else f'{g["name"]} (page {part["num"]} of {len(g["parts"])})'
                 add(part["src"], title, c["num"], cat=c, group=g, part=part)
     add("find.md", "Find a Work", "tools")
+    add("a-z.md", "A–Z Work Directory", "tools")
+    add("japa-counter.md", "Japa / Devotional Counter", "tools")
 
     config["nav"] = [
         {"Home": "index.md"},
@@ -767,7 +849,13 @@ def on_config(config, **kw):
             "Integrated Master Index": [{"All 42 categories": "master-index.md"}]
             + [{f'{c["num"]}. {title_case(c["title"])}': f'{c["dir"]}/index.md'} for c in d["categories"]]
         },
-        {"Find a Work": "find.md"},
+        {
+            "Tools": [
+                {"Find a Work": "find.md"},
+                {"A–Z Work Directory": "a-z.md"},
+                {"Japa / Devotional Counter": "japa-counter.md"},
+            ]
+        },
     ]
     return config
 
@@ -783,6 +871,8 @@ def on_files(files, config, **kw):
         "library.md": lambda p: page_library(d),
         "master-index.md": lambda p: page_master(d),
         "find.md": lambda p: page_find(d),
+        "a-z.md": lambda p: page_az(d),
+        "japa-counter.md": lambda p: page_japa(d),
     }
     sections = []
     for p in _pages:
@@ -821,55 +911,15 @@ def on_files(files, config, **kw):
         meta = {k: v for k, v in meta.items() if v is not None}
         files.append(File.generated(config, src, content=front_matter(**meta) + body))
 
-    offline_meta = {"title": "Offline", "hide": ["navigation", "toc"], "search": {"exclude": True}}
-    files.append(File.generated(config, "offline.md", content=front_matter(**offline_meta) + page_offline(d)))
     files.append(File.generated(config, "assets/works-index.json", content=works_index(d)))
     return files
 
 
-# --------------------------------------------------------------------------- PWA: service worker + offline packs
+# --------------------------------------------------------------------------- legacy PWA migration
 
 
 def on_post_build(config, **kw):
-    """Write sw.js (versioned app-shell precache) and assets/offline-packs.json (per-category page lists)."""
-    import hashlib
-
-    d = load()
+    """Publish a cleanup-only worker so existing PWA users leave the retired offline version safely."""
     site = Path(config["site_dir"])
-
-    # offline packs: every page of a category, with its size so the UI can show "≈ 12 MB"
-    packs = {}
-    for p in _pages:
-        if "cat" not in p:
-            continue
-        c = p["cat"]
-        pack = packs.setdefault(str(c["num"]), {"title": f'{c["num"]}. {title_case(c["title"])}', "pages": [], "bytes": 0})
-        url = url_of(p["src"])
-        f = site / url / "index.html"
-        pack["pages"].append(url)
-        pack["bytes"] += f.stat().st_size if f.exists() else 0
-    (site / "assets" / "offline-packs.json").write_text(json.dumps(packs, ensure_ascii=False, separators=(",", ":")))
-
-    # app shell: pages + assets needed to open the app and search offline
-    shell = ["./", "master-index/", "find/", "library/", "foreword/", "legend/", "offline/", "manifest.webmanifest",
-             "assets/works-index.json", "assets/offline-packs.json", "search/search_index.json", "sitemap.xml",
-             "stylesheets/abp.css", "javascripts/abp-transliterate.js", "javascripts/abp-i18n.js",
-             "javascripts/abp.js", "javascripts/abp-pwa.js", "javascripts/abp-a11y.js",
-             "assets/images/logo.svg", "assets/images/icon-192.png", "assets/images/apple-touch-icon.png",
-             "assets/images/cover-640.webp", "assets/images/cover-1024.webp", "assets/images/signature.png"]
-    for pattern in ("assets/stylesheets/*.css", "assets/javascripts/bundle.*.js", "assets/javascripts/workers/*.js"):
-        shell += sorted(str(f.relative_to(site)) for f in site.glob(pattern))
-    shell = [u for u in shell if (site / (u if not u.endswith("/") else u + "index.html")).exists() or u == "./"]
-
-    h = hashlib.sha256()
-    for u in shell:
-        f = site / (u + "index.html" if u.endswith("/") else u)
-        if u == "./":
-            f = site / "index.html"
-        h.update(u.encode())
-        h.update(f.read_bytes())
-    version = h.hexdigest()[:12]
-
     tpl = (ROOT / "hooks" / "sw.template.js").read_text(encoding="utf-8")
-    sw = tpl.replace("__VERSION__", version).replace("__SHELL__", json.dumps(shell, indent=2))
-    (site / "sw.js").write_text(sw, encoding="utf-8")
+    (site / "sw.js").write_text(tpl, encoding="utf-8")

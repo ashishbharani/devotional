@@ -12,23 +12,14 @@ collected & compiled by Advocate Ashish Bharani.
 * Light "parchment" and dark "lamp-light" colour schemes, responsive card layout on phones
 * **Find a Work** page: instant client-side search over all works with category / language / tier filters
   (link straight to a search with `find/?w=hanuman+chalisa`)
+* **A–Z Directory**: fast, letter-by-letter browsing from the same canonical work index, rendered in small batches
+* **Japa / Devotional Counter**: private, device-local counting with 108-bead mala totals, targets, undo and persistence
 
-## Progressive Web App (iPhone, iPad, Android)
+## Online-only operation
 
-The site installs as an app and works offline:
-
-* **Install app** button in the header and an install card on the home page.
-  * Android / Chrome / Edge: opens the browser's native install prompt.
-  * iPhone / iPad (Safari has no prompt): shows the *Share → Add to Home Screen* steps.
-* **Offline:** a service worker (`sw.js`, generated from `hooks/sw.template.js` on every build) precaches
-  the app shell — home, master index, library, Find a Work with the full works index, and site search.
-  Every page you open is kept for offline use; anything else shows a friendly offline page.
-* **Save for offline:** each category page (and the Integrated Master Index for everything) has a
-  *Save for offline* button showing the download size, with progress, *Refresh* and *Remove*.
-* **Updates:** when a new version is deployed the app shows *"A new version is available — Update"*.
-* Installed-app polish: back button in the header (iOS has no browser back button), notch-safe
-  header, offline banner, app shortcuts (Master Index, Find, Library) and store-style screenshots
-  in `manifest.webmanifest`.
+The website operates as a normal online site. Install prompts, offline packs and collection downloads have been
+retired. A small cleanup-only `sw.js` and `abp-cleanup.js` safely unregister an older site service worker and delete
+only this site's legacy `abp-*` caches. They do not handle requests, track visitors or touch unrelated caches.
 
 ## Accessibility (WCAG 2.2 AA)
 
@@ -67,7 +58,7 @@ Tuned for Safari (iPhone / iPad) and Chrome (Android phones & tablets):
 * **Touch & Safari details** – 44 px tap targets, 16 px inputs (no iOS zoom-on-focus), hover effects only on
   devices that can hover, notch-safe layout (`viewport-fit=cover`), fall-back colours for older iOS without
   `color-mix()`, no sideways scrolling.
-* **Add to Home Screen** – web-app manifest, iOS touch icon and Android maskable icon, light/dark browser-bar colours.
+* **Browser polish** – favicon, iOS touch icon and light/dark browser-bar colours remain available without app-install UI.
 
 ## Contributing
 
@@ -100,8 +91,10 @@ hooks/generate.py         MkDocs hook: builds every page from the JSON at build 
 theme/                    ABP Devotional theme (Material custom_dir: main.html + partials)
 docs/stylesheets/abp.css  theme styles and colour tokens (sampled from the PDF)
 docs/javascripts/abp.js   Find a Work page logic
-docs/assets/images/       cover art (WebP/JPEG sizes), signature, diya logo, app icons
-docs/manifest.webmanifest Add-to-Home-Screen manifest
+docs/javascripts/abp-directory.js  A–Z batching and navigation
+docs/javascripts/abp-japa.js       device-local Japa counter
+docs/assets/i18n.json     central interface translations for all ten languages
+docs/assets/images/       cover art (WebP/JPEG sizes), signature, diya logo and icons
 mkdocs.yml                site configuration
 ```
 
@@ -129,6 +122,8 @@ checks itself against the counts printed in the PDF's Integrated Master Index.
 | `/categories/NN-…/` | Category sub-index (sections and deity subsections) |
 | `/categories/NN-…/<group>/` (+ `part-N/`) | Works tables, pp. 759–4356 |
 | `/find/` | Search across every work |
+| `/a-z/` | Letter-by-letter directory over the canonical work index |
+| `/japa-counter/` | Private device-local Japa / Devotional Counter |
 
 > Note: Material for MkDocs prints a notice about MkDocs 2.0. This project pins `mkdocs<2`, which is what
 > Material supports, so the notice can be ignored.

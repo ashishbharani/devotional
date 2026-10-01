@@ -24,11 +24,13 @@ line — fix the CSV row, don't silence the warning.
 | `data/corrections.csv` | community fixes to existing works | **Yes — preferred place for fixes** |
 | `data/additions.csv` | community-added works | **Yes — preferred place for new works** |
 | `hooks/generate.py` | builds every page from the JSON at build time (no hand-written Markdown for the catalogue) | Yes, carefully |
-| `hooks/sw.template.js` | service worker template (offline/PWA) | Only for PWA work |
+| `hooks/sw.template.js` | one-time legacy service-worker/cache cleanup | Only for migration work |
 | `theme/` | Material `custom_dir` overrides (`main.html`, partials) | Yes |
 | `docs/stylesheets/abp.css` | the whole visual theme, colour tokens, mobile + accessibility layers | Yes |
-| `docs/javascripts/abp.js`, `abp-pwa.js`, `abp-a11y.js` | Find-a-Work, PWA install/offline, accessibility panel | Yes |
-| `docs/manifest.webmanifest`, `docs/assets/images/` | PWA manifest, icons, cover | Yes |
+| `docs/javascripts/abp.js`, `abp-directory.js`, `abp-japa.js`, `abp-a11y.js` | Find, A–Z, counter and accessibility panel | Yes |
+| `docs/javascripts/abp-i18n.js`, `docs/assets/i18n.json` | interface translation runtime and canonical strings | Yes |
+| `docs/javascripts/abp-cleanup.js` | unregisters the retired site worker and removes only `abp-*` caches | Yes, carefully |
+| `docs/assets/images/` | icons, cover and supporting images | Yes |
 | `site/` | build output | Never commit |
 
 A hand-written file in `docs/` with the same path as a generated page (e.g. `docs/foreword.md`) overrides it.

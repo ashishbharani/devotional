@@ -1,50 +1,80 @@
-/* Native interface translations plus work-title transliteration for ten selected languages. */
+/* Central interface translation catalogue plus safe sacred-title transliteration. */
 (() => {
   "use strict";
 
   const STORAGE_KEY = "abp-language";
+  const order = ["en", "hi", "mr", "gu", "bn", "pa", "te", "kn", "ml", "ta"];
+  const localeNames = {
+    en: "English", hi: "हिन्दी", mr: "मराठी", gu: "ગુજરાતી", bn: "বাংলা",
+    pa: "ਪੰਜਾਬੀ", te: "తెలుగు", kn: "ಕನ್ನಡ", ml: "മലയാളം", ta: "தமிழ்",
+  };
+  const FALLBACK = {
+    language: "Language", close: "Close", original: "Original", loading: "Loading…",
+    showMore: "Show more", chooseLetter: "Choose a starting letter", other: "Other",
+    shown: "shown", noWorks: "No works begin with this selection", errorIndex: "Could not load the works index.",
+    category: "Category", currentCount: "Current count", tapToCount: "Tap to count +1",
+    lastTapUndone: "Last tap undone", freshQuestion: "Start a fresh session? Today’s total will be kept.",
+    resetQuestion: "Reset the current session and today’s total? This cannot be undone.",
+    titleTransliterationNote: "Sacred work names use script transliteration. The original title remains available underneath.",
+  };
+  const script = document.querySelector('script[src*="javascripts/abp-i18n.js"]');
+  const rootUrl = script ? new URL("../", script.src) : new URL("./", location.href);
+  const catalogueUrl = new URL("assets/i18n.json", rootUrl);
   const store = {
     get: () => { try { return localStorage.getItem(STORAGE_KEY); } catch (error) { return null; } },
     set: (value) => { try { localStorage.setItem(STORAGE_KEY, value); } catch (error) { /* private browsing */ } },
   };
-  const en = {
-    language: "Language", home: "Home", index: "Integrated Master Index",
-    library: "Scriptures & Books Library", find: "Find a Work", foreword: "Foreword",
-    previous: "Previous", top: "Top", next: "Next", search: "Search", close: "Close",
-    original: "Original", works: "works", categories: "categories", sections: "sections",
-    form: "Form", tier: "Tier", foundIn: "Found in", all: "All", loading: "Loading…",
-    showMore: "Show more results",
-  };
-
-  const locales = {
-    en: { name: "English", strings: en },
-    hi: { name: "हिन्दी", strings: { language: "भाषा", home: "मुख्य पृष्ठ", index: "अनुक्रमणिका", library: "पुस्तकालय", find: "रचना खोजें", foreword: "भूमिका", previous: "पिछला", top: "ऊपर", next: "अगला", search: "खोजें", close: "बंद करें", original: "मूल", works: "रचनाएँ", categories: "श्रेणियाँ", sections: "खंड", form: "रूप", tier: "स्तर", foundIn: "यहाँ मिला", all: "सभी", loading: "लोड हो रहा है…", showMore: "और परिणाम दिखाएँ" } },
-    mr: { name: "मराठी", strings: { language: "भाषा", home: "मुख्यपृष्ठ", index: "अनुक्रमणिका", library: "ग्रंथालय", find: "रचना शोधा", foreword: "प्रस्तावना", previous: "मागील", top: "वर", next: "पुढील", search: "शोधा", close: "बंद करा", original: "मूळ", works: "रचना", categories: "श्रेणी", sections: "विभाग", form: "प्रकार", tier: "स्तर", foundIn: "येथे आहे", all: "सर्व", loading: "लोड होत आहे…", showMore: "अधिक निकाल दाखवा" } },
-    gu: { name: "ગુજરાતી", strings: { language: "ભાષા", home: "મુખ્ય પાનું", index: "સૂચિ", library: "પુસ્તકાલય", find: "રચના શોધો", foreword: "પ્રસ્તાવના", previous: "પાછલું", top: "ઉપર", next: "આગળ", search: "શોધો", close: "બંધ કરો", original: "મૂળ", works: "રચનાઓ", categories: "શ્રેણીઓ", sections: "વિભાગો", form: "રૂપ", tier: "સ્તર", foundIn: "અહીં મળે છે", all: "બધા", loading: "લોડ થઈ રહ્યું છે…", showMore: "વધુ પરિણામો બતાવો" } },
-    bn: { name: "বাংলা", strings: { language: "ভাষা", home: "প্রথম পাতা", index: "সূচি", library: "গ্রন্থাগার", find: "রচনা খুঁজুন", foreword: "ভূমিকা", previous: "পূর্ববর্তী", top: "উপরে", next: "পরবর্তী", search: "অনুসন্ধান", close: "বন্ধ করুন", original: "মূল", works: "রচনা", categories: "বিভাগ", sections: "অংশ", form: "রূপ", tier: "স্তর", foundIn: "যেখানে আছে", all: "সব", loading: "লোড হচ্ছে…", showMore: "আরও ফলাফল দেখুন" } },
-    pa: { name: "ਪੰਜਾਬੀ", strings: { language: "ਭਾਸ਼ਾ", home: "ਮੁੱਖ ਪੰਨਾ", index: "ਸੂਚੀ", library: "ਪੁਸਤਕਾਲਾ", find: "ਰਚਨਾ ਲੱਭੋ", foreword: "ਭੂਮਿਕਾ", previous: "ਪਿਛਲਾ", top: "ਉੱਪਰ", next: "ਅਗਲਾ", search: "ਖੋਜੋ", close: "ਬੰਦ ਕਰੋ", original: "ਮੂਲ", works: "ਰਚਨਾਵਾਂ", categories: "ਸ਼੍ਰੇਣੀਆਂ", sections: "ਭਾਗ", form: "ਰੂਪ", tier: "ਪੱਧਰ", foundIn: "ਇੱਥੇ ਮਿਲਿਆ", all: "ਸਾਰੇ", loading: "ਲੋਡ ਹੋ ਰਿਹਾ ਹੈ…", showMore: "ਹੋਰ ਨਤੀਜੇ ਵੇਖੋ" } },
-    te: { name: "తెలుగు", strings: { language: "భాష", home: "మొదటి పేజీ", index: "సూచిక", library: "గ్రంథాలయం", find: "రచనను వెతకండి", foreword: "ముందుమాట", previous: "మునుపటి", top: "పైకి", next: "తదుపరి", search: "వెతకండి", close: "మూసివేయండి", original: "మూలం", works: "రచనలు", categories: "వర్గాలు", sections: "విభాగాలు", form: "రూపం", tier: "స్థాయి", foundIn: "ఇక్కడ ఉంది", all: "అన్నీ", loading: "లోడ్ అవుతోంది…", showMore: "మరిన్ని ఫలితాలు" } },
-    kn: { name: "ಕನ್ನಡ", strings: { language: "ಭಾಷೆ", home: "ಮುಖಪುಟ", index: "ಸೂಚಿ", library: "ಗ್ರಂಥಾಲಯ", find: "ಕೃತಿ ಹುಡುಕಿ", foreword: "ಮುನ್ನುಡಿ", previous: "ಹಿಂದಿನ", top: "ಮೇಲೆ", next: "ಮುಂದಿನ", search: "ಹುಡುಕಿ", close: "ಮುಚ್ಚಿ", original: "ಮೂಲ", works: "ಕೃತಿಗಳು", categories: "ವರ್ಗಗಳು", sections: "ವಿಭಾಗಗಳು", form: "ರೂಪ", tier: "ಹಂತ", foundIn: "ಇಲ್ಲಿ ಇದೆ", all: "ಎಲ್ಲಾ", loading: "ಲೋಡ್ ಆಗುತ್ತಿದೆ…", showMore: "ಇನ್ನಷ್ಟು ಫಲಿತಾಂಶಗಳು" } },
-    ml: { name: "മലയാളം", strings: { language: "ഭാഷ", home: "ഹോം", index: "സൂചിക", library: "ഗ്രന്ഥശാല", find: "കൃതി കണ്ടെത്തുക", foreword: "ആമുഖം", previous: "മുമ്പത്തെ", top: "മുകളിൽ", next: "അടുത്തത്", search: "തിരയുക", close: "അടയ്ക്കുക", original: "മൂലം", works: "കൃതികൾ", categories: "വിഭാഗങ്ങൾ", sections: "ഭാഗങ്ങൾ", form: "രൂപം", tier: "നില", foundIn: "ഇവിടെ കാണാം", all: "എല്ലാം", loading: "ലോഡ് ചെയ്യുന്നു…", showMore: "കൂടുതൽ ഫലങ്ങൾ" } },
-    ta: { name: "தமிழ்", strings: { language: "மொழி", home: "முகப்பு", index: "அட்டவணை", library: "நூலகம்", find: "படைப்பைத் தேடுக", foreword: "முன்னுரை", previous: "முந்தைய", top: "மேலே", next: "அடுத்த", search: "தேடுக", close: "மூடுக", original: "மூலம்", works: "படைப்புகள்", categories: "வகைகள்", sections: "பிரிவுகள்", form: "வடிவம்", tier: "நிலை", foundIn: "இங்கு உள்ளது", all: "அனைத்தும்", loading: "ஏற்றப்படுகிறது…", showMore: "மேலும் முடிவுகள்" } },
-  };
-
-  const order = ["en", "hi", "mr", "gu", "bn", "pa", "te", "kn", "ml", "ta"];
   const chromeLabels = new Map([
-    ["Home", "home"], ["Foreword", "foreword"], ["Hindu Scriptures & Books Library", "library"],
+    ["Home", "home"], ["Foreword", "foreword"], ["Disclaimer & Terms", "disclaimer"],
+    ["Hindu Scriptures & Books Library", "library"], ["Scriptures & Books Library", "library"],
     ["Integrated Master Index", "index"], ["Find a Work", "find"],
+    ["A–Z Work Directory", "directory"], ["Japa / Devotional Counter", "japa"], ["Tools", "tools"],
   ]);
-  const originalTitles = new WeakMap();
+  const originalText = new WeakMap();
+  let locales = Object.fromEntries(order.map((code) => [code, { name: localeNames[code], strings: {} }]));
+  let categoryNames = {};
   let current = store.get() || "en";
-  if (!locales[current]) current = "en";
+  if (!order.includes(current)) current = "en";
 
-  const t = (key) => locales[current].strings[key] || en[key] || key;
+  const t = (key) => locales[current]?.strings[key] || locales.en?.strings[key] || FALLBACK[key] || key;
+
+  const ready = fetch(catalogueUrl.href)
+    .then((response) => {
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      return response.json();
+    })
+    .then((data) => {
+      const sections = data.sections || [];
+      const keys = sections.flatMap((section) => section.keys || []);
+      locales = Object.fromEntries(order.map((code) => {
+        const values = sections.flatMap((section) => section.values?.[code] || []);
+        const strings = Object.fromEntries(keys.map((key, index) => [key, values[index]]));
+        return [code, { name: data.localeNames?.[code] || localeNames[code], strings }];
+      }));
+      categoryNames = data.categoryNames || {};
+    })
+    .catch((error) => console.warn("Interface translation catalogue could not be loaded", error));
+
+  function transliterateText(node, explicit) {
+    const engine = window.abpTransliterate;
+    const original = originalText.get(node) || explicit || node.textContent.trim();
+    originalText.set(node, original);
+    if (!engine || current === "en" || !engine.languages.has(current)) {
+      node.textContent = original;
+      node.removeAttribute("lang");
+      node.removeAttribute("title");
+      return;
+    }
+    node.textContent = engine.transliterate(original, current);
+    node.lang = current;
+    node.title = `${t("original")}: ${original}`;
+  }
 
   function translateWorkTitles(root = document) {
     const engine = window.abpTransliterate;
     root.querySelectorAll(".abp-work-title").forEach((node) => {
-      const original = originalTitles.get(node) || node.textContent.trim();
-      originalTitles.set(node, original);
+      const original = originalText.get(node) || node.textContent.trim();
+      originalText.set(node, original);
       const anchor = node.closest("a");
       let source = anchor && anchor.querySelector(".abp-work-original");
       if (!engine || current === "en" || !engine.languages.has(current)) {
@@ -83,12 +113,25 @@
     root.querySelectorAll("[data-i18n-title]").forEach((node) => node.setAttribute("title", t(node.getAttribute("data-i18n-title"))));
     root.querySelectorAll("[data-i18n-placeholder]").forEach((node) => node.setAttribute("placeholder", t(node.getAttribute("data-i18n-placeholder"))));
     root.querySelectorAll("[data-i18n-label]").forEach((node) => node.setAttribute("data-label", t(node.getAttribute("data-i18n-label"))));
+    root.querySelectorAll("[data-i18n-value]").forEach((node) => { node.textContent = t(node.getAttribute("data-i18n-value")); });
     root.querySelectorAll("[data-i18n-all]").forEach((node) => { node.textContent = `${t("all")} ${t(node.getAttribute("data-i18n-all"))}`; });
+    root.querySelectorAll("[data-category-name]").forEach((node) => {
+      const number = Number(node.getAttribute("data-category-name"));
+      const translated = categoryNames[current]?.[number - 1];
+      if (translated) {
+        const original = originalText.get(node) || node.textContent.trim();
+        originalText.set(node, original);
+        node.textContent = translated;
+        node.lang = current;
+        node.title = current === "en" ? "" : `${t("original")}: ${original}`;
+      } else transliterateText(node);
+    });
+    root.querySelectorAll("[data-transliterate-ui]").forEach((node) => transliterateText(node));
     translateWorkTitles(root);
   }
 
   function applyLanguage(code) {
-    current = locales[code] ? code : "en";
+    current = order.includes(code) ? code : "en";
     store.set(current);
     document.documentElement.lang = current;
     document.documentElement.dir = "ltr";
@@ -108,7 +151,7 @@
     dialog.innerHTML =
       `<div class="abp-language-dialog__head"><h2 id="abp-language-title">${t("language")}</h2>` +
       `<button type="button" class="abp-language-dialog__close" aria-label="${t("close")}">×</button></div>` +
-      '<p class="abp-language-dialog__note">Work names use automatic script transliteration. The original title remains visible underneath.</p>' +
+      `<p class="abp-language-dialog__note">${t("titleTransliterationNote")}</p>` +
       '<div class="abp-language-grid">' + order.map((code) => {
         const locale = locales[code];
         return `<button type="button" lang="${code}" dir="ltr" data-lang="${code}"${code === current ? ' aria-current="true"' : ""}>` +
@@ -137,12 +180,13 @@
     header.insertBefore(button, search);
   }
 
-  function initPage() {
+  async function initPage() {
     addPicker();
+    await ready;
     applyLanguage(current);
   }
 
-  window.abpI18n = { t, translate, applyLanguage, get language() { return current; }, locales };
+  window.abpI18n = { t, translate, applyLanguage, ready, get language() { return current; }, get locales() { return locales; } };
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", initPage);
   else initPage();
   if (window.document$ && typeof window.document$.subscribe === "function") window.document$.subscribe(initPage);

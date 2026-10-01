@@ -1,7 +1,7 @@
 {#- ABP Devotional theme — extends Material for MkDocs -#}
 {% extends "base.html" %}
 
-{#- Mobile-first head: notch-aware viewport, home-screen icons, per-scheme browser chrome colour -#}
+{#- Mobile-first head: notch-aware viewport, normal browser icons, per-scheme browser chrome colour -#}
 {% block site_meta %}
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
@@ -12,14 +12,9 @@
   <meta name="theme-color" media="(prefers-color-scheme: light)" content="#82382f">
   <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#331512">
   <meta name="color-scheme" content="light dark">
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="Devotional">
   <link rel="icon" href="{{ 'assets/images/logo.svg' | url }}" type="image/svg+xml">
   <link rel="icon" href="{{ 'assets/images/favicon-32.png' | url }}" sizes="32x32" type="image/png">
   <link rel="apple-touch-icon" href="{{ 'assets/images/apple-touch-icon.png' | url }}">
-  <link rel="manifest" href="{{ 'manifest.webmanifest' | url }}">
   <meta name="generator" content="mkdocs-{{ mkdocs_version }}, mkdocs-material">
 {% endblock %}
 

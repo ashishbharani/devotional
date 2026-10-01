@@ -44,7 +44,9 @@ extra_javascript:
   - javascripts/abp-transliterate.js
   - javascripts/abp-i18n.js
   - javascripts/abp.js
-  - javascripts/abp-pwa.js
+  - javascripts/abp-directory.js
+  - javascripts/abp-japa.js
+  - javascripts/abp-cleanup.js
   - javascripts/abp-a11y.js
 
 plugins:
