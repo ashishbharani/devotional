@@ -27,7 +27,7 @@
   const chromeLabels = new Map([
     ["Home", "home"], ["Foreword", "foreword"], ["Disclaimer & Terms", "disclaimer"],
     ["Hindu Scriptures & Books Library", "library"], ["Scriptures & Books Library", "library"],
-    ["Integrated Master Index", "index"], ["Find a Work", "find"],
+    ["Religious Music", "index"], ["Integrated Master Index", "index"], ["Find a Work", "find"],
     ["A–Z Work Directory", "directory"], ["Japa / Devotional Counter", "japa"], ["Tools", "tools"],
   ]);
   const originalText = new WeakMap();

@@ -69,7 +69,7 @@ COLUMNS = [
 
 I18N_TEXT = {
     "Hindu Scriptures & Books Library": "library",
-    "Integrated Master Index": "index",
+    "Religious Music": "index",
     "Find a Work": "find",
     "A–Z Work Directory": "directoryTitle",
     "Japa / Devotional Counter": "japaTitle",
@@ -499,8 +499,8 @@ def page_rules(d):
     )
 
 
-def page_library(d):
-    out = [titlebar("Hindu Scriptures & Books Library", "Epics · Vedas · Upanishads · Puranas · Darshana", "abp-titlebar--slate")]
+def library_content(d):
+    out = []
     for shelf in d["library"]:
         out.append(f'<h2 class="abp-shelf">{esc(shelf["subtitle"].title().replace("•", "·"))}</h2>\n')
         cards = []
@@ -521,6 +521,13 @@ def page_library(d):
     return "\n".join(out)
 
 
+def page_library(d):
+    return (
+        titlebar("Hindu Scriptures & Books Library", "Epics · Vedas · Upanishads · Puranas · Darshana", "abp-titlebar--slate")
+        + library_content(d)
+    )
+
+
 def category_bars(d, prefix=""):
     rows = []
     for c in d["categories"]:
@@ -536,7 +543,7 @@ def category_bars(d, prefix=""):
 def page_master(d):
     total = sum(c["works_stated"] for c in d["categories"])
     return (
-        titlebar("Integrated Master Index", f"42 categories · {fmt(total)} works", "abp-titlebar--plum")
+        titlebar("Religious Music", f"42 categories · {fmt(total)} works", "abp-titlebar--plum")
         + category_bars(d, "../")
     )
 
@@ -556,7 +563,7 @@ def page_home(d):
         'alt="Ultimate Hindu Devotional Collection — a pan-India multilingual devotional reference, collected and compiled by Advocate Ashish Bharani">'
         "</picture>\n"
         '<a class="abp-cover__hot abp-cover__hot--left" href="library/" title="Scriptures &amp; Books Library" data-i18n-title="library"><span data-i18n="library">Scriptures &amp; Books Library</span></a>\n'
-        '<a class="abp-cover__hot abp-cover__hot--right" href="master-index/" title="Integrated Master Index" data-i18n-title="index"><span data-i18n="index">Integrated Master Index</span></a>\n'
+        '<a class="abp-cover__hot abp-cover__hot--right" href="master-index/" title="Religious Music" data-i18n-title="index"><span data-i18n="index">Religious Music</span></a>\n'
         "</section>\n\n"
         '<ul class="abp-stats" markdown="0" aria-label="The collection in numbers">'
         f'<li><b>{fmt(total)}</b> <span data-i18n="works">works</span></li>'
@@ -572,12 +579,15 @@ def page_home(d):
         '<a class="abp-btn abp-btn--big" href="find/" data-i18n="find">Find a Work</a>'
         '<a class="abp-btn abp-btn--big" href="a-z/" data-i18n="directory">A–Z Directory</a>'
         "</div>"
-        '<a class="abp-btn abp-btn--big abp-home-actions__wide" href="library/">'
-        '<span aria-hidden="true">📚</span><span data-i18n="library">Scriptures &amp; Books Library</span></a>'
         "</nav>\n\n"
+        '<details class="abp-home-index abp-home-library" markdown="0">'
+        '<summary><span aria-hidden="true">📚</span><span data-i18n="library">Scriptures &amp; Books Library</span></summary>'
+        '<p class="abp-home-index__link"><a href="library/" data-i18n="viewFullLibrary">View the full Scriptures &amp; Books Library page</a></p>'
+        + library_content(d)
+        + "</details>\n"
         '<details class="abp-home-index" markdown="0">'
-        '<summary><span aria-hidden="true">🕉</span><span data-i18n="index">Integrated Master Index</span></summary>'
-        '<p class="abp-home-index__link"><a href="master-index/" data-i18n="viewFullIndex">View the full Integrated Master Index page</a></p>'
+        '<summary><span aria-hidden="true">🕉</span><span data-i18n="index">Religious Music</span></summary>'
+        '<p class="abp-home-index__link"><a href="master-index/" data-i18n="viewFullIndex">View the full Religious Music page</a></p>'
         + category_bars(d)
         + "</details>\n"
         '<nav class="abp-home-utility" markdown="0" aria-label="Tools" data-i18n-aria="tools">'
@@ -827,7 +837,7 @@ def on_config(config, **kw):
     add("legend.md", "Legend", "front")
     add("rules.md", "Final Reconciliation Rules Applied", "front")
     add("library.md", "Hindu Scriptures & Books Library", "front")
-    add("master-index.md", "Integrated Master Index", "front")
+    add("master-index.md", "Religious Music", "front")
     for c in d["categories"]:
         add(f'{c["dir"]}/index.md', f'{c["num"]}. {title_case(c["title"])}', c["num"], cat=c)
         for g in c["merged"]:
@@ -850,7 +860,7 @@ def on_config(config, **kw):
         },
         {"Scriptures & Books Library": "library.md"},
         {
-            "Integrated Master Index": [{"All 42 categories": "master-index.md"}]
+            "Religious Music": [{"All 42 categories": "master-index.md"}]
             + [{f'{c["num"]}. {title_case(c["title"])}': f'{c["dir"]}/index.md'} for c in d["categories"]]
         },
         {
