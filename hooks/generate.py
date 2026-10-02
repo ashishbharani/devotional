@@ -578,6 +578,132 @@ def page_master(d):
     )
 
 
+def panchang_location_controls(suffix):
+    return (
+        '<div class="abp-panchang__settings">'
+        f'<label for="abp-panchang-location-{suffix}"><span>Change Location</span>'
+        f'<input id="abp-panchang-location-{suffix}" type="search" list="abp-panchang-cities-{suffix}" '
+        'data-panchang-location autocomplete="off" placeholder="Search or choose an Indian city"></label>'
+        f'<datalist id="abp-panchang-cities-{suffix}" data-panchang-cities></datalist>'
+        f'<label for="abp-panchang-convention-{suffix}"><span>Calendar</span>'
+        f'<select id="abp-panchang-convention-{suffix}" data-panchang-convention>'
+        '<option value="amanta">Amanta</option><option value="purnimanta">Purnimanta</option></select></label>'
+        '<button type="button" class="abp-btn" data-panchang-geolocate>Use My Location</button>'
+        '</div>'
+    )
+
+
+def panchang_status(message="Calculating today’s Panchang…"):
+    return f'<p class="abp-panchang__status" data-panchang-status role="status" aria-live="polite">{esc(message)}</p>'
+
+
+def panchang_summary_card():
+    tiles = [
+        ("Tithi / तिथि", "tithi", "tithi-end", "Ends"),
+        ("Paksha / पक्ष", "paksha", "convention", "Calendar"),
+        ("Masa / मास", "masa", "convention", "Convention"),
+        ("Nakshatra / नक्षत्र", "nakshatra", "nakshatra-end", "Ends"),
+        ("Festival / Vrata / उत्सव-व्रत", "festival", None, None),
+        ("Sunrise / Sunset / सूर्योदय-सूर्यास्त", "sunrise-sunset", None, None),
+    ]
+    tile_html = []
+    for label, field, subfield, sublabel in tiles:
+        secondary = (
+            f'<small>{sublabel}: <span data-panchang-field="{subfield}">—</span></small>' if subfield else ""
+        )
+        tile_html.append(
+            f'<div class="abp-panchang__tile"><dt>{label}</dt><dd data-panchang-field="{field}">—</dd>{secondary}</div>'
+        )
+    return (
+        '<section class="abp-panchang abp-panchang--home" data-panchang-view="summary" '
+        'aria-labelledby="abp-panchang-home-title" markdown="0">'
+        '<header class="abp-panchang__header"><h2 id="abp-panchang-home-title">'
+        '<span aria-hidden="true">🕉</span> Today According to the Panchang<br><span lang="hi">आज का पंचांग</span></h2>'
+        '<p>Hindu date, Tithi, Nakshatra and today’s devotional calendar</p>'
+        '<strong class="abp-panchang__date" data-panchang-field="date">Today</strong></header>'
+        + panchang_location_controls("home")
+        + panchang_status()
+        + '<dl class="abp-panchang__tiles">' + "".join(tile_html) + '</dl>'
+        '<aside class="abp-panchang__devotional" data-panchang-devotional hidden>'
+        '<h3>🙏 Today’s Devotional Significance</h3><p data-panchang-significance hidden></p><ul></ul></aside>'
+        '<nav class="abp-panchang__actions" aria-label="Panchang tools">'
+        '<a class="abp-panchang__cta abp-panchang__cta--full" href="panchang/">Full Panchang →</a>'
+        '<a class="abp-panchang__cta abp-panchang__cta--calendar" href="hindu-calendar/">Hindu Calendar →</a>'
+        '<a class="abp-panchang__cta abp-panchang__cta--converter" href="date-converter/">Date Converter →</a>'
+        '</nav><p class="abp-panchang__note">Calendar observances can vary by region and tradition.</p></section>\n'
+    )
+
+
+def page_panchang(d):
+    return titlebar("Today’s Panchang", "Daily Hindu calendar for your selected location", "abp-titlebar--sand") + (
+        '<section class="abp-panchang abp-panchang--page" data-panchang-view="full" markdown="0">'
+        + panchang_location_controls("full")
+        + '<div class="abp-panchang__daynav">'
+        '<button type="button" class="abp-btn" data-date-shift="-1">← Previous Day</button>'
+        '<button type="button" class="abp-btn" data-date-today>Today</button>'
+        '<label for="abp-panchang-date"><span class="abp-sr">Choose date</span>'
+        '<input id="abp-panchang-date" type="date" data-panchang-date></label>'
+        '<button type="button" class="abp-btn" data-date-shift="1">Next Day →</button></div>'
+        '<h2 class="abp-panchang__selected-date" data-panchang-field="date">Selected date</h2>'
+        + panchang_status()
+        + '<dl class="abp-panchang__details" data-panchang-details></dl>'
+        '<section class="abp-panchang__observances"><h2>Festivals &amp; Vratas</h2><ul data-panchang-festivals></ul>'
+        '<p>Festival and vrata dates can vary by sampradaya, region and local sunrise rules.</p></section>'
+        '<aside class="abp-panchang__devotional" data-panchang-devotional hidden><h2>Related devotional collection</h2>'
+        '<p data-panchang-significance hidden></p><ul></ul></aside></section>\n'
+    )
+
+
+def page_hindu_calendar(d):
+    month_options = "".join(
+        f'<option value="{index}">{name}</option>' for index, name in enumerate(
+            ("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"), 1
+        )
+    )
+    weekdays = "".join(f'<span>{day}</span>' for day in ("Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"))
+    return titlebar("Hindu Monthly Calendar", "Tithi and supported observances by civil month", "abp-titlebar--sand") + (
+        '<section class="abp-panchang abp-panchang--calendar" data-panchang-view="calendar" markdown="0">'
+        + panchang_location_controls("calendar")
+        + '<div class="abp-panchang__monthnav"><button type="button" class="abp-btn" data-month-prev>← Previous Month</button>'
+        '<button type="button" class="abp-btn" data-month-today>Today</button>'
+        f'<label for="abp-calendar-month"><span class="abp-sr">Month</span><select id="abp-calendar-month" data-calendar-month>{month_options}</select></label>'
+        '<label for="abp-calendar-year"><span class="abp-sr">Year</span><input id="abp-calendar-year" data-calendar-year type="number" min="1800" max="2200" inputmode="numeric"></label>'
+        '<button type="button" class="abp-btn" data-month-next>Next Month →</button></div>'
+        + panchang_status()
+        + f'<div class="abp-panchang-calendar__weekdays" aria-hidden="true">{weekdays}</div>'
+        '<div class="abp-panchang-calendar__grid" data-calendar-grid aria-label="Hindu monthly calendar"></div>'
+        '<p class="abp-panchang__note">Select a date to open its full Panchang. Festival observance can vary by region and tradition.</p></section>\n'
+    )
+
+
+def page_date_converter(d):
+    masa_options = "".join(
+        f'<option value="{index}">{name}</option>' for index, name in enumerate(
+            ("Chaitra", "Vaishakha", "Jyeshtha", "Ashadha", "Shravana", "Bhadrapada", "Ashwin", "Kartika", "Margashirsha", "Pausha", "Magha", "Phalguna")
+        )
+    )
+    return titlebar("Hindu Date Converter", "Convert between Gregorian and Hindu lunar dates", "abp-titlebar--sand") + (
+        '<section class="abp-panchang abp-panchang--converter" data-panchang-view="converter" markdown="0">'
+        + panchang_location_controls("converter")
+        + '<fieldset class="abp-converter__modes"><legend>Conversion direction</legend>'
+        '<label><input type="radio" name="abp-converter-mode" value="gregorian" checked> Gregorian → Hindu</label>'
+        '<label><input type="radio" name="abp-converter-mode" value="hindu"> Hindu → Gregorian</label></fieldset>'
+        '<div class="abp-converter__form" data-converter-gregorian-form><label for="abp-convert-gregorian">Gregorian date'
+        '<input id="abp-convert-gregorian" type="date" data-convert-gregorian required></label>'
+        '<button type="button" class="abp-btn abp-btn--big" data-convert-gregorian-button>Convert to Hindu date</button></div>'
+        '<div class="abp-converter__form" data-converter-hindu-form hidden>'
+        '<label for="abp-hindu-year">Vikram Samvat year<input id="abp-hindu-year" type="number" min="1500" max="3000" value="2083" inputmode="numeric" data-hindu-year></label>'
+        f'<label for="abp-hindu-month">Masa<select id="abp-hindu-month" data-hindu-month>{masa_options}</select></label>'
+        '<label for="abp-hindu-paksha">Paksha<select id="abp-hindu-paksha" data-hindu-paksha><option>Shukla</option><option>Krishna</option></select></label>'
+        '<label for="abp-hindu-tithi">Tithi number (1–15)<input id="abp-hindu-tithi" type="number" min="1" max="15" value="1" inputmode="numeric" data-hindu-tithi></label>'
+        '<label class="abp-converter__check"><input type="checkbox" data-hindu-adhika> Adhika Masa</label>'
+        '<button type="button" class="abp-btn abp-btn--big" data-convert-hindu-button>Find Gregorian date</button></div>'
+        + panchang_status("Choose a date and conversion direction.")
+        + '<section class="abp-converter__output" data-converter-output hidden><h2>Conversion result</h2><dl></dl><ol data-converter-matches></ol></section>'
+        '<p class="abp-panchang__note">Hindu → Gregorian conversion may return multiple dates. Results depend on location, sunrise and calendar convention.</p></section>\n'
+    )
+
+
 def page_home(d):
     total = sum(c["works_stated"] for c in d["categories"])
     groups = sum(len(c["merged"]) for c in d["categories"])
@@ -610,7 +736,8 @@ def page_home(d):
         '<a class="abp-btn abp-btn--big" href="a-z/" data-i18n="directory">A–Z Directory</a>'
         "</div>"
         "</nav>\n\n"
-        '<details class="abp-home-index abp-home-library" markdown="0">'
+        + panchang_summary_card()
+        + '<details class="abp-home-index abp-home-library" markdown="0">'
         '<summary><span aria-hidden="true">📚</span><span data-i18n="library">Scriptures &amp; Books Library</span></summary>'
         '<p class="abp-home-index__link"><a href="library/" data-i18n="viewFullLibrary">View the full Scriptures &amp; Books Library page</a></p>'
         + library_content(d)
@@ -911,6 +1038,9 @@ def on_config(config, **kw):
     add("a-z.md", "A–Z Work Directory", "tools")
     add("japa-counter.md", "Japa / Devotional Counter", "tools")
     add("favourites.md", "My Favourites", "tools")
+    add("panchang.md", "Today’s Panchang", "tools")
+    add("hindu-calendar.md", "Hindu Calendar", "tools")
+    add("date-converter.md", "Date Converter", "tools")
 
     config["nav"] = [
         {"Home": "index.md"},
@@ -933,6 +1063,9 @@ def on_config(config, **kw):
                 {"A–Z Work Directory": "a-z.md"},
                 {"Japa / Devotional Counter": "japa-counter.md"},
                 {"My Favourites": "favourites.md"},
+                {"Today’s Panchang": "panchang.md"},
+                {"Hindu Calendar": "hindu-calendar.md"},
+                {"Date Converter": "date-converter.md"},
             ]
         },
     ]
@@ -953,6 +1086,9 @@ def on_files(files, config, **kw):
         "a-z.md": lambda p: page_az(d),
         "japa-counter.md": lambda p: page_japa(d),
         "favourites.md": lambda p: page_favourites(d),
+        "panchang.md": lambda p: page_panchang(d),
+        "hindu-calendar.md": lambda p: page_hindu_calendar(d),
+        "date-converter.md": lambda p: page_date_converter(d),
     }
     sections = []
     for p in _pages:

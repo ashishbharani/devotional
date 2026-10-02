@@ -50,6 +50,7 @@ extra_javascript:
   - javascripts/abp.js
   - javascripts/abp-directory.js
   - javascripts/abp-japa.js
+  - javascripts/abp-panchang.js
   - javascripts/abp-pwa.js
   - javascripts/abp-a11y.js
 

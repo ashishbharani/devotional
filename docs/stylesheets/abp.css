@@ -1060,4 +1060,100 @@ html { scroll-padding-top: 3.4rem; }
 }
 @media screen and (max-width: 22em) {
   .abp-account-btn > span:last-child { display: none; }
+  .abp-language-btn { width: 44px; min-width: 44px; padding-inline: 0; }
+}
+
+/* ---------- Panchang ------------------------------------------------------- */
+.abp-panchang {
+  margin-block: 1rem; padding: clamp(.75rem, 2vw, 1.25rem); overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--abp-gold) 78%, transparent); border-radius: .75rem;
+  background: linear-gradient(145deg, color-mix(in srgb, var(--abp-paper) 94%, var(--abp-gold)), var(--abp-paper));
+  box-shadow: 0 .35rem 1.2rem rgba(74, 34, 12, .12); color: var(--abp-ink);
+}
+.abp-panchang__header { text-align: center; }
+.md-typeset .abp-panchang__header h2 { margin: 0; color: var(--abp-maroon); font-size: clamp(1rem, 3vw, 1.45rem); line-height: 1.25; }
+.abp-panchang__header h2 [lang="hi"] { color: var(--abp-saffron-ink, #9a3f00); font-size: .82em; }
+.abp-panchang__header p { margin: .35rem 0; color: var(--abp-ink-3); }
+.abp-panchang__date { display: block; margin-block: .4rem .7rem; color: var(--abp-maroon); font: 700 clamp(.78rem, 2vw, 1rem)/1.3 var(--abp-serif); }
+.abp-panchang__settings { display: grid; grid-template-columns: minmax(12rem, 2fr) minmax(8rem, 1fr) auto; align-items: end; gap: .55rem; margin-block: .65rem; }
+.abp-panchang__settings label, .abp-converter__form label { display: grid; gap: .18rem; min-width: 0; color: var(--abp-maroon); font: 700 .64rem/1.25 var(--abp-sans); }
+.abp-panchang :is(input, select) {
+  box-sizing: border-box; width: 100%; min-height: 44px; padding: .45rem .55rem;
+  border: 1px solid var(--abp-gold); border-radius: .4rem; background: var(--abp-paper); color: var(--abp-ink); font: 400 max(16px, .7rem)/1.2 var(--abp-sans);
+}
+.abp-panchang :is(input, select, button, a):focus-visible { outline: 3px solid var(--abp-focus); outline-offset: 2px; box-shadow: 0 0 0 6px var(--abp-focus-halo); }
+.abp-panchang__status { min-height: 1.3rem; margin: .55rem 0; color: var(--abp-ink-3); text-align: center; }
+.abp-panchang__status[data-state="loading"]::before { content: "ॐ"; display: inline-block; margin-inline-end: .35rem; color: var(--abp-saffron-ink, #9a3f00); }
+.abp-panchang__status[data-state="error"] { color: var(--abp-maroon); font-weight: 700; }
+.abp-panchang__tiles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .55rem; margin: 0; }
+.abp-panchang__tile, .abp-panchang__details > div, .abp-converter__output {
+  min-width: 0; padding: .65rem; border: 1px solid color-mix(in srgb, var(--abp-gold) 58%, transparent); border-radius: .55rem; background: var(--abp-row);
+}
+.abp-panchang__tile dt, .abp-panchang__details dt { color: var(--abp-maroon); font: 700 .62rem/1.3 var(--abp-sans); }
+.abp-panchang__tile dd, .abp-panchang__details dd { margin: .25rem 0 0; overflow-wrap: anywhere; font: 700 .78rem/1.35 var(--abp-serif); }
+.abp-panchang__tile small { display: block; margin-top: .2rem; color: var(--abp-ink-3); font-size: .56rem; }
+.abp-panchang__devotional, .abp-panchang__observances { margin-block: .7rem; padding: .65rem .8rem; border-inline-start: 4px solid var(--abp-gold); background: color-mix(in srgb, var(--abp-row) 85%, transparent); }
+.md-typeset .abp-panchang__devotional :is(h2,h3), .md-typeset .abp-panchang__observances h2 { margin: 0 0 .3rem; color: var(--abp-maroon); font-size: .78rem; }
+.abp-panchang__devotional :is(p,ul), .abp-panchang__observances :is(p,ul) { margin-block: .25rem; }
+.abp-panchang__actions { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .5rem; margin-top: .75rem; }
+.md-typeset .abp-panchang__cta { display: grid; place-items: center; min-height: 48px; padding: .5rem; border-radius: .45rem; color: #fff; font: 800 .65rem/1.25 var(--abp-sans); text-align: center; text-decoration: none; text-transform: uppercase; }
+.md-typeset .abp-panchang__cta--full { background: #761d2b; }
+.md-typeset .abp-panchang__cta--calendar { background: #a95300; color: #fff; }
+.md-typeset .abp-panchang__cta--converter { background: #17603b; }
+.abp-panchang__note { margin: .55rem 0 0; color: var(--abp-ink-3); font-size: .58rem; text-align: center; }
+.abp-panchang__daynav, .abp-panchang__monthnav { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: .4rem; margin-block: .75rem; }
+.abp-panchang__daynav :is(button,label), .abp-panchang__monthnav :is(button,label) { flex: 1 1 7rem; }
+.abp-panchang__selected-date { color: var(--abp-maroon); text-align: center; }
+.abp-panchang__details { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .5rem; margin: 0; }
+.abp-panchang-calendar__weekdays, .abp-panchang-calendar__grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: .25rem; }
+.abp-panchang-calendar__weekdays { margin-block: .65rem .3rem; color: var(--abp-maroon); font: 800 .62rem/1.2 var(--abp-sans); text-align: center; }
+.md-typeset .abp-panchang-calendar__day {
+  display: flex; min-width: 0; min-height: 5.2rem; padding: .35rem; flex-direction: column; gap: .18rem;
+  border: 1px solid color-mix(in srgb, var(--abp-gold) 58%, transparent); border-radius: .4rem;
+  background: var(--abp-row); color: var(--abp-ink); text-decoration: none; overflow-wrap: anywhere;
+}
+.abp-panchang-calendar__day b { color: var(--abp-maroon); font-size: .8rem; }
+.abp-panchang-calendar__day span { font: 700 .55rem/1.25 var(--abp-serif); }
+.abp-panchang-calendar__day small { color: var(--abp-saffron-ink, #9a3f00); font: 700 .46rem/1.2 var(--abp-sans); }
+.md-typeset .abp-panchang-calendar__day.is-today { border: 2px solid var(--abp-maroon); box-shadow: inset 0 0 0 2px var(--abp-gold); }
+.abp-panchang-calendar__day.is-unavailable { opacity: .6; }
+.abp-converter__modes { display: flex; flex-wrap: wrap; gap: .4rem 1rem; margin-block: .8rem; padding: .65rem; border: 1px solid var(--abp-gold); border-radius: .5rem; }
+.abp-converter__modes legend { padding-inline: .25rem; color: var(--abp-maroon); font-weight: 800; }
+.abp-converter__modes label { display: flex; align-items: center; gap: .3rem; min-height: 44px; }
+.abp-converter__modes input { width: 1rem; min-height: 1rem; }
+.abp-converter__form { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); align-items: end; gap: .55rem; padding: .75rem; border-radius: .55rem; background: var(--abp-row); }
+.abp-converter__form[hidden], .abp-converter__output[hidden] { display: none; }
+.abp-converter__form > .abp-btn { min-height: 44px; }
+.abp-converter__check { display: flex !important; align-items: center; min-height: 44px; }
+.abp-converter__check input { width: 1rem; min-height: 1rem; }
+.abp-converter__output { margin-top: .75rem; }
+.abp-converter__output dl { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .45rem; }
+.abp-converter__output dl > div { padding: .45rem; background: var(--abp-paper); }
+.abp-converter__output dt { color: var(--abp-maroon); font-weight: 700; }
+.abp-converter__output dd { margin: .15rem 0 0; }
+
+@media screen and (max-width: 60em) {
+  .abp-panchang__settings { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .abp-panchang__settings .abp-btn { grid-column: 1 / -1; }
+  .abp-panchang__tiles, .abp-panchang__details { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .abp-converter__form { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media screen and (max-width: 37.5em) {
+  .abp-panchang { margin-inline: -.2rem; padding: .65rem; }
+  .abp-panchang__actions, .abp-panchang__settings, .abp-converter__form { grid-template-columns: 1fr; }
+  .abp-panchang__settings .abp-btn { grid-column: auto; }
+  .abp-panchang__daynav :is(button,label), .abp-panchang__monthnav :is(button,label) { flex-basis: calc(50% - .4rem); }
+  .abp-panchang-calendar__weekdays, .abp-panchang-calendar__grid { gap: .12rem; }
+  .md-typeset .abp-panchang-calendar__day { min-height: 4.6rem; padding: .22rem; }
+  .abp-panchang-calendar__day span { font-size: .49rem; }
+  .abp-panchang-calendar__day small { display: none; }
+  .abp-converter__output dl { grid-template-columns: 1fr; }
+}
+@media screen and (max-width: 22em) {
+  .abp-panchang__tiles, .abp-panchang__details { grid-template-columns: 1fr; }
+  .md-typeset .abp-panchang-calendar__day { min-height: 4rem; }
+  .abp-panchang-calendar__day span { font-size: .44rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .abp-panchang__status[data-state="loading"]::before { animation: none; }
 }
