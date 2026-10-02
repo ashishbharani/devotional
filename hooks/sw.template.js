@@ -51,7 +51,7 @@ self.addEventListener("fetch", (event) => {
     event.respondWith(networkFirst(request));
     return;
   }
-  if (url.pathname.endsWith(".json") || /\.(?:css|js|svg|png|jpe?g|webp|woff2?)$/i.test(url.pathname)) {
+  if (url.pathname.endsWith(".json") || /\.(?:css|m?js|svg|png|jpe?g|webp|woff2?)$/i.test(url.pathname)) {
     event.respondWith(staleWhileRevalidate(request));
   }
 });
