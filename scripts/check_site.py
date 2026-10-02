@@ -15,6 +15,8 @@ ROUTES = (
     "library",
     "master-index",
     "japa-counter",
+    "favourites",
+    "offline",
 )
 
 
@@ -43,7 +45,6 @@ def main() -> int:
         require(f'href="{route}"' in home, f"homepage does not link to {route}", errors)
     require('href="japa-counter/"' in home, "homepage does not link to the Japa counter", errors)
     require('class="abp-home-utility"' in home, "homepage Japa utility control is missing", errors)
-    require("abp-install" not in home, "retired install UI remains on the homepage", errors)
     require("Save for Offline" not in home, "retired offline UI remains on the homepage", errors)
 
     directory = (site / "a-z" / "index.html").read_text(encoding="utf-8")
@@ -67,21 +68,50 @@ def main() -> int:
         works = json.loads(index_path.read_text(encoding="utf-8"))
         require(len(works.get("works", [])) == 43_085, "works index count is not 43,085", errors)
         require(bool(works.get("places")), "works index has no canonical locations", errors)
+        ids = [work[6] for work in works.get("works", []) if len(work) > 6]
+        require(len(ids) == 43_085, "not every indexed work has a canonical ID", errors)
+        require(len(set(ids)) == len(ids), "canonical work IDs are not unique", errors)
+        require(all(work_id.startswith("HDL2-CWID-") for work_id in ids), "canonical work ID format is invalid", errors)
         for place, *_ in works.get("places", [])[:: max(1, len(works.get("places", [])) // 6)]:
             path = place.split("#", 1)[0].strip("/")
             require((site / path / "index.html").is_file(), f"canonical work location is missing: {path}", errors)
 
     worker = (site / "sw.js").read_text(encoding="utf-8")
-    require("addEventListener(\"fetch\"" not in worker, "cleanup worker must not intercept requests", errors)
-    require('startsWith("abp-")' in worker, "cleanup worker is not scoped to abp-* caches", errors)
-    require(not (site / "manifest.webmanifest").exists(), "retired web manifest was generated", errors)
+    require("addEventListener(\"fetch\"" in worker, "PWA worker has no fetch handler", errors)
+    require('startsWith("abp-")' in worker, "worker does not retire only legacy abp-* caches", errors)
+    require("assets/works-index.json" not in worker.split("const scopeUrl", 1)[0], "full works index was precached", errors)
+    manifest_path = site / "manifest.webmanifest"
+    require(manifest_path.is_file(), "PWA manifest was not generated", errors)
+    if manifest_path.is_file():
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+        require(manifest.get("start_url") == "/devotional/", "manifest start_url is not /devotional/", errors)
+        require(manifest.get("scope") == "/devotional/", "manifest scope is not /devotional/", errors)
+        require(manifest.get("display") == "standalone", "manifest is not standalone", errors)
+        for icon in manifest.get("icons", []):
+            require((site / icon.get("src", "")).is_file(), f"manifest icon is missing: {icon.get('src')}", errors)
     require(not (site / "assets" / "offline-packs.json").exists(), "retired offline packs were generated", errors)
+
+    favourites = (site / "favourites" / "index.html").read_text(encoding="utf-8")
+    require('id="abp-favourites-page"' in favourites, "My Favourites application root is missing", errors)
+    require('id="account"' in favourites, "My Favourites account section is missing", errors)
+    require("abp-firebase-config.js" in favourites, "Firebase configuration module is not loaded", errors)
+    require("abp-favourites.js" in favourites, "favourites module is not loaded", errors)
+
+    sample_group = next(site.glob("categories/*/*/index.html"), None)
+    if sample_group:
+        sample_html = sample_group.read_text(encoding="utf-8")
+        require('data-work-id="HDL2-CWID-' in sample_html, "generated work rows do not emit canonical IDs", errors)
+        require('class="abp-favourite"' in sample_html, "generated work rows have no favourite control", errors)
+
+    rules = (root / "firestore.rules").read_text(encoding="utf-8")
+    require("request.auth != null && request.auth.uid == uid" in rules, "Firestore rules do not isolate each user", errors)
+    require("allow read, write: if false" in rules, "Firestore rules have no default deny", errors)
 
     if errors:
         print("Site smoke-check failures:")
         print("\n".join(f"- {error}" for error in errors))
         return 1
-    print(f"Site smoke checks passed: {len(ROUTES)} routes, 43,085 indexed works, sampled canonical work pages")
+    print(f"Site smoke checks passed: {len(ROUTES)} routes, 43,085 canonical work IDs, favourites and scoped PWA shell")
     return 0
 
 

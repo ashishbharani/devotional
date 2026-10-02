@@ -14,12 +14,12 @@ collected & compiled by Advocate Ashish Bharani.
   (link straight to a search with `find/?w=hanuman+chalisa`)
 * **A–Z Directory**: fast, letter-by-letter browsing from the same canonical work index, rendered in small batches
 * **Japa / Devotional Counter**: private, device-local counting with 108-bead mala totals, targets, undo and persistence
+* Optional **Google sign-in and favourites**: guests use a local IndexedDB store; signed-in users synchronize only their saved-work metadata through their own protected Firestore path
+* Installable **PWA**: a small application shell and pages the reader actually visits can work offline; the full catalogue is never precached
 
-## Online-only operation
+## Optional account and offline operation
 
-The website operates as a normal online site. Install prompts, offline packs and collection downloads have been
-retired. A small cleanup-only `sw.js` and `abp-cleanup.js` safely unregister an older site service worker and delete
-only this site's legacy `abp-*` caches. They do not handle requests, track visitors or touch unrelated caches.
+Browsing never requires an account. Firebase configuration is intentionally left as placeholders until the site owner follows [FIREBASE_SETUP.md](FIREBASE_SETUP.md). The service worker precaches only the application shell and caches catalogue pages as they are visited; it does not download all generated pages, works, books, PDFs, YouTube content, or Firebase traffic. During activation it removes only obsolete `udhc-*` and legacy site-owned `abp-*` caches.
 
 ## Accessibility (WCAG 2.2 AA)
 
@@ -58,7 +58,7 @@ Tuned for Safari (iPhone / iPad) and Chrome (Android phones & tablets):
 * **Touch & Safari details** – 44 px tap targets, 16 px inputs (no iOS zoom-on-focus), hover effects only on
   devices that can hover, notch-safe layout (`viewport-fit=cover`), fall-back colours for older iOS without
   `color-mix()`, no sideways scrolling.
-* **Browser polish** – favicon, iOS touch icon and light/dark browser-bar colours remain available without app-install UI.
+* **Browser polish** – favicon, iOS touch icon, light/dark browser-bar colours and a supported-device install control.
 
 ## Contributing
 

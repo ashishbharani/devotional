@@ -18,6 +18,7 @@ creates virtual pages at build time:
 from __future__ import annotations
 
 import html
+import hashlib
 import posixpath
 import json
 import re
@@ -73,6 +74,7 @@ I18N_TEXT = {
     "Find a Work": "find",
     "A–Z Work Directory": "directoryTitle",
     "Japa / Devotional Counter": "japaTitle",
+    "My Favourites": "myFavourites",
     "Important Disclaimer & Terms of Access": "disclaimerTitle",
     "Works": "works",
     "Language": "language",
@@ -188,6 +190,26 @@ def _norm(s: str) -> str:
     return re.sub(r"\s+", " ", (s or "")).strip().casefold()
 
 
+def canonical_work_id(category_num: int | str, group_name: str, form_name: str, work: dict) -> str:
+    """Return an existing CWID or a stable content-derived identifier.
+
+    The authoritative collection currently has no CWID field. The fallback is
+    derived from the immutable source identity before community corrections are
+    applied; it is never based on a generated row number, URL, or array index.
+    """
+    existing = work.get("cwid") or work.get("CWID") or work.get("work_id")
+    if existing:
+        return str(existing)
+    identity = {
+        "category": str(category_num),
+        "group": group_name,
+        "form": form_name,
+        "work": {key: value for key, value in work.items() if key not in {"cwid", "CWID", "work_id"}},
+    }
+    raw = json.dumps(identity, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
+    return "HDL2-CWID-" + hashlib.sha256(raw.encode("utf-8")).hexdigest()[:20].upper()
+
+
 def apply_community_edits(cat: dict, merged: "OrderedDict[str, dict]", report: dict) -> None:
     """Apply data/corrections.csv and data/additions.csv to one category (before pages are built)."""
     num = str(cat["num"])
@@ -254,14 +276,16 @@ def apply_community_edits(cat: dict, merged: "OrderedDict[str, dict]", report: d
             log.warning(f"{where}: tier must be T1, T2, T3 or T4 (got '{row.get('tier')}')")
             continue
         url = row.get("youtube") or row.get("url") or YT + quote_plus(title)
-        g["forms"].setdefault(fkey, []).append({
+        work = {
             "title": title, "url": url, "page": 0,
             "language": row.get("language", ""), "form": row.get("form", "").title(), "tier": tier,
             "singer": row.get("singer", row.get("preferred singer", "")),
             "purposes": row.get("purposes", row.get("traditional purposes", "")),
             "best_time": row.get("best time", row.get("best_time", "")),
             "jyotisha": row.get("jyotisha", ""), "affliction": row.get("affliction", row.get("horoscope affliction", "")),
-        })
+        }
+        work["cwid"] = canonical_work_id(num, gname, fkey, work)
+        g["forms"].setdefault(fkey, []).append(work)
         report["added"] += 1
 
 
@@ -285,6 +309,12 @@ def load():
                 if row.get("category", "").split(".")[0].strip() not in known:
                     log.warning(f'{name}.csv line {row["_line"]}: category must be a number from 1 to 42 (got "{row.get("category")}")')
         for cat in _data["categories"]:
+            for source_group in cat["groups"]:
+                for source_form in source_group["forms"]:
+                    for work in source_form["works"]:
+                        work["cwid"] = canonical_work_id(
+                            cat["num"], source_group["name"], source_form["name"], work
+                        )
             merged: OrderedDict[str, dict] = OrderedDict()
             for g in cat["groups"]:
                 tgt = merged.setdefault(g["name"], {"name": g["name"], "page": g["page"], "forms": OrderedDict()})
@@ -689,12 +719,15 @@ def page_group(c, g, part):
         name = f["name"] + (" — CONTINUED" if f["continued"] else "")
         out.append(f'\n<h3 id="{f["anchor"]}" class="abp-formbar" data-transliterate-ui>{esc(name)}</h3>\n')
         rows = []
+        canonical_location = f'{part["url"]}#{f["anchor"]}'
         for n, w in enumerate(f["works"], f["start"] + 1):
             rows.append(
-                "<tr>"
+                f'<tr data-work-id="{esc(w["cwid"])}">'
                 f'<td class="n">{n}</td>'
                 f'<th scope="row" class="w"><a href="{esc(w["url"])}" target="_blank" rel="noopener" title="Search YouTube for this work">'
-                f'<span class="abp-play" aria-hidden="true"></span><span class="abp-work-title">{esc(w["title"])}</span></a></th>'
+                f'<span class="abp-play" aria-hidden="true"></span><span class="abp-work-title">{esc(w["title"])}</span></a>'
+                f'<button type="button" class="abp-favourite" data-work-id="{esc(w["cwid"])}" data-title="{esc(w["title"])}" data-location="{esc(canonical_location)}" '
+                'aria-pressed="false" data-i18n-aria="addFavourite" aria-label="Add to favourites"><span aria-hidden="true">♡</span></button></th>'
                 + cell(w["language"], "lang", "Language")
                 + cell(w["form"], "form", "Form")
                 + f'<td class="tier" data-label="Tier" data-i18n-label="tier"><span class="abp-tier abp-tier--{esc(w["tier"].lower())}">{esc(w["tier"] or "—")}</span></td>'
@@ -707,7 +740,8 @@ def page_group(c, g, part):
             )
         out.append(
             f'<div class="abp-sheet abp-sheet--body" style="--rows:{len(f["works"])}" markdown="0">'
-            f'<table class="abp-table" role="table" data-search-exclude>'
+            f'<table class="abp-table" role="table" data-search-exclude data-category="{esc(c["title"])}" '
+            f'data-group="{esc(g["name"])}" data-form="{esc(f["name"])}">'
             f'<caption class="abp-sr">{esc(g["name"])} — {esc(name)}, {len(f["works"])} {"work" if len(f["works"]) == 1 else "works"}</caption>'
             f'{COLGROUP}{SR_HEAD}<tbody>\n'
             + "\n".join(rows)
@@ -791,6 +825,35 @@ def page_japa(d):
     )
 
 
+def page_favourites(d):
+    return titlebar("My Favourites", "Saved devotional works on this device", "abp-titlebar--sand") + (
+        '<div class="abp-favourites-page" id="abp-favourites-page" markdown="0">\n'
+        '<p class="abp-favourites-page__privacy" data-i18n="favouritesPrivacy">Guest favourites stay on this device. Sign in to synchronize favourites across your devices.</p>'
+        '<section class="abp-favourites-page__account" id="account"><h2 data-i18n="account">Account</h2><p id="abp-account-summary" data-i18n="signInGoogle">Sign in with Google</p></section>'
+        '<div class="abp-favourites-page__controls">'
+        '<label><span data-i18n="searchFavourites">Search favourites</span><input type="search" id="abp-favourites-search" autocomplete="off"></label>'
+        '<label><span data-i18n="category">Category</span><select id="abp-favourites-category"><option value="" data-i18n="allCategories">All categories</option></select></label>'
+        '<label><span data-i18n="language">Language</span><select id="abp-favourites-language"><option value="" data-i18n="allLanguages">All languages</option></select></label>'
+        '<label><span data-i18n="form">Form</span><select id="abp-favourites-form"><option value="" data-i18n="allForms">All forms</option></select></label>'
+        '</div>'
+        '<p id="abp-favourites-status" role="status" aria-live="polite" data-i18n="loading">Loading…</p>'
+        '<ol class="abp-favourites-page__list" id="abp-favourites-list"></ol>'
+        '<p class="abp-favourites-page__empty" id="abp-favourites-empty" data-i18n="noFavourites" hidden>No favourites saved yet.</p>'
+        '</div>\n'
+    )
+
+
+def page_offline(d):
+    return titlebar("You are offline", "Previously visited pages may still be available", "abp-titlebar--sand") + (
+        '<div class="abp-offline" markdown="0">'
+        '<p data-i18n="offlineMessage">This page has not been saved on this device. Reconnect to the internet and try again.</p>'
+        '<p><a class="abp-btn abp-btn--big" href="../" data-i18n="home">Home</a> '
+        '<a class="abp-btn abp-btn--big" href="../favourites/" data-i18n="myFavourites">My Favourites</a></p>'
+        '<p data-i18n="externalOnlineOnly">YouTube and external resources require an internet connection.</p>'
+        '</div>\n'
+    )
+
+
 def works_index(d) -> str:
     """Compact finder index: shared lookup tables + one short array per work."""
     langs, forms, places = [], [], []
@@ -803,7 +866,7 @@ def works_index(d) -> str:
                 key = f'{part["url"]}#{f["anchor"]}'
                 if key not in pi:
                     pi[key] = len(places)
-                    places.append([key, c["num"], f"{g['name']} › {f['name']}"])
+                    places.append([key, c["num"], f"{g['name']} › {f['name']}", title_case(c["title"])])
                 for w in f["works"]:
                     if w["language"] not in li:
                         li[w["language"]] = len(langs)
@@ -812,7 +875,7 @@ def works_index(d) -> str:
                         fi[w["form"]] = len(forms)
                         forms.append(w["form"])
                     url = 0 if w["url"] == YT + quote_plus(w["title"]) else w["url"]
-                    rows.append([w["title"], url, li[w["language"]], fi[w["form"]], w["tier"], pi[key]])
+                    rows.append([w["title"], url, li[w["language"]], fi[w["form"]], w["tier"], pi[key], w["cwid"]])
     return json.dumps({"langs": langs, "forms": forms, "places": places, "works": rows}, ensure_ascii=False, separators=(",", ":"))
 
 
@@ -847,6 +910,7 @@ def on_config(config, **kw):
     add("find.md", "Find a Work", "tools")
     add("a-z.md", "A–Z Work Directory", "tools")
     add("japa-counter.md", "Japa / Devotional Counter", "tools")
+    add("favourites.md", "My Favourites", "tools")
 
     config["nav"] = [
         {"Home": "index.md"},
@@ -868,6 +932,7 @@ def on_config(config, **kw):
                 {"Find a Work": "find.md"},
                 {"A–Z Work Directory": "a-z.md"},
                 {"Japa / Devotional Counter": "japa-counter.md"},
+                {"My Favourites": "favourites.md"},
             ]
         },
     ]
@@ -887,6 +952,7 @@ def on_files(files, config, **kw):
         "find.md": lambda p: page_find(d),
         "a-z.md": lambda p: page_az(d),
         "japa-counter.md": lambda p: page_japa(d),
+        "favourites.md": lambda p: page_favourites(d),
     }
     sections = []
     for p in _pages:
@@ -926,14 +992,37 @@ def on_files(files, config, **kw):
         files.append(File.generated(config, src, content=front_matter(**meta) + body))
 
     files.append(File.generated(config, "assets/works-index.json", content=works_index(d)))
+    if not files.get_file_from_path("offline.md"):
+        offline_meta = {"title": "You are offline", "hide": ["navigation", "toc"]}
+        files.append(File.generated(config, "offline.md", content=front_matter(**offline_meta) + page_offline(d)))
     return files
 
 
-# --------------------------------------------------------------------------- legacy PWA migration
+# --------------------------------------------------------------------------- PWA shell
 
 
 def on_post_build(config, **kw):
-    """Publish a cleanup-only worker so existing PWA users leave the retired offline version safely."""
+    """Publish a versioned, shell-only worker without precaching the catalogue."""
     site = Path(config["site_dir"])
     tpl = (ROOT / "hooks" / "sw.template.js").read_text(encoding="utf-8")
-    (site / "sw.js").write_text(tpl, encoding="utf-8")
+    shell = [
+        "", "offline/", "favourites/", "manifest.webmanifest", "stylesheets/abp.css",
+        "assets/images/logo.svg", "assets/images/icon-192.png", "assets/images/icon-512.png",
+        "assets/images/icon-maskable-512.png", "assets/images/apple-touch-icon.png",
+    ]
+    shell.extend(f"javascripts/{path.name}" for path in sorted((site / "javascripts").glob("*.js")))
+    shell.extend(path.relative_to(site).as_posix() for pattern in (
+        "assets/stylesheets/main.*.min.css", "assets/stylesheets/palette.*.min.css",
+        "assets/javascripts/bundle.*.min.js",
+    ) for path in sorted(site.glob(pattern)))
+    shell = [path for path in dict.fromkeys(shell) if path == "" or (site / path).exists()]
+    signature = hashlib.sha256()
+    for path in shell:
+        target = site / (path or "index.html")
+        if target.is_dir():
+            target = target / "index.html"
+        if target.is_file():
+            signature.update(target.read_bytes())
+    worker = tpl.replace("__UDHC_VERSION__", signature.hexdigest()[:12])
+    worker = worker.replace("__UDHC_SHELL__", json.dumps(shell, separators=(",", ":")))
+    (site / "sw.js").write_text(worker, encoding="utf-8")

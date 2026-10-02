@@ -19,6 +19,10 @@ jobs:
       - name: Build MkDocs site (every warning fails the check)
         run: uv run mkdocs build --strict 2>&1 | tee build.log
         shell: bash
+      - name: Audit generated routes, canonical IDs, translations and PWA shell
+        run: |
+          uv run python scripts/check_site.py
+          uv run python scripts/check_i18n.py
       - name: Explain problems in plain language
         if: failure()
         shell: bash
