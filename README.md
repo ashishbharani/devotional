@@ -93,6 +93,8 @@ docs/stylesheets/abp.css  theme styles and colour tokens (sampled from the PDF)
 docs/javascripts/abp.js   Find a Work page logic
 docs/javascripts/abp-directory.js  A–Z batching and navigation
 docs/javascripts/abp-japa.js       device-local Japa counter
+docs/javascripts/abp-panchang.js   lazy Panchang application loader
+docs/assets/panchang/              pinned browser engine and modular Panchang UI
 docs/assets/i18n.json     central interface translations for all ten languages
 docs/assets/images/       cover art (WebP/JPEG sizes), signature, diya logo and icons
 mkdocs.yml                site configuration
@@ -124,6 +126,9 @@ checks itself against the counts printed in the PDF's Integrated Master Index.
 | `/find/` | Search across every work |
 | `/a-z/` | Letter-by-letter directory over the canonical work index |
 | `/japa-counter/` | Private device-local Japa / Devotional Counter |
+| `/panchang/` | Full location-sensitive daily Panchang |
+| `/hindu-calendar/` | Monthly Hindu calendar with Tithi and observances |
+| `/date-converter/` | Gregorian ↔ Hindu date converter |
 
 > Note: Material for MkDocs prints a notice about MkDocs 2.0. This project pins `mkdocs<2`, which is what
 > Material supports, so the notice can be ignored.

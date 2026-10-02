@@ -16,6 +16,9 @@ ROUTES = (
     "master-index",
     "japa-counter",
     "favourites",
+    "panchang",
+    "hindu-calendar",
+    "date-converter",
     "offline",
 )
 
@@ -44,6 +47,9 @@ def main() -> int:
     for route in ("foreword/", "disclaimer/", "find/", "a-z/", "library/", "master-index/"):
         require(f'href="{route}"' in home, f"homepage does not link to {route}", errors)
     require('href="japa-counter/"' in home, "homepage does not link to the Japa counter", errors)
+    require('data-panchang-view="summary"' in home, "homepage Panchang summary is missing", errors)
+    for route in ("panchang/", "hindu-calendar/", "date-converter/"):
+        require(f'href="{route}"' in home, f"homepage Panchang does not link to {route}", errors)
     require('class="abp-home-utility"' in home, "homepage Japa utility control is missing", errors)
     require("Save for Offline" not in home, "retired offline UI remains on the homepage", errors)
 
@@ -97,6 +103,25 @@ def main() -> int:
     require("abp-firebase-config.js" in favourites, "Firebase configuration module is not loaded", errors)
     require("abp-favourites.js" in favourites, "favourites module is not loaded", errors)
 
+    panchang = (site / "panchang" / "index.html").read_text(encoding="utf-8")
+    require('data-panchang-view="full"' in panchang, "Full Panchang application root is missing", errors)
+    require("abp-panchang.js" in panchang, "Panchang loader is not included", errors)
+    require('data-date-shift="-1"' in panchang and 'data-date-shift="1"' in panchang, "Panchang day navigation is missing", errors)
+    calendar = (site / "hindu-calendar" / "index.html").read_text(encoding="utf-8")
+    require('data-panchang-view="calendar"' in calendar, "Hindu calendar application root is missing", errors)
+    require("data-calendar-grid" in calendar, "Hindu calendar grid is missing", errors)
+    converter = (site / "date-converter" / "index.html").read_text(encoding="utf-8")
+    require('data-panchang-view="converter"' in converter, "Date converter application root is missing", errors)
+    require("data-convert-gregorian-button" in converter, "Gregorian converter is missing", errors)
+    require("data-convert-hindu-button" in converter, "Hindu converter is missing", errors)
+    for asset in (
+        "assets/panchang/panchang-engine.mjs",
+        "assets/panchang/panchang-app.mjs",
+        "assets/panchang/settings.mjs",
+        "assets/panchang/festival-links.mjs",
+    ):
+        require((site / asset).is_file(), f"Panchang asset is missing: {asset}", errors)
+
     sample_group = next(site.glob("categories/*/*/index.html"), None)
     if sample_group:
         sample_html = sample_group.read_text(encoding="utf-8")
@@ -111,7 +136,7 @@ def main() -> int:
         print("Site smoke-check failures:")
         print("\n".join(f"- {error}" for error in errors))
         return 1
-    print(f"Site smoke checks passed: {len(ROUTES)} routes, 43,085 canonical work IDs, favourites and scoped PWA shell")
+    print(f"Site smoke checks passed: {len(ROUTES)} routes, 43,085 canonical work IDs, Panchang, favourites and scoped PWA shell")
     return 0
 
 
