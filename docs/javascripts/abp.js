@@ -54,9 +54,14 @@
       const place = data.places[w[5]];
       const href = w[1] === 0 ? YT + encodeURIComponent(w[0]).replace(/%20/g, "+") : w[1];
       const [grp, form] = place[2].split(" › ");
+      const favourite = window.abpFavourites?.buttonHTML({
+        id: w[6], title: w[0], category: place[3] || String(place[1]), group: grp,
+        language: data.langs[w[2]], form: data.forms[w[3]], tier: w[4],
+        location: place[0], youtube: href,
+      }) || "";
       return (
         `<tr role="row"><td role="cell" class="n">${i + 1}</td>` +
-        `<th role="rowheader" scope="row" class="w"><a href="${esc(href)}" target="_blank" rel="noopener" aria-label="${esc(w[0])} — ${esc(t("searchYoutube"))}, ${esc(t("newTab"))}"><span class="abp-play" aria-hidden="true"></span><span class="abp-work-title">${esc(w[0])}</span></a></th>` +
+        `<th role="rowheader" scope="row" class="w"><a href="${esc(href)}" target="_blank" rel="noopener" aria-label="${esc(w[0])} — ${esc(t("searchYoutube"))}, ${esc(t("newTab"))}"><span class="abp-play" aria-hidden="true"></span><span class="abp-work-title">${esc(w[0])}</span></a>${favourite}</th>` +
         `<td role="cell" class="lang" data-label="${esc(t("language"))}" data-i18n-label="language">${esc(data.langs[w[2]] || "—")}</td>` +
         `<td role="cell" class="form" data-label="${esc(t("form"))}" data-i18n-label="form">${esc(data.forms[w[3]] || "—")}</td>` +
         `<td role="cell" class="tier" data-label="${esc(t("tier"))}" data-i18n-label="tier"><span class="abp-tier abp-tier--${esc((w[4] || "").toLowerCase())}">${esc(w[4] || "—")}</span></td>` +
@@ -68,6 +73,7 @@
     function renderMore() {
       const next = hits.slice(shown, shown + BATCH());
       out.insertAdjacentHTML("beforeend", next.map((w, i) => row(w, shown + i)).join(""));
+      window.abpFavourites?.paintButtons(out);
       if (window.abpI18n) window.abpI18n.translate(out);
       shown += next.length;
       more.hidden = shown >= hits.length;

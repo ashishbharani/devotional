@@ -1,0 +1,16 @@
+{
+  "name": "Ultimate Hindu Devotional Collection",
+  "short_name": "UDHC",
+  "description": "A Pan-India multilingual devotional reference.",
+  "id": "/devotional/",
+  "start_url": "/devotional/",
+  "scope": "/devotional/",
+  "display": "standalone",
+  "background_color": "#fbf6e8",
+  "theme_color": "#82382f",
+  "icons": [
+    { "src": "assets/images/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "assets/images/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "assets/images/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

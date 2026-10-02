@@ -339,6 +339,7 @@ body { background: var(--abp-paper); }
 .abp-stats span { font-size: .6rem; color: var(--abp-ink-3); text-transform: uppercase; letter-spacing: .06em; }
 .abp-home-actions { display: grid; gap: .65rem; max-width: 52rem; margin: 0 auto .75rem; }
 .abp-home-actions__row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .65rem; }
+.abp-home-actions__row > .abp-btn { min-width: 0; white-space: normal; overflow-wrap: anywhere; }
 .md-typeset .abp-home-actions .abp-btn { min-height: 2.65rem; font-size: .68rem; }
 .md-typeset .abp-home-actions__wide { gap: .5rem; min-height: 3.2rem; font-size: .78rem; }
 .abp-home-actions__wide > span[aria-hidden] { font-size: 1.25rem; }
@@ -960,7 +961,7 @@ html[dir="rtl"] .abp-table :is(td, th), html[dir="rtl"] .abp-titlebar__h { unico
    WCAG 2.2 AA — remaining criteria
    ========================================================================== */
 /* stats list */
-.md-typeset ul.abp-stats { list-style: none; padding: 0; margin: 0 0 1rem; }
+.md-typeset ul.abp-stats { display: grid; list-style: none; padding: 0; margin: 0 0 1rem; }
 .md-typeset ul.abp-stats li { margin: 0; }
 .abp-stats b, .abp-stats span { display: block; }
 
@@ -988,3 +989,75 @@ html { scroll-padding-top: 3.4rem; }
 .md-typeset .abp-table .w a { align-items: center; }
 .md-typeset .abp-table .w .abp-play { margin-top: 0; }
 .abp-page:focus { outline: none; }
+
+/* ---------- account, favourites, and install controls ----------------------- */
+.abp-account { position: relative; display: flex; align-items: center; }
+.abp-account-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: .3rem;
+  width: auto; min-width: 2.4rem; max-width: 10rem; padding-inline: .45rem;
+  color: inherit; cursor: pointer; font: 700 .6rem/1.2 var(--abp-sans);
+}
+.abp-account-btn:disabled { opacity: .65; cursor: wait; }
+.abp-account-btn img { width: 1.45rem; height: 1.45rem; border-radius: 50%; object-fit: cover; }
+.abp-account-btn > span:last-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.abp-google { display: grid; place-items: center; width: 1.35rem; height: 1.35rem; flex: none; border-radius: 50%; background: #fff; color: #2457c5; font: 800 .72rem/1 sans-serif; }
+.abp-account-menu {
+  position: absolute; z-index: 15; inset-block-start: calc(100% + .25rem); inset-inline-end: 0;
+  width: max-content; min-width: 10rem; padding: .3rem; border: 1px solid var(--abp-gold); border-radius: .55rem;
+  background: var(--abp-paper); color: var(--abp-ink); box-shadow: 0 8px 30px rgba(0,0,0,.28);
+}
+.abp-account-menu[hidden] { display: none; }
+.abp-account-menu :is(a, button) {
+  display: flex; align-items: center; width: 100%; min-height: 44px; padding: .5rem .65rem; border: 0; border-radius: .35rem;
+  background: transparent; color: var(--abp-ink); font: 600 .68rem/1.25 var(--abp-sans); text-align: start; text-decoration: none; cursor: pointer;
+}
+.abp-account-menu :is(a, button):hover { background: var(--abp-row); }
+
+.abp-favourite {
+  display: inline-grid; place-items: center; width: 42px; height: 42px; margin-inline-start: .25rem; padding: 0;
+  border: 1px solid color-mix(in srgb, var(--abp-maroon) 55%, transparent); border-radius: 50%;
+  background: var(--abp-row); color: var(--abp-maroon); font: 700 1.2rem/1 sans-serif; cursor: pointer; vertical-align: middle;
+}
+.abp-favourite[aria-pressed="true"] { background: var(--abp-maroon); color: #fff; }
+[data-md-color-scheme="abp-dark"] .abp-favourite[aria-pressed="true"] { color: #1d1611; }
+.abp-favourite:focus-visible, .abp-account :is(button,a):focus-visible, .abp-install-btn:focus-visible {
+  outline: 3px solid var(--abp-focus); outline-offset: 2px; box-shadow: 0 0 0 6px var(--abp-focus-halo);
+}
+.md-typeset .abp-table .w { position: relative; }
+.md-typeset .abp-table .w > .abp-favourite { float: inline-end; margin-block: -.35rem; }
+.md-typeset .abp-directory__results li { display: flex; align-items: stretch; gap: .35rem; }
+.md-typeset .abp-directory__results li > a { flex: 1; min-width: 0; }
+.md-typeset .abp-directory__results li > .abp-favourite { flex: none; align-self: center; }
+
+.abp-favourites-page__privacy { padding: .65rem .8rem; border-inline-start: 4px solid var(--abp-gold); background: var(--abp-row); }
+.abp-favourites-page__account { margin-block: .75rem; padding: .55rem .75rem; border: 1px solid color-mix(in srgb, var(--abp-gold) 60%, transparent); border-radius: .5rem; }
+.abp-favourites-page__account h2 { margin: 0; font-size: .75rem; }
+.abp-favourites-page__account p { margin: .15rem 0 0; color: var(--abp-ink-3); }
+.abp-favourites-page__controls { display: grid; grid-template-columns: minmax(12rem, 2fr) repeat(3, minmax(8rem, 1fr)); gap: .55rem; margin-block: 1rem; }
+.abp-favourites-page__controls label { display: grid; gap: .2rem; font-weight: 700; font-size: .62rem; }
+.abp-favourites-page__controls :is(input,select) { min-height: 44px; width: 100%; padding: .4rem .5rem; border: 1px solid var(--abp-gold); border-radius: .4rem; background: var(--abp-paper); color: var(--abp-ink); }
+.md-typeset .abp-favourites-page__list { display: grid; gap: .55rem; margin: 0; padding: 0; list-style: none; }
+.md-typeset .abp-favourites-page__list > li { display: flex; align-items: center; justify-content: space-between; gap: .75rem; margin: 0; padding: .65rem .75rem; border: 1px solid color-mix(in srgb, var(--abp-gold) 65%, transparent); border-radius: .55rem; background: var(--abp-row); }
+.abp-favourites-page__list small { display: block; margin-top: .18rem; color: var(--abp-ink-3); font-size: .56rem; }
+.abp-favourites-page__actions { display: flex; align-items: center; gap: .25rem; flex: none; }
+.abp-favourites-page__actions .abp-btn { min-height: 42px; }
+.abp-favourites-page__empty { text-align: center; padding: 2rem 1rem; color: var(--abp-ink-3); }
+
+.abp-install-btn { display: inline-flex; align-items: center; gap: .25rem; width: auto; min-width: 2.4rem; padding-inline: .45rem; color: inherit; cursor: pointer; font: 700 .6rem/1.2 var(--abp-sans); }
+.abp-ios-install { position: fixed; z-index: 20; inset-inline: .75rem; inset-block-end: calc(.75rem + env(safe-area-inset-bottom, 0px)); max-width: 28rem; margin-inline: auto; padding: .75rem 2.6rem .75rem .85rem; border: 2px solid var(--abp-gold); border-radius: .7rem; background: var(--abp-paper); color: var(--abp-ink); box-shadow: 0 10px 35px rgba(0,0,0,.3); font-size: .68rem; }
+.abp-ios-install button { position: absolute; inset-block-start: .25rem; inset-inline-end: .25rem; width: 36px; height: 36px; border: 0; background: transparent; color: inherit; font-size: 1.1rem; cursor: pointer; }
+
+@media screen and (max-width: 60em) {
+  .abp-favourites-page__controls { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .abp-install-btn span:last-child { display: none; }
+}
+@media screen and (max-width: 37.5em) {
+  .md-header__title { display: none; }
+  .abp-favourites-page__controls { grid-template-columns: 1fr; }
+  .md-typeset .abp-favourites-page__list > li { align-items: flex-start; flex-direction: column; }
+  .abp-favourites-page__actions { width: 100%; justify-content: flex-end; }
+  .abp-account-btn { max-width: 5.5rem; }
+}
+@media screen and (max-width: 22em) {
+  .abp-account-btn > span:last-child { display: none; }
+}

@@ -15,6 +15,12 @@
     category: "Category", currentCount: "Current count", tapToCount: "Tap to count +1",
     lastTapUndone: "Last tap undone", freshQuestion: "Start a fresh session? Today’s total will be kept.",
     resetQuestion: "Reset the current session and today’s total? This cannot be undone.",
+    myFavourites: "My Favourites", account: "Account", signIn: "Sign in", signInGoogle: "Sign in with Google",
+    signOut: "Sign out", addFavourite: "Add to favourites", removeFavourite: "Remove from favourites",
+    favourites: "favourites", installApp: "Install App", listen: "Listen",
+    firebaseNotConfigured: "Google sign-in is not configured yet.", popupBlocked: "The sign-in popup was blocked.",
+    networkError: "A network error occurred.", sessionExpired: "Your session expired. Please sign in again.",
+    signInFailed: "Sign-in could not be completed.", signOutFailed: "Sign-out could not be completed.", signedOut: "You have signed out.",
     titleTransliterationNote: "Sacred work names use script transliteration. The original title remains available underneath.",
   };
   const script = document.querySelector('script[src*="javascripts/abp-i18n.js"]');
@@ -28,7 +34,7 @@
     ["Home", "home"], ["Foreword", "foreword"], ["Disclaimer & Terms", "disclaimer"],
     ["Hindu Scriptures & Books Library", "library"], ["Scriptures & Books Library", "library"],
     ["Religious Music", "index"], ["Integrated Master Index", "index"], ["Find a Work", "find"],
-    ["A–Z Work Directory", "directory"], ["Japa / Devotional Counter", "japa"], ["Tools", "tools"],
+    ["A–Z Work Directory", "directory"], ["Japa / Devotional Counter", "japa"], ["My Favourites", "myFavourites"], ["Tools", "tools"],
   ]);
   const originalText = new WeakMap();
   let locales = Object.fromEntries(order.map((code) => [code, { name: localeNames[code], strings: {} }]));

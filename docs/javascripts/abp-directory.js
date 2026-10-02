@@ -57,10 +57,17 @@
     function row(work, number) {
       const place = data.places[work[5]];
       const locationLabel = place[2].replace(" › ", " · ");
-      return `<li><a href="${esc(new URL(place[0], siteRoot).href)}">` +
+      const [group, form] = place[2].split(" › ");
+      const youtube = work[1] === 0 ? `https://www.youtube.com/results?search_query=${encodeURIComponent(work[0]).replace(/%20/g, "+")}` : work[1];
+      const favourite = window.abpFavourites?.buttonHTML({
+        id: work[6], title: work[0], category: place[3] || String(place[1]), group,
+        language: data.langs[work[2]], form: data.forms[work[3]], tier: work[4],
+        location: place[0], youtube,
+      }) || "";
+      return `<li><a data-work-location="${esc(place[0])}" href="${esc(new URL(place[0], siteRoot).href)}">` +
         `<span class="abp-directory__number" aria-hidden="true">${number}</span>` +
         `<span><b class="abp-work-title">${esc(work[0])}</b>` +
-        `<small>${esc(locationLabel)} · ${esc(t("category"))} ${place[1]}</small></span></a></li>`;
+        `<small>${esc(locationLabel)} · ${esc(t("category"))} ${place[1]}</small></span></a>${favourite}</li>`;
     }
 
     function updateStatus() {
@@ -78,6 +85,7 @@
     function renderMore() {
       const next = hits.slice(shown, shown + BATCH());
       results.insertAdjacentHTML("beforeend", next.map((work, index) => row(work, shown + index + 1)).join(""));
+      window.abpFavourites?.paintButtons(results);
       shown += next.length;
       more.hidden = shown >= hits.length;
       if (window.abpI18n) window.abpI18n.translate(results);
