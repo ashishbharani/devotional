@@ -70,11 +70,16 @@ function rawForDate(dateKey, settings) {
   return rawCache.get(key);
 }
 
-function solarForDate(dateKey, settings) {
-  const key = cacheKey(dateKey, settings);
-  if (!solarCache.has(key)) {
-    const bounds = localDayBounds(dateKey, settings.location.timezone, settings.location.timezoneOffset);
-    solarCache.set(key, solarEvents(dateKey, settings.location, bounds));
+function civilEvent(raw, field, dateKey, settings, warnings) {
+  const direct = safeAstronomicalDate(raw[field]);
+  if (direct && isEventOnLocalCivilDate(direct, dateKey, settings.location.timezone)) return direct;
+
+  // The pinned engine searches once from local midnight. Verify its returned
+  // event rather than recalculate the entire Panchang at different clock times.
+  // Next-day events are not events of the requested local civil date.
+  if (field === "moonrise" || field === "moonset") {
+    warnings.push(`No ${field === "moonrise" ? "Moonrise" : "Moonset"} occurs on this location-local civil date.`);
+    return null;
   }
   return solarCache.get(key);
 }
@@ -111,7 +116,8 @@ export async function calculatePanchangDay(dateKey, settings) {
   const day = {
     date: dateKey,
     location: { ...settings.location },
-    weekday: nameAt(varaNames, weekdayIndex),
+    timezone: settings.location.timezone,
+    weekday: nameAt(varaNames, raw.vara),
     locationDate: localDateKey(sunrise, settings.location.timezone),
     timezoneOffset: timezoneOffsetForInstant(sunrise, settings.location.timezone, settings.location.timezoneOffset),
     sunrise,

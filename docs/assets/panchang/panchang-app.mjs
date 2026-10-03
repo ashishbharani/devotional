@@ -62,8 +62,12 @@ function populateLocationControl(root, settings, refresh) {
     timezoneInput.value = settings.location.timezone;
     timezoneInput.addEventListener("change", () => {
       const timezone = timezoneInput.value.trim();
-      try { new Intl.DateTimeFormat("en", { timeZone: timezone }).format(new Date()); }
-      catch (_) { timezoneInput.setCustomValidity("Enter a valid IANA timezone, for example Asia/Kolkata."); timezoneInput.reportValidity(); return; }
+      try { new Intl.DateTimeFormat("en-IN", { timeZone: timezone }).format(); }
+      catch (_) {
+        timezoneInput.setCustomValidity("Enter a valid IANA timezone, such as Asia/Kolkata.");
+        timezoneInput.reportValidity();
+        return;
+      }
       timezoneInput.setCustomValidity("");
       settings.location = { ...settings.location, timezone };
       saveSettings(settings);
@@ -92,7 +96,7 @@ function populateLocationControl(root, settings, refresh) {
       input.setCustomValidity("");
       if (settings.location.id === city.id) return;
       settings.location = { ...city };
-      if (timezoneInput) timezoneInput.value = city.timezone;
+      if (timezoneInput) { timezoneInput.value = city.timezone; timezoneInput.setCustomValidity(""); }
       saveSettings(settings);
       clearPanchangCache();
       refresh();
@@ -119,7 +123,9 @@ function populateLocationControl(root, settings, refresh) {
     setStatus(root, "Waiting for location permission…", "loading");
     navigator.geolocation.getCurrentPosition(
       (position) => {
-        const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone || DEFAULT_LOCATION.timezone;
+        // Coordinates do not identify a timezone. Retain the visibly selected
+        // IANA zone; never silently substitute the computer's timezone.
+        const timezone = settings.location.timezone || DEFAULT_LOCATION.timezone;
         settings.location = {
           id: "device",
           name: "My location",
@@ -127,7 +133,7 @@ function populateLocationControl(root, settings, refresh) {
           longitude: position.coords.longitude,
           altitude: position.coords.altitude || 0,
           timezone,
-          timezoneOffset: -new Date().getTimezoneOffset(),
+          timezoneOffset: settings.location.timezoneOffset || 0,
         };
         if (input) input.value = settings.location.name;
         if (timezoneInput) timezoneInput.value = timezone;
@@ -181,8 +187,10 @@ function renderCommon(root, result) {
   setText(root, "nakshatra-end", shortTime(result.nakshatraTransitions[0]?.end, root._panchangSettings.location, result.date));
   setText(root, "festival", events.join("; ") || "No major observance identified in the current ruleset.");
   setText(root, "sunrise-sunset", `${shortTime(result.sunrise, root._panchangSettings.location)} / ${shortTime(result.sunset, root._panchangSettings.location)}`);
-  setText(root, "moonrise", formatMoonEvent(result.moonrise, "Moonrise", result.location, result.date));
-  setText(root, "moonset", formatMoonEvent(result.moonset, "Moonset", result.location, result.date));
+  for (const field of ["sunrise", "sunset", "moonrise", "moonset"]) {
+    const label = field === "moonrise" ? "Moonrise" : "Moonset";
+    setText(root, field, result[field] ? shortTime(result[field], root._panchangSettings.location) : noCivilEvent(label));
+  }
   setText(root, "convention", root._panchangSettings.convention === "purnimanta" ? "Purnimanta" : "Amanta");
   setText(root, "yoga", result.sunriseYoga.name);
   setText(root, "karana", result.sunriseKarana.name);

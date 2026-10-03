@@ -34,6 +34,8 @@ jobs:
           enable-cache: true
       - name: Test Panchang calculations and reference fixtures
         run: node scripts/test_panchang.mjs
+      - name: Test ephemeris timezone boundaries and native Swiss golden fixtures
+        run: node scripts/test_ephemeris.mjs
       - name: Build MkDocs site
         env:
           SITE_URL: ${{ steps.pages.outputs.base_url }}/

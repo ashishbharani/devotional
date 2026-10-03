@@ -588,6 +588,8 @@ def panchang_location_controls(suffix):
         f'<label for="abp-panchang-convention-{suffix}"><span>Calendar</span>'
         f'<select id="abp-panchang-convention-{suffix}" data-panchang-convention>'
         '<option value="amanta">Amanta</option><option value="purnimanta">Purnimanta</option></select></label>'
+        f'<label for="abp-panchang-timezone-{suffix}"><span>Location timezone (IANA)</span>'
+        f'<input id="abp-panchang-timezone-{suffix}" data-panchang-timezone value="Asia/Kolkata" autocomplete="off"></label>'
         '<button type="button" class="abp-btn" data-panchang-geolocate>Use My Location</button>'
         f'<label for="abp-panchang-timezone-{suffix}"><span>Location timezone (IANA)</span>'
         f'<input id="abp-panchang-timezone-{suffix}" data-panchang-timezone type="text" '
@@ -608,12 +610,10 @@ def panchang_summary_card():
         ("Masa / मास", "masa", "convention", "Convention"),
         ("Nakshatra / नक्षत्र", "nakshatra", "nakshatra-end", "Ends"),
         ("Festival / Vrata / उत्सव-व्रत", "festival", None, None),
-        ("Sunrise / Sunset / सूर्योदय-सूर्यास्त", "sunrise-sunset", None, None),
-        ("Moonrise / Chandrodaya", "moonrise", None, None),
-        ("Moonset / Chandrasta", "moonset", None, None),
-        ("Yoga", "yoga", None, None),
-        ("Karana", "karana", None, None),
-        ("Next Tithi / Transition", "next-tithi", None, None),
+        ("Sunrise / सूर्योदय", "sunrise", None, None),
+        ("Sunset / सूर्यास्त", "sunset", None, None),
+        ("Moonrise / चन्द्रोदय", "moonrise", None, None),
+        ("Moonset / चन्द्रास्त", "moonset", None, None),
     ]
     tile_html = []
     for label, field, subfield, sublabel in tiles:
@@ -780,6 +780,7 @@ def page_home(d):
         '<nav class="abp-home-utility" markdown="0" aria-label="Tools" data-i18n-aria="tools">'
         '<a class="abp-btn abp-btn--big" href="japa-counter/">'
         '<span aria-hidden="true">📿</span><span data-i18n="japa">Japa / Devotional Counter</span></a>'
+        '<a class="abp-btn abp-btn--big" href="tools/indian-ephemeris/">Indian Ephemeris</a>'
         "</nav>\n"
     )
 
@@ -1071,6 +1072,7 @@ def on_config(config, **kw):
     add("panchang.md", "Today’s Panchang", "tools")
     add("hindu-calendar.md", "Hindu Calendar", "tools")
     add("date-converter.md", "Date Converter", "tools")
+    add("tools/indian-ephemeris/index.md", "Indian Ephemeris", "tools")
 
     config["nav"] = [
         {"Home": "index.md"},
@@ -1096,6 +1098,7 @@ def on_config(config, **kw):
                 {"Today’s Panchang": "panchang.md"},
                 {"Hindu Calendar": "hindu-calendar.md"},
                 {"Date Converter": "date-converter.md"},
+                {"Indian Ephemeris": "tools/indian-ephemeris/index.md"},
             ]
         },
     ]
@@ -1184,7 +1187,15 @@ def on_post_build(config, **kw):
     ) for path in sorted(site.glob(pattern)))
     shell = [path for path in dict.fromkeys(shell) if path == "" or (site / path).exists()]
     signature = hashlib.sha256()
-    signature.update(b"panchang-sunrise-intervals-v2")
+    # The large ephemeris assets affect the cache version but are never
+    # precached on the homepage. A changed JS/WASM pair invalidates old caches.
+    for target in sorted((site / "assets" / "ephemeris").rglob("*")):
+        if target.is_file():
+            signature.update(target.relative_to(site).as_posix().encode())
+            signature.update(target.read_bytes())
+    ephemeris_css = site / "stylesheets" / "ephemeris.css"
+    if ephemeris_css.exists():
+        signature.update(ephemeris_css.read_bytes())
     for path in shell:
         target = site / (path or "index.html")
         if target.is_dir():
