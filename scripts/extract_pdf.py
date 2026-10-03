@@ -1,4 +1,4 @@
-"""Extract the Ultimate Hindu Devotional Collection PDF into structured JSON.
+"""Extract the Hindu Devotional Collection PDF into structured JSON.
 
 Usage:
     uv run --group extract scripts/extract_pdf.py "path/to/Hindu Devotional Collection.pdf"

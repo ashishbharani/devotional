@@ -1,6 +1,6 @@
 # AGENTS.md — instructions for AI coding agents (Codex, ChatGPT, Claude, Copilot…)
 
-You are helping maintain the **Ultimate Hindu Devotional Collection** website (MkDocs + Material, deployed to
+You are helping maintain the **Hindu Devotional Collection** website (MkDocs + Material, deployed to
 GitHub Pages at https://ashishbharani.github.io/devotional/). The person asking you is usually **not a software
 engineer**: explain what you changed in plain language, keep changes small, and always open a pull request.
 
@@ -60,7 +60,7 @@ A hand-written file in `docs/` with the same path as a generated page (e.g. `doc
    added at runtime by `abp-a11y.js`). Groups over 250 works are split into `part-N/` pages.
 4. **Colours** come from CSS tokens (`--abp-*`) and per-category `--abp-cat` / `--abp-cat-ink`; text in a category
    colour must use `--abp-cat-ink` (auto-darkened by `cat_ink()` in the hook).
-5. **Content is devotional and belongs to its compiler** (Advocate Ashish Bharani). Don't invent works, singers,
+5. **Content is devotional and belongs to its compiler** (Ashish Bharani). Don't invent works, singers,
    purposes or astrological claims; only add what the contributor provided or what a reliable source states, and keep
    the disclaimer intact.
 6. Don't commit `site/`, `.venv/` or the source PDF. Don't change `data/collection.json` by hand.

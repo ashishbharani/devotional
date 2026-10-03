@@ -1,6 +1,6 @@
 # One-time setup (about 10 minutes, no programming)
 
-This gets you ready to suggest fixes to the **Ultimate Hindu Devotional Collection** website using ChatGPT / Codex
+This gets you ready to suggest fixes to the **Hindu Devotional Collection** website using ChatGPT / Codex
 or the GitHub website. Afterwards, see **[CONTRIBUTING.md](CONTRIBUTING.md)** for what to do.
 
 ---

@@ -1,6 +1,6 @@
 {
-  "name": "Ultimate Hindu Devotional Collection",
-  "short_name": "UDHC",
+  "name": "Hindu Devotional Collection",
+  "short_name": "Hindu Devotional",
   "description": "A Pan-India multilingual devotional reference.",
   "id": "/devotional/",
   "start_url": "/devotional/",
