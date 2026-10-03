@@ -67,17 +67,10 @@ function civilEvent(raw, field, dateKey, settings, warnings) {
   const direct = safeAstronomicalDate(raw[field]);
   if (direct && isEventOnLocalCivilDate(direct, dateKey, settings.location.timezone)) return direct;
 
-  // panchangam-js 3.0.0 normally searches from local midnight. Probe both
-  // ends of the same civil day defensively so a future engine change cannot
-  // leak a previous/next-day Moon event into this date.
+  // The pinned engine searches once from local midnight. Verify its returned
+  // event rather than recalculate the entire Panchang at different clock times.
+  // Next-day events are not events of the requested local civil date.
   if (field === "moonrise" || field === "moonset") {
-    const candidates = [direct];
-    for (const localTime of [{ hour: 0, minute: 1 }, { hour: 23, minute: 58 }]) {
-      const probe = engineCall(dateKey, settings, localTime);
-      candidates.push(safeAstronomicalDate(probe[field]));
-    }
-    const matching = candidates.find((candidate) => candidate && isEventOnLocalCivilDate(candidate, dateKey, settings.location.timezone));
-    if (matching) return matching;
     warnings.push(`No ${field === "moonrise" ? "Moonrise" : "Moonset"} occurs on this location-local civil date.`);
     return null;
   }
@@ -121,6 +114,8 @@ export async function calculatePanchangDay(dateKey, settings) {
   const rules = applyFestivalRules(raw.festivals, raw.tithi);
   const day = {
     date: dateKey,
+    location: { ...settings.location },
+    timezone: settings.location.timezone,
     weekday: nameAt(varaNames, raw.vara),
     locationDate: localDateKey(sunrise, settings.location.timezone),
     timezoneOffset: timezoneOffsetForInstant(sunrise, settings.location.timezone, settings.location.timezoneOffset),

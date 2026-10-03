@@ -47,6 +47,13 @@ self.addEventListener("fetch", (event) => {
   const request = event.request;
   const url = new URL(request.url);
   if (request.method !== "GET" || !inScope(url)) return;
+  // Engine modules/data are loaded only on demand. Network first avoids
+  // mixing a stale module with a new WASM; offline reuse is same-version only.
+  if (url.pathname.includes("/assets/ephemeris/") || url.pathname.endsWith("/stylesheets/ephemeris.css")) {
+    event.respondWith(fetch(request).then((response) => remember(request, response))
+      .catch(async () => (await caches.match(request)) || Response.error()));
+    return;
+  }
   if (request.mode === "navigate") {
     event.respondWith(networkFirst(request));
     return;

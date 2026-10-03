@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { readFile } from "node:fs/promises";
 import { INDIAN_CITIES } from "../docs/assets/panchang/settings.mjs";
 import {
   calculatePanchangDay,
@@ -208,6 +209,67 @@ test("February/leap and December/January monthly boundaries remain exact", async
   assert.equal(december.length, 31);
   assert.equal(december.at(-1).date, "2026-12-31");
   assert.equal(shiftDateKey(december.at(-1).date, 1), "2027-01-01");
+});
+
+test("six cities across lunar phases retain civil dates, distinct events and unchanged engine fields", async () => {
+  for (const date of ["2026-01-03", "2026-01-10", "2026-01-18", "2026-01-25", "2026-04-02", "2026-07-14", "2026-10-03"]) {
+    const rises = new Set();
+    const sets = new Set();
+    for (const id of ["delhi", "mumbai", "kolkata", "chennai", "bengaluru", "varanasi"]) {
+      const location = city(id);
+      const result = await calculatePanchangDay(date, settings(location));
+      assert.equal(result.timezone, location.timezone);
+      assert.equal(result.location.latitude, location.latitude);
+      for (const field of ["moonrise", "moonset"]) {
+        const value = result[field];
+        assert.ok(value === null || isEventOnLocalCivilDate(value, date, location.timezone), `${id} ${date}: ${field}`);
+        if (value) (field === "moonrise" ? rises : sets).add(value.getTime());
+      }
+      for (const field of ["sunrise", "sunset"]) assert.equal(result[field].getTime(), result.raw[field].getTime(), `${field} unchanged`);
+      assert.equal(result.sunriseTithi.index, result.raw.tithi);
+      assert.equal(result.sunriseNakshatra.index, result.raw.nakshatra);
+      assert.equal(result.sunriseYoga.index, result.raw.yoga);
+      assert.equal(result.sunriseKarana.name, result.raw.karana);
+    }
+    assert.ok(rises.size > 1, `${date}: Moonrise is location-specific`);
+    assert.ok(sets.size > 1, `${date}: Moonset is location-specific`);
+  }
+});
+
+test("daily/monthly lunar events agree and Moonset may precede Moonrise", async () => {
+  const ordinary = await calculatePanchangDay("2026-10-03", settings());
+  assert.ok(ordinary.moonset < ordinary.moonrise);
+  const next = await calculatePanchangDay("2026-10-04", settings());
+  assert.notEqual(ordinary.moonrise?.getTime(), next.moonrise?.getTime());
+  assert.notEqual(ordinary.moonset?.getTime(), next.moonset?.getTime());
+  for (const id of ["delhi", "mumbai", "kolkata", "chennai", "bengaluru", "varanasi"]) {
+    const selected = settings(city(id));
+    const month = await calculatePanchangMonth(2026, 10, selected);
+    for (const monthly of month) {
+      const daily = await calculatePanchangDay(monthly.date, selected);
+      for (const field of ["sunrise", "sunset", "moonrise", "moonset"]) assert.equal(monthly[field]?.getTime(), daily[field]?.getTime());
+    }
+  }
+  assert.equal(instantForLocalTime("2026-10-03", { hour: 0 }, "Asia/Kolkata").toISOString(), "2026-10-02T18:30:00.000Z");
+});
+
+test("Moonrise/Moonset cross-check independent native Swiss rise/set reference", async () => {
+  const fixtures = JSON.parse(await readFile(new URL("./fixtures/moonrise-native.json", import.meta.url), "utf8"));
+  let maximumSeconds = 0;
+  for (const fixture of fixtures.cases) {
+    const day = await calculatePanchangDay(fixture.date, settings(city(fixture.city)));
+    for (const field of ["moonrise", "moonset"]) {
+      if (fixture[field] === null) assert.equal(day[field], null, `${fixture.city} ${fixture.date}: no ${field}`);
+      else {
+        assert.ok(day[field], `${fixture.city} ${fixture.date}: ${field} exists`);
+        const seconds = Math.abs(day[field].getTime() - new Date(fixture[field]).getTime()) / 1000;
+        maximumSeconds = Math.max(maximumSeconds, seconds);
+        // Independent engines/refraction models, not same-engine precision.
+        assert.ok(seconds <= 120, `${fixture.city} ${fixture.date}: ${field} differs ${seconds}s`);
+      }
+    }
+  }
+  console.log(`Native lunar rise/set cross-check: ${fixtures.cases.length} cases; maximum difference ${maximumSeconds.toFixed(3)} seconds`);
 });
 
 let passed = 0;

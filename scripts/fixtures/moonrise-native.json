@@ -1,0 +1,429 @@
+{
+  "reference": "Official native Swiss Ephemeris swe_rise_trans",
+  "version": "2.10.03",
+  "dllSHA256": "1b1645c164cdbc073408df8cd50586cea67b9c8cbf2ec8b8cee78d4706774a35",
+  "definition": "Upper limb; standard refraction; elevation pressure; 15 C; horizon 0 degrees",
+  "source": "https://www.astro.com/swisseph/swephprg.htm",
+  "cases": [
+    {
+      "date": "2026-01-03",
+      "city": "delhi",
+      "latitude": 28.6139,
+      "longitude": 77.209,
+      "altitude": 216,
+      "timezone": "Asia/Kolkata",
+      "moonrise": "2026-01-03T11:59:17.069716+00:00",
+      "moonset": "2026-01-03T01:41:14.920298+00:00"
+    },
+    {
+      "date": "2026-01-03",
+      "city": "mumbai",
+      "latitude": 19.076,
+      "longitude": 72.8777,
+      "altitude": 14,
+      "timezone": "Asia/Kolkata",
+      "moonrise": "2026-01-03T12:42:14.482531+00:00",
+      "moonset": "2026-01-03T01:33:40.766535+00:00"
+    },
+    {
+      "date": "2026-01-03",
+      "city": "kolkata",
+      "latitude": 22.5726,
+      "longitude": 88.3639,
+      "altitude": 9,
+      "timezone": "Asia/Kolkata",
+      "moonrise": "2026-01-03T11:28:39.711949+00:00",
+      "moonset": "2026-01-03T00:37:58.631495+00:00"
+    },
+    {
+      "date": "2026-01-03",
+      "city": "chennai",
+      "latitude": 13.0827,
+      "longitude": 80.2707,
+      "altitude": 7,
+      "timezone": "Asia/Kolkata",
+      "moonrise": "2026-01-03T12:25:09.033416+00:00",
+      "moonset": "2026-01-03T00:48:23.351019+00:00"
+    },
+    {
+      "date": "2026-01-03",
+      "city": "bengaluru",
+      "latitude": 12.9716,
+      "longitude": 77.5946,
+      "altitude": 920,
+      "timezone": "Asia/Kolkata",
+      "moonrise": "2026-01-03T12:36:54.679277+00:00",
+      "moonset": "2026-01-03T00:59:00.272127+00:00"
+    },
+    {
+      "date": "2026-01-03",
+      "city": "varanasi",
+      "latitude": 25.3176,
+      "longitude": 82.9739,
+      "altitude": 81,
+      "timezone": "Asia/Kolkata",
+      "moonrise": "2026-01-03T11:44:08.478708+00:00",
+      "moonset": "2026-01-03T01:07:50.750199+00:00"
+    },
+    {
+      "date": "2026-01-10",
+      "city": "delhi",
+      "latitude": 28.6139,
+      "longitude": 77.209,
+      "altitude": 216,
+      "timezone": "Asia/Kolkata",
+      "moonrise": null,
+      "moonset": "2026-01-10T06:04:25.780212+00:00"
+    },
+    {
+      "date": "2026-01-10",
+      "city": "mumbai",
+      "latitude": 19.076,
+      "longitude": 72.8777,
+      "altitude": 14,
+      "timezone": "Asia/Kolkata",
+      "moonrise": "2026-01-09T18:31:24.456646+00:00",
+      "moonset": "2026-01-10T06:29:32.541744+00:00"
+    },
+    {
+      "date": "2026-01-10",
+      "city": "kolkata",
+      "latitude": 22.5726,
+      "longitude": 88.3639,
+      "altitude": 9,
+      "timezone": "Asia/Kolkata",
+      "moonrise": "2026-01-10T18:20:27.255866+00:00",
+      "moonset": "2026-01-10T05:23:39.951716+00:00"
+    },
+    {
+      "date": "2026-01-10",
+      "city": "chennai",
+      "latitude": 13.0827,
+      "longitude": 80.2707,
+      "altitude": 7,
+      "timezone": "Asia/Kolkata",
+      "moonrise": null,
+      "moonset": "2026-01-10T06:03:26.257622+00:00"
+    },
+    {
+      "date": "2026-01-10",
+      "city": "bengaluru",
+      "latitude": 12.9716,
+      "longitude": 77.5946,
+      "altitude": 920,
+      "timezone": "Asia/Kolkata",
+      "moonrise": null,
+      "moonset": "2026-01-10T06:14:12.840677+00:00"
+    },
+    {
+      "date": "2026-01-10",
+      "city": "varanasi",
+      "latitude": 25.3176,
+      "longitude": 82.9739,
+      "altitude": 81,
+      "timezone": "Asia/Kolkata",
+      "moonrise": null,
+      "moonset": "2026-01-10T05:43:35.410048+00:00"
+    },
+    {
+      "date": "2026-01-18",
+      "city": "delhi",
+      "latitude": 28.6139,
+      "longitude": 77.209,
+      "altitude": 216,
+      "timezone": "Asia/Kolkata",
+      "moonrise": "2026-01-18T01:29:15.298372+00:00",
+      "moonset": "2026-01-18T11:49:13.956351+00:00"
+    },
+    {
+      "date": "2026-01-18",
+      "city": "mumbai",
+      "latitude": 19.076,
+      "longitude": 72.8777,
+      "altitude": 14,
+      "timezone": "Asia/Kolkata",
+      "moonrise": "2026-01-18T01:23:24.120474+00:00",
+      "moonset": "2026-01-18T12:29:49.824450+00:00"
+    },
+    {
+      "date": "2026-01-18",
+      "city": "kolkata",
+      "latitude": 22.5726,
+      "longitude": 88.3639,
+      "altitude": 9,
+      "timezone": "Asia/Kolkata",
+      "moonrise": "2026-01-18T00:27:41.265139+00:00",
+      "moonset": "2026-01-18T11:17:36.373443+00:00"
+    },
+    {
+      "date": "2026-01-18",
+      "city": "chennai",
+      "latitude": 13.0827,
+      "longitude": 80.2707,
+      "altitude": 7,
+      "timezone": "Asia/Kolkata",
+      "moonrise": "2026-01-18T00:39:34.255599+00:00",
+      "moonset": "2026-01-18T12:11:41.095453+00:00"
+    },
+    {
+      "date": "2026-01-18",
+      "city": "bengaluru",
+      "latitude": 12.9716,
+      "longitude": 77.5946,
+      "altitude": 920,
+      "timezone": "Asia/Kolkata",
+      "moonrise": "2026-01-18T00:50:41.937996+00:00",
+      "moonset": "2026-01-18T12:22:43.378483+00:00"
+    },
+    {
+      "date": "2026-01-18",
+      "city": "varanasi",
+      "latitude": 25.3176,
+      "longitude": 82.9739,
+      "altitude": 81,
+      "timezone": "Asia/Kolkata",
+      "moonrise": "2026-01-18T00:56:46.527650+00:00",
+      "moonset": "2026-01-18T11:33:31.356515+00:00"
+    },
+    {
+      "date": "2026-01-25",
+      "city": "delhi",
+      "latitude": 28.6139,
+      "longitude": 77.209,
+      "altitude": 216,
+      "timezone": "Asia/Kolkata",
+      "moonrise": "2026-01-25T05:25:18.929131+00:00",
+      "moonset": null
+    },
+    {
+      "date": "2026-01-25",
+      "city": "mumbai",
+      "latitude": 19.076,
+      "longitude": 72.8777,
+      "altitude": 14,
+      "timezone": "Asia/Kolkata",
+      "moonrise": "2026-01-25T05:53:09.071833+00:00",
+      "moonset": null
+    },
+    {
+      "date": "2026-01-25",
+      "city": "kolkata",
+      "latitude": 22.5726,
+      "longitude": 88.3639,
+      "altitude": 9,
+      "timezone": "Asia/Kolkata",
+      "moonrise": "2026-01-25T04:46:01.933869+00:00",
+      "moonset": "2026-01-25T17:57:03.445174+00:00"
+    },
+    {
+      "date": "2026-01-25",
+      "city": "chennai",
+      "latitude": 13.0827,
+      "longitude": 80.2707,
+      "altitude": 7,
+      "timezone": "Asia/Kolkata",
+      "moonrise": "2026-01-25T05:28:30.639297+00:00",
+      "moonset": "2026-01-25T18:18:49.656476+00:00"
+    },
+    {
+      "date": "2026-01-25",
+      "city": "bengaluru",
+      "latitude": 12.9716,
+      "longitude": 77.5946,
+      "altitude": 920,
+      "timezone": "Asia/Kolkata",
+      "moonrise": "2026-01-25T05:39:54.401953+00:00",
+      "moonset": "2026-01-25T18:29:32.349992+00:00"
+    },
+    {
+      "date": "2026-01-25",
+      "city": "varanasi",
+      "latitude": 25.3176,
+      "longitude": 82.9739,
+      "altitude": 81,
+      "timezone": "Asia/Kolkata",
+      "moonrise": "2026-01-25T05:05:17.782116+00:00",
+      "moonset": "2026-01-25T18:23:16.564785+00:00"
+    },
+    {
+      "date": "2026-04-02",
+      "city": "delhi",
+      "latitude": 28.6139,
+      "longitude": 77.209,
+      "altitude": 216,
+      "timezone": "Asia/Kolkata",
+      "moonrise": "2026-04-02T13:33:04.125656+00:00",
+      "moonset": "2026-04-02T00:31:10.014037+00:00"
+    },
+    {
+      "date": "2026-04-02",
+      "city": "mumbai",
+      "latitude": 19.076,
+      "longitude": 72.8777,
+      "altitude": 14,
+      "timezone": "Asia/Kolkata",
+      "moonrise": "2026-04-02T13:42:19.236224+00:00",
+      "moonset": "2026-04-02T00:54:52.173654+00:00"
+    },
+    {
+      "date": "2026-04-02",
+      "city": "kolkata",
+      "latitude": 22.5726,
+      "longitude": 88.3639,
+      "altitude": 9,
+      "timezone": "Asia/Kolkata",
+      "moonrise": "2026-04-02T12:41:07.078109+00:00",
+      "moonset": "2026-04-01T23:49:27.468810+00:00"
+    },
+    {
+      "date": "2026-04-02",
+      "city": "chennai",
+      "latitude": 13.0827,
+      "longitude": 80.2707,
+      "altitude": 7,
+      "timezone": "Asia/Kolkata",
+      "moonrise": "2026-04-02T13:06:51.740863+00:00",
+      "moonset": "2026-04-02T00:27:56.443894+00:00"
+    },
+    {
+      "date": "2026-04-02",
+      "city": "bengaluru",
+      "latitude": 12.9716,
+      "longitude": 77.5946,
+      "altitude": 920,
+      "timezone": "Asia/Kolkata",
+      "moonrise": "2026-04-02T13:18:06.746053+00:00",
+      "moonset": "2026-04-02T00:38:42.617899+00:00"
+    },
+    {
+      "date": "2026-04-02",
+      "city": "varanasi",
+      "latitude": 25.3176,
+      "longitude": 82.9739,
+      "altitude": 81,
+      "timezone": "Asia/Kolkata",
+      "moonrise": "2026-04-02T13:05:56.993584+00:00",
+      "moonset": "2026-04-02T00:09:48.096709+00:00"
+    },
+    {
+      "date": "2026-07-14",
+      "city": "delhi",
+      "latitude": 28.6139,
+      "longitude": 77.209,
+      "altitude": 216,
+      "timezone": "Asia/Kolkata",
+      "moonrise": "2026-07-13T23:32:11.463647+00:00",
+      "moonset": "2026-07-14T14:05:53.397050+00:00"
+    },
+    {
+      "date": "2026-07-14",
+      "city": "mumbai",
+      "latitude": 19.076,
+      "longitude": 72.8777,
+      "altitude": 14,
+      "timezone": "Asia/Kolkata",
+      "moonrise": "2026-07-14T00:14:20.831058+00:00",
+      "moonset": "2026-07-14T14:02:17.216248+00:00"
+    },
+    {
+      "date": "2026-07-14",
+      "city": "kolkata",
+      "latitude": 22.5726,
+      "longitude": 88.3639,
+      "altitude": 9,
+      "timezone": "Asia/Kolkata",
+      "moonrise": "2026-07-13T23:00:59.693232+00:00",
+      "moonset": "2026-07-14T13:05:33.432899+00:00"
+    },
+    {
+      "date": "2026-07-14",
+      "city": "chennai",
+      "latitude": 13.0827,
+      "longitude": 80.2707,
+      "altitude": 7,
+      "timezone": "Asia/Kolkata",
+      "moonrise": "2026-07-13T23:56:47.344316+00:00",
+      "moonset": "2026-07-14T13:19:19.961830+00:00"
+    },
+    {
+      "date": "2026-07-14",
+      "city": "bengaluru",
+      "latitude": 12.9716,
+      "longitude": 77.5946,
+      "altitude": 920,
+      "timezone": "Asia/Kolkata",
+      "moonrise": "2026-07-14T00:08:32.792753+00:00",
+      "moonset": "2026-07-14T13:29:56.992573+00:00"
+    },
+    {
+      "date": "2026-07-14",
+      "city": "varanasi",
+      "latitude": 25.3176,
+      "longitude": 82.9739,
+      "altitude": 81,
+      "timezone": "Asia/Kolkata",
+      "moonrise": "2026-07-13T23:16:43.486946+00:00",
+      "moonset": "2026-07-14T13:34:08.662944+00:00"
+    },
+    {
+      "date": "2026-10-03",
+      "city": "delhi",
+      "latitude": 28.6139,
+      "longitude": 77.209,
+      "altitude": 216,
+      "timezone": "Asia/Kolkata",
+      "moonrise": "2026-10-03T17:57:21.478027+00:00",
+      "moonset": "2026-10-03T07:38:51.818761+00:00"
+    },
+    {
+      "date": "2026-10-03",
+      "city": "mumbai",
+      "latitude": 19.076,
+      "longitude": 72.8777,
+      "altitude": 14,
+      "timezone": "Asia/Kolkata",
+      "moonrise": null,
+      "moonset": "2026-10-03T07:31:44.183342+00:00"
+    },
+    {
+      "date": "2026-10-03",
+      "city": "kolkata",
+      "latitude": 22.5726,
+      "longitude": 88.3639,
+      "altitude": 9,
+      "timezone": "Asia/Kolkata",
+      "moonrise": "2026-10-03T17:26:32.624809+00:00",
+      "moonset": "2026-10-03T06:36:02.477347+00:00"
+    },
+    {
+      "date": "2026-10-03",
+      "city": "chennai",
+      "latitude": 13.0827,
+      "longitude": 80.2707,
+      "altitude": 7,
+      "timezone": "Asia/Kolkata",
+      "moonrise": "2026-10-03T18:22:31.547205+00:00",
+      "moonset": "2026-10-03T06:46:47.919833+00:00"
+    },
+    {
+      "date": "2026-10-03",
+      "city": "bengaluru",
+      "latitude": 12.9716,
+      "longitude": 77.5946,
+      "altitude": 920,
+      "timezone": "Asia/Kolkata",
+      "moonrise": null,
+      "moonset": "2026-10-03T06:57:23.426545+00:00"
+    },
+    {
+      "date": "2026-10-03",
+      "city": "varanasi",
+      "latitude": 25.3176,
+      "longitude": 82.9739,
+      "altitude": 81,
+      "timezone": "Asia/Kolkata",
+      "moonrise": "2026-10-03T17:42:06.097396+00:00",
+      "moonset": "2026-10-03T07:05:42.460893+00:00"
+    }
+  ]
+}

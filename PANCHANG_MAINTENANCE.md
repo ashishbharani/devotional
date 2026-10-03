@@ -40,9 +40,11 @@ when intentionally upgrading pinned dependencies.
 - **Civil date and timezone:** the selected Gregorian date is resolved with its
   location's IANA timezone. The numeric engine offset is calculated for that
   date; no calculation depends on the computer or build server timezone.
+  The timezone is visible and editable. Geolocation retains that selected zone
+  because coordinates alone do not resolve a timezone; verify it when travelling.
 - **Moonrise/Moonset:** package 3.0.0 searches from location-local midnight and
   accepts only an event within that local civil date. The adapter verifies the
-  date again and defensively probes both ends of the same civil day. It never
+  date again without repeating the entire Panchang calculation. It never
   borrows an adjacent day's event. A null value is retained when the roughly
   24h50m lunar cycle produces no rise or set during that civil date.
 - **Lunar month:** the package derives the Amanta month from the sidereal solar
@@ -81,11 +83,19 @@ Regression coverage also includes genuine Delhi no-Moonrise/no-Moonset civil
 dates, DST-sensitive IANA offset conversion, Adhika Masa, confirmed skipped and
 repeated sunrise Tithis, twelve city presets, leap/year boundaries and complete
 October 2026 monthly generation for seven geographically separated cities.
+The new `moonrise-native.json` fixture independently checks 42 date/city cases
+against official native Swiss Ephemeris 2.10.03 `swe_rise_trans`, not the browser
+Panchang engine. Six cities and seven phase/season dates agree on absent events;
+the maximum observed lunar-event difference was 6.658 seconds. A two-minute
+cross-engine tolerance allows different standard refraction implementations;
+no fitted offsets are applied. Regenerate with
+`python scripts/generate_moon_reference.py --dll path/to/swedll64.dll`.
 
 Run:
 
 ```powershell
 node scripts/test_panchang.mjs
+node scripts/validate_moonrise.mjs 2026-10-03
 uv run mkdocs build --strict
 uv run python scripts/check_site.py
 ```

@@ -19,6 +19,7 @@ ROUTES = (
     "panchang",
     "hindu-calendar",
     "date-converter",
+    "tools/indian-ephemeris",
     "offline",
 )
 
@@ -50,7 +51,10 @@ def main() -> int:
     for route in ("foreword/", "disclaimer/", "find/", "a-z/", "library/", "master-index/"):
         require(f'href="{route}"' in home, f"homepage does not link to {route}", errors)
     require('href="japa-counter/"' in home, "homepage does not link to the Japa counter", errors)
+    require('href="tools/indian-ephemeris/"' in home, "homepage does not link to Indian Ephemeris", errors)
     require('data-panchang-view="summary"' in home, "homepage Panchang summary is missing", errors)
+    for event in ("sunrise", "sunset", "moonrise", "moonset"):
+        require(f'data-panchang-field="{event}"' in home, f"homepage Panchang missing {event}", errors)
     for route in ("panchang/", "hindu-calendar/", "date-converter/"):
         require(f'href="{route}"' in home, f"homepage Panchang does not link to {route}", errors)
     require('class="abp-home-utility"' in home, "homepage Japa utility control is missing", errors)
@@ -89,6 +93,16 @@ def main() -> int:
     require("addEventListener(\"fetch\"" in worker, "PWA worker has no fetch handler", errors)
     require('startsWith("abp-")' in worker, "worker does not retire only legacy abp-* caches", errors)
     require("assets/works-index.json" not in worker.split("const scopeUrl", 1)[0], "full works index was precached", errors)
+    require("ephemeris/vendor" not in worker.split("const scopeUrl", 1)[0], "large ephemeris assets must not be precached", errors)
+    ephemeris = (site / "tools" / "indian-ephemeris" / "index.html").read_text(encoding="utf-8")
+    require("data-ephemeris" in ephemeris and "abp-ephemeris.js" in ephemeris, "ephemeris root or lazy loader missing", errors)
+    for asset in (
+        "assets/ephemeris/ephemeris-app.mjs", "assets/ephemeris/ephemeris-worker.mjs",
+        "assets/ephemeris/vendor/swiss-0.2.2/wasm/swisseph.wasm",
+        "assets/ephemeris/vendor/data-0.2.2/sepl_18.se1", "assets/ephemeris/vendor/data-0.2.2/semo_18.se1",
+        "stylesheets/ephemeris.css",
+    ):
+        require((site / asset).is_file(), f"ephemeris asset missing: {asset}", errors)
     manifest_path = site / "manifest.webmanifest"
     require(manifest_path.is_file(), "PWA manifest was not generated", errors)
     if manifest_path.is_file():

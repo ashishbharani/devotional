@@ -69,6 +69,24 @@ function populateLocationControl(root, settings, refresh) {
   const input = root.querySelector("[data-panchang-location]");
   const list = root.querySelector("[data-panchang-cities]");
   const convention = root.querySelector("[data-panchang-convention]");
+  const timezoneInput = root.querySelector("[data-panchang-timezone]");
+  if (timezoneInput) {
+    timezoneInput.value = settings.location.timezone;
+    timezoneInput.addEventListener("change", () => {
+      const timezone = timezoneInput.value.trim();
+      try { new Intl.DateTimeFormat("en-IN", { timeZone: timezone }).format(); }
+      catch (_) {
+        timezoneInput.setCustomValidity("Enter a valid IANA timezone, such as Asia/Kolkata.");
+        timezoneInput.reportValidity();
+        return;
+      }
+      timezoneInput.setCustomValidity("");
+      settings.location = { ...settings.location, timezone };
+      saveSettings(settings);
+      clearPanchangCache();
+      refresh();
+    });
+  }
   if (list && !list.children.length) {
     for (const city of INDIAN_CITIES) {
       const option = document.createElement("option");
@@ -90,6 +108,7 @@ function populateLocationControl(root, settings, refresh) {
       input.setCustomValidity("");
       if (settings.location.id === city.id) return;
       settings.location = { ...city };
+      if (timezoneInput) { timezoneInput.value = city.timezone; timezoneInput.setCustomValidity(""); }
       saveSettings(settings);
       clearPanchangCache();
       refresh();
@@ -116,7 +135,9 @@ function populateLocationControl(root, settings, refresh) {
     setStatus(root, "Waiting for location permission…", "loading");
     navigator.geolocation.getCurrentPosition(
       (position) => {
-        const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone || DEFAULT_LOCATION.timezone;
+        // Coordinates do not identify a timezone. Retain the visibly selected
+        // IANA zone; never silently substitute the computer's timezone.
+        const timezone = settings.location.timezone || DEFAULT_LOCATION.timezone;
         settings.location = {
           id: "device",
           name: "My location",
@@ -124,7 +145,7 @@ function populateLocationControl(root, settings, refresh) {
           longitude: position.coords.longitude,
           altitude: position.coords.altitude || 0,
           timezone,
-          timezoneOffset: -new Date().getTimezoneOffset(),
+          timezoneOffset: settings.location.timezoneOffset || 0,
         };
         if (input) input.value = settings.location.name;
         saveSettings(settings);
@@ -177,14 +198,19 @@ function renderCommon(root, result) {
   setText(root, "nakshatra-end", shortTime(result.nakshatraTransitions[0]?.end, root._panchangSettings.location, result.date));
   setText(root, "festival", events.join("; ") || "No major observance identified in the current ruleset.");
   setText(root, "sunrise-sunset", `${shortTime(result.sunrise, root._panchangSettings.location)} / ${shortTime(result.sunset, root._panchangSettings.location)}`);
+  for (const field of ["sunrise", "sunset", "moonrise", "moonset"]) {
+    const label = field === "moonrise" ? "Moonrise" : "Moonset";
+    setText(root, field, result[field] ? shortTime(result[field], root._panchangSettings.location) : noCivilEvent(label));
+  }
   setText(root, "convention", root._panchangSettings.convention === "purnimanta" ? "Purnimanta" : "Amanta");
   setStatus(root, "Panchang calculated for the selected date and location.");
 }
 
-async function renderSummary(root, state) {
+async function renderSummary(root, state, isCurrent = () => true) {
   setStatus(root, "Calculating today’s Panchang…", "loading");
   const today = partsDate(new Date(), state.location.timezone);
   const result = await calculatePanchangDay(today, state);
+  if (!isCurrent()) return;
   renderCommon(root, result);
   renderDevotionalLinks(root, result, root._siteRoot);
 }
@@ -231,12 +257,13 @@ function renderRows(container, rows) {
   }));
 }
 
-async function renderFull(root, state) {
+async function renderFull(root, state, isCurrent = () => true) {
   const input = root.querySelector("[data-panchang-date]");
   const selected = parseDateKey(input?.value) ? input.value : partsDate(new Date(), state.location.timezone);
   if (input) input.value = selected;
   setStatus(root, "Calculating Panchang…", "loading");
   const result = await calculatePanchangDay(selected, state);
+  if (!isCurrent()) return;
   renderCommon(root, result);
   renderRows(root.querySelector("[data-panchang-details]"), detailRows(result, state.location, state.convention));
   const festivals = root.querySelector("[data-panchang-festivals]");
@@ -474,8 +501,8 @@ export function initializePanchang(root, { siteRoot }) {
   const refresh = async () => {
     const run = ++generation;
     try {
-      if (view === "summary") await renderSummary(root, root._panchangSettings);
-      if (view === "full") await renderFull(root, root._panchangSettings);
+      if (view === "summary") await renderSummary(root, root._panchangSettings, () => run === generation);
+      if (view === "full") await renderFull(root, root._panchangSettings, () => run === generation);
       if (view === "calendar") await renderCalendar(root, root._panchangSettings, () => run === generation);
       if (run !== generation) return;
     } catch (error) {
