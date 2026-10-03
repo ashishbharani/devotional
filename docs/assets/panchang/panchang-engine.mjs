@@ -36,3 +36,7 @@ astronomy-engine/astronomy.js:
    * @license MIT
    *)
 */
+
+// Expose the already bundled Astronomy Engine 2.1.19 instance. No second engine.
+export const astronomy = Gs;
+export const lahiriAyanamsha = _i().getAyanamsa;

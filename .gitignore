@@ -10,3 +10,4 @@ __pycache__/
 # local Codex workspace files
 work/
 outputs/
+node_modules/

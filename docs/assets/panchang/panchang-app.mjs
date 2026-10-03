@@ -4,16 +4,16 @@ import {
   calculatePanchangDay,
   calculatePanchangMonth,
   clearPanchangCache,
-} from "./panchang-adapter.mjs";
+} from "./panchang-client.mjs";
 import {
   dateKeyFromParts,
   localDateKey,
   localDateParts,
   parseDateKey,
-  safeAstronomicalDate,
   shiftDateKey,
 } from "./date-time.mjs";
 import { FESTIVAL_POLICY_NOTE, observanceNames } from "./festival-rules.mjs";
+import { formatTime, renderTimingSections } from "./panchang-display.mjs";
 
 const partsDate = (date, timeZone) => localDateKey(date, timeZone);
 
@@ -25,15 +25,7 @@ function longDate(value, location) {
 }
 
 function shortTime(value, location, baseDate = null) {
-  const date = safeAstronomicalDate(value);
-  if (!date) return "Not available";
-  const time = new Intl.DateTimeFormat("en-IN", { hour: "numeric", minute: "2-digit", timeZone: location.timezone }).format(date);
-  if (!baseDate) return time;
-  const eventDate = localDateKey(date, location.timezone);
-  if (eventDate === baseDate) return time;
-  const relation = eventDate === shiftDateKey(baseDate, 1) ? "next civil day" : eventDate;
-  const label = new Intl.DateTimeFormat("en-IN", { month: "short", day: "numeric", timeZone: location.timezone }).format(date);
-  return `${time} (${label}, ${relation})`;
+  return formatTime(value, location, baseDate);
 }
 
 function timeRange(value, location, baseDate = null) {
@@ -69,6 +61,20 @@ function populateLocationControl(root, settings, refresh) {
   const input = root.querySelector("[data-panchang-location]");
   const list = root.querySelector("[data-panchang-cities]");
   const convention = root.querySelector("[data-panchang-convention]");
+  const timezoneInput = root.querySelector("[data-panchang-timezone]");
+  if (timezoneInput) {
+    timezoneInput.value = settings.location.timezone;
+    timezoneInput.addEventListener("change", () => {
+      const timezone = timezoneInput.value.trim();
+      try { new Intl.DateTimeFormat("en", { timeZone: timezone }).format(new Date()); }
+      catch (_) { timezoneInput.setCustomValidity("Enter a valid IANA timezone, for example Asia/Kolkata."); timezoneInput.reportValidity(); return; }
+      timezoneInput.setCustomValidity("");
+      settings.location = { ...settings.location, timezone };
+      saveSettings(settings);
+      clearPanchangCache();
+      refresh();
+    });
+  }
   if (list && !list.children.length) {
     for (const city of INDIAN_CITIES) {
       const option = document.createElement("option");
@@ -90,6 +96,7 @@ function populateLocationControl(root, settings, refresh) {
       input.setCustomValidity("");
       if (settings.location.id === city.id) return;
       settings.location = { ...city };
+      if (timezoneInput) timezoneInput.value = city.timezone;
       saveSettings(settings);
       clearPanchangCache();
       refresh();
@@ -127,6 +134,7 @@ function populateLocationControl(root, settings, refresh) {
           timezoneOffset: -new Date().getTimezoneOffset(),
         };
         if (input) input.value = settings.location.name;
+        if (timezoneInput) timezoneInput.value = timezone;
         saveSettings(settings);
         clearPanchangCache();
         button.disabled = false;
@@ -168,8 +176,8 @@ function renderDevotionalLinks(root, result, siteRoot) {
 function renderCommon(root, result) {
   const events = observances(result);
   setText(root, "date", longDate(result.date, root._panchangSettings.location));
-  setText(root, "location", root._panchangSettings.location.name);
-  setText(root, "tithi", result.sunriseTithi.name);
+  setText(root, "location", `${result.location.name} · ${result.location.timezone}`);
+  setText(root, "tithi", `${result.paksha} ${result.sunriseTithi.name}`);
   setText(root, "tithi-end", shortTime(result.tithiTransitions[0]?.end, root._panchangSettings.location, result.date));
   setText(root, "paksha", result.paksha);
   setText(root, "masa", `${result.masa.isAdhika ? "Adhika " : ""}${result.masa.name}`);
@@ -178,13 +186,18 @@ function renderCommon(root, result) {
   setText(root, "festival", events.join("; ") || "No major observance identified in the current ruleset.");
   setText(root, "sunrise-sunset", `${shortTime(result.sunrise, root._panchangSettings.location)} / ${shortTime(result.sunset, root._panchangSettings.location)}`);
   setText(root, "convention", root._panchangSettings.convention === "purnimanta" ? "Purnimanta" : "Amanta");
+  setText(root, "yoga", result.sunriseYoga.name);
+  setText(root, "karana", result.sunriseKarana.name);
+  setText(root, "next-tithi", `${result.nextTithi.paksha} ${result.nextTithi.name} · starts ${shortTime(result.nextTithi.start, root._panchangSettings.location, result.date)}`);
+  renderTimingSections(root, result, root._panchangSettings.location);
   setStatus(root, "Panchang calculated for the selected date and location.");
 }
 
-async function renderSummary(root, state) {
+async function renderSummary(root, state, isCurrent = () => true) {
   setStatus(root, "Calculating today’s Panchang…", "loading");
   const today = partsDate(new Date(), state.location.timezone);
   const result = await calculatePanchangDay(today, state);
+  if (!isCurrent()) return;
   renderCommon(root, result);
   renderDevotionalLinks(root, result, root._siteRoot);
 }
@@ -192,9 +205,18 @@ async function renderSummary(root, state) {
 function detailRows(result, location, convention) {
   const rows = [
     ["Gregorian date", longDate(result.date, location)],
-    ["Vara / Weekday", result.weekday],
     ["Hindu day", `${shortTime(result.sunrise, location)} to ${shortTime(result.nextSunrise, location, result.date)}`],
-    ["Tithi at sunrise", result.sunriseTithi.name],
+    ["Sunrise", shortTime(result.sunrise, location)],
+    ["Sunset", shortTime(result.sunset, location)],
+    ["Moonrise / Chandrodaya", result.moonrise ? shortTime(result.moonrise, location) : noCivilEvent("Moonrise")],
+    ["Moonset / Chandrasta", result.moonset ? shortTime(result.moonset, location) : noCivilEvent("Moonset")],
+    ["Vara / Weekday", result.weekday],
+    ["Tithi at sunrise", `${result.paksha} ${result.sunriseTithi.name}`],
+    ["Tithi starts", formatTime(result.sunriseTithi.start, location, result.date, true)],
+    ["Tithi ends", formatTime(result.sunriseTithi.end, location, result.date, true)],
+    ["Next Tithi", `${result.nextTithi.paksha} ${result.nextTithi.name}`],
+    ["Next Tithi starts", formatTime(result.nextTithi.start, location, result.date, true)],
+    ["Next Tithi ends", formatTime(result.nextTithi.end, location, result.date, true)],
     ["Tithi sequence (sunrise to sunrise)", transitionSequence(result.tithiTransitions, location, result.date)],
     ["Paksha", result.paksha],
     ["Masa", `${result.masa.isAdhika ? "Adhika " : ""}${result.masa.name}`],
@@ -205,16 +227,11 @@ function detailRows(result, location, convention) {
     ["Yoga sequence (sunrise to sunrise)", transitionSequence(result.yogaTransitions, location, result.date)],
     ["Karana at sunrise", result.sunriseKarana.name],
     ["Karana sequence (sunrise to sunrise)", transitionSequence(result.karanaTransitions, location, result.date)],
-    ["Sunrise", shortTime(result.sunrise, location)],
-    ["Sunset", shortTime(result.sunset, location)],
-    ["Moonrise / Chandrodaya", result.moonrise ? shortTime(result.moonrise, location) : noCivilEvent("Moonrise")],
-    ["Moonset / Chandrasta", result.moonset ? shortTime(result.moonset, location) : noCivilEvent("Moonset")],
     ["Vikram Samvat", result.samvat?.vikram],
     ["Shaka Samvat", result.samvat?.shaka],
     ["Rahu Kalam", timeRange(result.rahuKalam, location, result.date)],
     ["Yamaganda", timeRange(result.yamaganda, location, result.date)],
     ["Gulika", timeRange(result.gulika, location, result.date)],
-    ["Abhijit Muhurta", timeRange(result.abhijitMuhurta, location, result.date)],
   ];
   return rows.filter(([, value]) => value !== undefined && value !== null && value !== "undefined");
 }
@@ -231,14 +248,18 @@ function renderRows(container, rows) {
   }));
 }
 
-async function renderFull(root, state) {
+async function renderFull(root, state, isCurrent = () => true) {
   const input = root.querySelector("[data-panchang-date]");
   const selected = parseDateKey(input?.value) ? input.value : partsDate(new Date(), state.location.timezone);
   if (input) input.value = selected;
   setStatus(root, "Calculating Panchang…", "loading");
   const result = await calculatePanchangDay(selected, state);
+  if (!isCurrent()) return;
   renderCommon(root, result);
-  renderRows(root.querySelector("[data-panchang-details]"), detailRows(result, state.location, state.convention));
+  const rows = detailRows(result, state.location, state.convention);
+  const additional = new Set(["Masa", "Calendar convention", "Vikram Samvat", "Shaka Samvat", "Rahu Kalam", "Yamaganda", "Gulika"]);
+  renderRows(root.querySelector("[data-panchang-details]"), rows.filter(([label]) => !additional.has(label)));
+  renderRows(root.querySelector("[data-panchang-additional]"), rows.filter(([label]) => additional.has(label)));
   const festivals = root.querySelector("[data-panchang-festivals]");
   festivals.replaceChildren(...((result.festivals || []).map((festival) => {
     const item = document.createElement("li");
@@ -300,14 +321,13 @@ async function renderCalendar(root, state, isCurrent = () => true) {
       const number = document.createElement("b");
       number.textContent = day;
       const tithi = document.createElement("span");
-      tithi.textContent = result.sunriseTithi.name;
+      tithi.textContent = `${result.paksha} ${result.sunriseTithi.name} · At sunrise`;
       link.append(number, tithi);
-      const firstTithi = result.tithiTransitions[0];
       const firstNakshatra = result.sunriseNakshatra.name;
-      if (firstTithi?.end) {
+      for (const segment of result.tithis) {
         const transition = document.createElement("small");
         transition.className = "abp-panchang-calendar__transition";
-        transition.textContent = `until ${shortTime(firstTithi.end, state.location, value)} · ${firstNakshatra}`;
+        transition.textContent = `${segment.name}: ${segment.presentAtSunrise ? "until" : `from ${shortTime(segment.start, state.location, value)}; ends`} ${shortTime(segment.end, state.location, value)}${segment.skippedAtSunrise ? " · Kshaya" : ""}${segment.repeatedAtSunrise ? " · Vriddhi" : ""}`;
         link.append(transition);
       }
       const markers = observances(result);
@@ -317,7 +337,25 @@ async function renderCalendar(root, state, isCurrent = () => true) {
         link.append(marker);
       }
       link.setAttribute("aria-label", `${longDate(value, state.location)}: ${result.sunriseTithi.name} at sunrise; ${firstNakshatra} Nakshatra${markers.length ? `; ${markers.join(", ")}` : ""}`);
-      grid.append(link);
+      const card = document.createElement("div");
+      card.className = "abp-panchang-calendar__card";
+      card.append(link);
+      const detail = document.createElement("details");
+      const summary = document.createElement("summary");
+      summary.textContent = "Timings & Muhurtas";
+      summary.setAttribute("aria-label", `Timings and Muhurtas for ${longDate(value, state.location)}`);
+      const timing = document.createElement("dl");
+      renderRows(timing, detailRows(result, state.location, state.convention));
+      const timeline = document.createElement("ol");
+      timeline.dataset.panchangTithis = "";
+      const heading = document.createElement("h2");
+      heading.textContent = "SHUBH MUHURTA";
+      const muhurtas = document.createElement("dl");
+      muhurtas.dataset.panchangMuhurtas = "";
+      detail.append(summary, timing, timeline, heading, muhurtas);
+      card.append(detail);
+      renderTimingSections(card, result, state.location);
+      grid.append(card);
     } else {
       const unavailable = document.createElement("span");
       unavailable.className = "abp-panchang-calendar__day is-unavailable";
@@ -461,7 +499,9 @@ function setupConverter(root, state) {
 
 function fail(root, error) {
   console.error("Panchang calculation failed", error);
-  setStatus(root, "Today’s Panchang could not be calculated. Please retry.", "error");
+  root.querySelectorAll("[data-panchang-field]").forEach((element) => { element.textContent = "Not available"; });
+  root.querySelectorAll("[data-panchang-tithis], [data-panchang-muhurtas], [data-panchang-details], [data-panchang-additional], [data-calendar-grid]").forEach((element) => element.replaceChildren());
+  setStatus(root, "Panchanga calculation could not be loaded. Please refresh and try again.", "error");
 }
 
 export function initializePanchang(root, { siteRoot }) {
@@ -474,8 +514,8 @@ export function initializePanchang(root, { siteRoot }) {
   const refresh = async () => {
     const run = ++generation;
     try {
-      if (view === "summary") await renderSummary(root, root._panchangSettings);
-      if (view === "full") await renderFull(root, root._panchangSettings);
+      if (view === "summary") await renderSummary(root, root._panchangSettings, () => run === generation);
+      if (view === "full") await renderFull(root, root._panchangSettings, () => run === generation);
       if (view === "calendar") await renderCalendar(root, root._panchangSettings, () => run === generation);
       if (run !== generation) return;
     } catch (error) {
@@ -487,4 +527,21 @@ export function initializePanchang(root, { siteRoot }) {
   if (view === "calendar") setupCalendarNavigation(root, refresh);
   if (view === "converter") setupConverter(root, root._panchangSettings);
   if (view !== "converter") refresh();
+  if (view === "summary") {
+    let shownDate = localDateKey(new Date(), root._panchangSettings.location.timezone);
+    const checkToday = () => {
+      if (!root.isConnected) return;
+      const today = localDateKey(new Date(), root._panchangSettings.location.timezone);
+      if (today !== shownDate) { shownDate = today; refresh(); }
+      setTimeout(checkToday, 60000);
+    };
+    setTimeout(checkToday, 60000);
+    const accordion = root.closest("details");
+    if (accordion) {
+      const summary = accordion.querySelector("summary");
+      const updateExpanded = () => summary.setAttribute("aria-expanded", String(accordion.open));
+      accordion.addEventListener("toggle", updateExpanded);
+      updateExpanded();
+    }
+  }
 }

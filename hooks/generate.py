@@ -589,6 +589,10 @@ def panchang_location_controls(suffix):
         f'<select id="abp-panchang-convention-{suffix}" data-panchang-convention>'
         '<option value="amanta">Amanta</option><option value="purnimanta">Purnimanta</option></select></label>'
         '<button type="button" class="abp-btn" data-panchang-geolocate>Use My Location</button>'
+        f'<label for="abp-panchang-timezone-{suffix}"><span>Location timezone (IANA)</span>'
+        f'<input id="abp-panchang-timezone-{suffix}" data-panchang-timezone type="text" '
+        'placeholder="Asia/Kolkata" aria-describedby="abp-timezone-note-' + suffix + '"></label>'
+        f'<small id="abp-timezone-note-{suffix}">City presets include their timezone. For device location, verify the detected timezone.</small>'
         '</div>'
     )
 
@@ -599,12 +603,15 @@ def panchang_status(message="Calculating today’s Panchang…"):
 
 def panchang_summary_card():
     tiles = [
-        ("Tithi / तिथि", "tithi", "tithi-end", "Ends"),
+        ("Tithi at Sunrise / तिथि", "tithi", "tithi-end", "Ends"),
         ("Paksha / पक्ष", "paksha", "convention", "Calendar"),
         ("Masa / मास", "masa", "convention", "Convention"),
         ("Nakshatra / नक्षत्र", "nakshatra", "nakshatra-end", "Ends"),
         ("Festival / Vrata / उत्सव-व्रत", "festival", None, None),
         ("Sunrise / Sunset / सूर्योदय-सूर्यास्त", "sunrise-sunset", None, None),
+        ("Yoga", "yoga", None, None),
+        ("Karana", "karana", None, None),
+        ("Next Tithi / Transition", "next-tithi", None, None),
     ]
     tile_html = []
     for label, field, subfield, sublabel in tiles:
@@ -615,22 +622,39 @@ def panchang_summary_card():
             f'<div class="abp-panchang__tile"><dt>{label}</dt><dd data-panchang-field="{field}">—</dd>{secondary}</div>'
         )
     return (
+        '<details class="abp-home-index" markdown="0">'
+        '<summary aria-expanded="false"><span aria-hidden="true">🕉</span><span>TODAY PANCHANG</span></summary>'
         '<section class="abp-panchang abp-panchang--home" data-panchang-view="summary" '
         'aria-labelledby="abp-panchang-home-title" markdown="0">'
         '<header class="abp-panchang__header"><h2 id="abp-panchang-home-title">'
-        '<span aria-hidden="true">🕉</span> Today According to the Panchang<br><span lang="hi">आज का पंचांग</span></h2>'
+        '<span aria-hidden="true">🕉</span> Today’s Panchang<br><span lang="hi">आज का पंचांग</span></h2>'
         '<p>Hindu date, Tithi, Nakshatra and today’s devotional calendar</p>'
+        '<p data-panchang-field="location"></p>'
         '<strong class="abp-panchang__date" data-panchang-field="date">Today</strong></header>'
         + panchang_location_controls("home")
         + panchang_status()
         + '<dl class="abp-panchang__tiles">' + "".join(tile_html) + '</dl>'
-        '<aside class="abp-panchang__devotional" data-panchang-devotional hidden>'
+        + panchang_timing_sections(3)
+        + '<aside class="abp-panchang__devotional" data-panchang-devotional hidden>'
         '<h3>🙏 Today’s Devotional Significance</h3><p data-panchang-significance hidden></p><ul></ul></aside>'
         '<nav class="abp-panchang__actions" aria-label="Panchang tools">'
-        '<a class="abp-panchang__cta abp-panchang__cta--full" href="panchang/">Full Panchang →</a>'
-        '<a class="abp-panchang__cta abp-panchang__cta--calendar" href="hindu-calendar/">Hindu Calendar →</a>'
+        '<a class="abp-panchang__cta abp-panchang__cta--full" href="panchang/">VIEW FULL PANCHANG →</a>'
+        '<a class="abp-panchang__cta abp-panchang__cta--calendar" href="hindu-calendar/">MONTHLY PANCHANG →</a>'
         '<a class="abp-panchang__cta abp-panchang__cta--converter" href="date-converter/">Date Converter →</a>'
-        '</nav><p class="abp-panchang__note">Calendar observances can vary by region and tradition.</p></section>\n'
+        '</nav><p class="abp-panchang__note">Calendar observances can vary by region and tradition.</p></section></details>\n'
+    )
+
+
+def panchang_timing_sections(level=2):
+    return (
+        f'<section class="abp-panchang__timings"><h{level}>TITHI TIMING</h{level}>'
+        '<p class="abp-panchang__note">The tithi prevailing at local sunrise is traditionally used as the principal '
+        'tithi of the Panchanga day. Later transitions are shown separately, through the next sunrise.</p>'
+        '<ol class="abp-panchang__timeline" data-panchang-tithis></ol></section>'
+        f'<section class="abp-panchang__muhurtas"><h{level}>SHUBH MUHURTA</h{level}>'
+        '<dl class="abp-panchang__details" data-panchang-muhurtas></dl>'
+        '<p class="abp-panchang__note">Local solar timings · Brahma: penultimate night division; Abhijit: 8th '
+        'daylight division; Vijaya: 11th daylight division; Godhuli: sunset ±12 minutes. Traditions may differ.</p></section>'
     )
 
 
@@ -645,9 +669,13 @@ def page_panchang(d):
         '<input id="abp-panchang-date" type="date" data-panchang-date></label>'
         '<button type="button" class="abp-btn" data-date-shift="1">Next Day →</button></div>'
         '<h2 class="abp-panchang__selected-date" data-panchang-field="date">Selected date</h2>'
+        '<p class="abp-panchang__note" data-panchang-field="location"></p>'
         + panchang_status()
         + '<dl class="abp-panchang__details" data-panchang-details></dl>'
-        '<section class="abp-panchang__observances"><h2>Festivals &amp; Vratas</h2><ul data-panchang-festivals></ul>'
+        + panchang_timing_sections()
+        + '<section class="abp-panchang__timings"><h2>Other Panchanga timings &amp; calendar</h2>'
+        '<dl class="abp-panchang__details" data-panchang-additional></dl></section>'
+        + '<section class="abp-panchang__observances"><h2>Festivals &amp; Vratas</h2><ul data-panchang-festivals></ul>'
         '<p>Festival and vrata dates can vary by sampradaya, region and local sunrise rules.</p></section>'
         '<aside class="abp-panchang__devotional" data-panchang-devotional hidden><h2>Related devotional collection</h2>'
         '<p data-panchang-significance hidden></p><ul></ul></aside></section>\n'
@@ -1147,12 +1175,14 @@ def on_post_build(config, **kw):
         "assets/images/icon-maskable-512.png", "assets/images/apple-touch-icon.png",
     ]
     shell.extend(f"javascripts/{path.name}" for path in sorted((site / "javascripts").glob("*.js")))
+    shell.extend(path.relative_to(site).as_posix() for path in sorted((site / "assets" / "panchang").glob("*.mjs")))
     shell.extend(path.relative_to(site).as_posix() for pattern in (
         "assets/stylesheets/main.*.min.css", "assets/stylesheets/palette.*.min.css",
         "assets/javascripts/bundle.*.min.js",
     ) for path in sorted(site.glob(pattern)))
     shell = [path for path in dict.fromkeys(shell) if path == "" or (site / path).exists()]
     signature = hashlib.sha256()
+    signature.update(b"panchang-sunrise-intervals-v2")
     for path in shell:
         target = site / (path or "index.html")
         if target.is_dir():
