@@ -94,7 +94,7 @@ docs/javascripts/abp.js   Find a Work page logic
 docs/javascripts/abp-directory.js  A–Z batching and navigation
 docs/javascripts/abp-japa.js       device-local Japa counter
 docs/javascripts/abp-panchang.js   lazy Panchang application loader
-docs/assets/panchang/              pinned browser engine and modular Panchang UI
+docs/assets/panchang/              pinned engine, canonical date adapter, festival policy and Panchang UI
 docs/assets/i18n.json     central interface translations for all ten languages
 docs/assets/images/       cover art (WebP/JPEG sizes), signature, diya logo and icons
 mkdocs.yml                site configuration

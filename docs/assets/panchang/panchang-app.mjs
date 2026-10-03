@@ -1,106 +1,61 @@
 import { DEFAULT_LOCATION, INDIAN_CITIES, findCity, loadSettings, saveSettings } from "./settings.mjs";
 import { GENERAL_LINKS, devotionalContext } from "./festival-links.mjs";
+import {
+  calculatePanchangDay,
+  calculatePanchangMonth,
+  clearPanchangCache,
+} from "./panchang-adapter.mjs";
+import {
+  dateKeyFromParts,
+  localDateKey,
+  localDateParts,
+  parseDateKey,
+  safeAstronomicalDate,
+  shiftDateKey,
+} from "./date-time.mjs";
+import { FESTIVAL_POLICY_NOTE, observanceNames } from "./festival-rules.mjs";
 
-let enginePromise;
-const loadEngine = () => (enginePromise ||= import("./panchang-engine.mjs"));
-
-const pad = (value) => String(value).padStart(2, "0");
-const dateKey = (date) => `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`;
-const parseDateKey = (value) => {
-  const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(value || "");
-  if (!match) return null;
-  const result = new Date(Number(match[1]), Number(match[2]) - 1, Number(match[3]), 12);
-  return Number.isNaN(result.getTime()) ? null : result;
-};
-
-function partsDate(date, timeZone) {
-  const parts = new Intl.DateTimeFormat("en-CA", { timeZone, year: "numeric", month: "2-digit", day: "2-digit" }).formatToParts(date);
-  const get = (type) => parts.find((part) => part.type === type)?.value;
-  return `${get("year")}-${get("month")}-${get("day")}`;
-}
-
-function timeZoneOffset(date, timeZone, fallback = 330) {
-  try {
-    const parts = new Intl.DateTimeFormat("en-US", {
-      timeZone,
-      year: "numeric", month: "2-digit", day: "2-digit",
-      hour: "2-digit", minute: "2-digit", second: "2-digit", hourCycle: "h23",
-    }).formatToParts(date);
-    const value = (type) => Number(parts.find((part) => part.type === type)?.value);
-    const asUtc = Date.UTC(value("year"), value("month") - 1, value("day"), value("hour"), value("minute"), value("second"));
-    return Math.round((asUtc - date.getTime()) / 60000);
-  } catch (_) {
-    return fallback;
-  }
-}
-
-function calculationInstant(value, location) {
-  const [year, month, day] = value.split("-").map(Number);
-  const middayUtc = new Date(Date.UTC(year, month - 1, day, 12));
-  const offset = timeZoneOffset(middayUtc, location.timezone, location.timezoneOffset);
-  return { date: new Date(middayUtc.getTime() - offset * 60000), offset };
-}
+const partsDate = (date, timeZone) => localDateKey(date, timeZone);
 
 function longDate(value, location) {
-  const [year, month, day] = value.split("-").map(Number);
-  const date = new Date(Date.UTC(year, month - 1, day, 12));
+  const parts = parseDateKey(value);
+  if (!parts) return "Invalid date";
+  const date = new Date(Date.UTC(parts.year, parts.month - 1, parts.day, 12));
   return new Intl.DateTimeFormat("en-IN", { weekday: "long", year: "numeric", month: "long", day: "numeric", timeZone: "UTC" }).format(date);
 }
 
-function shortTime(value, location) {
-  if (!value) return "Not available";
-  return new Intl.DateTimeFormat("en-IN", { hour: "numeric", minute: "2-digit", timeZone: location.timezone }).format(new Date(value));
+function shortTime(value, location, baseDate = null) {
+  const date = safeAstronomicalDate(value);
+  if (!date) return "Not available";
+  const time = new Intl.DateTimeFormat("en-IN", { hour: "numeric", minute: "2-digit", timeZone: location.timezone }).format(date);
+  if (!baseDate) return time;
+  const eventDate = localDateKey(date, location.timezone);
+  if (eventDate === baseDate) return time;
+  const relation = eventDate === shiftDateKey(baseDate, 1) ? "next civil day" : eventDate;
+  const label = new Intl.DateTimeFormat("en-IN", { month: "short", day: "numeric", timeZone: location.timezone }).format(date);
+  return `${time} (${label}, ${relation})`;
 }
 
-function timeRange(value, location) {
+function timeRange(value, location, baseDate = null) {
   if (!value?.start || !value?.end) return "Not available";
-  return `${shortTime(value.start, location)} – ${shortTime(value.end, location)}`;
+  return `${shortTime(value.start, location, baseDate)} – ${shortTime(value.end, location, baseDate)}`;
 }
 
-function nameAt(list, index, oneBased = false) {
-  return list?.[oneBased ? index - 1 : index] || String(index ?? "Not available");
+function transitionSequence(items, location, baseDate) {
+  if (!items?.length) return "Not available";
+  return items.map((item) => `${item.name} until ${shortTime(item.end, location, baseDate)}`).join("; then ");
 }
 
-async function calculate(value, settings) {
-  const engine = await loadEngine();
-  const { date, offset } = calculationInstant(value, settings.location);
-  const raw = engine.calculatePanchangam(
-    date,
-    settings.location.latitude,
-    settings.location.longitude,
-    settings.location.altitude || 0,
-    { timezoneOffset: offset, calendarType: settings.convention },
-  );
-  return {
-    raw,
-    date: value,
-    // panchangam-js 3.0.0 returns Tithi as 0–29 even though its declaration
-    // describes 1–30. Keep the adapter correction in this one place.
-    tithi: nameAt(engine.tithiNames, raw.tithi),
-    nakshatra: nameAt(engine.nakshatraNames, raw.nakshatra),
-    yoga: nameAt(engine.yogaNames, raw.yoga),
-    vara: nameAt(engine.varaNames, raw.vara),
-    monthNames: engine.masaNames,
-    tithiNames: engine.tithiNames,
-  };
+function noCivilEvent(label) {
+  return `No ${label} on this local civil date`;
 }
 
 function setText(root, field, value) {
   root.querySelectorAll(`[data-panchang-field="${field}"]`).forEach((element) => { element.textContent = value; });
 }
 
-function festivalNames(raw) {
-  // Multi-day span labels are intentionally excluded: independent validation
-  // found that the package's Shraddha day labels can differ from sunrise rules.
-  return (raw.festivals || []).filter((festival) => festival.type !== "span").map((festival) => festival.name).filter(Boolean);
-}
-
 function observances(result) {
-  const names = festivalNames(result.raw);
-  if (result.raw.tithi === 10 || result.raw.tithi === 25) names.push("Ekadashi Tithi");
-  if (result.raw.tithi === 14) names.push("Purnima Tithi");
-  if (result.raw.tithi === 29) names.push("Amavasya Tithi");
-  return [...new Set(names)];
+  return [...new Set(observanceNames(result))];
 }
 
 function setStatus(root, message, state = "ready") {
@@ -136,6 +91,7 @@ function populateLocationControl(root, settings, refresh) {
       if (settings.location.id === city.id) return;
       settings.location = { ...city };
       saveSettings(settings);
+      clearPanchangCache();
       refresh();
     };
     input.addEventListener("input", () => commitCity(false));
@@ -146,6 +102,7 @@ function populateLocationControl(root, settings, refresh) {
     convention.addEventListener("change", () => {
       settings.convention = convention.value === "purnimanta" ? "purnimanta" : "amanta";
       saveSettings(settings);
+      clearPanchangCache();
       refresh();
     });
   }
@@ -171,6 +128,7 @@ function populateLocationControl(root, settings, refresh) {
         };
         if (input) input.value = settings.location.name;
         saveSettings(settings);
+        clearPanchangCache();
         button.disabled = false;
         refresh();
       },
@@ -186,8 +144,7 @@ function populateLocationControl(root, settings, refresh) {
 function renderDevotionalLinks(root, result, siteRoot) {
   const region = root.querySelector("[data-panchang-devotional]");
   if (!region) return;
-  const supportedFestivals = (result.raw.festivals || []).filter((festival) => festival.type !== "span");
-  const context = devotionalContext(supportedFestivals, result.tithi);
+  const context = devotionalContext(result.festivals || [], result.sunriseTithi.name);
   const links = context.links.length ? context.links : GENERAL_LINKS;
   const list = region.querySelector("ul");
   if (list) {
@@ -209,18 +166,17 @@ function renderDevotionalLinks(root, result, siteRoot) {
 }
 
 function renderCommon(root, result) {
-  const { raw } = result;
   const events = observances(result);
   setText(root, "date", longDate(result.date, root._panchangSettings.location));
   setText(root, "location", root._panchangSettings.location.name);
-  setText(root, "tithi", result.tithi);
-  setText(root, "tithi-end", shortTime(raw.tithiEndTime, root._panchangSettings.location));
-  setText(root, "paksha", raw.paksha || "Not available");
-  setText(root, "masa", `${raw.masa?.isAdhika ? "Adhika " : ""}${raw.masa?.name || "Not available"}`);
-  setText(root, "nakshatra", result.nakshatra);
-  setText(root, "nakshatra-end", shortTime(raw.nakshatraEndTime, root._panchangSettings.location));
+  setText(root, "tithi", result.sunriseTithi.name);
+  setText(root, "tithi-end", shortTime(result.tithiTransitions[0]?.end, root._panchangSettings.location, result.date));
+  setText(root, "paksha", result.paksha);
+  setText(root, "masa", `${result.masa.isAdhika ? "Adhika " : ""}${result.masa.name}`);
+  setText(root, "nakshatra", result.sunriseNakshatra.name);
+  setText(root, "nakshatra-end", shortTime(result.nakshatraTransitions[0]?.end, root._panchangSettings.location, result.date));
   setText(root, "festival", events.join("; ") || "No major observance identified in the current ruleset.");
-  setText(root, "sunrise-sunset", `${shortTime(raw.sunrise, root._panchangSettings.location)} / ${shortTime(raw.sunset, root._panchangSettings.location)}`);
+  setText(root, "sunrise-sunset", `${shortTime(result.sunrise, root._panchangSettings.location)} / ${shortTime(result.sunset, root._panchangSettings.location)}`);
   setText(root, "convention", root._panchangSettings.convention === "purnimanta" ? "Purnimanta" : "Amanta");
   setStatus(root, "Panchang calculated for the selected date and location.");
 }
@@ -228,35 +184,37 @@ function renderCommon(root, result) {
 async function renderSummary(root, state) {
   setStatus(root, "Calculating today’s Panchang…", "loading");
   const today = partsDate(new Date(), state.location.timezone);
-  const result = await calculate(today, state);
+  const result = await calculatePanchangDay(today, state);
   renderCommon(root, result);
   renderDevotionalLinks(root, result, root._siteRoot);
 }
 
 function detailRows(result, location, convention) {
-  const raw = result.raw;
   const rows = [
     ["Gregorian date", longDate(result.date, location)],
-    ["Vara / Weekday", result.vara],
-    ["Tithi", result.tithi],
-    ["Tithi transition", shortTime(raw.tithiEndTime, location)],
-    ["Paksha", raw.paksha],
-    ["Masa", `${raw.masa?.isAdhika ? "Adhika " : ""}${raw.masa?.name}`],
+    ["Vara / Weekday", result.weekday],
+    ["Hindu day", `${shortTime(result.sunrise, location)} to ${shortTime(result.nextSunrise, location, result.date)}`],
+    ["Tithi at sunrise", result.sunriseTithi.name],
+    ["Tithi sequence (sunrise to sunrise)", transitionSequence(result.tithiTransitions, location, result.date)],
+    ["Paksha", result.paksha],
+    ["Masa", `${result.masa.isAdhika ? "Adhika " : ""}${result.masa.name}`],
     ["Calendar convention", convention === "purnimanta" ? "Purnimanta" : "Amanta"],
-    ["Nakshatra", result.nakshatra],
-    ["Nakshatra transition", shortTime(raw.nakshatraEndTime, location)],
-    ["Yoga", result.yoga],
-    ["Karana", raw.karana],
-    ["Sunrise", shortTime(raw.sunrise, location)],
-    ["Sunset", shortTime(raw.sunset, location)],
-    ["Moonrise", shortTime(raw.moonrise, location)],
-    ["Moonset", shortTime(raw.moonset, location)],
-    ["Vikram Samvat", raw.samvat?.vikram],
-    ["Shaka Samvat", raw.samvat?.shaka],
-    ["Rahu Kalam", raw.rahuKalamStart && raw.rahuKalamEnd ? `${shortTime(raw.rahuKalamStart, location)} – ${shortTime(raw.rahuKalamEnd, location)}` : "Not available"],
-    ["Yamaganda", timeRange(raw.yamagandaKalam, location)],
-    ["Gulika", timeRange(raw.gulikaKalam, location)],
-    ["Abhijit Muhurta", timeRange(raw.abhijitMuhurta, location)],
+    ["Nakshatra at sunrise", result.sunriseNakshatra.name],
+    ["Nakshatra sequence (sunrise to sunrise)", transitionSequence(result.nakshatraTransitions, location, result.date)],
+    ["Yoga at sunrise", result.sunriseYoga.name],
+    ["Yoga sequence (sunrise to sunrise)", transitionSequence(result.yogaTransitions, location, result.date)],
+    ["Karana at sunrise", result.sunriseKarana.name],
+    ["Karana sequence (sunrise to sunrise)", transitionSequence(result.karanaTransitions, location, result.date)],
+    ["Sunrise", shortTime(result.sunrise, location)],
+    ["Sunset", shortTime(result.sunset, location)],
+    ["Moonrise / Chandrodaya", result.moonrise ? shortTime(result.moonrise, location) : noCivilEvent("Moonrise")],
+    ["Moonset / Chandrasta", result.moonset ? shortTime(result.moonset, location) : noCivilEvent("Moonset")],
+    ["Vikram Samvat", result.samvat?.vikram],
+    ["Shaka Samvat", result.samvat?.shaka],
+    ["Rahu Kalam", timeRange(result.rahuKalam, location, result.date)],
+    ["Yamaganda", timeRange(result.yamaganda, location, result.date)],
+    ["Gulika", timeRange(result.gulika, location, result.date)],
+    ["Abhijit Muhurta", timeRange(result.abhijitMuhurta, location, result.date)],
   ];
   return rows.filter(([, value]) => value !== undefined && value !== null && value !== "undefined");
 }
@@ -278,16 +236,19 @@ async function renderFull(root, state) {
   const selected = parseDateKey(input?.value) ? input.value : partsDate(new Date(), state.location.timezone);
   if (input) input.value = selected;
   setStatus(root, "Calculating Panchang…", "loading");
-  const result = await calculate(selected, state);
+  const result = await calculatePanchangDay(selected, state);
   renderCommon(root, result);
   renderRows(root.querySelector("[data-panchang-details]"), detailRows(result, state.location, state.convention));
   const festivals = root.querySelector("[data-panchang-festivals]");
-  festivals.replaceChildren(...((result.raw.festivals || []).filter((festival) => festival.type !== "span").map((festival) => {
+  festivals.replaceChildren(...((result.festivals || []).map((festival) => {
     const item = document.createElement("li");
     const strong = document.createElement("strong");
     strong.textContent = festival.name;
     item.append(strong);
     if (festival.description) item.append(` — ${festival.description}`);
+    const qualification = document.createElement("small");
+    qualification.textContent = " Rule-based observance; verify the applicable regional tradition.";
+    item.append(qualification);
     return item;
   })));
   if (!festivals.children.length) {
@@ -295,59 +256,75 @@ async function renderFull(root, state) {
     item.textContent = "No major observance identified in the current ruleset.";
     festivals.append(item);
   }
+  const policy = document.createElement("li");
+  policy.className = "abp-panchang__policy";
+  policy.textContent = FESTIVAL_POLICY_NOTE;
+  festivals.append(policy);
   renderDevotionalLinks(root, result, root._siteRoot);
   const url = new URL(location.href);
   url.searchParams.set("date", selected);
   history.replaceState(history.state, "", url);
 }
 
-async function renderCalendar(root, state) {
+async function renderCalendar(root, state, isCurrent = () => true) {
   const monthInput = root.querySelector("[data-calendar-month]");
   const yearInput = root.querySelector("[data-calendar-year]");
-  const now = parseDateKey(partsDate(new Date(), state.location.timezone));
-  let month = Math.min(12, Math.max(1, Number(monthInput.value) || now.getMonth() + 1));
-  let year = Math.min(2200, Math.max(1800, Number(yearInput.value) || now.getFullYear()));
+  const todayKey = partsDate(new Date(), state.location.timezone);
+  const now = parseDateKey(todayKey);
+  const month = Math.min(12, Math.max(1, Number(monthInput.value) || now.month));
+  const year = Math.min(2200, Math.max(1800, Number(yearInput.value) || now.year));
   monthInput.value = month;
   yearInput.value = year;
   setStatus(root, "Calculating the monthly Hindu calendar…", "loading");
   const grid = root.querySelector("[data-calendar-grid]");
   grid.replaceChildren();
-  const first = new Date(year, month - 1, 1, 12);
-  const days = new Date(year, month, 0).getDate();
-  for (let blank = 0; blank < first.getDay(); blank += 1) {
+  const first = new Date(Date.UTC(year, month - 1, 1, 12));
+  const monthDays = await calculatePanchangMonth(year, month, state, (complete, total) => {
+    if (isCurrent()) setStatus(root, `Calculating the monthly Hindu calendar… ${complete}/${total}`, "loading");
+  });
+  if (!isCurrent()) return;
+  for (let blank = 0; blank < first.getUTCDay(); blank += 1) {
     const spacer = document.createElement("span");
     spacer.className = "abp-panchang-calendar__blank";
     spacer.setAttribute("aria-hidden", "true");
     grid.append(spacer);
   }
-  for (let day = 1; day <= days; day += 1) {
-    const value = `${year}-${pad(month)}-${pad(day)}`;
-    try {
-      const result = await calculate(value, state);
+  for (const result of monthDays) {
+    const value = result.date;
+    const day = parseDateKey(value).day;
+    if (!result.error) {
       const link = document.createElement("a");
       link.className = "abp-panchang-calendar__day";
-      if (value === dateKey(now)) link.classList.add("is-today");
+      if (value === todayKey) link.classList.add("is-today");
       link.href = new URL(`panchang/?date=${value}`, root._siteRoot).href;
       const number = document.createElement("b");
       number.textContent = day;
       const tithi = document.createElement("span");
-      tithi.textContent = result.tithi;
+      tithi.textContent = result.sunriseTithi.name;
       link.append(number, tithi);
+      const firstTithi = result.tithiTransitions[0];
+      const firstNakshatra = result.sunriseNakshatra.name;
+      if (firstTithi?.end) {
+        const transition = document.createElement("small");
+        transition.className = "abp-panchang-calendar__transition";
+        transition.textContent = `until ${shortTime(firstTithi.end, state.location, value)} · ${firstNakshatra}`;
+        link.append(transition);
+      }
       const markers = observances(result);
       if (markers.length) {
         const marker = document.createElement("small");
         marker.textContent = markers.slice(0, 2).join(" · ");
         link.append(marker);
       }
-      link.setAttribute("aria-label", `${longDate(value, state.location)}: ${result.tithi}${markers.length ? `; ${markers.join(", ")}` : ""}`);
+      link.setAttribute("aria-label", `${longDate(value, state.location)}: ${result.sunriseTithi.name} at sunrise; ${firstNakshatra} Nakshatra${markers.length ? `; ${markers.join(", ")}` : ""}`);
       grid.append(link);
-    } catch (_) {
+    } else {
       const unavailable = document.createElement("span");
       unavailable.className = "abp-panchang-calendar__day is-unavailable";
       unavailable.textContent = String(day);
+      unavailable.setAttribute("aria-label", `${longDate(value, state.location)} unavailable: ${result.warnings.join(" ")}`);
       grid.append(unavailable);
     }
-    if (day % 7 === 0) await new Promise((resolve) => setTimeout(resolve, 0));
   }
   setStatus(root, `${new Intl.DateTimeFormat("en-IN", { month: "long", year: "numeric" }).format(first)} calculated for ${state.location.name}.`);
 }
@@ -367,8 +344,8 @@ async function convertGregorian(root, state) {
   }
   input.setCustomValidity("");
   setStatus(root, "Converting Gregorian date…", "loading");
-  const result = await calculate(input.value, state);
-  converterOutput(root, detailRows(result, state.location, state.convention).filter(([label]) => ["Gregorian date", "Vara / Weekday", "Tithi", "Tithi transition", "Paksha", "Masa", "Calendar convention", "Nakshatra", "Nakshatra transition", "Vikram Samvat", "Shaka Samvat"].includes(label)));
+  const result = await calculatePanchangDay(input.value, state);
+  converterOutput(root, detailRows(result, state.location, state.convention).filter(([label]) => ["Gregorian date", "Vara / Weekday", "Tithi at sunrise", "Tithi sequence (sunrise to sunrise)", "Paksha", "Masa", "Calendar convention", "Nakshatra at sunrise", "Nakshatra sequence (sunrise to sunrise)", "Vikram Samvat", "Shaka Samvat"].includes(label)));
   setStatus(root, "Date conversion complete.");
 }
 
@@ -384,11 +361,9 @@ async function convertHindu(root, state) {
   }
   const wantedTithi = paksha === "Krishna" ? day + 14 : day - 1;
   const expectedGregorianYear = year - 57;
-  const center = new Date(expectedGregorianYear, 3, 1 + Math.round(month * 29.53), 12);
-  const start = new Date(center);
-  const end = new Date(center);
-  start.setDate(start.getDate() - 110);
-  end.setDate(end.getDate() + 110);
+  const center = new Date(Date.UTC(expectedGregorianYear, 3, 1 + Math.round(month * 29.53), 12));
+  const centerKey = dateKeyFromParts({ year: center.getUTCFullYear(), month: center.getUTCMonth() + 1, day: center.getUTCDate() });
+  const start = shiftDateKey(centerKey, -110);
   const matches = [];
   let checked = 0;
   setStatus(root, "Searching possible Gregorian dates…", "loading");
@@ -396,11 +371,10 @@ async function convertHindu(root, state) {
   output.hidden = true;
   output.querySelector("dl").replaceChildren();
   output.querySelector("[data-converter-matches]").replaceChildren();
-  for (let cursor = new Date(start); cursor <= end; cursor.setDate(cursor.getDate() + 1)) {
-    const value = dateKey(cursor);
-    const result = await calculate(value, state);
-    const raw = result.raw;
-    if (raw.samvat?.vikram === year && raw.masa?.index === month && raw.paksha === paksha && raw.tithi === wantedTithi && Boolean(raw.masa?.isAdhika) === adhika) {
+  for (let index = 0; index <= 220; index += 1) {
+    const value = shiftDateKey(start, index);
+    const result = await calculatePanchangDay(value, state);
+    if (result.samvat?.vikram === year && result.masa.index === month && result.paksha === paksha && result.sunriseTithi.index === wantedTithi && result.masa.isAdhika === adhika) {
       matches.push({ value, result });
     }
     checked += 1;
@@ -423,7 +397,7 @@ async function convertHindu(root, state) {
       const link = document.createElement("a");
       link.href = new URL(`panchang/?date=${match.value}`, root._siteRoot).href;
       link.textContent = longDate(match.value, state.location);
-      item.append(link, ` — ${match.result.tithi}, ${match.result.raw.paksha} ${match.result.raw.masa.name}`);
+      item.append(link, ` — ${match.result.sunriseTithi.name}, ${match.result.paksha} ${match.result.masa.name}`);
       list.append(item);
     }
   }
@@ -436,9 +410,8 @@ function setupFullNavigation(root, refresh) {
   input.value = parseDateKey(queryDate) ? queryDate : partsDate(new Date(), root._panchangSettings.location.timezone);
   input.addEventListener("change", refresh);
   root.querySelectorAll("[data-date-shift]").forEach((button) => button.addEventListener("click", () => {
-    const current = parseDateKey(input.value) || new Date();
-    current.setDate(current.getDate() + Number(button.dataset.dateShift));
-    input.value = dateKey(current);
+    const current = parseDateKey(input.value) ? input.value : partsDate(new Date(), root._panchangSettings.location.timezone);
+    input.value = shiftDateKey(current, Number(button.dataset.dateShift));
     refresh();
   }));
   root.querySelector("[data-date-today]")?.addEventListener("click", () => {
@@ -450,20 +423,20 @@ function setupFullNavigation(root, refresh) {
 function setupCalendarNavigation(root, refresh) {
   const month = root.querySelector("[data-calendar-month]");
   const year = root.querySelector("[data-calendar-year]");
-  const now = new Date();
-  month.value = now.getMonth() + 1;
-  year.value = now.getFullYear();
+  const now = localDateParts(new Date(), root._panchangSettings.location.timezone);
+  month.value = now.month;
+  year.value = now.year;
   const shift = (amount) => {
-    const date = new Date(Number(year.value), Number(month.value) - 1 + amount, 1);
-    month.value = date.getMonth() + 1;
-    year.value = date.getFullYear();
+    const date = new Date(Date.UTC(Number(year.value), Number(month.value) - 1 + amount, 1));
+    month.value = date.getUTCMonth() + 1;
+    year.value = date.getUTCFullYear();
     refresh();
   };
   root.querySelector("[data-month-prev]")?.addEventListener("click", () => shift(-1));
   root.querySelector("[data-month-next]")?.addEventListener("click", () => shift(1));
   root.querySelector("[data-month-today]")?.addEventListener("click", () => {
-    month.value = now.getMonth() + 1;
-    year.value = now.getFullYear();
+    month.value = now.month;
+    year.value = now.year;
     refresh();
   });
   month.addEventListener("change", refresh);
@@ -503,7 +476,7 @@ export function initializePanchang(root, { siteRoot }) {
     try {
       if (view === "summary") await renderSummary(root, root._panchangSettings);
       if (view === "full") await renderFull(root, root._panchangSettings);
-      if (view === "calendar") await renderCalendar(root, root._panchangSettings);
+      if (view === "calendar") await renderCalendar(root, root._panchangSettings, () => run === generation);
       if (run !== generation) return;
     } catch (error) {
       if (run === generation) fail(root, error);

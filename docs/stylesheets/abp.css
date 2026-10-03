@@ -1115,6 +1115,9 @@ html { scroll-padding-top: 3.4rem; }
 .abp-panchang-calendar__day b { color: var(--abp-maroon); font-size: .8rem; }
 .abp-panchang-calendar__day span { font: 700 .55rem/1.25 var(--abp-serif); }
 .abp-panchang-calendar__day small { color: var(--abp-saffron-ink, #9a3f00); font: 700 .46rem/1.2 var(--abp-sans); }
+.abp-panchang-calendar__day small.abp-panchang-calendar__transition { color: var(--abp-ink-3); font-weight: 600; }
+.abp-panchang__observances small { display: block; margin-top: .15rem; color: var(--abp-ink-3); }
+.abp-panchang__observances .abp-panchang__policy { margin-top: .55rem; font-size: .62rem; font-style: italic; }
 .md-typeset .abp-panchang-calendar__day.is-today { border: 2px solid var(--abp-maroon); box-shadow: inset 0 0 0 2px var(--abp-gold); }
 .abp-panchang-calendar__day.is-unavailable { opacity: .6; }
 .abp-converter__modes { display: flex; flex-wrap: wrap; gap: .4rem 1rem; margin-block: .8rem; padding: .65rem; border: 1px solid var(--abp-gold); border-radius: .5rem; }

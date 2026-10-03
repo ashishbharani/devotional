@@ -10,6 +10,9 @@ default location is Delhi, India, and preferences are stored in
 - `hooks/generate.py` emits the homepage card and the three generated tool pages.
 - `docs/javascripts/abp-panchang.js` is the small Material instant-navigation loader.
 - `docs/assets/panchang/settings.mjs` owns locations and saved preferences.
+- `docs/assets/panchang/date-time.mjs` is the canonical civil-date, IANA-timezone and Hindu-day utility layer.
+- `docs/assets/panchang/panchang-adapter.mjs` validates and normalizes the bundled engine into daily/monthly models.
+- `docs/assets/panchang/festival-rules.mjs` separates festival policy from astronomical calculations.
 - `docs/assets/panchang/festival-links.mjs` is the curated mapping into the existing collection.
 - `docs/assets/panchang/panchang-app.mjs` owns presentation, calendar and converter workflows.
 - `docs/assets/panchang/panchang-engine.mjs` is the pinned, minified calculation bundle.
@@ -18,6 +21,37 @@ The engine bundle contains `@ishubhamx/panchangam-js` 3.0.0,
 `astronomy-engine` 2.1.19 and `luxon` 3.6.1. All are MIT licensed; notices are
 in `docs/assets/panchang/THIRD_PARTY_NOTICES.txt`. It is loaded only when a
 Panchang element exists on the current page.
+
+Do not hand-edit `panchang-engine.mjs`. It is third-party generated code. Keep
+project-specific corrections in the adapter and rebuild the vendor bundle only
+when intentionally upgrading pinned dependencies.
+
+## Calculation conventions
+
+- **Astronomy:** Astronomy Engine 2.1.19 supplies apparent solar/lunar
+  positions and rise/set searches. Its rise/set definition uses the first/last
+  visible upper limb with standard atmospheric refraction.
+- **Ayanamsha:** the bundled package's default `getAyanamsa()` implementation is
+  Lahiri/Chitra Paksha. The UI does not currently expose another ayanamsha.
+- **Hindu day:** the adapter models a day from location-local sunrise through
+  the following location-local sunrise. Tithi, Nakshatra, Yoga and Karana shown
+  as the day's primary state are the states prevailing at sunrise. Every
+  transition returned inside that Hindu day is retained.
+- **Civil date and timezone:** the selected Gregorian date is resolved with its
+  location's IANA timezone. The numeric engine offset is calculated for that
+  date; no calculation depends on the computer or build server timezone.
+- **Moonrise/Moonset:** package 3.0.0 searches from location-local midnight and
+  accepts only an event within that local civil date. The adapter verifies the
+  date again and defensively probes both ends of the same civil day. It never
+  borrows an adjacent day's event. A null value is retained when the roughly
+  24h50m lunar cycle produces no rise or set during that civil date.
+- **Lunar month:** the package derives the Amanta month from the sidereal solar
+  sign at the relevant new moon, detects Adhika Masa when consecutive new moons
+  fall in the same sign, and applies its Purnimanta month adjustment. Switching
+  convention must not change astronomical events.
+- **Caching:** deterministic raw and normalized results are keyed by civil date,
+  latitude, longitude, altitude, IANA timezone and calendar convention. Cache
+  state is cleared when a user changes location or convention.
 
 ## Festival scope
 
@@ -28,13 +62,25 @@ independent checking found regional/day-number differences. The UI always warns 
 region and tradition. Devotional links are curated separately and never alter
 the canonical collection data.
 
+Package festival output is labelled as rule-based and requiring regional review;
+it is not presented as a universally authoritative festival ruling. The Tithi
+markers describe astronomical sunrise state, not a complete vrata decision.
+
 ## Validation
 
-The Delhi result for 2 October 2026 is checked against Drik Panchang: Krishna
-Shashthi to about 10:15, Mrigashira to about 02:55 the next day, Bhadrapada
-(Amanta), Ashwina (Purnimanta), sunrise about 06:14, sunset about 18:06, Vikram
-Samvat 2083 and Shaka Samvat 1948. Small minute-level differences can occur
-between astronomical implementations.
+The maintained golden fixture in `scripts/fixtures/panchang-golden.mjs` checks
+2 October 2026 against small, manually transcribed Drik Panchang reference rows
+for Delhi, Mumbai, Chennai and Guwahati. It compares sunrise, sunset,
+Moonrise, Moonset, Tithi, Tithi end, Nakshatra, Nakshatra end, Paksha and Masa.
+Sunrise/sunset and transition tolerances are two minutes; lunar rise/set uses a
+seven-minute tolerance because observer coordinates and refraction models differ.
+The fixture records each source URL and must not be changed merely to make a
+failing implementation pass.
+
+Regression coverage also includes genuine Delhi no-Moonrise/no-Moonset civil
+dates, DST-sensitive IANA offset conversion, Adhika Masa, confirmed skipped and
+repeated sunrise Tithis, twelve city presets, leap/year boundaries and complete
+October 2026 monthly generation for seven geographically separated cities.
 
 Run:
 
