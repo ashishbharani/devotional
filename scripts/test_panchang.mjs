@@ -20,6 +20,21 @@ for (const date of ["2024-02-29", "2026-10-02", "2026-12-31", "2027-01-01"]) {
   assert.ok(value.tithi >= 0 && value.tithi < 30, `${date}: valid Tithi`);
   assert.ok(value.nakshatra >= 0 && value.nakshatra < 27, `${date}: valid Nakshatra`);
   assert.ok(value.sunrise instanceof Date && value.sunset instanceof Date, `${date}: rise/set available`);
+  if (value.moonrise !== null && value.moonrise !== undefined) {
+  assert.ok(
+    value.moonrise instanceof Date &&
+    !Number.isNaN(value.moonrise.getTime()),
+    `${date}: moonrise is a valid Date`
+  );
+}
+
+if (value.moonset !== null && value.moonset !== undefined) {
+  assert.ok(
+    value.moonset instanceof Date &&
+    !Number.isNaN(value.moonset.getTime()),
+    `${date}: moonset is a valid Date`
+  );
+}
   assert.ok(value.sunrise < value.sunset, `${date}: sunrise precedes sunset`);
   assert.ok(tithiNames[value.tithi], `${date}: named Tithi`);
   assert.ok(nakshatraNames[value.nakshatra], `${date}: named Nakshatra`);
