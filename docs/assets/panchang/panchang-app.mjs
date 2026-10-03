@@ -13,7 +13,7 @@ import {
   shiftDateKey,
 } from "./date-time.mjs";
 import { FESTIVAL_POLICY_NOTE, observanceNames } from "./festival-rules.mjs";
-import { formatTime, renderTimingSections } from "./panchang-display.mjs";
+import { formatTime, formatMoonEvent, renderTimingSections } from "./panchang-display.mjs";
 
 const partsDate = (date, timeZone) => localDateKey(date, timeZone);
 
@@ -36,10 +36,6 @@ function timeRange(value, location, baseDate = null) {
 function transitionSequence(items, location, baseDate) {
   if (!items?.length) return "Not available";
   return items.map((item) => `${item.name} until ${shortTime(item.end, location, baseDate)}`).join("; then ");
-}
-
-function noCivilEvent(label) {
-  return `No ${label} on this local civil date`;
 }
 
 function setText(root, field, value) {
@@ -185,6 +181,8 @@ function renderCommon(root, result) {
   setText(root, "nakshatra-end", shortTime(result.nakshatraTransitions[0]?.end, root._panchangSettings.location, result.date));
   setText(root, "festival", events.join("; ") || "No major observance identified in the current ruleset.");
   setText(root, "sunrise-sunset", `${shortTime(result.sunrise, root._panchangSettings.location)} / ${shortTime(result.sunset, root._panchangSettings.location)}`);
+  setText(root, "moonrise", formatMoonEvent(result.moonrise, "Moonrise", result.location, result.date));
+  setText(root, "moonset", formatMoonEvent(result.moonset, "Moonset", result.location, result.date));
   setText(root, "convention", root._panchangSettings.convention === "purnimanta" ? "Purnimanta" : "Amanta");
   setText(root, "yoga", result.sunriseYoga.name);
   setText(root, "karana", result.sunriseKarana.name);
@@ -208,8 +206,8 @@ function detailRows(result, location, convention) {
     ["Hindu day", `${shortTime(result.sunrise, location)} to ${shortTime(result.nextSunrise, location, result.date)}`],
     ["Sunrise", shortTime(result.sunrise, location)],
     ["Sunset", shortTime(result.sunset, location)],
-    ["Moonrise / Chandrodaya", result.moonrise ? shortTime(result.moonrise, location) : noCivilEvent("Moonrise")],
-    ["Moonset / Chandrasta", result.moonset ? shortTime(result.moonset, location) : noCivilEvent("Moonset")],
+    ["Moonrise / Chandrodaya", formatMoonEvent(result.moonrise, "Moonrise", location, result.date)],
+    ["Moonset / Chandrasta", formatMoonEvent(result.moonset, "Moonset", location, result.date)],
     ["Vara / Weekday", result.weekday],
     ["Tithi at sunrise", `${result.paksha} ${result.sunriseTithi.name}`],
     ["Tithi starts", formatTime(result.sunriseTithi.start, location, result.date, true)],
@@ -243,6 +241,8 @@ function renderRows(container, rows) {
     const description = document.createElement("dd");
     term.textContent = label;
     description.textContent = String(value);
+    const eventField = { Sunrise: "sunrise", Sunset: "sunset", "Moonrise / Chandrodaya": "moonrise", "Moonset / Chandrasta": "moonset" }[label];
+    if (eventField) description.dataset.panchangField = eventField;
     item.append(term, description);
     return item;
   }));

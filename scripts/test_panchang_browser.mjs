@@ -39,6 +39,7 @@ const checkLayout = async (page, label) => {
   assert.deepEqual(failures, [], `${label}: no card overflow`);
 };
 const ready = (page) => page.waitForFunction(() => document.querySelector("[data-panchang-status]")?.dataset.state === "ready", null, { timeout: 60000 });
+const moonText = async (scope) => Promise.all(["moonrise", "moonset"].map((field) => scope.locator(`[data-panchang-field='${field}']`).innerText()));
 if (process.env.PANCHANG_BASELINE) {
   for (const width of [360, 1440]) {
     const context = await browser.newContext({ viewport: { width, height: 950 }, reducedMotion: "reduce", serviceWorkers: "block" });
@@ -46,6 +47,7 @@ if (process.env.PANCHANG_BASELINE) {
     for (const [label, route] of [["home", ""], ["daily", "panchang/?date=2026-10-03"], ["monthly", "hindu-calendar/"]]) {
       await page.goto(base + route);
       await ready(page);
+      if (label === "home") await page.locator("details.abp-home-index > summary").filter({ hasText: "TODAY PANCHANG" }).click();
       await page.screenshot({ path: path.join(shots, `${label}-before-${width}.png`), fullPage: true });
     }
     await context.close();
@@ -72,6 +74,18 @@ try {
     assert.match(await page.locator("[data-panchang-field='date']").innerText(), /3 October 2026/);
     assert.equal(await page.locator("[data-panchang-tithis] li").count(), 3);
     assert.equal(await page.locator("[data-panchang-muhurtas] dt").count(), 4);
+    const delhiMoon = await moonText(page);
+    assert.deepEqual(delhiMoon, ["11:27 PM", "01:09 PM"]);
+    await page.locator("[data-panchang-location]").fill("Mumbai, Maharashtra");
+    await page.waitForFunction(() => document.querySelector("[data-panchang-field='location']")?.textContent.includes("Mumbai"));
+    await ready(page);
+    const mumbaiMoon = await moonText(page);
+    assert.match(mumbaiMoon[0], /No Moonrise on this local civil date/);
+    assert.notEqual(mumbaiMoon[1], delhiMoon[1]);
+    await page.locator("[data-panchang-location]").fill("Delhi, India");
+    await page.waitForFunction(() => document.querySelector("[data-panchang-field='location']")?.textContent.includes("Delhi"));
+    await ready(page);
+    assert.deepEqual(await moonText(page), delhiMoon);
     await checkLayout(page, `home ${width}`);
     if (shots) await page.screenshot({ path: path.join(shots, `home-${width}.png`), fullPage: true });
     await summary.press("Space");
@@ -88,6 +102,7 @@ try {
     await page.waitForURL("**/panchang/**");
     await page.locator("[data-panchang-view='full']").waitFor();
     await ready(page);
+    assert.deepEqual(await moonText(page), delhiMoon, "Today and daily share Moon results");
     assert.equal(await page.locator("[data-panchang-tithis] li").count(), 3);
     assert.match(await page.locator("[data-panchang-tithis]").innerText(), /02 Oct 2026/);
     assert.match(await page.locator("[data-panchang-tithis]").innerText(), /04 Oct 2026/);
@@ -99,11 +114,13 @@ try {
     await location.fill("Mumbai, Maharashtra");
     await page.waitForFunction(() => document.querySelector("[data-panchang-field='location']")?.textContent.includes("Mumbai"));
     await ready(page);
+    assert.deepEqual(await moonText(page), mumbaiMoon);
     await page.locator("[data-panchang-date]").fill("2026-01-10");
     await page.locator("[data-panchang-date]").dispatchEvent("change");
     await page.waitForFunction(() => document.querySelector("[data-panchang-field='date']")?.textContent.includes("10 January 2026"));
     await ready(page);
     assert.match(await page.locator("[data-panchang-tithis]").innerText(), /Vriddhi/);
+    assert.notDeepEqual(await moonText(page), mumbaiMoon, "date change recalculates Moon events");
     await page.goto(`${base}hindu-calendar/`);
     await ready(page);
     assert.equal(await page.locator(".abp-panchang-calendar__card").count(), 31);
@@ -111,6 +128,7 @@ try {
     assert.equal(await oct3.locator(".abp-panchang-calendar__transition").count(), 3);
     if (shots) await page.screenshot({ path: path.join(shots, `monthly-compact-${width}.png`), fullPage: true });
     await oct3.locator("summary").click();
+    assert.deepEqual(await moonText(oct3), mumbaiMoon, "monthly and daily agree at the selected location");
     assert.equal(await oct3.locator("[data-panchang-muhurtas] dt").count(), 4);
     await checkLayout(page, `monthly ${width}`);
     await page.evaluate(() => window.scrollTo(0, 0));
@@ -137,6 +155,17 @@ try {
     navigator.geolocation.getCurrentPosition = (_, failure) => failure({ code: 1 });
   });
   await deniedPage.goto(`${base}panchang/?date=2026-10-03`);
+  await ready(deniedPage);
+  for (const [date, field] of [["2026-01-10", "moonrise"], ["2026-01-25", "moonset"]]) {
+    await deniedPage.locator("[data-panchang-date]").fill(date);
+    await deniedPage.locator("[data-panchang-date]").dispatchEvent("change");
+    await deniedPage.waitForFunction((value) => document.querySelector("[data-panchang-date]")?.value === value && document.querySelector("[data-panchang-status]")?.dataset.state === "ready", date);
+    await deniedPage.locator(`[data-panchang-field='${field}']`).filter({ hasText: /No Moon/ }).waitFor();
+    assert.match(await deniedPage.locator(`[data-panchang-field='${field}']`).innerText(), /No Moon.* on this local civil date/);
+  }
+  await deniedPage.locator("[data-panchang-date]").fill("2026-10-03");
+  await deniedPage.locator("[data-panchang-date]").dispatchEvent("change");
+  await deniedPage.waitForFunction(() => document.querySelector("[data-panchang-field='date']")?.textContent.includes("3 October 2026"));
   await ready(deniedPage);
   await deniedPage.locator("[data-panchang-geolocate]").click();
   assert.match(await deniedPage.locator("[data-panchang-status]").innerText(), /Continuing with Delhi/);
@@ -187,6 +216,7 @@ try {
   await ready(offlinePage);
   assert.equal(await offlinePage.locator("[data-panchang-tithis] li").count(), 3);
   assert.equal(await offlinePage.locator("[data-panchang-muhurtas] dt").count(), 4);
+  assert.deepEqual(await moonText(offlinePage), ["11:27 PM", "01:09 PM"]);
   assert.ok(await offlinePage.evaluate(async () => (await (await fetch("../assets/panchang/panchang-engine.mjs")).text()).includes("export const astronomy")), "offline engine is new, not obsolete");
   await offline.close();
   console.log(`Browser regression suite passed: ${passed} viewport groups, initialization failure, denied location, themes and real PWA migration/offline calculation`);

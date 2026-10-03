@@ -9,20 +9,18 @@ import {
 import {
   daysInMonth,
   instantForLocalTime,
-  isEventOnLocalCivilDate,
   localDateKey,
   localDayBounds,
   parseDateKey,
-  safeAstronomicalDate,
   shiftDateKey,
   timezoneOffsetForInstant,
 } from "./date-time.mjs";
 import { applyFestivalRules } from "./festival-rules.mjs";
-import { solarEvents, longitudes, julianDate, normalize360 } from "./astronomy.mjs";
+import { solarEvents, moonEvents, longitudes, julianDate, normalize360 } from "./astronomy.mjs";
 import { limbSegments, nextTithi } from "./tithi.mjs";
 import { calculateShubhMuhurtas } from "./muhurta.mjs";
 
-export const CALCULATION_VERSION = "sunrise-intervals-v2-lahiri-ae2.1.19";
+export const CALCULATION_VERSION = "sunrise-intervals-v3-moon-civil-lahiri-ae2.1.19";
 
 const rawCache = new Map();
 const dayCache = new Map();
@@ -72,29 +70,6 @@ function rawForDate(dateKey, settings) {
   return rawCache.get(key);
 }
 
-function civilEvent(raw, field, dateKey, settings, warnings) {
-  const direct = safeAstronomicalDate(raw[field]);
-  if (direct && isEventOnLocalCivilDate(direct, dateKey, settings.location.timezone)) return direct;
-
-  // panchangam-js 3.0.0 normally searches from local midnight. Probe both
-  // ends of the same civil day defensively so a future engine change cannot
-  // leak a previous/next-day Moon event into this date.
-  if (field === "moonrise" || field === "moonset") {
-    const candidates = [direct];
-    for (const localTime of [{ hour: 0, minute: 1 }, { hour: 23, minute: 58 }]) {
-      const probe = engineCall(dateKey, settings, localTime);
-      candidates.push(safeAstronomicalDate(probe[field]));
-    }
-    const matching = candidates.find((candidate) => candidate && isEventOnLocalCivilDate(candidate, dateKey, settings.location.timezone));
-    if (matching) return matching;
-    warnings.push(`No ${field === "moonrise" ? "Moonrise" : "Moonset"} occurs on this location-local civil date.`);
-    return null;
-  }
-
-  warnings.push(`${field} was unavailable or outside the selected location-local civil date.`);
-  return null;
-}
-
 function solarForDate(dateKey, settings) {
   const key = cacheKey(dateKey, settings);
   if (!solarCache.has(key)) {
@@ -124,8 +99,11 @@ export async function calculatePanchangDay(dateKey, settings) {
   const yogas = limbSegments("yoga", sunrise, nextSunrise, previousSunrise);
   const karanas = limbSegments("karana", sunrise, nextSunrise, previousSunrise);
   const shubhMuhurtas = calculateShubhMuhurtas(sunrise, sunset, previousSunset);
-  const moonrise = civilEvent(raw, "moonrise", dateKey, settings, warnings);
-  const moonset = civilEvent(raw, "moonset", dateKey, settings, warnings);
+  // Calculate once for the selected civil date. Daily/monthly/home renderers
+  // consume these same cached values; no whole-Panchanga fallback probes.
+  const { moonrise, moonset } = moonEvents(dateKey, settings.location);
+  if (!moonrise) warnings.push("No Moonrise occurs on this location-local civil date.");
+  if (!moonset) warnings.push("No Moonset occurs on this location-local civil date.");
   const rules = applyFestivalRules(raw.festivals, tithis[0].index);
   const parts = parseDateKey(dateKey);
   const weekdayIndex = new Date(Date.UTC(parts.year, parts.month - 1, parts.day)).getUTCDay();
@@ -206,6 +184,20 @@ export function inspectPanchang(day) {
     utcJulianDate: julianDate(day.sunrise), sunLongitude: sun, moonLongitude: moon, ayanamsha,
     elongation: normalize360(moon - sun), tithiIndex: day.sunriseTithi.index,
     transitions: day.tithis.map((item) => ({ targetAngle: item.targetAngle, utcJulianDate: julianDate(item.end), instant: item.end })) };
+}
+
+// Explicit developer-only invocation; never called by a production renderer.
+export function printRiseSetValidation(day, log = console.table) {
+  const time = (instant) => instant ? new Intl.DateTimeFormat("en-GB", {
+    timeZone: day.location.timezone, dateStyle: "short", timeStyle: "long",
+  }).format(instant) : "No event on this local civil date";
+  const row = { date: day.date, location: day.location.name,
+    latitude: day.location.latitude, longitude: day.location.longitude,
+    elevation: day.location.altitude || 0, timezone: day.location.timezone,
+    sunrise: time(day.sunrise), sunset: time(day.sunset),
+    moonrise: time(day.moonrise), moonset: time(day.moonset) };
+  log(row);
+  return row;
 }
 
 export const engineNames = Object.freeze({ masaNames, nakshatraNames, tithiNames, varaNames, yogaNames });

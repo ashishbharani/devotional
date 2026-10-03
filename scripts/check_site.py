@@ -116,6 +116,7 @@ def main() -> int:
     for page in (home, panchang):
         require("SHUBH MUHURTA" in page and "data-panchang-muhurtas" in page, "dedicated Shubh Muhurta section is missing", errors)
         require("data-panchang-tithis" in page, "full Tithi timeline is missing", errors)
+    require('data-panchang-field="moonrise"' in home and 'data-panchang-field="moonset"' in home, "homepage Moonrise/Moonset tiles are missing", errors)
     calendar = (site / "hindu-calendar" / "index.html").read_text(encoding="utf-8")
     require('data-panchang-view="calendar"' in calendar, "Hindu calendar application root is missing", errors)
     require("data-calendar-grid" in calendar, "Hindu calendar grid is missing", errors)

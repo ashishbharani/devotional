@@ -18,7 +18,7 @@ Vijaya, Godhuli, true tithi starts, and a matching homepage disclosure were abse
 - `panchang-engine.mjs`: unchanged pinned bundle plus a small explicit export of
   its existing Astronomy Engine instance and Lahiri function. The readable export
   at the end must be retained if the vendor bundle is regenerated.
-- `astronomy.mjs`: geocentric ecliptic-of-date longitudes and solar events.
+- `astronomy.mjs`: geocentric ecliptic-of-date longitudes and shared Sun/Moon rise/set searches.
 - `tithi.mjs`: wrapped-angle bracket/bisection solver and full limb intervals.
 - `muhurta.mjs`: the four documented solar rules.
 - `date-time.mjs`: validated civil dates and explicit IANA conversions.
@@ -64,6 +64,58 @@ Asia/Kolkata. Device coordinates use the device timezone, displayed in an editab
 IANA timezone control so travel or manually configured devices can be corrected.
 Coordinates alone do not reliably identify political timezone boundaries. Today
 uses the selected timezone and updates when its local date changes.
+
+## Moonrise and Moonset: local civil dates
+
+`moonEvents(dateKey, location)` uses the **same bundled Astronomy Engine** as
+the existing Sun and limb calculations; no second dependency or runtime API is
+introduced. An observer includes the selected latitude, longitude and altitude.
+Both directions are searched independently from location-local midnight converted
+to UTC, not UTC midnight or sunrise. Search results are accepted only inside
+`[local midnight, next local midnight)` and only if their location-local date
+equals `dateKey`. A two-day search horizon accommodates 25-hour DST civil dates;
+it does not allow accepting a following-day event. A missing event remains null.
+Moonset before Moonrise is valid. The obsolete wrapper probes at 00:01 and 23:58
+are removed, avoiding redundant full Panchanga calculations.
+
+The existing cached daily result holds `moonrise` and `moonset` as Date-or-null
+values. Today, Daily, and precomputed Monthly all consume these same fields.
+The homepage adds two existing-style tiles beside Sunrise/Sunset; Daily and
+Monthly retain their existing astronomical rows. All use the same local AM/PM
+minute formatter and explicit no-event wording. No 24-hour setting currently
+exists. No Moon calculation occurs during rendering. Cache keys already include
+date, coordinates, altitude and timezone, and the calculation version is bumped.
+
+Moon searches use apparent upper-limb rise/set with standard atmospheric
+refraction and a level horizon, as documented by
+[Astronomy Engine](https://github.com/cosinekitty/astronomy/blob/v2.1.19/source/js/astronomy.ts).
+Actual terrain and atmospheric conditions can alter observed times.
+
+Independent test-only minute observations from the
+[USNO documented Sun/Moon service](https://aa.usno.navy.mil/data/api.html) cover
+six cities and multiple lunar phases/months. Exact coordinates and request URLs
+are in `scripts/fixtures/moon-reference.mjs`. The largest difference across all
+four events is 34.1 seconds; the explicit test tolerance is 90 seconds to account
+for minute-rounded reference values and the service's lack of observer altitude.
+Delhi 2026-01-10 has no Moonrise; Delhi 2026-01-25 has no Moonset in both engines.
+Delhi 2026-10-03 has Moonrise 11:27 PM and Moonset 01:09 PM. Drik's page shows
+23:32/13:04 with slightly different coordinates and an unspecified Moon horizon
+convention. We report that difference rather than tuning offsets to match it;
+USNO independently agrees with this implementation's apparent-horizon model.
+
+For a development-only table of date, location, coordinates, elevation, timezone
+and all four local times, import `printRiseSetValidation` from the adapter and
+pass a calculated day, or run `PANCHANG_DEBUG_RISE_SET=1 node
+scripts/test_panchang.mjs` (use `$env:PANCHANG_DEBUG_RISE_SET='1'` in PowerShell).
+The diagnostic is never invoked by the production UI.
+
+The expanded suite covers a six-city/six-date lunar matrix, exact civil date
+membership, independent missing-event references, Moonset-before-Moonrise, IST
+and DST boundaries, elevation, and fresh Daily versus precomputed Monthly
+agreement. A pre-change SHA-256 regression checksum verifies exact preservation
+of Sun events, all four complete limb intervals and Muhurtas across 18 cases.
+Browser tests verify home-location changes, date changes, no-event rendering,
+all three views, five widths, themes, initialization failure and offline use.
 
 ## Muhurta conventions
 

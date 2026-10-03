@@ -10,6 +10,11 @@ export function formatTime(value, location, baseDate = null, alwaysDate = false)
   return `${date}, ${time}`;
 }
 
+export function formatMoonEvent(value, label, location, baseDate) {
+  return safeAstronomicalDate(value) ? formatTime(value, location, baseDate)
+    : `No ${label} on this local civil date`;
+}
+
 export function tithiRows(day, location) {
   return day.tithis.map((item) => ({
     title: `${item.paksha} ${item.name}`,

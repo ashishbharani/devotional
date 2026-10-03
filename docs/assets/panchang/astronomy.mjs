@@ -1,4 +1,5 @@
 import { astronomy, lahiriAyanamsha } from "./panchang-engine.mjs";
+import { localDateKey, localDayBounds } from "./date-time.mjs";
 
 export const normalize360 = (angle) => ((angle % 360) + 360) % 360;
 export const julianDate = (instant) => instant.getTime() / 86400000 + 2440587.5;
@@ -20,11 +21,27 @@ export function limbAngle(kind, instant) {
   return normalize360(moon - sun);
 }
 
-export function solarEvents(dateKey, location, bounds) {
+function riseSetEvents(body, dateKey, location, bounds) {
   const observer = new astronomy.Observer(Number(location.latitude), Number(location.longitude), Number(location.altitude || 0));
   const event = (direction) => {
-    const value = astronomy.SearchRiseSet(astronomy.Body.Sun, observer, direction, bounds.start, 2)?.date;
-    return value && value >= bounds.start && value < bounds.end ? value : null;
+    const value = astronomy.SearchRiseSet(body, observer, direction, bounds.start, 2)?.date;
+    // SearchRiseSet finds the NEXT event, which may belong to tomorrow. The
+    // civil window is half-open and independently checked in the chosen zone.
+    return value && value >= bounds.start && value < bounds.end
+      && localDateKey(value, location.timezone) === dateKey ? value : null;
   };
-  return { date: dateKey, sunrise: event(1), sunset: event(-1) };
+  return { rise: event(1), set: event(-1) };
+}
+
+export function solarEvents(dateKey, location, bounds) {
+  const { rise, set } = riseSetEvents(astronomy.Body.Sun, dateKey, location, bounds);
+  return { date: dateKey, sunrise: rise, sunset: set };
+}
+
+// Independent rise/set searches: Moonset is allowed to precede Moonrise.
+// Observer altitude is elevation above sea level, not height above the ground.
+// A two-day search covers even 25-hour DST civil days; only this date is accepted.
+export function moonEvents(dateKey, location, bounds = localDayBounds(dateKey, location.timezone, location.timezoneOffset)) {
+  const { rise, set } = riseSetEvents(astronomy.Body.Moon, dateKey, location, bounds);
+  return { date: dateKey, moonrise: rise, moonset: set };
 }

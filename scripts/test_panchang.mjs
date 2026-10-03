@@ -1,25 +1,30 @@
 import assert from "node:assert/strict";
+import { createHash } from "node:crypto";
 import { INDIAN_CITIES } from "../docs/assets/panchang/settings.mjs";
 import {
   calculatePanchangDay,
   calculatePanchangMonth,
   clearPanchangCache,
+  printRiseSetValidation,
 } from "../docs/assets/panchang/panchang-adapter.mjs";
 import {
   instantForLocalTime,
   isEventOnLocalCivilDate,
   isEventWithinHinduDay,
   localDateKey,
+  localDayBounds,
   parseDateKey,
   shiftDateKey,
   timezoneOffsetForInstant,
 } from "../docs/assets/panchang/date-time.mjs";
 import { GOLDEN_DAYS, GOLDEN_TOLERANCE_MINUTES } from "./fixtures/panchang-golden.mjs";
 import { limbSegments, boundary, tithiIndex } from "../docs/assets/panchang/tithi.mjs";
-import { limbAngle } from "../docs/assets/panchang/astronomy.mjs";
+import { limbAngle, moonEvents } from "../docs/assets/panchang/astronomy.mjs";
+import { astronomy } from "../docs/assets/panchang/panchang-engine.mjs";
 import { calculateShubhMuhurtas } from "../docs/assets/panchang/muhurta.mjs";
-import { formatTime, tithiRows, muhurtaRows } from "../docs/assets/panchang/panchang-display.mjs";
+import { formatTime, formatMoonEvent, tithiRows, muhurtaRows } from "../docs/assets/panchang/panchang-display.mjs";
 import { INDEPENDENT_DAYS } from "./fixtures/panchang-independent.mjs";
+import { MOON_REFERENCES } from "./fixtures/moon-reference.mjs";
 
 const DELHI = INDIAN_CITIES.find((city) => city.id === "delhi");
 const settings = (location = DELHI, convention = "amanta") => ({ location, convention });
@@ -356,6 +361,124 @@ test("independent nine-city, multi-season references compare complete dated inst
     const godhuliDeltas = ["start", "end"].map((field, index) => Math.round((day.shubhMuhurtas.godhuli[field] - referenceTime(fixture.godhuli[index], fixture.date, location)) / 60000));
     console.log(`REFERENCE ${fixture.city} ${fixture.date}: max comparable difference ${maxSeconds.toFixed(1)}s; Godhuli convention deltas ${godhuliDeltas.join("/")} min (sunset-centred vs reference evening interval)`);
   }
+});
+
+const MOON_CITIES = ["delhi", "mumbai", "kolkata", "chennai", "bengaluru", "varanasi"];
+
+test("six-city lunar phase matrix uses the exact local civil date and recalculates both events", async () => {
+  const dates = ["2026-01-03", "2026-01-10", "2026-01-18", "2026-01-26", "2026-07-15", "2026-10-03"];
+  const rises = new Set();
+  const sets = new Set();
+  for (const id of MOON_CITIES) {
+    const location = city(id);
+    const dateRises = new Set();
+    const dateSets = new Set();
+    const counts = { moonrise: 0, moonset: 0 };
+    for (const date of dates) {
+      const day = await calculatePanchangDay(date, settings(location));
+      const bounds = localDayBounds(date, location.timezone);
+      const observer = new astronomy.Observer(location.latitude, location.longitude, location.altitude);
+      for (const [field, direction] of [["moonrise", 1], ["moonset", -1]]) {
+        const expected = astronomy.SearchRiseSet(astronomy.Body.Moon, observer, direction, bounds.start, 2)?.date;
+        const accepted = expected && expected >= bounds.start && expected < bounds.end ? expected : null;
+        assert.equal(day[field]?.getTime() ?? null, accepted?.getTime() ?? null);
+        if (day[field]) {
+          assert.equal(localDateKey(day[field], location.timezone), date);
+          assert.ok(day[field] >= bounds.start && day[field] < bounds.end);
+          (field === "moonrise" ? dateRises : dateSets).add(+day[field]);
+          counts[field] += 1;
+        }
+      }
+      if (date === "2026-01-03") { rises.add(+day.moonrise); sets.add(+day.moonset); }
+    }
+    // Missing civil-day events are valid; every event that exists must change
+    // across these dates, without requiring an event on an arbitrary quota.
+    assert.equal(dateRises.size, counts.moonrise);
+    assert.equal(dateSets.size, counts.moonset);
+    assert.ok(dateRises.size >= 3 && dateSets.size >= 3, `${id}: date changes both events`);
+  }
+  assert.equal(rises.size, 6, "city changes Moonrise");
+  assert.equal(sets.size, 6, "city changes Moonset");
+});
+
+test("Moonset-before-Moonrise and genuine missing rise/set are independent and safe to display", async () => {
+  const ordinary = await calculatePanchangDay("2026-10-03", settings());
+  assert.ok(ordinary.moonset < ordinary.moonrise);
+  for (const [date, missing] of [["2026-01-10", "moonrise"], ["2026-01-25", "moonset"]]) {
+    const day = await calculatePanchangDay(date, settings());
+    assert.equal(day[missing], null);
+    const label = missing === "moonrise" ? "Moonrise" : "Moonset";
+    assert.equal(formatMoonEvent(day[missing], label, DELHI, date), `No ${label} on this local civil date`);
+  }
+  assert.match(formatMoonEvent(new Date(NaN), "Moonrise", DELHI, ordinary.date), /No Moonrise/);
+  const high = moonEvents("2026-10-03", { ...DELHI, altitude: 3000 });
+  assert.notEqual(+high.moonrise, +ordinary.moonrise, "elevation enters the observer model");
+});
+
+test("Moon civil boundaries respect IST midnight, DST and the location rather than the host timezone", async () => {
+  const bounds = localDayBounds("2026-10-03", DELHI.timezone);
+  assert.equal(bounds.start.toISOString(), "2026-10-02T18:30:00.000Z");
+  assert.equal(bounds.end.toISOString(), "2026-10-03T18:30:00.000Z");
+  const early = await calculatePanchangDay("2026-01-11", settings());
+  assert.ok(early.moonrise < new Date("2026-01-11T00:00:00Z"), "early IST rise must not be lost by searching from UTC midnight");
+  assert.equal(localDateKey(early.moonrise, DELHI.timezone), "2026-01-11");
+  const ny = { name: "New York", latitude: 40.7128, longitude: -74.006, altitude: 10, timezone: "America/New_York" };
+  for (const date of ["2026-03-08", "2026-11-01", "2026-12-31"]) {
+    const events = moonEvents(date, ny);
+    for (const field of ["moonrise", "moonset"]) if (events[field]) assert.equal(localDateKey(events[field], ny.timezone), date);
+  }
+  assert.equal(localDayBounds("2026-11-01", ny.timezone).end - localDayBounds("2026-11-01", ny.timezone).start, 25 * 3600000);
+});
+
+test("solar events, all four limb intervals and Muhurtas are exactly unchanged from the pre-Moon upgrade", async () => {
+  const rows = [];
+  for (const id of MOON_CITIES) for (const date of ["2026-01-15", "2026-07-15", "2026-10-03"]) {
+    const d = await calculatePanchangDay(date, settings(city(id)));
+    rows.push({ id, date, sunrise: d.sunrise, sunset: d.sunset, tithis: d.tithis,
+      nakshatras: d.nakshatraTransitions, yogas: d.yogaTransitions, karanas: d.karanaTransitions, shubhMuhurtas: d.shubhMuhurtas });
+  }
+  // Captured before changing any calculation code; test-only regression checksum.
+  assert.equal(createHash("sha256").update(JSON.stringify(rows)).digest("hex"), "3ba3e917731340e292131cfa527da65951e5084dd2a28165e836fceb281ee447");
+});
+
+test("USNO six-city independent civil-date rise/set references agree without tuned offsets", async () => {
+  for (const reference of MOON_REFERENCES) {
+    const location = city(reference.city);
+    const day = await calculatePanchangDay(reference.date, settings(location));
+    let maxSeconds = 0;
+    for (const field of ["sunrise", "sunset", "moonrise", "moonset"]) {
+      if (reference[field] === null) {
+        assert.equal(day[field], null, `${reference.city} ${reference.date}: independent no-event reference`);
+        continue;
+      }
+      const [hour, minute] = reference[field].split(":").map(Number);
+      const expected = instantForLocalTime(reference.date, { hour, minute }, location.timezone);
+      const difference = Math.abs(day[field] - expected) / 1000;
+      maxSeconds = Math.max(maxSeconds, difference);
+      assert.ok(day[field] && difference <= 90, `${reference.city} ${field}: ${difference.toFixed(1)} seconds`);
+    }
+    console.log(`MOON REFERENCE ${reference.city} ${reference.date}: largest rise/set difference ${maxSeconds.toFixed(1)} seconds`);
+  }
+});
+
+test("monthly and daily Moon events agree and developer diagnostics stay explicit", async () => {
+  for (const id of MOON_CITIES) {
+    const monthly = await calculatePanchangMonth(2026, 1, settings(city(id)));
+    clearPanchangCache();
+    for (const date of ["2026-01-03", "2026-01-10", "2026-01-25"]) {
+      const daily = await calculatePanchangDay(date, settings(city(id)));
+      const item = monthly.find((day) => day.date === date);
+      for (const field of ["moonrise", "moonset"]) assert.equal(daily[field]?.getTime() ?? null, item[field]?.getTime() ?? null);
+    }
+  }
+  let printed;
+  const day = await calculatePanchangDay("2026-10-03", settings());
+  const row = printRiseSetValidation(day, (value) => { printed = value; });
+  assert.equal(row, printed);
+  assert.equal(row.timezone, "Asia/Kolkata");
+  assert.equal(row.latitude, DELHI.latitude);
+  assert.ok(row.sunrise && row.sunset && row.moonrise && row.moonset);
+  if (process.env.PANCHANG_DEBUG_RISE_SET) printRiseSetValidation(day);
 });
 
 let passed = 0;
