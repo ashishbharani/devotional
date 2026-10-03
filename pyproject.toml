@@ -1,7 +1,7 @@
 [project]
 name = "abp"
 version = "0.1.0"
-description = "Ultimate Hindu Devotional Collection — MkDocs site generated from the PDF publication"
+description = "Hindu Devotional Collection — MkDocs site generated from the PDF publication"
 readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [

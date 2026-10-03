@@ -449,7 +449,7 @@ def page_foreword(d):
         out.append(f'<p class="{cls}">{esc(p["text"])}</p>')
     out.append("</div>")
     out.append('<div class="abp-foreword__box">' + "".join(f"<p>{esc(b['text'])}</p>" for b in box) + "</div>")
-    out.append('<img class="abp-foreword__sign" src="../assets/images/signature.png" width="720" height="240" loading="lazy" decoding="async" alt="Signature — Advocate Ashish Bharani">')
+    out.append('<img class="abp-foreword__sign" src="../assets/images/signature.png" width="720" height="240" loading="lazy" decoding="async" alt="Signature — Ashish Bharani">')
     out.append("</article>")
     return "\n".join(out)
 
@@ -708,7 +708,7 @@ def page_home(d):
     total = sum(c["works_stated"] for c in d["categories"])
     groups = sum(len(c["merged"]) for c in d["categories"])
     return (
-        '<h1 class="abp-sr" tabindex="-1">Ultimate Hindu Devotional Collection</h1>\n'
+        '<h1 class="abp-sr" tabindex="-1">Hindu Devotional Collection</h1>\n'
         '<section class="abp-cover" markdown="0" aria-label="Cover">\n'
         "<picture>"
         '<source type="image/webp" sizes="(min-width: 90rem) 1400px, 100vw" '
@@ -716,7 +716,7 @@ def page_home(d):
         '<img src="assets/images/cover-1024.jpg" sizes="(min-width: 90rem) 1400px, 100vw" '
         'srcset="assets/images/cover-640.jpg 640w, assets/images/cover-1024.jpg 1024w, assets/images/cover-1491.jpg 1491w" '
         'width="1491" height="1055" fetchpriority="high" decoding="async" '
-        'alt="Ultimate Hindu Devotional Collection — a pan-India multilingual devotional reference, collected and compiled by Advocate Ashish Bharani">'
+        'alt="Hindu Devotional Collection — a pan-India multilingual devotional reference, collected and compiled by Ashish Bharani">'
         "</picture>\n"
         '<a class="abp-cover__hot abp-cover__hot--left" href="library/" title="Scriptures &amp; Books Library" data-i18n-title="library"><span data-i18n="library">Scriptures &amp; Books Library</span></a>\n'
         '<a class="abp-cover__hot abp-cover__hot--right" href="master-index/" title="Religious Music" data-i18n-title="index"><span data-i18n="index">Religious Music</span></a>\n'

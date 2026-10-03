@@ -1,7 +1,7 @@
-# Ultimate Hindu Devotional Collection — MkDocs site
+# Hindu Devotional Collection — MkDocs site
 
-A browsable website version of the PDF publication **Ultimate Hindu Devotional Collection — Reworked Publication 2026**,
-collected & compiled by Advocate Ashish Bharani.
+A browsable website version of the PDF publication **Hindu Devotional Collection — Reworked Publication 2026**,
+collected & compiled by Ashish Bharani.
 
 * 43,085 works · 42 master categories · ~2,100 deity / tradition sections
 * Every work links to the same YouTube search the PDF uses

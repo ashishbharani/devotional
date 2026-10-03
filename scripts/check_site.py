@@ -38,6 +38,9 @@ def main() -> int:
         require(page.is_file(), f"missing route /{route}/", errors)
 
     home = (site / "index.html").read_text(encoding="utf-8")
+    require("Hindu Devotional Collection" in home, "new site branding is missing from the homepage", errors)
+    require('<meta name="author" content="Ashish Bharani">' in home, "public author metadata is incorrect", errors)
+    require('<meta name="application-name" content="Hindu Devotional Collection">' in home, "application-name metadata is incorrect", errors)
     require(home.count('<details class="abp-home-index') == 2, "homepage must have matching Library and Religious Music disclosures", errors)
     require('class="abp-home-index abp-home-library"' in home, "homepage Library disclosure is missing", errors)
     require('<details class="abp-home-index"' in home, "homepage index is not a native details element", errors)
@@ -90,6 +93,8 @@ def main() -> int:
     require(manifest_path.is_file(), "PWA manifest was not generated", errors)
     if manifest_path.is_file():
         manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+        require(manifest.get("name") == "Hindu Devotional Collection", "manifest full name is incorrect", errors)
+        require(manifest.get("short_name") == "Hindu Devotional", "manifest short name is incorrect", errors)
         require(manifest.get("start_url") == "/devotional/", "manifest start_url is not /devotional/", errors)
         require(manifest.get("scope") == "/devotional/", "manifest scope is not /devotional/", errors)
         require(manifest.get("display") == "standalone", "manifest is not standalone", errors)
@@ -134,6 +139,20 @@ def main() -> int:
     rules = (root / "firestore.rules").read_text(encoding="utf-8")
     require("request.auth != null && request.auth.uid == uid" in rules, "Firestore rules do not isolate each user", errors)
     require("allow read, write: if false" in rules, "Firestore rules have no default deny", errors)
+
+    retired_public_text = (
+        "ultimate hindu devotional collection",
+        "advocate ashish bharani",
+        "aadvocte ashish bharani",
+        "advovate ashish bharani",
+        "adv. ashish bharani",
+        "adv ashish bharani",
+        "made with material for mkdocs",
+    )
+    for page in site.rglob("*.html"):
+        rendered = page.read_text(encoding="utf-8").lower()
+        for retired in retired_public_text:
+            require(retired not in rendered, f"retired public branding remains in {page.relative_to(site)}: {retired}", errors)
 
     if errors:
         print("Site smoke-check failures:")
