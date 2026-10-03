@@ -117,6 +117,9 @@ def main() -> int:
     for asset in (
         "assets/panchang/panchang-engine.mjs",
         "assets/panchang/panchang-app.mjs",
+        "assets/panchang/panchang-adapter.mjs",
+        "assets/panchang/date-time.mjs",
+        "assets/panchang/festival-rules.mjs",
         "assets/panchang/settings.mjs",
         "assets/panchang/festival-links.mjs",
     ):

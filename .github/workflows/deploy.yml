@@ -24,6 +24,8 @@ jobs:
       - uses: astral-sh/setup-uv@v6
         with:
           enable-cache: true
+      - name: Test Panchang calculations and reference fixtures
+        run: node scripts/test_panchang.mjs
       - name: Build MkDocs site
         env:
           SITE_URL: ${{ steps.pages.outputs.base_url }}/
