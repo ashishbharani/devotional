@@ -15,3 +15,14 @@ These are visual evidence, not numerical reference fixtures.
 
 CI also captures expanded homepage/monthly views, 320/390/768 px widths and
 light/dark themes in the `panchang-browser-screenshots` artifact.
+
+## Moonrise/Moonset follow-up
+
+These expanded homepage captures isolate the follow-up's two additional
+existing-style astronomical tiles. Daily and Monthly retain their previous
+rows and styling; the browser suite verifies their values match the homepage.
+
+| Width | Before | After |
+| --- | --- | --- |
+| Phone, 360 px | [Before](moon-home-before-360.png) | [Moonrise/Moonset](moon-home-360.png) |
+| Desktop, 1440 px | [Before](moon-home-before-1440.png) | [Moonrise/Moonset](moon-home-1440.png) |

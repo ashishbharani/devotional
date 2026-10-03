@@ -609,6 +609,8 @@ def panchang_summary_card():
         ("Nakshatra / नक्षत्र", "nakshatra", "nakshatra-end", "Ends"),
         ("Festival / Vrata / उत्सव-व्रत", "festival", None, None),
         ("Sunrise / Sunset / सूर्योदय-सूर्यास्त", "sunrise-sunset", None, None),
+        ("Moonrise / Chandrodaya", "moonrise", None, None),
+        ("Moonset / Chandrasta", "moonset", None, None),
         ("Yoga", "yoga", None, None),
         ("Karana", "karana", None, None),
         ("Next Tithi / Transition", "next-tithi", None, None),
