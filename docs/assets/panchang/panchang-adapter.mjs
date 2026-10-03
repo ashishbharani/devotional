@@ -10,17 +10,23 @@ import {
   daysInMonth,
   instantForLocalTime,
   isEventOnLocalCivilDate,
-  isEventWithinHinduDay,
   localDateKey,
+  localDayBounds,
   parseDateKey,
   safeAstronomicalDate,
   shiftDateKey,
   timezoneOffsetForInstant,
 } from "./date-time.mjs";
 import { applyFestivalRules } from "./festival-rules.mjs";
+import { solarEvents, longitudes, julianDate, normalize360 } from "./astronomy.mjs";
+import { limbSegments, nextTithi } from "./tithi.mjs";
+import { calculateShubhMuhurtas } from "./muhurta.mjs";
+
+export const CALCULATION_VERSION = "sunrise-intervals-v2-lahiri-ae2.1.19";
 
 const rawCache = new Map();
 const dayCache = new Map();
+const solarCache = new Map();
 
 function locationKey(location) {
   return [
@@ -32,19 +38,22 @@ function locationKey(location) {
 }
 
 function cacheKey(dateKey, settings) {
-  return `${dateKey}|${locationKey(settings.location)}|${settings.convention}`;
+  return `${CALCULATION_VERSION}|${dateKey}|${locationKey(settings.location)}|${settings.convention}`;
 }
 
 function validLocation(location) {
   return location
     && Number.isFinite(Number(location.latitude)) && Number(location.latitude) >= -90 && Number(location.latitude) <= 90
     && Number.isFinite(Number(location.longitude)) && Number(location.longitude) >= -180 && Number(location.longitude) <= 180
-    && typeof location.timezone === "string" && location.timezone;
+    && typeof location.timezone === "string" && location.timezone
+    && Number.isFinite(Number(location.altitude || 0));
 }
 
 function engineCall(dateKey, settings, localTime = { hour: 12 }) {
   if (!parseDateKey(dateKey)) throw new RangeError(`Invalid Panchang date: ${dateKey}`);
   if (!validLocation(settings.location)) throw new RangeError("Invalid Panchang location.");
+  // Do not silently substitute a fixed offset for a corrupt saved IANA zone.
+  new Intl.DateTimeFormat("en", { timeZone: settings.location.timezone });
   const fallback = Number(settings.location.timezoneOffset || 0);
   const instant = instantForLocalTime(dateKey, localTime, settings.location.timezone, fallback);
   const offset = timezoneOffsetForInstant(instant, settings.location.timezone, fallback);
@@ -86,19 +95,13 @@ function civilEvent(raw, field, dateKey, settings, warnings) {
   return null;
 }
 
-function transitionList(items, sunrise, nextSunrise, fallbackNames) {
-  if (!Array.isArray(items)) return [];
-  return items.flatMap((item) => {
-    const start = safeAstronomicalDate(item.startTime);
-    const end = safeAstronomicalDate(item.endTime);
-    if (!start || !end || end <= start || !isEventWithinHinduDay(start, sunrise, nextSunrise)) return [];
-    return [{
-      index: Number.isInteger(item.index) ? item.index : null,
-      name: item.name || fallbackNames?.[item.index] || "Not available",
-      start,
-      end: end > nextSunrise ? new Date(nextSunrise) : end,
-    }];
-  });
+function solarForDate(dateKey, settings) {
+  const key = cacheKey(dateKey, settings);
+  if (!solarCache.has(key)) {
+    const bounds = localDayBounds(dateKey, settings.location.timezone, settings.location.timezoneOffset);
+    solarCache.set(key, solarEvents(dateKey, settings.location, bounds));
+  }
+  return solarCache.get(key);
 }
 
 function nameAt(names, index) {
@@ -110,18 +113,27 @@ export async function calculatePanchangDay(dateKey, settings) {
   if (dayCache.has(key)) return dayCache.get(key);
   const raw = rawForDate(dateKey, settings);
   const nextDateKey = shiftDateKey(dateKey, 1);
-  const nextRaw = rawForDate(nextDateKey, settings);
   const warnings = [];
-  const sunrise = civilEvent(raw, "sunrise", dateKey, settings, warnings);
-  const sunset = civilEvent(raw, "sunset", dateKey, settings, warnings);
-  const nextSunrise = safeAstronomicalDate(nextRaw.sunrise);
+  const { sunrise, sunset } = solarForDate(dateKey, settings);
+  const { sunrise: nextSunrise } = solarForDate(nextDateKey, settings);
+  const { sunrise: previousSunrise, sunset: previousSunset } = solarForDate(shiftDateKey(dateKey, -1), settings);
   if (!sunrise || !nextSunrise || nextSunrise <= sunrise) throw new Error(`Valid consecutive sunrises were not available for ${dateKey}.`);
+  if (!sunset || !previousSunset) throw new Error("Sunset is unavailable for this location/date.");
+  const tithis = limbSegments("tithi", sunrise, nextSunrise, previousSunrise);
+  const nakshatras = limbSegments("nakshatra", sunrise, nextSunrise, previousSunrise);
+  const yogas = limbSegments("yoga", sunrise, nextSunrise, previousSunrise);
+  const karanas = limbSegments("karana", sunrise, nextSunrise, previousSunrise);
+  const shubhMuhurtas = calculateShubhMuhurtas(sunrise, sunset, previousSunset);
   const moonrise = civilEvent(raw, "moonrise", dateKey, settings, warnings);
   const moonset = civilEvent(raw, "moonset", dateKey, settings, warnings);
-  const rules = applyFestivalRules(raw.festivals, raw.tithi);
+  const rules = applyFestivalRules(raw.festivals, tithis[0].index);
+  const parts = parseDateKey(dateKey);
+  const weekdayIndex = new Date(Date.UTC(parts.year, parts.month - 1, parts.day)).getUTCDay();
+  const eighth = (part) => ({ start: new Date(+sunrise + (sunset - sunrise) * (part - 1) / 8), end: new Date(+sunrise + (sunset - sunrise) * part / 8) });
   const day = {
     date: dateKey,
-    weekday: nameAt(varaNames, raw.vara),
+    location: { ...settings.location },
+    weekday: nameAt(varaNames, weekdayIndex),
     locationDate: localDateKey(sunrise, settings.location.timezone),
     timezoneOffset: timezoneOffsetForInstant(sunrise, settings.location.timezone, settings.location.timezoneOffset),
     sunrise,
@@ -129,25 +141,32 @@ export async function calculatePanchangDay(dateKey, settings) {
     nextSunrise,
     moonrise,
     moonset,
-    sunriseTithi: { index: raw.tithi, name: nameAt(tithiNames, raw.tithi) },
-    tithiTransitions: transitionList(raw.tithis, sunrise, nextSunrise, tithiNames),
-    sunriseNakshatra: { index: raw.nakshatra, name: nameAt(nakshatraNames, raw.nakshatra) },
-    nakshatraTransitions: transitionList(raw.nakshatras, sunrise, nextSunrise, nakshatraNames),
-    sunriseYoga: { index: raw.yoga, name: nameAt(yogaNames, raw.yoga) },
-    yogaTransitions: transitionList(raw.yogas, sunrise, nextSunrise, yogaNames),
-    sunriseKarana: { name: raw.karana || "Not available" },
-    karanaTransitions: transitionList(raw.karanas, sunrise, nextSunrise),
-    paksha: raw.paksha || "Not available",
+    panchangaDay: { start: sunrise, end: nextSunrise },
+    sunriseTithi: tithis[0],
+    tithiAtSunrise: tithis[0],
+    tithis,
+    tithiSegments: tithis,
+    tithiTransitions: tithis,
+    nextTithi: tithis[1] || nextTithi(tithis[0]),
+    sunriseNakshatra: nakshatras[0],
+    nakshatraTransitions: nakshatras,
+    sunriseYoga: yogas[0],
+    yogaTransitions: yogas,
+    sunriseKarana: karanas[0],
+    karanaTransitions: karanas,
+    paksha: tithis[0].paksha,
     masa: {
       index: raw.masa?.index,
       name: raw.masa?.name || masaNames?.[raw.masa?.index] || "Not available",
       isAdhika: Boolean(raw.masa?.isAdhika),
     },
     samvat: raw.samvat,
-    rahuKalam: raw.rahuKalamStart && raw.rahuKalamEnd ? { start: raw.rahuKalamStart, end: raw.rahuKalamEnd } : null,
-    yamaganda: raw.yamagandaKalam || null,
-    gulika: raw.gulikaKalam || null,
-    abhijitMuhurta: raw.abhijitMuhurta || null,
+    rahuKalam: eighth([8, 2, 7, 5, 6, 4, 3][weekdayIndex]),
+    yamaganda: eighth([5, 4, 3, 2, 1, 7, 6][weekdayIndex]),
+    gulika: eighth([7, 6, 5, 4, 3, 2, 1][weekdayIndex]),
+    abhijitMuhurta: shubhMuhurtas.abhijit,
+    shubhMuhurtas,
+    calculation: { version: CALCULATION_VERSION, astronomy: "Astronomy Engine 2.1.19", ayanamsha: "Lahiri", solarConvention: "apparent upper limb, standard atmospheric refraction, observer altitude; level horizon", rootPrecisionSeconds: 0.25 },
     festivals: rules.festivals,
     observances: rules.observances,
     warnings,
@@ -176,6 +195,17 @@ export async function calculatePanchangMonth(year, month, settings, onProgress) 
 export function clearPanchangCache() {
   rawCache.clear();
   dayCache.clear();
+  solarCache.clear();
+}
+
+// Opt-in diagnostics; called only by developers, never rendered in the UI.
+export function inspectPanchang(day) {
+  const { sun, moon, ayanamsha } = longitudes(day.sunrise);
+  return { ...day.calculation, sunrise: day.sunrise, sunset: day.sunset, timezone: day.location.timezone,
+    localTimestamp: new Intl.DateTimeFormat("en-IN", { timeZone: day.location.timezone, dateStyle: "full", timeStyle: "long" }).format(day.sunrise),
+    utcJulianDate: julianDate(day.sunrise), sunLongitude: sun, moonLongitude: moon, ayanamsha,
+    elongation: normalize360(moon - sun), tithiIndex: day.sunriseTithi.index,
+    transitions: day.tithis.map((item) => ({ targetAngle: item.targetAngle, utcJulianDate: julianDate(item.end), instant: item.end })) };
 }
 
 export const engineNames = Object.freeze({ masaNames, nakshatraNames, tithiNames, varaNames, yogaNames });

@@ -1149,7 +1149,7 @@ html { scroll-padding-top: 3.4rem; }
   .abp-panchang-calendar__weekdays, .abp-panchang-calendar__grid { gap: .12rem; }
   .md-typeset .abp-panchang-calendar__day { min-height: 4.6rem; padding: .22rem; }
   .abp-panchang-calendar__day span { font-size: .49rem; }
-  .abp-panchang-calendar__day small { display: none; }
+  .abp-panchang-calendar__day small { display: block; }
   .abp-converter__output dl { grid-template-columns: 1fr; }
 }
 @media screen and (max-width: 22em) {
@@ -1159,4 +1159,29 @@ html { scroll-padding-top: 3.4rem; }
 }
 @media (prefers-reduced-motion: reduce) {
   .abp-panchang__status[data-state="loading"]::before { animation: none; }
+}
+
+/* Panchanga full astronomical intervals share the existing paper/card theme. */
+.abp-panchang__timings, .abp-panchang__muhurtas { margin-block: 1rem; }
+.md-typeset :is(.abp-panchang__timings, .abp-panchang__muhurtas) :is(h2, h3) { color: var(--abp-maroon); font-size: .85rem; }
+.md-typeset .abp-panchang__timeline { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr)); gap: .5rem; margin: .6rem 0; padding: 0; list-style: none; }
+.md-typeset .abp-panchang__timeline li { margin: 0; min-width: 0; padding: .65rem; border: 1px solid var(--abp-gold); border-radius: .55rem; background: var(--abp-row); overflow-wrap: anywhere; }
+.abp-panchang__timeline :is(strong, small, span) { display: block; margin-block: .15rem; }
+.abp-panchang__timeline small { color: var(--abp-maroon); }
+.abp-panchang-calendar__card { min-width: 0; border: 1px solid var(--abp-gold); border-radius: .4rem; background: var(--abp-row); }
+.md-typeset .abp-panchang-calendar__card .abp-panchang-calendar__day { border: 0; }
+.md-typeset .abp-panchang-calendar__card details { margin: 0; padding: .3rem; border: 0; box-shadow: none; font-size: .6rem; overflow-wrap: anywhere; }
+.md-typeset .abp-panchang-calendar__card summary { min-height: 44px; display: flex; align-items: center; margin: 0; padding: .3rem; color: var(--abp-maroon); background: var(--abp-paper); }
+.md-typeset .abp-panchang-calendar__card summary::before { display: none; }
+.md-typeset .abp-panchang-calendar__card summary::after { position: static; flex: 0 0 auto; margin-inline-start: auto; }
+.abp-panchang-calendar__card :is(a, summary):focus-visible { outline: 3px solid var(--abp-focus); outline-offset: 2px; }
+.abp-panchang-calendar__card:has(details[open]) { grid-column: 1 / -1; }
+.abp-panchang-calendar__card dl { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 10rem), 1fr)); gap: .5rem; }
+.abp-panchang-calendar__card dd { margin: .2rem 0 .5rem; }
+.md-typeset details.abp-home-index > summary:focus-visible { outline: 3px solid var(--abp-focus); outline-offset: 2px; }
+@media screen and (max-width: 37.5em) {
+  .abp-panchang-calendar__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .4rem; }
+  .abp-panchang-calendar__weekdays, .abp-panchang-calendar__blank { display: none; }
+  .abp-panchang-calendar__day span { font-size: .65rem; }
+  .abp-panchang-calendar__day small { font-size: .58rem; line-height: 1.4; }
 }
