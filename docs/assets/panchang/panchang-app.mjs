@@ -64,22 +64,62 @@ function nameAt(list, index, oneBased = false) {
 async function calculate(value, settings) {
   const engine = await loadEngine();
   const { date, offset } = calculationInstant(value, settings.location);
+
   const raw = engine.calculatePanchangam(
     date,
     settings.location.latitude,
     settings.location.longitude,
     settings.location.altitude || 0,
-    { timezoneOffset: offset, calendarType: settings.convention },
+    {
+      timezoneOffset: offset,
+      calendarType: settings.convention,
+    },
   );
+
+  // Validate astronomical rise/set results.
+  const validDate = (v) =>
+    v instanceof Date && !Number.isNaN(v.getTime());
+
+  if (!validDate(raw.moonrise)) {
+    console.warn(
+      "[Panchang] Moonrise unavailable",
+      {
+        selectedDate: value,
+        location: settings.location.name,
+        latitude: settings.location.latitude,
+        longitude: settings.location.longitude,
+        calculationInstant: date,
+        timezoneOffset: offset,
+        moonrise: raw.moonrise,
+      }
+    );
+  }
+
+  if (!validDate(raw.moonset)) {
+    console.warn(
+      "[Panchang] Moonset unavailable",
+      {
+        selectedDate: value,
+        location: settings.location.name,
+        latitude: settings.location.latitude,
+        longitude: settings.location.longitude,
+        calculationInstant: date,
+        timezoneOffset: offset,
+        moonset: raw.moonset,
+      }
+    );
+  }
+
   return {
     raw,
     date: value,
-    // panchangam-js 3.0.0 returns Tithi as 0–29 even though its declaration
-    // describes 1–30. Keep the adapter correction in this one place.
+
+    // panchangam-js 3.0.0 returns Tithi as 0–29.
     tithi: nameAt(engine.tithiNames, raw.tithi),
     nakshatra: nameAt(engine.nakshatraNames, raw.nakshatra),
     yoga: nameAt(engine.yogaNames, raw.yoga),
     vara: nameAt(engine.varaNames, raw.vara),
+
     monthNames: engine.masaNames,
     tithiNames: engine.tithiNames,
   };
