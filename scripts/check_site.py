@@ -42,7 +42,8 @@ def main() -> int:
     require("Hindu Devotional Collection" in home, "new site branding is missing from the homepage", errors)
     require('<meta name="author" content="Ashish Bharani">' in home, "public author metadata is incorrect", errors)
     require('<meta name="application-name" content="Hindu Devotional Collection">' in home, "application-name metadata is incorrect", errors)
-    require(home.count('<details class="abp-home-index') == 2, "homepage must have matching Library and Religious Music disclosures", errors)
+    require(home.count('<details class="abp-home-index') == 3, "homepage must have matching Today Panchang, Library and Religious Music disclosures", errors)
+    require("TODAY PANCHANG" in home and 'aria-expanded="false"' in home, "accessible Today Panchang disclosure is missing", errors)
     require('class="abp-home-index abp-home-library"' in home, "homepage Library disclosure is missing", errors)
     require('<details class="abp-home-index"' in home, "homepage index is not a native details element", errors)
     require('<details class="abp-home-index" open' not in home, "homepage Religious Music control must start collapsed", errors)
@@ -126,6 +127,10 @@ def main() -> int:
     require('data-panchang-view="full"' in panchang, "Full Panchang application root is missing", errors)
     require("abp-panchang.js" in panchang, "Panchang loader is not included", errors)
     require('data-date-shift="-1"' in panchang and 'data-date-shift="1"' in panchang, "Panchang day navigation is missing", errors)
+    for page in (home, panchang):
+        require("SHUBH MUHURTA" in page and "data-panchang-muhurtas" in page, "dedicated Shubh Muhurta section is missing", errors)
+        require("data-panchang-tithis" in page, "full Tithi timeline is missing", errors)
+    require('data-panchang-field="moonrise"' in home and 'data-panchang-field="moonset"' in home, "homepage Moonrise/Moonset tiles are missing", errors)
     calendar = (site / "hindu-calendar" / "index.html").read_text(encoding="utf-8")
     require('data-panchang-view="calendar"' in calendar, "Hindu calendar application root is missing", errors)
     require("data-calendar-grid" in calendar, "Hindu calendar grid is missing", errors)
@@ -141,8 +146,15 @@ def main() -> int:
         "assets/panchang/festival-rules.mjs",
         "assets/panchang/settings.mjs",
         "assets/panchang/festival-links.mjs",
+        "assets/panchang/astronomy.mjs",
+        "assets/panchang/tithi.mjs",
+        "assets/panchang/muhurta.mjs",
+        "assets/panchang/panchang-display.mjs",
+        "assets/panchang/panchang-worker.mjs",
+        "assets/panchang/panchang-client.mjs",
     ):
         require((site / asset).is_file(), f"Panchang asset is missing: {asset}", errors)
+        require(asset in worker, f"Panchang asset not in versioned offline shell: {asset}", errors)
 
     sample_group = next(site.glob("categories/*/*/index.html"), None)
     if sample_group:

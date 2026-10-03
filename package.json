@@ -1,0 +1,12 @@
+{
+  "name": "devotional-browser-checks",
+  "private": true,
+  "packageManager": "pnpm@11.19.0",
+  "scripts": {
+    "test": "node scripts/test_panchang.mjs",
+    "test:browser": "node scripts/test_panchang_browser.mjs"
+  },
+  "devDependencies": {
+    "playwright": "1.62.1"
+  }
+}

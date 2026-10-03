@@ -18,7 +18,7 @@
         root.dataset.panchangReady = "error";
         const status = root.querySelector("[data-panchang-status]");
         if (status) {
-          status.textContent = "Today’s Panchang could not be calculated.";
+          status.textContent = "Panchanga calculation could not be loaded. Please refresh and try again.";
           const retry = document.createElement("button");
           retry.type = "button";
           retry.className = "abp-btn";

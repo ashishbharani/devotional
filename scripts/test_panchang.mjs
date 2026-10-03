@@ -5,17 +5,26 @@ import {
   calculatePanchangDay,
   calculatePanchangMonth,
   clearPanchangCache,
+  printRiseSetValidation,
 } from "../docs/assets/panchang/panchang-adapter.mjs";
 import {
   instantForLocalTime,
   isEventOnLocalCivilDate,
   isEventWithinHinduDay,
   localDateKey,
+  localDayBounds,
   parseDateKey,
   shiftDateKey,
   timezoneOffsetForInstant,
 } from "../docs/assets/panchang/date-time.mjs";
 import { GOLDEN_DAYS, GOLDEN_TOLERANCE_MINUTES } from "./fixtures/panchang-golden.mjs";
+import { limbSegments, boundary, tithiIndex } from "../docs/assets/panchang/tithi.mjs";
+import { limbAngle, moonEvents } from "../docs/assets/panchang/astronomy.mjs";
+import { astronomy } from "../docs/assets/panchang/panchang-engine.mjs";
+import { calculateShubhMuhurtas } from "../docs/assets/panchang/muhurta.mjs";
+import { formatTime, formatMoonEvent, tithiRows, muhurtaRows } from "../docs/assets/panchang/panchang-display.mjs";
+import { INDEPENDENT_DAYS } from "./fixtures/panchang-independent.mjs";
+import { MOON_REFERENCES } from "./fixtures/moon-reference.mjs";
 
 const DELHI = INDIAN_CITIES.find((city) => city.id === "delhi");
 const settings = (location = DELHI, convention = "amanta") => ({ location, convention });
@@ -80,7 +89,10 @@ test("daily result uses sunrise state and retains every sunrise-to-sunrise trans
   assert.ok(day.yogaTransitions.length >= 2);
   assert.ok(day.karanaTransitions.length >= 2);
   for (const group of [day.tithiTransitions, day.nakshatraTransitions, day.yogaTransitions, day.karanaTransitions]) {
-    for (const item of group) assert.ok(isEventWithinHinduDay(item.start, day.sunrise, day.nextSunrise));
+    for (const item of group) {
+      assert.ok(isEventWithinHinduDay(item.withinDay.start, day.sunrise, day.nextSunrise));
+      assert.ok(item.start <= item.withinDay.start && item.end >= item.withinDay.end, "true intervals encompass clipped display intervals");
+    }
   }
 });
 

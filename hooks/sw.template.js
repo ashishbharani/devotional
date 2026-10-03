@@ -14,10 +14,24 @@ self.addEventListener("install", (event) => {
 self.addEventListener("activate", (event) => {
   event.waitUntil((async () => {
     const names = await caches.keys();
+    const migratingPanchang = names.some((name) => name.startsWith("udhc-") && ![SHELL_CACHE, RUNTIME_CACHE].includes(name));
     await Promise.all(names.filter((name) =>
       (name.startsWith("udhc-") && ![SHELL_CACHE, RUNTIME_CACHE].includes(name)) || name.startsWith("abp-")
     ).map((name) => caches.delete(name)));
     await self.clients.claim();
+    // Older deployed pages have no controllerchange handler. Reload only
+    // Panchanga-bearing pages during an actual cache-version migration.
+    if (migratingPanchang) {
+      const clients = await self.clients.matchAll({ type: "window" });
+      clients.filter((client) => {
+        const path = new URL(client.url).pathname.slice(scopeUrl.pathname.length);
+        return ["", "panchang/", "hindu-calendar/", "date-converter/"].includes(path);
+      }).forEach((client) => {
+        // Do not await navigation inside activate: its fetch can wait for this
+        // activation to finish, otherwise both operations wait on each other.
+        client.navigate(client.url).catch((error) => console.warn("Panchanga update reload failed", error));
+      });
+    }
   })());
 });
 
@@ -59,6 +73,12 @@ self.addEventListener("fetch", (event) => {
     return;
   }
   if (url.pathname.endsWith(".json") || /\.(?:css|m?js|svg|png|jpe?g|webp|woff2?)$/i.test(url.pathname)) {
+    // Calculation modules are one versioned, precached set. Mixing a new
+    // adapter with an old engine during background revalidation is unsafe.
+    if (url.pathname.includes("/assets/panchang/")) {
+      event.respondWith(caches.open(SHELL_CACHE).then(async (cache) => (await cache.match(request)) || fetch(request)));
+      return;
+    }
     event.respondWith(staleWhileRevalidate(request));
   }
 });

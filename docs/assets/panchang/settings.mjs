@@ -28,6 +28,7 @@ export const INDIAN_CITIES = Object.freeze([
   { id: "kolkata", name: "Kolkata, West Bengal", latitude: 22.5726, longitude: 88.3639, altitude: 9, timezone: "Asia/Kolkata", timezoneOffset: 330 },
   { id: "lucknow", name: "Lucknow, Uttar Pradesh", latitude: 26.8467, longitude: 80.9462, altitude: 123, timezone: "Asia/Kolkata", timezoneOffset: 330 },
   { id: "madurai", name: "Madurai, Tamil Nadu", latitude: 9.9252, longitude: 78.1198, altitude: 101, timezone: "Asia/Kolkata", timezoneOffset: 330 },
+  { id: "meerut", name: "Meerut, Uttar Pradesh", latitude: 28.9845, longitude: 77.7064, altitude: 224, timezone: "Asia/Kolkata", timezoneOffset: 330 },
   { id: "mumbai", name: "Mumbai, Maharashtra", latitude: 19.076, longitude: 72.8777, altitude: 14, timezone: "Asia/Kolkata", timezoneOffset: 330 },
   { id: "nagpur", name: "Nagpur, Maharashtra", latitude: 21.1458, longitude: 79.0882, altitude: 310, timezone: "Asia/Kolkata", timezoneOffset: 330 },
   { id: "nashik", name: "Nashik, Maharashtra", latitude: 19.9975, longitude: 73.7898, altitude: 584, timezone: "Asia/Kolkata", timezoneOffset: 330 },
@@ -38,6 +39,7 @@ export const INDIAN_CITIES = Object.freeze([
   { id: "shimla", name: "Shimla, Himachal Pradesh", latitude: 31.1048, longitude: 77.1734, altitude: 2276, timezone: "Asia/Kolkata", timezoneOffset: 330 },
   { id: "srinagar", name: "Srinagar, Jammu and Kashmir", latitude: 34.0837, longitude: 74.7973, altitude: 1585, timezone: "Asia/Kolkata", timezoneOffset: 330 },
   { id: "thiruvananthapuram", name: "Thiruvananthapuram, Kerala", latitude: 8.5241, longitude: 76.9366, altitude: 16, timezone: "Asia/Kolkata", timezoneOffset: 330 },
+  { id: "ujjain", name: "Ujjain, Madhya Pradesh", latitude: 23.1765, longitude: 75.7885, altitude: 494, timezone: "Asia/Kolkata", timezoneOffset: 330 },
   { id: "varanasi", name: "Varanasi, Uttar Pradesh", latitude: 25.3176, longitude: 82.9739, altitude: 81, timezone: "Asia/Kolkata", timezoneOffset: 330 },
   { id: "visakhapatnam", name: "Visakhapatnam, Andhra Pradesh", latitude: 17.6868, longitude: 83.2185, altitude: 45, timezone: "Asia/Kolkata", timezoneOffset: 330 },
 ]);
