@@ -1,4 +1,4 @@
-import { DEFAULT_LOCATION, INDIAN_CITIES, findCity, loadSettings, saveSettings } from "./settings.mjs";
+import { DEFAULT_LOCATION, INDIAN_CITIES, findCity, loadSettings, saveSettings, subscribeSettings, settingsEqual } from "./settings.mjs";
 import { GENERAL_LINKS, devotionalContext } from "./festival-links.mjs";
 import {
   calculatePanchangDay,
@@ -94,7 +94,7 @@ function populateLocationControl(root, settings, refresh) {
         return;
       }
       input.setCustomValidity("");
-      if (settings.location.id === city.id) return;
+      if (settingsEqual(settings, { ...settings, location: city })) return;
       settings.location = { ...city };
       if (timezoneInput) { timezoneInput.value = city.timezone; timezoneInput.setCustomValidity(""); }
       saveSettings(settings);
@@ -382,7 +382,7 @@ function converterOutput(root, rows) {
   renderRows(output.querySelector("dl"), rows);
 }
 
-async function convertGregorian(root, state) {
+async function convertGregorian(root, state, current = () => true) {
   const input = root.querySelector("[data-convert-gregorian]");
   if (!parseDateKey(input.value)) {
     input.setCustomValidity("Choose a valid Gregorian date.");
@@ -392,11 +392,12 @@ async function convertGregorian(root, state) {
   input.setCustomValidity("");
   setStatus(root, "Converting Gregorian date…", "loading");
   const result = await calculatePanchangDay(input.value, state);
+  if (!current()) return;
   converterOutput(root, detailRows(result, state.location, state.convention).filter(([label]) => ["Gregorian date", "Vara / Weekday", "Tithi at sunrise", "Tithi sequence (sunrise to sunrise)", "Paksha", "Masa", "Calendar convention", "Nakshatra at sunrise", "Nakshatra sequence (sunrise to sunrise)", "Vikram Samvat", "Shaka Samvat"].includes(label)));
   setStatus(root, "Date conversion complete.");
 }
 
-async function convertHindu(root, state) {
+async function convertHindu(root, state, current = () => true) {
   const year = Number(root.querySelector("[data-hindu-year]").value);
   const month = Number(root.querySelector("[data-hindu-month]").value);
   const paksha = root.querySelector("[data-hindu-paksha]").value;
@@ -421,6 +422,7 @@ async function convertHindu(root, state) {
   for (let index = 0; index <= 220; index += 1) {
     const value = shiftDateKey(start, index);
     const result = await calculatePanchangDay(value, state);
+    if (!current()) return;
     if (result.samvat?.vikram === year && result.masa.index === month && result.paksha === paksha && result.sunriseTithi.index === wantedTithi && result.masa.isAdhika === adhika) {
       matches.push({ value, result });
     }
@@ -501,8 +503,13 @@ function setupConverter(root, state) {
     root.querySelector("[data-converter-output]").hidden = true;
   };
   modeButtons.forEach((button) => button.addEventListener("change", updateMode));
-  root.querySelector("[data-convert-gregorian-button]").addEventListener("click", () => convertGregorian(root, state).catch((error) => fail(root, error)));
-  root.querySelector("[data-convert-hindu-button]").addEventListener("click", () => convertHindu(root, state).catch((error) => fail(root, error)));
+  const convert = (operation) => {
+    const run = root._converterGeneration = (root._converterGeneration || 0) + 1;
+    const current = () => root.isConnected && run === root._converterGeneration;
+    operation(root, { ...state, location: { ...state.location } }, current).catch((error) => { if (current()) fail(root, error); });
+  };
+  root.querySelector("[data-convert-gregorian-button]").addEventListener("click", () => convert(convertGregorian));
+  root.querySelector("[data-convert-hindu-button]").addEventListener("click", () => convert(convertHindu));
   updateMode();
 }
 
@@ -521,17 +528,42 @@ export function initializePanchang(root, { siteRoot }) {
   const view = root.dataset.panchangView;
   let generation = 0;
   const refresh = async () => {
+    if (!root.isConnected) return;
     const run = ++generation;
     try {
-      if (view === "summary") await renderSummary(root, root._panchangSettings, () => run === generation);
-      if (view === "full") await renderFull(root, root._panchangSettings, () => run === generation);
-      if (view === "calendar") await renderCalendar(root, root._panchangSettings, () => run === generation);
+      const state = { ...root._panchangSettings, location: { ...root._panchangSettings.location } };
+      const current = () => root.isConnected && run === generation;
+      if (view === "summary") await renderSummary(root, state, current);
+      if (view === "full") await renderFull(root, state, current);
+      if (view === "calendar") await renderCalendar(root, state, current);
+      if (view === "converter") {
+        root._converterGeneration = (root._converterGeneration || 0) + 1;
+        root.querySelector("[data-converter-output]").hidden = true;
+        setStatus(root, "Location updated. Convert to update results.");
+      }
       if (run !== generation) return;
     } catch (error) {
       if (run === generation) fail(root, error);
     }
   };
   populateLocationControl(root, root._panchangSettings, refresh);
+  const unsubscribe = subscribeSettings((next) => {
+    if (!root.isConnected || settingsEqual(root._panchangSettings, next)) return;
+    Object.assign(root._panchangSettings, next);
+    for (const [selector, value] of [["[data-panchang-location]", next.location.name], ["[data-panchang-timezone]", next.location.timezone], ["[data-panchang-convention]", next.convention]]) {
+      const control = root.querySelector(selector);
+      if (control) { control.value = value; control.setCustomValidity(""); }
+    }
+    clearPanchangCache();
+    refresh();
+  });
+  const observer = new MutationObserver(() => {
+    if (root.isConnected) return;
+    generation += 1;
+    unsubscribe();
+    observer.disconnect();
+  });
+  observer.observe(document.body, { childList: true, subtree: true });
   if (view === "full") setupFullNavigation(root, refresh);
   if (view === "calendar") setupCalendarNavigation(root, refresh);
   if (view === "converter") setupConverter(root, root._panchangSettings);

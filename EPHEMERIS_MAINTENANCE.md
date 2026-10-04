@@ -47,6 +47,8 @@ Do not remove the public corresponding-source offer or third-party notices.
 - `ephemeris-app.mjs`, `csv-export.mjs`: controls, display, raw CSV, print,
   source/help, share links and harmless preferences. Precise device coordinates
   remain session-only. Share coordinates require explicit opt-in.
+
+The selected city preset is shared site-wide through Panchang's existing `abp-panchang-settings-v1` store. Ephemeris loads the canonical city, subscribes to changes and broadcasts preset selections back to Panchang. The full location record travels together; all Ephemeris modes retain it. Ephemeris preferences contain calculation options only. Manual coordinates, explicit share-link coordinates and precise device geolocation remain local overrides and never update the persistent city. A new canonical city selection supersedes a local override, terminates the obsolete worker and recalculates the current mode. Removed views unsubscribe and terminate their worker.
 - `abp-ephemeris.js`, `ephemeris.css`: page-only lazy loading and scoped theme.
   The service worker runtime-caches versioned assets without precaching this
   multi-megabyte tool on the home page.

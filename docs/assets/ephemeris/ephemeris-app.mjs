@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import { INDIAN_CITIES, DEFAULT_LOCATION } from "../panchang/settings.mjs";
+import { INDIAN_CITIES, findCity, loadSettings, saveSettings, subscribeSettings, settingsEqual } from "../panchang/settings.mjs";
 import { civilForInstant, localCivilTimeToUTC, formatOffset, DEFAULT_TIMEZONE } from "./time-conversion.mjs";
 import { formatAngle, RASHIS } from "./zodiac.mjs";
 import { exportCSV, downloadCSV } from "./csv-export.mjs";
@@ -121,6 +121,7 @@ function monthlyTable(model, detailed, precision) {
 }
 
 export function initializeEphemeris(root) {
+  if (root.dataset.ephemerisReady === "ready") return;
   root.innerHTML = markup();
   root.dataset.ephemerisReady = "ready";
   const get = (selector) => root.querySelector(selector);
@@ -133,6 +134,19 @@ export function initializeEphemeris(root) {
   let requestId = 0;
   const pending = new Map();
   let cleanupObserver;
+  let generation = 0;
+  let restoreControls = () => {};
+  let canonical = loadSettings();
+
+  function invalidate() {
+    generation += 1;
+    worker?.terminate(); worker = null;
+    for (const task of pending.values()) { clearTimeout(task.timer); task.reject(new Error("Calculation superseded.")); }
+    pending.clear();
+    restoreControls();
+    busy = false;
+    discardResults();
+  }
 
   function setStatus(message, state = "ready") {
     get("[data-status]").textContent = message;
@@ -157,6 +171,9 @@ export function initializeEphemeris(root) {
     control("latitude").value = city.latitude;
     control("longitude").value = city.longitude;
     control("altitude").value = city.altitude;
+    control("timezone").value = city.timezone;
+    control("manual").checked = false;
+    control("manualOffset").disabled = true;
     get("[data-location-status]").textContent = `${city.name} · approximate city-centre preset · ${city.latitude}° N, ${city.longitude}° E · elevation ${city.altitude} m · ${city.timezone}. Refine coordinates for a specific location.`;
   }
   function settings() {
@@ -259,10 +276,12 @@ export function initializeEphemeris(root) {
 
   async function calculate() {
     if (busy || !form.reportValidity()) return;
+    const run = ++generation;
     discardResults(); busy = true;
     // Freeze controls while the worker calculates so exports cannot describe a
     // different setting than the numbers on screen.
     const disabled = [...form.elements].map((element) => [element, element.disabled]);
+    restoreControls = () => disabled.forEach(([element, state]) => { element.disabled = state; });
     try {
       const timezone = control("timezone").value.trim();
       const manualOffset = control("manual").checked ? control("manualOffset").value : null;
@@ -283,22 +302,22 @@ export function initializeEphemeris(root) {
       form.querySelectorAll("input, select, button").forEach((element) => { element.disabled = true; });
       setStatus("Loading ephemeris engine / calculating…");
       const result = await callWorker(mode === "month" ? "month" : "single", request);
-      if (!root.isConnected) return;
+      if (!root.isConnected || run !== generation) return;
       snapshot = mode === "month" ? { ...result, mode, eventsRequested: request.events } : { mode, rows: [{ date: civil.date, result, civil }] };
       get("[data-engine-status]").textContent = `Swiss Ephemeris ${snapshot.rows[0].result.engineVersion} · verified DE441 files`;
       savePreferences(); render();
       setStatus(mode === "month" ? "Monthly calculation complete. Each row uses the stated local reference time." : "Calculation complete. Raw engine values are available in CSV.");
     } catch (error) {
+      if (!root.isConnected || run !== generation) return;
       discardResults();
       get("[data-engine-status]").textContent = "No calculation available";
       setStatus(`Ephemeris unavailable for these settings. ${error.message} Please correct the input or reload and try again.`, "error");
     } finally {
-      disabled.forEach(([element, state]) => { element.disabled = state; });
-      busy = false;
+      if (run === generation) { restoreControls(); busy = false; }
     }
   }
 
-  setCity(DEFAULT_LOCATION);
+  setCity(canonical.location);
   setNow();
   try {
     const prefs = JSON.parse(localStorage.getItem(PREF_KEY) || "{}");
@@ -325,9 +344,15 @@ export function initializeEphemeris(root) {
     if (event.target.name === "precision" || event.target.name === "detailed") { savePreferences(); render(); return; }
     if (event.target.name === "manual") control("manualOffset").disabled = !control("manual").checked;
     if (event.target.name === "city") {
-      const value = control("city").value.trim().toLowerCase();
-      const city = INDIAN_CITIES.find((c) => c.name.toLowerCase() === value || c.id === value || value === "new delhi" && c.id === "delhi");
-      if (city) setCity(city);
+      const city = findCity(control("city").value);
+      if (city) {
+        invalidate();
+        setCity(city);
+        canonical = { ...loadSettings(), location: { ...city } };
+        saveSettings(canonical);
+        calculate();
+        return;
+      }
       else get("[data-location-status]").textContent = "No matching city preset. Enter verified latitude, longitude and elevation manually; typing a city name does not change the coordinates.";
     }
     if (["latitude", "longitude", "altitude"].includes(event.target.name)) {
@@ -352,13 +377,14 @@ export function initializeEphemeris(root) {
   get("[data-now]").addEventListener("click", () => { setNow(); selectMode("current"); calculate(); });
   get("[data-reset]").addEventListener("click", () => {
     form.reset(); control("manualOffset").disabled = true;
-    control("timezone").value = DEFAULT_TIMEZONE; setCity(DEFAULT_LOCATION); setNow(); selectMode("current"); savePreferences(); calculate();
+    setCity(loadSettings().location); setNow(); selectMode("current"); savePreferences(); calculate();
   });
   get("[data-location]").addEventListener("click", () => {
     if (!navigator.geolocation) { get("[data-location-status]").textContent = "Geolocation unavailable. Choose a city or enter coordinates; geocentric calculation still works."; return; }
     get("[data-location-status]").textContent = "Requesting location after your button press…";
     navigator.geolocation.getCurrentPosition(({ coords }) => {
       if (!root.isConnected) return;
+      invalidate();
       control("latitude").value = coords.latitude;
       control("longitude").value = coords.longitude;
       control("altitude").value = Number.isFinite(coords.altitude) ? coords.altitude : "";
@@ -395,11 +421,20 @@ export function initializeEphemeris(root) {
   });
   // Dispose on Material instant navigation. A return visit initializes a fresh
   // page/worker, avoiding detached observers and background calculations.
+  const unsubscribe = subscribeSettings((next) => {
+    if (!root.isConnected || settingsEqual(canonical, next)) return;
+    const locationChanged = !settingsEqual({ ...canonical, convention: next.convention }, next);
+    canonical = next;
+    if (!locationChanged) return;
+    invalidate();
+    setCity(next.location);
+    calculate();
+  });
   cleanupObserver = new MutationObserver(() => {
     if (root.isConnected) return;
-    worker?.terminate();
-    for (const task of pending.values()) { clearTimeout(task.timer); task.reject(new Error("Page closed.")); }
-    pending.clear(); cleanupObserver.disconnect();
+    unsubscribe();
+    invalidate();
+    cleanupObserver.disconnect();
   });
   cleanupObserver.observe(document.body, { childList: true, subtree: true });
   calculate();
