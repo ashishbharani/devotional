@@ -43,6 +43,7 @@ extra:
 
 extra_css:
   - stylesheets/abp.css
+  - stylesheets/feedback.css
 extra_javascript:
   - javascripts/abp-transliterate.js
   - javascripts/abp-i18n.js
@@ -57,6 +58,7 @@ extra_javascript:
   - javascripts/abp-ephemeris.js
   - javascripts/abp-pwa.js
   - javascripts/abp-a11y.js
+  - javascripts/feedback.js
 
 plugins:
   - search:

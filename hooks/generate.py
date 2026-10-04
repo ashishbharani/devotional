@@ -588,13 +588,11 @@ def panchang_location_controls(suffix):
         f'<label for="abp-panchang-convention-{suffix}"><span>Calendar</span>'
         f'<select id="abp-panchang-convention-{suffix}" data-panchang-convention>'
         '<option value="amanta">Amanta</option><option value="purnimanta">Purnimanta</option></select></label>'
-        f'<label for="abp-panchang-timezone-{suffix}"><span>Location timezone (IANA)</span>'
-        f'<input id="abp-panchang-timezone-{suffix}" data-panchang-timezone value="Asia/Kolkata" autocomplete="off"></label>'
         '<button type="button" class="abp-btn" data-panchang-geolocate>Use My Location</button>'
         f'<label for="abp-panchang-timezone-{suffix}"><span>Location timezone (IANA)</span>'
-        f'<input id="abp-panchang-timezone-{suffix}" data-panchang-timezone type="text" '
+        f'<input id="abp-panchang-timezone-{suffix}" data-panchang-timezone type="text" autocomplete="off" '
         'placeholder="Asia/Kolkata" aria-describedby="abp-timezone-note-' + suffix + '"></label>'
-        f'<small id="abp-timezone-note-{suffix}">City presets include their timezone. For device location, verify the detected timezone.</small>'
+        f'<small id="abp-timezone-note-{suffix}">City presets include their timezone. For device location, verify the selected timezone.</small>'
         '</div>'
     )
 
@@ -1073,6 +1071,7 @@ def on_config(config, **kw):
     add("hindu-calendar.md", "Hindu Calendar", "tools")
     add("date-converter.md", "Date Converter", "tools")
     add("tools/indian-ephemeris/index.md", "Indian Ephemeris", "tools")
+    add("tools/feedback/index.md", "Suggestion / Report Issue", "tools")
 
     config["nav"] = [
         {"Home": "index.md"},
@@ -1099,6 +1098,7 @@ def on_config(config, **kw):
                 {"Hindu Calendar": "hindu-calendar.md"},
                 {"Date Converter": "date-converter.md"},
                 {"Indian Ephemeris": "tools/indian-ephemeris/index.md"},
+                {"Suggestion / Report Issue": "tools/feedback/index.md"},
             ]
         },
     ]
@@ -1175,7 +1175,7 @@ def on_post_build(config, **kw):
     site = Path(config["site_dir"])
     tpl = (ROOT / "hooks" / "sw.template.js").read_text(encoding="utf-8")
     shell = [
-        "", "offline/", "favourites/", "manifest.webmanifest", "stylesheets/abp.css",
+        "", "offline/", "favourites/", "manifest.webmanifest", "stylesheets/abp.css", "stylesheets/feedback.css",
         "assets/images/logo.svg", "assets/images/icon-192.png", "assets/images/icon-512.png",
         "assets/images/icon-maskable-512.png", "assets/images/apple-touch-icon.png",
     ]

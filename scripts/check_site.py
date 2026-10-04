@@ -20,6 +20,7 @@ ROUTES = (
     "hindu-calendar",
     "date-converter",
     "tools/indian-ephemeris",
+    "tools/feedback",
     "offline",
 )
 
@@ -39,6 +40,11 @@ def main() -> int:
         require(page.is_file(), f"missing route /{route}/", errors)
 
     home = (site / "index.html").read_text(encoding="utf-8")
+    for asset in ("javascripts/feedback.js", "stylesheets/feedback.css"):
+        require((site / asset).is_file(), f"feedback asset missing: {asset}", errors)
+        require(asset in home, f"feedback asset not loaded on homepage: {asset}", errors)
+    feedback = (site / "tools" / "feedback" / "index.html").read_text(encoding="utf-8")
+    require("data-feedback-open" in feedback, "feedback Tools action missing", errors)
     require("Hindu Devotional Collection" in home, "new site branding is missing from the homepage", errors)
     require('<meta name="author" content="Ashish Bharani">' in home, "public author metadata is incorrect", errors)
     require('<meta name="application-name" content="Hindu Devotional Collection">' in home, "application-name metadata is incorrect", errors)
@@ -91,6 +97,7 @@ def main() -> int:
             require((site / path / "index.html").is_file(), f"canonical work location is missing: {path}", errors)
 
     worker = (site / "sw.js").read_text(encoding="utf-8")
+    require("stylesheets/feedback.css" in worker, "feedback stylesheet missing from PWA shell", errors)
     require("addEventListener(\"fetch\"" in worker, "PWA worker has no fetch handler", errors)
     require('startsWith("abp-")' in worker, "worker does not retire only legacy abp-* caches", errors)
     require("assets/works-index.json" not in worker.split("const scopeUrl", 1)[0], "full works index was precached", errors)

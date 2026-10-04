@@ -46,6 +46,8 @@ jobs:
           uv run python scripts/check_i18n.py
       - name: Test Panchang browser views and mobile layouts
         run: pnpm test:browser
+      - name: Test feedback UI, context and mocked submissions
+        run: node scripts/test_feedback_browser.mjs
       - uses: actions/upload-pages-artifact@v3
         with:
           path: site
