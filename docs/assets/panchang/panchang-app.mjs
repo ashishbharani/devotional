@@ -1,4 +1,4 @@
-import { DEFAULT_LOCATION, INDIAN_CITIES, findCity, loadSettings, saveSettings, subscribeSettings, settingsEqual } from "./settings.mjs";
+import { INDIAN_CITIES, findCity, loadSettings, saveSettings, subscribeSettings, settingsEqual } from "./settings.mjs";
 import { GENERAL_LINKS, devotionalContext } from "./festival-links.mjs";
 import {
   calculatePanchangDay,
@@ -14,6 +14,8 @@ import {
 } from "./date-time.mjs";
 import { FESTIVAL_POLICY_NOTE, observanceNames } from "./festival-rules.mjs";
 import { formatTime, formatMoonEvent, renderTimingSections } from "./panchang-display.mjs";
+import { attachLocationControls } from "./location-controls.mjs";
+import { timezoneOffsetForInstant } from "./date-time.mjs";
 
 const partsDate = (date, timeZone) => localDateKey(date, timeZone);
 
@@ -58,6 +60,25 @@ function populateLocationControl(root, settings, refresh) {
   const list = root.querySelector("[data-panchang-cities]");
   const convention = root.querySelector("[data-panchang-convention]");
   const timezoneInput = root.querySelector("[data-panchang-timezone]");
+  const applyLocation = (city) => {
+    locationControls.cancel();
+    settings.location = { ...city };
+    if (input) { input.value = city.name; input.setCustomValidity(""); }
+    if (timezoneInput) { timezoneInput.value = city.timezone; timezoneInput.setCustomValidity(""); }
+    for (const key of ["latitude", "longitude", "altitude"]) root.querySelector(`[data-location-${key}]`).value = key === "altitude" && city.altitudeKnown === false ? "" : city[key];
+    saveSettings(settings);
+    locationControls.show(settings.location);
+    clearPanchangCache();
+    refresh();
+  };
+  const locationControls = attachLocationControls({ root, input,
+    geolocate: root.querySelector("[data-panchang-geolocate]"),
+    timezone: () => timezoneInput.value.trim(), apply: applyLocation,
+    manual: () => Object.fromEntries(["latitude", "longitude", "altitude"].map((key) => [key, root.querySelector(`[data-location-${key}]`).value])),
+  });
+  root._locationControls = locationControls;
+  for (const key of ["latitude", "longitude", "altitude"]) root.querySelector(`[data-location-${key}]`).value = key === "altitude" && settings.location.altitudeKnown === false ? "" : settings.location[key];
+  locationControls.show(settings.location);
   if (timezoneInput) {
     timezoneInput.value = settings.location.timezone;
     timezoneInput.addEventListener("change", () => {
@@ -69,7 +90,7 @@ function populateLocationControl(root, settings, refresh) {
         return;
       }
       timezoneInput.setCustomValidity("");
-      settings.location = { ...settings.location, timezone };
+      settings.location = { ...settings.location, timezone, timezoneOffset: timezoneOffsetForInstant(new Date(), timezone) };
       saveSettings(settings);
       clearPanchangCache();
       refresh();
@@ -88,18 +109,13 @@ function populateLocationControl(root, settings, refresh) {
       const city = findCity(input.value);
       if (!city) {
         if (reportInvalid) {
-          input.setCustomValidity("Choose a city from the list.");
-          input.reportValidity();
+          input.setCustomValidity("");
         }
         return;
       }
       input.setCustomValidity("");
       if (settingsEqual(settings, { ...settings, location: city })) return;
-      settings.location = { ...city };
-      if (timezoneInput) { timezoneInput.value = city.timezone; timezoneInput.setCustomValidity(""); }
-      saveSettings(settings);
-      clearPanchangCache();
-      refresh();
+      applyLocation(city);
     };
     input.addEventListener("input", () => commitCity(false));
     input.addEventListener("change", () => commitCity(true));
@@ -113,42 +129,6 @@ function populateLocationControl(root, settings, refresh) {
       refresh();
     });
   }
-  root.querySelector("[data-panchang-geolocate]")?.addEventListener("click", (event) => {
-    const button = event.currentTarget;
-    if (!navigator.geolocation) {
-      setStatus(root, "Location access is unavailable. Delhi remains selected.", "error");
-      return;
-    }
-    button.disabled = true;
-    setStatus(root, "Waiting for location permission…", "loading");
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        // Coordinates do not identify a timezone. Retain the visibly selected
-        // IANA zone; never silently substitute the computer's timezone.
-        const timezone = settings.location.timezone || DEFAULT_LOCATION.timezone;
-        settings.location = {
-          id: "device",
-          name: "My location",
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude,
-          altitude: position.coords.altitude || 0,
-          timezone,
-          timezoneOffset: settings.location.timezoneOffset || 0,
-        };
-        if (input) input.value = settings.location.name;
-        if (timezoneInput) timezoneInput.value = timezone;
-        saveSettings(settings);
-        clearPanchangCache();
-        button.disabled = false;
-        refresh();
-      },
-      () => {
-        button.disabled = false;
-        setStatus(root, `Location permission was not granted. Continuing with ${settings.location.name}.`, "error");
-      },
-      { enableHighAccuracy: false, timeout: 10000, maximumAge: 3600000 },
-    );
-  });
 }
 
 function renderDevotionalLinks(root, result, siteRoot) {
@@ -550,6 +530,9 @@ export function initializePanchang(root, { siteRoot }) {
   const unsubscribe = subscribeSettings((next) => {
     if (!root.isConnected || settingsEqual(root._panchangSettings, next)) return;
     Object.assign(root._panchangSettings, next);
+    root._locationControls.cancel();
+    root._locationControls.show(next.location);
+    for (const key of ["latitude", "longitude", "altitude"]) root.querySelector(`[data-location-${key}]`).value = key === "altitude" && next.location.altitudeKnown === false ? "" : next.location[key];
     for (const [selector, value] of [["[data-panchang-location]", next.location.name], ["[data-panchang-timezone]", next.location.timezone], ["[data-panchang-convention]", next.convention]]) {
       const control = root.querySelector(selector);
       if (control) { control.value = value; control.setCustomValidity(""); }
@@ -561,6 +544,7 @@ export function initializePanchang(root, { siteRoot }) {
     if (root.isConnected) return;
     generation += 1;
     unsubscribe();
+    root._locationControls.dispose();
     observer.disconnect();
   });
   observer.observe(document.body, { childList: true, subtree: true });

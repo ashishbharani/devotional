@@ -1,9 +1,48 @@
 # Panchang maintenance
 
-The Panchang is a client-side enhancement. It never sends a reader's selected
-city or browser geolocation to this site or to a calculation service. The
+The Panchang is a client-side enhancement. Calculations never send a reader's
+city or browser geolocation to a calculation service. Explicit online place
+search sends the typed query to the configured geocoder; presets work offline. The
 default location is Delhi, India, and preferences are stored in
 `localStorage` under `abp-panchang-settings-v1`.
+
+## Shared location workflow
+
+`location-controls.mjs` provides explicit Indian place search, device location
+and manual-coordinate application for every Panchang view and Ephemeris.
+Presets and explicitly selected search results persist through the existing
+settings key and synchronize via custom/storage events. Device and explicitly
+applied manual locations share the same state **in memory only**, across active
+components and Material instant navigation. Reload/full navigation restores
+the saved city; precise coordinates are not stored or propagated to other tabs.
+Legacy persisted `device` locations are replaced with Delhi on load. Editing
+Ephemeris fields alone and share URLs remain local overrides; the explicit
+Apply button shares manual coordinates for this document session.
+
+Unknown elevation is identified by `altitudeKnown: false`; engines receive a
+documented neutral 0 m fallback, not a claimed measured elevation. Coordinates
+cannot determine timezone: device/manual users must verify the visibly retained
+IANA zone. Indian search results use Asia/Kolkata (+330 minutes); historical
+calculation offsets still come from the original date-sensitive engines.
+GPS is requested only on button press, with high accuracy, a 15-second timeout
+and maximum age 60 seconds. Errors preserve the previous location; stale
+callbacks/searches are discarded, removed views unsubscribe and abort searches.
+
+The default low-volume provider is public Nominatim. Its policy forbids network
+autocomplete, so the selector requires an explicit Search click (minimum three
+characters), limits to six Indian results, never automatically resolves
+ambiguity, and caches up to 50 successful searches per document. Requests are
+delayed/throttled within the document and abortable, with a rate-limit cooldown.
+No bulk or background geocoding or reverse lookup occurs. Attribution and query
+privacy disclosure are visible. The public service's **application-wide** limit
+is one request/second; a static client cannot enforce that across all visitors.
+For higher traffic switch `location-search.json` to a compatible hosted/proxied
+service before enabling broader use. Endpoint and attribution can be changed
+without changing JavaScript. Policy: https://operations.osmfoundation.org/policies/nominatim/.
+
+Regression coverage is in `test_location_controls.mjs`, settings tests and
+`test_location_workflow_browser.mjs` (called by the existing browser suite);
+provider requests are mocked, never used for bulk automated tests.
 
 ## Architecture
 

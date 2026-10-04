@@ -595,6 +595,10 @@ def panchang_location_controls(suffix):
         f'<input id="abp-panchang-timezone-{suffix}" data-panchang-timezone type="text" autocomplete="off" '
         'placeholder="Asia/Kolkata" aria-describedby="abp-timezone-note-' + suffix + '"></label>'
         f'<small id="abp-timezone-note-{suffix}">City presets include their timezone. For device location, verify the selected timezone.</small>'
+        '<details class="abp-location-manual"><summary>Manual coordinates (session only)</summary>'
+        '<label>Latitude (north +)<input data-location-latitude type="number" min="-90" max="90" step="any"></label>'
+        '<label>Longitude (east +)<input data-location-longitude type="number" min="-180" max="180" step="any"></label>'
+        '<label>Elevation (metres; blank if unknown)<input data-location-altitude type="number" min="-500" max="10000" step="any"></label></details>'
         '</div>'
     )
 
