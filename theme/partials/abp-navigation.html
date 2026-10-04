@@ -1,0 +1,21 @@
+{# One navigation tree from the generator's config.nav, for all screen sizes. #}
+<nav id="abp-navigation" class="abp-navigation" aria-label="Main navigation">
+  <button class="abp-menu-close" type="button" aria-label="Close navigation">Close ✕</button>
+  <ul class="abp-navigation__list">
+  {% for item in nav %}
+    {% set active = item.active or (item.title == 'DEVOTIONAL WORKS' and page and page.meta and page.meta.abp_category) %}
+    <li class="abp-navigation__item{% if active %} is-active{% endif %}">
+    {% if item.children %}
+      <button type="button" class="abp-navigation__section" aria-expanded="false" aria-controls="abp-menu-{{ loop.index }}">{{ item.title }} <span aria-hidden="true">▾</span></button>
+      <ul id="abp-menu-{{ loop.index }}" class="abp-navigation__submenu" hidden>
+      {% for child in item.children %}
+        <li><a href="{{ config.extra.navigation_base }}{{ child.url }}"{% if child == page %} aria-current="page"{% endif %}>{{ child.title }}</a></li>
+      {% endfor %}
+      </ul>
+    {% else %}
+      <a href="{{ config.extra.navigation_base }}{{ item.url }}"{% if item == page %} aria-current="page"{% endif %}>{{ item.title }}</a>
+    {% endif %}
+    </li>
+  {% endfor %}
+  </ul>
+</nav>

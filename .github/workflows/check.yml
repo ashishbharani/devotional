@@ -39,6 +39,8 @@ jobs:
         run: pnpm test:browser
         env:
           PANCHANG_SCREENSHOTS: work/panchang-browser
+      - name: Test compact navigation, categories, keyboard and search
+        run: node scripts/test_navigation.mjs
       - name: Test feedback UI, context, accessibility and mocked submissions
         run: node scripts/test_feedback_browser.mjs
         env:

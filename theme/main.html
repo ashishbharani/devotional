@@ -80,6 +80,25 @@
   {% endif %}
 {% endblock %}
 
+{% block header %}
+<div class="abp-navigation-shell">
+  {{ super() }}
+  <button class="abp-menu-toggle" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="abp-navigation">☰</button>
+  <button class="abp-menu-shade" type="button" aria-label="Close navigation" hidden tabindex="-1"></button>
+  {% include "partials/abp-navigation.html" %}
+</div>
+{% endblock %}
+
+{% block site_nav %}
+  {% if page and page.toc and not (page.meta and 'toc' in page.meta.hide | default([])) %}
+  <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+    <div class="md-sidebar__scrollwrap"><div class="md-sidebar__inner">
+      {% include "partials/toc.html" %}
+    </div></div>
+  </div>
+  {% endif %}
+{% endblock %}
+
 {% block content %}
   {%- set m = page.meta or {} -%}
   <div class="abp-page{% if m.abp_color %} abp-page--cat{% endif %}"{% if m.abp_color %} style="--abp-cat: {{ m.abp_color }}; --abp-cat-ink: {{ m.abp_color_ink }}"{% endif %}>

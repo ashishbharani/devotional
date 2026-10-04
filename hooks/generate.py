@@ -24,7 +24,7 @@ import json
 import re
 from collections import OrderedDict
 from pathlib import Path
-from urllib.parse import quote_plus
+from urllib.parse import quote_plus, urlsplit
 
 import csv
 import logging
@@ -1076,32 +1076,37 @@ def on_config(config, **kw):
     add("tools/indian-ephemeris/index.md", "Indian Ephemeris", "tools")
     add("tools/feedback/index.md", "Suggestion / Report Issue", "tools")
 
+    # The shared header survives Material instant navigation: root-relative
+    # links must retain the configured Pages subdirectory on every route.
+    config["extra"]["navigation_base"] = urlsplit(config["site_url"]).path.rstrip("/") + "/"
     config["nav"] = [
-        {"Home": "index.md"},
+        {"HOME": "index.md"},
+        {"TODAY PANCHANG": [
+            {"Today’s Panchang": "panchang.md"},
+            {"Monthly / Hindu Calendar": "hindu-calendar.md"},
+            {"Date Converter": "date-converter.md"},
+            {"Indian Ephemeris": "tools/indian-ephemeris/index.md"},
+        ]},
+        {"DEVOTIONAL WORKS": [
+            {"Browse All 42 Categories": "master-index.md"},
+            {"Find a Work": "find.md"},
+            {"A–Z Work Directory": "a-z.md"},
+            {"My Favourites": "favourites.md"},
+        ]},
+        {"SCRIPTURES & BOOKS": "library.md"},
+        {"TOOLS": [
+            {"Find a Work": "find.md"},
+            {"A–Z Work Directory": "a-z.md"},
+            {"Japa / Devotional Counter": "japa-counter.md"},
+            {"My Favourites": "favourites.md"},
+            {"Suggestion / Report Issue": "tools/feedback/index.md"},
+        ]},
         {
-            "About this Collection": [
+            "ABOUT": [
                 {"Foreword": "foreword.md"},
                 {"Disclaimer & Terms": "disclaimer.md"},
                 {"Legend": "legend.md"},
                 {"Reconciliation Rules": "rules.md"},
-            ]
-        },
-        {"Scriptures & Books Library": "library.md"},
-        {
-            "Devotional Works": [{"All 42 categories": "master-index.md"}]
-            + [{f'{c["num"]}. {title_case(c["title"])}': f'{c["dir"]}/index.md'} for c in d["categories"]]
-        },
-        {
-            "Tools": [
-                {"Find a Work": "find.md"},
-                {"A–Z Work Directory": "a-z.md"},
-                {"Japa / Devotional Counter": "japa-counter.md"},
-                {"My Favourites": "favourites.md"},
-                {"Today’s Panchang": "panchang.md"},
-                {"Hindu Calendar": "hindu-calendar.md"},
-                {"Date Converter": "date-converter.md"},
-                {"Indian Ephemeris": "tools/indian-ephemeris/index.md"},
-                {"Suggestion / Report Issue": "tools/feedback/index.md"},
             ]
         },
     ]

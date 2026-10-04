@@ -43,8 +43,10 @@ extra:
 
 extra_css:
   - stylesheets/abp.css
+  - stylesheets/navigation.css
   - stylesheets/feedback.css
 extra_javascript:
+  - javascripts/navigation.js
   - javascripts/abp-transliterate.js
   - javascripts/abp-i18n.js
   - javascripts/abp-firebase-config.js
