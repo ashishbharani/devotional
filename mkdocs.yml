@@ -47,6 +47,7 @@ extra_css:
   - stylesheets/feedback.css
   - stylesheets/project-info.css
 extra_javascript:
+  - javascripts/section-pager.js
   - javascripts/navigation.js
   - javascripts/abp-transliterate.js
   - javascripts/abp-i18n.js

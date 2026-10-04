@@ -106,6 +106,7 @@ VALUE_I18N = {
 
 _data: dict | None = None
 _pages: list[dict] = []  # linear reading order
+_section_navigation: dict = {}
 
 
 # --------------------------------------------------------------------------- helpers
@@ -874,8 +875,10 @@ def page_group(c, g, part):
             f'<details class="abp-jumpbox" open markdown="0"><summary>Jump to a form ({len(g["forms"])})</summary>'
             f'<nav class="abp-jump" aria-label="Forms in this section">{chips}</nav></details>\n'
         )
-    for f in part["forms"]:
+    for f, navigation_anchor in zip(part["forms"], section_anchors(part)):
         name = f["name"] + (" — CONTINUED" if f["continued"] else "")
+        if navigation_anchor != f["anchor"]:
+            out.append(f'<span id="{esc(navigation_anchor)}" class="abp-section-anchor" aria-hidden="true"></span>')
         out.append(f'\n<h3 id="{f["anchor"]}" class="abp-formbar" data-transliterate-ui>{esc(name)}</h3>\n')
         rows = []
         canonical_location = f'{part["url"]}#{f["anchor"]}'
@@ -1051,6 +1054,8 @@ def on_config(config, **kw):
     for error in translation_errors:
         log.warning(f"Translation audit: {error}")
     _pages.clear()
+    _section_navigation.clear()
+    _section_navigation.update(canonical_section_navigation(d))
 
     def add(src, title, section, **meta):
         _pages.append({"src": src, "title": title, "section": section, **meta})
@@ -1119,14 +1124,50 @@ def on_config(config, **kw):
     return config
 
 
+def section_anchors(part):
+    """Add stable navigation aliases for existing colliding form anchors."""
+    seen = set()
+    for form in part["forms"]:
+        anchor = form["anchor"]
+        if anchor in seen:
+            anchor = "nav-section-" + form["works"][0]["cwid"]
+        seen.add(form["anchor"])
+        yield anchor
+
+
+def canonical_section_navigation(d):
+    """Publication order, shared with category indexes and the finder; never sorted.
+
+    Form anchors are navigable sections. Split parts remain consecutive, including
+    repeated form headings on separate URLs. Category landing pages are indexes,
+    not devotional sections, so they do not interrupt the sequence.
+    """
+    ordered = [f'{part["url"]}#{anchor}'
+               for cat in d["categories"] for group in cat["merged"]
+               for part in group["parts"] for anchor in section_anchors(part)]
+    neighbours = {}
+    for i, url in enumerate(ordered):
+        neighbours.setdefault(url.split("#", 1)[0], []).append({
+            "anchor": url.split("#", 1)[1],
+            "previous": ordered[i - 1] if i else None,
+            "next": ordered[i + 1] if i + 1 < len(ordered) else None,
+        })
+    return neighbours
+
+
 def on_page_markdown(markdown, page, config, **kw):
-    # Retain the existing reading-order pager on the official HTML overrides.
+    # Also apply to hand-written overrides of catalogue pages.
+    sections = _section_navigation.get(url_of(page.file.src_uri))
+    if sections:
+        page.meta["abp_sections"] = sections
+        page.meta["abp_prev"] = sections[0]["previous"]
+        page.meta["abp_next"] = sections[0]["next"]
+    # Retain reading-order neighbours on the official HTML overrides without
+    # changing the canonical devotional-section navigation above.
     if page.file.src_uri in {"foreword.md", "about.md", "contribution.md", "disclaimer.md"}:
         i = next(i for i, p in enumerate(_pages) if p["src"] == page.file.src_uri)
         page.meta.setdefault("abp_prev", url_of(_pages[i - 1]["src"]))
         page.meta.setdefault("abp_next", url_of(_pages[i + 1]["src"]))
-        next_section = next(p for p in _pages if p["section"] != "front")
-        page.meta.setdefault("abp_next_section", url_of(next_section["src"]))
     return markdown
 
 
@@ -1148,13 +1189,6 @@ def on_files(files, config, **kw):
         "hindu-calendar.md": lambda p: page_hindu_calendar(d),
         "date-converter.md": lambda p: page_date_converter(d),
     }
-    sections = []
-    for p in _pages:
-        if not sections or sections[-1][0] != p["section"]:
-            sections.append((p["section"], p))
-    sec_first = {s: p for s, p in sections}
-    sec_order = [s for s, _ in sections]
-
     for i, p in enumerate(_pages):
         src = p["src"]
         if files.get_file_from_path(src):
@@ -1165,13 +1199,10 @@ def on_files(files, config, **kw):
             body = page_category(p["cat"])
         else:
             body = builders[src](p)
-        si = sec_order.index(p["section"])
         meta = {
             "title": p["title"],
             "abp_prev": url_of(_pages[i - 1]["src"]) if i > 0 else None,
             "abp_next": url_of(_pages[i + 1]["src"]) if i + 1 < len(_pages) else None,
-            "abp_prev_section": url_of(sec_first[sec_order[si - 1]]["src"]) if si > 0 else None,
-            "abp_next_section": url_of(sec_first[sec_order[si + 1]]["src"]) if si + 1 < len(sec_order) else None,
         }
         if "cat" in p:
             meta["abp_color"] = p["cat"]["color"]

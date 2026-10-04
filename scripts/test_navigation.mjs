@@ -109,7 +109,53 @@ try {
   await page.locator('.md-search__input').fill('Hanuman');
   await page.waitForFunction(() => document.querySelectorAll('.md-search-result__item').length > 0);
   console.log('PASS all navigation routes, nested refresh, active states, 42 category links, work and global search');
+  const places = JSON.parse(await readFile(path.join(site, 'assets/works-index.json'), 'utf8')).places;
+  const first = places[0][0], last = places.at(-1)[0];
+  const middle = places.find((entry, i) => i && entry[0].split('#')[0] === places[i - 1][0].split('#')[0]);
+  const boundary = places.find((entry, i) => i && entry[1] !== places[i - 1][1]);
+  const collisionPath = places.find(entry => entry[0].includes('/vedanta-desika/'))[0].split('#')[0];
+  await page.goto(base + collisionPath);
+  const collisionSections = JSON.parse(await page.locator('.abp-pager').getAttribute('data-sections'));
+  const alias = collisionSections.find(section => section.anchor.startsWith('nav-section-'));
+  assert.ok(alias, 'colliding legacy headings get an additive navigation alias');
+  for (const target of [first, middle[0], boundary[0], collisionPath + '#' + alias.anchor, last]) {
+    await page.goto(base + target);
+    for (const refresh of [false, true]) {
+      if (refresh) await page.reload();
+      const pager = page.locator('.abp-pager[data-sections]');
+      await pager.waitFor();
+      const sections = JSON.parse(await pager.getAttribute('data-sections'));
+      const current = sections.find(section => section.anchor === target.split('#')[1]);
+      for (const [selector, key] of [['.abp-pager__p','previous'], ['.abp-pager__n','next']]) {
+        const button = pager.locator(selector);
+        if (current[key]) await assertEventuallyHref(button, '/devotional/' + current[key]);
+        else assert.equal(await button.getAttribute('aria-disabled'), 'true');
+      }
+      assert.equal(await pager.locator('.abp-btn').count(), 4);
+    }
+  }
+  await page.goto(base + middle[0]);
+  const nextHref = await page.locator('.abp-pager__n').getAttribute('href');
+  await page.locator('.abp-pager__n').click();
+  await page.waitForURL('**' + nextHref);
+  await assertEventuallyHref(page.locator('.abp-pager__p'), '/devotional/' + middle[0]);
+  console.log('PASS canonical pager: direct entry, refresh, anchor click, category boundary, endpoints');
+  for (const width of [320, 1440]) {
+    await page.setViewportSize({width, height: 900});
+    await page.locator('.abp-pager').scrollIntoViewIfNeeded();
+    for (const control of await page.locator('.abp-pager .abp-btn').all()) {
+      assert.ok((await control.boundingBox()).height >= 44);
+    }
+    assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1));
+    if (shots) await page.screenshot({path:path.join(shots, `section-pager-${width}.png`)});
+  }
 } finally {
   await browser.close();
   await new Promise(resolve => server.close(resolve));
+}
+
+async function assertEventuallyHref(control, expected) {
+  await control.page().waitForFunction(({selector, expected}) => document.querySelector(selector)?.getAttribute('href') === expected,
+    {selector: '.abp-pager ' + (await control.getAttribute('class')).split(' ').find(x => x.startsWith('abp-pager__')).replace(/^/, '.'), expected});
+  assert.equal(await control.getAttribute('href'), expected);
 }
