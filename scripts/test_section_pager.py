@@ -9,10 +9,17 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from hooks.generate import load, canonical_section_navigation
 
 data = load()
-expected = [f'{part["url"]}#{form["anchor"]}'
-            for cat in data["categories"] for group in cat["merged"]
-            for part in group["parts"] for form in part["forms"]]
-expected = list(dict.fromkeys(expected))  # repeated legacy anchors share a URL
+# Independently derive aliases only for duplicated legacy anchors.
+expected = []
+for cat in data["categories"]:
+    for group in cat["merged"]:
+        for part in group["parts"]:
+            seen = set()
+            for form in part["forms"]:
+                anchor = form["anchor"] if form["anchor"] not in seen else "nav-section-" + form["works"][0]["cwid"]
+                expected.append(part["url"] + "#" + anchor)
+                seen.add(form["anchor"])
+assert len(expected) == len(set(expected))
 seen = []
 for url, sections in canonical_section_navigation(data).items():
     source = (Path("site") / url / "index.html").read_text(encoding="utf-8")

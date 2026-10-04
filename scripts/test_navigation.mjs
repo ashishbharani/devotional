@@ -113,7 +113,12 @@ try {
   const first = places[0][0], last = places.at(-1)[0];
   const middle = places.find((entry, i) => i && entry[0].split('#')[0] === places[i - 1][0].split('#')[0]);
   const boundary = places.find((entry, i) => i && entry[1] !== places[i - 1][1]);
-  for (const target of [first, middle[0], boundary[0], last]) {
+  const collisionPath = places.find(entry => entry[0].includes('/vedanta-desika/'))[0].split('#')[0];
+  await page.goto(base + collisionPath);
+  const collisionSections = JSON.parse(await page.locator('.abp-pager').getAttribute('data-sections'));
+  const alias = collisionSections.find(section => section.anchor.startsWith('nav-section-'));
+  assert.ok(alias, 'colliding legacy headings get an additive navigation alias');
+  for (const target of [first, middle[0], boundary[0], collisionPath + '#' + alias.anchor, last]) {
     await page.goto(base + target);
     for (const refresh of [false, true]) {
       if (refresh) await page.reload();
@@ -138,6 +143,9 @@ try {
   for (const width of [320, 1440]) {
     await page.setViewportSize({width, height: 900});
     await page.locator('.abp-pager').scrollIntoViewIfNeeded();
+    for (const control of await page.locator('.abp-pager .abp-btn').all()) {
+      assert.ok((await control.boundingBox()).height >= 44);
+    }
     assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1));
     if (shots) await page.screenshot({path:path.join(shots, `section-pager-${width}.png`)});
   }

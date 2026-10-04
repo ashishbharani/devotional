@@ -875,8 +875,10 @@ def page_group(c, g, part):
             f'<details class="abp-jumpbox" open markdown="0"><summary>Jump to a form ({len(g["forms"])})</summary>'
             f'<nav class="abp-jump" aria-label="Forms in this section">{chips}</nav></details>\n'
         )
-    for f in part["forms"]:
+    for f, navigation_anchor in zip(part["forms"], section_anchors(part)):
         name = f["name"] + (" — CONTINUED" if f["continued"] else "")
+        if navigation_anchor != f["anchor"]:
+            out.append(f'<span id="{esc(navigation_anchor)}" class="abp-section-anchor" aria-hidden="true"></span>')
         out.append(f'\n<h3 id="{f["anchor"]}" class="abp-formbar" data-transliterate-ui>{esc(name)}</h3>\n')
         rows = []
         canonical_location = f'{part["url"]}#{f["anchor"]}'
@@ -1118,6 +1120,17 @@ def on_config(config, **kw):
     return config
 
 
+def section_anchors(part):
+    """Add stable navigation aliases for existing colliding form anchors."""
+    seen = set()
+    for form in part["forms"]:
+        anchor = form["anchor"]
+        if anchor in seen:
+            anchor = "nav-section-" + form["works"][0]["cwid"]
+        seen.add(form["anchor"])
+        yield anchor
+
+
 def canonical_section_navigation(d):
     """Publication order, shared with category indexes and the finder; never sorted.
 
@@ -1125,12 +1138,9 @@ def canonical_section_navigation(d):
     repeated form headings on separate URLs. Category landing pages are indexes,
     not devotional sections, so they do not interrupt the sequence.
     """
-    ordered = [f'{part["url"]}#{form["anchor"]}'
+    ordered = [f'{part["url"]}#{anchor}'
                for cat in d["categories"] for group in cat["merged"]
-               for part in group["parts"] for form in part["forms"]]
-    # Existing repeated headings can share an anchor. They are one navigable
-    # destination; preserve its first publication position and existing URLs.
-    ordered = list(dict.fromkeys(ordered))
+               for part in group["parts"] for anchor in section_anchors(part)]
     neighbours = {}
     for i, url in enumerate(ordered):
         neighbours.setdefault(url.split("#", 1)[0], []).append({
