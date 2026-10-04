@@ -23,6 +23,7 @@ ROUTES = (
     "hindu-calendar",
     "date-converter",
     "tools/indian-ephemeris",
+    "tools/feedback",
     "offline",
 )
 
@@ -115,6 +116,7 @@ def main() -> int:
             require((site / path / "index.html").is_file(), f"canonical work location is missing: {path}", errors)
 
     worker = (site / "sw.js").read_text(encoding="utf-8")
+    require("stylesheets/feedback.css" in worker, "feedback stylesheet missing from PWA shell", errors)
     require("addEventListener(\"fetch\"" in worker, "PWA worker has no fetch handler", errors)
     require('startsWith("abp-")' in worker, "worker does not retire only legacy abp-* caches", errors)
     require("assets/works-index.json" not in worker.split("const scopeUrl", 1)[0], "full works index was precached", errors)
