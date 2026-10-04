@@ -117,7 +117,7 @@ checks itself against the counts printed in the PDF's Integrated Master Index.
 
 | Path | From the PDF |
 | --- | --- |
-| `/` | Cover page (the two cover buttons are clickable, as in the PDF) |
+| `/` | Cover page (non-clickable picture; navigation is provided by the sections below it) |
 | `/foreword/`, `/disclaimer/`, `/legend/`, `/rules/` | Front matter, pp. 2–10 |
 | `/library/` | Hindu Scriptures & Books Library, pp. 11–13 |
 | `/master-index/` | Devotional Works directory (the publication's Integrated Master Index), pp. 14–19 |

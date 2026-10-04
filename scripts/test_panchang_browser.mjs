@@ -66,6 +66,33 @@ try {
     await page.route("https://fonts.googleapis.com/**", (route) => route.fulfill({ contentType: "text/css", body: "" }));
     await page.goto(base);
     assert.equal(await page.title(), brandName, `${width}px: homepage browser title`);
+    const cover = page.locator(".abp-cover");
+    assert.equal(await cover.locator("a, area, button, [href], [onclick], [tabindex], [usemap]").count(), 0, `${width}px: cover has no links or focusable hotspots`);
+    assert.equal(await cover.evaluate((element) => !!element.closest("a, [onclick], [role='link']")), false, `${width}px: cover has no clickable wrapper`);
+    assert.ok(await cover.locator("img").evaluate((image) => image.complete && image.naturalWidth > 0), `${width}px: current picture loads`);
+    // Sample the entire picture, including both obsolete lower-corner hotspots.
+    for (const y of [0.05, 0.5, 0.87, 0.95]) {
+      for (const x of [0.05, 0.17, 0.5, 0.83, 0.95]) {
+        // Large desktop covers can exceed the viewport: bring this sample into view.
+        await cover.evaluate((element, fraction) => {
+          const box = element.getBoundingClientRect();
+          scrollBy(0, box.top + box.height * fraction - innerHeight / 2);
+        }, y);
+        const box = await cover.boundingBox();
+        const point = { x: box.x + box.width * x, y: box.y + box.height * y };
+        assert.ok(await page.evaluate(({ x, y }) => {
+          const element = document.elementFromPoint(x, y);
+          return !!element?.closest(".abp-cover") && !element.closest("a, button, [role='link']") && getComputedStyle(element).cursor !== "pointer";
+        }, point), `${width}px: no clickable overlay or link cursor at ${x},${y}`);
+        await page.mouse.click(point.x, point.y);
+        assert.equal(page.url(), base, `${width}px: picture click does not navigate`);
+      }
+    }
+    await page.locator("h1.abp-sr").focus();
+    await page.keyboard.press("Tab");
+    assert.equal(await page.evaluate(() => !!document.activeElement.closest(".abp-cover")), false, `${width}px: Tab skips the non-interactive picture`);
+    assert.ok(await page.locator('a[href$="library/"]').count() > 0, "legitimate library navigation remains");
+    assert.ok(await page.locator('a[href$="master-index/"]').count() > 0, "legitimate devotional navigation remains");
     assert.equal((await page.locator(".md-header__topic").first().innerText()).trim(), brandName, `${width}px: header brand text`);
     assert.ok(await page.locator(".md-header__title").isVisible(), `${width}px: header brand remains visible`);
     const brandBox = await page.locator(".md-header__title").boundingBox();
@@ -98,7 +125,7 @@ try {
       }
     }
     if (shots) await page.screenshot({ path: path.join(shots, `branding-home-${width}.png`), fullPage: true });
-    console.log(`PASS branding viewport ${width}: title, header, metadata, structured data, layout`);
+    console.log(`PASS branding viewport ${width}: non-clickable cover, title, header, metadata, structured data, layout`);
     await context.close();
   }
   if (process.env.BRANDING_ONLY) {

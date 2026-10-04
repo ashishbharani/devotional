@@ -747,8 +747,6 @@ def page_home(d):
         'width="1491" height="1055" fetchpriority="high" decoding="async" '
         f'alt="{SITE_NAME} — a pan-India multilingual devotional reference, collected and compiled by Ashish Bharani">'
         "</picture>\n"
-        '<a class="abp-cover__hot abp-cover__hot--left" href="library/" title="Scriptures &amp; Books Library" data-i18n-title="library"><span data-i18n="library">Scriptures &amp; Books Library</span></a>\n'
-        '<a class="abp-cover__hot abp-cover__hot--right" href="master-index/" title="Devotional Works" data-i18n-title="index"><span data-i18n="index">Devotional Works</span></a>\n'
         "</section>\n\n"
         '<ul class="abp-stats" markdown="0" aria-label="The collection in numbers">'
         f'<li><b>{fmt(total)}</b> <span data-i18n="works">works</span></li>'
