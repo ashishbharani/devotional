@@ -296,13 +296,14 @@ body { background: var(--abp-paper); }
   scroll-margin-top: 5.2rem;
 }
 
-/* ---------- seven-button footer navigation --------------------------------- */
+/* ---------- canonical four-button footer navigation ------------------------ */
 .abp-pager {
   display: flex; flex-wrap: wrap; justify-content: center; gap: .35rem;
   margin: 2.2rem 0 .4rem;
   padding-top: 1rem;
   border-top: .5px solid color-mix(in srgb, var(--abp-gold) 60%, transparent);
 }
+.abp-pager .abp-btn { min-height: 44px; font-size: .7rem; }
 .md-typeset .abp-btn, .abp-btn {
   display: inline-flex; align-items: center; justify-content: center;
   min-height: 1.55rem;
@@ -672,10 +673,9 @@ button.abp-btn { cursor: pointer; }
   .abp-notice p { text-align: left; }
 
   /* 7-button footer as a thumb-friendly grid */
-  .abp-pager { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: .4rem; }
+  .abp-pager { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .4rem; }
   .abp-pager .abp-btn { padding-inline: .3rem; text-align: center; }
-  .abp-pager__ps, .abp-pager__p, .abp-pager__n, .abp-pager__ns { grid-column: span 3; }
-  .abp-pager__top, .abp-pager__home, .abp-pager__idx { grid-column: span 2; }
+  .abp-pager .abp-btn { grid-column: span 1; }
 }
 
 /* ---------- older Safari (iOS < 16.2) / Chrome < 111: no color-mix() -------- */

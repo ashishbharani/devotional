@@ -106,6 +106,7 @@ VALUE_I18N = {
 
 _data: dict | None = None
 _pages: list[dict] = []  # linear reading order
+_section_navigation: dict = {}
 
 
 # --------------------------------------------------------------------------- helpers
@@ -1047,6 +1048,8 @@ def on_config(config, **kw):
     for error in translation_errors:
         log.warning(f"Translation audit: {error}")
     _pages.clear()
+    _section_navigation.clear()
+    _section_navigation.update(canonical_section_navigation(d))
 
     def add(src, title, section, **meta):
         _pages.append({"src": src, "title": title, "section": section, **meta})
@@ -1111,6 +1114,39 @@ def on_config(config, **kw):
     return config
 
 
+def canonical_section_navigation(d):
+    """Publication order, shared with category indexes and the finder; never sorted.
+
+    Form anchors are navigable sections. Split parts remain consecutive, including
+    repeated form headings on separate URLs. Category landing pages are indexes,
+    not devotional sections, so they do not interrupt the sequence.
+    """
+    ordered = [f'{part["url"]}#{form["anchor"]}'
+               for cat in d["categories"] for group in cat["merged"]
+               for part in group["parts"] for form in part["forms"]]
+    # Existing repeated headings can share an anchor. They are one navigable
+    # destination; preserve its first publication position and existing URLs.
+    ordered = list(dict.fromkeys(ordered))
+    neighbours = {}
+    for i, url in enumerate(ordered):
+        neighbours.setdefault(url.split("#", 1)[0], []).append({
+            "anchor": url.split("#", 1)[1],
+            "previous": ordered[i - 1] if i else None,
+            "next": ordered[i + 1] if i + 1 < len(ordered) else None,
+        })
+    return neighbours
+
+
+def on_page_markdown(markdown, page, config, **kw):
+    # Also apply to hand-written overrides of catalogue pages.
+    sections = _section_navigation.get(url_of(page.file.src_uri))
+    if sections:
+        page.meta["abp_sections"] = sections
+        page.meta["abp_prev"] = sections[0]["previous"]
+        page.meta["abp_next"] = sections[0]["next"]
+    return markdown
+
+
 def on_files(files, config, **kw):
     d = load()
     builders = {
@@ -1129,13 +1165,6 @@ def on_files(files, config, **kw):
         "hindu-calendar.md": lambda p: page_hindu_calendar(d),
         "date-converter.md": lambda p: page_date_converter(d),
     }
-    sections = []
-    for p in _pages:
-        if not sections or sections[-1][0] != p["section"]:
-            sections.append((p["section"], p))
-    sec_first = {s: p for s, p in sections}
-    sec_order = [s for s, _ in sections]
-
     for i, p in enumerate(_pages):
         src = p["src"]
         if files.get_file_from_path(src):
@@ -1146,13 +1175,10 @@ def on_files(files, config, **kw):
             body = page_category(p["cat"])
         else:
             body = builders[src](p)
-        si = sec_order.index(p["section"])
         meta = {
             "title": p["title"],
             "abp_prev": url_of(_pages[i - 1]["src"]) if i > 0 else None,
             "abp_next": url_of(_pages[i + 1]["src"]) if i + 1 < len(_pages) else None,
-            "abp_prev_section": url_of(sec_first[sec_order[si - 1]]["src"]) if si > 0 else None,
-            "abp_next_section": url_of(sec_first[sec_order[si + 1]]["src"]) if si + 1 < len(sec_order) else None,
         }
         if "cat" in p:
             meta["abp_color"] = p["cat"]["color"]
