@@ -1057,7 +1057,9 @@ def on_config(config, **kw):
 
     add("index.md", "Home", "front")
     add("foreword.md", "Foreword", "front")
-    add("disclaimer.md", "Disclaimer & Terms of Access", "front")
+    add("about.md", "About Me", "front")
+    add("contribution.md", "Support the Project", "front")
+    add("disclaimer.md", "Disclaimer & Terms", "front")
     add("legend.md", "Legend", "front")
     add("rules.md", "Final Reconciliation Rules Applied", "front")
     add("library.md", "Hindu Scriptures & Books Library", "front")
@@ -1106,6 +1108,8 @@ def on_config(config, **kw):
         {
             "ABOUT": [
                 {"Foreword": "foreword.md"},
+                {"About Me": "about.md"},
+                {"Contribution": "contribution.md"},
                 {"Disclaimer & Terms": "disclaimer.md"},
                 {"Legend": "legend.md"},
                 {"Reconciliation Rules": "rules.md"},
@@ -1113,6 +1117,17 @@ def on_config(config, **kw):
         },
     ]
     return config
+
+
+def on_page_markdown(markdown, page, config, **kw):
+    # Retain the existing reading-order pager on the official HTML overrides.
+    if page.file.src_uri in {"foreword.md", "about.md", "contribution.md", "disclaimer.md"}:
+        i = next(i for i, p in enumerate(_pages) if p["src"] == page.file.src_uri)
+        page.meta.setdefault("abp_prev", url_of(_pages[i - 1]["src"]))
+        page.meta.setdefault("abp_next", url_of(_pages[i + 1]["src"]))
+        next_section = next(p for p in _pages if p["section"] != "front")
+        page.meta.setdefault("abp_next_section", url_of(next_section["src"]))
+    return markdown
 
 
 def on_files(files, config, **kw):
@@ -1185,7 +1200,7 @@ def on_post_build(config, **kw):
     site = Path(config["site_dir"])
     tpl = (ROOT / "hooks" / "sw.template.js").read_text(encoding="utf-8")
     shell = [
-        "", "offline/", "favourites/", "manifest.webmanifest", "stylesheets/abp.css", "stylesheets/feedback.css",
+        "", "offline/", "favourites/", "manifest.webmanifest", "stylesheets/abp.css", "stylesheets/feedback.css", "stylesheets/project-info.css",
         "assets/images/logo.svg", "assets/images/icon-192.png", "assets/images/icon-512.png",
         "assets/images/icon-maskable-512.png", "assets/images/apple-touch-icon.png",
     ]

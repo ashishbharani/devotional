@@ -45,6 +45,7 @@ extra_css:
   - stylesheets/abp.css
   - stylesheets/navigation.css
   - stylesheets/feedback.css
+  - stylesheets/project-info.css
 extra_javascript:
   - javascripts/navigation.js
   - javascripts/abp-transliterate.js

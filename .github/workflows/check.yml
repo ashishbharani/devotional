@@ -35,6 +35,16 @@ jobs:
         run: |
           uv run python scripts/check_site.py
           uv run python scripts/check_i18n.py
+          uv run python scripts/check_project_pdfs.py
+      - name: Test official pages, PDFs and responsive footer
+        run: node scripts/test_project_info_browser.mjs
+        env:
+          PROJECT_SCREENSHOTS: work/project-browser
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: official-project-browser-screenshots
+          path: work/project-browser
       - name: Test Panchang browser views and mobile layouts
         run: pnpm test:browser
         env:

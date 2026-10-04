@@ -1,0 +1,49 @@
+/* Official information pages: reuse the site's parchment and lamp-light tokens. */
+.abp-project-info { max-width: 48rem; margin-inline: auto; overflow-wrap: anywhere; }
+.md-typeset .abp-project-info h1,
+.md-typeset .abp-project-info h2 { color: var(--abp-maroon); }
+.abp-project-info blockquote,
+.abp-project-info .abp-info-card {
+  background: var(--abp-paper-2);
+  border: 1px solid var(--abp-gold);
+  border-radius: 1rem;
+  padding: 1rem;
+  margin: 1.25rem 0;
+  color: var(--abp-ink-2);
+}
+.md-typeset .abp-project-info a.abp-pdf-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: .7rem 1rem;
+  border: 1px solid var(--abp-gold);
+  border-radius: .7rem;
+  background: var(--abp-paper-2);
+  color: var(--abp-maroon);
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: .2em;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+.abp-project-info a:focus-visible,
+.abp-project-footer a:focus-visible { outline: 3px solid var(--abp-maroon); outline-offset: 3px; }
+.abp-project-footer {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: .25rem 1rem;
+  padding: 1rem;
+  border-top: 1px solid var(--abp-gold);
+  background: var(--abp-paper-2);
+}
+.abp-project-footer a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: var(--abp-ink-2);
+  text-decoration: underline;
+  text-underline-offset: .2em;
+}
+html.abp-hc .abp-project-info,
+html.abp-hc .abp-project-footer { color: var(--abp-ink); }

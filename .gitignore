@@ -6,6 +6,11 @@ __pycache__/
 *.pyc
 # source publication (large binary, kept outside git)
 *.pdf
+# Four official website documents; keep the large catalogue source excluded.
+!docs/assets/pdfs/about-me.pdf
+!docs/assets/pdfs/contribution.pdf
+!docs/assets/pdfs/disclaimer.pdf
+!docs/assets/pdfs/foreword.pdf
 .DS_Store
 # local Codex workspace files
 work/
