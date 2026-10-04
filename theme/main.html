@@ -1,20 +1,37 @@
 {#- ABP Devotional theme — extends Material for MkDocs -#}
 {% extends "base.html" %}
 
+{#- Canonical public branding comes from mkdocs.yml. -#}
+{% set brand_name = config.site_name %}
+{% set document_title = brand_name if page.is_homepage else (page.title or "Page not found") ~ " | " ~ brand_name %}
+{% set social_description = (page.meta and page.meta.description) or config.site_description %}
+
+{% block htmltitle %}
+  <title>{{ document_title }}</title>
+{% endblock %}
+
 {#- Mobile-first head: notch-aware viewport, normal browser icons, per-scheme browser chrome colour -#}
 {% block site_meta %}
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <meta name="description" content="{{ (page.meta and page.meta.description) or config.site_description }}">
+  <meta name="description" content="{{ social_description }}">
   <meta name="author" content="{{ config.site_author }}">
   {% if page.canonical_url %}<link rel="canonical" href="{{ page.canonical_url }}">{% endif %}
   <meta name="format-detection" content="telephone=no">
   <meta name="theme-color" media="(prefers-color-scheme: light)" content="#82382f">
   <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#331512">
   <meta name="color-scheme" content="light dark">
-  <meta name="application-name" content="Hindu Devotional Collection">
+  <meta name="application-name" content="{{ brand_name }}">
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-title" content="Hindu Devotional">
+  <meta name="apple-mobile-web-app-title" content="{{ brand_name }}">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="{{ brand_name }}">
+  <meta property="og:title" content="{{ document_title | e }}">
+  <meta property="og:description" content="{{ social_description }}">
+  {% if page.canonical_url %}<meta property="og:url" content="{{ page.canonical_url }}">{% endif %}
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="{{ document_title | e }}">
+  <meta name="twitter:description" content="{{ social_description }}">
   <link rel="manifest" href="{{ 'manifest.webmanifest' | url }}">
   <link rel="icon" href="{{ 'assets/images/logo.svg' | url }}" type="image/svg+xml">
   <link rel="icon" href="{{ 'assets/images/favicon-32.png' | url }}" sizes="32x32" type="image/png">
@@ -22,6 +39,20 @@
 {% endblock %}
 
 {% block extrahead %}
+  <script type="application/ld+json">
+    {{ {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "name": document_title,
+      "description": social_description,
+      "url": ((page.canonical_url or config.site_url) ~ ""),
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": brand_name,
+        "url": (config.site_url ~ "")
+      }
+    } | tojson }}
+  </script>
   {#- apply saved accessibility preferences before first paint (no flash) -#}
   <script>
     try {

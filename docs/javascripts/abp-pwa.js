@@ -46,7 +46,7 @@
     if (control) { control.querySelector("span:last-child").textContent = t("installApp"); control.setAttribute("aria-label", t("installApp")); }
   });
   if ("serviceWorker" in navigator) window.addEventListener("load", () => {
-    navigator.serviceWorker.register(new URL("sw.js", root), { scope: root.pathname }).catch((error) => console.warn("UDHC offline support could not start", error));
+    navigator.serviceWorker.register(new URL("sw.js", root), { scope: root.pathname }).catch((error) => console.warn("Hindu Devotional Collections offline support could not start", error));
   }, { once: true });
   if (isiOS) {
     if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", addButton);

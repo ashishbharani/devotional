@@ -43,6 +43,7 @@ log = logging.getLogger("mkdocs.hooks.abp")
 DATA_FILE = ROOT / "data" / "collection.json"
 CORRECTIONS_FILE = ROOT / "data" / "corrections.csv"  # community fixes (see CONTRIBUTING.md)
 ADDITIONS_FILE = ROOT / "data" / "additions.csv"  # community additions
+SITE_NAME = ""  # populated from the canonical site_name in mkdocs.yml
 EDITABLE = {
     "title": "title", "language": "language", "form": "form", "tier": "tier",
     "singer": "singer", "preferred singer": "singer", "recitation": "singer",
@@ -439,7 +440,7 @@ def page_foreword(d):
     box = [ln for ln in body if ln["bold"] and ln["y"] > 500]
     body = [ln for ln in body if ln not in box]
     out = ['<article class="abp-foreword" markdown="0">']
-    out.append('<header class="abp-foreword__band"><h1 tabindex="-1" data-i18n="foreword">FOREWORD</h1><p>HINDU DEVOTIONAL LIBRARY</p></header>')
+    out.append(f'<header class="abp-foreword__band"><h1 tabindex="-1" data-i18n="foreword">FOREWORD</h1><p>{SITE_NAME}</p></header>')
     out.append(f'<h2 class="abp-foreword__dedication">{esc(head["text"])}</h2>')
     out.append('<div class="abp-foreword__body">')
     for p in paragraphs(body):
@@ -738,7 +739,7 @@ def page_home(d):
     total = sum(c["works_stated"] for c in d["categories"])
     groups = sum(len(c["merged"]) for c in d["categories"])
     return (
-        '<h1 class="abp-sr" tabindex="-1">Hindu Devotional Collection</h1>\n'
+        f'<h1 class="abp-sr" tabindex="-1">{SITE_NAME}</h1>\n'
         '<section class="abp-cover" markdown="0" aria-label="Cover">\n'
         "<picture>"
         '<source type="image/webp" sizes="(min-width: 90rem) 1400px, 100vw" '
@@ -746,7 +747,7 @@ def page_home(d):
         '<img src="assets/images/cover-1024.jpg" sizes="(min-width: 90rem) 1400px, 100vw" '
         'srcset="assets/images/cover-640.jpg 640w, assets/images/cover-1024.jpg 1024w, assets/images/cover-1491.jpg 1491w" '
         'width="1491" height="1055" fetchpriority="high" decoding="async" '
-        'alt="Hindu Devotional Collection — a pan-India multilingual devotional reference, collected and compiled by Ashish Bharani">'
+        f'alt="{SITE_NAME} — a pan-India multilingual devotional reference, collected and compiled by Ashish Bharani">'
         "</picture>\n"
         '<a class="abp-cover__hot abp-cover__hot--left" href="library/" title="Scriptures &amp; Books Library" data-i18n-title="library"><span data-i18n="library">Scriptures &amp; Books Library</span></a>\n'
         '<a class="abp-cover__hot abp-cover__hot--right" href="master-index/" title="Religious Music" data-i18n-title="index"><span data-i18n="index">Religious Music</span></a>\n'
@@ -1041,6 +1042,8 @@ def works_index(d) -> str:
 
 
 def on_config(config, **kw):
+    global SITE_NAME
+    SITE_NAME = config["site_name"]
     d = load()
     translation_report, translation_errors = audit_catalogue(ROOT / "docs" / "assets" / "i18n.json")
     for line in translation_report:

@@ -11,7 +11,7 @@ The website works without Firebase: everyone can browse, and guest favourites st
 ## 2. Add the website as a Web App
 
 1. On **Project overview**, select the Web icon (`</>`).
-2. Enter a nickname such as `UDHC Website`.
+2. Enter a nickname such as `Hindu Devotional Collections Website`.
 3. Do not enable Firebase Hosting; GitHub Pages remains the host.
 4. Select **Register app**.
 5. Copy the `firebaseConfig` values shown by Firebase.

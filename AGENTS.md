@@ -1,6 +1,6 @@
 # AGENTS.md — instructions for AI coding agents (Codex, ChatGPT, Claude, Copilot…)
 
-You are helping maintain the **Hindu Devotional Collection** website (MkDocs + Material, deployed to
+You are helping maintain the **Hindu Devotional Collections** website (MkDocs + Material, deployed to
 GitHub Pages at https://ashishbharani.github.io/devotional/). The person asking you is usually **not a software
 engineer**: explain what you changed in plain language, keep changes small, and always open a pull request.
 

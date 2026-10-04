@@ -1,4 +1,4 @@
-# Hindu Devotional Collection — MkDocs site
+# Hindu Devotional Collections — MkDocs site
 
 A browsable website version of the PDF publication **Hindu Devotional Collection — Reworked Publication 2026**,
 collected & compiled by Ashish Bharani.

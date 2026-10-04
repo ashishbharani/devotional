@@ -2,10 +2,13 @@
 
 from __future__ import annotations
 
+import html
 import json
+import re
 from pathlib import Path
 
 
+SITE_NAME = "Hindu Devotional Collections"
 ROUTES = (
     "",
     "foreword",
@@ -39,9 +42,14 @@ def main() -> int:
         require(page.is_file(), f"missing route /{route}/", errors)
 
     home = (site / "index.html").read_text(encoding="utf-8")
-    require("Hindu Devotional Collection" in home, "new site branding is missing from the homepage", errors)
+    require(SITE_NAME in home, "canonical site branding is missing from the homepage", errors)
+    require(f"<title>{SITE_NAME}</title>" in home, "homepage browser title is incorrect", errors)
     require('<meta name="author" content="Ashish Bharani">' in home, "public author metadata is incorrect", errors)
-    require('<meta name="application-name" content="Hindu Devotional Collection">' in home, "application-name metadata is incorrect", errors)
+    require(f'<meta name="application-name" content="{SITE_NAME}">' in home, "application-name metadata is incorrect", errors)
+    require(f'<meta name="apple-mobile-web-app-title" content="{SITE_NAME}">' in home, "Apple app title metadata is incorrect", errors)
+    require(f'<meta property="og:site_name" content="{SITE_NAME}">' in home, "Open Graph site name is incorrect", errors)
+    require(f'<meta property="og:title" content="{SITE_NAME}">' in home, "homepage Open Graph title is incorrect", errors)
+    require(f'<meta name="twitter:title" content="{SITE_NAME}">' in home, "homepage Twitter title is incorrect", errors)
     require(home.count('<details class="abp-home-index') == 3, "homepage must have matching Today Panchang, Library and Religious Music disclosures", errors)
     require("TODAY PANCHANG" in home and 'aria-expanded="false"' in home, "accessible Today Panchang disclosure is missing", errors)
     require('class="abp-home-index abp-home-library"' in home, "homepage Library disclosure is missing", errors)
@@ -60,6 +68,22 @@ def main() -> int:
         require(f'href="{route}"' in home, f"homepage Panchang does not link to {route}", errors)
     require('class="abp-home-utility"' in home, "homepage Japa utility control is missing", errors)
     require("Save for Offline" not in home, "retired offline UI remains on the homepage", errors)
+
+    for route in ROUTES:
+        page_path = site / route / "index.html" if route else site / "index.html"
+        rendered = page_path.read_text(encoding="utf-8")
+        title_match = re.search(r"<title>(.*?)</title>", rendered, re.DOTALL)
+        title = html.unescape(title_match.group(1).strip()) if title_match else ""
+        require(title == SITE_NAME if not route else title.endswith(f" | {SITE_NAME}"), f"browser title convention is incorrect for /{route}/: {title!r}", errors)
+        require(f'<meta property="og:site_name" content="{SITE_NAME}">' in rendered, f"Open Graph site name is incorrect for /{route}/", errors)
+        require(f'<meta property="og:title" content="{html.escape(title, quote=True)}">' in rendered, f"Open Graph title is incorrect for /{route}/", errors)
+        require(f'<meta name="twitter:title" content="{html.escape(title, quote=True)}">' in rendered, f"Twitter title is incorrect for /{route}/", errors)
+        schema_match = re.search(r'<script type="application/ld\+json">\s*(.*?)\s*</script>', rendered, re.DOTALL)
+        require(bool(schema_match), f"structured data is missing for /{route}/", errors)
+        if schema_match:
+            schema = json.loads(schema_match.group(1))
+            require(schema.get("name") == title, f"structured data page name is incorrect for /{route}/", errors)
+            require(schema.get("isPartOf", {}).get("name") == SITE_NAME, f"structured data site name is incorrect for /{route}/", errors)
 
     directory = (site / "a-z" / "index.html").read_text(encoding="utf-8")
     require('id="abp-directory-results"' in directory, "A-Z results region is missing", errors)
@@ -108,8 +132,8 @@ def main() -> int:
     require(manifest_path.is_file(), "PWA manifest was not generated", errors)
     if manifest_path.is_file():
         manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
-        require(manifest.get("name") == "Hindu Devotional Collection", "manifest full name is incorrect", errors)
-        require(manifest.get("short_name") == "Hindu Devotional", "manifest short name is incorrect", errors)
+        require(manifest.get("name") == SITE_NAME, "manifest full name is incorrect", errors)
+        require(manifest.get("short_name") == "HDC", "manifest short name is incorrect", errors)
         require(manifest.get("start_url") == "/devotional/", "manifest start_url is not /devotional/", errors)
         require(manifest.get("scope") == "/devotional/", "manifest scope is not /devotional/", errors)
         require(manifest.get("display") == "standalone", "manifest is not standalone", errors)
@@ -166,8 +190,15 @@ def main() -> int:
     require("request.auth != null && request.auth.uid == uid" in rules, "Firestore rules do not isolate each user", errors)
     require("allow read, write: if false" in rules, "Firestore rules have no default deny", errors)
 
-    retired_public_text = (
-        "ultimate hindu devotional collection",
+    stylesheet = (site / "stylesheets" / "abp.css").read_text(encoding="utf-8")
+    require(".md-header__title { display: none; }" not in stylesheet, "mobile CSS still hides the site name", errors)
+
+    retired_public_patterns = (
+        r"hindu devotional collection(?!s)",
+        r"hindu devotional library",
+        r"ultimate hindu devotional collections?",
+        r"\budhc\b",
+        r"\buhdc\b",
         "advocate ashish bharani",
         "aadvocte ashish bharani",
         "advovate ashish bharani",
@@ -177,8 +208,8 @@ def main() -> int:
     )
     for page in site.rglob("*.html"):
         rendered = page.read_text(encoding="utf-8").lower()
-        for retired in retired_public_text:
-            require(retired not in rendered, f"retired public branding remains in {page.relative_to(site)}: {retired}", errors)
+        for retired in retired_public_patterns:
+            require(not re.search(retired, rendered), f"retired public branding remains in {page.relative_to(site)}: {retired}", errors)
 
     if errors:
         print("Site smoke-check failures:")
