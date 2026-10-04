@@ -4,6 +4,7 @@ import { createServer } from "node:http";
 import { readFile, stat, mkdir } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { testLocationWorkflow } from "./test_location_workflow_browser.mjs";
 
 const require = createRequire(import.meta.url);
 const { chromium } = require("playwright");
@@ -261,7 +262,8 @@ try {
   await deniedPage.waitForFunction(() => document.querySelector("[data-panchang-field='date']")?.textContent.includes("3 October 2026"));
   await ready(deniedPage);
   await deniedPage.locator("[data-panchang-geolocate]").click();
-  assert.match(await deniedPage.locator("[data-panchang-status]").innerText(), /Continuing with Delhi/);
+  assert.match(await deniedPage.locator("[data-location-message]").innerText(), /permission was denied.*previous location has been kept/);
+  assert.equal(await deniedPage.locator("[data-panchang-location]").inputValue(), "Delhi, India");
   assert.equal(await deniedPage.locator("[data-panchang-tithis] li").count(), 3);
   await deniedPage.locator("[data-panchang-timezone]").fill("Asia/Kolkata");
   await deniedPage.locator("[data-panchang-timezone]").dispatchEvent("change");
@@ -368,6 +370,7 @@ try {
   assert.deepEqual(syncErrors, []);
   await unified.close();
   console.log("PASS unified city: homepage, daily, monthly, ephemeris, persistence, cross-tab and manual/share privacy");
+  await testLocationWorkflow(browser, base);
 
   // Simulate an already-installed older deployment, then update the real SW.
   // Its activation must clear obsolete modules and reload in-memory calculations.

@@ -23,6 +23,14 @@ try {
   assert.deepEqual(loadSettings(), mumbai);
   saveSettings(mumbai);
   assert.equal(notifications, 1, "equal settings do not rebroadcast");
+  const persistentCity = stored;
+  saveSettings({ location: { ...findCity("meerut"), source: "geolocation", id: "device", altitude: null, accuracy: 9 }, convention: "amanta" });
+  assert.equal(stored, persistentCity, "device precision is never persisted");
+  assert.equal(loadSettings().location.altitude, 0);
+  assert.equal(loadSettings().location.altitudeKnown, false);
+  assert.equal(loadSettings().location.accuracy, 9);
+  saveSettings(mumbai);
+  notifications = 1;
   blocked = true;
   const meerut = { location: findCity("meerut"), convention: "amanta" };
   saveSettings(meerut);
@@ -31,6 +39,11 @@ try {
   unsubscribe();
   saveSettings(mumbai);
   assert.equal(notifications, 2, "unsubscribed views receive no callbacks");
+  blocked = false;
+  saveSettings(mumbai);
+  stored = JSON.stringify({ location: { ...DEFAULT_LOCATION, id: "device" }, convention: "amanta" });
+  assert.equal(loadSettings().location.id, "delhi", "legacy persisted GPS is replaced with safe fallback");
+  assert.equal(JSON.parse(stored).location.id, "delhi");
   console.log("PASS location settings: validation, alias, persistence, equality, blocked storage and unsubscribe");
 } finally {
   if (previousWindow === undefined) delete globalThis.window; else globalThis.window = previousWindow;
