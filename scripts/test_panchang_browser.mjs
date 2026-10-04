@@ -352,7 +352,10 @@ try {
     settings.saveSettings({ ...settings.loadSettings(), location: settings.findCity("meerut") });
   });
   await secondTab.waitForFunction(() => document.querySelector("[name=city]")?.value === "Meerut, Uttar Pradesh" && !document.querySelector("[name=city]").disabled);
-  await unifiedPage.waitForFunction(() => document.querySelector("[data-panchang-location]")?.value === "Meerut, Uttar Pradesh" && document.querySelector("[data-panchang-status]")?.dataset.state === "ready");
+  await unifiedPage.waitForFunction(() => document.querySelector("[data-panchang-location]")?.value === "Meerut, Uttar Pradesh" && document.querySelector("[data-panchang-status]")?.dataset.state === "ready").catch(async (error) => {
+    console.log("Cross-tab monthly location diagnostics", await unifiedPage.evaluate(() => ({ city: document.querySelector("[data-panchang-location]")?.value, status: document.querySelector("[data-panchang-status]")?.textContent, state: document.querySelector("[data-panchang-status]")?.dataset.state })), syncErrors);
+    throw error;
+  });
   await secondTab.locator("[name=latitude]").fill("11");
   await secondTab.locator("[name=latitude]").dispatchEvent("change");
   assert.equal(await secondTab.evaluate(() => JSON.parse(localStorage.getItem("abp-panchang-settings-v1")).location.id), "meerut");

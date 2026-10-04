@@ -1,4 +1,5 @@
 import { timezoneOffsetForInstant } from "./date-time.mjs";
+import { findCity } from "./settings.mjs";
 
 const cache = new Map();
 let nextSearch = 0;
@@ -24,7 +25,9 @@ export function manualLocation({ latitude, longitude, altitude, timezone }) {
 }
 
 export function locationFromPosition(coords, timezone) {
-  const value = manualLocation({ ...coords, timezone });
+  // GeolocationCoordinates exposes WebIDL getters, not enumerable own fields.
+  // Spreading it drops latitude/longitude in real browsers (plain mocks hid it).
+  const value = manualLocation({ latitude: coords.latitude, longitude: coords.longitude, altitude: coords.altitude, timezone });
   return { ...value, id: "device", name: "Current location (session only)", source: "geolocation", ...(Number.isFinite(coords.accuracy) && coords.accuracy >= 0 ? { accuracy: coords.accuracy } : {}) };
 }
 
@@ -62,6 +65,8 @@ export function attachLocationControls({ root, input, geolocate, timezone, apply
   panel.querySelector("button").addEventListener("click", async () => {
     cancel();
     const query = input.value.trim();
+    const preset = findCity(query);
+    if (preset) { apply(preset); message.textContent = locationDescription(preset); return; }
     if (query.length < 3) { message.textContent = "Enter at least 3 characters, then Search. Built-in presets also work offline."; return; }
     const run = sequence;
     controller = new AbortController();
@@ -106,6 +111,12 @@ export function attachLocationControls({ root, input, geolocate, timezone, apply
       message.textContent = error.message?.startsWith("The search service is busy") ? error.message : "Search unavailable or timed out. Your previous location is unchanged. Use an offline preset or manual coordinates.";
     } finally { clearTimeout(timeout); }
   });
+  const submitLocation = (event) => {
+    if (event.key !== "Enter" || event.isComposing) return;
+    event.preventDefault(); event.stopPropagation();
+    panel.querySelector("[data-location-search]").click();
+  };
+  input.addEventListener("keydown", submitLocation);
   geolocate?.addEventListener("click", () => {
     cancel();
     const run = sequence, zone = timezone();
@@ -128,5 +139,5 @@ export function attachLocationControls({ root, input, geolocate, timezone, apply
     });
     panel.append(button);
   }
-  return { cancel, show: (location) => { message.textContent = locationDescription(location); }, dispose: () => { cancel(); input.removeEventListener("input", edit); root.removeEventListener("input", editCoordinates); } };
+  return { cancel, show: (location) => { message.textContent = locationDescription(location); }, dispose: () => { cancel(); input.removeEventListener("input", edit); input.removeEventListener("keydown", submitLocation); root.removeEventListener("input", editCoordinates); } };
 }

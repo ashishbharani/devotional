@@ -51,7 +51,7 @@ function markup() {
             <label class="eph-check"><input name="modern" type="checkbox"> Include Uranus, Neptune and Pluto separately</label>
             <label class="eph-check"><input name="showLagna" type="checkbox"> Show Lagna and houses</label>
             <label>House system<select name="houseSystem">${options(HOUSE_LABELS)}</select></label>
-            <label>Indian city / town<input name="city" list="eph-cities" autocomplete="off" placeholder="Type a place, then Search; or choose a preset"></label>
+            <label>Indian city / town<input name="city" list="eph-cities" autocomplete="off" placeholder="Type a place, then Enter or Search; or choose a preset"></label>
             <datalist id="eph-cities">${INDIAN_CITIES.map((c) => `<option value="${escape(c.name)}"></option>`).join("")}<option value="New Delhi"></option></datalist>
             <label>Latitude (north +)<input name="latitude" type="number" min="-90" max="90" step="any"></label>
             <label>Longitude (east +)<input name="longitude" type="number" min="-180" max="180" step="any"></label>
@@ -373,7 +373,7 @@ export function initializeEphemeris(root) {
         applyLocation(city);
         return;
       }
-      else get("[data-location-status]").textContent = "Click Search Indian locations and choose a result, or apply manual coordinates. Typing alone keeps the previous calculation location.";
+      else get("[data-location-status]").textContent = "Press Enter or click Search Indian locations and choose a result, or apply manual coordinates. Typing alone keeps the previous calculation location.";
     }
     if (["latitude", "longitude", "altitude"].includes(event.target.name)) {
       control("city").value = "Manual location";

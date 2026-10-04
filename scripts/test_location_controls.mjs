@@ -13,6 +13,16 @@ assert.equal(gps.source, "geolocation");
 assert.equal(gps.altitudeKnown, false);
 assert.equal(gps.accuracy, 8);
 assert.equal(gps.timezoneOffset, 0);
+const browserCoordinates = Object.create({
+  get latitude() { return 28.9845; }, get longitude() { return 77.7064; },
+  get altitude() { return null; }, get accuracy() { return 20; },
+});
+assert.deepEqual(Object.keys(browserCoordinates), [], "real WebIDL coordinates need not have enumerable fields");
+const browserGPS = locationFromPosition(browserCoordinates, "Asia/Kolkata");
+assert.equal(browserGPS.latitude, 28.9845);
+assert.equal(browserGPS.longitude, 77.7064);
+assert.equal(browserGPS.altitudeKnown, false);
+assert.equal(browserGPS.accuracy, 20);
 assert.ok(GEOLOCATION_OPTIONS.enableHighAccuracy);
 const found = searchResultLocation({ osm_id: 123, osm_type: "relation", display_name: "Vrindavan, Uttar Pradesh, India", lat: "27.58", lon: "77.7", address: { country_code: "in" } });
 assert.equal(found.timezone, "Asia/Kolkata");

@@ -2,7 +2,8 @@ import assert from "node:assert/strict";
 
 export async function testLocationWorkflow(browser, base) {
   for (const width of [320, 1440]) {
-    const context = await browser.newContext({ viewport: { width, height: 950 }, serviceWorkers: "block", reducedMotion: "reduce" });
+    const context = await browser.newContext({ viewport: { width, height: 950 }, serviceWorkers: "block", reducedMotion: "reduce",
+      permissions: ["geolocation"], geolocation: { latitude: 28.9845, longitude: 77.7064, accuracy: 20 } });
     const page = await context.newPage();
     const errors = [];
     page.on("pageerror", (error) => errors.push(error.message));
@@ -24,13 +25,13 @@ export async function testLocationWorkflow(browser, base) {
     await ready();
     const input = page.locator("[data-panchang-location]");
     await input.fill("No");
-    await page.locator("[data-location-search]").click();
+    await input.press("Enter");
     assert.match(await page.locator("[data-location-message]").innerText(), /at least 3/);
     assert.equal(requests, 0, "short queries never call the provider");
     await input.fill("Vrindavan");
     await page.waitForTimeout(800);
     assert.equal(requests, 0, "typing never calls the provider");
-    await page.locator("[data-location-search]").click();
+    await input.press("Enter");
     await page.locator("[data-location-results] button").first().waitFor();
     assert.equal(await page.locator("[data-location-results] button").count(), 2, "ambiguous Indian matches shown, foreign results rejected");
     assert.equal(await page.evaluate(async () => (await import('/devotional/assets/panchang/settings.mjs')).loadSettings().location.id), "delhi", "search does not silently select");
@@ -71,6 +72,13 @@ export async function testLocationWorkflow(browser, base) {
     assert.equal(await eph.locator("[name=altitude]").inputValue(), "");
     await eph.locator("[name=showLagna]").check();
     await eph.locator("[name=observerMode]").selectOption("topocentric");
+    // Exercise real GeolocationCoordinates, not just enumerable object mocks.
+    await eph.locator("[data-location]").click();
+    await ephReady(); await ready();
+    assert.equal(await eph.locator("[name=latitude]").inputValue(), "28.9845");
+    assert.equal(await eph.locator("[name=longitude]").inputValue(), "77.7064");
+    assert.equal(await input.inputValue(), "Current location (session only)");
+    assert.deepEqual(await page.evaluate(() => JSON.parse(localStorage.getItem("abp-panchang-settings-v1"))), saved);
     await page.evaluate(() => {
       navigator.geolocation.getCurrentPosition = (success, _, options) => {
         window.testGeoOptions = options;
@@ -102,7 +110,7 @@ export async function testLocationWorkflow(browser, base) {
     await page.evaluate(() => { navigator.geolocation.getCurrentPosition = (success) => { window.lateGPS = success; }; });
     await eph.locator("[data-location]").click();
     await eph.locator("[name=city]").fill("Mumbai, Maharashtra");
-    await eph.locator("[name=city]").dispatchEvent("change");
+    await eph.locator("[name=city]").press("Enter");
     await ephReady(); await ready();
     await page.evaluate(() => window.lateGPS({ coords: { latitude: 1, longitude: 2, altitude: 3, accuracy: 10 } }));
     assert.equal(await eph.locator("[name=latitude]").inputValue(), "19.076");
