@@ -45,6 +45,9 @@ jobs:
           uv run python scripts/check_site.py
           uv run python scripts/test_section_pager.py
           uv run python scripts/check_i18n.py
+          uv run python scripts/check_project_pdfs.py
+      - name: Test official pages, PDFs and responsive footer
+        run: node scripts/test_project_info_browser.mjs
       - name: Test Panchang browser views and mobile layouts
         run: pnpm test:browser
       - name: Test compact navigation, categories, keyboard and search

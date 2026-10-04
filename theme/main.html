@@ -109,3 +109,8 @@
     {% include "partials/abp-pager.html" %}
   </div>
 {% endblock %}
+
+{% block footer %}
+  {% include "partials/abp-project-footer.html" %}
+  {{ super() }}
+{% endblock %}
