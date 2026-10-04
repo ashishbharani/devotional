@@ -326,11 +326,6 @@ body { background: var(--abp-paper); }
 /* ---------- home / cover ---------------------------------------------------- */
 .abp-cover { position: relative; margin: 0 0 1.2rem; border-radius: .5rem; overflow: hidden; box-shadow: 0 6px 22px var(--abp-shadow); border: 2px solid #c99a43; }
 .abp-cover img { display: block; width: 100%; height: auto; }
-.abp-cover__hot { position: absolute; top: 80.6%; height: 12.4%; width: 29.6%; border-radius: .6rem; transition: box-shadow .15s, background .15s; }
-.abp-cover__hot--left { left: 2.1%; }
-.abp-cover__hot--right { left: 68.2%; }
-.abp-cover__hot:hover, .abp-cover__hot:focus-visible { background: rgba(255, 230, 150, .18); box-shadow: 0 0 0 2px #f5d27a, 0 0 22px rgba(255, 210, 110, .8); }
-.abp-cover__hot span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
 .abp-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: .7rem; margin: 0 0 1rem; }
 .abp-stats li {
   text-align: center; padding: .7rem .4rem; border-radius: .5rem;
@@ -592,7 +587,6 @@ button.abp-btn { cursor: pointer; }
   .abp-group__forms, .abp-jump { gap: .45rem; }
   .md-typeset a.abp-catbar { min-height: 56px; }
   .md-typeset a.abp-group__bar { min-height: 48px; align-items: center; }
-  .abp-cover__hot:active { background: rgba(255, 230, 150, .25); box-shadow: 0 0 0 2px #f5d27a; }
   .md-typeset .abp-table .w a { min-height: 32px; align-items: center; }
   .md-typeset .abp-table .w .abp-play { margin-top: 0; }
 }
@@ -786,8 +780,7 @@ button.abp-btn:disabled { opacity: .5; cursor: progress; }
 [data-md-color-scheme="abp-dark"] { --abp-focus: #8ab4f8; --abp-focus-halo: #000; }
 .abp-page :is(a, button, summary, input, select, [tabindex]):focus-visible,
 .md-header :is(a, button, label):focus-visible,
-.abp-a11y-dialog :is(a, button, input, label):focus-visible,
-.abp-cover__hot:focus-visible {
+.abp-a11y-dialog :is(a, button, input, label):focus-visible {
   outline: 3px solid var(--abp-focus) !important;
   outline-offset: 2px;
   box-shadow: 0 0 0 6px var(--abp-focus-halo);
@@ -836,7 +829,7 @@ html.abp-spacing .md-typeset, html.abp-spacing .md-typeset :is(p, li, td, th, a,
 html.abp-spacing .md-typeset p { margin-bottom: 1.6em !important; }
 
 /* ---------- underline all links ---------------------------------------------- */
-html.abp-underline .md-typeset a:not(.abp-btn):not(.abp-catbar):not(.abp-cover__hot) { text-decoration: underline !important; text-underline-offset: .18em; }
+html.abp-underline .md-typeset a:not(.abp-btn):not(.abp-catbar) { text-decoration: underline !important; text-underline-offset: .18em; }
 
 /* ---------- stop animations -------------------------------------------------- */
 html.abp-still *, html.abp-still *::before, html.abp-still *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
@@ -860,7 +853,7 @@ html.abp-hc [data-md-color-scheme="abp-dark"] {
 }
 html.abp-hc .abp-page, html.abp-hc .abp-catbar { --abp-cat: #6b6b6b !important; --abp-cat-ink: #000 !important; --abp-circle-1: transparent; --abp-circle-2: transparent; }
 html.abp-hc [data-md-color-scheme="abp-dark"] :is(.abp-page, .abp-catbar) { --abp-cat: #9a9a9a !important; --abp-cat-ink: #fff !important; }
-html.abp-hc .md-typeset a:not(.abp-btn):not(.abp-catbar):not(.abp-cover__hot) { text-decoration: underline; }
+html.abp-hc .md-typeset a:not(.abp-btn):not(.abp-catbar) { text-decoration: underline; }
 html.abp-hc :is(.abp-btn, .abp-catbar, .abp-group__bar, .abp-groupbar, .abp-formbar, .abp-titlebar, .abp-jump a, .abp-group__forms a, .abp-parts a, .abp-card, .abp-book, .abp-home-index > summary, .abp-directory__letter, .abp-japa__preset, .abp-japa__tap) {
   border: 2px solid var(--abp-ink) !important; box-shadow: none !important;
 }
@@ -968,7 +961,7 @@ html[dir="rtl"] .abp-table :is(td, th), html[dir="rtl"] .abp-titlebar__h { unico
 .abp-stats b, .abp-stats span { display: block; }
 
 /* 1.4.1 links inside text are not identified by colour alone */
-.md-typeset :is(p, li, address, dd, .abp-lede) a:not(.abp-btn):not(.abp-catbar):not(.abp-cover__hot),
+.md-typeset :is(p, li, address, dd, .abp-lede) a:not(.abp-btn):not(.abp-catbar),
 .md-footer-meta a { text-decoration: underline; text-underline-offset: .18em; text-decoration-thickness: from-font; }
 
 /* 2.5.8 target size: at least 24 × 24 CSS px for every small control */
