@@ -155,7 +155,7 @@ try {
     if (shots) await page.screenshot({ path: path.join(shots, `home-${width}.png`), fullPage: true });
     await summary.press("Space");
     await page.waitForFunction(() => document.querySelector("details.abp-home-index > summary[aria-expanded='false']"));
-    for (const label of ["Scriptures & Books Library", "Religious Music"]) {
+    for (const label of ["Scriptures & Books Library", "Devotional Works"]) {
       const existing = page.locator("details.abp-home-index > summary").filter({ hasText: label });
       await existing.press("Enter");
       assert.equal(await existing.evaluate((element) => element.parentElement.open), true);

@@ -71,7 +71,7 @@ COLUMNS = [
 
 I18N_TEXT = {
     "Hindu Scriptures & Books Library": "library",
-    "Religious Music": "index",
+    "Devotional Works": "index",
     "Find a Work": "find",
     "A–Z Work Directory": "directoryTitle",
     "Japa / Devotional Counter": "japaTitle",
@@ -574,7 +574,7 @@ def category_bars(d, prefix=""):
 def page_master(d):
     total = sum(c["works_stated"] for c in d["categories"])
     return (
-        titlebar("Religious Music", f"42 categories · {fmt(total)} works", "abp-titlebar--plum")
+        titlebar("Devotional Works", f"42 categories · {fmt(total)} works", "abp-titlebar--plum")
         + category_bars(d, "../")
     )
 
@@ -748,7 +748,7 @@ def page_home(d):
         f'alt="{SITE_NAME} — a pan-India multilingual devotional reference, collected and compiled by Ashish Bharani">'
         "</picture>\n"
         '<a class="abp-cover__hot abp-cover__hot--left" href="library/" title="Scriptures &amp; Books Library" data-i18n-title="library"><span data-i18n="library">Scriptures &amp; Books Library</span></a>\n'
-        '<a class="abp-cover__hot abp-cover__hot--right" href="master-index/" title="Religious Music" data-i18n-title="index"><span data-i18n="index">Religious Music</span></a>\n'
+        '<a class="abp-cover__hot abp-cover__hot--right" href="master-index/" title="Devotional Works" data-i18n-title="index"><span data-i18n="index">Devotional Works</span></a>\n'
         "</section>\n\n"
         '<ul class="abp-stats" markdown="0" aria-label="The collection in numbers">'
         f'<li><b>{fmt(total)}</b> <span data-i18n="works">works</span></li>'
@@ -772,8 +772,8 @@ def page_home(d):
         + library_content(d)
         + "</details>\n"
         '<details class="abp-home-index" markdown="0">'
-        '<summary><span aria-hidden="true">🕉</span><span data-i18n="index">Religious Music</span></summary>'
-        '<p class="abp-home-index__link"><a href="master-index/" data-i18n="viewFullIndex">View the full Religious Music page</a></p>'
+        '<summary><span aria-hidden="true">🕉</span><span data-i18n="index">Devotional Works</span></summary>'
+        '<p class="abp-home-index__link"><a href="master-index/" data-i18n="viewFullIndex">View the full Devotional Works page</a></p>'
         + category_bars(d)
         + "</details>\n"
         '<nav class="abp-home-utility" markdown="0" aria-label="Tools" data-i18n-aria="tools">'
@@ -1059,7 +1059,7 @@ def on_config(config, **kw):
     add("legend.md", "Legend", "front")
     add("rules.md", "Final Reconciliation Rules Applied", "front")
     add("library.md", "Hindu Scriptures & Books Library", "front")
-    add("master-index.md", "Religious Music", "front")
+    add("master-index.md", "Devotional Works", "front")
     for c in d["categories"]:
         add(f'{c["dir"]}/index.md', f'{c["num"]}. {title_case(c["title"])}', c["num"], cat=c)
         for g in c["merged"]:
@@ -1088,7 +1088,7 @@ def on_config(config, **kw):
         },
         {"Scriptures & Books Library": "library.md"},
         {
-            "Religious Music": [{"All 42 categories": "master-index.md"}]
+            "Devotional Works": [{"All 42 categories": "master-index.md"}]
             + [{f'{c["num"]}. {title_case(c["title"])}': f'{c["dir"]}/index.md'} for c in d["categories"]]
         },
         {

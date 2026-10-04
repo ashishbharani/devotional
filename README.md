@@ -120,7 +120,7 @@ checks itself against the counts printed in the PDF's Integrated Master Index.
 | `/` | Cover page (the two cover buttons are clickable, as in the PDF) |
 | `/foreword/`, `/disclaimer/`, `/legend/`, `/rules/` | Front matter, pp. 2–10 |
 | `/library/` | Hindu Scriptures & Books Library, pp. 11–13 |
-| `/master-index/` | Religious Music directory (the publication's Integrated Master Index), pp. 14–19 |
+| `/master-index/` | Devotional Works directory (the publication's Integrated Master Index), pp. 14–19 |
 | `/categories/NN-…/` | Category sub-index (sections and deity subsections) |
 | `/categories/NN-…/<group>/` (+ `part-N/`) | Works tables, pp. 759–4356 |
 | `/find/` | Search across every work |
