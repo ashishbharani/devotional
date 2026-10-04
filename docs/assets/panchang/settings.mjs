@@ -44,30 +44,77 @@ export const INDIAN_CITIES = Object.freeze([
   { id: "visakhapatnam", name: "Visakhapatnam, Andhra Pradesh", latitude: 17.6868, longitude: 83.2185, altitude: 45, timezone: "Asia/Kolkata", timezoneOffset: 330 },
 ]);
 
-const STORAGE_KEY = "abp-panchang-settings-v1";
+export const STORAGE_KEY = "abp-panchang-settings-v1";
+export const SETTINGS_EVENT = "abp:panchang-settings-change";
+let sessionSettings;
+let sessionOnly = false;
+
+function normalizeSettings(settings) {
+  const location = settings?.location;
+  let valid = location && typeof location.id === "string" && typeof location.name === "string"
+    && Number.isFinite(location.latitude) && Math.abs(location.latitude) <= 90
+    && Number.isFinite(location.longitude) && Math.abs(location.longitude) <= 180
+    && Number.isFinite(location.altitude) && Number.isFinite(location.timezoneOffset);
+  try { new Intl.DateTimeFormat("en", { timeZone: location?.timezone }); }
+  catch (_) { valid = false; }
+  if (typeof location?.timezone !== "string" || !location.timezone) valid = false;
+  return {
+    location: valid ? Object.fromEntries(Object.keys(DEFAULT_LOCATION).map((key) => [key, location[key]])) : { ...DEFAULT_LOCATION },
+    convention: settings?.convention === "purnimanta" ? "purnimanta" : "amanta",
+  };
+}
+
+export function settingsEqual(a, b) {
+  return a?.convention === b?.convention && Object.keys(DEFAULT_LOCATION).every((key) => a?.location?.[key] === b?.location?.[key]);
+}
 
 export function loadSettings() {
+  if (sessionOnly) return normalizeSettings(sessionSettings);
   try {
     const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "null");
-    if (saved?.location && Number.isFinite(saved.location.latitude) && Number.isFinite(saved.location.longitude)) {
-      return { location: saved.location, convention: saved.convention === "purnimanta" ? "purnimanta" : "amanta" };
-    }
+    return normalizeSettings(saved);
   } catch (_) {
     // A blocked or malformed localStorage entry must never stop the page.
   }
-  return { location: { ...DEFAULT_LOCATION }, convention: "amanta" };
+  return normalizeSettings(sessionSettings);
 }
 
 export function saveSettings(settings) {
+  const normalized = normalizeSettings(settings);
+  const previous = loadSettings();
+  sessionSettings = normalized;
   try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(normalized));
+    sessionOnly = false;
   } catch (_) {
+    sessionOnly = true;
     // Preferences simply remain session-only when storage is unavailable.
   }
+  if (!settingsEqual(previous, normalized) && typeof window !== "undefined") {
+    window.dispatchEvent(new CustomEvent(SETTINGS_EVENT, { detail: normalized }));
+  }
+  return normalized;
+}
+
+export function subscribeSettings(listener) {
+  const sameDocument = (event) => listener(normalizeSettings(event.detail));
+  const otherDocument = (event) => {
+    if (event.key !== STORAGE_KEY && event.key !== null) return;
+    try { if (event.storageArea !== localStorage) return; } catch (_) { return; }
+    sessionSettings = undefined;
+    sessionOnly = false;
+    listener(loadSettings());
+  };
+  window.addEventListener(SETTINGS_EVENT, sameDocument);
+  window.addEventListener("storage", otherDocument);
+  return () => {
+    window.removeEventListener(SETTINGS_EVENT, sameDocument);
+    window.removeEventListener("storage", otherDocument);
+  };
 }
 
 export function findCity(value) {
   const needle = String(value || "").trim().toLocaleLowerCase();
-  return INDIAN_CITIES.find((city) => city.name.toLocaleLowerCase() === needle || city.id === needle) || null;
+  return INDIAN_CITIES.find((city) => city.name.toLocaleLowerCase() === needle || city.id === needle || needle === "new delhi" && city.id === "delhi") || null;
 }
 

@@ -9,7 +9,7 @@ default location is Delhi, India, and preferences are stored in
 
 - `hooks/generate.py` emits the homepage card and the three generated tool pages.
 - `docs/javascripts/abp-panchang.js` is the small Material instant-navigation loader.
-- `docs/assets/panchang/settings.mjs` owns locations and saved preferences.
+- `docs/assets/panchang/settings.mjs` owns the canonical site location and saved preferences under `abp-panchang-settings-v1`. City presets synchronize the complete coordinates, elevation and timezone across homepage/daily/monthly Panchang, the converter and Ephemeris. `subscribeSettings()` listens to same-document custom events and cross-tab storage events; removed views unsubscribe. Malformed storage falls back to Delhi. Location changes clear Panchang caches and invalidate older asynchronous runs.
 - `docs/assets/panchang/date-time.mjs` is the canonical civil-date, IANA-timezone and Hindu-day utility layer.
 - `docs/assets/panchang/panchang-adapter.mjs` validates and normalizes the bundled engine into daily/monthly models.
 - `docs/assets/panchang/festival-rules.mjs` separates festival policy from astronomical calculations.
