@@ -9,6 +9,8 @@ const require = createRequire(import.meta.url);
 const { chromium } = require("playwright");
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const site = path.resolve(process.env.PANCHANG_TEST_SITE || path.join(root, "site"));
+const brandName = "Hindu Devotional Collections";
+const brandWidths = [320, 360, 375, 390, 412, 768, 1024, 1440];
 const shots = process.env.PANCHANG_SCREENSHOTS;
 if (shots) await mkdir(shots, { recursive: true });
 const mime = { ".html": "text/html", ".js": "text/javascript", ".mjs": "text/javascript", ".css": "text/css", ".json": "application/json", ".svg": "image/svg+xml", ".png": "image/png", ".webp": "image/webp", ".woff2": "font/woff2", ".webmanifest": "application/manifest+json" };
@@ -57,6 +59,69 @@ if (process.env.PANCHANG_BASELINE) {
   process.exit(0);
 }
 try {
+  for (const width of brandWidths) {
+    const context = await browser.newContext({ viewport: { width, height: 950 }, reducedMotion: "reduce", serviceWorkers: "block" });
+    const page = await context.newPage();
+    await page.route("https://fonts.googleapis.com/**", (route) => route.fulfill({ contentType: "text/css", body: "" }));
+    await page.goto(base);
+    assert.equal(await page.title(), brandName, `${width}px: homepage browser title`);
+    assert.equal((await page.locator(".md-header__topic").first().innerText()).trim(), brandName, `${width}px: header brand text`);
+    assert.ok(await page.locator(".md-header__title").isVisible(), `${width}px: header brand remains visible`);
+    const brandBox = await page.locator(".md-header__title").boundingBox();
+    assert.ok(brandBox && brandBox.x >= -1 && brandBox.x + brandBox.width <= width + 1, `${width}px: header brand stays inside the viewport`);
+    assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), `${width}px: branding creates no horizontal overflow`);
+    assert.equal(await page.locator('meta[property="og:site_name"]').getAttribute("content"), brandName, `${width}px: Open Graph site name`);
+    assert.equal(await page.locator('meta[name="twitter:title"]').getAttribute("content"), brandName, `${width}px: social title`);
+    const schema = JSON.parse(await page.locator('script[type="application/ld+json"]').textContent());
+    assert.equal(schema.isPartOf.name, brandName, `${width}px: structured-data site name`);
+    await page.evaluate(() => scrollTo(0, 400));
+    assert.ok(await page.locator(".md-header__topic").first().isVisible(), `${width}px: brand remains visible after scrolling`);
+    await page.evaluate(() => scrollTo(0, 0));
+    if (width === 320 || width === 1440) {
+      await page.goto(base + "find/");
+      await page.locator("#abp-q").fill("Hanuman Chalisa");
+      await page.waitForFunction(() => document.querySelectorAll("#abp-results tr").length > 0);
+      assert.ok(await page.locator("#abp-results").innerText().then((text) => text.includes("Hanuman Chalisa")), "work search remains usable");
+      await page.locator("#abp-results .where a").first().click();
+      await page.locator("[data-work-id]").first().waitFor();
+      assert.ok((await page.title()).endsWith(" | " + brandName), "section navigation keeps title convention");
+      for (const route of ["foreword/", "disclaimer/", "library/", "master-index/", "offline/", "tools/indian-ephemeris/"]) {
+        await page.goto(base + route, { waitUntil: "domcontentloaded" });
+        assert.ok((await page.title()).endsWith(" | " + brandName), route + ": browser title");
+      }
+      await page.goto(base);
+      if (width === 320) {
+        await page.locator('.md-header label[for="__drawer"]').click();
+        assert.ok(await page.locator("#__drawer").isChecked(), "mobile navigation opens");
+        await page.locator('.md-overlay[for="__drawer"]').click({ position: { x: 310, y: 300 } });
+      }
+    }
+    if (shots) await page.screenshot({ path: path.join(shots, `branding-home-${width}.png`), fullPage: true });
+    console.log(`PASS branding viewport ${width}: title, header, metadata, structured data, layout`);
+    await context.close();
+  }
+  if (process.env.BRANDING_ONLY) {
+    const context = await browser.newContext({ serviceWorkers: "allow" });
+    const page = await context.newPage();
+    await page.route("https://fonts.googleapis.com/**", (route) => route.fulfill({ contentType: "text/css", body: "" }));
+    await page.goto(base);
+    const manifest = await page.evaluate(async () => (await fetch("manifest.webmanifest")).json());
+    assert.equal(manifest.name, brandName);
+    assert.equal(manifest.short_name, "HDC");
+    await page.evaluate(() => navigator.serviceWorker.ready);
+    await page.waitForFunction(() => navigator.serviceWorker.controller);
+    await context.setOffline(true);
+    await page.reload();
+    assert.equal(await page.title(), brandName, "cached homepage keeps canonical branding offline");
+    await page.goto(base + "offline/");
+    assert.equal(await page.title(), "You are offline | " + brandName);
+    await context.close();
+    console.log("PASS PWA manifest, real service worker, cached homepage and offline branding");
+    console.log("Branding regression suite passed at all eight requested widths");
+    await browser.close();
+    await new Promise((resolve) => server.close(resolve));
+    process.exit(0);
+  }
   for (const width of (process.env.PANCHANG_PWA_ONLY ? [] : [320, 360, 390, 768, 1440])) {
     const context = await browser.newContext({ viewport: { width, height: 950 }, timezoneId: "America/New_York", reducedMotion: "reduce", serviceWorkers: "block" });
     const page = await context.newPage();
@@ -219,7 +284,7 @@ try {
   assert.deepEqual(await moonText(offlinePage), ["11:27 PM", "01:09 PM"]);
   assert.ok(await offlinePage.evaluate(async () => (await (await fetch("../assets/panchang/panchang-engine.mjs")).text()).includes("export const astronomy")), "offline engine is new, not obsolete");
   await offline.close();
-  console.log(`Browser regression suite passed: ${passed} viewport groups, initialization failure, denied location, themes and real PWA migration/offline calculation`);
+  console.log(`Browser regression suite passed: ${brandWidths.length} branding widths, ${passed} Panchang viewport groups, initialization failure, denied location, themes and real PWA migration/offline calculation`);
 } finally {
   await browser.close();
   await new Promise((resolve) => server.close(resolve));

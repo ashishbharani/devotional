@@ -1,6 +1,6 @@
 {
-  "name": "Hindu Devotional Collection",
-  "short_name": "Hindu Devotional",
+  "name": "Hindu Devotional Collections",
+  "short_name": "HDC",
   "description": "A Pan-India multilingual devotional reference.",
   "id": "/devotional/",
   "start_url": "/devotional/",
