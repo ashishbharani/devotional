@@ -531,18 +531,31 @@ def page_rules(d):
     )
 
 
+# Verified reader destinations override links without editing the source catalogue.
+# ValmikiRamayan.net provides six Kandas; BharatKosha includes Hindi text and scans.
+LIBRARY_LINK_OVERRIDES = {
+    "Valmiki Ramayana": {
+        "open": "https://www.valmikiramayan.net/",
+        "english": "https://www.valmikiramayan.net/",
+        "hindi": "https://bharatkosha.org/hi/granth/shrimad-valmiki-ramayana-gita-press",
+    },
+}
+
+
 def library_content(d):
     out = []
     for shelf in d["library"]:
         out.append(f'<h2 class="abp-shelf">{esc(shelf["subtitle"].title().replace("•", "·"))}</h2>\n')
         cards = []
         for b in shelf["books"]:
+            links = {**b["links"], **LIBRARY_LINK_OVERRIDES.get(b["title"], {})}
+            rel_attr = "noopener noreferrer" if b["title"] in LIBRARY_LINK_OVERRIDES else "noopener"
             names = {"open": "Open {t}", "english": "{t} in English", "hindi": "{t} in Hindi", "listen": "Listen to {t} on YouTube"}
             btns = "".join(
-                f'<a class="abp-btn" href="{esc(b["links"][k])}" target="_blank" rel="noopener" '
+                f'<a class="abp-btn" href="{esc(links[k])}" target="_blank" rel="{rel_attr}" '
                 f'aria-label="{esc(names[k].format(t=b["title"]))} (opens in a new tab)">{k.upper()}</a>'
                 for k in ("open", "english", "hindi", "listen")
-                if k in b["links"]
+                if k in links
             )
             cards.append(
                 f'<div class="abp-book"><div class="abp-book__cover" aria-hidden="true" style="--cover:{b["cover"]}">'

@@ -43,6 +43,22 @@ def main() -> int:
         require(page.is_file(), f"missing route /{route}/", errors)
 
     home = (site / "index.html").read_text(encoding="utf-8")
+    # Both hosts share the library renderer: catch stale or mismatched readers.
+    for label, page_html in (("homepage", home), ("library", (site / "library/index.html").read_text(encoding="utf-8"))):
+        cards = re.findall(r'<h3>Valmiki Ramayana</h3><div class="abp-book__btns">(.*?)</div>', page_html, re.S)
+        require(len(cards) == 1, f"{label}: expected exactly one Valmiki Ramayana card", errors)
+        if not cards:
+            continue
+        expected = {
+            "OPEN": "https://www.valmikiramayan.net/",
+            "ENGLISH": "https://www.valmikiramayan.net/",
+            "HINDI": "https://bharatkosha.org/hi/granth/shrimad-valmiki-ramayana-gita-press",
+            "LISTEN": "https://www.youtube.com/results?search_query=Valmiki+Ramayana+recitation",
+        }
+        for button, url in expected.items():
+            require(re.search(r'<a[^>]*href="' + re.escape(url) + r'"[^>]*>' + button + r'</a>', cards[0]) is not None,
+                    f"{label}: incorrect Valmiki {button} destination", errors)
+        require(cards[0].count('rel="noopener noreferrer"') == 4, f"{label}: unsafe external Valmiki reader links", errors)
     require(SITE_NAME in home, "canonical site branding is missing from the homepage", errors)
     require(f"<title>{SITE_NAME}</title>" in home, "homepage browser title is incorrect", errors)
     require('<meta name="author" content="Ashish Bharani">' in home, "public author metadata is incorrect", errors)
