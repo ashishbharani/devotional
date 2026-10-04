@@ -15,6 +15,7 @@ const shots = process.env.PANCHANG_SCREENSHOTS;
 if (shots) await mkdir(shots, { recursive: true });
 const mime = { ".html": "text/html", ".js": "text/javascript", ".mjs": "text/javascript", ".css": "text/css", ".json": "application/json", ".svg": "image/svg+xml", ".png": "image/png", ".webp": "image/webp", ".woff2": "font/woff2", ".webmanifest": "application/manifest+json" };
 let legacyWorker = false;
+mime[".wasm"] = "application/wasm";
 const server = createServer(async (request, response) => {
   try {
     const url = new URL(request.url, "http://localhost");
@@ -247,6 +248,99 @@ try {
   await checkLayout(deniedPage, "daily high contrast");
   await denied.close();
   console.log("PASS denied location and light/dark/high-contrast layouts");
+
+  // One preset is canonical across navigation, reloads, components and tabs.
+  const unified = await browser.newContext({ serviceWorkers: "block" });
+  const unifiedPage = await unified.newPage();
+  const syncErrors = [];
+  unifiedPage.on("pageerror", (error) => syncErrors.push(error.message));
+  unifiedPage.on("console", (message) => { if (message.type() === "error") syncErrors.push(message.text()); });
+  await unifiedPage.clock.setFixedTime(new Date("2026-10-03T06:00:00Z"));
+  await unifiedPage.goto(base);
+  await ready(unifiedPage);
+  assert.equal(await unifiedPage.locator("[data-panchang-location]").inputValue(), "Delhi, India");
+  await unifiedPage.locator("details.abp-home-index > summary").filter({ hasText: "TODAY PANCHANG" }).click();
+  await unifiedPage.locator("[data-panchang-location]").fill("Mumbai, Maharashtra");
+  await unifiedPage.waitForFunction(() => document.querySelector("[data-panchang-field='location']")?.textContent.includes("Mumbai") && document.querySelector("[data-panchang-status]")?.dataset.state === "ready");
+  await unifiedPage.goto(base + "hindu-calendar/");
+  await ready(unifiedPage);
+  assert.equal(await unifiedPage.locator("[data-panchang-location]").inputValue(), "Mumbai, Maharashtra");
+  assert.deepEqual(await unifiedPage.evaluate(async () => {
+    const settings = await import(new URL("assets/panchang/settings.mjs", location.origin + "/devotional/"));
+    const client = await import(new URL("assets/panchang/panchang-client.mjs", location.origin + "/devotional/"));
+    const day = await client.calculatePanchangDay("2026-10-03", settings.loadSettings());
+    const month = await client.calculatePanchangMonth(2026, 10, settings.loadSettings());
+    const sample = month.find((entry) => entry.date === day.date);
+    return [sample.moonrise, sample.moonset].map((value) => +new Date(value));
+  }), await unifiedPage.evaluate(async () => {
+    const settings = await import(new URL("assets/panchang/settings.mjs", location.origin + "/devotional/"));
+    const client = await import(new URL("assets/panchang/panchang-client.mjs", location.origin + "/devotional/"));
+    const day = await client.calculatePanchangDay("2026-10-03", settings.loadSettings());
+    return [day.moonrise, day.moonset].map((value) => +new Date(value));
+  }));
+  await unifiedPage.goto(base + "tools/indian-ephemeris/");
+  const eph = (name) => unifiedPage.locator(`[name='${name}']`);
+  await unifiedPage.waitForFunction(() => !document.querySelector("[name=city]")?.disabled);
+  await unifiedPage.locator(".eph-advanced > summary").click();
+  for (const [name, value] of Object.entries({ city: "Mumbai, Maharashtra", latitude: "19.076", longitude: "72.8777", altitude: "14", timezone: "Asia/Kolkata" })) assert.equal(await eph(name).inputValue(), value);
+  await eph("city").fill("Meerut, Uttar Pradesh");
+  await eph("city").dispatchEvent("change");
+  await unifiedPage.waitForFunction(() => !document.querySelector("[name=city]")?.disabled);
+  for (const [name, value] of Object.entries({ city: "Meerut, Uttar Pradesh", latitude: "28.9845", longitude: "77.7064", altitude: "224", timezone: "Asia/Kolkata" })) assert.equal(await eph(name).inputValue(), value);
+  await unifiedPage.locator("[data-mode=month]").click();
+  assert.equal(await eph("city").inputValue(), "Meerut, Uttar Pradesh");
+  await unifiedPage.goto(base + "panchang/?date=2026-10-03");
+  await ready(unifiedPage);
+  assert.equal(await unifiedPage.locator("[data-panchang-location]").inputValue(), "Meerut, Uttar Pradesh");
+  assert.equal(await unifiedPage.locator("[data-panchang-timezone]").inputValue(), "Asia/Kolkata");
+  await unifiedPage.goto(base + "hindu-calendar/");
+  await ready(unifiedPage);
+  await unifiedPage.reload();
+  await ready(unifiedPage);
+  assert.equal(await unifiedPage.locator("[data-panchang-location]").inputValue(), "Meerut, Uttar Pradesh");
+  const secondTab = await unified.newPage();
+  secondTab.on("pageerror", (error) => syncErrors.push(error.message));
+  secondTab.on("console", (message) => { if (message.type() === "error") syncErrors.push(message.text()); });
+  await secondTab.goto(base + "tools/indian-ephemeris/");
+  await secondTab.waitForFunction(() => !document.querySelector("[name=city]")?.disabled);
+  await unifiedPage.locator("[data-panchang-location]").fill("Mumbai, Maharashtra");
+  await secondTab.waitForFunction(() => document.querySelector("[name=city]")?.value === "Mumbai, Maharashtra" && !document.querySelector("[name=city]").disabled);
+  assert.equal(await secondTab.locator("[name=latitude]").inputValue(), "19.076");
+  await secondTab.goto(base + "tools/indian-ephemeris/?lat=10&lon=20&alt=30&timezone=UTC");
+  await secondTab.waitForFunction(() => !document.querySelector("[name=city]")?.disabled);
+  await secondTab.locator(".eph-advanced > summary").click();
+  assert.equal(await secondTab.locator("[name=latitude]").inputValue(), "10");
+  assert.equal(await secondTab.locator("[name=timezone]").inputValue(), "UTC");
+  assert.equal(await secondTab.evaluate(() => JSON.parse(localStorage.getItem("abp-panchang-settings-v1")).location.id), "mumbai");
+  await secondTab.evaluate(() => {
+    navigator.geolocation.getCurrentPosition = (success) => success({ coords: { latitude: 12, longitude: 34, altitude: 56, accuracy: 10 } });
+  });
+  await secondTab.locator("[data-location]").click();
+  assert.equal(await secondTab.locator("[name=city]").inputValue(), "Current location (session only)");
+  assert.equal(await secondTab.evaluate(() => JSON.parse(localStorage.getItem("abp-panchang-settings-v1")).location.id), "mumbai");
+  await secondTab.evaluate(async () => {
+    const settings = await import(new URL("assets/panchang/settings.mjs", location.origin + "/devotional/"));
+    settings.saveSettings({ ...settings.loadSettings(), location: settings.findCity("meerut") });
+  });
+  await secondTab.waitForFunction(() => document.querySelector("[name=city]")?.value === "Meerut, Uttar Pradesh" && !document.querySelector("[name=city]").disabled);
+  await unifiedPage.waitForFunction(() => document.querySelector("[data-panchang-location]")?.value === "Meerut, Uttar Pradesh" && document.querySelector("[data-panchang-status]")?.dataset.state === "ready");
+  await secondTab.locator("[name=latitude]").fill("11");
+  await secondTab.locator("[name=latitude]").dispatchEvent("change");
+  assert.equal(await secondTab.evaluate(() => JSON.parse(localStorage.getItem("abp-panchang-settings-v1")).location.id), "meerut");
+  await secondTab.locator("[data-mode=month]").click();
+  await secondTab.locator("[data-calculate]").click();
+  await secondTab.evaluate(async () => {
+    const settings = await import(new URL("assets/panchang/settings.mjs", location.origin + "/devotional/"));
+    settings.saveSettings({ ...settings.loadSettings(), location: settings.findCity("mumbai") });
+  });
+  await secondTab.waitForFunction(() => !document.querySelector("[name=city]")?.disabled, null, { timeout: 120000 });
+  assert.equal(await secondTab.locator("[name=city]").inputValue(), "Mumbai, Maharashtra");
+  assert.equal(await secondTab.locator("[name=latitude]").inputValue(), "19.076");
+  await secondTab.locator(".eph-details > summary").click();
+  assert.match(await secondTab.locator("[data-details]").innerText(), /19\.076/, await secondTab.locator("[data-status]").innerText());
+  assert.deepEqual(syncErrors, []);
+  await unified.close();
+  console.log("PASS unified city: homepage, daily, monthly, ephemeris, persistence, cross-tab and manual/share privacy");
 
   // Simulate an already-installed older deployment, then update the real SW.
   // Its activation must clear obsolete modules and reload in-memory calculations.

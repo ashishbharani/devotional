@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import "./test_location_settings.mjs";
 import { readFile } from "node:fs/promises";
 import { INDIAN_CITIES } from "../docs/assets/panchang/settings.mjs";
 import {
