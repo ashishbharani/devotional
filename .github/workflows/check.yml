@@ -39,6 +39,15 @@ jobs:
         run: pnpm test:browser
         env:
           PANCHANG_SCREENSHOTS: work/panchang-browser
+      - name: Test feedback UI, context, accessibility and mocked submissions
+        run: node scripts/test_feedback_browser.mjs
+        env:
+          FEEDBACK_SCREENSHOTS: work/feedback-browser
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: feedback-browser-screenshots
+          path: work/feedback-browser
       - uses: actions/upload-artifact@v4
         if: always()
         with:

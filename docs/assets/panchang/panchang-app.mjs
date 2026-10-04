@@ -188,8 +188,9 @@ function renderCommon(root, result) {
   setText(root, "festival", events.join("; ") || "No major observance identified in the current ruleset.");
   setText(root, "sunrise-sunset", `${shortTime(result.sunrise, root._panchangSettings.location)} / ${shortTime(result.sunset, root._panchangSettings.location)}`);
   for (const field of ["sunrise", "sunset", "moonrise", "moonset"]) {
-    const label = field === "moonrise" ? "Moonrise" : "Moonset";
-    setText(root, field, result[field] ? shortTime(result[field], root._panchangSettings.location) : noCivilEvent(label));
+    setText(root, field, field.startsWith("moon")
+      ? formatMoonEvent(result[field], field === "moonrise" ? "Moonrise" : "Moonset", result.location, result.date)
+      : shortTime(result[field], root._panchangSettings.location));
   }
   setText(root, "convention", root._panchangSettings.convention === "purnimanta" ? "Purnimanta" : "Amanta");
   setText(root, "yoga", result.sunriseYoga.name);
