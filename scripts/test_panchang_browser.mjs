@@ -91,9 +91,9 @@ try {
       }
       await page.goto(base);
       if (width === 320) {
-        await page.locator('.md-header label[for="__drawer"]').click();
-        assert.ok(await page.locator("#__drawer").isChecked(), "mobile navigation opens");
-        await page.locator('.md-overlay[for="__drawer"]').click({ position: { x: 310, y: 300 } });
+        await page.locator('.abp-menu-toggle').click();
+        assert.equal(await page.locator('.abp-menu-toggle').getAttribute('aria-expanded'), 'true', "mobile navigation opens");
+        await page.locator('.abp-menu-close').click();
       }
     }
     if (shots) await page.screenshot({ path: path.join(shots, `branding-home-${width}.png`), fullPage: true });

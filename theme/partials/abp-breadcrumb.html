@@ -1,4 +1,6 @@
 <nav class="abp-crumbs" aria-label="Breadcrumb">
+  <a href="{{ nav.homepage.url | url }}">Home</a>
+  <span aria-hidden="true">›</span>
   <a href="{{ base_url }}/master-index/" data-i18n="index">Devotional Works</a>
   <span aria-hidden="true">›</span>
   {%- if page.url.rstrip('/') ~ '/' == page.meta.abp_category_url %}

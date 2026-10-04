@@ -183,7 +183,7 @@ try {
     await floating.waitFor();
     assert.equal(await floating.count(), 1);
   }
-  assert.equal(await page.locator(".md-nav a[href$='/tools/feedback/']").count() > 0, true);
+  assert.equal(await page.locator("#abp-navigation a[href$='/tools/feedback/']").count() > 0, true);
   passed("book context, Tools auto-open, repeated Material instant navigation and single floating action");
   await page.goto(base); await open();
   for (const width of [320, 360, 390, 768, 1440]) {
