@@ -54,24 +54,39 @@ function normalizeSettings(settings) {
   let valid = location && typeof location.id === "string" && typeof location.name === "string"
     && Number.isFinite(location.latitude) && Math.abs(location.latitude) <= 90
     && Number.isFinite(location.longitude) && Math.abs(location.longitude) <= 180
-    && Number.isFinite(location.altitude) && Number.isFinite(location.timezoneOffset);
+    && (location.altitude === null || Number.isFinite(location.altitude) && location.altitude >= -500 && location.altitude <= 10000)
+    && Number.isFinite(location.timezoneOffset) && Math.abs(location.timezoneOffset) <= 840;
   try { new Intl.DateTimeFormat("en", { timeZone: location?.timezone }); }
   catch (_) { valid = false; }
   if (typeof location?.timezone !== "string" || !location.timezone) valid = false;
+  const normalized = valid ? Object.fromEntries(Object.keys(DEFAULT_LOCATION).map((key) => [key, location[key]])) : { ...DEFAULT_LOCATION };
+  if (valid) {
+    if (location.altitude === null || location.altitudeKnown === false) { normalized.altitude = 0; normalized.altitudeKnown = false; }
+    else if (location.altitudeKnown === true) normalized.altitudeKnown = true;
+    if (["search", "geolocation", "manual"].includes(location.source)) normalized.source = location.source;
+    if (Number.isFinite(location.accuracy) && location.accuracy >= 0) normalized.accuracy = location.accuracy;
+  }
   return {
-    location: valid ? Object.fromEntries(Object.keys(DEFAULT_LOCATION).map((key) => [key, location[key]])) : { ...DEFAULT_LOCATION },
+    location: normalized,
     convention: settings?.convention === "purnimanta" ? "purnimanta" : "amanta",
   };
 }
 
 export function settingsEqual(a, b) {
-  return a?.convention === b?.convention && Object.keys(DEFAULT_LOCATION).every((key) => a?.location?.[key] === b?.location?.[key]);
+  return a?.convention === b?.convention && [...Object.keys(DEFAULT_LOCATION), "source", "altitudeKnown", "accuracy"].every((key) => a?.location?.[key] === b?.location?.[key]);
 }
 
 export function loadSettings() {
   if (sessionOnly) return normalizeSettings(sessionSettings);
   try {
     const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "null");
+    // Older Panchang versions persisted device coordinates. Remove that legacy
+    // precision on first load; device/manual selections now live only in memory.
+    if (saved?.location?.id === "device" || ["geolocation", "manual"].includes(saved?.location?.source)) {
+      const safe = normalizeSettings({ ...saved, location: DEFAULT_LOCATION });
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(safe));
+      return safe;
+    }
     return normalizeSettings(saved);
   } catch (_) {
     // A blocked or malformed localStorage entry must never stop the page.
@@ -79,11 +94,13 @@ export function loadSettings() {
   return normalizeSettings(sessionSettings);
 }
 
-export function saveSettings(settings) {
+export function saveSettings(settings, { persist = true } = {}) {
   const normalized = normalizeSettings(settings);
   const previous = loadSettings();
   sessionSettings = normalized;
-  try {
+  if (!persist || ["geolocation", "manual"].includes(normalized.location.source)) {
+    sessionOnly = true;
+  } else try {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(normalized));
     sessionOnly = false;
   } catch (_) {

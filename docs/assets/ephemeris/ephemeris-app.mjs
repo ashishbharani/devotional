@@ -3,6 +3,7 @@ import { INDIAN_CITIES, findCity, loadSettings, saveSettings, subscribeSettings,
 import { civilForInstant, localCivilTimeToUTC, formatOffset, DEFAULT_TIMEZONE } from "./time-conversion.mjs";
 import { formatAngle, RASHIS } from "./zodiac.mjs";
 import { exportCSV, downloadCSV } from "./csv-export.mjs";
+import { attachLocationControls, locationDescription } from "../panchang/location-controls.mjs";
 
 const PREF_KEY = "abp-ephemeris-preferences-v1";
 const AYANAMSHA_LABELS = { lahiri: "Lahiri (Chitrapaksha)", raman: "Raman", krishnamurti: "Krishnamurti", yukteshwar: "Yukteshwar", fagan: "Fagan/Bradley", tropical: "Tropical / Sayana (comparison)" };
@@ -50,13 +51,13 @@ function markup() {
             <label class="eph-check"><input name="modern" type="checkbox"> Include Uranus, Neptune and Pluto separately</label>
             <label class="eph-check"><input name="showLagna" type="checkbox"> Show Lagna and houses</label>
             <label>House system<select name="houseSystem">${options(HOUSE_LABELS)}</select></label>
-            <label>Indian city / town<input name="city" list="eph-cities" autocomplete="off" placeholder="Search city presets"></label>
+            <label>Indian city / town<input name="city" list="eph-cities" autocomplete="off" placeholder="Type a place, then Search; or choose a preset"></label>
             <datalist id="eph-cities">${INDIAN_CITIES.map((c) => `<option value="${escape(c.name)}"></option>`).join("")}<option value="New Delhi"></option></datalist>
             <label>Latitude (north +)<input name="latitude" type="number" min="-90" max="90" step="any"></label>
             <label>Longitude (east +)<input name="longitude" type="number" min="-180" max="180" step="any"></label>
             <label>Elevation (metres)<input name="altitude" type="number" min="-500" max="10000" step="any"></label>
             <button class="abp-btn" type="button" data-location>📍 Use Current Location</button>
-            <p class="eph-hint" data-location-status>City presets are approximate central coordinates, not an exact birth location. Set precise coordinates for Lagna or topocentric work.</p>
+            <p class="eph-hint" role="status" aria-live="polite" data-location-status>City presets are approximate central coordinates, not an exact birth location. Set precise coordinates for Lagna or topocentric work.</p>
             <label class="eph-check"><input name="manual" type="checkbox"> Manually specify historical UTC offset</label>
             <label>Historical offset (±HH:MM[:SS])<input name="manualOffset" value="+05:30" pattern="[+-][0-9]{2}:[0-9]{2}(:[0-9]{2})?" disabled></label>
           </div>
@@ -137,6 +138,7 @@ export function initializeEphemeris(root) {
   let generation = 0;
   let restoreControls = () => {};
   let canonical = loadSettings();
+  let activeLocationName = canonical.location.name;
 
   function invalidate() {
     generation += 1;
@@ -167,21 +169,22 @@ export function initializeEphemeris(root) {
     control("month").value = p.date.slice(0, 7);
   }
   function setCity(city) {
+    activeLocationName = city.name;
     control("city").value = city.name;
     control("latitude").value = city.latitude;
     control("longitude").value = city.longitude;
-    control("altitude").value = city.altitude;
+    control("altitude").value = city.altitudeKnown === false ? "" : city.altitude;
     control("timezone").value = city.timezone;
     control("manual").checked = false;
     control("manualOffset").disabled = true;
-    get("[data-location-status]").textContent = `${city.name} · approximate city-centre preset · ${city.latitude}° N, ${city.longitude}° E · elevation ${city.altitude} m · ${city.timezone}. Refine coordinates for a specific location.`;
+    get("[data-location-status]").textContent = locationDescription(city);
   }
   function settings() {
     const numeric = (key) => control(key).value.trim() === "" ? null : Number(control(key).value);
     return { ayanamsha: control("ayanamsha").value, nodeMode: control("nodeMode").value,
       observerMode: control("observerMode").value, modern: control("modern").checked,
       showLagna: mode !== "month" && control("showLagna").checked, houseSystem: control("houseSystem").value,
-      latitude: numeric("latitude"), longitude: numeric("longitude"), altitude: numeric("altitude") };
+      latitude: numeric("latitude"), longitude: numeric("longitude"), altitude: numeric("altitude") ?? 0 };
   }
   function selectMode(value, focus = false) {
     mode = value;
@@ -276,6 +279,10 @@ export function initializeEphemeris(root) {
 
   async function calculate() {
     if (busy || !form.reportValidity()) return;
+    if (control("city").value.trim() !== activeLocationName) {
+      setStatus("Choose a search result or preset, or explicitly apply manual coordinates before calculating for a new place name.", "error");
+      return;
+    }
     const run = ++generation;
     discardResults(); busy = true;
     // Freeze controls while the worker calculates so exports cannot describe a
@@ -336,8 +343,25 @@ export function initializeEphemeris(root) {
   if (query.get("lagna") === "1") control("showLagna").checked = true;
   if (query.has("houses")) control("houseSystem").value = query.get("houses");
   if (query.get("modern") === "1") control("modern").checked = true;
-  if (query.has("lat") || query.has("lon")) control("city").value = "Shared manual location";
+  if (query.has("lat") || query.has("lon")) {
+    control("city").value = "Shared manual location"; activeLocationName = control("city").value;
+    if (!query.has("alt")) control("altitude").value = "";
+  }
   selectMode(query.has("date") ? "date" : "current");
+  if (query.has("lat") || query.has("lon")) get("[data-location-status]").textContent = "Shared URL coordinates are a local override, not a saved site location. Blank elevation uses a 0 m neutral fallback.";
+  const applyLocation = (place) => {
+    locationControls.cancel();
+    invalidate();
+    setCity(place);
+    canonical = { ...loadSettings(), location: place };
+    canonical = saveSettings(canonical);
+    locationControls.show(canonical.location);
+    calculate();
+  };
+  const locationControls = attachLocationControls({ root, input: control("city"),
+    geolocate: get("[data-location]"), timezone: () => control("timezone").value.trim(), apply: applyLocation,
+    manual: () => Object.fromEntries(["latitude", "longitude", "altitude"].map((key) => [key, control(key).value])),
+  });
 
   form.addEventListener("submit", (event) => { event.preventDefault(); calculate(); });
   form.addEventListener("change", (event) => {
@@ -346,18 +370,15 @@ export function initializeEphemeris(root) {
     if (event.target.name === "city") {
       const city = findCity(control("city").value);
       if (city) {
-        invalidate();
-        setCity(city);
-        canonical = { ...loadSettings(), location: { ...city } };
-        saveSettings(canonical);
-        calculate();
+        applyLocation(city);
         return;
       }
-      else get("[data-location-status]").textContent = "No matching city preset. Enter verified latitude, longitude and elevation manually; typing a city name does not change the coordinates.";
+      else get("[data-location-status]").textContent = "Click Search Indian locations and choose a result, or apply manual coordinates. Typing alone keeps the previous calculation location.";
     }
     if (["latitude", "longitude", "altitude"].includes(event.target.name)) {
       control("city").value = "Manual location";
-      get("[data-location-status]").textContent = "Manual coordinates. Timezone is selected independently; longitude is east-positive.";
+      activeLocationName = "Manual location";
+      get("[data-location-status]").textContent = "Manual local override. Apply manual coordinates across site to share for this session; timezone is selected independently. Blank elevation uses a 0 m neutral fallback.";
     }
     discardResults(); setStatus("Settings changed. Calculate to update results.");
   });
@@ -378,20 +399,6 @@ export function initializeEphemeris(root) {
   get("[data-reset]").addEventListener("click", () => {
     form.reset(); control("manualOffset").disabled = true;
     setCity(loadSettings().location); setNow(); selectMode("current"); savePreferences(); calculate();
-  });
-  get("[data-location]").addEventListener("click", () => {
-    if (!navigator.geolocation) { get("[data-location-status]").textContent = "Geolocation unavailable. Choose a city or enter coordinates; geocentric calculation still works."; return; }
-    get("[data-location-status]").textContent = "Requesting location after your button press…";
-    navigator.geolocation.getCurrentPosition(({ coords }) => {
-      if (!root.isConnected) return;
-      invalidate();
-      control("latitude").value = coords.latitude;
-      control("longitude").value = coords.longitude;
-      control("altitude").value = Number.isFinite(coords.altitude) ? coords.altitude : "";
-      control("city").value = "Current location (session only)";
-      discardResults();
-      get("[data-location-status]").textContent = `Location obtained (reported accuracy ±${Math.round(coords.accuracy)} m). ${coords.altitude === null ? "Elevation unavailable: enter it for topocentric/Lagna calculations." : "Elevation supplied by device."} Timezone remains ${control("timezone").value}; verify it. Coordinates are not stored.`;
-    }, () => { get("[data-location-status]").textContent = "Location declined or unavailable. The existing coordinates remain; choose a city or enter coordinates. Geocentric ephemeris still works."; }, { enableHighAccuracy: false, timeout: 15000, maximumAge: 60000 });
   });
   const csv = () => exportCSV(snapshot.rows, { generatedAt: snapshot.generatedAt, referenceTime: snapshot.referenceTime });
   get("[data-csv]").addEventListener("click", () => { if (snapshot) downloadCSV(csv(), `indian-ephemeris-${snapshot.rows[0].date}${snapshot.mode === "month" ? "-monthly" : ""}.csv`); });
@@ -426,13 +433,16 @@ export function initializeEphemeris(root) {
     const locationChanged = !settingsEqual({ ...canonical, convention: next.convention }, next);
     canonical = next;
     if (!locationChanged) return;
+    locationControls.cancel();
     invalidate();
     setCity(next.location);
+    locationControls.show(next.location);
     calculate();
   });
   cleanupObserver = new MutationObserver(() => {
     if (root.isConnected) return;
     unsubscribe();
+    locationControls.dispose();
     invalidate();
     cleanupObserver.disconnect();
   });

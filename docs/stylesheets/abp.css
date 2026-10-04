@@ -326,6 +326,11 @@ body { background: var(--abp-paper); }
 /* ---------- home / cover ---------------------------------------------------- */
 .abp-cover { position: relative; margin: 0 0 1.2rem; border-radius: .5rem; overflow: hidden; box-shadow: 0 6px 22px var(--abp-shadow); border: 2px solid #c99a43; }
 .abp-cover img { display: block; width: 100%; height: auto; }
+.abp-location-search { grid-column: 1 / -1; min-width: 0; }
+.abp-location-search :is(p, small, button) { overflow-wrap: anywhere; }
+.abp-location-search button { max-width: 100%; white-space: normal; }
+.abp-location-search ul:empty { display: none; }
+.abp-location-manual { min-width: 0; }
 .abp-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: .7rem; margin: 0 0 1rem; }
 .abp-stats li {
   text-align: center; padding: .7rem .4rem; border-radius: .5rem;
