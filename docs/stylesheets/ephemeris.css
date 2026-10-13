@@ -10,6 +10,9 @@
 .eph-tabs button { min-height: 44px; padding: .55rem .8rem; border: 1px solid var(--eph-border); border-radius: .3rem; color: inherit; background: var(--eph-panel); font: inherit; }
 .eph-tabs button[aria-selected="true"] { color: #fff6df; background: #243654; border-color: #243654; box-shadow: inset 0 -3px 0 #dba84f; }
 .eph-controls { border: 1px solid var(--eph-border); padding: 1rem; border-radius: .45rem; background: var(--eph-panel); }
+.eph-location { min-width: 0; margin: .85rem 0; padding: .75rem; border: 1px solid var(--eph-border); border-radius: .35rem; }
+.eph-location legend { font-weight: 700; padding-inline: .3rem; }
+.eph-location summary { min-height: 44px; }
 .eph-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); gap: .85rem; margin-bottom: .85rem; }
 .eph label { display: flex; flex-direction: column; gap: .3rem; font-size: .8rem; font-weight: 600; min-width: 0; }
 .eph input:not([type="checkbox"]), .eph select { box-sizing: border-box; min-width: 0; width: 100%; min-height: 44px; padding: .5rem; color: inherit; background: var(--eph-panel); border: 1px solid var(--eph-border); border-radius: .25rem; font: inherit; font-size: 16px; }

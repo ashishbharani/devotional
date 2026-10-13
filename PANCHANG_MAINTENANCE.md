@@ -8,6 +8,14 @@ default location is Delhi, India, and preferences are stored in
 
 ## Shared location workflow
 
+Offline suggestions now use a compact shared local index (original Indian cities
+plus three documented worldwide presets), token/whitespace normalization and
+explicit well-established aliases. See LOCATION_DATA.md for provenance, limits
+and attribution. `loadSavedSettings()` distinguishes the permanent city from the
+effective GPS/manual session setting so Ephemeris Reset restores the saved city
+and broadcasts it to Panchang. Device mode uses the browser IANA timezone with a
+visible verification notice; coordinate-to-timezone inference is not attempted.
+
 `location-controls.mjs` provides explicit Indian place search, device location
 and manual-coordinate application for every Panchang view and Ephemeris.
 Presets and explicitly selected search results persist through the existing

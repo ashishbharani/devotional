@@ -48,6 +48,7 @@ export const STORAGE_KEY = "abp-panchang-settings-v1";
 export const SETTINGS_EVENT = "abp:panchang-settings-change";
 let sessionSettings;
 let sessionOnly = false;
+let savedSettingsMemory;
 
 function normalizeSettings(settings) {
   const location = settings?.location;
@@ -76,8 +77,7 @@ export function settingsEqual(a, b) {
   return a?.convention === b?.convention && [...Object.keys(DEFAULT_LOCATION), "source", "altitudeKnown", "accuracy"].every((key) => a?.location?.[key] === b?.location?.[key]);
 }
 
-export function loadSettings() {
-  if (sessionOnly) return normalizeSettings(sessionSettings);
+export function loadSavedSettings() {
   try {
     const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "null");
     // Older Panchang versions persisted device coordinates. Remove that legacy
@@ -91,7 +91,11 @@ export function loadSettings() {
   } catch (_) {
     // A blocked or malformed localStorage entry must never stop the page.
   }
-  return normalizeSettings(sessionSettings);
+  return normalizeSettings(savedSettingsMemory);
+}
+
+export function loadSettings() {
+  return sessionOnly ? normalizeSettings(sessionSettings) : loadSavedSettings();
 }
 
 export function saveSettings(settings, { persist = true } = {}) {
@@ -101,6 +105,7 @@ export function saveSettings(settings, { persist = true } = {}) {
   if (!persist || ["geolocation", "manual"].includes(normalized.location.source)) {
     sessionOnly = true;
   } else try {
+    savedSettingsMemory = normalized;
     localStorage.setItem(STORAGE_KEY, JSON.stringify(normalized));
     sessionOnly = false;
   } catch (_) {
@@ -131,7 +136,31 @@ export function subscribeSettings(listener) {
 }
 
 export function findCity(value) {
-  const needle = String(value || "").trim().toLocaleLowerCase();
-  return INDIAN_CITIES.find((city) => city.name.toLocaleLowerCase() === needle || city.id === needle || needle === "new delhi" && city.id === "delhi") || null;
+  const needle = normalizePlaceQuery(value);
+  const aliases = { "new delhi": "delhi", kashi: "varanasi", banaras: "varanasi", benares: "varanasi", bangalore: "bengaluru", bombay: "mumbai", calcutta: "kolkata" };
+  return LOCATION_PRESETS.find((city) => normalizePlaceQuery(city.name) === needle || city.id === (aliases[needle] || needle)
+    || normalizePlaceQuery(city.name.replace(/, India$/, "")) === needle
+    || normalizePlaceQuery(city.name.replace(/, India$/, "") + ", India") === needle) || null;
+}
+
+export function normalizePlaceQuery(value) {
+  return String(value || "").normalize("NFKC").toLowerCase().replace(/[,.;]/g, " ").replace(/\s+/g, " ").trim()
+    .replace(/\bup\b/g, "uttar pradesh");
+}
+
+// GeoNames CC BY 4.0 place centres; elevation is deliberately unknown.
+// See LOCATION_DATA.md for source records and limitations. No timezone inference.
+export const LOCATION_PRESETS = Object.freeze([...INDIAN_CITIES,
+  { id: "london", name: "London, United Kingdom", latitude: 51.50853, longitude: -0.12574, altitude: 0, altitudeKnown: false, timezone: "Europe/London", timezoneOffset: 0 },
+  { id: "new york", name: "New York, United States", latitude: 40.71427, longitude: -74.00597, altitude: 0, altitudeKnown: false, timezone: "America/New_York", timezoneOffset: -300 },
+  { id: "kathmandu", name: "Kathmandu, Nepal", latitude: 27.70169, longitude: 85.3206, altitude: 0, altitudeKnown: false, timezone: "Asia/Kathmandu", timezoneOffset: 345 },
+]);
+
+export function searchLocalPlaces(value) {
+  const needle = normalizePlaceQuery(value);
+  if (needle.length < 2) return [];
+  const exact = findCity(value);
+  if (exact) return [exact];
+  return LOCATION_PRESETS.filter((city) => needle.split(" ").every((token) => normalizePlaceQuery(city.name).split(" ").some((word) => word.startsWith(token)))).slice(0, 8);
 }
 
