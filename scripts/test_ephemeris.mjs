@@ -7,8 +7,25 @@ import { normalizeLongitude, classifyLongitude, ketuLongitude, motionForSpeed, f
 import { loadEphemerisEngine, calculateEphemeris, verifyData } from "../docs/assets/ephemeris/ephemeris-engine.mjs";
 import { calculateMonth, findMonthEvents } from "../docs/assets/ephemeris/monthly.mjs";
 import { exportCSV } from "../docs/assets/ephemeris/csv-export.mjs";
+import { findCity } from "../docs/assets/panchang/settings.mjs";
 
 const convert = (date, time, extra = {}) => localCivilTimeToUTC({ date, time, timezone: "Asia/Kolkata", ...extra });
+test("observer location: geocentric invariance, topocentric Moon, Lagna and houses across Delhi/Mumbai/London", async () => {
+  const engine = await loadEphemerisEngine(async (file) => new Uint8Array(await readFile(new URL(`../docs/assets/ephemeris/vendor/data-0.2.2/${file}`, import.meta.url))));
+  try {
+    const samples = ["delhi", "mumbai", "london"].map((city) => {
+      const place = findCity(city);
+      const selected = { ...place, instantUTC: "2026-10-03T06:30:00Z", ayanamsha: "lahiri", nodeMode: "mean", observerMode: "geocentric", showLagna: true, houseSystem: "A" };
+      return { geo: calculateEphemeris(engine, selected), topo: calculateEphemeris(engine, { ...selected, observerMode: "topocentric" }) };
+    });
+    for (const other of samples.slice(1)) {
+      assert.deepEqual(other.geo.planets.map((p) => p.longitude), samples[0].geo.planets.map((p) => p.longitude), "same UTC geocentric longitudes are location independent");
+      assert.notEqual(other.topo.planets[1].longitude, samples[0].topo.planets[1].longitude, "topocentric Moon responds to location");
+      assert.notEqual(other.geo.lagna.longitude, samples[0].geo.lagna.longitude);
+      assert.notDeepEqual(other.geo.houses.cusps, samples[0].geo.houses.cusps);
+    }
+  } finally { engine.dispose(); }
+});
 const defaults = { ayanamsha: "lahiri", nodeMode: "mean", observerMode: "geocentric", latitude: 28.6139, longitude: 77.209, altitude: 216, showLagna: false, modern: false };
 
 test("IST to UTC regression, previous day and year boundaries", () => {

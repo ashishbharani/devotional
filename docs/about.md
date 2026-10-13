@@ -7,13 +7,11 @@ description: Ashish Bharani introduces the personal purpose behind this free dev
 
 # About Me
 
+<img class="abp-author-portrait" src="../assets/images/ashish-bharani-portrait.png" width="425" height="482" alt="Ashish Bharani" decoding="async">
+
 ## Ashish Bharani
 
 **Advocate | Researcher & Compiler**
-
-[VIEW ORIGINAL ABOUT ME PDF](assets/pdfs/about-me.pdf){ .abp-pdf-link target="_blank" rel="noopener" }
-
-*Opens the official PDF in a new tab.*
 
 I am an Advocate by profession, but this website grew from a part of my life that exists beyond my professional work.
 
@@ -30,7 +28,5 @@ I especially hope it helps couples and families from different communities under
 With gratitude and Pranam,
 
 **Ashish Bharani**
-
-[Read the original About Me PDF](assets/pdfs/about-me.pdf){ target="_blank" rel="noopener" } (new tab).
 
 </article>

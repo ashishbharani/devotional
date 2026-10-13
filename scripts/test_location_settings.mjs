@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { DEFAULT_LOCATION, STORAGE_KEY, loadSettings, saveSettings, subscribeSettings, findCity } from "../docs/assets/panchang/settings.mjs";
+import { DEFAULT_LOCATION, STORAGE_KEY, loadSettings, loadSavedSettings, saveSettings, subscribeSettings, findCity, searchLocalPlaces } from "../docs/assets/panchang/settings.mjs";
 
 const previousWindow = globalThis.window;
 const previousStorage = globalThis.localStorage;
@@ -16,6 +16,10 @@ try {
     assert.equal(loadSettings().location.id, "delhi");
   }
   assert.equal(findCity("New Delhi").id, "delhi");
+  for (const query of ["meerut", "  Meerut   UP ", "Meerut Uttar Pradesh", "Meerut, Uttar Pradesh, India"]) assert.equal(findCity(query).id, "meerut");
+  assert.equal(findCity("Kashi").id, "varanasi");
+  assert.equal(searchLocalPlaces("uttar pradesh").length > 1, true, "ambiguous local matches are not silently guessed");
+  for (const [query, zone] of [["London", "Europe/London"], ["New York", "America/New_York"], ["Kathmandu", "Asia/Kathmandu"]]) assert.equal(findCity(query).timezone, zone);
   let notifications = 0;
   const unsubscribe = subscribeSettings(() => { notifications++; });
   const mumbai = { location: findCity("mumbai"), convention: "purnimanta" };
@@ -29,6 +33,7 @@ try {
   assert.equal(loadSettings().location.altitude, 0);
   assert.equal(loadSettings().location.altitudeKnown, false);
   assert.equal(loadSettings().location.accuracy, 9);
+  assert.equal(loadSavedSettings().location.id, "mumbai", "saved city is distinct from a temporary GPS override");
   saveSettings(mumbai);
   notifications = 1;
   blocked = true;

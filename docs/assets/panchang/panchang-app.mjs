@@ -1,4 +1,4 @@
-import { INDIAN_CITIES, findCity, loadSettings, saveSettings, subscribeSettings, settingsEqual } from "./settings.mjs";
+import { LOCATION_PRESETS, findCity, loadSettings, saveSettings, subscribeSettings, settingsEqual } from "./settings.mjs";
 import { GENERAL_LINKS, devotionalContext } from "./festival-links.mjs";
 import {
   calculatePanchangDay,
@@ -74,6 +74,7 @@ function populateLocationControl(root, settings, refresh) {
   const locationControls = attachLocationControls({ root, input,
     geolocate: root.querySelector("[data-panchang-geolocate]"),
     timezone: () => timezoneInput.value.trim(), apply: applyLocation,
+    deviceTimezone: () => Intl.DateTimeFormat().resolvedOptions().timeZone || timezoneInput.value.trim(),
     manual: () => Object.fromEntries(["latitude", "longitude", "altitude"].map((key) => [key, root.querySelector(`[data-location-${key}]`).value])),
   });
   root._locationControls = locationControls;
@@ -92,12 +93,13 @@ function populateLocationControl(root, settings, refresh) {
       timezoneInput.setCustomValidity("");
       settings.location = { ...settings.location, timezone, timezoneOffset: timezoneOffsetForInstant(new Date(), timezone) };
       saveSettings(settings);
+      locationControls.show(settings.location);
       clearPanchangCache();
       refresh();
     });
   }
   if (list && !list.children.length) {
-    for (const city of INDIAN_CITIES) {
+    for (const city of LOCATION_PRESETS) {
       const option = document.createElement("option");
       option.value = city.name;
       list.append(option);

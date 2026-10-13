@@ -54,18 +54,43 @@ try {
         assert.equal(await page.locator('main h1').count(), 1);
         assert.equal(await page.locator('iframe').count(), 0);
         assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), `${route} ${width}: overflow`);
-        const pdf = page.locator('.abp-project-info a.abp-pdf-link').first();
-        assert.equal(await pdf.getAttribute('target'), '_blank');
-        assert.match(new URL(await pdf.evaluate(a => a.href)).pathname, /^\/devotional\/assets\/pdfs\//);
-        assert.equal((await context.request.get(await pdf.evaluate(a => a.href))).status(), 200);
-        await pdf.focus();
-        assert.notEqual(await pdf.evaluate(el => getComputedStyle(el).outlineStyle), 'none', 'visible keyboard focus');
-        assert.ok((await pdf.boundingBox()).height >= 44);
+        assert.equal(await page.locator('a[href$=".pdf"], iframe, object, embed').count(), 0, 'full content is native, not a PDF link/embed');
+        if (route === 'disclaimer') {
+          assert.equal(await page.locator('h3[id^="clause-"]').count(), 72);
+          assert.equal(await page.locator('h2[id^="part-"]').count(), 18);
+          await page.locator('.abp-info-contents summary').click();
+          await page.locator('.abp-info-contents a[href$="#clause-70"]').click();
+          assert.match(page.url(), /#clause-70$/);
+          // Instant navigation may replace the initial DOM after the hash changes.
+          await page.waitForFunction(() => {
+            const target = document.getElementById('clause-70');
+            const header = document.querySelector('.abp-navigation-shell');
+            if (!target) return false;
+            const box = target.getBoundingClientRect();
+            return box.height > 0 && box.top >= (header?.getBoundingClientRect().bottom || 100) && box.top < innerHeight;
+          });
+          assert.match(await page.locator('.abp-project-info').innerText(), /ashishbharani984@gmail.com/);
+        }
+        if (route === 'about' || route === 'contribution') {
+          const image = page.locator(route === 'about' ? '.abp-author-portrait' : '.abp-contribution-qr');
+          await image.waitFor();
+          assert.ok(await image.evaluate(el => el.complete && el.naturalWidth > 0));
+        }
+        const focusControl = page.locator('.abp-project-footer a').first();
+        await page.keyboard.press('Tab'); // enter keyboard modality after clicking contents
+        await focusControl.focus();
+        assert.notEqual(await focusControl.evaluate(el => getComputedStyle(el).outlineStyle), 'none', 'visible keyboard focus');
+        assert.ok((await focusControl.boundingBox()).height >= 44);
         assert.equal(await page.locator('.abp-project-footer a').count(), 4);
         assert.match(await page.locator('.md-copyright').textContent(), /Ashish Bharani/);
         assert.equal(await page.locator('.abp-pager__n.is-disabled').count(), 0, 'reading-order pager retained');
         await checkContrast(page);
-        if (shots) await page.screenshot({ path: path.join(shots, `${route}-${scheme}-${width}.png`), fullPage: true });
+        await page.evaluate(() => scrollTo(0, 0));
+        if (shots) await page.screenshot({ path: path.join(shots, `${route}-${scheme}-${width}.png`), fullPage: false });
+        if (shots && route === 'disclaimer') {
+          await page.locator('#clause-70').scrollIntoViewIfNeeded();
+          await page.screenshot({ path: path.join(shots, `disclaimer-contact-${scheme}-${width}.png`), fullPage: false });
+        }
         await page.locator('html').evaluate(el => el.classList.add('abp-hc'));
         await checkContrast(page);
         assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1));
@@ -91,7 +116,7 @@ try {
       assert.equal(await page.locator('main h1').textContent(), 'Disclaimer & Terms');
       assert.deepEqual(errors, [], `${width} ${scheme}: runtime errors`);
       await context.close();
-      console.log(`PASS official pages ${width}px ${scheme}: PDFs, headings, focus, footer, ABOUT, instant navigation`);
+      console.log(`PASS native pages ${width}px ${scheme}: full content, clauses, images, focus, footer, ABOUT, instant navigation`);
     }
   }
 } finally { await browser.close(); await new Promise(resolve => server.close(resolve)); }

@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import { INDIAN_CITIES, findCity, loadSettings, saveSettings, subscribeSettings, settingsEqual } from "../panchang/settings.mjs";
+import { LOCATION_PRESETS, DEFAULT_LOCATION, findCity, loadSettings, loadSavedSettings, saveSettings, subscribeSettings, settingsEqual } from "../panchang/settings.mjs";
 import { civilForInstant, localCivilTimeToUTC, formatOffset, DEFAULT_TIMEZONE } from "./time-conversion.mjs";
 import { formatAngle, RASHIS } from "./zodiac.mjs";
 import { exportCSV, downloadCSV } from "./csv-export.mjs";
-import { attachLocationControls, locationDescription } from "../panchang/location-controls.mjs";
+import { attachLocationControls, selectedLocationDescription, manualLocation } from "../panchang/location-controls.mjs";
 
 const PREF_KEY = "abp-ephemeris-preferences-v1";
 const AYANAMSHA_LABELS = { lahiri: "Lahiri (Chitrapaksha)", raman: "Raman", krishnamurti: "Krishnamurti", yukteshwar: "Yukteshwar", fagan: "Fagan/Bradley", tropical: "Tropical / Sayana (comparison)" };
@@ -38,26 +38,35 @@ function markup() {
           <label class="eph-check"><input name="events" type="checkbox"> Find Rashi ingresses and stations</label>
         </div>
         <div class="eph-grid">
-          <label>Timezone (IANA)<input name="timezone" value="Asia/Kolkata" list="eph-timezones" required spellcheck="false"></label>
-          <datalist id="eph-timezones"><option>Asia/Kolkata</option><option>UTC</option><option>Asia/Kathmandu</option><option>Europe/London</option><option>America/New_York</option></datalist>
           <label>Ayanamsha / Zodiac<select name="ayanamsha">${options(AYANAMSHA_LABELS)}</select></label>
           <label>Lunar node<select name="nodeMode"><option value="mean">Mean Node</option><option value="true">True Node</option></select></label>
           <label>Display precision<select name="precision"><option value="seconds">Degrees + Minutes + Seconds</option><option value="minutes">Degrees + Minutes</option><option value="degrees">Degrees</option></select></label>
         </div>
+        <fieldset class="eph-location">
+          <legend>Location</legend>
+          <p class="eph-hint" role="status" aria-live="polite" data-location-status></p>
+          <div class="eph-grid">
+            <label>Search place<input name="city" list="eph-cities" autocomplete="off" placeholder="City, district or locality; Enter or Search"></label>
+            <datalist id="eph-cities">${LOCATION_PRESETS.map((c) => `<option value="${escape(c.name)}"></option>`).join("")}<option value="New Delhi"></option></datalist>
+            <label>Timezone (IANA)<input name="timezone" value="Asia/Kolkata" list="eph-timezones" required spellcheck="false"></label>
+            <datalist id="eph-timezones"><option>Asia/Kolkata</option><option>UTC</option><option>Asia/Kathmandu</option><option>Europe/London</option><option>America/New_York</option></datalist>
+            <button class="abp-btn" type="button" data-location>📍 Use Current Location</button>
+            <button class="abp-btn" type="button" data-location-default>Reset location to Delhi</button>
+          </div>
+          <details class="eph-location-coordinates" open><summary>✏ Manual coordinates / verify selected coordinates</summary><div class="eph-grid">
+            <label>Latitude (north +)<input name="latitude" type="number" min="-90" max="90" step="any" required></label>
+            <label>Longitude (east +)<input name="longitude" type="number" min="-180" max="180" step="any" required></label>
+            <label>Elevation (metres; blank if unknown)<input name="altitude" type="number" min="-500" max="10000" step="any"></label>
+          </div></details>
+          <p class="eph-hint" role="status" aria-live="polite" data-observer-note></p>
+        </fieldset>
         <details class="eph-advanced">
-          <summary>Advanced Settings · Location, observer and historical time</summary>
+          <summary>Advanced Settings · Observer and historical time</summary>
           <div class="eph-grid">
             <label>Observer mode<select name="observerMode"><option value="geocentric">Geocentric (default)</option><option value="topocentric">Topocentric</option></select></label>
             <label class="eph-check"><input name="modern" type="checkbox"> Include Uranus, Neptune and Pluto separately</label>
             <label class="eph-check"><input name="showLagna" type="checkbox"> Show Lagna and houses</label>
             <label>House system<select name="houseSystem">${options(HOUSE_LABELS)}</select></label>
-            <label>Indian city / town<input name="city" list="eph-cities" autocomplete="off" placeholder="Type a place, then Search; or choose a preset"></label>
-            <datalist id="eph-cities">${INDIAN_CITIES.map((c) => `<option value="${escape(c.name)}"></option>`).join("")}<option value="New Delhi"></option></datalist>
-            <label>Latitude (north +)<input name="latitude" type="number" min="-90" max="90" step="any"></label>
-            <label>Longitude (east +)<input name="longitude" type="number" min="-180" max="180" step="any"></label>
-            <label>Elevation (metres)<input name="altitude" type="number" min="-500" max="10000" step="any"></label>
-            <button class="abp-btn" type="button" data-location>📍 Use Current Location</button>
-            <p class="eph-hint" role="status" aria-live="polite" data-location-status>City presets are approximate central coordinates, not an exact birth location. Set precise coordinates for Lagna or topocentric work.</p>
             <label class="eph-check"><input name="manual" type="checkbox"> Manually specify historical UTC offset</label>
             <label>Historical offset (±HH:MM[:SS])<input name="manualOffset" value="+05:30" pattern="[+-][0-9]{2}:[0-9]{2}(:[0-9]{2})?" disabled></label>
           </div>
@@ -138,11 +147,11 @@ export function initializeEphemeris(root) {
   let generation = 0;
   let restoreControls = () => {};
   let canonical = loadSettings();
-  let activeLocationName = canonical.location.name;
+  let activeLocation = { ...canonical.location };
 
   function invalidate() {
     generation += 1;
-    worker?.terminate(); worker = null;
+    if (pending.size) { worker?.terminate(); worker = null; }
     for (const task of pending.values()) { clearTimeout(task.timer); task.reject(new Error("Calculation superseded.")); }
     pending.clear();
     restoreControls();
@@ -169,7 +178,7 @@ export function initializeEphemeris(root) {
     control("month").value = p.date.slice(0, 7);
   }
   function setCity(city) {
-    activeLocationName = city.name;
+    activeLocation = { ...city };
     control("city").value = city.name;
     control("latitude").value = city.latitude;
     control("longitude").value = city.longitude;
@@ -177,7 +186,13 @@ export function initializeEphemeris(root) {
     control("timezone").value = city.timezone;
     control("manual").checked = false;
     control("manualOffset").disabled = true;
-    get("[data-location-status]").textContent = locationDescription(city);
+    get("[data-location-status]").textContent = "Selected location: " + selectedLocationDescription(city);
+    updateObserverNote();
+  }
+  function updateObserverNote() {
+    get("[data-observer-note]").textContent = control("observerMode").value === "topocentric"
+      ? "Selected coordinates are actively used for topocentric planetary positions; Rahu/Ketu remain geocentric orbital nodes."
+      : `Geocentric planetary positions are Earth-centred and do not materially change with city at the same UTC instant. ${control("showLagna").checked && mode !== "month" ? "Selected coordinates are actively used for Lagna and houses." : "Location is used for Panchang local events and, when enabled, Lagna, houses and topocentric calculations."}`;
   }
   function settings() {
     const numeric = (key) => control(key).value.trim() === "" ? null : Number(control(key).value);
@@ -199,6 +214,7 @@ export function initializeEphemeris(root) {
     ["date", "time"].forEach((key) => { control(key).disabled = mode !== "date"; });
     ["month", "referenceTime", "detailed", "events"].forEach((key) => { control(key).disabled = mode !== "month"; });
     control("showLagna").disabled = mode === "month";
+    updateObserverNote();
     get("[data-calculate]").textContent = mode === "current" ? "Refresh" : mode === "month" ? "Generate Month" : "Calculate";
     discardResults();
     setStatus(mode === "month" ? "Choose a month and explicit local sampling time, then Generate Month." : mode === "current" ? "Refresh calculates the actual current instant." : "Enter a date and time, then Calculate.");
@@ -266,7 +282,7 @@ export function initializeEphemeris(root) {
       ${!r.sidereal ? "<p>Tropical / Sayana comparison: Nakshatra and Pada are not assigned.</p>" : ""}`;
     get("[data-table]").innerHTML = snapshot.mode === "month" ? monthlyTable(snapshot, control("detailed").checked, precision) : detailedTable(r, precision);
     get("[data-details]").innerHTML = `${snapshot.mode === "month" ? "<p>First daily sample shown below. Every date’s UTC instant, offset and numerical ayanamsha are recorded in the monthly CSV.</p>" : ""}${details(rows[0])}`;
-    get("[data-lagna]").innerHTML = r.lagna ? `<section><h2>Lagna / Ascendant</h2><p>Lagna is location- and time-dependent. ${escape(control("city").value || "Manual location")} · ${r.settings.latitude}°, ${r.settings.longitude}°.</p>
+    get("[data-lagna]").innerHTML = r.lagna ? `<section><h2>Lagna / Ascendant</h2><p>Lagna is location- and time-dependent. ${escape(activeLocation.name)} · ${r.settings.latitude}°, ${r.settings.longitude}°.</p>
       <p>${escape(r.lagna.rashi.name)} · ${formatAngle(r.lagna.degreeInRashi, precision, 30)} · absolute ${formatAngle(r.lagna.longitude, precision)}${r.sidereal ? ` · ${escape(r.lagna.nakshatra)} · Pada ${r.lagna.pada}` : ""}</p>
       <details><summary>Houses · ${escape(HOUSE_LABELS[r.houses.system])}</summary><ol>${r.houses.cusps.map((longitude) => `<li>${escape(RASHIS[Math.floor(longitude / 30)].name)} · ${formatAngle(longitude, precision)}</li>`).join("")}</ol></details></section>` : "";
     get("[data-events]").innerHTML = snapshot.eventsUnavailable ? "<p>Event search is unavailable for December 2399. The daily samples remain supported.</p>" : snapshot.events?.length ? `<details><summary>Rashi ingresses and stations (${snapshot.events.length})</summary><p>Hourly scan refined to ≤1 second; timestamps below use the selected civil timezone. Verify very brief double crossings separately.</p><ul>${snapshot.events.map((event) => {
@@ -278,11 +294,8 @@ export function initializeEphemeris(root) {
   }
 
   async function calculate() {
-    if (busy || !form.reportValidity()) return;
-    if (control("city").value.trim() !== activeLocationName) {
-      setStatus("Choose a search result or preset, or explicitly apply manual coordinates before calculating for a new place name.", "error");
-      return;
-    }
+    if (busy) return;
+    if (!form.reportValidity()) { discardResults(); setStatus("Correct invalid coordinates, elevation or date/time before calculating.", "error"); return; }
     const run = ++generation;
     discardResults(); busy = true;
     // Freeze controls while the worker calculates so exports cannot describe a
@@ -293,6 +306,11 @@ export function initializeEphemeris(root) {
       const timezone = control("timezone").value.trim();
       const manualOffset = control("manual").checked ? control("manualOffset").value : null;
       const selected = settings();
+      // Validate coordinates even for geocentric mode, without changing Swiss.
+      const observer = manualLocation({ ...selected, altitude: control("altitude").value, timezone });
+      activeLocation = { ...activeLocation, latitude: observer.latitude, longitude: observer.longitude, altitude: observer.altitude,
+        altitudeKnown: observer.altitudeKnown, timezone, timezoneOffset: observer.timezoneOffset };
+      get("[data-location-status]").textContent = "Selected location: " + selectedLocationDescription(activeLocation);
       let request;
       let civil;
       if (mode === "month") {
@@ -344,7 +362,8 @@ export function initializeEphemeris(root) {
   if (query.has("houses")) control("houseSystem").value = query.get("houses");
   if (query.get("modern") === "1") control("modern").checked = true;
   if (query.has("lat") || query.has("lon")) {
-    control("city").value = "Shared manual location"; activeLocationName = control("city").value;
+    control("city").value = "Shared manual location";
+    activeLocation = { ...activeLocation, name: "Shared manual location", source: "shared" };
     if (!query.has("alt")) control("altitude").value = "";
   }
   selectMode(query.has("date") ? "date" : "current");
@@ -359,7 +378,9 @@ export function initializeEphemeris(root) {
     calculate();
   };
   const locationControls = attachLocationControls({ root, input: control("city"),
+    compact: true,
     geolocate: get("[data-location]"), timezone: () => control("timezone").value.trim(), apply: applyLocation,
+    deviceTimezone: () => Intl.DateTimeFormat().resolvedOptions().timeZone || control("timezone").value.trim(),
     manual: () => Object.fromEntries(["latitude", "longitude", "altitude"].map((key) => [key, control(key).value])),
   });
 
@@ -370,19 +391,37 @@ export function initializeEphemeris(root) {
     if (event.target.name === "city") {
       const city = findCity(control("city").value);
       if (city) {
+        // Enter/result selection may already have applied this preset. The
+        // subsequent native blur/change must not disable the next clicked button.
+        if (activeLocation.id === city.id && activeLocation.source === city.source
+          && Number(control("latitude").value) === city.latitude && Number(control("longitude").value) === city.longitude
+          && Number(control("altitude").value) === city.altitude && control("timezone").value === city.timezone) {
+          control("city").value = city.name;
+          return;
+        }
         applyLocation(city);
         return;
       }
-      else get("[data-location-status]").textContent = "Click Search Indian locations and choose a result, or apply manual coordinates. Typing alone keeps the previous calculation location.";
+      discardResults();
+      setStatus("Search text is not a selected location. Press Enter or Search, then choose a result. The selected coordinates have not changed.");
+      return;
     }
-    if (["latitude", "longitude", "altitude"].includes(event.target.name)) {
+    if (["latitude", "longitude", "altitude", "timezone"].includes(event.target.name)) {
       control("city").value = "Manual location";
-      activeLocationName = "Manual location";
+      activeLocation = { ...activeLocation, name: "Manual location", source: "manual" };
+      delete activeLocation.accuracy;
       get("[data-location-status]").textContent = "Manual local override. Apply manual coordinates across site to share for this session; timezone is selected independently. Blank elevation uses a 0 m neutral fallback.";
     }
     discardResults(); setStatus("Settings changed. Calculate to update results.");
+    updateObserverNote();
   });
   form.addEventListener("input", (event) => {
+    if (["latitude", "longitude", "altitude"].includes(event.target.name)) {
+      activeLocation = { ...activeLocation, name: "Manual location", source: "manual" };
+      delete activeLocation.accuracy;
+      control("city").value = "Manual location";
+      get("[data-location-status]").textContent = "Manual location (local override). Calculate to use these coordinates, or Apply to share for this session. Blank elevation uses 0 m as a neutral fallback.";
+    }
     if (event.target.name !== "precision" && event.target.name !== "detailed") discardResults();
   });
   root.querySelectorAll("[data-mode]").forEach((tab) => {
@@ -397,9 +436,14 @@ export function initializeEphemeris(root) {
   });
   get("[data-now]").addEventListener("click", () => { setNow(); selectMode("current"); calculate(); });
   get("[data-reset]").addEventListener("click", () => {
+    locationControls.cancel(); invalidate();
     form.reset(); control("manualOffset").disabled = true;
-    setCity(loadSettings().location); setNow(); selectMode("current"); savePreferences(); calculate();
+    canonical = loadSavedSettings();
+    setCity(canonical.location); saveSettings(canonical);
+    locationControls.show(canonical.location);
+    setNow(); selectMode("current"); savePreferences(); calculate();
   });
+  get("[data-location-default]").addEventListener("click", () => applyLocation(DEFAULT_LOCATION));
   const csv = () => exportCSV(snapshot.rows, { generatedAt: snapshot.generatedAt, referenceTime: snapshot.referenceTime });
   get("[data-csv]").addEventListener("click", () => { if (snapshot) downloadCSV(csv(), `indian-ephemeris-${snapshot.rows[0].date}${snapshot.mode === "month" ? "-monthly" : ""}.csv`); });
   get("[data-copy]").addEventListener("click", async () => {
@@ -444,6 +488,7 @@ export function initializeEphemeris(root) {
     unsubscribe();
     locationControls.dispose();
     invalidate();
+    worker?.terminate(); worker = null;
     cleanupObserver.disconnect();
   });
   cleanupObserver.observe(document.body, { childList: true, subtree: true });

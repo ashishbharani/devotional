@@ -1,13 +1,20 @@
 import { timezoneOffsetForInstant } from "./date-time.mjs";
+import { findCity, searchLocalPlaces, normalizePlaceQuery } from "./settings.mjs";
 
 const cache = new Map();
 let nextSearch = 0;
 export const GEOLOCATION_OPTIONS = Object.freeze({ enableHighAccuracy: true, timeout: 15000, maximumAge: 60000 });
 
+export function selectedLocationDescription(location) {
+  const latitude = `${Math.abs(location.latitude).toFixed(4)}° ${location.latitude < 0 ? "S" : "N"}`;
+  const longitude = `${Math.abs(location.longitude).toFixed(4)}° ${location.longitude < 0 ? "W" : "E"}`;
+  return `${location.name} · ${latitude}, ${longitude} · ${location.timezone}${Number.isFinite(location.accuracy) ? ` · accuracy ±${Math.round(location.accuracy)} m` : ""}${location.source === "shared" ? " · shared-link override" : ["manual", "geolocation"].includes(location.source) ? " · session only" : ""}. ${location.altitudeKnown === false ? "Elevation unknown (0 m fallback)." : `Elevation ${location.altitude} m.`}`;
+}
+
 export function locationDescription(location) {
   const elevation = location.altitudeKnown === false ? "Elevation unknown; 0 m neutral calculation fallback. Enter elevation if known." : `Elevation ${location.altitude} m.`;
-  const privacy = ["manual", "geolocation"].includes(location.source) ? "Shared in this page session only; not stored. Reload restores the saved city." : "Selected location is saved and shared across Panchang and Ephemeris.";
-  return `${location.name} · ${location.latitude}°, ${location.longitude}° · ${location.timezone}. ${!location.source ? "Approximate city-centre preset. " : location.source === "search" ? "Geocoded place centre, not an exact birth location. " : ""}${elevation} ${Number.isFinite(location.accuracy) ? `Reported accuracy ±${Math.round(location.accuracy)} m. ` : ""}${privacy}`;
+  const privacy = location.source === "shared" ? "Shared-link override; not saved." : ["manual", "geolocation"].includes(location.source) ? "Session-only coordinates; not stored. Reload restores the saved city." : "Selected location is saved and shared across Panchang and Ephemeris.";
+  return `${location.name} · ${Number(location.latitude).toFixed(5)}°, ${Number(location.longitude).toFixed(5)}° · ${location.timezone}. ${!location.source ? "Approximate city-centre preset. " : location.source === "search" ? "Geocoded place centre, not an exact birth location. " : ""}${elevation} ${Number.isFinite(location.accuracy) ? `Reported accuracy ±${Math.round(location.accuracy)} m. ` : ""}${privacy}`;
 }
 
 export function manualLocation({ latitude, longitude, altitude, timezone }) {
@@ -18,13 +25,16 @@ export function manualLocation({ latitude, longitude, altitude, timezone }) {
   if (!Number.isFinite(lat) || Math.abs(lat) > 90 || !Number.isFinite(lon) || Math.abs(lon) > 180) throw new Error("Latitude must be −90 to 90; longitude must be −180 to 180.");
   if (!Number.isFinite(height) || height < -500 || height > 10000) throw new Error("Elevation must be −500 to 10,000 metres, or blank if unknown.");
   let offset;
+  if (typeof timezone !== "string" || !timezone.trim()) throw new Error("Choose a valid IANA timezone separately from coordinates.");
   try { new Intl.DateTimeFormat("en", { timeZone: timezone }); offset = timezoneOffsetForInstant(new Date(), timezone); }
   catch (_) { throw new Error("Enter a valid IANA timezone, such as Asia/Kolkata."); }
   return { id: "manual", name: "Manual location", latitude: lat, longitude: lon, altitude: height, altitudeKnown: known, timezone, timezoneOffset: offset || 0, source: "manual" };
 }
 
 export function locationFromPosition(coords, timezone) {
-  const value = manualLocation({ ...coords, timezone });
+  // GeolocationCoordinates exposes WebIDL getters, not enumerable own fields.
+  // Spreading it drops latitude/longitude in real browsers (plain mocks hid it).
+  const value = manualLocation({ latitude: coords.latitude, longitude: coords.longitude, altitude: coords.altitude, timezone });
   return { ...value, id: "device", name: "Current location (session only)", source: "geolocation", ...(Number.isFinite(coords.accuracy) && coords.accuracy >= 0 ? { accuracy: coords.accuracy } : {}) };
 }
 
@@ -43,16 +53,31 @@ export function searchResultLocation(result) {
 
 // Explicit submit only: Nominatim forbids client-side autocomplete. No network
 // request is made on input, focus, page load or preset selection.
-export function attachLocationControls({ root, input, geolocate, timezone, apply, manual }) {
+export function attachLocationControls({ root, input, geolocate, timezone, apply, manual, deviceTimezone = () => timezone(), compact = false }) {
   let sequence = 0, controller;
   const panel = document.createElement("div");
   panel.className = "abp-location-search";
-  panel.innerHTML = '<button type="button" class="abp-btn" data-location-search>Search Indian locations</button><p role="status" aria-live="polite" data-location-message></p><ul data-location-results></ul><small>Search sends only the place name to the geocoding provider, not device coordinates. <a data-location-attribution href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">© OpenStreetMap contributors</a></small>';
+  panel.innerHTML = '<button type="button" class="abp-btn" data-location-search>Search places</button><p role="status" aria-live="polite" data-location-message></p><ul aria-label="Location search results" data-location-results></ul><small>Suggestions are offline. Enter or Search uses the online India search only when no bundled place matches. The typed query—not GPS—is sent. <a data-location-attribution href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">© OpenStreetMap contributors</a> · <a href="https://www.geonames.org/" target="_blank" rel="noopener">Worldwide preset centres: GeoNames (CC BY 4.0)</a></small>';
   input.closest("label").after(panel);
   const message = panel.querySelector("[data-location-message]");
   const results = panel.querySelector("ul");
+  const appliedMessage = (place) => compact ? (["geolocation", "manual"].includes(place.source) ? "Temporary location applied; coordinates are not saved." : "Named location is saved and shared with Panchang.") : locationDescription(place);
   const cancel = () => { sequence++; controller?.abort(); results.replaceChildren(); };
-  const edit = () => { cancel(); input.setCustomValidity(""); };
+  const renderPlaces = (places) => {
+    results.replaceChildren();
+    for (const place of places) {
+      const item = document.createElement("li"), button = document.createElement("button");
+      button.type = "button"; button.className = "abp-btn"; button.textContent = place.name;
+      button.addEventListener("click", () => { cancel(); apply(place); message.textContent = appliedMessage(place); });
+      item.append(button); results.append(item);
+    }
+  };
+  const edit = () => {
+    cancel(); input.setCustomValidity("");
+    const matches = searchLocalPlaces(input.value);
+    renderPlaces(matches);
+    message.textContent = matches.length ? "Offline suggestions: choose a place to apply it." : "Previous selected location remains active. Press Enter or Search to resolve this place in India.";
+  };
   input.addEventListener("input", edit);
   const editCoordinates = (event) => {
     if (["latitude", "longitude", "altitude", "timezone"].includes(event.target.name)
@@ -62,6 +87,10 @@ export function attachLocationControls({ root, input, geolocate, timezone, apply
   panel.querySelector("button").addEventListener("click", async () => {
     cancel();
     const query = input.value.trim();
+    const preset = findCity(query);
+    if (preset) { apply(preset); message.textContent = appliedMessage(preset); return; }
+    const matches = searchLocalPlaces(query);
+    if (matches.length) { renderPlaces(matches); message.textContent = "Choose a bundled place below; no network request was made."; return; }
     if (query.length < 3) { message.textContent = "Enter at least 3 characters, then Search. Built-in presets also work offline."; return; }
     const run = sequence;
     controller = new AbortController();
@@ -71,9 +100,10 @@ export function attachLocationControls({ root, input, geolocate, timezone, apply
     message.textContent = "Searching India… Choose a result explicitly; your previous location remains active.";
     try {
       const config = await fetch(new URL("./location-search.json", import.meta.url), { signal }).then((response) => { if (!response.ok) throw new Error(); return response.json(); });
+      if (config.enabled === false) throw new Error();
       const endpoint = new URL(config.endpoint);
       if (endpoint.protocol !== "https:") throw new Error();
-      const key = endpoint.href + query.toLocaleLowerCase();
+      const key = endpoint.href + normalizePlaceQuery(query);
       let places = cache.get(key);
       if (!places) {
         // Serialize this document's requests, including rapid repeated submits.
@@ -94,26 +124,27 @@ export function attachLocationControls({ root, input, geolocate, timezone, apply
       const attribution = panel.querySelector("a");
       if (config.attribution) attribution.textContent = config.attribution;
       if (config.attributionUrl && new URL(config.attributionUrl).protocol === "https:") attribution.href = config.attributionUrl;
-      for (const place of places) {
-        const item = document.createElement("li"), button = document.createElement("button");
-        button.type = "button"; button.className = "abp-btn"; button.textContent = place.name;
-        button.addEventListener("click", () => { cancel(); apply(place); message.textContent = locationDescription(place); });
-        item.append(button); results.append(item);
-      }
-      message.textContent = places.length ? "Choose the correct place below. No result is selected automatically." : "No Indian locations found. Add district/state to your search, choose a preset, or enter coordinates.";
+      renderPlaces(places);
+      message.textContent = places.length ? "Choose the correct place below. No result is selected automatically." : "Location not found. Try another spelling, use Current Location, or enter coordinates manually. Online search covers India only.";
     } catch (error) {
       if (run !== sequence || !root.isConnected) return;
       message.textContent = error.message?.startsWith("The search service is busy") ? error.message : "Search unavailable or timed out. Your previous location is unchanged. Use an offline preset or manual coordinates.";
     } finally { clearTimeout(timeout); }
   });
+  const submitLocation = (event) => {
+    if (event.key !== "Enter" || event.isComposing) return;
+    event.preventDefault(); event.stopPropagation();
+    panel.querySelector("[data-location-search]").click();
+  };
+  input.addEventListener("keydown", submitLocation);
   geolocate?.addEventListener("click", () => {
     cancel();
-    const run = sequence, zone = timezone();
+    const run = sequence, zone = deviceTimezone();
     if (!window.isSecureContext || !navigator.geolocation) { message.textContent = "Location requires HTTPS and a browser with geolocation support. Your previous location has been kept."; return; }
     message.textContent = "Waiting for your location permission…";
     navigator.geolocation.getCurrentPosition(({ coords }) => {
       if (run !== sequence || !root.isConnected) return;
-      try { const place = locationFromPosition(coords, zone); apply(place); message.textContent = `${locationDescription(place)} Coordinates cannot determine a timezone; verify the retained timezone.`; }
+      try { const place = locationFromPosition(coords, zone); apply(place); message.textContent = `${appliedMessage(place)} Verify the timezone: browser timezone may differ from device position.`; }
       catch (error) { message.textContent = `${error.message} Your previous location has been kept.`; }
     }, (error) => { if (run === sequence && root.isConnected) message.textContent = geolocationError(error); }, GEOLOCATION_OPTIONS);
   });
@@ -123,10 +154,10 @@ export function attachLocationControls({ root, input, geolocate, timezone, apply
     button.textContent = "Apply manual coordinates across site (session only)";
     button.addEventListener("click", () => {
       cancel();
-      try { const place = manualLocation({ ...manual(), timezone: timezone() }); apply(place); message.textContent = locationDescription(place); }
+      try { const place = manualLocation({ ...manual(), timezone: timezone() }); apply(place); message.textContent = appliedMessage(place); }
       catch (error) { message.textContent = `${error.message} Your previous location has been kept.`; }
     });
     panel.append(button);
   }
-  return { cancel, show: (location) => { message.textContent = locationDescription(location); }, dispose: () => { cancel(); input.removeEventListener("input", edit); root.removeEventListener("input", editCoordinates); } };
+  return { cancel, show: (location) => { message.textContent = appliedMessage(location); }, dispose: () => { cancel(); input.removeEventListener("input", edit); input.removeEventListener("keydown", submitLocation); root.removeEventListener("input", editCoordinates); } };
 }
