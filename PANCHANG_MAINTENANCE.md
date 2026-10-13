@@ -8,6 +8,14 @@ default location is Delhi, India, and preferences are stored in
 
 ## Shared location workflow
 
+Offline suggestions now use a compact shared local index (original Indian cities
+plus three documented worldwide presets), token/whitespace normalization and
+explicit well-established aliases. See LOCATION_DATA.md for provenance, limits
+and attribution. `loadSavedSettings()` distinguishes the permanent city from the
+effective GPS/manual session setting so Ephemeris Reset restores the saved city
+and broadcasts it to Panchang. Device mode uses the browser IANA timezone with a
+visible verification notice; coordinate-to-timezone inference is not attempted.
+
 `location-controls.mjs` provides explicit Indian place search, device location
 and manual-coordinate application for every Panchang view and Ephemeris.
 Presets and explicitly selected search results persist through the existing
@@ -27,6 +35,12 @@ calculation offsets still come from the original date-sensitive engines.
 GPS is requested only on button press, with high accuracy, a 15-second timeout
 and maximum age 60 seconds. Errors preserve the previous location; stale
 callbacks/searches are discarded, removed views unsubscribe and abort searches.
+Read coordinate properties explicitly: browser `GeolocationCoordinates` uses
+WebIDL getters, so object spread does not reliably copy latitude/longitude.
+Regression tests include non-enumerable getters and Playwright's real browser
+geolocation API with synthetic coordinates; no real device location is tested.
+Enter in the place field applies a known offline preset or submits an explicit
+online search. Other searches still require choosing a result explicitly.
 
 The default low-volume provider is public Nominatim. Its policy forbids network
 autocomplete, so the selector requires an explicit Search click (minimum three

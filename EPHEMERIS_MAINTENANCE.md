@@ -30,6 +30,43 @@ Do not remove the public corresponding-source offer or third-party notices.
 
 ## Architecture and settings
 
+### Location UX and canonical versus temporary state
+
+The Location fieldset is visible outside Advanced Settings. Offline token search
+and known aliases supplement the original Indian presets; London, New York and
+Kathmandu have documented GeoNames centres and verified IANA zones (see
+LOCATION_DATA.md). Typing produces local suggestions only; Enter/Search resolves
+a known preset or explicitly queries India. Results are real keyboard-accessible
+buttons, rendered through textContent. Unknown online places never replace the
+current location until selected. Network failure leaves local/manual/GPS paths
+available. General worldwide online geocoding is not claimed.
+
+`loadSettings()` returns effective session state; `loadSavedSettings()` returns
+the persisted named city independently of any GPS/manual override, with an
+in-memory saved-city fallback when storage is blocked. Reset restores that saved
+city, clears temporary/share overrides and resets calculation defaults. The
+separate Reset location to Delhi button deliberately selects the Delhi preset.
+The store key remains `abp-panchang-settings-v1`; no second persistent city store
+is created. Cross-tab named selections and same-document session changes use the
+existing subscription; removed roots unsubscribe. Idle Swiss workers are reused;
+in-flight obsolete workers are terminated and stale generations cannot render.
+
+Ephemeris tracks an explicit active-location record separately from search text.
+Manual coordinate edits invalidate results immediately, are labelled Manual
+location, and do not silently save a city. Calculate uses the validated local
+override; Apply shares it in memory for the document session. Share URLs also stay
+local. Latitude/longitude are validated even in geocentric mode. Unknown elevation
+uses a disclosed neutral 0 m fallback, not a fabricated measurement. Browser GPS
+reads coordinate getters explicitly, uses the browser IANA zone with a verification
+notice, automatically recalculates and never writes precise coordinates to storage.
+No location request is made on page load. Reset also cancels pending GPS/searches.
+
+A live observer note distinguishes same-UTC, Earth-centred geocentric longitude
+from topocentric corrections and enabled Lagna/houses. It never manufactures city
+dependence in geocentric positions. Tests exercise Delhi/Mumbai/London using the
+unchanged Swiss engine, plus reset, alias search, synthetic browser GPS, manual
+validation, share-link opt-in/reproduction and same-document synchronization.
+
 - `time-conversion.mjs`: one canonical civil-time → UTC → Julian Day boundary.
   Browser IANA history is used, retaining historical offset seconds. DST gaps
   and ambiguous times require an explicit offset; they are never guessed.

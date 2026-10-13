@@ -26,11 +26,20 @@ const server = createServer(async (request, response) => {
       return;
     }
     const relative = decodeURIComponent(url.pathname).replace(/^\/devotional\/?/, "");
-    let file = path.resolve(site, relative.replace(/^\//, ""));
-    if (file !== site && !file.startsWith(site + path.sep)) { response.writeHead(403).end(); return; }
+    // Optional local development mode: validate current location modules without
+    // regenerating thousands of catalogue pages after each JavaScript edit.
+    // CI/default mode always tests the actual strict-build output.
+    const directory = process.env.LOCATION_TEST_SOURCE && (/^assets\/(panchang|ephemeris)\//.test(relative) || relative === "stylesheets/ephemeris.css") ? path.join(root, "docs") : site;
+    let file = path.resolve(directory, relative.replace(/^\//, ""));
+    if (file !== directory && !file.startsWith(directory + path.sep)) { response.writeHead(403).end(); return; }
     if ((await stat(file)).isDirectory()) file = path.join(file, "index.html");
-    response.writeHead(200, { "Content-Type": mime[path.extname(file)] || "application/octet-stream" });
-    response.end(await readFile(file));
+    response.writeHead(200, { "Content-Type": relative === "sitemap.xml" ? "application/xml" : mime[path.extname(file)] || "application/octet-stream" });
+    if (relative === "sitemap.xml") {
+      // Material matches sitemap URLs exactly (including port). The production
+      // build names GitHub Pages; adapt only the test response to this server.
+      const xml = (await readFile(file, "utf8")).replace(/https:\/\/ashishbharani\.github\.io\/devotional\//g, `http://127.0.0.1:${server.address().port}/devotional/`);
+      response.end(xml);
+    } else response.end(await readFile(file));
   } catch (_) { response.writeHead(404).end("Not found"); }
 });
 await new Promise((resolve) => server.listen(0, "127.0.0.1", resolve));
@@ -61,6 +70,12 @@ if (process.env.PANCHANG_BASELINE) {
   process.exit(0);
 }
 try {
+  if (process.env.LOCATION_WORKFLOW_ONLY) {
+    await testLocationWorkflow(browser, base);
+    await browser.close();
+    await new Promise((resolve) => server.close(resolve));
+    process.exit(0);
+  }
   for (const width of brandWidths) {
     const context = await browser.newContext({ viewport: { width, height: 950 }, reducedMotion: "reduce", serviceWorkers: "block" });
     const page = await context.newPage();
@@ -352,7 +367,10 @@ try {
     settings.saveSettings({ ...settings.loadSettings(), location: settings.findCity("meerut") });
   });
   await secondTab.waitForFunction(() => document.querySelector("[name=city]")?.value === "Meerut, Uttar Pradesh" && !document.querySelector("[name=city]").disabled);
-  await unifiedPage.waitForFunction(() => document.querySelector("[data-panchang-location]")?.value === "Meerut, Uttar Pradesh" && document.querySelector("[data-panchang-status]")?.dataset.state === "ready");
+  await unifiedPage.waitForFunction(() => document.querySelector("[data-panchang-location]")?.value === "Meerut, Uttar Pradesh" && document.querySelector("[data-panchang-status]")?.dataset.state === "ready", null, { timeout: 60000 }).catch(async (error) => {
+    console.log("Cross-tab monthly location diagnostics", await unifiedPage.evaluate(() => ({ city: document.querySelector("[data-panchang-location]")?.value, status: document.querySelector("[data-panchang-status]")?.textContent, state: document.querySelector("[data-panchang-status]")?.dataset.state })), syncErrors);
+    throw error;
+  });
   await secondTab.locator("[name=latitude]").fill("11");
   await secondTab.locator("[name=latitude]").dispatchEvent("change");
   assert.equal(await secondTab.evaluate(() => JSON.parse(localStorage.getItem("abp-panchang-settings-v1")).location.id), "meerut");

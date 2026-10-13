@@ -585,7 +585,7 @@ def panchang_location_controls(suffix):
         '<div class="abp-panchang__settings">'
         f'<label for="abp-panchang-location-{suffix}"><span>Change Location</span>'
         f'<input id="abp-panchang-location-{suffix}" type="search" list="abp-panchang-cities-{suffix}" '
-        'data-panchang-location autocomplete="off" placeholder="Search or choose an Indian city"></label>'
+        'data-panchang-location autocomplete="off" placeholder="Type a place, then Enter or Search"></label>'
         f'<datalist id="abp-panchang-cities-{suffix}" data-panchang-cities></datalist>'
         f'<label for="abp-panchang-convention-{suffix}"><span>Calendar</span>'
         f'<select id="abp-panchang-convention-{suffix}" data-panchang-convention>'
