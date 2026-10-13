@@ -37,6 +37,7 @@ ROOT = Path(__file__).resolve().parent.parent
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 from scripts.check_i18n import audit_catalogue  # noqa: E402
+from scripts.search_index import build_search  # noqa: E402
 
 log = logging.getLogger("mkdocs.hooks.abp")
 
@@ -916,15 +917,18 @@ def page_group(c, g, part):
 
 def page_find(d):
     opts = "".join(f'<option value="{c["num"]}">{c["num"]}. {esc(title_case(c["title"]))}</option>' for c in d["categories"])
-    return titlebar("Find a Work", "Search all works by title, language, form or tier", "abp-titlebar--slate") + (
+    return titlebar("Find a Work", "Search titles, verified names, identities and the complete collection hierarchy", "abp-titlebar--slate") + (
         '<div class="abp-finder" markdown="0" data-index="../assets/works-index.json">\n'
         '<div class="abp-finder__controls">'
         '<input type="search" id="abp-q" inputmode="search" enterkeyhint="search" autocapitalize="off" autocorrect="off" spellcheck="false" aria-label="Search works" data-i18n-aria="searchWorks" placeholder="Type a title, e.g. Hanuman Chalisa, Ganesha Ashtakam…" autocomplete="off">'
         f'<select id="abp-cat" aria-label="Category" data-i18n-aria="category"><option value="" data-i18n="allCategories">All categories</option>{opts}</select>'
         '<select id="abp-lang" aria-label="Language" data-i18n-aria="language"><option value="" data-i18n="allLanguages">All languages</option></select>'
+        '<select id="abp-form" aria-label="Devotional form"><option value="">All devotional forms</option></select>'
         '<select id="abp-tier" aria-label="Tier" data-i18n-aria="tier"><option value="" data-i18n="allTiers">All tiers</option><option>T1</option><option>T2</option><option>T3</option><option>T4</option></select>'
         "</div>\n"
+        '<div id="abp-suggestions" class="abp-search-suggestions" aria-label="Search suggestions"></div>'
         '<p class="abp-finder__status" id="abp-status" role="status" aria-live="polite" data-i18n="loading">Loading index…</p>\n'
+        '<div id="abp-search-identities"></div><div id="abp-search-hierarchy"></div><div id="abp-search-related"></div>'
         '<div class="abp-sheet"><table class="abp-table abp-table--finder" role="table"><caption class="abp-sr" data-i18n="searchResults">Search results</caption>'
         '<thead role="rowgroup"><tr role="row"><th role="columnheader" scope="col" class="n">Number</th><th role="columnheader" scope="col" class="w" data-i18n="works">Works</th>'
         '<th role="columnheader" scope="col" class="lang" data-i18n="language">Language</th><th role="columnheader" scope="col" class="form" data-i18n="form">Form</th>'
@@ -942,6 +946,7 @@ def page_az(d):
     )
     return titlebar("A–Z Work Directory", "Browse the canonical collection alphabetically", "abp-titlebar--slate") + (
         '<div class="abp-directory" markdown="0" data-index="../assets/works-index.json">\n'
+        '<form class="abp-universal-entry" data-universal-search-form><label>Search all names and works <input name="w" type="search" autocomplete="off"></label><button class="abp-btn" type="submit">Search</button></form>'
         '<p class="abp-lede" data-i18n="directoryIntro">Choose a letter to browse works. Results are shown in small batches for speed.</p>\n'
         '<nav class="abp-directory__letters" aria-label="Choose a starting letter" data-i18n-aria="chooseLetter">'
         + letters
@@ -1216,7 +1221,12 @@ def on_files(files, config, **kw):
         meta = {k: v for k, v in meta.items() if v is not None}
         files.append(File.generated(config, src, content=front_matter(**meta) + body))
 
-    files.append(File.generated(config, "assets/works-index.json", content=works_index(d)))
+    compact = works_index(d)
+    files.append(File.generated(config, "assets/works-index.json", content=compact))
+    search = build_search(d, json.loads(compact), ROOT / "data" / "search-registry.json")
+    graph = search.pop("edges")
+    for name, value in (("universal-search.json", search), ("identity-graph.json", graph)):
+        files.append(File.generated(config, "assets/" + name, content=json.dumps(value, ensure_ascii=False, separators=(",", ":"))))
     if not files.get_file_from_path("offline.md"):
         offline_meta = {"title": "You are offline", "hide": ["navigation", "toc"]}
         files.append(File.generated(config, "offline.md", content=front_matter(**offline_meta) + page_offline(d)))
@@ -1231,11 +1241,12 @@ def on_post_build(config, **kw):
     site = Path(config["site_dir"])
     tpl = (ROOT / "hooks" / "sw.template.js").read_text(encoding="utf-8")
     shell = [
-        "", "offline/", "favourites/", "manifest.webmanifest", "stylesheets/abp.css", "stylesheets/feedback.css", "stylesheets/project-info.css",
+        "", "offline/", "favourites/", "manifest.webmanifest", "stylesheets/abp.css", "stylesheets/feedback.css", "stylesheets/project-info.css", "stylesheets/search.css",
         "assets/images/logo.svg", "assets/images/icon-192.png", "assets/images/icon-512.png",
         "assets/images/icon-maskable-512.png", "assets/images/apple-touch-icon.png",
     ]
     shell.extend(f"javascripts/{path.name}" for path in sorted((site / "javascripts").glob("*.js")))
+    shell.extend(f"javascripts/{path.name}" for path in sorted((site / "javascripts").glob("search-*.mjs")))
     shell.extend(path.relative_to(site).as_posix() for path in sorted((site / "assets" / "panchang").glob("*.mjs")))
     shell.extend(path.relative_to(site).as_posix() for pattern in (
         "assets/stylesheets/main.*.min.css", "assets/stylesheets/palette.*.min.css",
@@ -1243,6 +1254,9 @@ def on_post_build(config, **kw):
     ) for path in sorted(site.glob(pattern)))
     shell = [path for path in dict.fromkeys(shell) if path == "" or (site / path).exists()]
     signature = hashlib.sha256()
+    # Version the paired search assets without precaching their large payloads.
+    for name in ("works-index.json", "universal-search.json"):
+        signature.update((site / "assets" / name).read_bytes())
     # The large ephemeris assets affect the cache version but are never
     # precached on the homepage. A changed JS/WASM pair invalidates old caches.
     for target in sorted((site / "assets" / "ephemeris").rglob("*")):
