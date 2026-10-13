@@ -37,7 +37,7 @@ No fixed amount is required. The document suggests ₹101, ₹251, ₹501, ₹1,
 ### UPI
 
 - Recipient shown in the document: **ASHISH BHARANI**
-- UPI ID: **bharani.ashish@okhdfcbank**
+- UPI ID: **0000000000@okhdfcbank**
 
 The original PDF contains the PhonePe QR code alongside the recipient details. Use that original QR code rather than a recreated image.
 
@@ -45,8 +45,8 @@ The original PDF contains the PhonePe QR code alongside the recipient details. U
 
 - Account name: **Ashish Bharani**
 - Bank: **Bank of Baroda**
-- Account number: **38480100004053**
-- IFSC: **BARB0IPEDEL** (the fifth character is the digit zero).
+- Account number: **0000000000000**
+- IFSC: **BARB0IPE000** (the fifth character is the digit zero).
 
 </div>
 
