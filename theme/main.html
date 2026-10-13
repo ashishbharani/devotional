@@ -100,6 +100,12 @@
 {% endblock %}
 
 {% block content %}
+  {% if page.is_homepage %}
+  <form class="abp-universal-entry" data-universal-search-form action="{{ 'find/' | url }}">
+    <label>Find a devotional work or name<input type="search" name="w" aria-label="Find a devotional work or name" placeholder="Name, title, native script or devotional form" autocomplete="off"></label>
+    <button type="submit" class="abp-btn">Search</button>
+  </form>
+  {% endif %}
   {%- set m = page.meta or {} -%}
   <div class="abp-page{% if m.abp_color %} abp-page--cat{% endif %}"{% if m.abp_color %} style="--abp-cat: {{ m.abp_color }}; --abp-cat-ink: {{ m.abp_color_ink }}"{% endif %}>
     {% if m.abp_category %}

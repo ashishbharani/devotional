@@ -1,0 +1,24 @@
+/* Search additions use the existing glass, parchment and accessibility tokens. */
+.abp-search-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr)); gap: .75rem; padding: 0; list-style: none; }
+.abp-search-grid li { padding: .8rem; border: 1px solid var(--abp-gold); border-radius: .7rem; background: var(--abp-paper-2); color: var(--abp-ink-2); overflow-wrap: anywhere; }
+.md-typeset .abp-search-grid > li { list-style: none; margin: 0; }
+.md-typeset .abp-search-grid { margin-inline: 0; padding: 0; }
+.abp-search-grid a, .abp-search-suggestions button { color: var(--abp-maroon); }
+.abp-search-grid a { display: flex; align-items: center; min-height: 44px; }
+.abp-search-grid small, .abp-search-reason { display: block; font-size: .8em; color: var(--abp-ink-2); }
+.abp-search-suggestions { display: flex; flex-wrap: wrap; gap: .5rem; margin-block: .75rem; }
+.abp-search-suggestions button { min-height: 44px; max-width: 100%; white-space: normal; border: 1px solid var(--abp-gold); border-radius: .5rem; padding: .5rem .7rem; background: var(--abp-paper-2); cursor: pointer; }
+.abp-search-suggestions button:focus-visible, .abp-search-grid a:focus-visible { outline: 3px solid var(--abp-maroon); outline-offset: 3px; }
+.abp-universal-entry { display: flex; flex-wrap: wrap; gap: .5rem; margin-block: 1rem; }
+.abp-universal-entry label { flex: 1; min-width: min(100%, 12rem); }
+.abp-universal-entry input { display: block; width: 100%; min-height: 44px; padding: .5rem; border: 1px solid var(--abp-gold); border-radius: .5rem; color: var(--abp-ink-2); background: var(--abp-paper-2); box-sizing: border-box; }
+.abp-universal-entry :is(input, button):focus-visible { outline: 3px solid var(--abp-focus); outline-offset: 3px; }
+.abp-finder #abp-more[hidden] { display: none; }
+.abp-search-reason { margin-top: .25rem; }
+.abp-universal-overlay { padding: .75rem; background: var(--abp-paper); color: var(--abp-ink-2); }
+.abp-universal-overlay:empty { display: none; }
+.abp-universal-overlay a { display: block; padding: .5rem; min-height: 44px; color: var(--abp-maroon); overflow-wrap: anywhere; }
+.abp-finder mark { color: var(--abp-maroon); background: var(--abp-paper-2); font-weight: 700; text-decoration: underline; }
+@media (min-width: 60.01em) {
+  .abp-finder__controls { grid-template-columns: minmax(0, 2fr) repeat(4, minmax(0, 1fr)); }
+}

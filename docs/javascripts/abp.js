@@ -7,21 +7,16 @@
   const YT = "https://www.youtube.com/results?search_query=";
   // smaller batches on phones keep the DOM light; "Show more" appends the next batch
   const BATCH = () => (window.matchMedia("(max-width: 37.5em)").matches ? 60 : 200);
-  let cache = null;
   const t = (key) => (window.abpI18n ? window.abpI18n.t(key) : key);
 
   const esc = (s) =>
     String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
-  const fold = (s) => s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
-
-  async function loadIndex(url) {
-    if (cache) return cache;
-    const res = await fetch(url);
-    const data = await res.json();
-    data.works.forEach((w) => (w.key = fold(w[0])));
-    cache = data;
-    return data;
-  }
+  const highlight = (title, query) => {
+    const words = query.match(/[\p{L}\p{M}\p{N}]+/gu) || [];
+    if (!words.length) return esc(title);
+    const pattern = new RegExp('(' + words.map(w => w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|') + ')', 'giu');
+    return title.split(pattern).map((part, i) => i % 2 ? '<mark>' + esc(part) + '</mark>' : esc(part)).join('');
+  };
 
   async function initFinder() {
     const root = document.querySelector(".abp-finder");
@@ -30,27 +25,35 @@
     const indexUrl = new URL(root.dataset.index, location.href);
     const siteRoot = new URL("../", indexUrl);
     const $ = (id) => root.querySelector("#" + id);
-    const q = $("abp-q"), cat = $("abp-cat"), lang = $("abp-lang"), tier = $("abp-tier");
+    const q = $("abp-q"), cat = $("abp-cat"), lang = $("abp-lang"), tier = $("abp-tier"), form = $("abp-form");
     const status = $("abp-status"), out = $("abp-results");
+    const initialParams = new URLSearchParams(location.search);
+    if (!q.value) q.value = initialParams.get('w') || '';
+    selectValue(cat, initialParams.get('category') || '');
+    selectValue(tier, initialParams.get('tier') || '');
 
-    let data;
+    let data, service, sequence = 0, identity = '', committedURL = location.href, nodeLimit = 30;
     try {
-      data = await loadIndex(indexUrl.href);
+      service = await window.abpSearch.load();
+      data = service.compact;
+      if (window.abpI18n?.ready) await window.abpI18n.ready;
     } catch (e) {
       status.textContent = t("errorIndex");
+      const retry = document.createElement('button');
+      retry.type = 'button'; retry.className = 'abp-btn'; retry.textContent = 'Retry search';
+      retry.addEventListener('click', () => { delete root.dataset.ready; retry.remove(); initFinder(); });
+      status.after(retry);
       return;
     }
     const langOrder = data.langs.map((l, i) => [l, i]).sort((a, b) => a[0].localeCompare(b[0]));
     lang.insertAdjacentHTML("beforeend", langOrder.map(([l, i]) => `<option value="${i}">${esc(l || "—")}</option>`).join(""));
-
-    const params = new URLSearchParams(location.search);
-    // "?w=" (not "?q=", which Material reserves for its own search overlay)
-    if (params.get("w")) q.value = params.get("w");
+    const formOrder = [...new Set([...data.forms, ...service.index.forms.map(f => f.name)])].filter(Boolean).sort();
+    form.insertAdjacentHTML('beforeend', formOrder.map(f => `<option>${esc(f)}</option>`).join(''));
 
     const more = $("abp-more");
     let hits = [], shown = 0;
 
-    function row(w, i) {
+    function row(w, i, reason) {
       const place = data.places[w[5]];
       const href = w[1] === 0 ? YT + encodeURIComponent(w[0]).replace(/%20/g, "+") : w[1];
       const [grp, form] = place[2].split(" › ");
@@ -61,7 +64,7 @@
       }) || "";
       return (
         `<tr role="row"><td role="cell" class="n">${i + 1}</td>` +
-        `<th role="rowheader" scope="row" class="w"><a href="${esc(href)}" target="_blank" rel="noopener" aria-label="${esc(w[0])} — ${esc(t("searchYoutube"))}, ${esc(t("newTab"))}"><span class="abp-play" aria-hidden="true"></span><span class="abp-work-title">${esc(w[0])}</span></a>${favourite}</th>` +
+        `<th role="rowheader" scope="row" class="w"><a href="${esc(href)}" target="_blank" rel="noopener" aria-label="${esc(w[0])} — ${esc(t("searchYoutube"))}, ${esc(t("newTab"))}"><span class="abp-play" aria-hidden="true"></span><span class="abp-work-title">${highlight(w[0], q.value)}</span></a>${favourite}<small class="abp-search-reason">${esc(reason)}</small></th>` +
         `<td role="cell" class="lang" data-label="${esc(t("language"))}" data-i18n-label="language">${esc(data.langs[w[2]] || "—")}</td>` +
         `<td role="cell" class="form" data-label="${esc(t("form"))}" data-i18n-label="form">${esc(data.forms[w[3]] || "—")}</td>` +
         `<td role="cell" class="tier" data-label="${esc(t("tier"))}" data-i18n-label="tier"><span class="abp-tier abp-tier--${esc((w[4] || "").toLowerCase())}">${esc(w[4] || "—")}</span></td>` +
@@ -72,48 +75,120 @@
 
     function renderMore() {
       const next = hits.slice(shown, shown + BATCH());
-      out.insertAdjacentHTML("beforeend", next.map((w, i) => row(w, shown + i)).join(""));
+      out.insertAdjacentHTML("beforeend", next.map((hit, i) => row(data.works[hit.index], shown + i, hit.reason)).join(""));
       window.abpFavourites?.paintButtons(out);
       if (window.abpI18n) window.abpI18n.translate(out);
+      // The existing transliterator intentionally replaces title text. Apply
+      // literal highlighting afterwards without changing its original-text map.
+      out.querySelectorAll('.abp-work-title').forEach(title => { title.innerHTML = highlight(title.textContent, q.value); });
       shown += next.length;
       more.hidden = shown >= hits.length;
       if (hits.length) status.textContent = `${hits.length.toLocaleString()} ${t("works")} · ${shown.toLocaleString()} ${t("shown")}`;
       more.textContent = `${t("showMore")} (${(hits.length - shown).toLocaleString()})`;
     }
 
-    function run() {
-      const terms = fold(q.value.trim()).split(/\s+/).filter(Boolean);
-      const c = cat.value ? +cat.value : null;
-      const l = lang.value !== "" ? +lang.value : null;
-      const selectedTier = tier.value || null;
+    function searchURL(name, id = '') {
+      const url = new URL('find/', siteRoot);
+      url.searchParams.set('w', name);
+      if (id) url.searchParams.set('identity', id);
+      return url.href;
+    }
+    function group(id, title, rows) {
+      $(id).innerHTML = rows.length ? `<h2>${esc(title)}</h2><ul class="abp-search-grid">${rows.join('')}</ul>` : '';
+    }
+    function selectValue(select, value, label = value) {
+      let option = [...select.options].find(o => o.value === value);
+      if (!option && value) {
+        option = document.createElement('option'); option.value = value;
+        option.dataset.unavailable = '1'; select.append(option);
+      }
+      if (option?.dataset.unavailable) { option.textContent = `Unavailable filter: ${label}`; option.dataset.requested = label; }
+      select.value = value;
+    }
+    function restore() {
+      const params = new URLSearchParams(location.search);
+      q.value = params.get('w') || '';
+      selectValue(cat, params.get('category') || '');
+      const language = params.get('language') || '';
+      const languageValue = /^\d+$/.test(language) ? language : language ? String(data.langs.indexOf(language)) : '';
+      selectValue(lang, languageValue, language);
+      selectValue(tier, params.get('tier') || '');
+      selectValue(form, params.get('form') || '');
+      identity = params.get('identity') || '';
+    }
+    async function run(historyMode = 'replace') {
+      const current = ++sequence;
+      const filters = { category: cat.value, language: lang.value, tier: tier.value, form: form.value, identity };
+      status.textContent = t('loading');
+      let result;
+      try { result = await service.search(q.value.trim(), { ...filters, nodeLimit }); }
+      catch { if (root.isConnected) status.textContent = t('errorIndex'); return; }
+      if (current !== sequence || !root.isConnected) return;
       out.innerHTML = "";
-      hits = [];
+      hits = result.hits;
       shown = 0;
-      if (!terms.length && c === null && l === null && !selectedTier) {
+      group('abp-search-identities', 'Deities and Divine Identities', result.identities.map(e =>
+        `<li><a href="${esc(searchURL(e.name, e.id))}">${esc(e.name)}</a><small>Matched name: ${esc(e.matched)}${e.corrected ? ' (likely spelling correction)' : ''}</small><small>${esc(e.context)}${e.ambiguous ? ' · Choose an identity to disambiguate' : ''}</small></li>`));
+      group('abp-search-hierarchy', 'Categories, Sections and Subsections', result.nodes.map(n =>
+        `<li><a href="${esc(new URL(n.url, siteRoot).href)}">${esc(n.name)}</a><small>${esc(n.kind)} · Category ${n.category}</small></li>`));
+      if (result.nodeCount > result.nodes.length) {
+        const button = document.createElement('button');
+        button.type = 'button'; button.className = 'abp-btn';
+        button.textContent = `Show more sections (${result.nodeCount - result.nodes.length})`;
+        button.addEventListener('click', () => { nodeLimit += 30; run(false); });
+        $('abp-search-hierarchy').append(button);
+      }
+      const related = result.identities.flatMap(e => [...e.parents, ...e.children].map(r => ({ ...r, from: e.name })));
+      const relatedIds = new Set();
+      group('abp-search-related', 'Related Forms and Traditions', related.filter(r => !relatedIds.has(r.id) && relatedIds.add(r.id)).map(r => {
+        const entity = service.index.entities.find(e => e.id === r.id);
+        const edgeFrom = service.index.entities.find(e => e.id === r.edgeFrom)?.name || r.from;
+        const edgeTo = service.index.entities.find(e => e.id === r.edgeTo)?.name || entity.name;
+        const relationship = r.depth > 1 ? `Connected through ${r.depth} documented steps · ${r.from}` : `${edgeFrom} — ${r.type.replaceAll('_', ' ')} — ${edgeTo}`;
+        return `<li><a href="${esc(searchURL(entity.name, entity.id))}">${esc(entity.name)}</a><small>${esc(relationship)}</small></li>`;
+      }));
+      $('abp-suggestions').innerHTML = result.suggestions.map((s, i) => `<button type="button" data-suggestion="${i}">${esc(s.label)}</button>`).join('');
+      $('abp-suggestions').querySelectorAll('button').forEach(button => button.addEventListener('click', () => {
+        const suggestion = result.suggestions[Number(button.dataset.suggestion)];
+        q.value = suggestion.query; identity = suggestion.identity; run('push'); q.focus();
+      }));
+      if (!q.value.trim() && !Object.values(filters).some(Boolean)) {
         status.textContent = `${data.works.length.toLocaleString()} ${t("works")} · ${t("search")}`;
         more.hidden = true;
         return;
       }
-      for (const w of data.works) {
-        if (l !== null && w[2] !== l) continue;
-        if (selectedTier && w[4] !== selectedTier) continue;
-        if (c !== null && data.places[w[5]][1] !== c) continue;
-        if (terms.length && !terms.every((x) => w.key.includes(x))) continue;
-        hits.push(w);
+      if (historyMode) {
+        const url = new URL(location.href);
+        const urlFilters = { ...filters, language: lang.value === '' ? '' : data.langs[Number(lang.value)] ?? lang.selectedOptions[0]?.dataset.requested ?? '' };
+        for (const [key, value] of Object.entries({ w: q.value.trim(), ...urlFilters })) {
+          value !== '' ? url.searchParams.set(key, value) : url.searchParams.delete(key);
+        }
+        if (historyMode === 'push' && url.href !== committedURL) {
+          history.replaceState({}, '', committedURL);
+          history.pushState({}, '', url);
+          committedURL = url.href;
+        } else if (url.href !== location.href) history.replaceState({}, '', url);
       }
       status.textContent = `${hits.length.toLocaleString()} ${t("works")}`;
       renderMore();
     }
 
     more.addEventListener("click", renderMore);
-    q.addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); q.blur(); } });
+    q.addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); clearTimeout(timer); run('push'); } });
 
     let timer;
-    const debounced = () => { clearTimeout(timer); timer = setTimeout(run, 140); };
+    const debounced = () => { identity = ''; nodeLimit = 30; clearTimeout(timer); timer = setTimeout(() => run('replace'), 140); };
     q.addEventListener("input", debounced);
-    [cat, lang, tier].forEach((el) => el.addEventListener("change", run));
-    document.addEventListener("abp-languagechange", run);
-    run();
+    [cat, lang, tier, form].forEach((el) => el.addEventListener("change", () => { clearTimeout(timer); run('push'); }));
+    document.addEventListener("abp-languagechange", () => { if (root.isConnected) run(false); });
+    window.addEventListener('popstate', () => { if (root.isConnected) { committedURL = location.href; restore(); run(false); } });
+    // Preserve text and available filters entered while the lazy index/worker
+    // was loading; restoring URL defaults must not erase an early keystroke.
+    const draft = { query: q.value, category: cat.value, tier: tier.value };
+    restore();
+    q.value = draft.query; cat.value = draft.category; tier.value = draft.tier;
+    if (draft.query !== (initialParams.get('w') || '')) identity = '';
+    run(draft.query !== (initialParams.get('w') || '') ? 'replace' : false);
     if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) q.focus();
   }
 

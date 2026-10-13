@@ -1,0 +1,1826 @@
+{
+  "version": 1,
+  "research_limit": "Canonical coverage is automatic for every published work and hierarchy node. Supplementary external identity research is a finite initial pass, not exhaustive across all 2,112 sections or languages. Catalogue slash labels are scoped discovery names, not assertions of religious equivalence. Unsupported or unverified aliases are not expanded.",
+  "entities": [
+    {
+      "id": "deity:krishna",
+      "name": "Krishna",
+      "kind": "identity",
+      "groups": [
+        "KRISHNA"
+      ],
+      "title_phrases": [
+        "Krishna",
+        "Krishn",
+        "Krsna",
+        "Kṛṣṇa",
+        "Gopal",
+        "Gopala",
+        "Govind",
+        "Govinda",
+        "Giridhari",
+        "Giridhar",
+        "Muralidhara",
+        "Murli Manohar",
+        "Murali Manohar",
+        "Murali Manohara",
+        "Murlidhar",
+        "Muralidhari",
+        "Makhan Chor"
+      ],
+      "source": "https://sanskritdocuments.org/iast/krishna/",
+      "context": "devotional catalogue",
+      "aliases": [
+        {
+          "text": "Krishn",
+          "type": "ALTERNATIVE_NAME",
+          "language": "und",
+          "script": "Latn",
+          "source": "https://sanskritdocuments.org/iast/krishna/",
+          "status": "verified",
+          "confidence": 0.95,
+          "scope": "devotional identity"
+        },
+        {
+          "text": "Krsna",
+          "type": "ALTERNATIVE_NAME",
+          "language": "und",
+          "script": "Latn",
+          "source": "https://sanskritdocuments.org/iast/krishna/",
+          "status": "verified",
+          "confidence": 0.95,
+          "scope": "devotional identity"
+        },
+        {
+          "text": "Kṛṣṇa",
+          "type": "ALTERNATIVE_NAME",
+          "language": "und",
+          "script": "Latn",
+          "source": "https://sanskritdocuments.org/iast/krishna/",
+          "status": "verified",
+          "confidence": 0.95,
+          "scope": "devotional identity"
+        },
+        {
+          "text": "श्रीकृष्ण",
+          "type": "TRANSLITERATION",
+          "language": "sa",
+          "script": "Deva",
+          "source": "https://sanskritdocuments.org/iast/krishna/",
+          "status": "verified",
+          "confidence": 0.95,
+          "scope": "devotional identity"
+        },
+        {
+          "text": "कृष्ण",
+          "type": "TRANSLITERATION",
+          "language": "sa",
+          "script": "Deva",
+          "source": "https://sanskritdocuments.org/iast/krishna/",
+          "status": "verified",
+          "confidence": 0.95,
+          "scope": "devotional identity"
+        },
+        {
+          "text": "கிருஷ்ணர்",
+          "type": "TRANSLITERATION",
+          "language": "ta",
+          "script": "Taml",
+          "source": "https://sanskritdocuments.org/iast/krishna/",
+          "status": "verified",
+          "confidence": 0.95,
+          "scope": "devotional identity"
+        },
+        {
+          "text": "కృష్ణుడు",
+          "type": "TRANSLITERATION",
+          "language": "te",
+          "script": "Telu",
+          "source": "https://sanskritdocuments.org/iast/krishna/",
+          "status": "verified",
+          "confidence": 0.95,
+          "scope": "devotional identity"
+        },
+        {
+          "text": "Gopal",
+          "type": "ALTERNATIVE_NAME",
+          "language": "und",
+          "script": "Latn",
+          "source": "https://sanskritdocuments.org/iast/krishna/",
+          "status": "verified",
+          "confidence": 0.95,
+          "scope": "devotional identity"
+        },
+        {
+          "text": "Gopala",
+          "type": "ALTERNATIVE_NAME",
+          "language": "und",
+          "script": "Latn",
+          "source": "https://sanskritdocuments.org/iast/krishna/",
+          "status": "verified",
+          "confidence": 0.95,
+          "scope": "devotional identity"
+        },
+        {
+          "text": "Govind",
+          "type": "ALTERNATIVE_NAME",
+          "language": "und",
+          "script": "Latn",
+          "source": "https://sanskritdocuments.org/iast/krishna/",
+          "status": "verified",
+          "confidence": 0.95,
+          "scope": "devotional identity"
+        },
+        {
+          "text": "Govinda",
+          "type": "ALTERNATIVE_NAME",
+          "language": "und",
+          "script": "Latn",
+          "source": "https://sanskritdocuments.org/iast/krishna/",
+          "status": "verified",
+          "confidence": 0.95,
+          "scope": "devotional identity"
+        },
+        {
+          "text": "Giridhari",
+          "type": "ALTERNATIVE_NAME",
+          "language": "und",
+          "script": "Latn",
+          "source": "https://sanskritdocuments.org/iast/krishna/",
+          "status": "verified",
+          "confidence": 0.95,
+          "scope": "devotional identity"
+        },
+        {
+          "text": "Giridhar",
+          "type": "ALTERNATIVE_NAME",
+          "language": "und",
+          "script": "Latn",
+          "source": "https://sanskritdocuments.org/iast/krishna/",
+          "status": "verified",
+          "confidence": 0.95,
+          "scope": "devotional identity"
+        },
+        {
+          "text": "Muralidhara",
+          "type": "ALTERNATIVE_NAME",
+          "language": "und",
+          "script": "Latn",
+          "source": "https://sanskritdocuments.org/iast/krishna/",
+          "status": "verified",
+          "confidence": 0.95,
+          "scope": "devotional identity"
+        },
+        {
+          "text": "Madhav",
+          "type": "ALTERNATIVE_NAME",
+          "language": "und",
+          "script": "Latn",
+          "source": "https://sanskritdocuments.org/iast/krishna/",
+          "status": "verified",
+          "confidence": 0.95,
+          "scope": "ambiguous; use displayed identity context"
+        },
+        {
+          "text": "Madhava",
+          "type": "ALTERNATIVE_NAME",
+          "language": "und",
+          "script": "Latn",
+          "source": "https://sanskritdocuments.org/iast/krishna/",
+          "status": "verified",
+          "confidence": 0.95,
+          "scope": "ambiguous; use displayed identity context"
+        },
+        {
+          "text": "Kanhaiya",
+          "type": "DEVOTIONAL_TITLE",
+          "language": "hi",
+          "script": "Latn",
+          "source": "https://ignca.gov.in/Asi_data/9565.pdf",
+          "status": "verified",
+          "confidence": 0.95,
+          "scope": "Krishna devotional context"
+        },
+        {
+          "text": "कन्हैया",
+          "type": "DEVOTIONAL_TITLE",
+          "language": "hi",
+          "script": "Deva",
+          "source": "https://ignca.gov.in/Asi_data/9565.pdf",
+          "status": "verified",
+          "confidence": 0.95,
+          "scope": "Krishna devotional context"
+        },
+        {
+          "text": "Kanha",
+          "type": "DEVOTIONAL_TITLE",
+          "language": "hi",
+          "script": "Latn",
+          "source": "https://ignca.gov.in/Asi_data/9565.pdf",
+          "status": "verified",
+          "confidence": 0.95,
+          "scope": "Krishna devotional context"
+        },
+        {
+          "text": "Kanha Ji",
+          "type": "DEVOTIONAL_TITLE",
+          "language": "hi",
+          "script": "Latn",
+          "source": "https://ignca.gov.in/Asi_data/9565.pdf",
+          "status": "verified",
+          "confidence": 0.95,
+          "scope": "Krishna devotional context"
+        },
+        {
+          "text": "कान्हा",
+          "type": "DEVOTIONAL_TITLE",
+          "language": "hi",
+          "script": "Deva",
+          "source": "https://ignca.gov.in/Asi_data/9565.pdf",
+          "status": "verified",
+          "confidence": 0.95,
+          "scope": "Krishna devotional context"
+        },
+        {
+          "text": "Murli Manohar",
+          "type": "EPITHET",
+          "language": "hi",
+          "script": "Latn",
+          "source": "https://sssbalvikas.in/courses/group-i/krishna-janmastami-yr1/lessons/murali-manohar-shyama-murari/",
+          "status": "verified",
+          "confidence": 0.95,
+          "scope": "Krishna devotional context"
+        },
+        {
+          "text": "Murali Manohar",
+          "type": "EPITHET",
+          "language": "hi",
+          "script": "Latn",
+          "source": "https://sssbalvikas.in/courses/group-i/krishna-janmastami-yr1/lessons/murali-manohar-shyama-murari/",
+          "status": "verified",
+          "confidence": 0.95,
+          "scope": "Krishna devotional context"
+        },
+        {
+          "text": "Murali Manohara",
+          "type": "EPITHET",
+          "language": "hi",
+          "script": "Latn",
+          "source": "https://sssbalvikas.in/courses/group-i/krishna-janmastami-yr1/lessons/murali-manohar-shyama-murari/",
+          "status": "verified",
+          "confidence": 0.95,
+          "scope": "Krishna devotional context"
+        },
+        {
+          "text": "Murlidhar",
+          "type": "EPITHET",
+          "language": "hi",
+          "script": "Latn",
+          "source": "https://sssbalvikas.in/courses/group-i/krishna-janmastami-yr1/lessons/murali-manohar-shyama-murari/",
+          "status": "verified",
+          "confidence": 0.95,
+          "scope": "Krishna devotional context"
+        },
+        {
+          "text": "Muralidhari",
+          "type": "EPITHET",
+          "language": "hi",
+          "script": "Latn",
+          "source": "https://sssbalvikas.in/courses/group-i/krishna-janmastami-yr1/lessons/murali-manohar-shyama-murari/",
+          "status": "verified",
+          "confidence": 0.95,
+          "scope": "Krishna devotional context"
+        },
+        {
+          "text": "Shyam",
+          "type": "EPITHET",
+          "language": "hi",
+          "script": "Latn",
+          "source": "https://sssbalvikas.in/courses/group-i/krishna-janmastami-yr1/lessons/murali-manohar-shyama-murari/",
+          "status": "verified",
+          "confidence": 0.95,
+          "scope": "ambiguous; Krishna devotional context, not every use of Shyam"
+        },
+        {
+          "text": "Makhan Chor",
+          "type": "EPITHET",
+          "language": "hi",
+          "script": "Latn",
+          "source": "https://sairhythms.sathyasai.org/song/glossary/makhan",
+          "status": "verified",
+          "confidence": 0.95,
+          "scope": "Krishna devotional context"
+        }
+      ]
+    },
+    {
+      "id": "deity:banke-bihari",
+      "name": "Banke Bihari",
+      "kind": "form",
+      "groups": [
+        "BANKE BIHARI TEMPLE"
+      ],
+      "title_phrases": [
+        "Banke Bihari",
+        "Bankey Bihari"
+      ],
+      "source": "https://www.bihariji.org/public/DivineGlimpses.aspx",
+      "context": "devotional catalogue",
+      "aliases": [
+        {
+          "text": "Bankey Bihari",
+          "type": "ALTERNATIVE_NAME",
+          "language": "und",
+          "script": "Latn",
+          "source": "https://www.bihariji.org/public/DivineGlimpses.aspx",
+          "status": "verified",
+          "confidence": 0.95,
+          "scope": "devotional identity"
+        },
+        {
+          "text": "बाँके बिहारी",
+          "type": "TRANSLITERATION",
+          "language": "sa",
+          "script": "Deva",
+          "source": "https://www.bihariji.org/public/DivineGlimpses.aspx",
+          "status": "verified",
+          "confidence": 0.95,
+          "scope": "devotional identity"
+        },
+        {
+          "text": "ठाकुर बाँके बिहारी",
+          "type": "TRANSLITERATION",
+          "language": "sa",
+          "script": "Deva",
+          "source": "https://www.bihariji.org/public/DivineGlimpses.aspx",
+          "status": "verified",
+          "confidence": 0.95,
+          "scope": "devotional identity"
+        }
+      ]
+    },
+    {
+      "id": "deity:shiva",
+      "name": "Shiva",
+      "kind": "identity",
+      "groups": [
+        "SHIVA / MAHESH"
+      ],
+      "title_phrases": [
+        "Shiva",
+        "Mahesh",
+        "Mahesha",
+        "Maheshwara"
+      ],
+      "source": "https://sanskritdocuments.org/sanskrit/shiva/",
+      "context": "devotional catalogue",
+      "aliases": [
+        {
+          "text": "Siva",
+          "type": "ALTERNATIVE_NAME",
+          "language": "und",
+          "script": "Latn",
+          "source": "https://sanskritdocuments.org/sanskrit/shiva/",
+          "status": "verified",
+          "confidence": 0.95,
+          "scope": "devotional identity"
+        },
+        {
+          "text": "Śiva",
+          "type": "ALTERNATIVE_NAME",
+          "language": "und",
+          "script": "Latn",
+          "source": "https://sanskritdocuments.org/sanskrit/shiva/",
+          "status": "verified",
+          "confidence": 0.95,
+          "scope": "devotional identity"
+        },
+        {
+          "text": "Shiv",
+          "type": "ALTERNATIVE_NAME",
+          "language": "und",
+          "script": "Latn",
+          "source": "https://sanskritdocuments.org/sanskrit/shiva/",
+          "status": "verified",
+          "confidence": 0.95,
+          "scope": "devotional identity"
+        },
+        {
+          "text": "Mahesh",
+          "type": "ALTERNATIVE_NAME",
+          "language": "und",
+          "script": "Latn",
+          "source": "https://sanskritdocuments.org/sanskrit/shiva/",
+          "status": "verified",
+          "confidence": 0.95,
+          "scope": "devotional identity"
+        },
+        {
+          "text": "Mahesha",
+          "type": "ALTERNATIVE_NAME",
+          "language": "und",
+          "script": "Latn",
+          "source": "https://sanskritdocuments.org/sanskrit/shiva/",
+          "status": "verified",
+          "confidence": 0.95,
+          "scope": "devotional identity"
+        },
+        {
+          "text": "Maheshwara",
+          "type": "ALTERNATIVE_NAME",
+          "language": "und",
+          "script": "Latn",
+          "source": "https://sanskritdocuments.org/sanskrit/shiva/",
+          "status": "verified",
+          "confidence": 0.95,
+          "scope": "devotional identity"
+        },
+        {
+          "text": "शिव",
+          "type": "TRANSLITERATION",
+          "language": "sa",
+          "script": "Deva",
+          "source": "https://sanskritdocuments.org/sanskrit/shiva/",
+          "status": "verified",
+          "confidence": 0.95,
+          "scope": "devotional identity"
+        },
+        {
+          "text": "महेश",
+          "type": "TRANSLITERATION",
+          "language": "sa",
+          "script": "Deva",
+          "source": "https://sanskritdocuments.org/sanskrit/shiva/",
+          "status": "verified",
+          "confidence": 0.95,
+          "scope": "devotional identity"
+        },
+        {
+          "text": "சிவன்",
+          "type": "TRANSLITERATION",
+          "language": "ta",
+          "script": "Taml",
+          "source": "https://sanskritdocuments.org/sanskrit/shiva/",
+          "status": "verified",
+          "confidence": 0.95,
+          "scope": "devotional identity"
+        },
+        {
+          "text": "శివుడు",
+          "type": "TRANSLITERATION",
+          "language": "te",
+          "script": "Telu",
+          "source": "https://sanskritdocuments.org/sanskrit/shiva/",
+          "status": "verified",
+          "confidence": 0.95,
+          "scope": "devotional identity"
+        },
+        {
+          "text": "ಶಿವ",
+          "type": "TRANSLITERATION",
+          "language": "kn",
+          "script": "Knda",
+          "source": "https://sanskritdocuments.org/sanskrit/shiva/",
+          "status": "verified",
+          "confidence": 0.95,
+          "scope": "devotional identity"
+        },
+        {
+          "text": "ശിവൻ",
+          "type": "TRANSLITERATION",
+          "language": "ml",
+          "script": "Mlym",
+          "source": "https://sanskritdocuments.org/sanskrit/shiva/",
+          "status": "verified",
+          "confidence": 0.95,
+          "scope": "devotional identity"
+        },
+        {
+          "text": "শিব",
+          "type": "TRANSLITERATION",
+          "language": "bn",
+          "script": "Beng",
+          "source": "https://sanskritdocuments.org/sanskrit/shiva/",
+          "status": "verified",
+          "confidence": 0.95,
+          "scope": "devotional identity"
+        },
+        {
+          "text": "શિવ",
+          "type": "TRANSLITERATION",
+          "language": "gu",
+          "script": "Gujr",
+          "source": "https://sanskritdocuments.org/sanskrit/shiva/",
+          "status": "verified",
+          "confidence": 0.95,
+          "scope": "devotional identity"
+        },
+        {
+          "text": "Bholenath",
+          "type": "EPITHET",
+          "language": "hi",
+          "script": "Latn",
+          "source": "https://sanskritdocuments.org/doc_shiva/AratIbhagavAnashrIbholenAthajI.html",
+          "status": "verified",
+          "confidence": 0.98,
+          "scope": "Shiva devotional context"
+        }
+      ]
+    },
+    {
+      "id": "deity:hanuman",
+      "name": "Hanuman",
+      "kind": "identity",
+      "groups": [
+        "HANUMAN"
+      ],
+      "title_phrases": [
+        "Hanuman",
+        "Anjaneya",
+        "Bajrangbali",
+        "Bajrang Bali",
+        "Maruti",
+        "Vayuputra"
+      ],
+      "source": "https://www.sssvm.org/image/mh2019/mahakumb2019.pdf",
+      "context": "devotional catalogue",
+      "aliases": [
+        {
+          "text": "Anjaneya",
+          "type": "ALTERNATIVE_NAME",
+          "language": "und",
+          "script": "Latn",
+          "source": "https://www.sssvm.org/image/mh2019/mahakumb2019.pdf",
+          "status": "verified",
+          "confidence": 0.95,
+          "scope": "devotional identity"
+        },
+        {
+          "text": "Bajrangbali",
+          "type": "ALTERNATIVE_NAME",
+          "language": "und",
+          "script": "Latn",
+          "source": "https://www.sssvm.org/image/mh2019/mahakumb2019.pdf",
+          "status": "verified",
+          "confidence": 0.95,
+          "scope": "devotional identity"
+        },
+        {
+          "text": "Bajrang Bali",
+          "type": "ALTERNATIVE_NAME",
+          "language": "und",
+          "script": "Latn",
+          "source": "https://www.sssvm.org/image/mh2019/mahakumb2019.pdf",
+          "status": "verified",
+          "confidence": 0.95,
+          "scope": "devotional identity"
+        },
+        {
+          "text": "Maruti",
+          "type": "ALTERNATIVE_NAME",
+          "language": "und",
+          "script": "Latn",
+          "source": "https://www.sssvm.org/image/mh2019/mahakumb2019.pdf",
+          "status": "verified",
+          "confidence": 0.95,
+          "scope": "devotional identity"
+        },
+        {
+          "text": "Vayuputra",
+          "type": "ALTERNATIVE_NAME",
+          "language": "und",
+          "script": "Latn",
+          "source": "https://www.sssvm.org/image/mh2019/mahakumb2019.pdf",
+          "status": "verified",
+          "confidence": 0.95,
+          "scope": "devotional identity"
+        },
+        {
+          "text": "हनुमान",
+          "type": "TRANSLITERATION",
+          "language": "sa",
+          "script": "Deva",
+          "source": "https://www.sssvm.org/image/mh2019/mahakumb2019.pdf",
+          "status": "verified",
+          "confidence": 0.95,
+          "scope": "devotional identity"
+        },
+        {
+          "text": "आञ्जनेय",
+          "type": "TRANSLITERATION",
+          "language": "sa",
+          "script": "Deva",
+          "source": "https://www.sssvm.org/image/mh2019/mahakumb2019.pdf",
+          "status": "verified",
+          "confidence": 0.95,
+          "scope": "devotional identity"
+        }
+      ]
+    },
+    {
+      "id": "deity:ganesha",
+      "name": "Ganesha",
+      "kind": "identity",
+      "groups": [
+        "GANESHA"
+      ],
+      "title_phrases": [
+        "Ganesha",
+        "Ganesh",
+        "Ganapati",
+        "Ganapathi",
+        "Pillaiyar",
+        "Pillayar",
+        "Vinayaka",
+        "Gajanan"
+      ],
+      "source": "https://www.himalayanacademy.com/media/books/my-friend-lord-ganesha_ei/web/ch23a.html",
+      "context": "devotional catalogue",
+      "aliases": [
+        {
+          "text": "Ganesh",
+          "type": "ALTERNATIVE_NAME",
+          "language": "und",
+          "script": "Latn",
+          "source": "https://www.himalayanacademy.com/media/books/my-friend-lord-ganesha_ei/web/ch23a.html",
+          "status": "verified",
+          "confidence": 0.95,
+          "scope": "devotional identity"
+        },
+        {
+          "text": "Ganapati",
+          "type": "ALTERNATIVE_NAME",
+          "language": "und",
+          "script": "Latn",
+          "source": "https://www.himalayanacademy.com/media/books/my-friend-lord-ganesha_ei/web/ch23a.html",
+          "status": "verified",
+          "confidence": 0.95,
+          "scope": "devotional identity"
+        },
+        {
+          "text": "Ganapathi",
+          "type": "ALTERNATIVE_NAME",
+          "language": "und",
+          "script": "Latn",
+          "source": "https://www.himalayanacademy.com/media/books/my-friend-lord-ganesha_ei/web/ch23a.html",
+          "status": "verified",
+          "confidence": 0.95,
+          "scope": "devotional identity"
+        },
+        {
+          "text": "Pillaiyar",
+          "type": "ALTERNATIVE_NAME",
+          "language": "und",
+          "script": "Latn",
+          "source": "https://www.himalayanacademy.com/media/books/my-friend-lord-ganesha_ei/web/ch23a.html",
+          "status": "verified",
+          "confidence": 0.95,
+          "scope": "devotional identity"
+        },
+        {
+          "text": "Pillayar",
+          "type": "ALTERNATIVE_NAME",
+          "language": "und",
+          "script": "Latn",
+          "source": "https://www.himalayanacademy.com/media/books/my-friend-lord-ganesha_ei/web/ch23a.html",
+          "status": "verified",
+          "confidence": 0.95,
+          "scope": "devotional identity"
+        },
+        {
+          "text": "Vinayaka",
+          "type": "ALTERNATIVE_NAME",
+          "language": "und",
+          "script": "Latn",
+          "source": "https://www.himalayanacademy.com/media/books/my-friend-lord-ganesha_ei/web/ch23a.html",
+          "status": "verified",
+          "confidence": 0.95,
+          "scope": "devotional identity"
+        },
+        {
+          "text": "Gajanan",
+          "type": "ALTERNATIVE_NAME",
+          "language": "und",
+          "script": "Latn",
+          "source": "https://www.himalayanacademy.com/media/books/my-friend-lord-ganesha_ei/web/ch23a.html",
+          "status": "verified",
+          "confidence": 0.95,
+          "scope": "ambiguous; use displayed identity context"
+        },
+        {
+          "text": "गणेश",
+          "type": "TRANSLITERATION",
+          "language": "sa",
+          "script": "Deva",
+          "source": "https://www.himalayanacademy.com/media/books/my-friend-lord-ganesha_ei/web/ch23a.html",
+          "status": "verified",
+          "confidence": 0.95,
+          "scope": "devotional identity"
+        },
+        {
+          "text": "गणपति",
+          "type": "TRANSLITERATION",
+          "language": "sa",
+          "script": "Deva",
+          "source": "https://www.himalayanacademy.com/media/books/my-friend-lord-ganesha_ei/web/ch23a.html",
+          "status": "verified",
+          "confidence": 0.95,
+          "scope": "devotional identity"
+        },
+        {
+          "text": "பிள்ளையார்",
+          "type": "TRANSLITERATION",
+          "language": "ta",
+          "script": "Taml",
+          "source": "https://www.himalayanacademy.com/media/books/my-friend-lord-ganesha_ei/web/ch23a.html",
+          "status": "verified",
+          "confidence": 0.95,
+          "scope": "devotional identity"
+        }
+      ]
+    },
+    {
+      "id": "deity:vishnu",
+      "name": "Vishnu",
+      "kind": "identity",
+      "groups": [
+        "VISHNU"
+      ],
+      "title_phrases": [
+        "Vishnu",
+        "Viṣṇu",
+        "Narayana",
+        "Narayan"
+      ],
+      "source": "https://sanskritdocuments.org/sanskrit/by-category/vishnu.php",
+      "context": "devotional catalogue",
+      "aliases": [
+        {
+          "text": "Viṣṇu",
+          "type": "ALTERNATIVE_NAME",
+          "language": "und",
+          "script": "Latn",
+          "source": "https://sanskritdocuments.org/sanskrit/by-category/vishnu.php",
+          "status": "verified",
+          "confidence": 0.95,
+          "scope": "devotional identity"
+        },
+        {
+          "text": "Narayana",
+          "type": "ALTERNATIVE_NAME",
+          "language": "und",
+          "script": "Latn",
+          "source": "https://sanskritdocuments.org/sanskrit/by-category/vishnu.php",
+          "status": "verified",
+          "confidence": 0.95,
+          "scope": "devotional identity"
+        },
+        {
+          "text": "Narayan",
+          "type": "ALTERNATIVE_NAME",
+          "language": "und",
+          "script": "Latn",
+          "source": "https://sanskritdocuments.org/sanskrit/by-category/vishnu.php",
+          "status": "verified",
+          "confidence": 0.95,
+          "scope": "devotional identity"
+        },
+        {
+          "text": "Madhav",
+          "type": "ALTERNATIVE_NAME",
+          "language": "und",
+          "script": "Latn",
+          "source": "https://sanskritdocuments.org/sanskrit/by-category/vishnu.php",
+          "status": "verified",
+          "confidence": 0.95,
+          "scope": "ambiguous; use displayed identity context"
+        },
+        {
+          "text": "Madhava",
+          "type": "ALTERNATIVE_NAME",
+          "language": "und",
+          "script": "Latn",
+          "source": "https://sanskritdocuments.org/sanskrit/by-category/vishnu.php",
+          "status": "verified",
+          "confidence": 0.95,
+          "scope": "ambiguous; use displayed identity context"
+        },
+        {
+          "text": "विष्णु",
+          "type": "TRANSLITERATION",
+          "language": "sa",
+          "script": "Deva",
+          "source": "https://sanskritdocuments.org/sanskrit/by-category/vishnu.php",
+          "status": "verified",
+          "confidence": 0.95,
+          "scope": "devotional identity"
+        },
+        {
+          "text": "नारायण",
+          "type": "TRANSLITERATION",
+          "language": "sa",
+          "script": "Deva",
+          "source": "https://sanskritdocuments.org/sanskrit/by-category/vishnu.php",
+          "status": "verified",
+          "confidence": 0.95,
+          "scope": "devotional identity"
+        }
+      ]
+    },
+    {
+      "id": "deity:venkateswara",
+      "name": "Venkateswara",
+      "kind": "form",
+      "groups": [
+        "VENKATESHWARA / BALAJI / SRINIVASA",
+        "TIRUMALA SRI VENKATESWARA TEMPLE"
+      ],
+      "title_phrases": [
+        "Venkateswara",
+        "Venkateshwara",
+        "Srinivasa",
+        "Tirupati Balaji"
+      ],
+      "source": "https://venkateswara.org.uk/public/index.php/shrines/lord-venkateshwara-balaji",
+      "context": "Tirumala; Sri Vaishnava tradition",
+      "aliases": [
+        {
+          "text": "Venkateshwara",
+          "type": "ALTERNATIVE_NAME",
+          "language": "und",
+          "script": "Latn",
+          "source": "https://venkateswara.org.uk/public/index.php/shrines/lord-venkateshwara-balaji",
+          "status": "verified",
+          "confidence": 0.95,
+          "scope": "devotional identity"
+        },
+        {
+          "text": "Srinivasa",
+          "type": "ALTERNATIVE_NAME",
+          "language": "und",
+          "script": "Latn",
+          "source": "https://venkateswara.org.uk/public/index.php/shrines/lord-venkateshwara-balaji",
+          "status": "verified",
+          "confidence": 0.95,
+          "scope": "devotional identity"
+        },
+        {
+          "text": "Balaji",
+          "type": "ALTERNATIVE_NAME",
+          "language": "und",
+          "script": "Latn",
+          "source": "https://venkateswara.org.uk/public/index.php/shrines/lord-venkateshwara-balaji",
+          "status": "verified",
+          "confidence": 0.95,
+          "scope": "ambiguous; use displayed identity context"
+        },
+        {
+          "text": "Tirupati Balaji",
+          "type": "ALTERNATIVE_NAME",
+          "language": "und",
+          "script": "Latn",
+          "source": "https://venkateswara.org.uk/public/index.php/shrines/lord-venkateshwara-balaji",
+          "status": "verified",
+          "confidence": 0.95,
+          "scope": "devotional identity"
+        },
+        {
+          "text": "తిరుమలేశుని",
+          "type": "TRANSLITERATION",
+          "language": "te",
+          "script": "Telu",
+          "source": "https://venkateswara.org.uk/public/index.php/shrines/lord-venkateshwara-balaji",
+          "status": "verified",
+          "confidence": 0.95,
+          "scope": "devotional identity"
+        }
+      ]
+    },
+    {
+      "id": "deity:mehandipur-balaji",
+      "name": "Mehandipur Balaji",
+      "kind": "form",
+      "groups": [],
+      "title_phrases": [
+        "Mehandipur Balaji",
+        "Mehndipur Balaji"
+      ],
+      "source": "https://shribalajimehandipur.org/visit/",
+      "context": "Rajasthan; Hanuman tradition",
+      "aliases": [
+        {
+          "text": "Balaji",
+          "type": "ALTERNATIVE_NAME",
+          "language": "und",
+          "script": "Latn",
+          "source": "https://shribalajimehandipur.org/visit/",
+          "status": "verified",
+          "confidence": 0.95,
+          "scope": "ambiguous; use displayed identity context"
+        },
+        {
+          "text": "Mehndipur Balaji",
+          "type": "ALTERNATIVE_NAME",
+          "language": "und",
+          "script": "Latn",
+          "source": "https://shribalajimehandipur.org/visit/",
+          "status": "verified",
+          "confidence": 0.95,
+          "scope": "devotional identity"
+        },
+        {
+          "text": "मेहंदीपुर बालाजी",
+          "type": "TRANSLITERATION",
+          "language": "sa",
+          "script": "Deva",
+          "source": "https://shribalajimehandipur.org/visit/",
+          "status": "verified",
+          "confidence": 0.95,
+          "scope": "devotional identity"
+        }
+      ]
+    },
+    {
+      "id": "deity:khatu-shyam",
+      "name": "Khatu Shyam",
+      "kind": "identity",
+      "groups": [
+        "KHATU SHYAM TEMPLE"
+      ],
+      "title_phrases": [
+        "Khatu Shyam",
+        "Shyam Baba",
+        "Khatushyam"
+      ],
+      "source": "https://utsav.gov.in/public/view-darshan/shri-shyam-mandir-khatushyamji-1",
+      "context": "Khatu, Rajasthan; distinct from Krishna",
+      "aliases": [
+        {
+          "text": "Shyam Baba",
+          "type": "ALTERNATIVE_NAME",
+          "language": "und",
+          "script": "Latn",
+          "source": "https://utsav.gov.in/public/view-darshan/shri-shyam-mandir-khatushyamji-1",
+          "status": "verified",
+          "confidence": 0.95,
+          "scope": "devotional identity"
+        },
+        {
+          "text": "Khatushyam",
+          "type": "ALTERNATIVE_NAME",
+          "language": "und",
+          "script": "Latn",
+          "source": "https://utsav.gov.in/public/view-darshan/shri-shyam-mandir-khatushyamji-1",
+          "status": "verified",
+          "confidence": 0.95,
+          "scope": "devotional identity"
+        },
+        {
+          "text": "खाटू श्याम",
+          "type": "TRANSLITERATION",
+          "language": "sa",
+          "script": "Deva",
+          "source": "https://utsav.gov.in/public/view-darshan/shri-shyam-mandir-khatushyamji-1",
+          "status": "verified",
+          "confidence": 0.95,
+          "scope": "devotional identity"
+        },
+        {
+          "text": "श्याम बाबा",
+          "type": "TRANSLITERATION",
+          "language": "sa",
+          "script": "Deva",
+          "source": "https://utsav.gov.in/public/view-darshan/shri-shyam-mandir-khatushyamji-1",
+          "status": "verified",
+          "confidence": 0.95,
+          "scope": "devotional identity"
+        },
+        {
+          "text": "Shyam",
+          "type": "ALTERNATIVE_NAME",
+          "language": "und",
+          "script": "Latn",
+          "source": "https://utsav.gov.in/public/view-darshan/shri-shyam-mandir-khatushyamji-1",
+          "status": "verified",
+          "confidence": 0.95,
+          "scope": "ambiguous; use displayed identity context"
+        }
+      ]
+    },
+    {
+      "id": "deity:murugan",
+      "name": "Murugan",
+      "kind": "identity",
+      "groups": [
+        "KARTIKEYA / MURUGAN"
+      ],
+      "title_phrases": [
+        "Murugan",
+        "Kartikeya",
+        "Skanda",
+        "Subrahmanya",
+        "Subramanya",
+        "Shanmukha"
+      ],
+      "source": "https://palanimurugan.hrce.tn.gov.in/",
+      "context": "devotional catalogue",
+      "aliases": [
+        {
+          "text": "Kartikeya",
+          "type": "ALTERNATIVE_NAME",
+          "language": "und",
+          "script": "Latn",
+          "source": "https://palanimurugan.hrce.tn.gov.in/",
+          "status": "verified",
+          "confidence": 0.95,
+          "scope": "devotional identity"
+        },
+        {
+          "text": "Skanda",
+          "type": "ALTERNATIVE_NAME",
+          "language": "und",
+          "script": "Latn",
+          "source": "https://palanimurugan.hrce.tn.gov.in/",
+          "status": "verified",
+          "confidence": 0.95,
+          "scope": "devotional identity"
+        },
+        {
+          "text": "Subrahmanya",
+          "type": "ALTERNATIVE_NAME",
+          "language": "und",
+          "script": "Latn",
+          "source": "https://palanimurugan.hrce.tn.gov.in/",
+          "status": "verified",
+          "confidence": 0.95,
+          "scope": "devotional identity"
+        },
+        {
+          "text": "Subramanya",
+          "type": "ALTERNATIVE_NAME",
+          "language": "und",
+          "script": "Latn",
+          "source": "https://palanimurugan.hrce.tn.gov.in/",
+          "status": "verified",
+          "confidence": 0.95,
+          "scope": "devotional identity"
+        },
+        {
+          "text": "Shanmukha",
+          "type": "ALTERNATIVE_NAME",
+          "language": "und",
+          "script": "Latn",
+          "source": "https://palanimurugan.hrce.tn.gov.in/",
+          "status": "verified",
+          "confidence": 0.95,
+          "scope": "devotional identity"
+        },
+        {
+          "text": "முருகன்",
+          "type": "TRANSLITERATION",
+          "language": "ta",
+          "script": "Taml",
+          "source": "https://palanimurugan.hrce.tn.gov.in/",
+          "status": "verified",
+          "confidence": 0.95,
+          "scope": "devotional identity"
+        },
+        {
+          "text": "சுப்பிரமணிய",
+          "type": "TRANSLITERATION",
+          "language": "ta",
+          "script": "Taml",
+          "source": "https://palanimurugan.hrce.tn.gov.in/",
+          "status": "verified",
+          "confidence": 0.95,
+          "scope": "devotional identity"
+        }
+      ]
+    },
+    {
+      "id": "deity:ranganatha",
+      "name": "Ranganatha",
+      "kind": "form",
+      "groups": [
+        "RANGANATHA / RANGARAJA",
+        "SRI RANGANATHASWAMY TEMPLE, SRIRANGAM"
+      ],
+      "title_phrases": [
+        "Ranganatha",
+        "Rangaraja",
+        "Ranganath"
+      ],
+      "source": "https://sanskritdocuments.org/sanskrit/by-category/vishnu.php",
+      "context": "devotional catalogue",
+      "aliases": [
+        {
+          "text": "Rangaraja",
+          "type": "ALTERNATIVE_NAME",
+          "language": "und",
+          "script": "Latn",
+          "source": "https://sanskritdocuments.org/sanskrit/by-category/vishnu.php",
+          "status": "verified",
+          "confidence": 0.95,
+          "scope": "devotional identity"
+        },
+        {
+          "text": "Ranganath",
+          "type": "ALTERNATIVE_NAME",
+          "language": "und",
+          "script": "Latn",
+          "source": "https://sanskritdocuments.org/sanskrit/by-category/vishnu.php",
+          "status": "verified",
+          "confidence": 0.95,
+          "scope": "devotional identity"
+        },
+        {
+          "text": "रङ्गनाथ",
+          "type": "TRANSLITERATION",
+          "language": "sa",
+          "script": "Deva",
+          "source": "https://sanskritdocuments.org/sanskrit/by-category/vishnu.php",
+          "status": "verified",
+          "confidence": 0.95,
+          "scope": "devotional identity"
+        }
+      ]
+    },
+    {
+      "id": "deity:rama",
+      "name": "Rama",
+      "kind": "identity",
+      "groups": [
+        "RAMA"
+      ],
+      "title_phrases": [
+        "Rama"
+      ],
+      "source": "https://sanskritdocuments.org/sanskrit/index.php",
+      "context": "devotional catalogue",
+      "aliases": [
+        {
+          "text": "Ram",
+          "type": "ALTERNATIVE_NAME",
+          "language": "und",
+          "script": "Latn",
+          "source": "https://sanskritdocuments.org/sanskrit/index.php",
+          "status": "verified",
+          "confidence": 0.95,
+          "scope": "devotional identity"
+        },
+        {
+          "text": "Rāma",
+          "type": "ALTERNATIVE_NAME",
+          "language": "und",
+          "script": "Latn",
+          "source": "https://sanskritdocuments.org/sanskrit/index.php",
+          "status": "verified",
+          "confidence": 0.95,
+          "scope": "devotional identity"
+        },
+        {
+          "text": "राम",
+          "type": "TRANSLITERATION",
+          "language": "sa",
+          "script": "Deva",
+          "source": "https://sanskritdocuments.org/sanskrit/index.php",
+          "status": "verified",
+          "confidence": 0.95,
+          "scope": "devotional identity"
+        },
+        {
+          "text": "श्रीराम",
+          "type": "TRANSLITERATION",
+          "language": "sa",
+          "script": "Deva",
+          "source": "https://sanskritdocuments.org/sanskrit/index.php",
+          "status": "verified",
+          "confidence": 0.95,
+          "scope": "devotional identity"
+        }
+      ]
+    },
+    {
+      "id": "deity:durga",
+      "name": "Durga",
+      "kind": "identity",
+      "groups": [
+        "DURGA",
+        "DURGA / DEVI"
+      ],
+      "title_phrases": [
+        "Durga",
+        "Durgā"
+      ],
+      "source": "https://sanskritdocuments.org/sanskrit/index.php",
+      "context": "devotional catalogue",
+      "aliases": [
+        {
+          "text": "दुर्गा",
+          "type": "TRANSLITERATION",
+          "language": "sa",
+          "script": "Deva",
+          "source": "https://sanskritdocuments.org/sanskrit/index.php",
+          "status": "verified",
+          "confidence": 0.95,
+          "scope": "devotional identity"
+        },
+        {
+          "text": "Durgā",
+          "type": "ALTERNATIVE_NAME",
+          "language": "und",
+          "script": "Latn",
+          "source": "https://sanskritdocuments.org/sanskrit/index.php",
+          "status": "verified",
+          "confidence": 0.95,
+          "scope": "devotional identity"
+        }
+      ]
+    },
+    {
+      "id": "deity:lakshmi",
+      "name": "Lakshmi",
+      "kind": "identity",
+      "groups": [
+        "LAKSHMI"
+      ],
+      "title_phrases": [
+        "Lakshmi",
+        "Laxmi",
+        "Lakṣmī"
+      ],
+      "source": "https://sanskritdocuments.org/sanskrit/index.php",
+      "context": "devotional catalogue",
+      "aliases": [
+        {
+          "text": "Laxmi",
+          "type": "ALTERNATIVE_NAME",
+          "language": "und",
+          "script": "Latn",
+          "source": "https://sanskritdocuments.org/sanskrit/index.php",
+          "status": "verified",
+          "confidence": 0.95,
+          "scope": "devotional identity"
+        },
+        {
+          "text": "Lakṣmī",
+          "type": "ALTERNATIVE_NAME",
+          "language": "und",
+          "script": "Latn",
+          "source": "https://sanskritdocuments.org/sanskrit/index.php",
+          "status": "verified",
+          "confidence": 0.95,
+          "scope": "devotional identity"
+        },
+        {
+          "text": "लक्ष्मी",
+          "type": "TRANSLITERATION",
+          "language": "sa",
+          "script": "Deva",
+          "source": "https://sanskritdocuments.org/sanskrit/index.php",
+          "status": "verified",
+          "confidence": 0.95,
+          "scope": "devotional identity"
+        }
+      ]
+    },
+    {
+      "id": "deity:saraswati",
+      "name": "Saraswati",
+      "kind": "identity",
+      "groups": [
+        "SARASWATI"
+      ],
+      "title_phrases": [
+        "Saraswati",
+        "Sarasvati"
+      ],
+      "source": "https://sanskritdocuments.org/sanskrit/index.php",
+      "context": "devotional catalogue",
+      "aliases": [
+        {
+          "text": "Sarasvati",
+          "type": "ALTERNATIVE_NAME",
+          "language": "und",
+          "script": "Latn",
+          "source": "https://sanskritdocuments.org/sanskrit/index.php",
+          "status": "verified",
+          "confidence": 0.95,
+          "scope": "devotional identity"
+        },
+        {
+          "text": "सरस्वती",
+          "type": "TRANSLITERATION",
+          "language": "sa",
+          "script": "Deva",
+          "source": "https://sanskritdocuments.org/sanskrit/index.php",
+          "status": "verified",
+          "confidence": 0.95,
+          "scope": "devotional identity"
+        }
+      ]
+    },
+    {
+      "id": "deity:navagraha",
+      "name": "Navagraha",
+      "kind": "identity",
+      "groups": [
+        "NAVAGRAHA"
+      ],
+      "title_phrases": [
+        "Navagraha"
+      ],
+      "source": "https://sanskritdocuments.org/sanskrit/index.php",
+      "context": "devotional catalogue",
+      "aliases": [
+        {
+          "text": "नवग्रह",
+          "type": "TRANSLITERATION",
+          "language": "sa",
+          "script": "Deva",
+          "source": "https://sanskritdocuments.org/sanskrit/index.php",
+          "status": "verified",
+          "confidence": 0.95,
+          "scope": "devotional identity"
+        }
+      ]
+    }
+  ],
+  "relationships": [
+    {
+      "from": "deity:banke-bihari",
+      "to": "deity:krishna",
+      "type": "FORM_OF",
+      "source": "https://www.bihariji.org/public/DivineGlimpses.aspx",
+      "status": "verified",
+      "confidence": 0.95
+    },
+    {
+      "from": "deity:venkateswara",
+      "to": "deity:vishnu",
+      "type": "FORM_OF",
+      "source": "https://venkateswara.org.uk/public/index.php/shrines/lord-venkateshwara-balaji",
+      "status": "verified",
+      "confidence": 0.95
+    },
+    {
+      "from": "deity:ranganatha",
+      "to": "deity:vishnu",
+      "type": "FORM_OF",
+      "source": "https://sanskritdocuments.org/sanskrit/by-category/vishnu.php",
+      "status": "verified",
+      "confidence": 0.95
+    },
+    {
+      "from": "deity:mehandipur-balaji",
+      "to": "deity:hanuman",
+      "type": "REGIONAL_FORM_OF",
+      "source": "https://shribalajimehandipur.org/visit/",
+      "status": "verified",
+      "confidence": 0.95
+    }
+  ],
+  "forms": [
+    {
+      "name": "Mantra",
+      "aliases": [
+        "Mantram",
+        "मंत्र",
+        "मन्त्र"
+      ],
+      "source": "https://sanskritdocuments.org/sanskrit/index.php"
+    },
+    {
+      "name": "Mahamantra",
+      "aliases": [
+        "महामंत्र"
+      ],
+      "source": "https://sanskritdocuments.org/sanskrit/index.php"
+    },
+    {
+      "name": "Sukta",
+      "aliases": [
+        "Suktam",
+        "सूक्त"
+      ],
+      "source": "https://sanskritdocuments.org/sanskrit/index.php"
+    },
+    {
+      "name": "Stotra",
+      "aliases": [
+        "Stotram",
+        "स्तोत्र"
+      ],
+      "source": "https://sanskritdocuments.org/sanskrit/index.php"
+    },
+    {
+      "name": "Stuti",
+      "aliases": [
+        "स्तुति"
+      ],
+      "source": "https://sanskritdocuments.org/sanskrit/index.php"
+    },
+    {
+      "name": "Ashtakam",
+      "aliases": [
+        "Astakam",
+        "अष्टकम्"
+      ],
+      "source": "https://sanskritdocuments.org/sanskrit/index.php"
+    },
+    {
+      "name": "Sahasranama",
+      "aliases": [
+        "Sahasranamam",
+        "सहस्रनाम"
+      ],
+      "source": "https://sanskritdocuments.org/sanskrit/index.php"
+    },
+    {
+      "name": "Ashtottara",
+      "aliases": [
+        "अष्टोत्तर"
+      ],
+      "source": "https://sanskritdocuments.org/sanskrit/index.php"
+    },
+    {
+      "name": "Trishati",
+      "aliases": [
+        "त्रिशती"
+      ],
+      "source": "https://sanskritdocuments.org/sanskrit/index.php"
+    },
+    {
+      "name": "Namavali",
+      "aliases": [
+        "नामावली"
+      ],
+      "source": "https://sanskritdocuments.org/sanskrit/index.php"
+    },
+    {
+      "name": "Kavach",
+      "aliases": [
+        "Kavacha",
+        "Kavacham",
+        "कवच"
+      ],
+      "source": "https://sanskritdocuments.org/sanskrit/index.php"
+    },
+    {
+      "name": "Hridayam",
+      "aliases": [
+        "Hridyam",
+        "हृदयम्"
+      ],
+      "source": "https://sanskritdocuments.org/sanskrit/index.php"
+    },
+    {
+      "name": "Dhyana",
+      "aliases": [
+        "Dhyanam",
+        "ध्यान"
+      ],
+      "source": "https://sanskritdocuments.org/sanskrit/index.php"
+    },
+    {
+      "name": "Aarti",
+      "aliases": [
+        "Arati",
+        "Arti",
+        "आरती",
+        "आरति"
+      ],
+      "source": "https://sanskritdocuments.org/sanskrit/index.php"
+    },
+    {
+      "name": "Chalisa",
+      "aliases": [
+        "Chaleesa",
+        "चालीसा"
+      ],
+      "source": "https://sanskritdocuments.org/sanskrit/index.php"
+    },
+    {
+      "name": "Bhajan",
+      "aliases": [
+        "Bhajana",
+        "भजन"
+      ],
+      "source": "https://sanskritdocuments.org/sanskrit/index.php"
+    },
+    {
+      "name": "Kirtan",
+      "aliases": [
+        "Kirtana",
+        "Keertan",
+        "कीर्तन"
+      ],
+      "source": "https://sanskritdocuments.org/sanskrit/index.php"
+    },
+    {
+      "name": "Gita",
+      "aliases": [
+        "Geeta",
+        "गीता"
+      ],
+      "source": "https://sanskritdocuments.org/sanskrit/index.php"
+    },
+    {
+      "name": "Shloka",
+      "aliases": [
+        "Sloka",
+        "Shlokas",
+        "श्लोक"
+      ],
+      "source": "https://sanskritdocuments.org/sanskrit/index.php"
+    },
+    {
+      "name": "Path",
+      "aliases": [
+        "पाठ"
+      ],
+      "source": "https://sanskritdocuments.org/sanskrit/index.php"
+    },
+    {
+      "name": "Parayan",
+      "aliases": [
+        "Parayana",
+        "पारायण"
+      ],
+      "source": "https://sanskritdocuments.org/sanskrit/index.php"
+    },
+    {
+      "name": "Paddhati",
+      "aliases": [
+        "पद्धति"
+      ],
+      "source": "https://sanskritdocuments.org/sanskrit/index.php"
+    },
+    {
+      "name": "Puja",
+      "aliases": [
+        "Pooja",
+        "पूजा"
+      ],
+      "source": "https://sanskritdocuments.org/sanskrit/index.php"
+    },
+    {
+      "name": "Havana",
+      "aliases": [
+        "Havan",
+        "Homa",
+        "हवन"
+      ],
+      "source": "https://sanskritdocuments.org/sanskrit/index.php"
+    },
+    {
+      "name": "Yajna",
+      "aliases": [
+        "Yagna",
+        "यज्ञ"
+      ],
+      "source": "https://sanskritdocuments.org/sanskrit/index.php"
+    },
+    {
+      "name": "Abhisheka",
+      "aliases": [
+        "Abhishekam",
+        "अभिषेक"
+      ],
+      "source": "https://sanskritdocuments.org/sanskrit/index.php"
+    },
+    {
+      "name": "Suprabhatam",
+      "aliases": [
+        "सुप्रभातम्"
+      ],
+      "source": "https://sanskritdocuments.org/sanskrit/index.php"
+    },
+    {
+      "name": "Mangalam",
+      "aliases": [
+        "मङ्गलम्"
+      ],
+      "source": "https://sanskritdocuments.org/sanskrit/index.php"
+    },
+    {
+      "name": "Prapatti",
+      "aliases": [
+        "प्रपत्ति"
+      ],
+      "source": "https://sanskritdocuments.org/sanskrit/index.php"
+    },
+    {
+      "name": "Dandakam",
+      "aliases": [
+        "दण्डकम्"
+      ],
+      "source": "https://sanskritdocuments.org/sanskrit/index.php"
+    },
+    {
+      "name": "Lahari",
+      "aliases": [
+        "लहरी"
+      ],
+      "source": "https://sanskritdocuments.org/sanskrit/index.php"
+    },
+    {
+      "name": "Vrat Katha",
+      "aliases": [
+        "Vrata Katha",
+        "व्रत कथा"
+      ],
+      "source": "https://sanskritdocuments.org/sanskrit/index.php"
+    },
+    {
+      "name": "Jagran",
+      "aliases": [
+        "Jagrata",
+        "जागरण"
+      ],
+      "source": "https://sanskritdocuments.org/sanskrit/index.php"
+    }
+  ],
+  "languages": [
+    {
+      "name": "Sanskrit",
+      "aliases": [
+        "संस्कृत",
+        "संस्कृतम्"
+      ],
+      "source": "https://cldr.unicode.org/translation/displaynames/languagelocale-names"
+    },
+    {
+      "name": "Hindi",
+      "aliases": [
+        "हिन्दी",
+        "हिंदी"
+      ],
+      "source": "https://cldr.unicode.org/translation/displaynames/languagelocale-names"
+    },
+    {
+      "name": "English",
+      "aliases": [
+        "अंग्रेजी"
+      ],
+      "source": "https://cldr.unicode.org/translation/displaynames/languagelocale-names"
+    },
+    {
+      "name": "Marathi",
+      "aliases": [
+        "मराठी"
+      ],
+      "source": "https://cldr.unicode.org/translation/displaynames/languagelocale-names"
+    },
+    {
+      "name": "Gujarati",
+      "aliases": [
+        "ગુજરાતી"
+      ],
+      "source": "https://cldr.unicode.org/translation/displaynames/languagelocale-names"
+    },
+    {
+      "name": "Bengali",
+      "aliases": [
+        "বাংলা"
+      ],
+      "source": "https://cldr.unicode.org/translation/displaynames/languagelocale-names"
+    },
+    {
+      "name": "Assamese",
+      "aliases": [
+        "অসমীয়া"
+      ],
+      "source": "https://cldr.unicode.org/translation/displaynames/languagelocale-names"
+    },
+    {
+      "name": "Odia",
+      "aliases": [
+        "Oriya",
+        "ଓଡ଼ିଆ"
+      ],
+      "source": "https://cldr.unicode.org/translation/displaynames/languagelocale-names"
+    },
+    {
+      "name": "Punjabi",
+      "aliases": [
+        "ਪੰਜਾਬੀ"
+      ],
+      "source": "https://cldr.unicode.org/translation/displaynames/languagelocale-names"
+    },
+    {
+      "name": "Tamil",
+      "aliases": [
+        "தமிழ்"
+      ],
+      "source": "https://cldr.unicode.org/translation/displaynames/languagelocale-names"
+    },
+    {
+      "name": "Telugu",
+      "aliases": [
+        "తెలుగు"
+      ],
+      "source": "https://cldr.unicode.org/translation/displaynames/languagelocale-names"
+    },
+    {
+      "name": "Kannada",
+      "aliases": [
+        "ಕನ್ನಡ"
+      ],
+      "source": "https://cldr.unicode.org/translation/displaynames/languagelocale-names"
+    },
+    {
+      "name": "Malayalam",
+      "aliases": [
+        "മലയാളം"
+      ],
+      "source": "https://cldr.unicode.org/translation/displaynames/languagelocale-names"
+    },
+    {
+      "name": "Rajasthani",
+      "aliases": [
+        "राजस्थानी"
+      ],
+      "source": "https://cldr.unicode.org/translation/displaynames/languagelocale-names"
+    },
+    {
+      "name": "Marwari",
+      "aliases": [
+        "मारवाड़ी"
+      ],
+      "source": "https://cldr.unicode.org/translation/displaynames/languagelocale-names"
+    },
+    {
+      "name": "Braj Bhasha",
+      "aliases": [
+        "Braj",
+        "ब्रज"
+      ],
+      "source": "https://cldr.unicode.org/translation/displaynames/languagelocale-names"
+    },
+    {
+      "name": "Awadhi",
+      "aliases": [
+        "अवधी"
+      ],
+      "source": "https://cldr.unicode.org/translation/displaynames/languagelocale-names"
+    },
+    {
+      "name": "Maithili",
+      "aliases": [
+        "मैथिली"
+      ],
+      "source": "https://cldr.unicode.org/translation/displaynames/languagelocale-names"
+    },
+    {
+      "name": "Konkani",
+      "aliases": [
+        "कोंकणी"
+      ],
+      "source": "https://cldr.unicode.org/translation/displaynames/languagelocale-names"
+    },
+    {
+      "name": "Nepali",
+      "aliases": [
+        "नेपाली"
+      ],
+      "source": "https://cldr.unicode.org/translation/displaynames/languagelocale-names"
+    },
+    {
+      "name": "Sindhi",
+      "aliases": [
+        "सिन्धी"
+      ],
+      "source": "https://cldr.unicode.org/translation/displaynames/languagelocale-names"
+    },
+    {
+      "name": "Kashmiri",
+      "aliases": [
+        "कश्मीरी"
+      ],
+      "source": "https://cldr.unicode.org/translation/displaynames/languagelocale-names"
+    },
+    {
+      "name": "Dogri",
+      "aliases": [
+        "डोगरी"
+      ],
+      "source": "https://cldr.unicode.org/translation/displaynames/languagelocale-names"
+    },
+    {
+      "name": "Bhojpuri",
+      "aliases": [
+        "भोजपुरी"
+      ],
+      "source": "https://cldr.unicode.org/translation/displaynames/languagelocale-names"
+    }
+  ],
+  "proposed": [
+    {
+      "text": "Ghanshyam|Shyamsundar|Nandlal|Yashodanandan|Venugopala",
+      "entity": "deity:krishna",
+      "status": "proposed",
+      "reason": "Additional per-name source review required; canonical text matches still work."
+    }
+  ]
+}
