@@ -1,65 +1,53 @@
 ---
-title: Support the Project
-description: Optional voluntary contributions support the technical costs of this free, non-commercial devotional resource, without purchasing access or preference.
+title: Contribution
+description: Completely voluntary support for the maintenance, preservation and technical upkeep of Hindu Devotional Collections. Access remains free for everyone.
 ---
 
-<article class="abp-project-info" markdown="1">
+<article class="abp-project-info">
+<h1>Support the Project</h1>
+<p>Hindu Devotional Collections</p>
+<p>This website and its devotional resources are being maintained as a free, non-commercial resource. Access is not dependent upon contribution. Voluntary support simply helps meet the real technical costs of keeping the collection available, secure, backed up and usable over time.</p>
+<blockquote>The purpose is simple: preserve the work, keep it accessible, and keep it free.</blockquote>
 
-# Support the Project
-
-[VIEW ORIGINAL CONTRIBUTION PDF](assets/pdfs/contribution.pdf){ .abp-pdf-link target="_blank" rel="noopener" }
-
-*Opens the complete official contribution information in a new tab.*
-
-## A free, non-commercial resource
-
-This website is a free, non-commercial resource. Contributions are entirely voluntary and optional, and are never required for access. A contribution is not a purchase, subscription or access fee, and does not provide preferential access. The same free public access remains available to everyone.
-
-The collection has real technical costs involved in keeping it available, secure, backed up and usable. Voluntary support helps preserve the work and keep it accessible for free. Sharing this resource is equally welcome.
-
-## What voluntary support helps with
-
-- **Website & domain:** hosting, domain renewals, bandwidth and website infrastructure.
-- **Storage & backups:** cloud storage, redundant preservation and recovery.
-- **Software & licences:** tools genuinely needed for the project.
-- **Hardware:** essential computer and storage equipment, backups, repairs, replacements and upgrades.
-- **Security & reliability:** monitoring, SSL and maintenance.
-- **Accessibility & improvements:** performance, usability and future technical improvements.
-
-## Voluntary contribution information
-
-No fixed amount is required. The document suggests ₹101, ₹251, ₹501, ₹1,001 or ₹2,501, or any amount you choose. Choosing not to contribute does not affect access in any way.
-
-<div class="abp-info-card" markdown="1">
-
-**Before authorising payment, verify the recipient/account name in your payment application.** Check the details against the original Contribution PDF; do not proceed if they differ.
-
-### UPI
-
-- Recipient shown in the document: **ASHISH BHARANI**
-- UPI ID: **0000000000@okhdfcbank**
-
-The original PDF contains the PhonePe QR code alongside the recipient details. Use that original QR code rather than a recreated image.
-
-### Bank transfer
-
-- Account name: **Ashish Bharani**
-- Bank: **Bank of Baroda**
-- Account number: **0000000000000**
-- IFSC: **BARB0IPE000** (the fifth character is the digit zero).
-
+<h2>What your contribution supports</h2>
+<div class="abp-support-grid">
+<section class="abp-info-card"><h3>Website &amp; Domain</h3><p>Hosting, domain renewals, bandwidth and essential web infrastructure.</p></section>
+<section class="abp-info-card"><h3>Storage &amp; Backups</h3><p>Cloud storage, redundant backups, data preservation and recovery copies.</p></section>
+<section class="abp-info-card"><h3>Software &amp; Licences</h3><p>Software, licences and tools genuinely required to maintain and improve the project.</p></section>
+<section class="abp-info-card"><h3>Hardware</h3><p>Essential computer, storage and backup hardware, including repair, replacement or upgrades when needed.</p></section>
+<section class="abp-info-card"><h3>Security &amp; Reliability</h3><p>Security, monitoring, SSL-related services and technical maintenance.</p></section>
+<section class="abp-info-card"><h3>Accessibility &amp; Improvements</h3><p>Performance, usability, accessibility and future technical improvements for visitors.</p></section>
 </div>
 
-## Contribution terms
+<h2>What does not change</h2>
+<blockquote>Free access stays free. A contribution is never required to use the collection. Contributors and non-contributors receive the same public access. There is no paywall and no preferential access.</blockquote>
+<p>If contributing is not convenient, sharing the collection with family, elders, friends and others who may find it useful is equally welcome.</p>
 
-No Section 80G tax benefit is claimed unless expressly stated otherwise. Contributions do not confer priority, editorial control or preferential treatment. Applicable legal requirements, including those concerning foreign-source contributions, remain relevant; an available payment route does not itself establish legal permission to accept a contribution.
-
-Please read the [complete Disclaimer, Terms & Conditions and Terms of Use](assets/pdfs/disclaimer.pdf){ target="_blank" rel="noopener" } (PDF, new tab) for the qualified contribution and refund provisions. Nothing here replaces those complete terms or mandatory legal rights.
-
-Thank you, with Pranam,
-
-**Ashish Bharani — Collector & Compiler**
-
-[View the original contribution details and QR code (PDF)](assets/pdfs/contribution.pdf){ target="_blank" rel="noopener" } (new tab).
-
+<h2>Ways to contribute</h2>
+<p><em>Completely voluntary - there is no fixed amount</em></p>
+<p><strong>Suggested only: ₹101 · ₹251 · ₹501 · ₹1,001 · ₹2,501 · or any amount</strong></p>
+<div class="abp-payment-grid">
+<section class="abp-info-card">
+<h3>PhonePe - Scan &amp; Pay</h3>
+<p>Recipient: ASHISH BHARANI</p>
+<img class="abp-contribution-qr" src="../assets/images/contribution-phonepe-qr.png" width="628" height="628" alt="Original PhonePe payment QR code for Ashish Bharani. UPI ID: bharani.ashish@okhdfcbank." decoding="async">
+<p><strong>UPI ID</strong></p>
+<p>bharani.ashish@okhdfcbank</p>
+<p>If you are viewing this page on the same phone, use the UPI ID or bank details instead of scanning the QR code.</p>
+</section>
+<section class="abp-info-card">
+<h3>Bank Transfer / UPI</h3>
+<dl class="abp-payment-details">
+<dt>Account Name</dt><dd>Ashish Bharani</dd>
+<dt>Bank</dt><dd>Bank of Baroda</dd>
+<dt>Account Number</dt><dd>38480100004053</dd>
+<dt>IFSC Code</dt><dd>BARB0IPEDEL<br>5th character is zero (0)</dd>
+</dl>
+<p><strong>Before paying:</strong> please verify that the recipient/account name shown by your bank or payment app is Ashish Bharani before authorising the transaction.</p>
+</section>
+</div>
+<blockquote><strong>Important:</strong> This is a voluntary contribution towards the maintenance, preservation, software, hardware and technical upkeep of this free project. It is not a purchase or a fee for access. No tax deduction or 80G benefit is claimed unless expressly stated otherwise.</blockquote>
+<p><em>Thank you for helping keep this resource available for everyone.</em></p>
+<p>With Pranam,<br><strong>Ashish Bharani</strong></p>
+<p><a href="../disclaimer/#part-ii">Read the complete voluntary contribution terms</a>.</p>
 </article>

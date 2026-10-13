@@ -11,20 +11,23 @@
   margin: 1.25rem 0;
   color: var(--abp-ink-2);
 }
-.md-typeset .abp-project-info a.abp-pdf-link {
-  display: inline-flex;
-  align-items: center;
-  min-height: 44px;
-  padding: .7rem 1rem;
-  border: 1px solid var(--abp-gold);
-  border-radius: .7rem;
-  background: var(--abp-paper-2);
-  color: var(--abp-maroon);
-  font-weight: 700;
-  text-decoration: underline;
-  text-underline-offset: .2em;
-  max-width: 100%;
-  box-sizing: border-box;
+.abp-author-portrait { float: right; width: min(36%, 14rem); height: auto; margin: 0 0 1rem 1.5rem; border-radius: 1rem; }
+.abp-support-grid, .abp-payment-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+.abp-project-info .abp-info-card { margin: 0; }
+.abp-project-info .abp-info-card h3 { margin-top: 0; }
+.abp-payment-grid { margin-block: 1.5rem; }
+.abp-contribution-qr { display: block; width: min(100%, 17rem); height: auto; margin: 1rem auto; border: .5rem solid white; box-sizing: border-box; }
+.abp-payment-details dt { font-weight: 700; }
+.abp-payment-details dd { margin: .25rem 0 1rem; }
+.abp-project-info--legal h2, .abp-project-info--legal h3 { scroll-margin-top: 8rem; }
+.abp-info-contents { border: 1px solid var(--abp-gold); border-radius: .7rem; padding: .5rem 1rem; margin-block: 1rem 2rem; }
+.abp-info-contents summary { min-height: 44px; cursor: pointer; font-weight: 700; }
+.abp-info-contents a { display: block; min-height: 44px; padding-block: .4rem; }
+.abp-info-contents__part { font-weight: 700; margin-top: 1rem; }
+.abp-info-contents summary:focus-visible { outline: 3px solid var(--abp-maroon); outline-offset: 3px; }
+@media (max-width: 640px) {
+  .abp-author-portrait { float: none; width: min(75%, 14rem); margin: 1rem auto; display: block; }
+  .abp-support-grid, .abp-payment-grid { grid-template-columns: minmax(0, 1fr); }
 }
 .abp-project-info a:focus-visible,
 .abp-project-footer a:focus-visible { outline: 3px solid var(--abp-maroon); outline-offset: 3px; }
