@@ -940,12 +940,12 @@ html.abp-hc .md-header { background: var(--md-primary-fg-color); border-bottom-c
 }
 .abp-language-dialog__note { margin: .45rem 0 .8rem; color: var(--abp-ink-3); }
 .abp-language-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .45rem; }
-.abp-language-grid button {
+.abp-language-grid :is(button, a) {
   display: flex; align-items: center; justify-content: space-between; gap: .35rem; min-height: 48px; padding: .55rem .7rem;
   border: 2px solid var(--abp-btn); border-radius: .55rem; color: var(--abp-btn-ink); background: var(--abp-row);
   font: 600 .72rem/1.25 var(--abp-sans); text-align: start; cursor: pointer;
 }
-.abp-language-grid button:hover { background: color-mix(in srgb, var(--abp-row) 75%, var(--abp-gold)); }
+.abp-language-grid :is(button, a):hover { background: color-mix(in srgb, var(--abp-row) 75%, var(--abp-gold)); }
 .abp-language-grid button[aria-current="true"] { border-color: var(--abp-maroon); background: var(--abp-maroon); color: #fff; }
 [data-md-color-scheme="abp-dark"] .abp-language-grid button[aria-current="true"] { color: #1d1611; }
 .abp-language-grid small { font-size: .52rem; font-weight: 500; opacity: .8; }

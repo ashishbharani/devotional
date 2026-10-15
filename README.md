@@ -86,13 +86,13 @@ uv run mkdocs build     # static site in ./site (≈1 min, ~130 MB)
 
 ### Language selection and optional whole-page translation
 
-The header language picker has two distinct choices:
+The header language picker defaults to whole-page translation:
 
-- **Local interface/title script:** uses `docs/assets/i18n.json` and offline
+- **Local interface/title script (secondary, expandable):** uses `docs/assets/i18n.json` and offline
   transliteration. It does not promise to translate every page paragraph, tool
   message, sacred work, or external PDF.
-- **Translate whole page (online, optional):** select a target language and click
-  **Open Google Translate**. This opens a machine-translated copy of the published
+- **Translate whole page (online, optional):** click a language in the primary
+  grid. That click directly opens a Google machine-translated copy of the published
   public page in a separate tab; no third-party script is embedded or loaded by
   the picker. Only the public origin/path is included, never query parameters or
   fragments (which can contain coordinates/search text). It does not transmit
