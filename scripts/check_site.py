@@ -215,7 +215,7 @@ def main() -> int:
         if page == site / "index.html":
             # The owner explicitly approved this homepage heading in the new
             # design. All other public branding checks remain unchanged.
-            rendered = re.sub(r'(<h1[^>]*>)ultimate hindu devotional collection(</h1>)', r'\1\2', rendered)
+            rendered = re.sub(r'(<h1[^>]*>)hindu devotional collection(</h1>)', r'\1\2', rendered)
             # Homepage CSS/ARIA identifiers are not visitor-facing old branding.
             rendered = rendered.replace("udhc-", "homepage-")
         for retired in retired_public_patterns:
