@@ -38,6 +38,7 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 from scripts.check_i18n import audit_catalogue  # noqa: E402
 from scripts.search_index import build_search  # noqa: E402
+from hooks.royal_home import hero, discovery, closing  # noqa: E402
 
 log = logging.getLogger("mkdocs.hooks.abp")
 
@@ -740,7 +741,6 @@ def page_date_converter(d):
 
 
 def page_home(d):
-    from hooks.royal_home import hero, discovery, closing
     total = sum(c["works_stated"] for c in d["categories"])
     groups = sum(len(c["merged"]) for c in d["categories"])
     return (

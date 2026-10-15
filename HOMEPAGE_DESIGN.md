@@ -47,6 +47,11 @@ Before publishing, run the strict MkDocs build, site and translation audits,
 homepage tests, and the existing navigation/search/Panchang/Ephemeris tests.
 No direct production deployment is performed by this change.
 
+`uv run python -I scripts/test_homepage_hook.py` additionally reproduces the
+MkDocs console entry point's temporary import path. Homepage helpers must be
+imported when the hook module is loaded, not lazily during page rendering.
+This guards the Linux CI failure masked by local `python -m mkdocs` builds.
+
 The complete homepage link audit also found seven pre-existing, date-dependent
 Panchang devotional links using a retired category-1 prefix. Only those link
 strings are corrected to the existing canonical destination. No festival rule,
