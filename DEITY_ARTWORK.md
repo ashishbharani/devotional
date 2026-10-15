@@ -11,6 +11,8 @@ No remaining Category 1 identity is approved by implication.
 Category 1 and existing section-introduction rendering. There is no substring,
 alias, gender or avatar inference, and no reuse on unrelated categories.
 Existing Navagraha artwork is left unchanged, not replaced by an individual god.
+The homepage's two top-banner guardian portraits also use this allowlist:
+Ganesha and Shiva must never fall back to the older royal-home image files.
 
 The artwork was generated with the built-in image tool and individually shown
 to the owner before approval. It is modern artistic interpretation, not a

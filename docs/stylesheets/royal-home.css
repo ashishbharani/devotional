@@ -33,6 +33,7 @@
 .udhc-guardians { position:absolute; top:38px; right:32px; display:flex; gap:18px; }
 .udhc-guardians figure { margin:0; text-align:center; }
 .udhc-guardians img { display:block; width:90px; height:90px; object-fit:cover; border:3px double #e7c678; border-radius:50%; box-shadow:0 3px 20px #4a0920; }
+.udhc-guardians .udhc-guardian-portrait { object-fit:contain; border-radius:12px; }
 .udhc-guardians figcaption { margin-top:8px; color:#ffe8b7; font-size:.7rem; background:#4a0920; border-radius:15px; padding:4px; }
 .udhc-gold-rule { text-align:center; color:#790d20; background:linear-gradient(90deg,#8c341c,#e2b05a,#8c341c); border-block:2px solid #e7c678; }
 .udhc-home .abp-stats { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); margin:0 4%; border:1px solid #c8953e; border-top:0; padding:0; border-radius:0; box-shadow:0 14px 42px #5a2a1315; background:#fffbf1; }
