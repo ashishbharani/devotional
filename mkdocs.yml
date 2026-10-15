@@ -42,6 +42,7 @@ extra:
   generator: false
 
 extra_css:
+  - stylesheets/library-reader.css
   - stylesheets/abp.css
   - stylesheets/navigation.css
   - stylesheets/feedback.css
@@ -51,6 +52,7 @@ extra_css:
   - stylesheets/sacred-site.css
   - stylesheets/deity-art.css
 extra_javascript:
+  - javascripts/library-reader.js
   - javascripts/universal-search.js
   - javascripts/section-pager.js
   - javascripts/navigation.js

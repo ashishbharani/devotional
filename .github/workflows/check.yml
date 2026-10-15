@@ -75,6 +75,13 @@ jobs:
         run: node scripts/test_hdc_plugins_browser.mjs
       - name: Test optional translation handoff, language scope and privacy
         run: node scripts/test_translation_browser.mjs
+      - name: Test in-page book readers, external fallbacks and keyboard/mobile behaviour
+        run: node scripts/test_library_reader_browser.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: library-reader-screenshots
+          path: work/library-reader
       - uses: actions/upload-artifact@v4
         if: always()
         with:

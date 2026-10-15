@@ -534,18 +534,36 @@ def page_rules(d):
     )
 
 
+# Keep source catalogue intact. Only LIBRARY_EMBED_URLS were verified in a
+# sandboxed cross-origin frame; the Hindi override remains an external reader.
+LIBRARY_LINK_OVERRIDES = {
+    "Valmiki Ramayana": {
+        "open": "https://www.valmikiramayan.net/",
+        "english": "https://www.valmikiramayan.net/",
+        "hindi": "https://bharatkosha.org/hi/granth/shrimad-valmiki-ramayana-gita-press",
+    },
+}
+LIBRARY_EMBED_URLS = {
+    "https://www.valmikiramayan.net/",
+    "https://sanskritdocuments.org/doc_devii/durga700.html",
+    "https://sanskritdocuments.org/doc_upanishhat/kena.html",
+}
+
+
 def library_content(d):
     out = []
     for shelf in d["library"]:
         out.append(f'<h2 class="abp-shelf">{esc(shelf["subtitle"].title().replace("•", "·"))}</h2>\n')
         cards = []
         for b in shelf["books"]:
+            links = {**b["links"], **LIBRARY_LINK_OVERRIDES.get(b["title"], {})}
             names = {"open": "Open {t}", "english": "{t} in English", "hindi": "{t} in Hindi", "listen": "Listen to {t} on YouTube"}
             btns = "".join(
-                f'<a class="abp-btn" href="{esc(b["links"][k])}" target="_blank" rel="noopener" '
-                f'aria-label="{esc(names[k].format(t=b["title"]))} (opens in a new tab)">{k.upper()}</a>'
+                f'<a class="abp-btn" href="{esc(links[k])}" target="_blank" rel="noopener noreferrer" '
+                + (f'data-book-reader="{esc(b["title"])} — {k.upper()}" ' if k != "listen" and links[k] in LIBRARY_EMBED_URLS else "")
+                + f'aria-label="{esc(names[k].format(t=b["title"]))} (opens in a new tab)">{k.upper()}</a>'
                 for k in ("open", "english", "hindi", "listen")
-                if k in b["links"]
+                if k in links
             )
             cards.append(
                 f'<div class="abp-book"><div class="abp-book__cover" aria-hidden="true" style="--cover:{b["cover"]}">'
@@ -553,7 +571,11 @@ def library_content(d):
                 f'<div class="abp-book__btns">{btns}</div></div>'
             )
         out.append('<div class="abp-books" markdown="0">\n' + "\n".join(cards) + "\n</div>\n")
-    return "\n".join(out)
+    return (
+        '<p class="abp-library-reader-note">Supported book links open in an in-page reader with JavaScript enabled. '
+        'Other sources and LISTEN open on their own websites. External readers may change availability; '
+        'the original website is always available as a fallback.</p>\n' + "\n".join(out)
+    )
 
 
 def page_library(d):

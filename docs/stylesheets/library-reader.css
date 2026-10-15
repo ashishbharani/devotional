@@ -1,0 +1,27 @@
+/* A scoped, responsive shell; third-party book content keeps its own styles. */
+.abp-library-reader {
+  box-sizing: border-box;
+  width: min(76rem, calc(100% - 1rem));
+  max-width: calc(100% - 1rem);
+  height: calc(100vh - 1rem);
+  height: calc(100dvh - 1rem);
+  max-height: calc(100% - 1rem);
+  margin: auto;
+  padding: 1rem;
+  overflow: auto;
+  border: 2px solid var(--abp-ink-3);
+  border-radius: .6rem;
+  background: var(--abp-paper);
+  color: var(--abp-ink);
+  font: inherit;
+  overflow-wrap: anywhere;
+}
+.abp-library-reader[open] { display: flex; flex-direction: column; gap: .5rem; }
+.abp-library-reader::backdrop { background: rgb(0 0 0 / 65%); }
+.abp-library-reader header { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: .5rem; }
+.abp-library-reader h2 { margin: 0; font-size: 1.1rem; }
+.abp-library-reader p { margin: 0; font-size: .8rem; line-height: 1.5; }
+.abp-library-reader .abp-btn { min-height: 44px; max-width: 100%; white-space: normal; }
+.abp-library-reader iframe { display: block; box-sizing: border-box; width: 100%; flex: 1 0 40vh; min-height: 14rem; border: 1px solid var(--abp-ink-3); background: white; }
+.abp-library-reader :focus-visible { outline: 3px solid var(--abp-ink); outline-offset: 3px; }
+@media (max-width: 400px) { .abp-library-reader { padding: .6rem; } }

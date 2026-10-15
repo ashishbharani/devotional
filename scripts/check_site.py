@@ -43,6 +43,14 @@ def main() -> int:
         require(page.is_file(), f"missing route /{route}/", errors)
 
     home = (site / "index.html").read_text(encoding="utf-8")
+    # Both hosts use the same catalogue renderer and progressive reader links.
+    for route in ("index.html", "library/index.html"):
+        library = (site / route).read_text(encoding="utf-8")
+        require(library.count('data-book-reader="') == 8, f"{route}: verified book reader registrations changed", errors)
+        require('https://www.valmikiramayan.net/' in library, f"{route}: Valmiki English reader missing", errors)
+        require('https://bharatkosha.org/hi/granth/shrimad-valmiki-ramayana-gita-press' in library, f"{route}: Valmiki Hindi fallback missing", errors)
+        require('data-book-reader="Valmiki Ramayana — HINDI"' not in library, f"{route}: Hindi provider blocks embedding", errors)
+        require('javascripts/library-reader.js' in library and 'stylesheets/library-reader.css' in library, f"{route}: reader assets disconnected", errors)
     require('<h1 id="udhc-title" tabindex="-1">HINDU DEVOTIONAL COLLECTION</h1>' in home,
             "requested royal-homepage title is missing", errors)
     require(SITE_NAME in home, "canonical site branding is missing from the homepage", errors)
