@@ -67,6 +67,13 @@ jobs:
         run: node scripts/test_navigation.mjs
       - name: Test royal homepage, artwork, search and destination links
         run: node scripts/test_royal_homepage.mjs
+      - name: Test shared sacred design on every page type
+        run: node scripts/test_sacred_site.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: sacred-site-screenshots
+          path: work/sacred-site
       - uses: actions/upload-artifact@v4
         if: always()
         with:

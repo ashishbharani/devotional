@@ -1,0 +1,9 @@
+{% extends "main.html" %}
+{% block content %}
+  {% set m = {} %}{% set sacred_kind = 'editorial' %}
+  <div class="abp-page abp-sacred-page" data-sacred-kind="editorial">
+    {% include "partials/sacred-intro.html" %}
+    <h1>404 - Not found</h1>
+    <p>This page could not be found. <a href="{{ config.extra.navigation_base }}">Return to the homepage</a> or <a href="{{ config.extra.navigation_base }}find/">search the collection</a>.</p>
+  </div>
+{% endblock %}

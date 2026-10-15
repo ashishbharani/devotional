@@ -1,0 +1,17 @@
+{# Original decorative line drawings. Inline paths intentionally have no href:
+   Material instant navigation rewrites [href] and cannot assign SVGUseElement.href. #}
+{% set symbol = m.abp_symbol | default('sun' if sacred_kind == 'astronomy' else ('manuscript' if sacred_kind == 'manuscript' else 'lotus')) %}
+{% set drawings = {
+  'lotus': 'M24 5c-13 13-13 24 0 33C37 29 37 18 24 5ZM24 38C9 39 4 29 5 17c12 2 18 9 19 21Zm0 0c15 1 20-9 19-21-12 2-18 9-19 21ZM8 42h32',
+  'manuscript': 'M5 10c8-3 13-2 19 2 6-4 11-5 19-2v29c-8-3-13-2-19 2-6-4-11-5-19-2ZM24 12v29M10 17l8 2m-8 5 8 2m12-7 8-2m-8 9 8-2',
+  'temple': 'M5 42h38M9 42V23h30v19M5 23h38L24 6 5 23Zm12 19V30h14v12M24 6V2m-5 13h10M12 26v13m24-13v13',
+  'lamp': 'M6 27h36c-2 12-10 17-18 17S8 39 6 27ZM24 22c-9-5-5-12 0-19 5 7 9 14 0 19Zm0 0v5M12 32h24',
+  'sun': 'M24 14a10 10 0 1 0 0 20 10 10 0 0 0 0-20ZM24 2v7m0 30v7M2 24h7m30 0h7M8 8l5 5m22 22 5 5M8 40l5-5m22-22 5-5',
+  'journey': 'M24 43S8 28 8 18a16 16 0 0 1 32 0c0 10-16 25-16 25Zm0-31a6 6 0 1 0 0 12 6 6 0 0 0 0-12Z',
+  'music': 'M18 36V10l23-5v26M18 17l23-5M18 37a7 5 0 1 0-14 0 7 5 0 0 0 14 0Zm23-5a7 5 0 1 0-14 0 7 5 0 0 0 14 0Z'
+} %}
+<div class="abp-sacred-intro">
+  {% if m.abp_portrait %}<img src="{{ m.abp_portrait | url }}" width="88" height="88" alt="Traditional illustration of {{ m.abp_portrait_name }}" decoding="async" loading="lazy">{% else %}<span class="abp-sacred-emblem" aria-hidden="true"><svg viewBox="0 0 48 48" focusable="false" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="{{ drawings[symbol] }}"></path></svg></span>{% endif %}
+  <p>Explore · Read · Listen · Learn · Devote</p>
+  <span class="abp-sacred-rule" aria-hidden="true"></span>
+</div>
