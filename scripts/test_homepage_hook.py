@@ -19,5 +19,6 @@ assert str(root) not in sys.path, "Run in isolated mode (-I), without an ambient
 html = hook.page_home(hook.load())
 assert 'id="udhc-title"' in html
 assert 'data-panchang-view="summary"' in html
-assert "ULTIMATE HINDU DEVOTIONAL COLLECTION" in html
+assert "HINDU DEVOTIONAL COLLECTION" in html
+assert "ULTIMATE" not in html
 print("PASS homepage hook renders after MkDocs restores its import path")

@@ -91,7 +91,7 @@ try {
     assert.equal(await cover.locator("img").evaluate((image) => getComputedStyle(image).cursor), "auto");
     assert.equal(await page.locator(".udhc-hero a:not(.udhc-button):not(.udhc-about-link), .udhc-hero [onclick], .udhc-hero area").count(), 0);
     assert.equal(await page.locator("h1").count(), 1);
-    assert.equal(await page.locator("h1").innerText(), "ULTIMATE HINDU DEVOTIONAL COLLECTION");
+    assert.equal(await page.locator("h1").innerText(), "HINDU DEVOTIONAL COLLECTION");
     await page.locator("#udhc-title").focus();
     await page.keyboard.press("Tab");
     assert.equal(await page.evaluate(() => !!document.activeElement.closest(".udhc-hero-art")), false, `${width}px: Tab skips the non-interactive picture`);

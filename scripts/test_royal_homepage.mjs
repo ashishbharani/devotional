@@ -49,7 +49,7 @@ try {
     await page.locator('body').evaluate((el,t)=>el.setAttribute('data-md-color-scheme',t),theme);
     await page.locator('.udhc-home img').evaluateAll(images=>Promise.all(images.map(img=>{img.loading='eager'; return img.decode();})));
     assert.equal(await page.locator('h1').count(),1);
-    assert.equal(await page.locator('h1').innerText(),'ULTIMATE HINDU DEVOTIONAL COLLECTION');
+    assert.equal(await page.locator('h1').innerText(),'HINDU DEVOTIONAL COLLECTION');
     assert.equal(await page.locator('.udhc-path').count(),4);
     assert.equal(await page.locator('.udhc-category').count(),9);
     assert.equal(await page.locator('.udhc-deities a').count(),10);
