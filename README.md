@@ -84,6 +84,35 @@ uv run mkdocs build     # static site in ./site (≈1 min, ~130 MB)
 
 ## How it is put together
 
+### Language selection and optional whole-page translation
+
+The header language picker has two distinct choices:
+
+- **Local interface/title script:** uses `docs/assets/i18n.json` and offline
+  transliteration. It does not promise to translate every page paragraph, tool
+  message, sacred work, or external PDF.
+- **Translate whole page (online, optional):** select a target language and click
+  **Open Google Translate**. This opens a machine-translated copy of the published
+  public page in a separate tab; no third-party script is embedded or loaded by
+  the picker. Only the public origin/path is included, never query parameters or
+  fragments (which can contain coordinates/search text). It does not transmit
+  local favourites, authentication state, form inputs or preferences. Google
+  handles the translated copy under its own policies. No request to Google
+  Translate occurs until the external link is activated.
+
+The original tab remains authoritative. Use it for sign-in, favourites, search
+and live Panchang/Ephemeris calculations; provider-proxied interactive features
+and dynamic results are not guaranteed to work or translate. Machine translation
+can misinterpret sacred/astronomical terminology, image text and PDFs. Provider
+availability varies by region/device. If unavailable, use the browser's Translate
+command on the original page. See [Google's website translation help](https://support.google.com/translate/answer/2534559).
+No language/storage key or canonical devotional content is changed by this option.
+
+Regression: `node scripts/test_translation_browser.mjs` tests all nine targets,
+explicit activation, private URL stripping, local language persistence and mobile/
+desktop dialogs using a mocked external destination. Provider output quality is
+not asserted by the deterministic test.
+
 ```
 data/collection.json      structured data extracted from the PDF (single source of truth)
 scripts/extract_pdf.py    PDF -> data/collection.json + docs/assets/images/
