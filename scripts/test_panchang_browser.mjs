@@ -10,7 +10,7 @@ const require = createRequire(import.meta.url);
 const { chromium } = require("playwright");
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const site = path.resolve(process.env.PANCHANG_TEST_SITE || path.join(root, "site"));
-const brandName = "Hindu Devotional Collections";
+const brandName = "HDC — Hindu Devotional Collection";
 const brandWidths = [320, 360, 375, 390, 412, 768, 1024, 1440];
 const shots = process.env.PANCHANG_SCREENSHOTS;
 if (shots) await mkdir(shots, { recursive: true });

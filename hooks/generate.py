@@ -1252,6 +1252,7 @@ def on_post_build(config, **kw):
     tpl = (ROOT / "hooks" / "sw.template.js").read_text(encoding="utf-8")
     shell = [
         "", "offline/", "favourites/", "manifest.webmanifest", "stylesheets/abp.css", "stylesheets/feedback.css", "stylesheets/project-info.css", "stylesheets/search.css",
+        "stylesheets/navigation.css", "stylesheets/royal-home.css", "stylesheets/sacred-site.css",
         "assets/images/logo.svg", "assets/images/icon-192.png", "assets/images/icon-512.png",
         "assets/images/icon-maskable-512.png", "assets/images/apple-touch-icon.png",
     ]

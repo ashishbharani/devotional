@@ -43,7 +43,7 @@ description: The complete foreword by Ashish Bharani, dedicated to his parents a
 
 <p>Then the collection grew beyond the pages of a book. It found another home on the internet.</p>
 
-<p>The Hindu Devotional Collections website was created so that these materials could become easier to search, read, listen to, explore and share. What once required turning through thousands of pages can increasingly be discovered through a search. Sacred scriptures and books can be brought closer to the reader. Devotional music can be explored. Prayers and works can be searched, and useful devotional tools can sit alongside the collection itself.</p>
+<p>The HDC — Hindu Devotional Collection website was created so that these materials could become easier to search, read, listen to, explore and share. What once required turning through thousands of pages can increasingly be discovered through a search. Sacred scriptures and books can be brought closer to the reader. Devotional music can be explored. Prayers and works can be searched, and useful devotional tools can sit alongside the collection itself.</p>
 
 <p>https://ashishbharani.github.io/devotional/</p>
 
@@ -139,7 +139,7 @@ description: The complete foreword by Ashish Bharani, dedicated to his parents a
 
 <h2>Ashish Bharani</h2>
 
-<p>Collector &amp; Compiler | Hindu Devotional Collections</p>
+<p>Collector &amp; Compiler | HDC — Hindu Devotional Collection</p>
 
-<p>Visit the Hindu Devotional Collections</p>
+<p>Visit the HDC — Hindu Devotional Collection</p>
 </article>

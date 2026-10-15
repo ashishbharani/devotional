@@ -1,4 +1,4 @@
-# Hindu Devotional Collections — MkDocs site
+# HDC — Hindu Devotional Collection — MkDocs site
 
 A browsable website version of the PDF publication **Hindu Devotional Collection — Reworked Publication 2026**,
 collected & compiled by Ashish Bharani.
@@ -19,7 +19,7 @@ collected & compiled by Ashish Bharani.
 
 ## Optional account and offline operation
 
-Browsing never requires an account. Firebase configuration is intentionally left as placeholders until the site owner follows [FIREBASE_SETUP.md](FIREBASE_SETUP.md). The service worker precaches only the application shell and caches catalogue pages as they are visited; it does not download all generated pages, works, books, PDFs, YouTube content, or Firebase traffic. During activation it removes only obsolete `udhc-*` and legacy site-owned `abp-*` caches.
+Browsing never requires an account. The existing public Firebase Web configuration is present; Google-provider authorization and protected Firestore access remain owner-managed prerequisites described in [FIREBASE_SETUP.md](FIREBASE_SETUP.md). The service worker precaches only the application shell, including the existing makeover styles, and caches catalogue pages as they are visited; it does not download all generated pages, works, books, PDFs, YouTube content, or Firebase traffic. During activation it removes only obsolete `udhc-*` and legacy site-owned `abp-*` caches. Those cache prefixes, the `udhc-favourites` database, legacy CSS/anchor IDs and external Firebase project IDs are retained compatibility identifiers, not the current HDC display brand.
 
 ## Accessibility (WCAG 2.2 AA)
 

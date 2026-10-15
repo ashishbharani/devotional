@@ -8,7 +8,7 @@ import re
 from pathlib import Path
 
 
-SITE_NAME = "Hindu Devotional Collections"
+SITE_NAME = "HDC — Hindu Devotional Collection"
 ROUTES = (
     "",
     "foreword",
@@ -198,7 +198,7 @@ def main() -> int:
     require(".md-header__title { display: none; }" not in stylesheet, "mobile CSS still hides the site name", errors)
 
     retired_public_patterns = (
-        r"hindu devotional collection(?!s)",
+        r"hindu devotional collections\b",
         r"hindu devotional library",
         r"ultimate hindu devotional collections?",
         r"\budhc\b",

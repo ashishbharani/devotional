@@ -2,6 +2,10 @@
 
 The website works without Firebase: everyone can browse, and guest favourites stay in the browser. Complete these steps only to enable optional Google sign-in and cross-device favourite synchronization.
 
+The existing Web configuration is already populated. HDC rebranding does not
+require a new Firebase project or changes to its `udhc-devotional` identity,
+authorized domains, user records or favourites paths. Preserve those identifiers.
+
 ## 1. Create or select a Firebase project
 
 1. Open [Firebase Console](https://console.firebase.google.com/).
@@ -11,7 +15,7 @@ The website works without Firebase: everyone can browse, and guest favourites st
 ## 2. Add the website as a Web App
 
 1. On **Project overview**, select the Web icon (`</>`).
-2. Enter a nickname such as `Hindu Devotional Collections Website`.
+2. Enter a nickname such as `HDC — Hindu Devotional Collection Website`.
 3. Do not enable Firebase Hosting; GitHub Pages remains the host.
 4. Select **Register app**.
 5. Copy the `firebaseConfig` values shown by Firebase.

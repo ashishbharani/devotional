@@ -69,6 +69,13 @@ jobs:
         run: node scripts/test_royal_homepage.mjs
       - name: Test shared sacred design on every page type
         run: node scripts/test_sacred_site.mjs
+      - name: Verify existing HDC plugins, legacy data and restored offline styles
+        run: node scripts/test_hdc_plugins_browser.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: hdc-plugin-branding-screenshots
+          path: work/hdc-plugin-audit
       - uses: actions/upload-artifact@v4
         if: always()
         with:

@@ -10,7 +10,7 @@ description: Complete Disclaimer, Terms and Conditions, Terms of Use, Copyright 
 
 <p>Disclaimer | Terms and Conditions | Terms of Use Copyright &amp; Rights-Holder Policy | Voluntary Contribution Terms</p>
 
-<h2>Hindu Devotional Collections</h2>
+<h2>HDC — Hindu Devotional Collection</h2>
 
 <p>https://ashishbharani.github.io/devotional/</p>
 
@@ -44,7 +44,7 @@ description: Complete Disclaimer, Terms and Conditions, Terms of Use, Copyright 
 
 <h3 id="clause-1">1. Definitions and Scope</h3>
 
-<p>For these Terms, the &quot;Website&quot; or &quot;Service&quot; means the Hindu Devotional Collections website and all creator-controlled pages, directories, databases, indexes, downloadable PDFs, documents, search functions, devotional listings, Scripture and Books resources, religious-music references, Panchang and calendar tools, ephemeris or astronomical-reference tools, favourites, counters, external links, YouTube search links, images, metadata, explanatory text and other material made available through or in connection with the Website.</p>
+<p>For these Terms, the &quot;Website&quot; or &quot;Service&quot; means the HDC — Hindu Devotional Collection website and all creator-controlled pages, directories, databases, indexes, downloadable PDFs, documents, search functions, devotional listings, Scripture and Books resources, religious-music references, Panchang and calendar tools, ephemeris or astronomical-reference tools, favourites, counters, external links, YouTube search links, images, metadata, explanatory text and other material made available through or in connection with the Website.</p>
 
 <p>&quot;Operator&quot; means Ashish Bharani acting as the compiler and administrator of the Website, and includes any lawful successor or person expressly authorised in writing to administer the Website.</p>
 
@@ -452,7 +452,7 @@ description: Complete Disclaimer, Terms and Conditions, Terms of Use, Copyright 
 
 <h2 id="part-xviii">PART XVIII - FINAL NOTICE</h2>
 
-<p>The Hindu Devotional Collections is intended as a good-faith, non-commercial devotional, cultural, educational, archival and reference initiative. It is not operated for the sale of devotional works. Third-party rights remain with their respective owners, and external links are provided primarily for identification, reference and navigation.</p>
+<p>The HDC — Hindu Devotional Collection is intended as a good-faith, non-commercial devotional, cultural, educational, archival and reference initiative. It is not operated for the sale of devotional works. Third-party rights remain with their respective owners, and external links are provided primarily for identification, reference and navigation.</p>
 
 <p>The Operator does not knowingly authorise copyright infringement, defamation, unlawful publication, privacy violations or other illegal activity.</p>
 
@@ -464,7 +464,7 @@ description: Complete Disclaimer, Terms and Conditions, Terms of Use, Copyright 
 
 <p>With responsibility, transparency and respect for rights,</p>
 
-<p>Ashish Bharani Compiler - Hindu Devotional Collections</p>
+<p>Ashish Bharani Compiler - HDC — Hindu Devotional Collection</p>
 
 <p>Document version 1.1 - 03 October 2026</p>
 </article>

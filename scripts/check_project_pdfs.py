@@ -78,6 +78,9 @@ def main():
         assert page.headings.count("h1") == 1, route
         assert page.description, f"missing description: {route}"
         native = " ".join(" ".join(page.native_text).split())
+        # Only the owner-authorized current project brand may differ from the
+        # archived source. All other native wording and PDF bytes stay exact.
+        native = native.replace("HDC — Hindu Devotional Collection", "Hindu Devotional Collections")
         assert sha256(native.encode()).hexdigest() == NATIVE_TEXT_SHA[route], f"native source text changed: {route}"
         assert not any(a.get("href", "").lower().endswith(".pdf") for a in page.links), f"PDF dependency: {route}"
         for image in page.images:
