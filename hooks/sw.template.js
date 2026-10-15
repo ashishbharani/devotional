@@ -1,4 +1,5 @@
-/* UDHC service worker: shell-only precache plus pages visited by the reader. */
+/* HDC service worker: shell-only precache plus pages visited by the reader.
+ * Legacy udhc-* cache names are a compatibility protocol, not display branding. */
 const VERSION = "__UDHC_VERSION__";
 const SHELL_CACHE = `udhc-shell-${VERSION}`;
 const RUNTIME_CACHE = `udhc-runtime-${VERSION}`;

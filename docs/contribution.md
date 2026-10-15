@@ -1,11 +1,11 @@
 ---
 title: Contribution
-description: Completely voluntary support for the maintenance, preservation and technical upkeep of Hindu Devotional Collections. Access remains free for everyone.
+description: Completely voluntary support for the maintenance, preservation and technical upkeep of HDC — Hindu Devotional Collection. Access remains free for everyone.
 ---
 
 <article class="abp-project-info">
 <h1>Support the Project</h1>
-<p>Hindu Devotional Collections</p>
+<p>HDC — Hindu Devotional Collection</p>
 <p>This website and its devotional resources are being maintained as a free, non-commercial resource. Access is not dependent upon contribution. Voluntary support simply helps meet the real technical costs of keeping the collection available, secure, backed up and usable over time.</p>
 <blockquote>The purpose is simple: preserve the work, keep it accessible, and keep it free.</blockquote>
 
