@@ -2,7 +2,7 @@
 from html import escape
 from urllib.parse import urlencode
 
-HOME_TITLE = "ULTIMATE HINDU DEVOTIONAL COLLECTION"
+HOME_TITLE = "HINDU DEVOTIONAL COLLECTION"
 ART = "assets/images/royal-home/"
 
 
