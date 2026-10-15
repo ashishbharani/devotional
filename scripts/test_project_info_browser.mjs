@@ -76,12 +76,30 @@ try {
           await image.waitFor();
           assert.ok(await image.evaluate(el => el.complete && el.naturalWidth > 0));
         }
-        const focusControl = page.locator('.abp-project-footer a').first();
-        await page.keyboard.press('Tab'); // enter keyboard modality after clicking contents
-        await focusControl.focus();
-        assert.notEqual(await focusControl.evaluate(el => getComputedStyle(el).outlineStyle), 'none', 'visible keyboard focus');
-        assert.ok((await focusControl.boundingBox()).height >= 44);
-        assert.equal(await page.locator('.abp-project-footer a').count(), 4);
+        const footerLinks = page.locator('.abp-project-footer a');
+        assert.equal(await footerLinks.count(), 4);
+        // Seed the second link, then enter the first with a real keyboard action.
+        // Programmatic focus after a pointer action need not match :focus-visible.
+        // Check every link's actual Tab order, active element and painted ring.
+        await footerLinks.nth(1).focus();
+        await page.keyboard.press('Shift+Tab');
+        for (let index = 0; index < 4; index++) {
+          const focusControl = footerLinks.nth(index);
+          const focusState = await focusControl.evaluate(el => ({
+            active: document.activeElement === el,
+            visible: el.matches(':focus-visible'),
+            outline: getComputedStyle(el).outlineStyle,
+            outlineWidth: parseFloat(getComputedStyle(el).outlineWidth),
+            activeElement: document.activeElement?.outerHTML.slice(0, 300),
+          }));
+          const message = `${route} ${width} ${scheme} footer ${index}: ${JSON.stringify(focusState)}`;
+          assert.equal(focusState.active, true, `keyboard Tab order: ${message}`);
+          assert.equal(focusState.visible, true, `keyboard focus-visible: ${message}`);
+          assert.notEqual(focusState.outline, 'none', `visible keyboard focus: ${message}`);
+          assert.ok(focusState.outlineWidth >= 2, `painted focus ring: ${message}`);
+          assert.ok((await focusControl.boundingBox()).height >= 44);
+          if (index < 3) await page.keyboard.press('Tab');
+        }
         assert.match(await page.locator('.md-copyright').textContent(), /Ashish Bharani/);
         assert.equal(await page.locator('.abp-pager__n.is-disabled').count(), 0, 'reading-order pager retained');
         await checkContrast(page);
