@@ -71,6 +71,13 @@ jobs:
         run: node scripts/test_sacred_site.mjs
       - name: Verify existing HDC plugins, legacy data and restored offline styles
         run: node scripts/test_hdc_plugins_browser.mjs
+      - name: Test optional translation handoff, language scope and privacy
+        run: node scripts/test_translation_browser.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: translation-picker-screenshots
+          path: work/translation-browser
       - uses: actions/upload-artifact@v4
         if: always()
         with:
