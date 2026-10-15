@@ -21,7 +21,8 @@ async function audit(dir) {
       assert.equal((html.match(/<h1\b/g)||[]).length,1,`preserve one main heading: ${file}`);
       assert.ok(!/<use\b[^>]*\bhref=/.test(html),'no SVG href incompatible with Material instant navigation');
       if(html.includes('abp-sacred-intro')) {
-        const image=html.match(/<img src="([^"]+royal-home\/[^"]+)" width="88"/);
+        const intro=html.match(/<div class="abp-sacred-intro">([\s\S]*?)<\/div>/)?.[1] || '';
+        const image=intro.match(/<img\b[^>]*\bsrc="([^"]+(?:royal-home|deities)\/[^"]+)"/);
         if(image) {
           assert.ok((await stat(path.resolve(path.dirname(file),image[1]))).isFile(),`portrait path: ${file}`);
           portraits++;
@@ -61,8 +62,8 @@ try {
       assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),`no overflow: ${route} ${width} ${theme}`);
       const intro=await page.locator('.abp-sacred-intro').evaluate(el=>({height:el.getBoundingClientRect().height,color:getComputedStyle(el.querySelector('p')).color}));
       assert.ok(intro.height<160,'restrained internal header, not a repeated homepage hero');
-      if(route===categoryRoot+'ganesha/') assert.match(await page.locator('.abp-sacred-intro img').getAttribute('src'),/ganesha.webp$/);
-      if(route===categoryRoot+'shiva-mahesh/') assert.match(await page.locator('.abp-sacred-intro img').getAttribute('src'),/shiva.webp$/);
+      if(route===categoryRoot+'ganesha/') assert.match(await page.locator('.abp-sacred-intro img').getAttribute('src'),/deities\/ganesha-640.webp$/);
+      if(route===categoryRoot+'shiva-mahesh/') assert.match(await page.locator('.abp-sacred-intro img').getAttribute('src'),/deities\/shiva-640.webp$/);
       if(route==='tools/indian-ephemeris/') {
         await page.locator('.eph-controls').waitFor();
         assert.equal(await page.locator('.abp-page').getAttribute('data-sacred-kind'),'astronomy');
