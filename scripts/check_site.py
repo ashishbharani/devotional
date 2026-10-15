@@ -43,7 +43,7 @@ def main() -> int:
         require(page.is_file(), f"missing route /{route}/", errors)
 
     home = (site / "index.html").read_text(encoding="utf-8")
-    require('<h1 id="udhc-title" tabindex="-1">ULTIMATE HINDU DEVOTIONAL COLLECTION</h1>' in home,
+    require('<h1 id="udhc-title" tabindex="-1">HINDU DEVOTIONAL COLLECTION</h1>' in home,
             "requested royal-homepage title is missing", errors)
     require(SITE_NAME in home, "canonical site branding is missing from the homepage", errors)
     require(f"<title>{SITE_NAME}</title>" in home, "homepage browser title is incorrect", errors)
@@ -215,7 +215,7 @@ def main() -> int:
         if page == site / "index.html":
             # The owner explicitly approved this homepage heading in the new
             # design. All other public branding checks remain unchanged.
-            rendered = re.sub(r'(<h1[^>]*>)ultimate hindu devotional collection(</h1>)', r'\1\2', rendered)
+            rendered = re.sub(r'(<h1[^>]*>)hindu devotional collection(</h1>)', r'\1\2', rendered)
             # Homepage CSS/ARIA identifiers are not visitor-facing old branding.
             rendered = rendered.replace("udhc-", "homepage-")
         for retired in retired_public_patterns:
