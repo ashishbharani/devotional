@@ -48,6 +48,10 @@ try {
     await page.locator('details.abp-home-index > summary').filter({hasText:'TODAY PANCHANG'}).click();
     await page.locator('body').evaluate((el,t)=>el.setAttribute('data-md-color-scheme',t),theme);
     await page.locator('.udhc-home img').evaluateAll(images=>Promise.all(images.map(img=>{img.loading='eager'; return img.decode();})));
+    const guardians = page.locator('.udhc-guardians img');
+    assert.equal(await guardians.count(), 2);
+    assert.deepEqual(await guardians.evaluateAll(images => images.map(img => new URL(img.currentSrc).pathname.split('/').at(-1))), ['ganesha-640.webp','shiva-640.webp']);
+    assert.ok(await guardians.evaluateAll(images => images.every(img => img.complete && img.naturalWidth > 0 && getComputedStyle(img).objectFit === 'contain')));
     assert.equal(await page.locator('h1').count(),1);
     assert.equal(await page.locator('h1').innerText(),'HINDU DEVOTIONAL COLLECTION');
     assert.equal(await page.locator('.udhc-path').count(),4);
@@ -112,6 +116,7 @@ try {
     }
     await page.locator('#udhc-query').fill('');
     await page.evaluate(()=>{document.activeElement.blur();scrollTo(0,0);});
+    if (theme === 'abp-light' && [390,1440].includes(width)) await page.locator('.udhc-hero').screenshot({path:path.join(shots,`top-banner-${width}.png`)});
     await page.screenshot({path:path.join(shots,`homepage-${width}-${theme}.png`),fullPage:true});
     assert.deepEqual(errors,[]);
     await context.close();

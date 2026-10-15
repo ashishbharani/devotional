@@ -36,8 +36,8 @@ def hero():
         '<a class="udhc-button udhc-button--outline" href="library/">Explore Books Library →</a>'
         '<a class="udhc-about-link" href="foreword/">About This Collection →</a></div>'
         '</div><div class="udhc-guardians" aria-label="Devotional illustrations">'
-        f'<figure><img src="{ART}ganesha.webp" width="240" height="240" alt="Traditional illustration of Shri Ganesha"><figcaption>श्री गणेश</figcaption></figure>'
-        f'<figure><img src="{ART}shiva.webp" width="240" height="240" alt="Traditional illustration of Lord Shiva"><figcaption>ॐ नमः शिवाय</figcaption></figure>'
+        f'<figure>{deity_portrait("GANESHA", css="udhc-guardian-portrait")}<figcaption>श्री गणेश</figcaption></figure>'
+        f'<figure>{deity_portrait("SHIVA / MAHESH", css="udhc-guardian-portrait")}<figcaption>ॐ नमः शिवाय</figcaption></figure>'
         '</div></section><div class="udhc-gold-rule" aria-hidden="true">❖</div>'
     )
 

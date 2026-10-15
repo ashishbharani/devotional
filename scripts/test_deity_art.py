@@ -37,4 +37,10 @@ assert not list((ROOT / "docs/assets/images/deities").glob("chandra*"))
 assert not list((ROOT / "docs/assets/images/deities").glob("brahma*"))
 home = (ROOT / "site/index.html").read_text(encoding="utf-8")
 assert home.count('class="abp-deity-portrait"') == 9
+assert home.count('class="udhc-guardian-portrait"') == 2
+guardians = home.split('<div class="udhc-guardians"', 1)[1].split('</section>', 1)[0]
+for slug in ("ganesha", "shiva"):
+    assert f'assets/images/deities/{slug}-640.webp' in guardians
+    assert f'assets/images/deities/{slug}-1254.webp' in guardians
+    assert f'assets/images/royal-home/{slug}.webp' not in home
 print("PASS approved deity art: 16 exact identities, 32 responsive assets, all Category 1 mappings and section endpoints, nine homepage portraits; unapproved art excluded")
