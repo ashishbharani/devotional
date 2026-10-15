@@ -67,7 +67,8 @@
 .udhc-deities img,.udhc-seal { width:115px; height:115px; object-fit:cover; border:5px double #b88636; outline:1px solid #c8953e; outline-offset:4px; border-radius:50%; background:#ffe6a8; box-shadow:0 8px 24px #5a2a1320; }
 .udhc-seal { display:grid; place-items:center; padding:12px; font:600 1.1rem/1.6 Georgia,serif; }
 .udhc-home .abp-home-actions,.udhc-home > .abp-home-index,.udhc-home .abp-home-utility { margin:28px 4%; }
-.udhc-home .abp-home-actions { padding:16px; background:#fffbf1; border:1px solid #d5ac64; border-radius:4px; }
+.udhc-home .abp-home-actions { width:92%; margin-inline:auto; padding:16px; background:#fffbf1; border:1px solid #d5ac64; border-radius:4px; }
+.udhc-home .abp-home-actions .abp-btn { text-align:center; }
 .udhc-about { margin-top:38px; background:#f4e4c4; border-top:1px solid #c8953e; }
 .udhc-about p { max-width:700px; margin:0 auto 20px!important; line-height:1.9; font-size:.9rem; }
 .udhc-about a { color:#790d20!important; text-decoration:underline; display:inline-block; padding:12px 4px; }
