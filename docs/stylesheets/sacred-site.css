@@ -1,0 +1,85 @@
+/* Shared temple-of-knowledge presentation. No routes, data or UI state here.
+   Existing ABP tokens remain the interface for every widget and theme mode. */
+:root {
+  --sacred-sandalwood: #fff5dd;
+  --sacred-parchment: #f6e7c7;
+  --sacred-maroon: #790d20;
+  --sacred-gold: #c8953e;
+  --sacred-saffron: #934013;
+  --sacred-radius: .65rem;
+  --abp-paper: var(--sacred-sandalwood);
+  --abp-paper-2: var(--sacred-parchment);
+  --abp-ink: #43261a;
+  --abp-ink-2: #543b2e;
+  --abp-ink-3: #69503e;
+  --abp-maroon: var(--sacred-maroon);
+  --abp-gold: #b88636;
+  --abp-btn: var(--sacred-maroon);
+  --abp-btn-ink: #571428;
+  --abp-row: #fffbf1;
+}
+/* Homepage and internal pages share the same palette source. */
+.udhc-home { --udhc-cream: var(--sacred-sandalwood); --udhc-paper: #fffbf1; --udhc-maroon: var(--sacred-maroon); --udhc-gold: var(--sacred-gold); }
+body { background-image: radial-gradient(ellipse at top, color-mix(in srgb, var(--abp-gold) 9%, transparent), transparent 65%); }
+/* The accessibility flag shares a name with the rules-card component; the
+   document root must not inherit that component's grid/min-content sizing. */
+html.abp-cards { display: block; max-width: none; margin: 0; }
+.md-header { border-top: 3px solid var(--sacred-gold); border-bottom: 1px solid var(--sacred-gold); }
+.md-header__title { font-family: var(--abp-serif); }
+.abp-navigation { border-bottom: 3px double var(--abp-gold); }
+.md-content { border: 1px solid color-mix(in srgb, var(--abp-gold) 60%, transparent); border-radius: var(--sacred-radius); background: var(--abp-paper); box-shadow: 0 8px 30px var(--abp-shadow); min-width: 0; }
+.abp-sacred-page { padding: clamp(.75rem, 2vw, 1.5rem); }
+.abp-sacred-intro { display: flex; align-items: center; gap: .8rem; padding: .5rem 0 1rem; margin-bottom: 1rem; border-bottom: 3px double var(--abp-gold); min-width: 0; }
+.abp-sacred-intro p { margin: 0; color: var(--abp-maroon); font: 600 .65rem/1.8 var(--abp-serif); letter-spacing: .06em; }
+.abp-sacred-emblem { display: grid; place-items: center; width: 3rem; height: 3rem; flex: 0 0 3rem; border: 3px double var(--abp-gold); border-radius: 50%; color: var(--abp-maroon); font-size: 1.8rem; background: var(--abp-paper-2); }
+.abp-sacred-emblem svg { display: block; width: 65%; height: 65%; }
+.abp-sacred-intro img { width: 88px; height: 88px; flex: 0 0 88px; object-fit: cover; border: 4px double var(--abp-gold); border-radius: 50%; box-sizing: border-box; }
+.abp-sacred-rule { flex: 1; height: 1px; background: linear-gradient(90deg, var(--abp-gold), transparent); }
+.abp-sacred-page .abp-titlebar { border: 3px double var(--abp-gold); border-radius: var(--sacred-radius); background: linear-gradient(115deg, var(--abp-paper-2), var(--abp-paper)); padding-block: 1rem; }
+.abp-sacred-page .abp-titlebar::after { border-bottom-color: var(--abp-gold); }
+.abp-sacred-page .abp-titlebar--cat .abp-titlebar__h { font-family: var(--abp-serif); font-size: clamp(.85rem, 1.7vw, 1.25rem); line-height: 1.4; }
+.abp-sacred-page :is(h1,h2,h3) { text-wrap: pretty; }
+.abp-sacred-page > h1, .abp-project-info > h1 { font-family: var(--abp-serif); color: var(--abp-maroon); border-bottom: 3px double var(--abp-gold); padding-bottom: .65rem; }
+.abp-sacred-page .abp-groupbar { border: 3px double var(--abp-gold); border-radius: var(--sacred-radius); }
+.abp-sacred-page .abp-formbar { border-inline-start: 4px solid var(--abp-gold); }
+.abp-sacred-page .abp-group { padding: .7rem; margin-block: .7rem; border: 1px solid color-mix(in srgb, var(--abp-gold) 60%, transparent); border-radius: var(--sacred-radius); background: var(--abp-row); }
+.abp-sacred-page :is(.abp-group__bar,.abp-catbar) { border-radius: .35rem; }
+.abp-sacred-page :is(.abp-sheet,.abp-search-grid,.abp-directory) { min-width: 0; }
+.abp-sacred-page .abp-table tbody :is(td,th) { line-height: 1.55; }
+.abp-sacred-page .abp-table .w { font-family: var(--abp-serif); }
+/* Dense metadata stays compact. No ornament is repeated on individual rows. */
+.abp-sacred-page :is(.abp-finder,.abp-directory,.abp-japa) { padding: clamp(.5rem, 1.5vw, 1rem); border: 1px solid var(--abp-gold); border-radius: var(--sacred-radius); background: var(--abp-paper-2); }
+.abp-sacred-page :is(.abp-finder input,.abp-finder select) { background-color: var(--abp-row); color: var(--abp-ink-2); }
+.abp-sacred-page .abp-directory__results a { background: var(--abp-row); }
+.abp-sacred-page .abp-directory__letters { grid-template-columns: repeat(auto-fit, minmax(min(100%, max(44px, 2.4rem)), 1fr)); max-width: calc(13 * 2.4rem + 12 * .35rem); margin-inline: auto; }
+.abp-sacred-page[data-sacred-kind="manuscript"] .abp-book { border: 3px double var(--abp-gold); border-radius: .25rem var(--sacred-radius) var(--sacred-radius) .25rem; box-shadow: inset 4px 0 0 color-mix(in srgb, var(--abp-gold) 30%, transparent); }
+.abp-book { background: linear-gradient(120deg, var(--abp-row), var(--abp-paper-2)); border-color: var(--abp-gold); }
+.abp-book .abp-book__btns .abp-btn { background: var(--abp-paper); }
+.abp-sacred-page .abp-project-info { font-family: var(--abp-serif); line-height: 1.9; }
+.abp-sacred-page .abp-project-info :is(p,li) { overflow-wrap: anywhere; }
+.abp-sacred-page .abp-project-info :is(h2,h3) { line-height: 1.45; }
+.abp-sacred-page .abp-project-info blockquote { border-inline-start: 4px solid var(--abp-gold); }
+.abp-sacred-page .abp-panchang { border: 3px double var(--abp-gold); background: var(--abp-paper-2); }
+.abp-sacred-page .abp-panchang :is(input,select) { background: var(--abp-row); }
+/* Extra specificity also covers the Ephemeris stylesheet loaded on demand. */
+.abp-sacred-page .eph .eph-hero { background: linear-gradient(120deg, #790d20, #4a0920); border: 3px double var(--sacred-gold); border-radius: var(--sacred-radius); }
+.abp-sacred-page .eph :is(.eph-controls,.eph-location) { border-color: var(--abp-gold); border-radius: var(--sacred-radius); background: var(--abp-paper-2); }
+.abp-sacred-page .eph :is(.eph-primary,.eph-tabs button[aria-selected="true"]) { color: #fff5dd; background: #790d20; border-color: #790d20; }
+.abp-project-footer { border-top: 4px double var(--abp-gold); border-bottom: 1px solid var(--abp-gold); background: var(--abp-paper-2); font-family: var(--abp-serif); }
+.md-footer { border-top: 1px solid var(--abp-gold); }
+/* Retain lamp-light, high contrast and native forced-colour behaviours. */
+[data-md-color-scheme="abp-dark"] { --abp-btn: #e8998b; --abp-btn-ink: #f6dfb0; }
+html.abp-hc .abp-sacred-intro { border-color: var(--abp-ink); }
+html.abp-hc .md-content { box-shadow: none; border-color: var(--abp-ink); }
+@media (max-width: 600px) {
+  .abp-sacred-page { padding: .5rem; }
+  .abp-sacred-intro { gap: .5rem; }
+  .abp-sacred-intro img { width: 64px; height: 64px; flex-basis: 64px; }
+  .abp-sacred-intro p { font-size: .6rem; letter-spacing: 0; }
+  .abp-sacred-rule { display: none; }
+  .abp-sacred-page .abp-project-info { font-size: .82rem; line-height: 1.85; }
+}
+@media print {
+  .abp-sacred-intro { display: none; }
+  .md-content { border: 0; box-shadow: none; }
+}

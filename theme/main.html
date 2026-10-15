@@ -105,7 +105,11 @@
   </form>
   {% endif %}
   {%- set m = page.meta or {} -%}
-  <div class="abp-page{% if m.abp_color %} abp-page--cat{% endif %}"{% if m.abp_color %} style="--abp-cat: {{ m.abp_color }}; --abp-cat-ink: {{ m.abp_color_ink }}"{% endif %}>
+  {% set sacred_kind = 'home' if page.is_homepage else ('catalogue' if m.abp_category else ('manuscript' if page.url == 'library/' else ('astronomy' if page.url in ['panchang/', 'hindu-calendar/', 'date-converter/', 'tools/indian-ephemeris/'] else ('discovery' if page.url in ['find/', 'a-z/', 'master-index/', 'favourites/'] else 'editorial')))) %}
+  <div class="abp-page{% if not page.is_homepage %} abp-sacred-page{% endif %}{% if m.abp_color %} abp-page--cat{% endif %}" data-sacred-kind="{{ sacred_kind }}"{% if m.abp_color %} style="--abp-cat: {{ m.abp_color }}; --abp-cat-ink: {{ m.abp_color_ink }}"{% endif %}>
+    {% if not page.is_homepage %}
+    {% include "partials/sacred-intro.html" %}
+    {% endif %}
     {% if m.abp_category %}
       {% include "partials/abp-breadcrumb.html" %}
     {% endif %}

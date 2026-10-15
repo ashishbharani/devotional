@@ -1209,6 +1209,25 @@ def on_files(files, config, **kw):
             meta["hide"] = ["navigation", "toc"]
         elif src != "disclaimer.md":
             meta["hide"] = ["toc"]
+        # Presentation only: exact canonical names, never infer an avatar or
+        # conflate a regional tradition with one of the supplied portraits.
+        portraits = {"GANESHA": "ganesha", "SHIVA / MAHESH": "shiva",
+                     "VISHNU": "vishnu", "KRISHNA": "krishna", "DURGA": "durga",
+                     "SARASWATI": "saraswati", "NAVAGRAHA": "navagraha"}
+        category_num = p.get("cat", {}).get("num")
+        if category_num:
+            meta["abp_symbol"] = next((symbol for symbol, numbers in (
+                ("manuscript", {5, 10, 11, 20, 27}),
+                ("temple", {4, 16, 24, 31, 39, 40}),
+                ("lamp", {7, 8, 19, 29, 30, 36, 37, 38, 42}),
+                ("sun", {26, 28, 35}), ("journey", {9, 41}),
+                ("music", {14, 15}),
+            ) if category_num in numbers), "lotus")
+        if p.get("cat", {}).get("num") == 1 and "group" in p:
+            portrait = portraits.get(p["group"]["name"])
+            if portrait:
+                meta["abp_portrait"] = "assets/images/royal-home/" + portrait + ".webp"
+                meta["abp_portrait_name"] = title_case(p["group"]["name"])
         meta = {k: v for k, v in meta.items() if v is not None}
         files.append(File.generated(config, src, content=front_matter(**meta) + body))
 
