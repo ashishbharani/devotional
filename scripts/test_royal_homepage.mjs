@@ -36,7 +36,7 @@ try {
   // Exercise every date-dependent devotional link, not only today's observance.
   const contexts=devotionalContext(['Ekadashi','Shivaratri','Navaratri','Janmashtami','Ram Navami','Ganesh Chaturthi','Hanuman','Purnima','Amavasya','Sankranti'].map(name=>({name}))).links;
   for (const link of [...contexts,...GENERAL_LINKS]) assert.ok((await stat(path.join(site,link.path,'index.html'))).isFile(),link.path);
-  for (const [width,theme] of [[320,'abp-light'],[390,'abp-light'],[768,'abp-light'],[1440,'abp-light'],[390,'abp-dark'],[1440,'abp-dark']]) {
+  for (const [width,theme] of [[320,'abp-light'],[390,'abp-light'],[768,'abp-light'],[1440,'abp-light'],[1920,'abp-light'],[390,'abp-dark'],[1440,'abp-dark']]) {
     const context = await browser.newContext({viewport:{width,height:950},reducedMotion:'reduce',serviceWorkers:'block'});
     const page = await context.newPage();
     const errors=[];
@@ -55,6 +55,20 @@ try {
     assert.equal(await page.locator('.udhc-deities a').count(),10);
     assert.equal(await page.locator('.udhc-home .abp-stats li').nth(1).locator('b').innerText(),'42');
     assert.equal(await page.locator('.udhc-home details.abp-home-index').count(),3);
+    const tabLayout = await page.locator('.abp-home-actions').evaluate(nav => {
+      const box = nav.getBoundingClientRect(), parent = nav.parentElement.getBoundingClientRect();
+      return {
+        centerOffset: Math.abs((box.left + box.right - parent.left - parent.right) / 2),
+        links: [...nav.querySelectorAll('a')].map(a => ({
+          path: new URL(a.href).pathname,
+          textAlign: getComputedStyle(a).textAlign,
+          justify: getComputedStyle(a).justifyContent,
+        })),
+      };
+    });
+    assert.ok(tabLayout.centerOffset <= 1, `homepage tabs centered at ${width}px: ${tabLayout.centerOffset}`);
+    assert.deepEqual(tabLayout.links.map(a=>a.path), ['foreword/','disclaimer/','find/','a-z/'].map(p=>'/devotional/'+p));
+    assert.ok(tabLayout.links.every(a=>a.textAlign==='center' && a.justify==='center'),'tab labels centered, including wrapped lines');
     assert.equal(await page.locator('.udhc-hero-art a,.udhc-hero-art [onclick],.udhc-hero-art [tabindex]').count(),0);
     assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth <= innerWidth+1),'no horizontal overflow');
     assert.deepEqual(await page.locator('.udhc-home img').evaluateAll(images=>images.filter(img=>!img.complete||!img.naturalWidth).map(img=>img.src)),[]);
