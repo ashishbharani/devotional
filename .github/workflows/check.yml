@@ -31,6 +31,8 @@ jobs:
       - name: Build MkDocs site (every warning fails the check)
         run: uv run mkdocs build --strict 2>&1 | tee build.log
         shell: bash
+      - name: Test homepage hook without an ambient repository import path
+        run: uv run python -I scripts/test_homepage_hook.py
       - name: Audit generated routes, canonical IDs, translations and PWA shell
         run: |
           uv run python scripts/check_site.py
@@ -63,6 +65,13 @@ jobs:
           PANCHANG_SCREENSHOTS: work/panchang-browser
       - name: Test compact navigation, categories, keyboard and search
         run: node scripts/test_navigation.mjs
+      - name: Test royal homepage, artwork, search and destination links
+        run: node scripts/test_royal_homepage.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: royal-homepage-screenshots
+          path: work/royal-homepage
       - name: Test feedback UI, context, accessibility and mocked submissions
         run: node scripts/test_feedback_browser.mjs
         env:

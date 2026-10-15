@@ -74,9 +74,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Noto+Serif:wght@500;600;700&display=swap">
   {% if page.is_homepage %}
-  <link rel="preload" as="image" type="image/webp"
-        imagesrcset="{{ 'assets/images/cover-640.webp' | url }} 640w, {{ 'assets/images/cover-1024.webp' | url }} 1024w, {{ 'assets/images/cover-1491.webp' | url }} 1491w"
-        imagesizes="(min-width: 90rem) 1400px, 100vw">
+  <link rel="preload" as="image" type="image/webp" href="{{ 'assets/images/royal-home/temple-ghat-hero.webp' | url }}">
   {% endif %}
 {% endblock %}
 

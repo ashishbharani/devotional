@@ -38,6 +38,7 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 from scripts.check_i18n import audit_catalogue  # noqa: E402
 from scripts.search_index import build_search  # noqa: E402
+from hooks.royal_home import hero, discovery, closing  # noqa: E402
 
 log = logging.getLogger("mkdocs.hooks.abp")
 
@@ -743,22 +744,12 @@ def page_home(d):
     total = sum(c["works_stated"] for c in d["categories"])
     groups = sum(len(c["merged"]) for c in d["categories"])
     return (
-        f'<h1 class="abp-sr" tabindex="-1">{SITE_NAME}</h1>\n'
-        '<section class="abp-cover" markdown="0" aria-label="Cover">\n'
-        "<picture>"
-        '<source type="image/webp" sizes="(min-width: 90rem) 1400px, 100vw" '
-        'srcset="assets/images/cover-640.webp 640w, assets/images/cover-1024.webp 1024w, assets/images/cover-1491.webp 1491w">'
-        '<img src="assets/images/cover-1024.jpg" sizes="(min-width: 90rem) 1400px, 100vw" '
-        'srcset="assets/images/cover-640.jpg 640w, assets/images/cover-1024.jpg 1024w, assets/images/cover-1491.jpg 1491w" '
-        'width="1491" height="1055" fetchpriority="high" decoding="async" '
-        f'alt="{SITE_NAME} — a pan-India multilingual devotional reference, collected and compiled by Ashish Bharani">'
-        "</picture>\n"
-        "</section>\n\n"
-        '<ul class="abp-stats" markdown="0" aria-label="The collection in numbers">'
+        '<div class="udhc-home" markdown="0">' + hero()
+        + '<ul class="abp-stats" aria-label="The collection in numbers">'
         f'<li><b>{fmt(total)}</b> <span data-i18n="works">works</span></li>'
-        f'<li><b>42</b> <span data-i18n="categories">categories</span></li>'
+        f'<li><b>{len(d["categories"])}</b> <span data-i18n="categories">categories</span></li>'
         f'<li><b>{fmt(groups)}</b> <span data-i18n="deitiesGroups">deities, traditions &amp; groups</span></li>'
-        "</ul>\n\n"
+        "</ul>\n\n" + discovery(d) +
         '<nav class="abp-home-actions" markdown="0" aria-label="Main sections" data-i18n-aria="mainSections">'
         '<div class="abp-home-actions__row">'
         '<a class="abp-btn abp-btn--big" href="foreword/" data-i18n="foreword">Foreword</a>'
@@ -784,7 +775,7 @@ def page_home(d):
         '<a class="abp-btn abp-btn--big" href="japa-counter/">'
         '<span aria-hidden="true">📿</span><span data-i18n="japa">Japa / Devotional Counter</span></a>'
         '<a class="abp-btn abp-btn--big" href="tools/indian-ephemeris/">Indian Ephemeris</a>'
-        "</nav>\n"
+        "</nav>\n" + closing() + '</div>'
     )
 
 
