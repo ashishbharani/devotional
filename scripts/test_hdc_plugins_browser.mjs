@@ -53,11 +53,13 @@ try {
   await page.waitForFunction(()=>document.querySelectorAll('#abp-favourites-list li').length===1);
   assert.ok(await page.evaluate(async()=>(await indexedDB.databases()).some(db=>db.name==='udhc-favourites')),'legacy favourites DB retained');
   await page.locator('.abp-language-btn').click();
+  await page.locator('[data-local-language] summary').click();
   await page.locator('[data-lang="hi"]').click();
   await page.reload();
   assert.equal(await page.locator('html').getAttribute('lang'),'hi');
   assert.equal(await page.evaluate(()=>localStorage.getItem('abp-language')),'hi');
   await page.locator('.abp-language-btn').click();
+  await page.locator('[data-local-language] summary').click();
   await page.locator('[data-lang="en"]').click();
   await page.locator('.abp-a11y-btn').click();
   await page.locator('.abp-a11y-dialog [name="motion"]').check();

@@ -40,44 +40,57 @@ try{
   assert.equal(await page.locator('.abp-language-dialog').count(),0,'Escape cleans up the picker');
   await page.locator('.abp-language-btn').click();
   const dialog=page.locator('.abp-language-dialog');
-  assert.match(await dialog.innerText(),/not every paragraph/,'local scope is disclosed');
+  assert.match(await dialog.locator('[data-local-language] summary').innerText(),/not every paragraph/,'local scope is disclosed separately');
+  assert.equal(await dialog.locator('[data-local-language]').getAttribute('open'),null,'partial local translation is NOT the default choice');
   assert.match(await dialog.innerText(),/favourites and live calculations/,'provider limits disclosed');
-  const link=dialog.locator('a[target="_blank"]').first();
+  const link=dialog.locator('[data-full-language="hi"]');
   assert.equal(await link.getAttribute('rel'),'noopener noreferrer');
   assert.equal(await link.getAttribute('referrerpolicy'),'no-referrer');
   for(const code of languages){
-    await dialog.locator('#abp-online-language').selectOption(code);
-    const target=new URL(await link.getAttribute('href'));
+    const primary=dialog.locator(`[data-full-language="${code}"]`);
+    assert.ok(await primary.isVisible(),'the main language choices are whole-page translation');
+    const target=new URL(await primary.getAttribute('href'));
     assert.equal(target.origin,'https://translate.google.com');
     assert.equal(target.searchParams.get('tl'),code);
     assert.equal(target.searchParams.get('u'),'https://ashishbharani.github.io/devotional/tools/indian-ephemeris/','only published path; no localhost, query, GPS or fragment');
   }
   assert.deepEqual(external,[],'opening picker/selecting target makes NO provider request');
   const before=await page.evaluate(()=>localStorage.getItem('abp-language'));
-  const popupPromise=page.waitForEvent('popup');
-  await link.click();
-  const popup=await popupPromise;
-  await popup.waitForLoadState('domcontentloaded');
-  assert.equal(external.length,1,'only explicit activation contacts translator');
-  assert.equal(await popup.evaluate(()=>window.opener),null);
-  await popup.close();
+  for(const [index,code] of languages.entries()){
+    const popupPromise=page.waitForEvent('popup');
+    await dialog.locator(`[data-full-language="${code}"]`).click();
+    const popup=await popupPromise;
+    await popup.waitForLoadState('domcontentloaded');
+    assert.equal(external.length,index+1,'each main language click directly opens full-page translation');
+    assert.equal(new URL(popup.url()).searchParams.get('tl'),code);
+    assert.equal(await popup.evaluate(()=>window.opener),null);
+    await popup.close();
+  }
   assert.equal(await page.evaluate(()=>localStorage.getItem('abp-language')),before,'external mode never overwrites local preference');
   await dialog.locator('.abp-language-dialog__close').click();
   for(const code of languages){
     await page.locator('.abp-language-btn').click();
+    await dialog.locator('[data-local-language] summary').click();
     await page.locator(`[data-lang="${code}"]`).click();
     await page.locator('.abp-language-btn').click();
     assert.equal(await dialog.locator('#abp-online-translation-title').innerText(),strings(code).wholePageTranslation);
-    assert.equal(await dialog.locator('#abp-online-language').inputValue(),code);
+    assert.equal(await dialog.locator('[data-full-language]').count(),9);
     assert.equal(await dialog.locator('#abp-online-translation-note').innerText(),strings(code).onlineTranslationNotice);
     assert.ok(await dialog.evaluate(el=>el.scrollWidth<=el.clientWidth+1),'all-language dialog fits viewport');
     await dialog.locator('.abp-language-dialog__close').click();
   }
   await page.reload();
   assert.equal(await page.locator('html').getAttribute('lang'),'ta','legacy local preference still reloads');
-  await page.goto(base+'library/');
+  for(const route of ['','library/','categories/01-deities-sub-deities-and-divine-forms/ganesha/']){
+    await page.goto(base+route);
+    await page.locator('.abp-language-btn').click();
+    assert.equal(new URL(await dialog.locator('[data-full-language="hi"]').getAttribute('href')).searchParams.get('u'),'https://ashishbharani.github.io/devotional/'+route,'handoff tracks the homepage, library and reported Ganesha page');
+    await dialog.locator('.abp-language-dialog__close').click();
+  }
   await page.locator('.abp-language-btn').click();
-  assert.equal(new URL(await dialog.locator('a[target="_blank"]').first().getAttribute('href')).searchParams.get('u'),'https://ashishbharani.github.io/devotional/library/','handoff tracks current route');
+  await dialog.locator('[data-original-language]').click();
+  assert.equal(await page.locator('html').getAttribute('lang'),'en','original-language action restores English');
+  await page.locator('.abp-language-btn').click();
   assert.equal(await page.locator('.abp-language-btn').count(),1);
   await page.screenshot({path:`work/translation-browser/picker-${width}.png`});
   assert.deepEqual(errors,[]);

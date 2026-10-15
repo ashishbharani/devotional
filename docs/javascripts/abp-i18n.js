@@ -162,15 +162,15 @@
     dialog.innerHTML =
       `<div class="abp-language-dialog__head"><h2 id="abp-language-title">${t("language")}</h2>` +
       `<button type="button" class="abp-language-dialog__close" aria-label="${t("close")}">×</button></div>` +
-      `<p class="abp-language-dialog__note">${t("localTranslationScope")}</p>` +
+      `<details data-local-language><summary>${t("localTranslationScope")}</summary>` +
       `<p class="abp-language-dialog__note">${t("titleTransliterationNote")}</p>` +
       '<div class="abp-language-grid">' + order.map((code) => {
         const locale = locales[code];
         return `<button type="button" lang="${code}" dir="ltr" data-lang="${code}"${code === current ? ' aria-current="true"' : ""}>` +
           `<span>${locale.name}</span>${code === "en" ? `<small>${t("original")}</small>` : ""}</button>`;
-      }).join("") + "</div>";
-    // External translation is deliberately a separate, explicit action. Do not
-    // load a third-party widget, send browser state, or overwrite local language.
+      }).join("") + "</div></details>";
+    // Whole-page translation is the primary language choice. Limited offline
+    // interface/transliteration remains explicit, secondary and independent.
     const online = document.createElement("section");
     online.setAttribute("aria-labelledby", "abp-online-translation-title");
     const heading = document.createElement("h3");
@@ -180,28 +180,7 @@
     note.id = "abp-online-translation-note";
     note.className = "abp-language-dialog__note";
     note.textContent = t("onlineTranslationNotice");
-    const label = document.createElement("label");
-    label.htmlFor = "abp-online-language";
-    label.textContent = t("language");
-    const select = document.createElement("select");
-    select.id = "abp-online-language";
-    select.setAttribute("aria-describedby", note.id);
-    order.filter(code => code !== "en").forEach(code => {
-      const option = document.createElement("option");
-      option.value = code;
-      option.lang = code;
-      option.textContent = locales[code].name;
-      select.appendChild(option);
-    });
-    select.value = current === "en" ? "hi" : current;
-    const action = document.createElement("a");
-    action.className = "abp-btn";
-    action.target = "_blank";
-    action.rel = "noopener noreferrer";
-    action.referrerPolicy = "no-referrer";
-    action.textContent = `${t("openGoogleTranslation")} ↗`;
-    action.setAttribute("aria-describedby", note.id);
-    const updateLink = () => {
+    const translationUrl = (code) => {
       // Use only the published public path, never local dev hosts, query terms,
       // share-link GPS coordinates, fragments, credentials or saved user data.
       const published = new URL("https://ashishbharani.github.io/devotional/");
@@ -209,23 +188,40 @@
         ? location.pathname.slice(rootUrl.pathname.length) : "";
       published.pathname += relative;
       const target = new URL("https://translate.google.com/translate");
-      target.search = new URLSearchParams({sl: "auto", tl: select.value, u: published.href});
-      action.href = target.href;
+      target.search = new URLSearchParams({sl: "auto", tl: code, u: published.href});
+      return target.href;
     };
-    select.addEventListener("change", updateLink);
-    updateLink();
+    const grid = document.createElement("div");
+    grid.className = "abp-language-grid";
+    const original = document.createElement("button");
+    original.type = "button";
+    original.dataset.originalLanguage = "en";
+    original.textContent = `English · ${t("original")}`;
+    original.addEventListener("click", () => { applyLanguage("en"); close(); });
+    grid.appendChild(original);
+    order.filter(code => code !== "en").forEach(code => {
+      const link = document.createElement("a");
+      link.dataset.fullLanguage = code;
+      link.lang = code;
+      link.href = translationUrl(code);
+      link.target = "_blank";
+      link.rel = "noopener noreferrer";
+      link.referrerPolicy = "no-referrer";
+      link.setAttribute("aria-describedby", note.id);
+      link.textContent = `${locales[code].name} ↗`;
+      link.title = `${t("wholePageTranslation")} — Google Translate (${t("newTab")})`;
+      grid.appendChild(link);
+    });
     const help = document.createElement("a");
     help.href = "https://support.google.com/translate/answer/2534559";
     help.target = "_blank";
     help.rel = "noopener noreferrer";
     help.referrerPolicy = "no-referrer";
     help.textContent = t("translationHelp");
-    const controls = document.createElement("p");
-    controls.append(label, " ", select);
     const links = document.createElement("p");
-    links.append(action, " · ", help);
-    online.append(heading, note, controls, links);
-    dialog.appendChild(online);
+    links.appendChild(help);
+    online.append(heading, note, grid, links);
+    dialog.insertBefore(online, dialog.querySelector("[data-local-language]"));
     document.body.appendChild(dialog);
     const close = () => { dialog.close(); dialog.remove(); };
     dialog.addEventListener("cancel", (event) => { event.preventDefault(); close(); });
