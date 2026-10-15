@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" role="img" aria-labelledby="t">
+<title id="t">Gada, the traditional mace emblem of Hanuman</title>
+<defs><radialGradient id="bg"><stop stop-color="#ffe9a4"/><stop offset=".76" stop-color="#d9892f"/><stop offset="1" stop-color="#8a3025"/></radialGradient><linearGradient id="gold" x2=".9" y2="1"><stop stop-color="#fff1ba"/><stop offset=".48" stop-color="#eabb50"/><stop offset="1" stop-color="#a75e22"/></linearGradient></defs>
+<circle cx="120" cy="120" r="118" fill="url(#bg)"/><circle cx="120" cy="120" r="104" fill="none" stroke="#fff1b9" stroke-width="3"/><circle cx="120" cy="120" r="86" fill="none" stroke="#a34824" stroke-width="2" stroke-dasharray="3 8"/>
+<g transform="translate(120 124) rotate(-28) translate(-120 -124)" fill="url(#gold)" stroke="#8c3a1a" stroke-width="3" stroke-linejoin="round"><path d="M115 112h10v72h-10z"/><path d="M102 188h36v12h-36z"/><circle cx="120" cy="204" r="10"/><path d="M94 70q26-29 52 0l13 27-8 29-31 11-31-11-8-29z"/><path d="M97 73l-12 21 10 31M143 73l12 21-10 31M119 60v74" fill="none" stroke="#fff0ae" stroke-width="5"/></g>
+<g fill="#ad4b27" opacity=".8"><circle cx="43" cy="120" r="3"/><circle cx="197" cy="120" r="3"/><circle cx="120" cy="31" r="3"/></g>
+</svg>

@@ -47,6 +47,7 @@ extra_css:
   - stylesheets/feedback.css
   - stylesheets/project-info.css
   - stylesheets/search.css
+  - stylesheets/royal-home.css
 extra_javascript:
   - javascripts/universal-search.js
   - javascripts/section-pager.js
