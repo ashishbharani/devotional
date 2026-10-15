@@ -39,6 +39,7 @@ if str(ROOT) not in sys.path:
 from scripts.check_i18n import audit_catalogue  # noqa: E402
 from scripts.search_index import build_search  # noqa: E402
 from hooks.royal_home import hero, discovery, closing  # noqa: E402
+from hooks.deity_art import APPROVED, portrait as deity_portrait  # noqa: E402
 
 log = logging.getLogger("mkdocs.hooks.abp")
 
@@ -795,7 +796,8 @@ def page_category(c):
         parts = f' · {len(g["parts"])} pages' if len(g["parts"]) > 1 else ""
         out.append(
             f'<section class="abp-group"><h2 class="abp-group__h"><a class="abp-group__bar" href="{rel(c["url"], g["url"])}">'
-            f'<span data-transliterate-ui>{esc(g["name"])}</span><small><span class="abp-sr">, </span>{fmt(g["count"])} works{parts}</small></a></h2>'
+            + (deity_portrait(g["name"], c["url"]) if c["num"] == 1 else "")
+            + f'<span data-transliterate-ui>{esc(g["name"])}</span><small><span class="abp-sr">, </span>{fmt(g["count"])} works{parts}</small></a></h2>'
             f'<nav class="abp-group__forms" aria-label="Forms of {esc(g["name"])}">{chips}</nav></section>'
         )
     out.append("</div>\n")
@@ -1224,8 +1226,13 @@ def on_files(files, config, **kw):
                 ("music", {14, 15}),
             ) if category_num in numbers), "lotus")
         if p.get("cat", {}).get("num") == 1 and "group" in p:
+            approved = APPROVED.get(p["group"]["name"])
             portrait = portraits.get(p["group"]["name"])
-            if portrait:
+            if approved:
+                meta["abp_portrait"] = f"assets/images/deities/{approved[0]}-640.webp"
+                meta["abp_portrait_large"] = f"assets/images/deities/{approved[0]}-1254.webp"
+                meta["abp_portrait_name"] = approved[1]
+            elif portrait:
                 meta["abp_portrait"] = "assets/images/royal-home/" + portrait + ".webp"
                 meta["abp_portrait_name"] = title_case(p["group"]["name"])
         meta = {k: v for k, v in meta.items() if v is not None}
@@ -1252,7 +1259,7 @@ def on_post_build(config, **kw):
     tpl = (ROOT / "hooks" / "sw.template.js").read_text(encoding="utf-8")
     shell = [
         "", "offline/", "favourites/", "manifest.webmanifest", "stylesheets/abp.css", "stylesheets/feedback.css", "stylesheets/project-info.css", "stylesheets/search.css",
-        "stylesheets/navigation.css", "stylesheets/royal-home.css", "stylesheets/sacred-site.css",
+        "stylesheets/navigation.css", "stylesheets/royal-home.css", "stylesheets/sacred-site.css", "stylesheets/deity-art.css",
         "assets/images/logo.svg", "assets/images/icon-192.png", "assets/images/icon-512.png",
         "assets/images/icon-maskable-512.png", "assets/images/apple-touch-icon.png",
     ]

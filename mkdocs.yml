@@ -49,6 +49,7 @@ extra_css:
   - stylesheets/search.css
   - stylesheets/royal-home.css
   - stylesheets/sacred-site.css
+  - stylesheets/deity-art.css
 extra_javascript:
   - javascripts/universal-search.js
   - javascripts/section-pager.js

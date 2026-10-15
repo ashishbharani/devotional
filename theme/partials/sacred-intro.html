@@ -11,7 +11,7 @@
   'music': 'M18 36V10l23-5v26M18 17l23-5M18 37a7 5 0 1 0-14 0 7 5 0 0 0 14 0Zm23-5a7 5 0 1 0-14 0 7 5 0 0 0 14 0Z'
 } %}
 <div class="abp-sacred-intro">
-  {% if m.abp_portrait %}<img src="{{ m.abp_portrait | url }}" width="88" height="88" alt="Traditional illustration of {{ m.abp_portrait_name }}" decoding="async" loading="lazy">{% else %}<span class="abp-sacred-emblem" aria-hidden="true"><svg viewBox="0 0 48 48" focusable="false" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="{{ drawings[symbol] }}"></path></svg></span>{% endif %}
+  {% if m.abp_portrait %}<img {% if m.abp_portrait_large %}class="abp-deity-portrait" srcset="{{ m.abp_portrait | url }} 640w, {{ m.abp_portrait_large | url }} 1254w" sizes="88px"{% endif %} src="{{ m.abp_portrait | url }}" width="88" height="88" alt="{% if m.abp_portrait_large %}3D devotional{% else %}Traditional{% endif %} illustration of {{ m.abp_portrait_name }}" decoding="async" loading="lazy">{% else %}<span class="abp-sacred-emblem" aria-hidden="true"><svg viewBox="0 0 48 48" focusable="false" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="{{ drawings[symbol] }}"></path></svg></span>{% endif %}
   <p>Explore · Read · Listen · Learn · Devote</p>
   <span class="abp-sacred-rule" aria-hidden="true"></span>
 </div>

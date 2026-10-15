@@ -1,6 +1,7 @@
 """Homepage-only presentation. Catalogue identities and routes come from generate.load."""
 from html import escape
 from urllib.parse import urlencode
+from hooks.deity_art import portrait as deity_portrait
 
 HOME_TITLE = "HINDU DEVOTIONAL COLLECTION"
 ART = "assets/images/royal-home/"
@@ -79,7 +80,7 @@ def discovery(d):
     ]:
         if key not in groups:
             continue
-        portrait = f'<img src="{ART}{art}.webp" width="240" height="240" loading="lazy" alt="Illustration of {escape(name)}">' if art else f'<span class="udhc-seal" aria-hidden="true">{"श्री राम" if key == "RAMA" else "श्री" if key == "LAKSHMI" else "जय हनुमान"}</span>'
+        portrait = deity_portrait(key) or (f'<img src="{ART}{art}.webp" width="240" height="240" loading="lazy" alt="Illustration of {escape(name)}">' if art else f'<span class="udhc-seal" aria-hidden="true">{"श्री राम" if key == "RAMA" else "श्री" if key == "LAKSHMI" else "जय हनुमान"}</span>')
         out.append(f'<a href="{escape(groups[key]["url"])}">{portrait}<span>{escape(name)}</span></a>')
     all_deities = next(c["url"] for c in d["categories"] if c["num"] == 1)
     out.append(f'</div><a class="udhc-button" href="{all_deities}">All Deities & Divine Forms →</a></section>')
