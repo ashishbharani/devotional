@@ -7,7 +7,7 @@ from PIL import Image
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
-from hooks.deity_art import APPROVED  # noqa: E402
+from hooks.deity_art import APPROVED, PREVIEW_VERSIONS  # noqa: E402
 
 
 def main():
@@ -17,7 +17,11 @@ def main():
     target = ROOT / "docs/assets/images/deities"
     target.mkdir(parents=True, exist_ok=True)
     for slug, _ in APPROVED.values():
-        with Image.open(args.previews / f"{slug}-preview-v1.png") as image:
+        outputs = [target / f"{slug}-{width}.webp" for width in (640, 1254)]
+        if all(output.exists() for output in outputs):
+            continue  # Preserve previously packaged approved originals.
+        version = PREVIEW_VERSIONS.get(slug, 1)
+        with Image.open(args.previews / f"{slug}-preview-v{version}.png") as image:
             image = image.convert("RGB")
             assert image.width == image.height, slug
             for width in (640, 1254):

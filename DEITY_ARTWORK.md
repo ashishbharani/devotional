@@ -4,15 +4,24 @@ On 15 October 2026 the owner approved the displayed previews with:
 “allow every pic till surya”. This covers the first 16 generated images:
 Ganesha, Shiva, Vishnu, Durga, Rama, Krishna, Lakshmi, Hanuman, Saraswati,
 Murugan, Yoga Narasimha, Venkateswara, Vitthala, Shirdi Sai Baba, Kali and Surya.
-The later Chandra and Brahma previews are **not approved or included**.
+On 16 October 2026 the owner approved all displayed current previews with
+“yes use all this pics and update them accordingly everywhere”. This adds
+Chandra v4, Brahma v4, Rahu v2, Shukra v2, Dattatreya, Radha, Parvati, Sita,
+Annapurna, Dhanvantari, Hayagriva, Dakshinamurti, Shani, Mangala, Brihaspati,
+Ketu, Budha, Lalita Tripurasundari and the Navagraha group (35 identities total).
+Rejected earlier Brahma, Rahu and Shukra drafts are excluded. Kubera, Ayyappa,
+Varahi and Meenakshi were proposed but not generated and are not included.
 No remaining Category 1 identity is approved by implication.
 
 `hooks/deity_art.py` is the explicit allowlist shared by the homepage,
 Category 1 and existing section-introduction rendering. There is no substring,
 alias, gender or avatar inference, and no reuse on unrelated categories.
-Existing Navagraha artwork is left unchanged, not replaced by an individual god.
 The homepage's two top-banner guardian portraits also use this allowlist:
 Ganesha and Shiva must never fall back to the older royal-home image files.
+Navagraha uses the approved nine-deity tableau, never an individual god.
+Brahma's four visible heads use an illustrative fan arrangement, not a claim
+to cardinal-direction temple iconography. Navagraha's three-by-three grouping
+is illustrative, not a prescribed ritual directional layout.
 
 The artwork was generated with the built-in image tool and individually shown
 to the owner before approval. It is modern artistic interpretation, not a
@@ -24,7 +33,8 @@ Venkateswara is the Tirumala murti, not Hanuman despite shared use of “Balaji�
 Previews and prompt/reference notes remain in the local sibling
 `outputs/deity-previews/` folder; unapproved previews must not be copied into docs.
 `scripts/prepare_deity_art.py` packages only approved PNGs as 640px and 1254px
-quality-92 WebP. It does not crop, repaint or alter identifying attributes.
+quality-92 WebP. Selected preview versions are explicit in `PREVIEW_VERSIONS`.
+Already packaged assets are preserved. It does not crop, repaint or alter identifying attributes.
 Pillow is needed only for this developer packaging command, not the site build;
 the bundled desktop Python includes it. No site dependency was added.
 
