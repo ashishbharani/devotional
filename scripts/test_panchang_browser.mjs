@@ -97,7 +97,8 @@ try {
     assert.equal(await page.evaluate(() => !!document.activeElement.closest(".udhc-hero-art")), false, `${width}px: Tab skips the non-interactive picture`);
     assert.ok(await page.locator('a[href$="library/"]').count() > 0, "legitimate library navigation remains");
     assert.ok(await page.locator('a[href$="master-index/"]').count() > 0, "legitimate devotional navigation remains");
-    assert.equal((await page.locator(".md-header__topic").first().innerText()).trim(), brandName, `${width}px: header brand text`);
+    assert.equal((await page.locator(".md-header__topic").first().innerText()).trim(), width < 1200 ? "HDC" : brandName, `${width}px: approved responsive header brand text`);
+    assert.equal(await page.locator('a[data-md-component="logo"]').getAttribute('aria-label'), brandName, 'compact logo retains full accessible branding');
     assert.ok(await page.locator(".md-header__title").isVisible(), `${width}px: header brand remains visible`);
     const brandBox = await page.locator(".md-header__title").boundingBox();
     assert.ok(brandBox && brandBox.x >= -1 && brandBox.x + brandBox.width <= width + 1, `${width}px: header brand stays inside the viewport`);

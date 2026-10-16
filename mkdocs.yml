@@ -15,8 +15,8 @@ theme:
   name: material
   custom_dir: theme            # the "ABP Devotional" theme: templates + partials
   language: en
-  logo: assets/images/logo.svg
-  favicon: assets/images/favicon-32.png
+  logo: assets/images/hdc-brand/emblem.webp
+  favicon: assets/images/hdc-brand/favicon-32.png
   font: false                  # fonts are loaded by the theme (Noto Serif / Noto Sans)
   palette:
     - media: "(prefers-color-scheme: light)"
@@ -50,11 +50,13 @@ extra_css:
   - stylesheets/royal-home.css
   - stylesheets/sacred-site.css
   - stylesheets/deity-art.css
+  - stylesheets/hdc-header.css
 extra_javascript:
   - javascripts/universal-search.js
   - javascripts/section-pager.js
   - javascripts/navigation.js
   - javascripts/abp-transliterate.js
+  - javascripts/abp-google-translate.js
   - javascripts/abp-i18n.js
   - javascripts/abp-firebase-config.js
   - javascripts/abp-firebase.js

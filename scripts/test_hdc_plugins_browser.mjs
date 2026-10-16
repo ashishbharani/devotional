@@ -7,7 +7,7 @@ import {chromium} from 'playwright';
 const site=path.resolve('site'), brand='HDC — Hindu Devotional Collection';
 const shots=process.env.HDC_SCREENSHOTS || 'work/hdc-plugin-audit';
 await mkdir(shots,{recursive:true});
-const scripts=['universal-search','section-pager','navigation','abp-transliterate','abp-i18n','abp-firebase-config','abp-firebase','abp-favourites','abp-auth','abp','abp-directory','abp-japa','abp-panchang','abp-ephemeris','abp-pwa','abp-a11y','feedback'];
+const scripts=['universal-search','section-pager','navigation','abp-transliterate','abp-google-translate','abp-i18n','abp-firebase-config','abp-firebase','abp-favourites','abp-auth','abp','abp-directory','abp-japa','abp-panchang','abp-ephemeris','abp-pwa','abp-a11y','feedback'];
 const server=createServer(async(req,res)=>{try{
   const url=new URL(req.url,'http://localhost');
   assert.ok(url.pathname.startsWith('/devotional/'));
@@ -31,7 +31,8 @@ try {
   await page.goto(base);
   assert.equal(await page.title(),brand);
   for(const name of scripts)assert.equal(await page.locator(`script[src$="javascripts/${name}.js"]`).count(),1,`connected once: ${name}`);
-  assert.equal(await page.locator('.md-header__topic').first().innerText(),brand);
+  assert.equal(await page.locator('.md-header__topic').first().innerText(),width<1200?'HDC':brand);
+  assert.equal(await page.locator('a[data-md-component="logo"]').getAttribute('aria-label'),brand);
   assert.doesNotMatch(await page.locator('body').innerText(),/\b(?:UDHC|UHDC)\b|Ultimate Hindu Devotional/i);
   await page.evaluate(()=>localStorage.setItem('abp-japa-state-v1',JSON.stringify({name:'Preserved practice',count:12,target:108,today:12,day:[new Date().getFullYear(),String(new Date().getMonth()+1).padStart(2,'0'),String(new Date().getDate()).padStart(2,'0')].join('-')})));
   await page.goto(base+'japa-counter/');
@@ -52,15 +53,18 @@ try {
   await page.goto(base+'favourites/');
   await page.waitForFunction(()=>document.querySelectorAll('#abp-favourites-list li').length===1);
   assert.ok(await page.evaluate(async()=>(await indexedDB.databases()).some(db=>db.name==='udhc-favourites')),'legacy favourites DB retained');
+  if(width<1200)await page.locator('.abp-menu-toggle').click();
   await page.locator('.abp-language-btn').click();
   await page.locator('[data-local-language] summary').click();
   await page.locator('[data-lang="hi"]').click();
   await page.reload();
   assert.equal(await page.locator('html').getAttribute('lang'),'hi');
   assert.equal(await page.evaluate(()=>localStorage.getItem('abp-language')),'hi');
+  if(width<1200)await page.locator('.abp-menu-toggle').click();
   await page.locator('.abp-language-btn').click();
   await page.locator('[data-local-language] summary').click();
   await page.locator('[data-lang="en"]').click();
+  if(width<1200)await page.locator('.abp-menu-close').click();
   await page.locator('.abp-a11y-btn').click();
   await page.locator('.abp-a11y-dialog [name="motion"]').check();
   await page.locator('.abp-a11y-dialog [data-close]').click();
@@ -112,13 +116,13 @@ try {
  await page.goto(base);
  await page.evaluate(()=>navigator.serviceWorker.ready);
  await page.waitForFunction(()=>Boolean(navigator.serviceWorker.controller));
- for(const file of ['navigation.css','royal-home.css','sacred-site.css']) {
+ for(const file of ['navigation.css','royal-home.css','sacred-site.css','hdc-header.css']) {
    assert.ok(await page.evaluate(async url=>Boolean(await caches.match(url)),base+'stylesheets/'+file),`makeover stylesheet in first-install shell: ${file}`);
  }
  assert.ok(await page.evaluate(async()=>(await caches.keys()).some(key=>key.startsWith('udhc-shell-'))),'legacy cache protocol retained');
  await context.setOffline(true);await page.reload();
  assert.equal(await page.title(),brand);
- assert.equal(await page.locator('.abp-navigation').evaluate(el=>getComputedStyle(el).borderBottomStyle),'double','sacred navigation style available offline');
+ assert.equal(await page.locator('.abp-navigation').evaluate(el=>getComputedStyle(el).borderBottomStyle),'solid','approved navigation style available offline');
  await page.goto(base+'offline/');
  assert.equal(await page.title(),'You are offline | '+brand);
  await context.close();

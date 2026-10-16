@@ -1291,9 +1291,14 @@ def on_post_build(config, **kw):
     shell = [
         "", "offline/", "favourites/", "manifest.webmanifest", "stylesheets/abp.css", "stylesheets/feedback.css", "stylesheets/project-info.css", "stylesheets/search.css",
         "stylesheets/navigation.css", "stylesheets/royal-home.css", "stylesheets/sacred-site.css", "stylesheets/deity-art.css",
+        "stylesheets/hdc-header.css",
         "assets/images/logo.svg", "assets/images/icon-192.png", "assets/images/icon-512.png",
         "assets/images/icon-maskable-512.png", "assets/images/apple-touch-icon.png",
     ]
+    shell.extend(f"assets/images/hdc-brand/{name}" for name in (
+        "header-emblem.webp", "header-sunset.webp", "mobile-emblem-light.webp", "mobile-emblem-dark.webp", "emblem.webp", "favicon-32.png", "favicon-48.png",
+        "icon-192.png", "icon-512.png", "icon-maskable-512.png", "apple-touch-icon.png",
+    ))
     shell.extend(f"javascripts/{path.name}" for path in sorted((site / "javascripts").glob("*.js")))
     shell.extend(f"javascripts/{path.name}" for path in sorted((site / "javascripts").glob("search-*.mjs")))
     shell.extend(path.relative_to(site).as_posix() for path in sorted((site / "assets" / "panchang").glob("*.mjs")))
