@@ -126,3 +126,42 @@ html.abp-hc .hdc-header, html.abp-hc .hdc-bottom-navigation { background: #000; 
 html.abp-hc .abp-navigation { background: var(--abp-paper); color: var(--abp-ink); }
 @media (prefers-reduced-motion: reduce) { .abp-navigation-shell *, .hdc-bottom-navigation * { transition: none !important; transform: none; } }
 @media print { .hdc-bottom-navigation, .hdc-install-help { display: none !important; } body, body:has(.abp-feedback-float) { padding-bottom: 0; } }
+
+/* Approved-board taskbar finishing details: keep all existing navigation semantics. */
+@media (min-width: 1200px) {
+  .abp-navigation__item > :is(a,button) {
+    position: relative;
+    transition: background-color .18s ease, box-shadow .18s ease, color .18s ease;
+  }
+  .abp-navigation__item.is-active > :is(a,button)::after {
+    content: "";
+    position: absolute;
+    inset-inline: 16px;
+    bottom: 4px;
+    height: 2px;
+    border-radius: 2px;
+    background: #b96a1b;
+    box-shadow: 0 0 7px #d99632a8;
+    pointer-events: none;
+  }
+  [data-md-color-scheme='abp-dark'] .abp-navigation__item.is-active > :is(a,button)::after {
+    background: #ffdf94;
+    box-shadow: 0 0 9px #ffdf94a8;
+  }
+  .hdc-install-header:not(:disabled):focus-visible {
+    outline: 3px solid #ffdf94;
+    outline-offset: 3px;
+    box-shadow: 0 0 0 5px #590817, 0 0 16px #e7bb6277;
+  }
+}
+@media (max-width: 1199px) {
+  .hdc-bottom-navigation > :is(a,button):active {
+    background: #e7bb6238;
+  }
+  .hdc-bottom-navigation .is-active .hdc-icon {
+    filter: drop-shadow(0 0 4px #ffce79b3);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .abp-navigation__item > :is(a,button) { transition: none !important; }
+}
