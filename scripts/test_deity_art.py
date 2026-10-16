@@ -4,10 +4,12 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
-from hooks.deity_art import APPROVED, portrait  # noqa: E402
+from hooks.deity_art import APPROVED, PREVIEW_VERSIONS, portrait  # noqa: E402
 from hooks import generate  # noqa: E402
 
 assert len(APPROVED) == 35
+assert PREVIEW_VERSIONS == {"chandra": 4, "brahma": 4, "rahu": 2, "shukra": 2}
+assert len(list((ROOT / "docs/assets/images/deities").glob("*.webp"))) == 70
 for unapproved in ("KUBERA", "AYYAPPA", "VARAHI", "MEENAKSHI", "ARDHANARISHVARA", "SHIVA", "UNKNOWN"):
     assert portrait(unapproved) == "", unapproved
 data = generate.load()
@@ -28,7 +30,8 @@ for name, (slug, label) in APPROVED.items():
         source = ROOT / f"docs/assets/images/deities/{slug}-{width}.webp"
         built = ROOT / f"site/assets/images/deities/{slug}-{width}.webp"
         assert source.read_bytes() == built.read_bytes(), source
-        assert source.stat().st_size < 700_000, source
+        # Nine detailed figures need a slightly larger large-image budget.
+        assert source.stat().st_size < (800_000 if slug == "navagraha" else 700_000), source
     for part in (group["parts"][0], group["parts"][-1]):
         page = (ROOT / "site" / part["url"] / "index.html").read_text(encoding="utf-8")
         assert f"/{slug}-640.webp" in page, name
