@@ -40,7 +40,6 @@ try {
       assert.equal(await page.locator('html').evaluate(el => getComputedStyle(el).overflow), 'hidden');
       await nav.locator('.abp-menu-close').focus();
       await page.keyboard.press('Shift+Tab');
-      const lastControl=nav.locator('a,button').filter({visible:true});
       assert.ok(await page.evaluate(()=>document.activeElement.closest('#abp-navigation')!==null),'drawer traps focus with mobile utilities');
       await page.keyboard.press('Tab');
       assert.equal(await nav.locator('.abp-menu-close').evaluate(el=>el===document.activeElement),true,'drawer wraps its actual final enabled control');

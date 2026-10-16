@@ -1265,7 +1265,7 @@ def on_post_build(config, **kw):
         "assets/images/icon-maskable-512.png", "assets/images/apple-touch-icon.png",
     ]
     shell.extend(f"assets/images/hdc-brand/{name}" for name in (
-        "header-emblem.webp", "header-sunset.webp", "emblem.webp", "favicon-32.png", "favicon-48.png",
+        "header-emblem.webp", "header-sunset.webp", "mobile-emblem-light.webp", "mobile-emblem-dark.webp", "emblem.webp", "favicon-32.png", "favicon-48.png",
         "icon-192.png", "icon-512.png", "icon-maskable-512.png", "apple-touch-icon.png",
     ))
     shell.extend(f"javascripts/{path.name}" for path in sorted((site / "javascripts").glob("*.js")))

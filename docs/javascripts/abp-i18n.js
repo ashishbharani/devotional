@@ -11,8 +11,8 @@
   const FALLBACK = {
     localTranslationScope: "Local interface and title script (offline): supported labels only, not every paragraph or tool message.",
     wholePageTranslation: "Translate whole page (online, optional)",
-    onlineTranslationNotice: "Opens a published-page copy in Google Translate only when clicked. Google receives the public page address without URL queries or fragments. Machine translations may be inaccurate. Use the original for sign-in, favourites and live calculations. If unavailable in your region, use your browser’s Translate command.",
-    openGoogleTranslation: "Open Google Translate", translationHelp: "Translation help",
+    onlineTranslationNotice: "Translate this page here without leaving the site. Enabling Google Translate allows Google to access page text, including displayed location details. Your consent is remembered in this browser. Machine translations may be inaccurate; check sacred and astronomical terms against the original. Internet access is required.",
+    openGoogleTranslation: "Enable Google Translate here", translationHelp: "Translation help",
     language: "Language", close: "Close", original: "Original", loading: "Loading…",
     showMore: "Show more", chooseLetter: "Choose a starting letter", other: "Other",
     shown: "shown", noWorks: "No works begin with this selection", errorIndex: "Could not load the works index.",
@@ -158,6 +158,8 @@
     if (document.querySelector(".abp-language-dialog")) return;
     const dialog = document.createElement("dialog");
     dialog.className = "abp-language-dialog";
+    dialog.classList.add("notranslate");
+    dialog.translate = false;
     dialog.setAttribute("aria-labelledby", "abp-language-title");
     dialog.innerHTML =
       `<div class="abp-language-dialog__head"><h2 id="abp-language-title">${t("language")}</h2>` +
@@ -169,8 +171,9 @@
         return `<button type="button" lang="${code}" dir="ltr" data-lang="${code}"${code === current ? ' aria-current="true"' : ""}>` +
           `<span>${locale.name}</span>${code === "en" ? `<small>${t("original")}</small>` : ""}</button>`;
       }).join("") + "</div></details>";
-    // Whole-page translation is the primary language choice. Limited offline
-    // interface/transliteration remains explicit, secondary and independent.
+    // Keep the owner's real provider widget on this origin, never a proxy page.
+    // Its DOM must survive closing/reopening the picker and instant navigation.
+    const provider = window.abpGoogleTranslate;
     const online = document.createElement("section");
     online.setAttribute("aria-labelledby", "abp-online-translation-title");
     const heading = document.createElement("h3");
@@ -180,58 +183,67 @@
     note.id = "abp-online-translation-note";
     note.className = "abp-language-dialog__note";
     note.textContent = t("onlineTranslationNotice");
-    const translationUrl = (code) => {
-      // Use only the published public path, never local dev hosts, query terms,
-      // share-link GPS coordinates, fragments, credentials or saved user data.
-      const published = new URL("https://ashishbharani.github.io/devotional/");
-      const relative = location.pathname.startsWith(rootUrl.pathname)
-        ? location.pathname.slice(rootUrl.pathname.length) : "";
-      published.pathname += relative;
-      const target = new URL("https://translate.google.com/translate");
-      target.search = new URLSearchParams({sl: "auto", tl: code, u: published.href});
-      return target.href;
+    const controls = document.createElement("p");
+    const enable = document.createElement("button");
+    enable.type = "button";
+    enable.className = "abp-btn";
+    enable.dataset.enableTranslation = "";
+    enable.textContent = t("openGoogleTranslation");
+    const status = document.createElement("p");
+    status.setAttribute("role", "status");
+    status.dataset.translationStatus = "";
+    const start = async () => {
+      enable.disabled = true;
+      status.textContent = t("loading");
+      try {
+        if (!provider) throw new Error("Translator not loaded");
+        // Start from original text, not a mixture of old local translations
+        // and transliteration. Preserve the saved offline language preference.
+        if (!provider.enabled) {
+          const saved = current;
+          current = "en";
+          translate();
+          current = saved;
+          document.documentElement.lang = "en";
+        }
+        await provider.enable();
+        enable.hidden = true;
+        status.textContent = "";
+      } catch {
+        status.textContent = `Google Translate: ${t("networkError")}`;
+        enable.disabled = false;
+      }
     };
-    const grid = document.createElement("div");
-    grid.className = "abp-language-grid";
+    enable.addEventListener("click", start);
     const original = document.createElement("button");
     original.type = "button";
+    original.className = "abp-btn";
     original.dataset.originalLanguage = "en";
     original.textContent = `English · ${t("original")}`;
-    original.addEventListener("click", () => { applyLanguage("en"); close(); });
-    grid.appendChild(original);
-    order.filter(code => code !== "en").forEach(code => {
-      const link = document.createElement("a");
-      link.dataset.fullLanguage = code;
-      link.lang = code;
-      link.href = translationUrl(code);
-      link.target = "_blank";
-      link.rel = "noopener noreferrer";
-      link.referrerPolicy = "no-referrer";
-      link.setAttribute("aria-describedby", note.id);
-      link.textContent = `${locales[code].name} ↗`;
-      link.title = `${t("wholePageTranslation")} — Google Translate (${t("newTab")})`;
-      grid.appendChild(link);
-    });
-    const help = document.createElement("a");
-    help.href = "https://support.google.com/translate/answer/2534559";
-    help.target = "_blank";
-    help.rel = "noopener noreferrer";
-    help.referrerPolicy = "no-referrer";
-    help.textContent = t("translationHelp");
-    const links = document.createElement("p");
-    links.appendChild(help);
-    online.append(heading, note, grid, links);
+    const useLocal = (code) => {
+      if (provider?.enabled) {
+        store.set(code);
+        provider.disable();
+        // Reload the SAME URL to remove provider DOM wrappers safely. Never
+        // try to reverse translated HTML or clear unrelated saved user data.
+        location.reload();
+      } else { applyLanguage(code); close(); }
+    };
+    original.addEventListener("click", () => useLocal("en"));
+    controls.append(enable, " ", original);
+    online.append(heading, note, controls, status);
+    if (provider) online.appendChild(provider.host());
     dialog.insertBefore(online, dialog.querySelector("[data-local-language]"));
     document.body.appendChild(dialog);
-    const close = () => { dialog.close(); dialog.remove(); };
+    const close = () => { provider?.park(); dialog.close(); dialog.remove(); };
     dialog.addEventListener("cancel", (event) => { event.preventDefault(); close(); });
     dialog.querySelector(".abp-language-dialog__close").addEventListener("click", close);
     dialog.addEventListener("click", (event) => { if (event.target === dialog) close(); });
     dialog.querySelectorAll("[data-lang]").forEach((button) => button.addEventListener("click", () => {
-      applyLanguage(button.getAttribute("data-lang"));
-      close();
+      useLocal(button.getAttribute("data-lang"));
     }));
     dialog.showModal ? dialog.showModal() : dialog.setAttribute("open", "");
+    if (provider?.enabled) start();
   }
 
   function addPicker() {
@@ -249,7 +261,9 @@
   async function initPage() {
     addPicker();
     await ready;
-    applyLanguage(current);
+    if (!window.abpGoogleTranslate?.enabled) applyLanguage(current);
+    // Consent is explicit on first use; only then may later pages resume it.
+    window.abpGoogleTranslate?.resume().catch(() => {});
   }
 
   window.abpI18n = { t, translate, applyLanguage, ready, get language() { return current; }, get locales() { return locales; } };

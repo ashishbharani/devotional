@@ -72,7 +72,8 @@ try{
   if(ipad)await context.addInitScript(()=>{Object.defineProperty(navigator,'platform',{get:()=> 'MacIntel'});Object.defineProperty(navigator,'maxTouchPoints',{get:()=>5});});
   const page=await context.newPage();await page.goto(base);await page.locator('.abp-menu-toggle').click();
   await page.locator('#hdc-install-menu').click();assert.match(await page.locator('.hdc-install-help').innerText(),/Safari.*Share.*Add to Home Screen/s);
-  await page.keyboard.press('Escape');assert.equal(await page.locator('.hdc-install-help').count(),0);
+  await page.keyboard.press('Escape');await page.locator('.hdc-install-help').waitFor({state:'detached'});assert.equal(await page.locator('.hdc-install-help').count(),0);
+  assert.ok(await page.locator('#abp-navigation').evaluate(el=>el.classList.contains('is-open')),'Escape closes the native dialog, not its background drawer');
   await context.close();console.log(`PASS ${ipad?'iPad desktop-UA':'iPhone'} explicit installation instructions and Escape`);
  }
  const context=await setup({viewport:{width:1440,height:1000}});

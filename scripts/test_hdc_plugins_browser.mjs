@@ -7,7 +7,7 @@ import {chromium} from 'playwright';
 const site=path.resolve('site'), brand='HDC — Hindu Devotional Collection';
 const shots=process.env.HDC_SCREENSHOTS || 'work/hdc-plugin-audit';
 await mkdir(shots,{recursive:true});
-const scripts=['universal-search','section-pager','navigation','abp-transliterate','abp-i18n','abp-firebase-config','abp-firebase','abp-favourites','abp-auth','abp','abp-directory','abp-japa','abp-panchang','abp-ephemeris','abp-pwa','abp-a11y','feedback'];
+const scripts=['universal-search','section-pager','navigation','abp-transliterate','abp-google-translate','abp-i18n','abp-firebase-config','abp-firebase','abp-favourites','abp-auth','abp','abp-directory','abp-japa','abp-panchang','abp-ephemeris','abp-pwa','abp-a11y','feedback'];
 const server=createServer(async(req,res)=>{try{
   const url=new URL(req.url,'http://localhost');
   assert.ok(url.pathname.startsWith('/devotional/'));

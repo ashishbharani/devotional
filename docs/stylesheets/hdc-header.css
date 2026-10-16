@@ -10,6 +10,7 @@
 .hdc-header .md-header__ellipsis { height: auto; }
 .hdc-header .md-header__topic { position: static; display: block; height: auto; white-space: normal; font: 600 clamp(16px, 1.4vw, 23px)/1.35 var(--abp-serif); letter-spacing: 0; }
 .hdc-brand-short { display: none; }
+.hdc-header .md-logo :is(.hdc-emblem-light, .hdc-emblem-dark) { display: none; }
 .hdc-brand-motto { margin: 4px 0 0; font: 500 10px/1.6 var(--abp-sans); letter-spacing: .17em; color: #ffdf94; }
 .hdc-brand-motto span { margin-inline: 6px; }
 .hdc-header .md-search__form { border: 1px solid #d9aa4c66; border-radius: 12px; }
@@ -45,7 +46,12 @@
 @media (max-width: 1199px) {
   :root { --hdc-bottom-space: calc(72px + env(safe-area-inset-bottom, 0px)); }
   .abp-navigation-shell { margin: 0; border: 0; border-radius: 0; }
-  .hdc-header { border-radius: 0; }
+  .hdc-header { border-radius: 0; background: linear-gradient(#fff9eb, var(--hdc-ivory)); color: var(--hdc-wine); }
+  .hdc-header .md-logo .hdc-emblem-desktop { display: none; }
+  .hdc-header .md-logo .hdc-emblem-light { display: block; }
+  [data-md-color-scheme='abp-dark'] .hdc-header { background: var(--hdc-wine); color: var(--hdc-ivory); }
+  [data-md-color-scheme='abp-dark'] .hdc-header .md-logo .hdc-emblem-light { display: none; }
+  [data-md-color-scheme='abp-dark'] .hdc-header .md-logo .hdc-emblem-dark { display: block; }
   .hdc-header .md-header__inner { min-height: 64px; padding: 4px 8px 4px 54px; gap: 3px; }
   .hdc-header .md-header__button { min-width: 44px; min-height: 44px; padding: 6px; }
   .hdc-header .md-header__button.md-logo { display: flex; align-items: center; visibility: visible; width: 44px; min-width: 44px; margin: 0; padding: 0; }
@@ -54,7 +60,8 @@
   .hdc-header .md-header__topic { display: block; height: auto; font-size: clamp(20px, 5.5vw, 30px); }
   .hdc-brand-long, .hdc-brand-motto, .hdc-install-header { display: none !important; }
   .hdc-brand-short { display: inline; }
-  .abp-menu-toggle { top: 10px; left: 5px; color: var(--hdc-ivory); }
+  .abp-menu-toggle { top: 10px; left: 5px; color: var(--hdc-wine); }
+  [data-md-color-scheme='abp-dark'] .abp-menu-toggle { color: var(--hdc-ivory); }
   .abp-navigation { border-radius: 0; padding-bottom: 28px; }
   .abp-navigation__list { display: block; }
   .abp-navigation__item + .abp-navigation__item { border-inline-start: 0; border-top: 1px solid #c8953e44; }

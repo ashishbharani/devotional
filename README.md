@@ -86,32 +86,40 @@ uv run mkdocs build     # static site in ./site (≈1 min, ~130 MB)
 
 ### Language selection and optional whole-page translation
 
-The header language picker defaults to whole-page translation:
+The header language picker offers the owner-supplied Google Website Translator
+**in the current page, at the same URL, with no new tab**:
 
 - **Local interface/title script (secondary, expandable):** uses `docs/assets/i18n.json` and offline
   transliteration. It does not promise to translate every page paragraph, tool
   message, sacred work, or external PDF.
-- **Translate whole page (online, optional):** click a language in the primary
-  grid. That click directly opens a Google machine-translated copy of the published
-  public page in a separate tab; no third-party script is embedded or loaded by
-  the picker. Only the public origin/path is included, never query parameters or
-  fragments (which can contain coordinates/search text). It does not transmit
-  local favourites, authentication state, form inputs or preferences. Google
-  handles the translated copy under its own policies. No request to Google
-  Translate occurs until the external link is activated.
+- **Translate whole page (online, optional):** click **Enable Google Translate
+  here**, then select a language in Google's actual dropdown. The supplied
+  `https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit`
+  script is loaded only after consent. No Google search redirect, proxy URL,
+  embedded translated page, or replacement calculation/search engine is used.
 
-The original tab remains authoritative. Use it for sign-in, favourites, search
-and live Panchang/Ephemeris calculations; provider-proxied interactive features
-and dynamic results are not guaranteed to work or translate. Machine translation
-can misinterpret sacred/astronomical terminology, image text and PDFs. Provider
-availability varies by region/device. If unavailable, use the browser's Translate
-command on the original page. See [Google's website translation help](https://support.google.com/translate/answer/2534559).
-No language/storage key or canonical devotional content is changed by this option.
+Google's script can access page text, including displayed location information;
+the consent notice discloses this. Form values, account controls and the personal
+favourites list are marked notranslate; this is not a sandbox for third-party
+JavaScript. Enablement is remembered using `abp-google-translate-consent-v1`.
+Google manages its own translation cookie. Later pages may resume only after
+consent. The widget host survives picker close/reopen and instant navigation;
+script/constructor initialization is deduplicated. Provider attribution and its
+original/translated toolbar are not hidden. Loading/network failure offers retry
+without redirecting or claiming success. **English · Original**, or an explicit
+offline-language choice, clears only translation consent/cookies and reloads the
+same URL to remove provider DOM wrappers safely. Other saved data is untouched.
+That reload can reset unsaved form inputs; save/share tool inputs first.
 
-Regression: `node scripts/test_translation_browser.mjs` tests all nine targets,
-explicit activation, private URL stripping, local language persistence and mobile/
-desktop dialogs using a mocked external destination. Provider output quality is
-not asserted by the deterministic test.
+Machine translation can misinterpret sacred/astronomical terminology and may not
+translate images, PDFs or every dynamic message. Provider availability varies by
+region/device. See [Google's website translation help](https://support.google.com/translate/answer/2534559).
+Canonical devotional content and astronomical algorithms remain unchanged.
+
+Regression: `node scripts/test_translation_browser.mjs` tests in-page mutation,
+explicit consent, no popup/navigation, failure/retry, one widget across picker
+reopens, reload/resume, local preferences and mobile/desktop layouts using a
+clearly mocked provider. Separate live checks verify Google's real output.
 
 ```
 data/collection.json      structured data extracted from the PDF (single source of truth)

@@ -105,6 +105,7 @@
       if (!mobile.matches && !nav.contains(event.target)) collapse();
     });
     document.addEventListener('keydown', event => {
+      if (document.querySelector('dialog[open]')) return;
       if (event.key === 'Escape') {
         if (nav.classList.contains('is-open')) close(true);
         else {
