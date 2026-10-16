@@ -66,7 +66,8 @@ try {
   assert.ok(hubLinks.some(x=>x.text==='Parayan'));
   assert.ok(hubLinks.some(x=>x.text==='Katha / Vrat Katha'));
   assert.ok(await page.locator('.abp-page .abp-card h3').first().evaluate(el=>el.getBoundingClientRect().width>100),'card content must fill its column, not the icon column');
-  assert.ok(await page.locator('.abp-reading-link').evaluateAll(a=>a.every(el=>el.getBoundingClientRect().height>=44)),'new collection links have 44px touch targets');
+  assert.equal(await page.locator('.abp-reading-footer a.abp-reading-link').count(),3,'all three footer links use the accessible collection-link style');
+  assert.ok(await page.locator('.abp-reading-link').evaluateAll(a=>a.every(el=>el.getBoundingClientRect().height>=44)),'new collection and footer links have 44px touch targets');
   for(const name of ['Parayan','Katha / Vrat Katha']) {
    const link=page.getByRole('link',{name,exact:true});
    const destination=new URL(await link.getAttribute('href'),page.url()).href;

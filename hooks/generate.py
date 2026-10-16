@@ -586,9 +586,9 @@ def page_vrat_katha_parayan(d):
             out.append(f'<div class="abp-card"><span class="abp-card__num" aria-hidden="true">❖</span><div><h3><a class="abp-reading-link" href="../{esc(group["url"])}">{esc(group["name"])}</a></h3>'
                        f'<p>{fmt(group["count"])} works · Browse collection</p></div></div>')
         out.append('</div>')
-    out.append(f'<p><a href="../{esc(observances["url"])}">All festivals and observances</a> · '
-               f'<a href="../{esc(literary["url"])}">All devotional literary forms</a> · '
-               '<a href="../library/">Scriptures &amp; Books Library</a></p>')
+    out.append(f'<div class="abp-reading-footer"><a class="abp-reading-link" href="../{esc(observances["url"])}">All festivals and observances</a>'
+               f'<a class="abp-reading-link" href="../{esc(literary["url"])}">All devotional literary forms</a>'
+               '<a class="abp-reading-link" href="../library/">Scriptures &amp; Books Library</a></div>')
     return "\n".join(out)
 
 
