@@ -29,7 +29,7 @@ try{
   assert.equal(await page.locator('[data-install-app]').count(),2,'one control per intended entry point');
   assert.equal(await header.getAttribute('aria-label'),'Install HDC App');
   assert.equal(await header.getAttribute('title'),'Install Hindu Devotional Collection');
-  assert.equal(await header.isVisible(),!mobile,'desktop install icon always visible even unavailable');
+  assert.ok(await header.isVisible(),'header install icon remains visible on desktop and mobile, even unavailable');
   assert.ok(await header.isDisabled(),'no unsolicited or unsupported prompt');
   assert.equal(await page.locator('.hdc-bottom-navigation').isVisible(),mobile);
   assert.equal(await page.locator('.hdc-bottom-navigation > a,.hdc-bottom-navigation > button').count(),6);

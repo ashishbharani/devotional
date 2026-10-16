@@ -76,6 +76,13 @@ jobs:
         run: node scripts/test_hdc_plugins_browser.mjs
       - name: Test approved header and explicit PWA installation states
         run: node scripts/test_approved_header_browser.mjs
+      - name: Test approved-reference header proportions and mobile hero placement
+        run: node scripts/test_header_fidelity_browser.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: header-reference-comparison-screenshots
+          path: work/header-fidelity
       - uses: actions/upload-artifact@v4
         if: always()
         with:

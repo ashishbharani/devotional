@@ -9,14 +9,7 @@ ART = "assets/images/royal-home/"
 
 def hero():
     return (
-        '<div class="udhc-sacred-strip"><span aria-hidden="true">✦</span> '
-        '<span lang="sa">ॐ सर्वे भवन्तु सुखिनः</span> · THE LIGHT OF DEVOTION · THE WISDOM OF BHARAT '
-        '<span aria-hidden="true">✦</span></div>'
-        '<nav class="udhc-quick-nav" aria-label="Homepage destinations">'
-        + ''.join(f'<a href="{url}">{name}</a>' for name, url in [
-            ("Home", "./"), ("Library", "library/"), ("Categories", "master-index/"),
-            ("Books", "library/"), ("Search", "find/"), ("About", "foreword/"), ("Help", "legend/")])
-        + '</nav><section class="udhc-hero" aria-labelledby="udhc-title">'
+        '<section class="udhc-hero" aria-labelledby="udhc-title">'
         '<div class="udhc-hero-art" aria-hidden="true">'
         f'<img src="{ART}temple-ghat-hero.webp" width="1536" height="1024" fetchpriority="high" alt="">'
         '</div><div class="udhc-hero-copy">'
@@ -28,7 +21,7 @@ def hero():
         '<p class="udhc-motto">Explore • Read • Listen • Learn • Devote</p>'
         '<p class="udhc-intro">Explore Hindu scriptures, mantras, stotras, prayers, sacred literature, '
         'devotional music and traditional works — thoughtfully brought together in one living digital library.</p>'
-        '<form class="udhc-search" action="find/" method="get" role="search" aria-label="Search the collection">'
+        '<form class="udhc-search" data-universal-search-form action="find/" method="get" role="search" aria-label="Search the collection">'
         '<label for="udhc-query">What would you like to discover?</label><div>'
         '<input id="udhc-query" type="search" name="w" placeholder="Try Hanuman Chalisa, Shiva, a mantra…" required>'
         '<button type="submit">Search <span aria-hidden="true">→</span></button></div></form>'
@@ -39,6 +32,15 @@ def hero():
         f'<figure>{deity_portrait("GANESHA", css="udhc-guardian-portrait")}<figcaption>श्री गणेश</figcaption></figure>'
         f'<figure>{deity_portrait("SHIVA / MAHESH", css="udhc-guardian-portrait")}<figcaption>ॐ नमः शिवाय</figcaption></figure>'
         '</div></section><div class="udhc-gold-rule" aria-hidden="true">❖</div>'
+        '<div class="udhc-sacred-strip"><span aria-hidden="true">✦</span> '
+        '<span lang="sa">ॐ सर्वे भवन्तु सुखिनः</span> · THE LIGHT OF DEVOTION · THE WISDOM OF BHARAT '
+        '<span aria-hidden="true">✦</span></div>'
+        '<details class="udhc-home-links"><summary>More homepage links</summary>'
+        '<nav class="udhc-quick-nav" aria-label="Homepage destinations">'
+        + ''.join(f'<a href="{url}">{name}</a>' for name, url in [
+            ("Home", "./"), ("Library", "library/"), ("Categories", "master-index/"),
+            ("Books", "library/"), ("Search", "find/"), ("About", "foreword/"), ("Help", "legend/")])
+        + '</nav></details>'
     )
 
 

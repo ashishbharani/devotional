@@ -1,5 +1,6 @@
 {# Shared HDC shell, retaining Material's search, palette and instant-nav hooks. #}
 {% from 'partials/hdc-controls.html' import install %}
+{% set brand_parts = config.site_name.split(' — ', 1) %}
 <header class="md-header md-header--shadow hdc-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="{{ lang.t('header') }}">
     <a href="{{ nav.homepage.url | url }}" title="{{ config.site_name }}" class="md-header__button md-logo" aria-label="{{ config.site_name }}" data-md-component="logo">
@@ -10,7 +11,7 @@
     <div class="md-header__title" data-md-component="header-title">
       <div class="md-header__ellipsis">
         <div class="md-header__topic" aria-label="{{ config.site_name }}">
-          <span class="hdc-brand-long">{{ config.site_name }}</span><span class="hdc-brand-short" aria-hidden="true">HDC</span>
+          <span class="hdc-brand-long">{% if brand_parts | length == 2 %}<span class="hdc-brand-initials">{{ brand_parts[0] }}</span> — {{ brand_parts[1] }}{% else %}{{ config.site_name }}{% endif %}</span><span class="hdc-brand-short" aria-hidden="true">HDC</span>
         </div>
         <div class="md-header__topic" data-md-component="header-topic"><span class="md-ellipsis">{{ page.title }}</span></div>
         <p class="hdc-brand-motto">BHAKTI <span aria-hidden="true">|</span> JNANA <span aria-hidden="true">|</span> SANSKRUTI <span aria-hidden="true">|</span> SEVA</p>

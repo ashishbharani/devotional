@@ -19,6 +19,11 @@ BOXES = {
     "app-192": (1202, 73, 1382, 253),
     "favicon": (1406, 135, 1508, 240),
     "navigation-lotus": (728, 473, 800, 514),
+    "navigation-lotus-clear": (728, 473, 800, 514),
+    "navigation-corner-light": (18, 442, 68, 493),
+    "navigation-corner-dark": (18, 609, 68, 658),
+    "navigation-corner-light-right": (1464, 442, 1517, 493),
+    "navigation-corner-dark-right": (1466, 609, 1518, 658),
 }
 
 
@@ -50,24 +55,43 @@ def square(image, size, background=(0, 0, 0, 0), fraction=1.0):
     return target
 
 
+def ornament_alpha(image):
+    """Keep the approved gold pixels while removing their parchment/wine matte."""
+    image = image.convert("RGBA")
+    pixels = image.load()
+    for y in range(image.height):
+        for x in range(image.width):
+            r, g, b, _ = pixels[x, y]
+            pixels[x, y] = (r, g, b, max(0, min(255, (g - b - 55) * 15)))
+    return image
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("board", type=Path)
     parser.add_argument("--add-mobile", action="store_true", help="Extend the same reviewed source with its dedicated mobile emblems only.")
+    parser.add_argument("--add-navigation", action="store_true", help="Extract the approved gold corners and central lotus without repainting.")
     args = parser.parse_args()
     target = ROOT / "docs/assets/images/hdc-brand"
     if (target / "source.json").exists():
-        if not args.add_mobile:
+        if not (args.add_mobile or args.add_navigation):
             raise FileExistsError("Brand assets already exist; review rather than silently overwrite.")
         assert json.loads((target / "source.json").read_text())["sha256"] == hashlib.sha256(args.board.read_bytes()).hexdigest()
         with Image.open(args.board) as board:
-            for name in ("mobile-emblem-light", "mobile-emblem-dark"):
+            names = ("navigation-corner-light", "navigation-corner-dark", "navigation-corner-light-right", "navigation-corner-dark-right", "navigation-lotus-clear") if args.add_navigation else ("mobile-emblem-light", "mobile-emblem-dark")
+            for name in names:
                 output = target / f"{name}.webp"
                 if output.exists():
                     raise FileExistsError(output)
-                board.crop(BOXES[name]).save(output, "WEBP", quality=94, method=6)
+                panel = board.crop(BOXES[name]).convert("RGBA")
+                if args.add_navigation:
+                    # Retain the exact gold ink; remove its matte, not the artwork.
+                    panel = ornament_alpha(panel)
+                panel.save(output, "WEBP", quality=94, method=6)
         metadata = json.loads((target / "source.json").read_text())
         metadata["cropBoxes"] = BOXES
+        if args.add_navigation:
+            metadata["ornamentAlphaMethod"] = "Exact gold pixels with parchment/wine matte removed by chroma alpha; no repainting."
         (target / "source.json").write_text(json.dumps(metadata, indent=2), encoding="utf-8")
         return
     target.mkdir(parents=True, exist_ok=True)
@@ -76,6 +100,9 @@ def main():
         panels = {key: board.crop(box) for key, box in BOXES.items()}
     for name in ("logo-full", "logo-horizontal", "header-emblem", "header-sunset", "navigation-lotus", "mobile-emblem-light", "mobile-emblem-dark"):
         panels[name].save(target / f"{name}.webp", "WEBP", quality=94, method=6)
+    for name in ("navigation-corner-light", "navigation-corner-dark", "navigation-corner-light-right", "navigation-corner-dark-right", "navigation-lotus-clear"):
+        panel = ornament_alpha(panels[name])
+        panel.save(target / f"{name}.webp", "WEBP", quality=94, method=6)
     emblem = outside_alpha(panels["emblem"])
     square(emblem, 266).save(target / "emblem.webp", "WEBP", quality=94, method=6)
     square(emblem, 512).save(target / "icon-512.png", optimize=True)
@@ -89,7 +116,7 @@ def main():
         square(favicon, size).save(target / f"favicon-{size}.png", optimize=True)
     metadata = {"source": args.board.name, "sha256": hashlib.sha256(args.board.read_bytes()).hexdigest(),
                 "sourceSize": [1536, 1024], "cropBoxes": BOXES,
-                "method": "Exact dedicated panels, no AI generation/repainting; contain, never stretch; boundary-only alpha.",
+                "method": "Exact dedicated panels, no AI generation/repainting; contain, never stretch; icon boundary alpha and gold-ornament matte removal.",
                 "limitation": "512px output is resampled from a 266×262 board panel, not a native high-resolution master.",
                 "maskableArtworkFraction": .52}
     (target / "source.json").write_text(json.dumps(metadata, indent=2), encoding="utf-8")

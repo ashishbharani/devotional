@@ -6,6 +6,11 @@
 .udhc-sacred-strip { padding:12px 18px; background:#790d20; color:#ffe8b1; text-align:center; font:700 .68rem/1.8 Georgia,serif; letter-spacing:.09em; border-top:5px solid #dca443; }
 .udhc-quick-nav { display:flex; justify-content:center; flex-wrap:wrap; gap:4px 16px; padding:10px 16px; border-bottom:2px solid var(--udhc-gold); }
 .udhc-quick-nav a { color:#790d20!important; padding:8px; font:700 .75rem/1.5 "Noto Sans",sans-serif; min-height:44px; }
+.udhc-home-links { margin: 0 !important; border: 0 !important; border-bottom: 1px solid var(--udhc-gold) !important; border-radius: 0 !important; background: var(--udhc-cream) !important; }
+.udhc-home-links > summary { padding: 12px 20px; color: #790d20; text-align: center; cursor: pointer; }
+.md-content:has([data-sacred-kind='home']) { border: 0; border-radius: 0; background: none; box-shadow: none; }
+.md-content__inner:has(> [data-sacred-kind='home']) { margin: 0; padding-top: 0; }
+.abp-page[data-sacred-kind='home'] { padding: 0; background: none; }
 .udhc-hero { position:relative; isolation:isolate; overflow:hidden; min-height:680px; border:5px ridge #d3a049; color:#fff5dd; background:#4a0920; }
 .udhc-hero-art { position:absolute; inset:0; z-index:-2; }
 .udhc-hero-art img { width:100%; height:100%; object-fit:cover; object-position:center; }
@@ -85,11 +90,14 @@
 .udhc-home > .abp-home-index,.udhc-home .abp-home-utility,.udhc-home .abp-home-actions { color:var(--abp-ink); font-family:var(--abp-sans); }
 @media (hover:hover) { .udhc-path:hover { transform:translateY(-4px); } .udhc-category:hover,.udhc-deities a:hover { outline:2px solid #b88636; outline-offset:3px; } }
 @media (max-width:1100px) { .udhc-guardians { position:relative; top:auto; right:auto; justify-content:center; padding:0 20px 32px; } .udhc-paths { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:1199px) { .md-main__inner:has([data-sacred-kind='home']) { margin-top: 0; } }
 @media (max-width:650px) {
-  .udhc-hero-copy { padding:24px 20px 32px; }
+  .udhc-hero-copy { padding:46px 20px 32px; text-align:center; }
+  .udhc-hero .udhc-kicker { text-align:center; font-size:11px; letter-spacing:.12em; }
+  .udhc-hero .udhc-plaque { position:absolute; top:12px; right:12px; margin:0; padding:5px 12px; font-size:11px; }
   .udhc-hero::before { background:linear-gradient(90deg,#3c061aee,#3c061acc 65%,#3c061a66); }
-  .udhc-home h1 { font-size:1.4rem; letter-spacing:.025em; }
-  .udhc-invitation { font-size:2rem; }
+  .udhc-home h1 { font-size:26px; line-height:1.2; font-weight:400; letter-spacing:0; text-align:center; }
+  .udhc-invitation { font-size:24px; }
   .udhc-intro { font-size:.82rem; }
   .udhc-actions > a { width:100%; }
   .udhc-search > div { flex-wrap:wrap; }
