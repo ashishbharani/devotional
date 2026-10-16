@@ -48,6 +48,7 @@ const base=`http://127.0.0.1:${server.address().port}/devotional/`;
 const browser=await chromium.launch();
 const routes=[categoryRoot,categoryRoot+'ganesha/',categoryRoot+'shiva-mahesh/','library/','master-index/','find/','a-z/','foreword/','disclaimer/','legend/','panchang/','hindu-calendar/','date-converter/','tools/indian-ephemeris/','japa-counter/','favourites/','tools/feedback/','404.html'];
 routes.push(...['navagraha','brahma','chandra','rahu','shukra','lalita-tripurasundari'].map(slug=>categoryRoot+slug+'/'));
+routes.push(...['varahi','ardhanarishvara','nataraja','gayatri'].map(slug=>categoryRoot+slug+'/'));
 try {
   for(const [width,theme] of [[320,'abp-light'],[390,'abp-light'],[768,'abp-light'],[1440,'abp-light'],[390,'abp-dark'],[1440,'abp-dark']]) {
     const context=await browser.newContext({viewport:{width,height:1000},serviceWorkers:'block',reducedMotion:'reduce',isMobile:width<600,hasTouch:width<600});
@@ -60,6 +61,11 @@ try {
       assert.equal(await page.locator('.abp-sacred-intro').count(),1,route);
       assert.equal(await page.locator('main h1').count(),1,`one h1: ${route}`);
       await page.locator('.abp-sacred-intro img').evaluateAll(images=>Promise.all(images.map(img=>img.decode())));
+      if(route===categoryRoot) {
+        // Decode every approved portrait, including all twenty new identities.
+        await page.locator('img.abp-deity-portrait').evaluateAll(images=>Promise.all(images.map(img=>{img.loading='eager';return img.decode();})));
+        assert.equal(await page.locator('img.abp-deity-portrait').count(),55);
+      }
       assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),`no overflow: ${route} ${width} ${theme}`);
       const intro=await page.locator('.abp-sacred-intro').evaluate(el=>({height:el.getBoundingClientRect().height,color:getComputedStyle(el.querySelector('p')).color}));
       assert.ok(intro.height<160,'restrained internal header, not a repeated homepage hero');
@@ -69,7 +75,7 @@ try {
         await page.locator('.eph-controls').waitFor();
         assert.equal(await page.locator('.abp-page').getAttribute('data-sacred-kind'),'astronomy');
       }
-      if(['library/','foreword/',categoryRoot+'ganesha/',categoryRoot+'navagraha/',categoryRoot+'brahma/','find/','panchang/','tools/indian-ephemeris/'].includes(route)) {
+      if(['library/','foreword/',categoryRoot+'ganesha/',categoryRoot+'navagraha/',categoryRoot+'brahma/',categoryRoot+'nataraja/',categoryRoot+'ardhanarishvara/','find/','panchang/','tools/indian-ephemeris/'].includes(route)) {
         await page.screenshot({path:path.join(shots,`${route.replaceAll('/','_')}-${width}-${theme}.jpg`),type:'jpeg',quality:85,fullPage:false});
       }
       await page.locator('html').evaluate(el=>el.classList.add('abp-hc','abp-text-2','abp-cards','abp-still'));

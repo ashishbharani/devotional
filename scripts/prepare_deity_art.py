@@ -7,7 +7,7 @@ from PIL import Image
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
-from hooks.deity_art import APPROVED, PREVIEW_VERSIONS  # noqa: E402
+from hooks.deity_art import APPROVED, PREVIEW_VERSIONS, LIFELIKE_PREVIEWS  # noqa: E402
 
 
 def main():
@@ -21,7 +21,10 @@ def main():
         if all(output.exists() for output in outputs):
             continue  # Preserve previously packaged approved originals.
         version = PREVIEW_VERSIONS.get(slug, 1)
-        with Image.open(args.previews / f"{slug}-preview-v{version}.png") as image:
+        source = (args.previews / "next-20-lifelike" / LIFELIKE_PREVIEWS[slug]
+                  if slug in LIFELIKE_PREVIEWS
+                  else args.previews / f"{slug}-preview-v{version}.png")
+        with Image.open(source) as image:
             image = image.convert("RGB")
             assert image.width == image.height, slug
             for width in (640, 1254):
