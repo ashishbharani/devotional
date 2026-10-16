@@ -1,0 +1,22 @@
+{
+  "Bhagavad Gita": {"english": "https://www.holy-bhagavad-gita.org/chapter/1/verse/1", "note": "English: Swami Mukundananda translation and commentary."},
+  "Valmiki Ramayana": {"open": "https://www.valmikiramayan.net/", "english": "https://www.valmikiramayan.net/", "hindi": "https://bharatkosha.org/hi/granth/shrimad-valmiki-ramayana-gita-press", "note": "English source lists six Kandas. Hindi: community transcription and scans of the Gita Press edition."},
+  "Ramcharitmanas": {"english": "https://www.shrisitaram.org/ramsharit/pdf/ramsharit.pdf", "note": "English: Gita Press bilingual PDF, hosted by Shri Sitaram. Large document; may take time to open."},
+  "Mahabharata": {"english": "https://www.wisdomlib.org/hinduism/book/the-mahabharata-mohan", "note": "English: Kisari Mohan Ganguli translation."},
+  "Sundara Kanda": {"english": "https://www.valmikiramayan.net/sundara/sarga1/sundara_1_prose.htm", "note": "English: Valmiki Ramayana, Sundara Kanda, starting at chapter 1."},
+  "Srimad Bhagavata Purana": {"english": "https://vedabase.io/en/library/sb/", "note": "English: Bhaktivedanta Book Trust translation and purports."},
+  "Devi Mahatmya": {"english": "https://www.wisdomlib.org/hinduism/book/the-markandeya-purana/d/doc117155.html", "note": "English: Devi Mahatmya in Markandeya Purana, cantos 81–93; use Next to continue."},
+  "Rig Veda": {"english": "https://www.wisdomlib.org/hinduism/book/rig-veda-english-translation", "note": "English: H. H. Wilson translation and commentary."},
+  "Yajur Veda": {"english": "https://www.intratext.com/IXT/ENG0043/", "note": "English: A. B. Keith translation of the Taittiriya Samhita (Black Yajur Veda)."},
+  "Sama Veda": {"english": "https://www.intratext.com/IXT/ENG0040/", "note": "English: Ralph T. H. Griffith translation."},
+  "Atharva Veda": {"english": "https://en.wikisource.org/wiki/Atharva-Veda_Samhita", "note": "English: Whitney/Lanman edition; community transcription with source scans."},
+  "Kena Upanishad": {"english": "https://www.wisdomlib.org/hinduism/book/kena-upanishad-shankara-bhashya", "note": "English: S. Sitarama Sastri translation with Shankara commentary."},
+  "Garuda Purana": {"english": "https://www.wisdomlib.org/hinduism/book/the-garuda-purana-dutt", "note": "English: Manmatha Nath Dutt translation."},
+  "Narada Purana": {"english": "https://www.wisdomlib.org/hinduism/book/narada-purana-english", "note": "English: Ganesh Vasudeo Tagare translation."},
+  "Agni Purana": {"english": "https://www.wisdomlib.org/hinduism/book/the-agni-purana", "note": "English: N. Gangadharan translation."},
+  "Skanda Purana": {"english": "https://www.wisdomlib.org/hinduism/book/the-skanda-purana", "note": "English: G. V. Tagare translation."},
+  "Ganesha Purana": {"english": "https://www.wisdomlib.org/hinduism/book/the-ganesha-purana", "note": "English: abridged edition, not the complete Ganesha Purana."},
+  "Patanjali Yoga Sutras": {"english": "https://www.wisdomlib.org/hinduism/book/yoga-sutras-with-commentaries", "note": "English: Rama Prasada translation with Vyasa and Vachaspati Mishra commentaries."},
+  "Brahma Sutras": {"english": "https://www.wisdomlib.org/hinduism/book/brahma-sutras", "note": "English: Swami Vireshwarananda translation with Shankara commentary."},
+  "Sankhya Aphorisms": {"english": "https://archive.org/details/sankhyaaphorisms032069mbp", "note": "English: J. R. Ballantyne, edited by Fitzedward Hall; scanned book at Internet Archive."}
+}

@@ -460,6 +460,8 @@ body { background: var(--abp-paper); }
 [data-md-color-scheme="abp-dark"] .md-typeset .abp-book h3 { color: #f0b86f; }
 .abp-book__btns { display: grid; grid-template-columns: 1fr 1fr; gap: .35rem; width: 100%; }
 .abp-book__btns .abp-btn { padding: .3rem .2rem; background: linear-gradient(180deg, var(--abp-gloss) 0 45%, transparent 45%), color-mix(in srgb, #7f8fa0 40%, var(--abp-paper)); }
+.md-typeset .abp-book__edition { margin: .65rem 0 0; font-size: .7rem; line-height: 1.5; color: var(--abp-ink-3); }
+.md-typeset .abp-reading-link { display: flex; align-items: center; min-height: 44px; }
 
 /* ---------- finder ----------------------------------------------------------- */
 .abp-finder__controls { display: grid; grid-template-columns: 2fr 1.3fr 1fr .6fr; gap: .5rem; margin-bottom: .6rem; }

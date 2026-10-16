@@ -47,6 +47,7 @@ await new Promise(r=>server.listen(0,'127.0.0.1',r));
 const base=`http://127.0.0.1:${server.address().port}/devotional/`;
 const browser=await chromium.launch();
 const routes=[categoryRoot,categoryRoot+'ganesha/',categoryRoot+'shiva-mahesh/','library/','master-index/','find/','a-z/','foreword/','disclaimer/','legend/','panchang/','hindu-calendar/','date-converter/','tools/indian-ephemeris/','japa-counter/','favourites/','tools/feedback/','404.html'];
+routes.push(...['navagraha','brahma','chandra','rahu','shukra','lalita-tripurasundari'].map(slug=>categoryRoot+slug+'/'));
 try {
   for(const [width,theme] of [[320,'abp-light'],[390,'abp-light'],[768,'abp-light'],[1440,'abp-light'],[390,'abp-dark'],[1440,'abp-dark']]) {
     const context=await browser.newContext({viewport:{width,height:1000},serviceWorkers:'block',reducedMotion:'reduce',isMobile:width<600,hasTouch:width<600});
@@ -68,7 +69,7 @@ try {
         await page.locator('.eph-controls').waitFor();
         assert.equal(await page.locator('.abp-page').getAttribute('data-sacred-kind'),'astronomy');
       }
-      if(['library/','foreword/',categoryRoot+'ganesha/','find/','panchang/','tools/indian-ephemeris/'].includes(route)) {
+      if(['library/','foreword/',categoryRoot+'ganesha/',categoryRoot+'navagraha/',categoryRoot+'brahma/','find/','panchang/','tools/indian-ephemeris/'].includes(route)) {
         await page.screenshot({path:path.join(shots,`${route.replaceAll('/','_')}-${width}-${theme}.jpg`),type:'jpeg',quality:85,fullPage:false});
       }
       await page.locator('html').evaluate(el=>el.classList.add('abp-hc','abp-text-2','abp-cards','abp-still'));

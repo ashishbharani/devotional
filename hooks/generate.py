@@ -534,23 +534,29 @@ def page_rules(d):
     )
 
 
+LIBRARY_READERS = json.loads((ROOT / "hooks" / "library_readers.json").read_text(encoding="utf-8"))
+
+
 def library_content(d):
     out = []
     for shelf in d["library"]:
         out.append(f'<h2 class="abp-shelf">{esc(shelf["subtitle"].title().replace("•", "·"))}</h2>\n')
         cards = []
         for b in shelf["books"]:
+            reader = LIBRARY_READERS.get(b["title"], {})
+            links = {**b["links"], **{k: v for k, v in reader.items() if k in ("open", "english", "hindi")}}
             names = {"open": "Open {t}", "english": "{t} in English", "hindi": "{t} in Hindi", "listen": "Listen to {t} on YouTube"}
             btns = "".join(
-                f'<a class="abp-btn" href="{esc(b["links"][k])}" target="_blank" rel="noopener" '
+                f'<a class="abp-btn" href="{esc(links[k])}" target="_blank" rel="noopener noreferrer" '
                 f'aria-label="{esc(names[k].format(t=b["title"]))} (opens in a new tab)">{k.upper()}</a>'
                 for k in ("open", "english", "hindi", "listen")
-                if k in b["links"]
+                if k in links
             )
             cards.append(
                 f'<div class="abp-book"><div class="abp-book__cover" aria-hidden="true" style="--cover:{b["cover"]}">'
                 f'<span>SACRED TEXT</span><i></i></div><h3>{esc(b["title"])}</h3>'
-                f'<div class="abp-book__btns">{btns}</div></div>'
+                f'<div class="abp-book__btns">{btns}</div>'
+                + (f'<p class="abp-book__edition">{esc(reader["note"])}</p>' if reader.get("note") else "") + '</div>'
             )
         out.append('<div class="abp-books" markdown="0">\n' + "\n".join(cards) + "\n</div>\n")
     return "\n".join(out)
@@ -561,6 +567,29 @@ def page_library(d):
         titlebar("Hindu Scriptures & Books Library", "Epics · Vedas · Upanishads · Puranas · Darshana", "abp-titlebar--slate")
         + library_content(d)
     )
+
+
+def page_vrat_katha_parayan(d):
+    """Discovery links into existing canonical sections, not a partial keyword search."""
+    literary = next(c for c in d["categories"] if c["num"] == 10)
+    observances = next(c for c in d["categories"] if c["num"] == 7)
+    out = [titlebar("Vrat Katha & Parayan", "Browse existing stories, recitations and observances", "abp-titlebar--sage"),
+           '<p>Choose a collection below to browse its devotional works and existing reading/listening links. '
+           'These are catalogue sections, not newly supplied full-text translations.</p>']
+    for heading, key, groups in (
+        ("Vrat Katha", "vrat-katha", [g for g in literary["merged"] if "vrat" in g["name"].lower() and "katha" in g["name"].lower()]),
+        ("Parayan", "parayan", [g for g in literary["merged"] if "parayan" in g["name"].lower()]),
+        ("Related Vrata Observances", "vrata-observances", [g for g in observances["merged"] if "vrat" in g["name"].lower()]),
+    ):
+        out.append(f'<h2 id="{key}">{heading}</h2><div class="abp-cards" markdown="0">')
+        for group in groups:
+            out.append(f'<div class="abp-card"><span class="abp-card__num" aria-hidden="true">❖</span><div><h3><a class="abp-reading-link" href="../{esc(group["url"])}">{esc(group["name"])}</a></h3>'
+                       f'<p>{fmt(group["count"])} works · Browse collection</p></div></div>')
+        out.append('</div>')
+    out.append(f'<div class="abp-reading-footer"><a class="abp-reading-link" href="../{esc(observances["url"])}">All festivals and observances</a>'
+               f'<a class="abp-reading-link" href="../{esc(literary["url"])}">All devotional literary forms</a>'
+               '<a class="abp-reading-link" href="../library/">Scriptures &amp; Books Library</a></div>')
+    return "\n".join(out)
 
 
 def category_bars(d, prefix=""):
@@ -1066,6 +1095,7 @@ def on_config(config, **kw):
     add("legend.md", "Legend", "front")
     add("rules.md", "Final Reconciliation Rules Applied", "front")
     add("library.md", "Hindu Scriptures & Books Library", "front")
+    add("vrat-katha-parayan.md", "Vrat Katha & Parayan", "front")
     add("master-index.md", "Devotional Works", "front")
     for c in d["categories"]:
         add(f'{c["dir"]}/index.md', f'{c["num"]}. {title_case(c["title"])}', c["num"], cat=c)
@@ -1178,6 +1208,7 @@ def on_files(files, config, **kw):
         "legend.md": lambda p: page_legend(d),
         "rules.md": lambda p: page_rules(d),
         "library.md": lambda p: page_library(d),
+        "vrat-katha-parayan.md": lambda p: page_vrat_katha_parayan(d),
         "master-index.md": lambda p: page_master(d),
         "find.md": lambda p: page_find(d),
         "a-z.md": lambda p: page_az(d),
