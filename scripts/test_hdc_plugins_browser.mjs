@@ -119,6 +119,9 @@ try {
  for(const file of ['navigation.css','royal-home.css','sacred-site.css','hdc-header.css']) {
    assert.ok(await page.evaluate(async url=>Boolean(await caches.match(url)),base+'stylesheets/'+file),`makeover stylesheet in first-install shell: ${file}`);
  }
+ for(const file of ['navigation-corner-light.webp','navigation-corner-light-right.webp','navigation-corner-dark.webp','navigation-corner-dark-right.webp','navigation-lotus-clear.webp']) {
+   assert.ok(await page.evaluate(async url=>Boolean(await caches.match(url)),base+'assets/images/hdc-brand/'+file),`approved header ornament cached offline: ${file}`);
+ }
  assert.ok(await page.evaluate(async()=>(await caches.keys()).some(key=>key.startsWith('udhc-shell-'))),'legacy cache protocol retained');
  await context.setOffline(true);await page.reload();
  assert.equal(await page.title(),brand);

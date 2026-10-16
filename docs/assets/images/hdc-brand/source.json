@@ -65,9 +65,40 @@
       473,
       800,
       514
+    ],
+    "navigation-lotus-clear": [
+      728,
+      473,
+      800,
+      514
+    ],
+    "navigation-corner-light": [
+      18,
+      442,
+      68,
+      493
+    ],
+    "navigation-corner-dark": [
+      18,
+      609,
+      68,
+      658
+    ],
+    "navigation-corner-light-right": [
+      1464,
+      442,
+      1517,
+      493
+    ],
+    "navigation-corner-dark-right": [
+      1466,
+      609,
+      1518,
+      658
     ]
   },
-  "method": "Exact dedicated panels, no AI generation/repainting; contain, never stretch; boundary-only alpha.",
+  "method": "Exact dedicated panels, no AI generation/repainting; contain, never stretch; icon boundary alpha and gold-ornament matte removal.",
   "limitation": "512px output is resampled from a 266\u00d7262 board panel, not a native high-resolution master.",
-  "maskableArtworkFraction": 0.52
+  "maskableArtworkFraction": 0.52,
+  "ornamentAlphaMethod": "Exact gold pixels with parchment/wine matte removed by chroma alpha; no repainting."
 }

@@ -10,7 +10,8 @@
       <button type="button" class="abp-navigation__section" aria-expanded="false" aria-controls="abp-menu-{{ loop.index }}">{{ icon(item.title) }}<span>{{ item.title }}</span> <span aria-hidden="true">▾</span></button>
       <ul id="abp-menu-{{ loop.index }}" class="abp-navigation__submenu" hidden>
       {% for child in item.children %}
-        <li><a href="{{ config.extra.navigation_base }}{{ child.url }}"{% if child == page %} aria-current="page"{% endif %}>{{ child.title }}</a></li>
+        {% set child_icon = {'master-index/':'CATEGORIES','find/':'FIND','a-z/':'AZ','favourites/':'FAVOURITES'}.get(child.url) %}
+        <li><a href="{{ config.extra.navigation_base }}{{ child.url }}"{% if child == page %} aria-current="page"{% endif %}>{% if child_icon %}{{ icon(child_icon) }}{% endif %}<span>{{ child.title }}</span><span class="hdc-menu-chevron" aria-hidden="true"></span></a></li>
       {% endfor %}
       </ul>
     {% else %}

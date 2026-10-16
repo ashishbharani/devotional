@@ -1297,6 +1297,8 @@ def on_post_build(config, **kw):
     ]
     shell.extend(f"assets/images/hdc-brand/{name}" for name in (
         "header-emblem.webp", "header-sunset.webp", "mobile-emblem-light.webp", "mobile-emblem-dark.webp", "emblem.webp", "favicon-32.png", "favicon-48.png",
+        "navigation-corner-light.webp", "navigation-corner-dark.webp", "navigation-lotus-clear.webp",
+        "navigation-corner-light-right.webp", "navigation-corner-dark-right.webp",
         "icon-192.png", "icon-512.png", "icon-maskable-512.png", "apple-touch-icon.png",
     ))
     shell.extend(f"javascripts/{path.name}" for path in sorted((site / "javascripts").glob("*.js")))
