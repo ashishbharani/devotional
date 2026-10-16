@@ -58,6 +58,15 @@ def audit_catalogue(path: Path) -> tuple[list[str], list[str]]:
         if count not in (0, 42):
             errors.append(f"{label}: category-name translation list must contain either 0 or 42 entries (found {count})")
 
+    # Completeness of a dictionary is not completeness of a rendered website.
+    # Report missing dedicated category-name translations without failing the
+    # entire website build before those translations have been supplied.
+    report.append(
+        "Scope warning — this checks registered keys and category names only; "
+        "page prose, generated sections, dynamic tool output, and linguistic "
+        "accuracy require separate coverage and review."
+    )
+
     return report, errors
 
 
