@@ -33,7 +33,6 @@ theme:
     - navigation.instant
     - navigation.instant.progress
     - navigation.tracking
-    - navigation.top
     - search.suggest
     - search.highlight
     - toc.follow
