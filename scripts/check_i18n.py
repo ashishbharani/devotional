@@ -55,8 +55,17 @@ def audit_catalogue(path: Path) -> tuple[list[str], list[str]]:
     for code, label in LANGUAGES.items():
         count = len([value for value in category_names.get(code, []) if isinstance(value, str) and value.strip()])
         report.append(f"Category-name translations — {label}: {count}/42 (other names use safe script transliteration)")
-        if count not in (0, 42):
-            errors.append(f"{label}: category-name translation list must contain either 0 or 42 entries (found {count})")
+        if count != 42:
+            errors.append(f"{label}: category-name translation list must contain exactly 42 entries (found {count})")
+
+    # Completeness of a dictionary is not completeness of a rendered website.
+    # Require every published category name in every locale; no transliteration
+    # fallback may be counted as a verified translation.
+    report.append(
+        "Scope warning — this checks registered keys and category names only; "
+        "page prose, generated sections, dynamic tool output, and linguistic "
+        "accuracy require separate coverage and review."
+    )
 
     return report, errors
 
