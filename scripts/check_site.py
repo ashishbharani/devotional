@@ -16,6 +16,7 @@ ROUTES = (
     "find",
     "a-z",
     "library",
+    "vrat-katha-parayan",
     "master-index",
     "japa-counter",
     "favourites",

@@ -65,7 +65,7 @@ def discovery(d):
         ("❖", "Kavachas & Sacred Prayers", "kavach"), ("◈", "Vrat Katha & Parayan", "vrat"),
         ("▤", "Hindu Books Library", None),
     ]:
-        url = "find/?" + urlencode({"w": term}) if term else "library/"
+        url = "vrat-katha-parayan/" if name == "Vrat Katha & Parayan" else ("find/?" + urlencode({"w": term}) if term else "library/")
         out.append(f'<a class="udhc-category" href="{url}"><span aria-hidden="true">{symbol}</span><h3>{escape(name)}</h3><span aria-hidden="true">→</span></a>')
     out.append(f'</div><p><a class="udhc-button" href="master-index/">Browse all {len(d["categories"])} canonical categories →</a></p></section>')
     out.append('<section class="udhc-section udhc-traditions" aria-labelledby="udhc-deities"><p class="udhc-kicker">✦ The many expressions of the divine ✦</p>'

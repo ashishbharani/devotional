@@ -39,6 +39,7 @@ jobs:
           uv run python scripts/test_section_pager.py
           uv run python scripts/check_i18n.py
           uv run python scripts/check_project_pdfs.py
+          uv run python scripts/test_reading_links.py
       - name: Test owner-approved deity artwork and exact identity mappings
         run: uv run python scripts/test_deity_art.py
       - name: Test universal search coverage, graph and multilingual ranking
@@ -75,6 +76,13 @@ jobs:
         run: node scripts/test_hdc_plugins_browser.mjs
       - name: Test optional translation handoff, language scope and privacy
         run: node scripts/test_translation_browser.mjs
+      - name: Test English library handoffs and Vrat Katha / Parayan discovery
+        run: node scripts/test_reading_links_browser.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: reading-links-screenshots
+          path: work/reading-links
       - uses: actions/upload-artifact@v4
         if: always()
         with:
