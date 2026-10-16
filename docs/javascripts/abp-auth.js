@@ -84,7 +84,7 @@
 
   function init() {
     const header = document.querySelector(".md-header__inner");
-    if (!header || header.querySelector(".abp-account")) return;
+    if (!header || document.querySelector(".abp-account")) return;
     const root = document.createElement("div");
     root.className = "abp-account";
     root.innerHTML =

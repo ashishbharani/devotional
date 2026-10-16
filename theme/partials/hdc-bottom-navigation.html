@@ -1,0 +1,13 @@
+{% from 'partials/hdc-controls.html' import icon %}
+{% set labels = {'HOME':'Home','TODAY PANCHANG':'Panchang','DEVOTIONAL WORKS':'Devotional Works','SCRIPTURES & BOOKS':'Library','TOOLS':'Tools','ABOUT':'About'} %}
+<nav class="hdc-bottom-navigation" aria-label="Mobile navigation">
+  {% for item in nav %}
+    {% set active = item.active or (item.title == 'DEVOTIONAL WORKS' and page and page.meta and page.meta.abp_category) %}
+    {% if item.title == 'TOOLS' %}
+      <button type="button" data-nav-section="{{ loop.index }}" data-open-section="abp-menu-{{ loop.index }}" aria-controls="abp-navigation" aria-expanded="false" aria-label="Open Tools menu"{% if active %} class="is-active"{% endif %}>{{ icon(item.title) }}<span>{{ labels[item.title] }}</span></button>
+    {% else %}
+      {% set destination = item.children[0].url if item.children else item.url %}
+      <a href="{{ config.extra.navigation_base }}{{ destination }}"{% if active %} class="is-active" aria-current="{{ 'page' if item == page else 'location' }}"{% endif %} data-nav-section="{{ loop.index }}">{{ icon(item.title) }}<span>{{ labels[item.title] }}</span></a>
+    {% endif %}
+  {% endfor %}
+</nav>

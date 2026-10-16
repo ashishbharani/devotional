@@ -18,8 +18,8 @@
   <meta name="author" content="{{ config.site_author }}">
   {% if page.canonical_url %}<link rel="canonical" href="{{ page.canonical_url }}">{% endif %}
   <meta name="format-detection" content="telephone=no">
-  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#82382f">
-  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#331512">
+  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#590817">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#21070b">
   <meta name="color-scheme" content="light dark">
   <meta name="application-name" content="{{ brand_name }}">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -33,9 +33,9 @@
   <meta name="twitter:title" content="{{ document_title | e }}">
   <meta name="twitter:description" content="{{ social_description }}">
   <link rel="manifest" href="{{ 'manifest.webmanifest' | url }}">
-  <link rel="icon" href="{{ 'assets/images/logo.svg' | url }}" type="image/svg+xml">
-  <link rel="icon" href="{{ 'assets/images/favicon-32.png' | url }}" sizes="32x32" type="image/png">
-  <link rel="apple-touch-icon" href="{{ 'assets/images/apple-touch-icon.png' | url }}">
+  <link rel="icon" href="{{ 'assets/images/hdc-brand/favicon-32.png' | url }}" sizes="32x32" type="image/png">
+  <link rel="icon" href="{{ 'assets/images/hdc-brand/favicon-48.png' | url }}" sizes="48x48" type="image/png">
+  <link rel="apple-touch-icon" href="{{ 'assets/images/hdc-brand/apple-touch-icon.png' | url }}" sizes="180x180">
 {% endblock %}
 
 {% block extrahead %}
@@ -85,6 +85,8 @@
   <button class="abp-menu-shade" type="button" aria-label="Close navigation" hidden tabindex="-1"></button>
   {% include "partials/abp-navigation.html" %}
 </div>
+{% include 'partials/hdc-bottom-navigation.html' %}
+<p class="abp-sr" id="hdc-install-announcement" role="status" aria-live="polite"></p>
 {% endblock %}
 
 {% block site_nav %}

@@ -31,7 +31,8 @@ try {
   await page.goto(base);
   assert.equal(await page.title(),brand);
   for(const name of scripts)assert.equal(await page.locator(`script[src$="javascripts/${name}.js"]`).count(),1,`connected once: ${name}`);
-  assert.equal(await page.locator('.md-header__topic').first().innerText(),brand);
+  assert.equal(await page.locator('.md-header__topic').first().innerText(),width<1200?'HDC':brand);
+  assert.equal(await page.locator('a[data-md-component="logo"]').getAttribute('aria-label'),brand);
   assert.doesNotMatch(await page.locator('body').innerText(),/\b(?:UDHC|UHDC)\b|Ultimate Hindu Devotional/i);
   await page.evaluate(()=>localStorage.setItem('abp-japa-state-v1',JSON.stringify({name:'Preserved practice',count:12,target:108,today:12,day:[new Date().getFullYear(),String(new Date().getMonth()+1).padStart(2,'0'),String(new Date().getDate()).padStart(2,'0')].join('-')})));
   await page.goto(base+'japa-counter/');
@@ -52,15 +53,18 @@ try {
   await page.goto(base+'favourites/');
   await page.waitForFunction(()=>document.querySelectorAll('#abp-favourites-list li').length===1);
   assert.ok(await page.evaluate(async()=>(await indexedDB.databases()).some(db=>db.name==='udhc-favourites')),'legacy favourites DB retained');
+  if(width<1200)await page.locator('.abp-menu-toggle').click();
   await page.locator('.abp-language-btn').click();
   await page.locator('[data-local-language] summary').click();
   await page.locator('[data-lang="hi"]').click();
   await page.reload();
   assert.equal(await page.locator('html').getAttribute('lang'),'hi');
   assert.equal(await page.evaluate(()=>localStorage.getItem('abp-language')),'hi');
+  if(width<1200)await page.locator('.abp-menu-toggle').click();
   await page.locator('.abp-language-btn').click();
   await page.locator('[data-local-language] summary').click();
   await page.locator('[data-lang="en"]').click();
+  if(width<1200)await page.locator('.abp-menu-close').click();
   await page.locator('.abp-a11y-btn').click();
   await page.locator('.abp-a11y-dialog [name="motion"]').check();
   await page.locator('.abp-a11y-dialog [data-close]').click();

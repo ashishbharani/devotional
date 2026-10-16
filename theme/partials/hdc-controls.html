@@ -1,0 +1,11 @@
+{# UI icons from the existing pinned Material package; never SVG use[href]. #}
+{% macro icon(title) -%}
+  {% set names = {'HOME':'home-outline','TODAY PANCHANG':'calendar-month-outline','DEVOTIONAL WORKS':'om','SCRIPTURES & BOOKS':'book-open-page-variant-outline','TOOLS':'tools','ABOUT':'information-outline','INSTALL':'download-outline'} %}
+  <span class="hdc-icon" aria-hidden="true">{% include '.icons/material/' ~ names.get(title, 'information-outline') ~ '.svg' %}</span>
+{%- endmacro %}
+
+{% macro install(place) -%}
+  <button id="hdc-install-{{ place }}" class="hdc-install-control hdc-install-{{ place }}{% if place == 'header' %} abp-install-btn md-header__button{% endif %}" type="button" data-install-app data-install-state="unavailable" disabled aria-disabled="true" aria-label="Install HDC App" title="Install Hindu Devotional Collection" aria-describedby="hdc-install-announcement">
+    {{ icon('INSTALL') }}<span class="hdc-install-label" data-i18n="installApp">Install App</span>
+  </button>
+{%- endmacro %}

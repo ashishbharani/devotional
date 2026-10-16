@@ -1,0 +1,32 @@
+{# Shared HDC shell, retaining Material's search, palette and instant-nav hooks. #}
+{% from 'partials/hdc-controls.html' import install %}
+<header class="md-header md-header--shadow hdc-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="{{ lang.t('header') }}">
+    <a href="{{ nav.homepage.url | url }}" title="{{ config.site_name }}" class="md-header__button md-logo" aria-label="{{ config.site_name }}" data-md-component="logo">
+      <img src="{{ 'assets/images/hdc-brand/header-emblem.webp' | url }}" width="100" height="75" alt="">
+    </a>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic" aria-label="{{ config.site_name }}">
+          <span class="hdc-brand-long">{{ config.site_name }}</span><span class="hdc-brand-short" aria-hidden="true">HDC</span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic"><span class="md-ellipsis">{{ page.title }}</span></div>
+        <p class="hdc-brand-motto">BHAKTI <span aria-hidden="true">|</span> JNANA <span aria-hidden="true">|</span> SANSKRUTI <span aria-hidden="true">|</span> SEVA</p>
+      </div>
+    </div>
+    {% if config.theme.palette and config.theme.palette is not mapping %}
+      {% include 'partials/palette.html' %}
+      {% include 'partials/javascripts/palette.html' %}
+    {% endif %}
+    {% if config.extra.alternate %}{% include 'partials/alternate.html' %}{% endif %}
+    {{ install('header') }}
+    {% if 'material/search' in config.plugins %}
+      {% set search = config.plugins['material/search'] | attr('config') %}
+      {% if search.enabled %}
+        <label class="md-header__button md-icon" for="__search">{% include '.icons/material/magnify.svg' %}</label>
+        {% include 'partials/search.html' %}
+      {% endif %}
+    {% endif %}
+    {% if config.repo_url %}<div class="md-header__source">{% include 'partials/source.html' %}</div>{% endif %}
+  </nav>
+</header>

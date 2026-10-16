@@ -236,7 +236,7 @@
 
   function addPicker() {
     const header = document.querySelector(".md-header__inner");
-    if (!header || header.querySelector(".abp-language-btn")) return;
+    if (!header || document.querySelector(".abp-language-btn")) return;
     const button = document.createElement("button");
     button.type = "button";
     button.className = "abp-language-btn md-header__button";

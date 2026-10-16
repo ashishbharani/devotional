@@ -1,0 +1,61 @@
+{
+  "source": "Hindu Devotional UI Design Board.png",
+  "sha256": "9784d028e8cbcfe0bd5536aa99b7518362491a53faaafd396d3c10e1357b6e13",
+  "sourceSize": [
+    1536,
+    1024
+  ],
+  "cropBoxes": {
+    "logo-full": [
+      0,
+      0,
+      882,
+      335
+    ],
+    "logo-horizontal": [
+      40,
+      363,
+      602,
+      438
+    ],
+    "emblem": [
+      918,
+      18,
+      1184,
+      280
+    ],
+    "header-emblem": [
+      42,
+      363,
+      142,
+      438
+    ],
+    "header-sunset": [
+      610,
+      363,
+      894,
+      438
+    ],
+    "app-192": [
+      1202,
+      73,
+      1382,
+      253
+    ],
+    "favicon": [
+      1406,
+      135,
+      1508,
+      240
+    ],
+    "navigation-lotus": [
+      728,
+      473,
+      800,
+      514
+    ]
+  },
+  "method": "Exact dedicated panels, no AI generation/repainting; contain, never stretch; boundary-only alpha.",
+  "limitation": "512px output is resampled from a 266\u00d7262 board panel, not a native high-resolution master.",
+  "maskableArtworkFraction": 0.52
+}
