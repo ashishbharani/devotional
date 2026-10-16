@@ -116,13 +116,13 @@ try {
  await page.goto(base);
  await page.evaluate(()=>navigator.serviceWorker.ready);
  await page.waitForFunction(()=>Boolean(navigator.serviceWorker.controller));
- for(const file of ['navigation.css','royal-home.css','sacred-site.css']) {
+ for(const file of ['navigation.css','royal-home.css','sacred-site.css','hdc-header.css']) {
    assert.ok(await page.evaluate(async url=>Boolean(await caches.match(url)),base+'stylesheets/'+file),`makeover stylesheet in first-install shell: ${file}`);
  }
  assert.ok(await page.evaluate(async()=>(await caches.keys()).some(key=>key.startsWith('udhc-shell-'))),'legacy cache protocol retained');
  await context.setOffline(true);await page.reload();
  assert.equal(await page.title(),brand);
- assert.equal(await page.locator('.abp-navigation').evaluate(el=>getComputedStyle(el).borderBottomStyle),'double','sacred navigation style available offline');
+ assert.equal(await page.locator('.abp-navigation').evaluate(el=>getComputedStyle(el).borderBottomStyle),'solid','approved navigation style available offline');
  await page.goto(base+'offline/');
  assert.equal(await page.title(),'You are offline | '+brand);
  await context.close();

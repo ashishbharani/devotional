@@ -1,5 +1,7 @@
 /* Approved gateway/path board: shared shell only, never catalogue/hero styling. */
 :root { --hdc-wine: #590817; --hdc-gold: #e7bb62; --hdc-ivory: #fff4da; --hdc-bottom-space: 0px; }
+html, html:not(.abp-cards):has(.abp-sheet--head) { scroll-padding-top: calc(var(--hdc-header-space, 140px) + 16px); }
+.abp-sheet--head { top: var(--hdc-header-space, 140px); }
 .abp-navigation-shell { margin: 8px clamp(4px, 1vw, 16px) 0; border: 1px solid var(--hdc-gold); border-radius: 12px; box-shadow: 0 4px 15px var(--abp-shadow); }
 .hdc-header { color: var(--hdc-ivory); border: 0; border-radius: 11px 11px 0 0; background: linear-gradient(90deg, #500714ed, #660b20b8 48%, #4b0616ef), url('../assets/images/hdc-brand/header-sunset.webp') center / auto 100% no-repeat, var(--hdc-wine); }
 .hdc-header .md-header__inner { min-height: 78px; padding: 4px 12px; gap: 6px; }

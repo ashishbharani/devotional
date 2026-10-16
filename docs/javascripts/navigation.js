@@ -1,6 +1,6 @@
 /* Dependency-free disclosure navigation; Material still owns search and routing. */
 (() => {
-  let controlsObserver, watchedHeader, bottomObserver, watchedBottom;
+  let controlsObserver, watchedHeader, bottomObserver, watchedBottom, shellObserver, watchedShell;
   function arrangeControls() {
     const header = document.querySelector('.md-header__inner');
     const slot = document.querySelector('.hdc-mobile-utilities');
@@ -17,6 +17,13 @@
       }
     };
     move();
+    const shell = document.querySelector('.abp-navigation-shell');
+    if (shell && shell !== watchedShell && typeof ResizeObserver !== 'undefined') {
+      shellObserver?.disconnect();
+      shellObserver = new ResizeObserver(() => document.documentElement.style.setProperty('--hdc-header-space', `${Math.ceil(shell.getBoundingClientRect().height)}px`));
+      shellObserver.observe(shell);
+      watchedShell = shell;
+    }
     if (watchedHeader !== header) {
       controlsObserver?.disconnect();
       controlsObserver = new MutationObserver(move);
