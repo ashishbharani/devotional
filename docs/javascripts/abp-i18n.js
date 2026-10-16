@@ -258,8 +258,27 @@
     header.insertBefore(button, search);
   }
 
+  // Translate components inserted after initial load (search, dialogs, lazy tools).
+  // Only element additions trigger a pass: translated text-node replacements do not.
+  let dynamicTranslationQueued = false;
+  const dynamicTranslationObserver = new MutationObserver((records) => {
+    if (window.abpGoogleTranslate?.enabled || current === "en") return;
+    const hasNewElements = records.some((record) =>
+      Array.from(record.addedNodes).some((node) => node.nodeType === Node.ELEMENT_NODE));
+    if (!hasNewElements || dynamicTranslationQueued) return;
+    dynamicTranslationQueued = true;
+    requestAnimationFrame(() => {
+      dynamicTranslationQueued = false;
+      if (!window.abpGoogleTranslate?.enabled) translate();
+    });
+  });
+  function observeDynamicTranslations() {
+    if (document.body) dynamicTranslationObserver.observe(document.body, { childList: true, subtree: true });
+  }
+
   async function initPage() {
     addPicker();
+    observeDynamicTranslations();
     await ready;
     if (!window.abpGoogleTranslate?.enabled) applyLanguage(current);
     // Consent is explicit on first use; only then may later pages resume it.
