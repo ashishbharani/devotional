@@ -7,13 +7,13 @@ sys.path.insert(0, str(ROOT))
 from hooks.deity_art import APPROVED, portrait  # noqa: E402
 from hooks import generate  # noqa: E402
 
-assert len(APPROVED) == 16
-for unapproved in ("CHANDRA", "BRAHMA", "NAVAGRAHA", "ARDHANARISHVARA", "SHIVA", "UNKNOWN"):
+assert len(APPROVED) == 35
+for unapproved in ("KUBERA", "AYYAPPA", "VARAHI", "MEENAKSHI", "ARDHANARISHVARA", "SHIVA", "UNKNOWN"):
     assert portrait(unapproved) == "", unapproved
 data = generate.load()
 category = next(c for c in data["categories"] if c["num"] == 1)
 html = generate.page_category(category)
-assert html.count('class="abp-deity-portrait"') == 16
+assert html.count('class="abp-deity-portrait"') == len(APPROVED)
 for c in data["categories"]:
     if c["num"] != 1:
         assert 'class="abp-deity-portrait"' not in generate.page_category(c)
@@ -33,14 +33,13 @@ for name, (slug, label) in APPROVED.items():
         page = (ROOT / "site" / part["url"] / "index.html").read_text(encoding="utf-8")
         assert f"/{slug}-640.webp" in page, name
         assert f"3D devotional illustration of {label}" in page, name
-assert not list((ROOT / "docs/assets/images/deities").glob("chandra*"))
-assert not list((ROOT / "docs/assets/images/deities").glob("brahma*"))
 home = (ROOT / "site/index.html").read_text(encoding="utf-8")
-assert home.count('class="abp-deity-portrait"') == 9
+assert home.count('class="abp-deity-portrait"') == 10
+assert "assets/images/deities/navagraha-640.webp" in home
 assert home.count('class="udhc-guardian-portrait"') == 2
 guardians = home.split('<div class="udhc-guardians"', 1)[1].split('</section>', 1)[0]
 for slug in ("ganesha", "shiva"):
     assert f'assets/images/deities/{slug}-640.webp' in guardians
     assert f'assets/images/deities/{slug}-1254.webp' in guardians
     assert f'assets/images/royal-home/{slug}.webp' not in home
-print("PASS approved deity art: 16 exact identities, 32 responsive assets, all Category 1 mappings and section endpoints, nine homepage portraits; unapproved art excluded")
+print("PASS approved deity art: 35 exact identities, 70 responsive assets, all Category 1 mappings and section endpoints, ten homepage portraits; unavailable art excluded")

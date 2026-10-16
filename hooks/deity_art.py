@@ -3,8 +3,9 @@ from html import escape
 from posixpath import relpath
 
 
-# Approval: 15 October 2026, "allow every pic till surya". Neither Chandra
-# nor Brahma is approved. No aliases, substring matches or gender inference.
+# Owner approval: first 16 on 15 October; displayed remakes, additional
+# previews and Navagraha on 16 October: "yes use all this pics".
+# No aliases, substring matches or gender inference.
 APPROVED = {
     "GANESHA": ("ganesha", "Shri Ganesha"),
     "SHIVA / MAHESH": ("shiva", "Lord Shiva"),
@@ -22,7 +23,29 @@ APPROVED = {
     "SAI BABA": ("sai-baba", "Shirdi Sai Baba"),
     "KALI": ("kali", "Maa Kali"),
     "SURYA": ("surya", "Lord Surya"),
+    "CHANDRA": ("chandra", "Lord Chandra"),
+    "BRAHMA": ("brahma", "Lord Brahma, four-visible-head illustrative form"),
+    "RAHU": ("rahu", "Rahu, head-only form"),
+    "SHUKRA": ("shukra", "Lord Shukra"),
+    "DATTATREYA": ("dattatreya", "Lord Dattatreya"),
+    "RADHA": ("radha", "Shri Radha"),
+    "PARVATI": ("parvati", "Maa Parvati"),
+    "SITA": ("sita", "Maa Sita"),
+    "ANNAPURNA": ("annapurna", "Maa Annapurna"),
+    "DHANVANTARI": ("dhanvantari", "Lord Dhanvantari"),
+    "HAYAGRIVA": ("hayagriva", "Lord Hayagriva"),
+    "DAKSHINAMURTI": ("dakshinamurti", "Lord Dakshinamurti"),
+    "SHANI": ("shani", "Lord Shani"),
+    "MANGALA": ("mangala", "Lord Mangala"),
+    "BRIHASPATI / GURU": ("brihaspati", "Lord Brihaspati"),
+    "KETU": ("ketu", "Ketu, serpent-tailed form"),
+    "BUDHA": ("budha", "Lord Budha"),
+    "LALITA TRIPURASUNDARI": ("lalita", "Maa Lalita Tripurasundari"),
+    "NAVAGRAHA": ("navagraha", "the nine Navagraha deities, illustrative grouping"),
 }
+
+# Explicit selected versions: rejected drafts must never be packaged.
+PREVIEW_VERSIONS = {"chandra": 4, "brahma": 4, "rahu": 2, "shukra": 2}
 
 
 def portrait(name, page_url="", css="abp-deity-portrait"):
