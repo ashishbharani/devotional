@@ -4,13 +4,18 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
-from hooks.deity_art import APPROVED, PREVIEW_VERSIONS, portrait  # noqa: E402
+from hooks.deity_art import APPROVED, PREVIEW_VERSIONS, LIFELIKE_PREVIEWS, portrait  # noqa: E402
 from hooks import generate  # noqa: E402
 
-assert len(APPROVED) == 35
+assert len(APPROVED) == 55
 assert PREVIEW_VERSIONS == {"chandra": 4, "brahma": 4, "rahu": 2, "shukra": 2}
-assert len(list((ROOT / "docs/assets/images/deities").glob("*.webp"))) == 70
-for unapproved in ("KUBERA", "AYYAPPA", "VARAHI", "MEENAKSHI", "ARDHANARISHVARA", "SHIVA", "UNKNOWN"):
+assert len(LIFELIKE_PREVIEWS) == 20
+assert LIFELIKE_PREVIEWS["bhairava"] == "bhairava-lifelike-corrected.png"
+assert LIFELIKE_PREVIEWS["kamakshi"] == "kamakshi-lifelike-preview.png"
+assert LIFELIKE_PREVIEWS["nataraja"] == "nataraja-lifelike-preview.png"
+assert set(LIFELIKE_PREVIEWS) <= {slug for slug, _ in APPROVED.values()}
+assert len(list((ROOT / "docs/assets/images/deities").glob("*.webp"))) == 110
+for unapproved in ("JAGANNATH", "VARAHA", "SUDARSHANA", "VAISHNO DEVI", "SHIVA", "UNKNOWN"):
     assert portrait(unapproved) == "", unapproved
 data = generate.load()
 category = next(c for c in data["categories"] if c["num"] == 1)
@@ -45,4 +50,4 @@ for slug in ("ganesha", "shiva"):
     assert f'assets/images/deities/{slug}-640.webp' in guardians
     assert f'assets/images/deities/{slug}-1254.webp' in guardians
     assert f'assets/images/royal-home/{slug}.webp' not in home
-print("PASS approved deity art: 35 exact identities, 70 responsive assets, all Category 1 mappings and section endpoints, ten homepage portraits; unavailable art excluded")
+print("PASS approved deity art: 55 exact identities, 110 responsive assets, revised lifelike selections, all Category 1 mappings and section endpoints, ten homepage portraits; unavailable art excluded")
