@@ -59,17 +59,17 @@ html, html:not(.abp-cards):has(.abp-sheet--head) { scroll-padding-top: calc(var(
 [data-md-color-scheme='abp-dark'] .abp-navigation .hdc-icon { color: #ffdf94; }
 [data-md-color-scheme='abp-dark'] .abp-navigation__submenu { background: var(--abp-paper); color: var(--abp-ink); }
 [data-md-color-scheme='abp-dark'] .abp-navigation__item.is-active > :is(a,button) { box-shadow: inset 0 -3px 0 #ffdf94, 0 0 16px #e7bb6220; }
-@media (min-width: 1200px) {
+@media (min-width: 1200px) and (not (any-pointer: coarse)) {
   .abp-navigation { position: relative; }
   .abp-navigation::after { content: ''; pointer-events: none; position: absolute; width: 72px; height: 41px; left: calc(50% - 36px); bottom: -19px; background: url('../assets/images/hdc-brand/navigation-lotus-clear.webp') center / contain no-repeat; }
   .hdc-header .md-search { width: clamp(150px, 12vw, 190px); }
   html:not(:has(#__search:checked)) .hdc-header .md-search__inner { width: 100%; }
 }
-@media (min-width: 1400px) {
+@media (min-width: 1400px) and (not (any-pointer: coarse)) {
   .hdc-install-header .hdc-install-label { position: static; width: auto; height: auto; overflow: visible; clip-path: none; }
   .hdc-install-header { white-space: nowrap; padding: 10px 12px; }
 }
-@media (max-width: 1199px), (max-height: 700px) and (any-pointer: coarse) {
+@media (max-width: 1199px), (any-pointer: coarse) {
   :root { --hdc-bottom-space: calc(72px + env(safe-area-inset-bottom, 0px)); }
   .abp-navigation-shell { margin: 0; border: 0; border-radius: 0; }
   .hdc-header { border-radius: 0; background: linear-gradient(#fff9eb, var(--hdc-ivory)); color: var(--hdc-wine); }
@@ -128,7 +128,7 @@ html.abp-hc .abp-navigation { background: var(--abp-paper); color: var(--abp-ink
 @media print { .hdc-bottom-navigation, .hdc-install-help { display: none !important; } body, body:has(.abp-feedback-float) { padding-bottom: 0; } }
 
 /* Approved-board taskbar finishing details: keep all existing navigation semantics. */
-@media (min-width: 1200px) {
+@media (min-width: 1200px) and (not (any-pointer: coarse)) {
   .abp-navigation__item > :is(a,button) {
     position: relative;
     transition: background-color .18s ease, box-shadow .18s ease, color .18s ease;
@@ -154,7 +154,7 @@ html.abp-hc .abp-navigation { background: var(--abp-paper); color: var(--abp-ink
     box-shadow: 0 0 0 5px #590817, 0 0 16px #e7bb6277;
   }
 }
-@media (max-width: 1199px), (max-height: 700px) and (any-pointer: coarse) {
+@media (max-width: 1199px), (any-pointer: coarse) {
   .hdc-bottom-navigation > :is(a,button):active {
     background: #e7bb6238;
   }
