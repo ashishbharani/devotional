@@ -69,7 +69,7 @@ html, html:not(.abp-cards):has(.abp-sheet--head) { scroll-padding-top: calc(var(
   .hdc-install-header .hdc-install-label { position: static; width: auto; height: auto; overflow: visible; clip-path: none; }
   .hdc-install-header { white-space: nowrap; padding: 10px 12px; }
 }
-@media (max-width: 1199px) {
+@media (max-width: 1199px), (max-height: 700px) and (any-pointer: coarse) {
   :root { --hdc-bottom-space: calc(72px + env(safe-area-inset-bottom, 0px)); }
   .abp-navigation-shell { margin: 0; border: 0; border-radius: 0; }
   .hdc-header { border-radius: 0; background: linear-gradient(#fff9eb, var(--hdc-ivory)); color: var(--hdc-wine); }
@@ -154,7 +154,7 @@ html.abp-hc .abp-navigation { background: var(--abp-paper); color: var(--abp-ink
     box-shadow: 0 0 0 5px #590817, 0 0 16px #e7bb6277;
   }
 }
-@media (max-width: 1199px) {
+@media (max-width: 1199px), (max-height: 700px) and (any-pointer: coarse) {
   .hdc-bottom-navigation > :is(a,button):active {
     background: #e7bb6238;
   }
