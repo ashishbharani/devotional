@@ -1,9 +1,9 @@
 /* Dependency-free disclosure navigation; Material still owns search and routing. */
 (() => {
   let controlsObserver, watchedHeader, bottomObserver, watchedBottom, shellObserver, watchedShell;
-  // Full-screen and split-screen touch tablets need the same compact navigation.
-  // Viewport height alone is not a reliable indication of a tablet window.
-  const compactQuery = '(max-width: 1199px), (any-pointer: coarse)';
+  // Full-width tablets use the horizontal bar; narrower or short touch windows use the dock.
+  // Match the same window geometry in both navigation stylesheets.
+  const compactQuery = '(max-width: 1199px), (max-height: 599px) and (any-pointer: coarse)';
   function arrangeControls() {
     const header = document.querySelector('.md-header__inner');
     const slot = document.querySelector('.hdc-mobile-utilities');
