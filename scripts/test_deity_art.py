@@ -46,6 +46,9 @@ assert home.count('class="abp-deity-portrait"') == 10
 assert "assets/images/deities/navagraha-640.webp" in home
 assert home.count('class="udhc-guardian-portrait"') == 2
 guardians = home.split('<div class="udhc-guardians"', 1)[1].split('</section>', 1)[0]
+assert '<p class="udhc-plaque" lang="sa">श्री गणेश</p>' in home
+assert '<figcaption lang="sa">॥ श्री गणेशाय नमः ॥</figcaption>' in guardians
+assert '<figcaption>ॐ नमः शिवाय</figcaption>' in guardians
 for slug in ("ganesha", "shiva"):
     assert f'assets/images/deities/{slug}-640.webp' in guardians
     assert f'assets/images/deities/{slug}-1254.webp' in guardians
