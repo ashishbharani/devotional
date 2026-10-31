@@ -134,9 +134,10 @@
     mobile.addEventListener('change', () => close());
     // A tablet multi-window transition need not cross a width breakpoint.
     // Close an open drawer and reflow controls after the usable viewport changes.
-    let previousSize = `${window.innerWidth}x${window.innerHeight}`;
+    const viewportSize = () => `${window.innerWidth}x${window.innerHeight}:${Math.round(window.visualViewport?.width ?? window.innerWidth)}x${Math.round(window.visualViewport?.height ?? window.innerHeight)}`;
+    let previousSize = viewportSize();
     const onViewportResize = () => {
-      const size = `${window.innerWidth}x${window.innerHeight}`;
+      const size = viewportSize();
       if (size === previousSize) return;
       previousSize = size;
       if (nav.classList.contains('is-open')) close();
