@@ -52,4 +52,33 @@ try {
   assert.deepEqual(errors,[]);
   await context.close();console.log('PASS reference geometry '+width+'px '+theme);
  }
+  // Cover Android tablet side-by-side and stacked split windows, not only static widths.
+  const tablet = await browser.newContext({viewport:{width:1360,height:860},isMobile:true,hasTouch:true,serviceWorkers:'block',reducedMotion:'reduce'});
+  await tablet.route('https://fonts.googleapis.com/**',r=>r.fulfill({body:'',contentType:'text/css'}));
+  await tablet.route('https://www.gstatic.com/firebasejs/**',r=>r.abort());
+  const pane=await tablet.newPage();
+  await pane.goto(base);
+  const dock=pane.locator('.hdc-bottom-navigation');
+  for (const [width,height,visible] of [[1360,860,false],[1360,580,true],[710,860,true],[390,420,true],[1360,860,false]]) {
+    await pane.setViewportSize({width,height});
+    await pane.waitForFunction(shouldShow=>{
+      const nav=document.querySelector('.hdc-bottom-navigation');
+      return Boolean(nav) && (getComputedStyle(nav).display !== 'none') === shouldShow;
+    },visible);
+    assert.equal(await dock.isVisible(),visible,`tablet taskbar visibility ${width}x${height}`);
+    if (visible) {
+      const r=await dock.boundingBox();
+      assert.ok(r && r.x>=0 && r.x+r.width<=width+1 && r.y>=0 && r.y+r.height<=height+1,`taskbar visible inside split-screen viewport ${width}x${height}`);
+      assert.equal(await pane.locator('.hdc-bottom-navigation > a,.hdc-bottom-navigation > button').count(),6);
+      assert.ok(await pane.locator('.abp-menu-toggle').isVisible(),'mobile drawer accessible in split-screen');
+    } else assert.ok(await pane.locator('.abp-navigation').isVisible(),'desktop navigation preserved at full size');
+  }
+  await pane.setViewportSize({width:710,height:860});
+  await pane.locator('.abp-menu-toggle').click();
+  assert.ok(await pane.locator('#abp-navigation').evaluate(el=>el.classList.contains('is-open')));
+  await pane.setViewportSize({width:390,height:420});
+  await pane.waitForFunction(()=>!document.documentElement.classList.contains('abp-navigation-open'));
+  assert.ok(await dock.isVisible(),'open drawer does not strand taskbar hidden on resize');
+  await tablet.close();
+  console.log('PASS tablet split-screen taskbar across width/height transitions and open-drawer resize');
 }finally{await browser.close();preview.kill();}
