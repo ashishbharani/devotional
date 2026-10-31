@@ -1,13 +1,14 @@
 /* Dependency-free disclosure navigation; Material still owns search and routing. */
 (() => {
   let controlsObserver, watchedHeader, bottomObserver, watchedBottom, shellObserver, watchedShell;
+  const compactQuery = '(max-width: 1199px), (max-height: 700px) and (any-pointer: coarse)';
   function arrangeControls() {
     const header = document.querySelector('.md-header__inner');
     const slot = document.querySelector('.hdc-mobile-utilities');
     if (!header || !slot) return;
     const move = () => {
       const controls = ['.abp-account','.abp-language-btn'].map(selector => document.querySelector(selector)).filter(Boolean);
-      if (matchMedia('(max-width: 1199px)').matches) {
+      if (matchMedia(compactQuery).matches) {
         controls.filter(node => node.parentElement !== slot).forEach(node => slot.appendChild(node));
       } else {
         const anchor = header.querySelector('[data-install-app]') || header.querySelector('.md-search');
@@ -39,7 +40,7 @@
       watchedBottom = bottom;
     }
   }
-  matchMedia('(max-width: 1199px)').addEventListener('change', arrangeControls);
+  matchMedia(compactQuery).addEventListener('change', arrangeControls);
   function init() {
     const nav = document.querySelector('#abp-navigation');
     if (!nav) return;
@@ -65,7 +66,7 @@
     nav.dataset.ready = 'true';
     const toggle = document.querySelector('.abp-menu-toggle');
     const shade = document.querySelector('.abp-menu-shade');
-    const mobile = matchMedia('(max-width: 1199px)');
+    const mobile = matchMedia(compactQuery);
     const sections = [...nav.querySelectorAll('.abp-navigation__section')];
     const panel = button => document.getElementById(button.getAttribute('aria-controls'));
     function collapse(except) {
@@ -131,6 +132,18 @@
       if (!mobile.matches && !nav.contains(event.relatedTarget)) collapse();
     });
     mobile.addEventListener('change', () => close());
+    // A tablet multi-window transition need not cross a width breakpoint.
+    // Close an open drawer and reflow controls after the usable viewport changes.
+    let previousSize = `${window.innerWidth}x${window.innerHeight}`;
+    const onViewportResize = () => {
+      const size = `${window.innerWidth}x${window.innerHeight}`;
+      if (size === previousSize) return;
+      previousSize = size;
+      if (nav.classList.contains('is-open')) close();
+      arrangeControls();
+    };
+    window.addEventListener('resize', onViewportResize);
+    window.visualViewport?.addEventListener('resize', onViewportResize);
     window.addEventListener('popstate', () => close());
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
