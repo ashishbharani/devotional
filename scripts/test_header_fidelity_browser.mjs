@@ -52,33 +52,45 @@ try {
   assert.deepEqual(errors,[]);
   await context.close();console.log('PASS reference geometry '+width+'px '+theme);
  }
-  // Cover Android tablet side-by-side and stacked split windows, not only static widths.
+  // Tablet navigation follows the available window, not the touch hardware identity.
+  // These transitions cover full-screen, stacked split-screen, side-by-side and return to full.
   const tablet = await browser.newContext({viewport:{width:1360,height:860},isMobile:true,hasTouch:true,serviceWorkers:'block',reducedMotion:'reduce'});
   await tablet.route('https://fonts.googleapis.com/**',r=>r.fulfill({body:'',contentType:'text/css'}));
   await tablet.route('https://www.gstatic.com/firebasejs/**',r=>r.abort());
   const pane=await tablet.newPage();
   await pane.goto(base);
-  const dock=pane.locator('.hdc-bottom-navigation');
-  for (const [width,height,visible] of [[1360,860,true],[1360,580,true],[710,860,true],[390,420,true],[1360,860,true],[1440,900,true]]) {
+  const dock=pane.locator('.hdc-bottom-navigation'),topNav=pane.locator('.abp-navigation');
+  for (const [width,height,layout] of [[1360,860,'top'],[1360,560,'bottom'],[710,860,'bottom'],[390,420,'bottom'],[1360,860,'top'],[1440,900,'top'],[1440,560,'bottom'],[1440,900,'top']]) {
     await pane.setViewportSize({width,height});
-    await pane.waitForFunction(shouldShow=>{
+    await pane.waitForFunction(wantBottom=>{
       const nav=document.querySelector('.hdc-bottom-navigation');
-      return Boolean(nav) && (getComputedStyle(nav).display !== 'none') === shouldShow;
-    },visible);
-    assert.equal(await dock.isVisible(),visible,`tablet taskbar visibility ${width}x${height}`);
-    if (visible) {
+      return Boolean(nav) && (getComputedStyle(nav).display !== 'none') === wantBottom;
+    },layout==='bottom');
+    assert.equal(await dock.isVisible(),layout==='bottom',`tablet ${layout} dock at ${width}x${height}`);
+    const topVisible=await topNav.isVisible();
+    assert.equal(topVisible,layout==='top',`tablet ${layout} horizontal navigation at ${width}x${height}`);
+    assert.equal(await pane.locator('.hdc-bottom-navigation > a,.hdc-bottom-navigation > button').count(),6,'all six compact destinations retained');
+    if(layout==='bottom') {
       const r=await dock.boundingBox();
-      assert.ok(r && r.x>=0 && r.x+r.width<=width+1 && r.y>=0 && r.y+r.height<=height+1,`taskbar visible inside split-screen viewport ${width}x${height}`);
-      assert.equal(await pane.locator('.hdc-bottom-navigation > a,.hdc-bottom-navigation > button').count(),6);
-      assert.ok(await pane.locator('.abp-menu-toggle').isVisible(),'mobile drawer accessible in split-screen');
-    } else assert.ok(await pane.locator('.abp-navigation').isVisible(),'desktop navigation preserved at full size');
+      assert.ok(r && r.x>=0 && r.x+r.width<=width+1 && r.y>=0 && r.y+r.height<=height+1,`dock stays within split-screen viewport ${width}x${height}`);
+      assert.ok(await pane.locator('.abp-menu-toggle').isVisible(),'compact drawer access remains visible');
+      assert.equal(await pane.locator('.hdc-bottom-navigation').evaluate(el=>getComputedStyle(el).borderTopWidth),'2px','approved gold dock outline retained');
+    } else {
+      assert.equal(await pane.locator('.abp-menu-toggle').isVisible(),false,'no redundant hamburger on wide full-screen tablet');
+      assert.ok(await pane.locator('.hdc-header .hdc-emblem-desktop').isVisible(),'approved full-size desktop emblem is present');
+    }
+    assert.ok(await pane.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'no horizontal overflow after window transition');
+    await pane.screenshot({path:`work/header-fidelity/tablet-${width}x${height}-${layout}.png`});
   }
   await pane.setViewportSize({width:710,height:860});
   await pane.locator('.abp-menu-toggle').click();
-  assert.ok(await pane.locator('#abp-navigation').evaluate(el=>el.classList.contains('is-open')));
+  assert.ok(await topNav.evaluate(el=>el.classList.contains('is-open')),'drawer opens in split-screen');
   await pane.setViewportSize({width:390,height:420});
   await pane.waitForFunction(()=>!document.documentElement.classList.contains('abp-navigation-open'));
-  assert.ok(await dock.isVisible(),'open drawer does not strand taskbar hidden on resize');
+  assert.ok(await dock.isVisible(),'split-screen resizing never strands the dock hidden');
+  await pane.setViewportSize({width:1360,height:860});
+  await pane.waitForFunction(()=>getComputedStyle(document.querySelector('.hdc-bottom-navigation')).display==='none');
+  assert.ok(await topNav.isVisible(),'horizontal navigation returns on restoring full-screen');
   await tablet.close();
   // Wide non-touch computers retain the approved desktop top navigation.
   const desktopContext=await browser.newContext({viewport:{width:1360,height:860},serviceWorkers:'block',reducedMotion:'reduce'});
@@ -91,5 +103,5 @@ try {
   await desktop.setViewportSize({width:760,height:860});
   assert.ok(await desktop.locator('.hdc-bottom-navigation').isVisible(),'narrow desktop window uses bottom taskbar');
   await desktopContext.close();
-  console.log('PASS touch tablet taskbar in full/split-screen, desktop fallback, and drawer-resize recovery');
+  console.log('PASS adaptive tablet top navigation and split-screen dock, desktop fallback, and drawer-resize recovery');
 }finally{await browser.close();preview.kill();}
