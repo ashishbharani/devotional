@@ -1,7 +1,9 @@
 /* Dependency-free disclosure navigation; Material still owns search and routing. */
 (() => {
   let controlsObserver, watchedHeader, bottomObserver, watchedBottom, shellObserver, watchedShell;
-  const compactQuery = '(max-width: 1199px), (max-height: 700px) and (any-pointer: coarse)';
+  // Full-screen and split-screen touch tablets need the same compact navigation.
+  // Viewport height alone is not a reliable indication of a tablet window.
+  const compactQuery = '(max-width: 1199px), (any-pointer: coarse)';
   function arrangeControls() {
     const header = document.querySelector('.md-header__inner');
     const slot = document.querySelector('.hdc-mobile-utilities');
