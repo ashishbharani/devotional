@@ -79,6 +79,12 @@ self.addEventListener("fetch", (event) => {
     event.respondWith(networkFirst(request));
     return;
   }
+  // Navigation CSS must not use an older cached breakpoint on the first online
+  // visit after deployment; fall back to the cached stylesheet when offline.
+  if (/\/stylesheets\/(?:hdc-header|navigation)\.css$/.test(url.pathname)) {
+    event.respondWith(networkFirst(request));
+    return;
+  }
   if (url.pathname.endsWith(".json") || /\.(?:css|m?js|svg|png|jpe?g|webp|woff2?)$/i.test(url.pathname)) {
     // Calculation modules are one versioned, precached set. Mixing a new
     // adapter with an old engine during background revalidation is unsafe.

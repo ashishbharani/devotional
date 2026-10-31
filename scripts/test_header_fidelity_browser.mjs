@@ -59,7 +59,7 @@ try {
   const pane=await tablet.newPage();
   await pane.goto(base);
   const dock=pane.locator('.hdc-bottom-navigation');
-  for (const [width,height,visible] of [[1360,860,false],[1360,580,true],[710,860,true],[390,420,true],[1360,860,false]]) {
+  for (const [width,height,visible] of [[1360,860,true],[1360,580,true],[710,860,true],[390,420,true],[1360,860,true],[1440,900,true]]) {
     await pane.setViewportSize({width,height});
     await pane.waitForFunction(shouldShow=>{
       const nav=document.querySelector('.hdc-bottom-navigation');
@@ -80,5 +80,16 @@ try {
   await pane.waitForFunction(()=>!document.documentElement.classList.contains('abp-navigation-open'));
   assert.ok(await dock.isVisible(),'open drawer does not strand taskbar hidden on resize');
   await tablet.close();
-  console.log('PASS tablet split-screen taskbar across width/height transitions and open-drawer resize');
+  // Wide non-touch computers retain the approved desktop top navigation.
+  const desktopContext=await browser.newContext({viewport:{width:1360,height:860},serviceWorkers:'block',reducedMotion:'reduce'});
+  await desktopContext.route('https://fonts.googleapis.com/**',r=>r.fulfill({body:'',contentType:'text/css'}));
+  await desktopContext.route('https://www.gstatic.com/firebasejs/**',r=>r.abort());
+  const desktop=await desktopContext.newPage();
+  await desktop.goto(base);
+  assert.ok(await desktop.locator('.abp-navigation').isVisible(),'wide desktop top navigation retained');
+  assert.equal(await desktop.locator('.hdc-bottom-navigation').isVisible(),false,'no duplicate dock on wide non-touch desktop');
+  await desktop.setViewportSize({width:760,height:860});
+  assert.ok(await desktop.locator('.hdc-bottom-navigation').isVisible(),'narrow desktop window uses bottom taskbar');
+  await desktopContext.close();
+  console.log('PASS touch tablet taskbar in full/split-screen, desktop fallback, and drawer-resize recovery');
 }finally{await browser.close();preview.kill();}
