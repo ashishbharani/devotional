@@ -79,9 +79,9 @@ self.addEventListener("fetch", (event) => {
     event.respondWith(networkFirst(request));
     return;
   }
-  // Navigation CSS must not use an older cached breakpoint on the first online
-  // visit after deployment; fall back to the cached stylesheet when offline.
-  if (/\/stylesheets\/(?:hdc-header|navigation)\.css$/.test(url.pathname)) {
+  // Navigation CSS and its coordinating JS must come from the same live release;
+  // use the last cached response only when offline.
+  if (/\/stylesheets\/(?:hdc-header|navigation)\.css$/.test(url.pathname) || url.pathname.endsWith('/javascripts/navigation.js')) {
     event.respondWith(networkFirst(request));
     return;
   }
