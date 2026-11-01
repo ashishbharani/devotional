@@ -86,11 +86,11 @@ No confirmed baseline runtime defect is asserted from inspection alone.
 | 3 Sanctuary | TESTED | Initial optional digital aids; gated preview; physical audio not certified |
 | 4 Sacred Reader | TESTED | One original Sanskrit passage; gated preview; translations/recordings unavailable |
 | 5 Festivals | IN PROGRESS | Preview/scheduling foundation implemented; reviewed real observance data still unavailable |
-| 6 Journeys | IN PROGRESS | Tested initial local routine/journal/log; broader routine/history features and offline preset handoff pending |
+| 6 Journeys | IN PROGRESS | Tested initial local routine/journal/log and first-install offline preset handoff; broader routine/history features pending |
 | 7 Discovery | IN PROGRESS | Tested canonical facets/paths; wider verified discovery data and navigation evaluation pending |
 | 8 SEO/sharing | IN PROGRESS | Tested breadcrumbs, public sharing, metadata and unpublished editorial template; external SEO coverage unverified |
-| 9 PWA/performance | NOT STARTED | Existing cache and install regression; measured limitations |
-| 10 Integration QA | NOT STARTED | Complete matrix and owner-reviewed final release PR |
+| 9 PWA/performance | IN PROGRESS | Exact offline preset cache repair tested; local source budget measured; desktop layout movement and field/device checks remain open |
+| 10 Integration QA | IN PROGRESS | Finite 35-step runner and protected hashes implemented; full results below; final owner review still required |
 
 SEO files: `theme/main.html`, `scripts/test_social_metadata.py`.
 Adds only the approved 512px brand icon to Open Graph and Twitter metadata,
@@ -144,6 +144,28 @@ all eight widths, route/history/category/search and canonical pager cases.
 Screenshots: `work/journey-discovery`; phone
 dark-mode visual reviewed. Canonical collection hash unchanged. Full transformation
 and final release QA remain incomplete. Details: `JOURNEYS_DISCOVERY_SEO.md`.
+
+### PWA repair and integration evidence foundation
+
+Preview shell generation now includes exact 5/10/20-minute Sanctuary query
+aliases and existing approved portraits. First-install offline testing reproduced
+the missing-alias defect before the repair and verifies the real journey handoff,
+timer interaction, portrait loading, online recovery and untouched Japa state.
+The worker strategy/template and default production activation remain unchanged.
+
+Integration review additionally found lost session-only journey history after
+rejected storage writes. Actions now retain their current in-memory state after
+a failure; the regression checks repeated records, routine save and journal erase
+without altering the prior persistent store. No account/provider migration.
+
+`scripts/run_release_validation.py` runs the finite 35-step automated matrix,
+records exact commands/exit codes/logs and protected hashes, and distinguishes
+full runs from selected reruns. PWA CI uploads local screenshots/performance
+evidence. See `RELEASE_QA.md` for commands, scope and rollback. Generated evidence
+is under `work/release-qa`; do not infer field performance or final release
+approval from these automated checks. Desktop lab layout movement remains an
+unresolved finding; physical-device installation and authenticated sync are not
+certified. Both increments stay IN PROGRESS while these release gates remain.
 
 ### Festival experience foundation
 

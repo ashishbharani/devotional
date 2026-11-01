@@ -23,10 +23,17 @@ failure keeps controls available for the visit; cross-tab notices preserve an
 unsaved draft instead of silently replacing it. Seven-day summaries cover elapsed
 time and are explicitly self-reported, not measured Japa or spiritual achievement.
 Routine durations hand off to the existing Sanctuary's validated 5/10/20 presets.
-The query-string preset handoff is verified online. First-install offline use of
-an uncached `sanctuary/?minutes=...` URL is not guaranteed by the current worker;
-this remains a PWA-increment release-QA item, not a claimed offline workflow.
+The query-string preset handoff is verified online and offline. Preview builds
+precache the exact three supported `sanctuary/?minutes=5|10|20` addresses and the
+approved portraits. A fresh service-worker install is tested before any preset
+visit, followed by offline timer interaction and the actual journey link. Other
+query strings are not normalized or silently treated as cached presets.
 No new counter, authentication provider, journal sharing or spiritual ranking.
+
+After a storage write fails, subsequent saves use the current in-memory journey
+state instead of rereading stale persistent data. Repeated session records,
+routine saves and journal-only erase preserve the visit's history. Successful
+writes restore normal persistence; failed writes never erase the previous store.
 
 This initial slice does not implement multiple routines, authenticated journey
 sync, comprehensive Japa session history or favourite-deity preference storage.

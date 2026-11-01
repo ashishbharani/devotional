@@ -67,5 +67,14 @@ try{
  assert.equal(await page.locator('[data-journal]').inputValue(),'Unsent synthetic draft');await other.close();
  await page.evaluate(()=>{const set=Storage.prototype.setItem;Storage.prototype.setItem=function(k,v){if(k==='hdc-journey-state-v1')throw new Error('blocked');return set.call(this,k,v);};});
  await page.locator('[data-journey-save]').click();assert.match(await page.locator('[data-journey-status]').textContent(),/this visit only/);
+ const storedBefore=await page.evaluate(()=>localStorage.getItem('hdc-journey-state-v1'));
+ await page.locator('[data-session-record]').click();await page.locator('[data-session-record]').click();
+ assert.match(await page.locator('[data-journey-summary]').textContent(),/2 self-reported sessions/,'failed writes retain successive session-only records');
+ await page.locator('[data-routine-name]').fill('Session-only routine');await page.locator('[data-journey-save]').click();
+ assert.equal(await page.locator('[data-journey-history] li').count(),2,'routine save preserves session-only history');
+ await page.locator('[data-journal-clear]').click();
+ assert.equal(await page.locator('[data-journey-history] li').count(),2,'journal clear preserves session-only history');
+ assert.equal(await page.locator('[data-routine-name]').inputValue(),'Session-only routine');
+ assert.equal(await page.evaluate(()=>localStorage.getItem('hdc-journey-state-v1')),storedBefore,'blocked persistence leaves previous saved state untouched');
  await context.close();console.log('PASS category breadcrumb, public manual-copy fallback and blocked journey storage');
 }finally{await browser.close();server.kill();}

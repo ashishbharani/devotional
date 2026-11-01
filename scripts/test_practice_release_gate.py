@@ -16,5 +16,7 @@ assert ('assets/festivals/themes.mjs' in worker) == enabled
 assert ('Enter the Devotional Sanctuary' in home) == enabled
 assert ('data-festival-experience' in home) == enabled
 assert ('data-share-page' in home) == enabled
+for minutes in (5,10,20):
+    assert (f'sanctuary/?minutes={minutes}' in worker) == enabled
 assert 'data-panchang-view="summary"' in home, 'existing Daily Darshan must remain'
 print(f'PASS practice release gate: {sys.argv[1]}')

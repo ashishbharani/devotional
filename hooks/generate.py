@@ -1313,6 +1313,7 @@ def on_post_build(config, **kw):
     ))
     if PRACTICE_PREVIEW:
         shell.extend(["stylesheets/practice.css", "stylesheets/festivals.css", "sanctuary/", "reader/", "journeys/", "explore/"])
+        shell.extend(["assets/images/deities/ganesha-640.webp", "assets/images/deities/shiva-640.webp"])
         shell.extend(path.relative_to(site).as_posix() for path in sorted((site / "assets" / "festivals").glob("*")) if path.is_file())
     shell.extend(f"javascripts/{path.name}" for path in sorted((site / "javascripts").glob("*.js"))
                  if PRACTICE_PREVIEW or path.name not in {"abp-practice.js", "abp-festivals.js", "abp-journeys.js", "abp-discovery.js", "abp-sharing.js"})
@@ -1323,6 +1324,10 @@ def on_post_build(config, **kw):
         "assets/javascripts/bundle.*.min.js",
     ) for path in sorted(site.glob(pattern)))
     shell = [path for path in dict.fromkeys(shell) if path == "" or (site / path).exists()]
+    if PRACTICE_PREVIEW:
+        # Exact query aliases for the three supported presets. Preserve the
+        # existing worker strategy and avoid treating arbitrary queries as hits.
+        shell.extend(f"sanctuary/?minutes={minutes}" for minutes in (5, 10, 20))
     signature = hashlib.sha256()
     # Version the paired search assets without precaching their large payloads.
     for name in ("works-index.json", "universal-search.json"):
@@ -1337,7 +1342,9 @@ def on_post_build(config, **kw):
     if ephemeris_css.exists():
         signature.update(ephemeris_css.read_bytes())
     for path in shell:
-        target = site / (path or "index.html")
+        if "?" in path:
+            signature.update(path.encode())
+        target = site / (urlsplit(path).path or "index.html")
         if target.is_dir():
             target = target / "index.html"
         if target.is_file():

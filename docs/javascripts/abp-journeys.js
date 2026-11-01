@@ -6,7 +6,7 @@
  function init(){
   cleanup();const root=document.querySelector('[data-journey]');if(!root)return;
   const controller=new AbortController(),q=s=>root.querySelector(s);cleanup=()=>controller.abort();
-  let state=normalize(read(key));const status=q('[data-journey-status]');
+  let state=normalize(read(key)),sessionOnly=false;const status=q('[data-journey-status]');
   q('[data-routine-name]').value=state.name;q('[data-routine-minutes]').value=state.minutes;
   q('[data-journal]').value=state.journal;q('[data-journal-consent]').checked=Boolean(state.journal);
   function summary(){
@@ -18,13 +18,14 @@
    const list=q('[data-journey-history]');list.replaceChildren();
    for(const s of [...state.sessions].reverse()){const li=document.createElement('li');li.textContent=`${new Date(s.at).toLocaleString()} — ${s.minutes} minutes (self-reported)`;list.append(li);}
   }
-  function save(value){state=normalize(value);try{localStorage.setItem(key,JSON.stringify(state));status.textContent='Saved in this browser only.';}catch(_){status.textContent='Storage unavailable. Changes remain for this visit only.';}summary();}
+  const latest=()=>sessionOnly?state:normalize(read(key));
+  function save(value){state=normalize(value);try{localStorage.setItem(key,JSON.stringify(state));sessionOnly=false;status.textContent='Saved in this browser only.';}catch(_){sessionOnly=true;status.textContent='Storage unavailable. Changes remain for this visit only.';}summary();}
   const on=(s,e,f)=>q(s).addEventListener(e,f,{signal:controller.signal});
   const start=()=>{const minutes=Number(q('[data-routine-minutes]').value);q('[data-routine-start]').href=new URL(`../sanctuary/?minutes=${[5,10,20].includes(minutes)?minutes:5}`,location.href).href;};
   on('[data-routine-minutes]','change',start);start();
-  on('[data-journey-save]','click',()=>save({...normalize(read(key)),name:q('[data-routine-name]').value,minutes:Number(q('[data-routine-minutes]').value),journal:q('[data-journal-consent]').checked?q('[data-journal]').value:''}));
-  on('[data-journal-clear]','click',()=>{save({...normalize(read(key)),journal:''});q('[data-journal]').value='';q('[data-journal-consent]').checked=false;});
-  on('[data-session-record]','click',()=>{const latest=normalize(read(key)),minutes=Number(q('[data-routine-minutes]').value);if([5,10,20].includes(minutes))save({...latest,sessions:[...latest.sessions,{at:new Date().toISOString(),minutes}]});});
+  on('[data-journey-save]','click',()=>save({...latest(),name:q('[data-routine-name]').value,minutes:Number(q('[data-routine-minutes]').value),journal:q('[data-journal-consent]').checked?q('[data-journal]').value:''}));
+  on('[data-journal-clear]','click',()=>{save({...latest(),journal:''});q('[data-journal]').value='';q('[data-journal-consent]').checked=false;});
+  on('[data-session-record]','click',()=>{const current=latest(),minutes=Number(q('[data-routine-minutes]').value);if([5,10,20].includes(minutes))save({...current,sessions:[...current.sessions,{at:new Date().toISOString(),minutes}]});});
   window.addEventListener('storage',event=>{if(event.key===key)status.textContent='Journey changed in another tab. Reload to load it; your current draft has been kept.';else if(['abp-japa-state-v1','hdc-reader-v1'].includes(event.key))summary();},{signal:controller.signal});
   summary();
  }
