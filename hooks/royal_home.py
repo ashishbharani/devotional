@@ -7,6 +7,35 @@ HOME_TITLE = "HINDU DEVOTIONAL COLLECTION"
 ART = "assets/images/royal-home/"
 
 
+def daily_darshan(panchang):
+    """Neutral entry points around the ONE existing, location-aware summary.
+
+    No weekday/deity assignment or unreviewed work recommendation is invented.
+    Observance-linked discovery remains the existing Panchang responsibility.
+    """
+    return (
+        '<section class="udhc-section hdc-daily" aria-labelledby="hdc-daily-title">'
+        '<p class="udhc-kicker">Your daily devotional companion</p>'
+        '<h2 id="hdc-daily-title">Daily Darshan</h2>'
+        '<p class="udhc-section-intro">Begin with your local Panchang, choose a prayer or reading, '
+        'or return to your private practice. Your path is yours to choose.</p>'
+        + panchang
+        + '<nav class="hdc-daily-paths" aria-label="Daily devotional paths">'
+        '<a href="japa-counter/">Begin Daily Prayer <span>Open the private Japa counter</span></a>'
+        '<a href="categories/01-deities-sub-deities-and-divine-forms/">Explore Deities <span>Browse existing divine forms and traditions</span></a>'
+        '<a href="library/">Read Sacred Texts <span>Open the existing Books Library</span></a>'
+        '<a href="hindu-calendar/">Discover Festivals <span>Local calendar; traditions may vary</span></a>'
+        '<a href="find/">Find a Devotional Work <span>Search verified catalogue identities</span></a>'
+        '<a href="favourites/">Continue My Journey <span>Return to saved works</span></a>'
+        '</nav><p class="hdc-daily-resume" data-daily-resume hidden>'
+        '<a href="japa-counter/">Continue Japa: <span data-daily-count></span> repetitions</a>'
+        '</p><p class="hdc-daily-note">No daily deity or prayer is prescribed here. '
+        'Open the Panchang above for existing observance-linked discovery. '
+        'Reading links may open external resources; catalogue availability does not mean full text is hosted here.</p>'
+        '</section>'
+    )
+
+
 def hero():
     return (
         '<section class="udhc-hero" aria-labelledby="udhc-title">'

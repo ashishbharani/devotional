@@ -38,7 +38,7 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 from scripts.check_i18n import audit_catalogue  # noqa: E402
 from scripts.search_index import build_search  # noqa: E402
-from hooks.royal_home import hero, discovery, closing  # noqa: E402
+from hooks.royal_home import hero, discovery, closing, daily_darshan  # noqa: E402
 from hooks.deity_art import APPROVED, portrait as deity_portrait  # noqa: E402
 
 log = logging.getLogger("mkdocs.hooks.abp")
@@ -779,7 +779,7 @@ def page_home(d):
         f'<li><b>{fmt(total)}</b> <span data-i18n="works">works</span></li>'
         f'<li><b>{len(d["categories"])}</b> <span data-i18n="categories">categories</span></li>'
         f'<li><b>{fmt(groups)}</b> <span data-i18n="deitiesGroups">deities, traditions &amp; groups</span></li>'
-        "</ul>\n\n" + discovery(d) +
+        "</ul>\n\n" + daily_darshan(panchang_summary_card()) + discovery(d) +
         '<nav class="abp-home-actions" markdown="0" aria-label="Main sections" data-i18n-aria="mainSections">'
         '<div class="abp-home-actions__row">'
         '<a class="abp-btn abp-btn--big" href="foreword/" data-i18n="foreword">Foreword</a>'
@@ -790,7 +790,6 @@ def page_home(d):
         '<a class="abp-btn abp-btn--big" href="a-z/" data-i18n="directory">A–Z Directory</a>'
         "</div>"
         "</nav>\n\n"
-        + panchang_summary_card()
         + '<details class="abp-home-index abp-home-library" markdown="0">'
         '<summary><span aria-hidden="true">📚</span><span data-i18n="library">Scriptures &amp; Books Library</span></summary>'
         '<p class="abp-home-index__link"><a href="library/" data-i18n="viewFullLibrary">View the full Scriptures &amp; Books Library page</a></p>'
