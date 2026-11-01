@@ -3,16 +3,21 @@
   "use strict";
 
   const STORAGE_KEY = "abp-language";
+  // Retire only Website Translator state. Never clear auth, favourites or Japa.
+  try { localStorage.removeItem("abp-google-translate-consent-v1"); } catch { /* blocked storage */ }
+  const retiredBase = new URL("../", document.currentScript.src).pathname;
+  for (const path of new Set(["/", retiredBase])) {
+    for (const domain of ["", `; domain=${location.hostname}`, `; domain=.${location.hostname}`]) {
+      document.cookie = `googtrans=; Max-Age=0; path=${path}${domain}; SameSite=Lax`;
+    }
+  }
   const order = ["en", "hi", "mr", "gu", "bn", "pa", "te", "kn", "ml", "ta"];
   const localeNames = {
     en: "English", hi: "हिन्दी", mr: "मराठी", gu: "ગુજરાતી", bn: "বাংলা",
     pa: "ਪੰਜਾਬੀ", te: "తెలుగు", kn: "ಕನ್ನಡ", ml: "മലയാളം", ta: "தமிழ்",
   };
   const FALLBACK = {
-    localTranslationScope: "Local interface and title script (offline): supported labels only, not every paragraph or tool message.",
-    wholePageTranslation: "Translate whole page (online, optional)",
-    onlineTranslationNotice: "Translate this page here without leaving the site. Enabling Google Translate allows Google to access page text, including displayed location details. Your consent is remembered in this browser. Machine translations may be inaccurate; check sacred and astronomical terms against the original. Internet access is required.",
-    openGoogleTranslation: "Enable Google Translate here", translationHelp: "Translation help",
+    localTranslationScope: "Choose an in-site language. Untranslated passages retain their original wording; full-text coverage is being expanded.",
     language: "Language", close: "Close", original: "Original", loading: "Loading…",
     showMore: "Show more", chooseLetter: "Choose a starting letter", other: "Other",
     shown: "shown", noWorks: "No works begin with this selection", errorIndex: "Could not load the works index.",
@@ -43,6 +48,45 @@
   const originalText = new WeakMap();
   let locales = Object.fromEntries(order.map((code) => [code, { name: localeNames[code], strings: {} }]));
   let categoryNames = {};
+  let catalogueLoaded = false;
+  let phrases = new Map();
+  const plainText = new WeakMap(), originalAttributes = new WeakMap();
+  const normalized = (value) => value.replace(/\s+/g, " ").trim().toLocaleLowerCase("en");
+  const setText = (node, value) => { if (node.textContent !== value) node.textContent = value; };
+  const protectedText = 'script,style,noscript,svg,code,pre,input,textarea,option:not([value]),[contenteditable],.abp-work-title,.abp-work-original,[data-transliterate-ui],[data-category-name],.abp-account,#abp-account-summary,#abp-favourites-list,[lang="sa"],.abp-language-grid,.abp-language-btn';
+  function translatePlainText(root) {
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+    let node;
+    while ((node = walker.nextNode())) {
+      const parent = node.parentElement;
+      if (!parent || parent.closest(protectedText + ',[data-i18n],[data-i18n-value],[data-i18n-all]')) continue;
+      const previous = plainText.get(node);
+      const source = previous && node.nodeValue === previous.rendered ? previous.source : node.nodeValue;
+      const entry = phrases.get(normalized(source));
+      if (!entry) continue;
+      const value = current === "en" ? source : source.match(/^\s*/)[0] + (entry[current] || source.trim()) + source.match(/\s*$/)[0];
+      if (node.nodeValue !== value) node.nodeValue = value;
+      plainText.set(node, {source, rendered: value});
+    }
+    root.querySelectorAll("[aria-label],[placeholder],[title],[alt]").forEach((element) => {
+      // Static accessible labels may translate; input/textarea values never do.
+      if (element.closest(protectedText.replace("input,textarea,", ""))) return;
+      const saved = originalAttributes.get(element) || {};
+      for (const attribute of ["aria-label", "placeholder", "title", "alt"]) {
+        if (element.hasAttribute("data-i18n-" + (attribute === "aria-label" ? "aria" : attribute))) continue;
+        const value = element.getAttribute(attribute);
+        if (value === null) continue;
+        const previous = saved[attribute];
+        const source = previous && value === previous.rendered ? previous.source : value;
+        const entry = phrases.get(normalized(source));
+        if (!entry) continue;
+        const rendered = current === "en" ? source : entry[current] || source;
+        if (value !== rendered) element.setAttribute(attribute, rendered);
+        saved[attribute] = {source, rendered};
+      }
+      originalAttributes.set(element, saved);
+    });
+  }
   let current = store.get() || "en";
   if (!order.includes(current)) current = "en";
 
@@ -55,13 +99,22 @@
     })
     .then((data) => {
       const sections = data.sections || [];
-      const keys = sections.flatMap((section) => section.keys || []);
       locales = Object.fromEntries(order.map((code) => {
-        const values = sections.flatMap((section) => section.values?.[code] || []);
-        const strings = Object.fromEntries(keys.map((key, index) => [key, values[index]]));
+        const strings = Object.fromEntries(sections.flatMap((section) =>
+          (section.keys || []).map((key, index) => [key, section.values?.[code]?.[index] || section.values?.en?.[index]])
+        ));
         return [code, { name: data.localeNames?.[code] || localeNames[code], strings }];
       }));
       categoryNames = data.categoryNames || {};
+      phrases = new Map();
+      for (const section of sections) (section.keys || []).forEach((key, index) => {
+        const source = section.values?.en?.[index];
+        if (source) phrases.set(normalized(source), Object.fromEntries(order.map(code => [code, locales[code].strings[key]])));
+      });
+      for (const [source, translations] of Object.entries(data.textTranslations || {})) {
+        phrases.set(normalized(source), {en: source, ...translations});
+      }
+      catalogueLoaded = true;
     })
     .catch((error) => console.warn("Interface translation catalogue could not be loaded", error));
 
@@ -70,12 +123,12 @@
     const original = originalText.get(node) || explicit || node.textContent.trim();
     originalText.set(node, original);
     if (!engine || current === "en" || !engine.languages.has(current)) {
-      node.textContent = original;
+      setText(node, original);
       node.removeAttribute("lang");
       node.removeAttribute("title");
       return;
     }
-    node.textContent = engine.transliterate(original, current);
+    setText(node, engine.transliterate(original, current));
     node.lang = current;
     node.title = `${t("original")}: ${original}`;
   }
@@ -88,13 +141,13 @@
       const anchor = node.closest("a");
       let source = anchor && anchor.querySelector(".abp-work-original");
       if (!engine || current === "en" || !engine.languages.has(current)) {
-        node.textContent = original;
+        setText(node, original);
         node.removeAttribute("lang");
         if (source) source.remove();
         return;
       }
       const converted = engine.transliterate(original, current);
-      node.textContent = converted;
+      setText(node, converted);
       node.lang = current;
       if (!anchor || converted === original) {
         if (source) source.remove();
@@ -106,7 +159,7 @@
         source.lang = "en";
         anchor.appendChild(source);
       }
-      source.textContent = `${t("original")}: ${original}`;
+      setText(source, `${t("original")}: ${original}`);
     });
   }
 
@@ -117,27 +170,28 @@
     });
     root.querySelectorAll("[data-i18n]").forEach((node) => {
       const value = t(node.getAttribute("data-i18n"));
-      if (value) node.textContent = value;
+      if (value) setText(node, value);
     });
     root.querySelectorAll("[data-i18n-aria]").forEach((node) => node.setAttribute("aria-label", t(node.getAttribute("data-i18n-aria"))));
     root.querySelectorAll("[data-i18n-title]").forEach((node) => node.setAttribute("title", t(node.getAttribute("data-i18n-title"))));
     root.querySelectorAll("[data-i18n-placeholder]").forEach((node) => node.setAttribute("placeholder", t(node.getAttribute("data-i18n-placeholder"))));
     root.querySelectorAll("[data-i18n-label]").forEach((node) => node.setAttribute("data-label", t(node.getAttribute("data-i18n-label"))));
-    root.querySelectorAll("[data-i18n-value]").forEach((node) => { node.textContent = t(node.getAttribute("data-i18n-value")); });
-    root.querySelectorAll("[data-i18n-all]").forEach((node) => { node.textContent = `${t("all")} ${t(node.getAttribute("data-i18n-all"))}`; });
+    root.querySelectorAll("[data-i18n-value]").forEach((node) => { setText(node, t(node.getAttribute("data-i18n-value"))); });
+    root.querySelectorAll("[data-i18n-all]").forEach((node) => { setText(node, `${t("all")} ${t(node.getAttribute("data-i18n-all"))}`); });
     root.querySelectorAll("[data-category-name]").forEach((node) => {
       const number = Number(node.getAttribute("data-category-name"));
       const translated = categoryNames[current]?.[number - 1];
       if (translated) {
         const original = originalText.get(node) || node.textContent.trim();
         originalText.set(node, original);
-        node.textContent = translated;
+        setText(node, translated);
         node.lang = current;
         node.title = current === "en" ? "" : `${t("original")}: ${original}`;
       } else transliterateText(node);
     });
     root.querySelectorAll("[data-transliterate-ui]").forEach((node) => transliterateText(node));
     translateWorkTitles(root);
+    translatePlainText(root);
   }
 
   function applyLanguage(code) {
@@ -158,92 +212,26 @@
     if (document.querySelector(".abp-language-dialog")) return;
     const dialog = document.createElement("dialog");
     dialog.className = "abp-language-dialog";
-    dialog.classList.add("notranslate");
-    dialog.translate = false;
     dialog.setAttribute("aria-labelledby", "abp-language-title");
     dialog.innerHTML =
       `<div class="abp-language-dialog__head"><h2 id="abp-language-title">${t("language")}</h2>` +
       `<button type="button" class="abp-language-dialog__close" aria-label="${t("close")}">×</button></div>` +
-      `<details data-local-language><summary>${t("localTranslationScope")}</summary>` +
-      `<p class="abp-language-dialog__note">${t("titleTransliterationNote")}</p>` +
-      '<div class="abp-language-grid">' + order.map((code) => {
-        const locale = locales[code];
-        return `<button type="button" lang="${code}" dir="ltr" data-lang="${code}"${code === current ? ' aria-current="true"' : ""}>` +
-          `<span>${locale.name}</span>${code === "en" ? `<small>${t("original")}</small>` : ""}</button>`;
-      }).join("") + "</div></details>";
-    // Keep the owner's real provider widget on this origin, never a proxy page.
-    // Its DOM must survive closing/reopening the picker and instant navigation.
-    const provider = window.abpGoogleTranslate;
-    const online = document.createElement("section");
-    online.setAttribute("aria-labelledby", "abp-online-translation-title");
-    const heading = document.createElement("h3");
-    heading.id = "abp-online-translation-title";
-    heading.textContent = t("wholePageTranslation");
-    const note = document.createElement("p");
-    note.id = "abp-online-translation-note";
-    note.className = "abp-language-dialog__note";
-    note.textContent = t("onlineTranslationNotice");
-    const controls = document.createElement("p");
-    const enable = document.createElement("button");
-    enable.type = "button";
-    enable.className = "abp-btn";
-    enable.dataset.enableTranslation = "";
-    enable.textContent = t("openGoogleTranslation");
-    const status = document.createElement("p");
-    status.setAttribute("role", "status");
-    status.dataset.translationStatus = "";
-    const start = async () => {
-      enable.disabled = true;
-      status.textContent = t("loading");
-      try {
-        if (!provider) throw new Error("Translator not loaded");
-        // Start from original text, not a mixture of old local translations
-        // and transliteration. Preserve the saved offline language preference.
-        if (!provider.enabled) {
-          const saved = current;
-          current = "en";
-          translate();
-          current = saved;
-          document.documentElement.lang = "en";
-        }
-        await provider.enable();
-        enable.hidden = true;
-        status.textContent = "";
-      } catch {
-        status.textContent = `Google Translate: ${t("networkError")}`;
-        enable.disabled = false;
-      }
-    };
-    enable.addEventListener("click", start);
-    const original = document.createElement("button");
-    original.type = "button";
-    original.className = "abp-btn";
-    original.dataset.originalLanguage = "en";
-    original.textContent = `English · ${t("original")}`;
-    const useLocal = (code) => {
-      if (provider?.enabled) {
-        store.set(code);
-        provider.disable();
-        // Reload the SAME URL to remove provider DOM wrappers safely. Never
-        // try to reverse translated HTML or clear unrelated saved user data.
-        location.reload();
-      } else { applyLanguage(code); close(); }
-    };
-    original.addEventListener("click", () => useLocal("en"));
-    controls.append(enable, " ", original);
-    online.append(heading, note, controls, status);
-    if (provider) online.appendChild(provider.host());
-    dialog.insertBefore(online, dialog.querySelector("[data-local-language]"));
+      `<p class="abp-language-dialog__note">${t("localTranslationScope")}</p>` +
+      '<div class="abp-language-grid">' + order.map((code) =>
+        `<button type="button" lang="${code}" dir="ltr" data-lang="${code}"${code === current ? ' aria-current="true"' : ""}>` +
+        `<span>${locales[code].name}</span></button>`
+      ).join("") + "</div>" +
+      `<p class="abp-language-dialog__note">${t("titleTransliterationNote")}</p>`;
     document.body.appendChild(dialog);
-    const close = () => { provider?.park(); dialog.close(); dialog.remove(); };
+    const close = () => { dialog.close(); dialog.remove(); };
     dialog.addEventListener("cancel", (event) => { event.preventDefault(); close(); });
     dialog.querySelector(".abp-language-dialog__close").addEventListener("click", close);
     dialog.addEventListener("click", (event) => { if (event.target === dialog) close(); });
     dialog.querySelectorAll("[data-lang]").forEach((button) => button.addEventListener("click", () => {
-      useLocal(button.getAttribute("data-lang"));
+      applyLanguage(button.dataset.lang);
+      close();
     }));
     dialog.showModal ? dialog.showModal() : dialog.setAttribute("open", "");
-    if (provider?.enabled) start();
   }
 
   function addPicker() {
@@ -252,37 +240,46 @@
     const button = document.createElement("button");
     button.type = "button";
     button.className = "abp-language-btn md-header__button";
+    button.disabled = !catalogueLoaded;
     button.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12.9 15.1 10.4 8.6H8.6l-3.5 9h1.8l.8-2.2h3.6l.8 2.2h1.8l-1-2.5ZM8.3 13.8l1.2-3.3 1.2 3.3H8.3ZM20 4h-6V2h-2v2H6v2h9.9c-.5 1.5-1.4 3-2.5 4.2-.8-.9-1.5-2-2-3.2h-2c.6 1.7 1.5 3.2 2.7 4.5l-2 1.9.7 1.8 2.6-2.4c1.4 1.2 3 2.2 4.8 2.8l.6-1.8c-1.5-.5-2.9-1.3-4.1-2.3C17.2 9.9 18.3 8 18.8 6H20V4Z"/></svg><span></span>';
+    button.setAttribute("aria-label", FALLBACK.language);
+    button.querySelector("span").textContent = localeNames[current];
     button.addEventListener("click", openPicker);
     const search = header.querySelector(".md-search") || header.lastElementChild;
     header.insertBefore(button, search);
   }
 
   // Translate components inserted after initial load (search, dialogs, lazy tools).
-  // Only element additions trigger a pass: translated text-node replacements do not.
+  // Text-only updates also matter. Idempotent writes prevent observer loops.
   let dynamicTranslationQueued = false;
   const dynamicTranslationObserver = new MutationObserver((records) => {
-    if (window.abpGoogleTranslate?.enabled || current === "en") return;
-    const hasNewElements = records.some((record) =>
-      Array.from(record.addedNodes).some((node) => node.nodeType === Node.ELEMENT_NODE));
+    if (current === "en") return;
+    const hasNewElements = records.some((record) => record.type === "characterData" || record.addedNodes.length);
     if (!hasNewElements || dynamicTranslationQueued) return;
     dynamicTranslationQueued = true;
     requestAnimationFrame(() => {
       dynamicTranslationQueued = false;
-      if (!window.abpGoogleTranslate?.enabled) translate();
+      translate();
     });
   });
   function observeDynamicTranslations() {
-    if (document.body) dynamicTranslationObserver.observe(document.body, { childList: true, subtree: true });
+    if (document.body) dynamicTranslationObserver.observe(document.body, { childList: true, characterData: true, subtree: true });
   }
 
   async function initPage() {
     addPicker();
     observeDynamicTranslations();
     await ready;
-    if (!window.abpGoogleTranslate?.enabled) applyLanguage(current);
-    // Consent is explicit on first use; only then may later pages resume it.
-    window.abpGoogleTranslate?.resume().catch(() => {});
+    document.querySelectorAll(".abp-language-btn").forEach(button => { button.disabled = !catalogueLoaded; });
+    if (catalogueLoaded) applyLanguage(current);
+    else {
+      current = "en";
+      document.documentElement.lang = "en";
+      document.querySelectorAll(".abp-language-btn").forEach(button => {
+        button.title = "Language catalogue unavailable. Please reload.";
+        button.setAttribute("aria-label", button.title);
+      });
+    }
   }
 
   window.abpI18n = { t, translate, applyLanguage, ready, get language() { return current; }, get locales() { return locales; } };

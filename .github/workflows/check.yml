@@ -39,6 +39,8 @@ jobs:
           uv run python scripts/test_social_metadata.py
           uv run python scripts/test_section_pager.py
           uv run python scripts/check_i18n.py
+          uv run python scripts/test_local_translation_catalogue.py
+          uv run python scripts/audit_hosted_translations.py --output work/translation-coverage.json
           uv run python scripts/check_project_pdfs.py
           uv run python scripts/test_reading_links.py
       - name: Test owner-approved deity artwork and exact identity mappings
@@ -96,7 +98,7 @@ jobs:
         with:
           name: approved-header-staging-screenshots
           path: work/approved-header-staging
-      - name: Test optional in-page translation consent and preference safety
+      - name: Test ten local languages without Google Translate
         run: node scripts/test_translation_browser.mjs
       - name: Test English library handoffs and Vrat Katha / Parayan discovery
         run: node scripts/test_reading_links_browser.mjs
@@ -109,7 +111,9 @@ jobs:
         if: always()
         with:
           name: translation-picker-screenshots
-          path: work/translation-browser
+          path: |
+            work/translation-browser
+            work/translation-coverage.json
       - uses: actions/upload-artifact@v4
         if: always()
         with:
