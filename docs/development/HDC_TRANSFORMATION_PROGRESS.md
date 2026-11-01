@@ -15,6 +15,11 @@ Darshan commit `c06118e` is held in draft PR #50 and was NOT included in PR #49.
 Do not merge PR #50 as an individual increment. Continue on the integration branch
 and retain the single final-release approval gate.
 
+PR #50 was subsequently merged externally; main advanced to `78f6153`. CI run
+`41303376490` passed on `a8474f5`. The next Sanctuary/Reader increments are kept
+separate and must not be individually launched. The agent did not merge/deploy
+these checkpoints. Refresh main before creating the next draft PR.
+
 ## Architecture and preservation map
 
 - MkDocs Material; `hooks/generate.py` generates catalogue routes and navigation
@@ -76,16 +81,16 @@ No confirmed baseline runtime defect is asserted from inspection alone.
 | Increment | State | Work / next evidence required |
 | --- | --- | --- |
 | 0 Audit | TESTED | Inventory, captures, strict build, responsive header checks; limitations below |
-| 1 Design | NOT STARTED | Preserve tokens/artwork; measure representative page types |
-| 2 Daily Darshan | TESTED | Initial neutral-discovery module; reviewed recommendations/reader continuation remain future work |
-| 3 Sanctuary | NOT STARTED | Optional digital aids; audio off and rights-gated |
-| 4 Sacred Reader | NOT STARTED | Rights/source-verified pilot required; no invented translations |
-| 5 Festivals | NOT STARTED | Reviewed year/region data and deterministic boundary tests |
-| 6 Journeys | NOT STARTED | Extend existing local storage without invalidation |
-| 7 Discovery | NOT STARTED | Preserve canonical matching and complete route access |
-| 8 SEO/sharing | IN PROGRESS | Approved social image metadata plus full-site regression test |
-| 9 PWA/performance | NOT STARTED | Existing cache and install regression; measured limitations |
-| 10 Integration QA | NOT STARTED | Complete matrix and owner-reviewed final release PR |
+| 1 Design | IN PROGRESS | Shared-token/enhanced-reading audit added; high-contrast interaction accent repaired; wider visual approval remains |
+| 2 Daily Darshan | TESTED | Neutral discovery plus preview-only saved Reader continuation; reviewed recommendations remain future work |
+| 3 Sanctuary | TESTED | Initial optional digital aids; gated preview; physical audio not certified |
+| 4 Sacred Reader | TESTED | One original Sanskrit passage; gated preview; translations/recordings unavailable |
+| 5 Festivals | IN PROGRESS | Preview/scheduling foundation implemented; reviewed real observance data still unavailable |
+| 6 Journeys | IN PROGRESS | Local routine/journal/log, today/rolling-week summaries and offline preset handoff; broader routine/history features pending |
+| 7 Discovery | IN PROGRESS | Tested canonical facets/paths; wider verified discovery data and navigation evaluation pending |
+| 8 SEO/sharing | IN PROGRESS | Tested breadcrumbs, public sharing, metadata and unpublished editorial template; external SEO coverage unverified |
+| 9 PWA/performance | IN PROGRESS | Offline presets, update-failure/version-transition tests and session-window lab metrics; layout attribution and field/device checks remain open |
+| 10 Integration QA | IN PROGRESS | Finite 39-step runner and protected hashes implemented; full results below; final owner review still required |
 
 SEO files: `theme/main.html`, `scripts/test_social_metadata.py`.
 Adds only the approved 512px brand icon to Open Graph and Twitter metadata,
@@ -105,6 +110,186 @@ to social metadata rather than removing functional theme tags. No existing test
 was weakened or removed.
 
 ## Recovery and continuation
+
+### Five continuation follow-ups
+
+`CONTINUATION_FOLLOWUPS.md` describes homepage Reader continuation, cross-tab Reader
+preferences/progress, filter-safe passage links, browser-local daily journey
+summaries and address-backed Explore filters. All reuse existing routes, stores
+and canonical search metadata. The homepage Reader entry is absent in default
+production; original Japa continuation is preserved. No text corpus, verified
+festival schedule, authenticated-sync expansion or complete release is claimed.
+
+### Next three initial slices — Journeys, Discovery, SEO/sharing
+
+New default-OFF routes `journeys/` and `explore/`. Journey reuses the Japa count,
+Reader progress and existing favourites links; it does not copy account records
+or create a second counter. Optional journal/routine/self-reported log use
+`hdc-journey-state-v1`, with explicit note-storage consent, plaintext/shared-device
+warning, no cloud writes, no machine-translation/sharing of private form values,
+bounded content/history and journal-only erase. Cross-tab notices retain unsaved
+drafts. Query-based duration handoff is verified online; uncached offline preset
+navigation remains for PWA QA. This is not a secure/encrypted vault.
+
+Discovery populates real category/language/form selectors from the existing
+integrity-checked search service and submits its normal GET contract. No ranking,
+identity, alias, graph or canonical dataset changes. No unsupported regional or
+family-deity classifications are invented. Existing mobile navigation is retained.
+
+SEO/sharing adds preview-only actual category/group descriptions and canonical
+BreadcrumbList, public-page native/copy/manual sharing (excluding private journey,
+favourites and existing Reader control), and an unpublished source-review template
+under `templates/`. No thin work pages, ratings, tracking or ranking promises.
+
+Validation: default strict build passed 132.25s + disabled gate; preview strict
+build passed 91.88s + enabled gate. New browser matrix passed ten width/theme
+cases, private persistence/opt-in/erase, legacy Japa preservation, literal-text
+injection safety, real search submission, keyboard focus, 4.5:1 contrast,
+cross-tab draft protection, bad/blocked storage and public manual-copy fallback.
+SEO structure audit passed 2,244 real breadcrumb hierarchies; social metadata
+passed 2,273 pages; site smoke passed 16 routes/43,085 IDs. Existing numerical
+search/ranking/coverage and all six browser search cases passed. Navigation passed
+all eight widths, route/history/category/search and canonical pager cases.
+Screenshots: `work/journey-discovery`; phone
+dark-mode visual reviewed. Canonical collection hash unchanged. Full transformation
+and final release QA remain incomplete. Details: `JOURNEYS_DISCOVERY_SEO.md`.
+
+### PWA repair and integration evidence foundation
+
+Follow-up design/PWA work is documented in `DESIGN_SYSTEM_QA.md` and
+`RELEASE_QA.md`. The shared audit covers representative page types with ordinary
+and enhanced reading, and exposed a high-contrast focused-link failure. The fix
+uses the existing maroon interaction token in high-contrast mode. Ordinary-light
+interactive text also failed at about 3.17:1 and now uses the existing deeper
+sacred saffron. Resting presentation, artwork and geometry are preserved. A real generated-worker update test
+exercises failed precache installation and recovery to a successful new version,
+with offline interaction, old CSS/cache retirement and saved-state preservation.
+Lab measurement now distinguishes raw shift sum from session-window CLS, records
+large-shift source geometry and includes tablet width. These remain local lab
+observations, not field performance or physical-device certification. The original
+desktop shift finding varies between isolated traces/preview origins; no site
+layout change is justified by that evidence yet. Do not discard adverse traces
+or mark the performance target achieved. Full release review is still pending.
+
+The upgrade audit subsequently exposed uncaught Material offline requests for
+its native search index and sitemap. Preview precaching now includes the existing
+native index/worker, sitemap and interface dictionary under a 4 MiB group budget.
+The worker adds exact XML dispatch through its existing asset strategy. This
+intentional worker edit supports the offline/version-transition repair; the
+larger universal payloads remain on demand. Native search results are exercised
+offline without changing either search engine. Provider and user-data schemas,
+canonical content, astronomical code and approved artwork remain untouched.
+
+Preview shell generation now includes exact 5/10/20-minute Sanctuary query
+aliases and existing approved portraits. First-install offline testing reproduced
+the missing-alias defect before the repair and verifies the real journey handoff,
+timer interaction, portrait loading, online recovery and untouched Japa state.
+The worker strategy/template and default production activation remain unchanged.
+
+Integration review additionally found lost session-only journey history after
+rejected storage writes. Actions now retain their current in-memory state after
+a failure; the regression checks repeated records, routine save and journal erase
+without altering the prior persistent store. No account/provider migration.
+
+`scripts/run_release_validation.py` runs the finite 39-step automated matrix,
+records exact commands/exit codes/logs and protected hashes, and distinguishes
+full runs from selected reruns. PWA CI uploads local screenshots/performance
+evidence. See `RELEASE_QA.md` for commands, scope and rollback. Generated evidence
+is under `work/release-qa`; do not infer field performance or final release
+approval from these automated checks. Desktop lab layout movement remains an
+unresolved finding; physical-device installation and authenticated sync are not
+certified. Both increments stay IN PROGRESS while these release gates remain.
+
+### Festival experience foundation
+
+PR #51's Sanctuary/Reader checkpoint passed CI `41307084235` before this work.
+New festival presentation uses the same default-OFF preview gate. Existing
+astronomical/festival-rule engines are untouched. The 2026 registry is explicitly
+empty: there is no reviewed year/region observance schedule to activate yet.
+Original mode remains the honest automatic fallback, not guessed calendar dates.
+
+Implemented: strict schedule schema and evidence fields, seven-calendar-day
+eligibility in Asia/Kolkata, inclusive end, year/leap boundaries, regional scope,
+deterministic overlap priority with other eligible links, midnight refresh,
+original-theme override, labelled Ganesha/Shiva design previews, approved existing
+portraits, optional reduced-motion-aware effects, no audio and private preferences.
+Only the scoped preview panel changes; hero/header/canonical content remain intact.
+Old requests/listeners/timers are aborted/cleared on navigation. Storage events
+update tabs; blocked storage keeps a session-only setting. Year resources are
+read locally and cached after successful validation; no external API is added.
+
+Files and data-review procedure: `FESTIVAL_EXPERIENCES.md`. Tests:
+`test_festival_themes.mjs` and `test_festival_browser.mjs`. All scheduling fixtures
+are explicitly fictional, test-only and absent from production JSON. Unit tests
+passed; default strict build and disabled gate passed (118.38s). Final preview
+strict build passed (129.03s), with the enabled gate and all ten light/dark browser
+cases at 320/375/768/1024/1440px. Synthetic automatic timing/expiry, cross-tab
+preferences, malformed manifest, blocked storage and legacy Japa preservation
+passed. Dark-mode visual QA corrected Material's default white/blue details panel
+to the existing sacred palette. Locale-independent tie ordering and daily cache
+refresh were added; midnight and visible-tab return refresh without polling.
+Canonical collection hash remains unchanged. Screenshots: `work/festival-preview`.
+Keep this increment IN PROGRESS until real reviewed
+observance data and final release QA are supplied. Schema field validation is
+not independent proof that a festival date is religiously correct.
+
+### Sanctuary and Reader increments
+
+New hand-authored routes: `sanctuary/` and `reader/`, reachable through existing
+Tools navigation and Daily Darshan. `abp-practice.js` progressively enhances only
+those roots; `practice.css` uses existing theme tokens. No new dependencies.
+
+Both new features have a default-OFF build gate. Set `HDC_PRACTICE_PREVIEW=1`
+only for staging/CI. Normal production builds omit their routes, navigation,
+homepage links, script/style activation and offline shell entries. Existing
+Daily Darshan and other approved features remain enabled. PR CI explicitly
+enables the preview; the deployment workflow does not. Enabling these publicly
+requires the final coordinated release/owner approval, not merely merging a draft.
+`test_practice_release_gate.py disabled|enabled` verifies both generated artifacts.
+Local preview: set that environment variable, then `uv run mkdocs build --strict`
+and use the existing `/devotional/` preview server. Remove the variable to test
+the default production artifact. Do not mistake disabled features for regressions.
+
+Sanctuary: approved existing Ganesha image, virtual diya and flower interactions,
+guided neutral reflection, optional 5/10/20-minute quiet sessions, motion toggle,
+quiet mode and existing Japa link. Sound is off each mount; a synthesized tone is
+generated only after explicit sound opt-in and bell selection. No copyrighted
+ambient recording is included. Visual preference uses `hdc-sanctuary-v1`; running
+sessions, flowers and sound permission are not persisted. AbortController cleanup
+removes old handlers; page/document transitions close audio and stop timers.
+
+Reader: one source-cross-checked original Sanskrit verse, Gita 2.47. Fixed source,
+rights scope, institutional cross-reference and normalization are recorded in
+`READER_PILOT_SOURCES.md` and shown alongside the passage. Original text excludes
+machine translation. No modern translation/commentary/transliteration/audio is
+bundled; these require separately reviewed sources/permissions. This initial
+one-passage pilot is not a full scripture corpus or a critical edition.
+
+Reader-local bookmark, explicit read/unread progress, continue link, font/spacing,
+Unicode search, print view and passage-link sharing use `hdc-reader-v1`. No CWID
+or catalogue record changes. Sharing uses explicit native share/copy with a manual
+copy fallback. Storage failure leaves the text readable and controls session-only.
+No automatic cloud sync, tracking or private journal is introduced. Existing user
+stores are not erased or migrated. Both routes/CSS join the existing offline shell;
+the original cache strategy is retained.
+
+New `test_practice_browser.mjs` and CI screenshot artifact cover both themes and
+five widths, interaction, opt-in audio (mocked), reduced motion, instant navigation,
+reader persistence/search/print, exact Sanskrit, corrupt/blocked storage and
+legacy Japa preservation. Final default strict build passed (69.97s) with the gate
+disabled; final preview strict build passed (75.50s) with the gate enabled. Both
+artifact gate checks passed. All ten width/theme browser cases passed with contrast
+checks, the complete Sanskrit passage, no console exceptions, reader persistence,
+storage failure and manual copy fallback. Real first-install service-worker testing
+verified offline reader bookmarking and sanctuary diya interaction. Daily Darshan,
+complete existing navigation, plugin/guest-state, real offline-homepage and
+metadata/site checks also passed during integration. The final timer accessibility
+adjustment passed the refreshed browser matrix. Countdown ticks are intentionally
+not live-announced; start/end messages are announced. Phone and desktop visual
+evidence is retained under `work/practice` and uploaded by PR CI. The canonical
+collection SHA256 remains identical to the baseline. No production deployment.
+Physical audio/installation certification and authored multilingual interface
+translations are not claimed. Existing header and image designs remain unchanged.
 
 ### CI follow-up — run 41300442644
 
@@ -169,3 +354,23 @@ rollback only through a reviewed revert PR preserving user data and newer change
 Release blockers: all NOT STARTED increments and final QA remain open. No complete
 transformation, authoritative text pilot, verified festival schedule, performance
 target attainment, or deployment is claimed.
+
+## 2026-11-02 continuation: routine library, explicit reload and scoped erase
+
+Three preview-only journey follow-ups implemented and locally verified:
+ten-entry name/duration library isolated from the legacy active-journey writer;
+explicit cross-tab saved-state loading that keeps drafts until requested;
+confirmed session-only log erasure preserving journal/routine/Japa/Reader and
+unknown saved fields. Invalid records and failed writes retain persistent data
+with explicit status. No accounts, canonical data, calculations or location
+settings changed. Details and storage compatibility: ROUTINE_LIBRARY.md.
+
+Actual checks: 12/12 targeted build/gate/site/metadata/i18n/practice/journey/design/
+PWA checks plus the final continuation and new routine-library tests passed.
+This is not a new complete 40-step local run. CI, wider source/editorial work,
+real authenticated synchronization, physical devices and final owner approval
+remain required. Keep the PR draft and the production feature flag OFF.
+
+Separate CI repair c8192db addresses run 41353175731's Reader cross-tab test
+timeout; that run's strict build had passed. The repaired Reader check passed on
+Ubuntu in run 41355714184; complete-run status must be checked independently.

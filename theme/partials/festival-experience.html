@@ -1,0 +1,12 @@
+{% if config.extra.hdc_practice_preview %}
+<aside class="hdc-festival" data-festival-experience aria-label="Festival experience preview">
+  <details><summary>Festival appearance (preview)</summary>
+    <label>Theme <select data-festival-mode><option value="auto">Automatic reviewed observances</option><option value="original">Original theme</option><option value="ganesha">Ganesha design preview</option><option value="shiva">Shiva design preview</option></select></label>
+    <label>Region <select data-festival-region><option value="IN">All-India scope only</option><option value="IN-UP">Uttar Pradesh</option><option value="IN-MH">Maharashtra</option><option value="IN-DL">Delhi</option></select></label>
+    <label><input type="checkbox" data-festival-effects>Enable gentle effects</label>
+    <p>No festival audio is played. Date-based themes require reviewed year, region and tradition evidence. Design previews do not change Panchang dates or calculations.</p>
+  </details>
+  <p data-festival-status role="status">Loading reviewed festival availability…</p>
+  <div class="hdc-festival-display" data-festival-display hidden><img data-festival-image width="80" height="80" alt=""><div><strong data-festival-title></strong><p data-festival-note></p><a data-festival-link>Explore the existing collection</a><ul data-festival-overlaps aria-label="Other applicable observances"></ul></div></div>
+</aside>
+{% endif %}

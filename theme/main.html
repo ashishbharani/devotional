@@ -4,7 +4,7 @@
 {#- Canonical public branding comes from mkdocs.yml. -#}
 {% set brand_name = config.site_name %}
 {% set document_title = brand_name if page.is_homepage else (page.title or "Page not found") ~ " | " ~ brand_name %}
-{% set social_description = (page.meta and page.meta.description) or config.site_description %}
+{% set social_description = (page.meta and page.meta.description) or (('Explore the existing devotional catalogue: ' ~ page.title ~ ' — ' ~ page.meta.abp_category) if config.extra.hdc_practice_preview and page.meta and page.meta.abp_category else config.site_description) %}
 {# Approved square artwork, absolute URL for crawlers (including nested routes). #}
 {% set social_image = config.site_url ~ 'assets/images/hdc-brand/icon-512.png' %}
 
@@ -18,6 +18,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="description" content="{{ social_description }}">
   <meta name="author" content="{{ config.site_author }}">
+  {% if config.extra.hdc_practice_preview and page.meta and page.meta.robots %}<meta name="robots" content="{{ page.meta.robots }}">{% endif %}
   {% if page.canonical_url %}<link rel="canonical" href="{{ page.canonical_url }}">{% endif %}
   <meta name="format-detection" content="telephone=no">
   <meta name="theme-color" media="(prefers-color-scheme: light)" content="#590817">
@@ -61,6 +62,15 @@
       }
     } | tojson }}
   </script>
+  {% if config.extra.hdc_practice_preview and page.meta and page.meta.abp_category %}
+  {% set crumbs = [
+    {"@type":"ListItem","position":1,"name":"Home","item":config.site_url ~ ""},
+    {"@type":"ListItem","position":2,"name":"Devotional Works","item":config.site_url ~ 'master-index/'},
+    {"@type":"ListItem","position":3,"name":page.meta.abp_category,"item":config.site_url ~ page.meta.abp_category_url}
+  ] %}
+  {% if page.url.rstrip('/') ~ '/' != page.meta.abp_category_url %}{% set _ = crumbs.append({"@type":"ListItem","position":4,"name":page.title,"item":page.canonical_url ~ ""}) %}{% endif %}
+  <script type="application/ld+json">{{ {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":crumbs} | tojson }}</script>
+  {% endif %}
   {#- apply saved accessibility preferences before first paint (no flash) -#}
   <script>
     try {
@@ -118,6 +128,8 @@
       {% include "partials/abp-breadcrumb.html" %}
     {% endif %}
     {{ page.content }}
+    {% include "partials/festival-experience.html" %}
+    {% include "partials/page-sharing.html" %}
     {% include "partials/abp-pager.html" %}
   </div>
 {% endblock %}

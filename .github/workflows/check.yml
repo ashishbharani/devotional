@@ -11,6 +11,8 @@ jobs:
   build:
     name: Build the site (strict)
     runs-on: ubuntu-latest
+    env:
+      HDC_PRACTICE_PREVIEW: '1'
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -37,6 +39,8 @@ jobs:
         run: |
           uv run python scripts/check_site.py
           uv run python scripts/test_social_metadata.py
+          uv run python scripts/test_practice_release_gate.py enabled
+          uv run python scripts/test_seo_structure.py enabled
           uv run python scripts/test_section_pager.py
           uv run python scripts/check_i18n.py
           uv run python scripts/check_project_pdfs.py
@@ -73,6 +77,62 @@ jobs:
         run: node scripts/test_royal_homepage.mjs
       - name: Test Daily Darshan, existing Japa state and responsive discovery
         run: node scripts/test_daily_darshan_browser.mjs
+      - name: Test local journeys, canonical discovery and public sharing
+        run: node scripts/test_journey_discovery_browser.mjs
+      - name: Test reading continuation, cross-tab state and shareable filters
+        run: node scripts/test_continuation_browser.mjs
+      - name: Test routine library, explicit draft reload and scoped log erasure
+        run: node scripts/test_routine_library_browser.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: routine-library-screenshots
+          path: work/routine-library
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: continuation-flow-screenshots
+          path: work/continuation
+      - name: Verify first-install offline routines and record local performance snapshot
+        run: |
+          node scripts/test_lab_metrics.mjs
+          node scripts/test_pwa_release_browser.mjs
+          node scripts/test_pwa_upgrade_browser.mjs
+      - name: Audit shared design tokens, enhanced reading and keyboard contrast
+        run: node scripts/test_design_system_browser.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: design-and-worker-upgrade-evidence
+          path: |
+            work/design-system
+            work/pwa-upgrade
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: release-qa-lab-evidence
+          path: work/release-qa
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: journey-discovery-screenshots
+          path: work/journey-discovery
+      - name: Test optional Sanctuary and source-attributed Sacred Reader pilot
+        run: node scripts/test_practice_browser.mjs
+      - name: Test festival schedule validation, India-time boundaries and preview UI
+        run: |
+          node scripts/test_festival_themes.mjs
+          node scripts/test_festival_browser.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: festival-preview-screenshots
+          path: work/festival-preview
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: sanctuary-reader-screenshots
+          path: work/practice
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -139,13 +199,20 @@ jobs:
         with:
           name: panchang-browser-screenshots
           path: work/panchang-browser
+      - name: Verify default production keeps unfinished practice features disabled
+        env:
+          HDC_PRACTICE_PREVIEW: ''
+        run: |
+          uv run mkdocs build --strict
+          uv run python scripts/test_practice_release_gate.py disabled
+          uv run python scripts/test_seo_structure.py disabled
       - name: Explain problems in plain language
         if: failure()
         shell: bash
         run: |
           {
-            echo "### ❌ The website could not be built"
-            echo "Fix the lines below (usually in data/corrections.csv or data/additions.csv), then push again:"
+            echo "### ❌ Website validation failed"
+            echo "Open the first failing step above for its exact error. This excerpt is from the build log; browser and data tests have their own step logs."
             echo '```'
             grep -E "WARNING|ERROR" build.log || tail -n 20 build.log
             echo '```'

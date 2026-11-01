@@ -47,6 +47,7 @@ DATA_FILE = ROOT / "data" / "collection.json"
 CORRECTIONS_FILE = ROOT / "data" / "corrections.csv"  # community fixes (see CONTRIBUTING.md)
 ADDITIONS_FILE = ROOT / "data" / "additions.csv"  # community additions
 SITE_NAME = ""  # populated from the canonical site_name in mkdocs.yml
+PRACTICE_PREVIEW = False  # no partial public launch; explicitly enabled in staging only
 EDITABLE = {
     "title": "title", "language": "language", "form": "form", "tier": "tier",
     "singer": "singer", "preferred singer": "singer", "recitation": "singer",
@@ -779,7 +780,7 @@ def page_home(d):
         f'<li><b>{fmt(total)}</b> <span data-i18n="works">works</span></li>'
         f'<li><b>{len(d["categories"])}</b> <span data-i18n="categories">categories</span></li>'
         f'<li><b>{fmt(groups)}</b> <span data-i18n="deitiesGroups">deities, traditions &amp; groups</span></li>'
-        "</ul>\n\n" + daily_darshan(panchang_summary_card()) + discovery(d) +
+        "</ul>\n\n" + daily_darshan(panchang_summary_card(), PRACTICE_PREVIEW) + discovery(d) +
         '<nav class="abp-home-actions" markdown="0" aria-label="Main sections" data-i18n-aria="mainSections">'
         '<div class="abp-home-actions__row">'
         '<a class="abp-btn abp-btn--big" href="foreword/" data-i18n="foreword">Foreword</a>'
@@ -1071,8 +1072,13 @@ def works_index(d) -> str:
 
 
 def on_config(config, **kw):
-    global SITE_NAME
+    global SITE_NAME, PRACTICE_PREVIEW
     SITE_NAME = config["site_name"]
+    PRACTICE_PREVIEW = os.environ.get("HDC_PRACTICE_PREVIEW") == "1"
+    config["extra"]["hdc_practice_preview"] = PRACTICE_PREVIEW
+    if not PRACTICE_PREVIEW:
+        config["extra_css"] = [p for p in config["extra_css"] if p not in {"stylesheets/practice.css", "stylesheets/festivals.css"}]
+        config["extra_javascript"] = [p for p in config["extra_javascript"] if str(p) not in {"javascripts/abp-practice.js", "javascripts/abp-festivals.js", "javascripts/abp-journeys.js", "javascripts/abp-discovery.js", "javascripts/abp-sharing.js"}]
     d = load()
     translation_report, translation_errors = audit_catalogue(ROOT / "docs" / "assets" / "i18n.json")
     for line in translation_report:
@@ -1131,6 +1137,7 @@ def on_config(config, **kw):
         ]},
         {"SCRIPTURES & BOOKS": "library.md"},
         {"TOOLS": [
+            *([{"My Devotional Journey": "journeys.md"}, {"Explore the Collection": "explore.md"}, {"Devotional Sanctuary": "sanctuary.md"}, {"Sacred Reader pilot": "reader/index.md"}] if PRACTICE_PREVIEW else []),
             {"Find a Work": "find.md"},
             {"A–Z Work Directory": "a-z.md"},
             {"Japa / Devotional Counter": "japa-counter.md"},
@@ -1199,6 +1206,10 @@ def on_page_markdown(markdown, page, config, **kw):
 
 
 def on_files(files, config, **kw):
+    if not PRACTICE_PREVIEW:
+        for file in list(files):
+            if file.src_uri in {"sanctuary.md", "reader/index.md", "journeys.md", "explore.md"}:
+                files.remove(file)
     d = load()
     builders = {
         "index.md": lambda p: page_home(d),
@@ -1284,7 +1295,7 @@ def on_files(files, config, **kw):
 
 
 def on_post_build(config, **kw):
-    """Publish a versioned, shell-only worker without precaching the catalogue."""
+    """Publish a versioned shell; preview adds bounded Material search helpers."""
     site = Path(config["site_dir"])
     # Ship larger Android launcher artwork without modifying approved source PNGs.
     from scripts.pwa_icon import publish_maskable
@@ -1303,7 +1314,17 @@ def on_post_build(config, **kw):
         "navigation-corner-light-right.webp", "navigation-corner-dark-right.webp",
         "icon-192.png", "icon-512.png", "icon-maskable-512.png", "icon-maskable-512-v2.png", "apple-touch-icon.png",
     ))
-    shell.extend(f"javascripts/{path.name}" for path in sorted((site / "javascripts").glob("*.js")))
+    if PRACTICE_PREVIEW:
+        shell.extend(["stylesheets/practice.css", "stylesheets/festivals.css", "sanctuary/", "reader/", "journeys/", "explore/"])
+        # Material requests these even on an offline shell page. Keep its
+        # built-in text search and instant-navigation bootstrap available;
+        # the larger universal-search payload pair remains on demand.
+        shell.extend(["sitemap.xml", "assets/i18n.json", "search/search_index.json"])
+        shell.extend(path.relative_to(site).as_posix() for path in sorted((site / "assets" / "javascripts" / "workers").glob("search.*.min.js")))
+        shell.extend(["assets/images/deities/ganesha-640.webp", "assets/images/deities/shiva-640.webp"])
+        shell.extend(path.relative_to(site).as_posix() for path in sorted((site / "assets" / "festivals").glob("*")) if path.is_file())
+    shell.extend(f"javascripts/{path.name}" for path in sorted((site / "javascripts").glob("*.js"))
+                 if PRACTICE_PREVIEW or path.name not in {"abp-practice.js", "abp-festivals.js", "abp-journeys.js", "abp-discovery.js", "abp-sharing.js"})
     shell.extend(f"javascripts/{path.name}" for path in sorted((site / "javascripts").glob("search-*.mjs")))
     shell.extend(path.relative_to(site).as_posix() for path in sorted((site / "assets" / "panchang").glob("*.mjs")))
     shell.extend(path.relative_to(site).as_posix() for pattern in (
@@ -1311,6 +1332,10 @@ def on_post_build(config, **kw):
         "assets/javascripts/bundle.*.min.js",
     ) for path in sorted(site.glob(pattern)))
     shell = [path for path in dict.fromkeys(shell) if path == "" or (site / path).exists()]
+    if PRACTICE_PREVIEW:
+        # Exact query aliases for the three supported presets. Preserve the
+        # existing worker strategy and avoid treating arbitrary queries as hits.
+        shell.extend(f"sanctuary/?minutes={minutes}" for minutes in (5, 10, 20))
     signature = hashlib.sha256()
     # Version the paired search assets without precaching their large payloads.
     for name in ("works-index.json", "universal-search.json"):
@@ -1325,7 +1350,9 @@ def on_post_build(config, **kw):
     if ephemeris_css.exists():
         signature.update(ephemeris_css.read_bytes())
     for path in shell:
-        target = site / (path or "index.html")
+        if "?" in path:
+            signature.update(path.encode())
+        target = site / (urlsplit(path).path or "index.html")
         if target.is_dir():
             target = target / "index.html"
         if target.is_file():

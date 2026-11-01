@@ -1,0 +1,10 @@
+import assert from 'node:assert/strict';
+import {layoutMetrics} from './lab_metrics.mjs';
+assert.deepEqual(layoutMetrics([]),{layoutShiftSum:0,labCls:0});
+const entry=(startTime,value,hadRecentInput=false)=>({startTime,value,hadRecentInput});
+assert.deepEqual(layoutMetrics([entry(0,.1),entry(999,.2),entry(1999,.4)]),{layoutShiftSum:.1+.2+.4,labCls:.4},'a gap of exactly one second starts a new session');
+const long=Array.from({length:7},(_,i)=>entry(i*900,.1));
+assert.ok(Math.abs(layoutMetrics(long).labCls-.6)<1e-10,'a session is capped at five seconds, not the whole trace');
+assert.deepEqual(layoutMetrics([entry(0,.05),entry(10,1,true),entry(20,NaN),entry(NaN,1),entry(30,-1)]),{layoutShiftSum:.05,labCls:.05},'recent input and invalid entries do not inflate CLS');
+assert.deepEqual(layoutMetrics([entry(100,.1),entry(0,.2)]),{layoutShiftSum:.2+.1,labCls:.2+.1},'trace order is normalized without mutating the supplied entries');
+console.log('PASS lab CLS session boundaries, five-second cap, recent-input exclusion and invalid/unordered traces');

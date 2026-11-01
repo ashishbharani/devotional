@@ -1,0 +1,86 @@
+import assert from 'node:assert/strict';
+import {spawn} from 'node:child_process';
+import {mkdir,readFile} from 'node:fs/promises';
+import {chromium} from 'playwright';
+const server=spawn(process.execPath,['scripts/serve_header_preview.mjs'],{env:{...process.env,HDC_PREVIEW_PORT:'4334'},stdio:['ignore','pipe','inherit']});
+await new Promise((resolve,reject)=>{server.stdout.once('data',resolve);server.once('error',reject);});
+const browser=await chromium.launch(),base='http://127.0.0.1:4334/devotional/';
+const checkContrast=async page=>assert.ok(await page.evaluate(()=>{
+ const luminance=color=>color.match(/[\d.]+/g).slice(0,3).map(Number).map(v=>{v/=255;return v<=.04045?v/12.92:((v+.055)/1.055)**2.4;}).reduce((a,v,i)=>a+v*[.2126,.7152,.0722][i],0);
+ const bg=luminance(getComputedStyle(document.querySelector('.hdc-practice')).backgroundColor);
+ return [...document.querySelectorAll('.hdc-practice p,.hdc-practice a,.hdc-practice label,.hdc-practice h2,.hdc-practice figcaption')].every(el=>{const fg=luminance(getComputedStyle(el).color);return(Math.max(bg,fg)+.05)/(Math.min(bg,fg)+.05)>=4.5;});
+}),'practice/reader text meets 4.5:1 on its theme surface');
+await mkdir('work/practice',{recursive:true});
+try{
+ for(const width of [320,375,768,1024,1440])for(const theme of ['abp-light','abp-dark']){
+  const context=await browser.newContext({viewport:{width,height:1000},reducedMotion:'reduce',serviceWorkers:'block'});
+  await context.route('https://fonts.googleapis.com/**',r=>r.fulfill({body:'',contentType:'text/css'}));
+  await context.addInitScript(()=>{
+   window.audioCreated=0;window.audioClosed=0;
+   window.AudioContext=class{constructor(){window.audioCreated++;this.currentTime=0;this.destination={};}resume(){return Promise.resolve();}close(){window.audioClosed++;return Promise.resolve();}createOscillator(){return{frequency:{},connect(){return{connect(){}};},start(){},stop(){}};}createGain(){return{gain:{setValueAtTime(){},exponentialRampToValueAtTime(){}}};}};
+  });
+  const page=await context.newPage(),errors=[];page.on('pageerror',e=>errors.push(e.message));
+  await page.goto(base+'sanctuary/');await page.locator('[data-light]').click();
+  await page.evaluate(t=>document.body.setAttribute('data-md-color-scheme',t),theme);
+  assert.equal(await page.locator('[data-light]').getAttribute('aria-pressed'),'true');
+  await page.locator('[data-flower]').click();assert.match(await page.locator('[data-flowers]').textContent(),/1 digital flower/);
+  assert.equal(await page.evaluate(()=>window.audioCreated),0,'no autoplay or sound on load');
+  await page.locator('[data-bell]').click();assert.equal(await page.evaluate(()=>window.audioCreated),0,'bell stays silent without opt-in');
+  await page.locator('[data-sound]').check();await page.locator('[data-bell]').click();
+  assert.equal(await page.evaluate(()=>window.audioCreated),1,'explicit sound + explicit gesture only');
+  await page.locator('[data-effects]').check();
+  assert.equal(await page.locator('[data-diya]').evaluate(el=>getComputedStyle(el).animationName),'none','reduced motion');
+  await page.locator('[data-quiet]').click();assert.equal(await page.locator('[data-sound]').isChecked(),false);
+  assert.equal(await page.evaluate(()=>window.audioClosed),1);
+  await page.locator('[data-start]').click();assert.match(await page.locator('[data-session]').textContent(),/remaining/);
+  assert.equal(await page.locator('[data-session]').getAttribute('aria-live'),'off','do not announce every timer tick');
+  await checkContrast(page);
+  await page.screenshot({path:`work/practice/sanctuary-${width}-${theme}.png`,fullPage:true});
+  await page.getByRole('link',{name:'Read the Sacred Reader pilot',exact:true}).click();await page.waitForURL(base+'reader/');
+  await page.locator('[data-bookmark]').click();await page.locator('[data-read]').click();
+  await page.locator('[data-reader-size]').selectOption('1.5');await page.locator('[data-reader-spacing]').selectOption('2.2');
+  assert.equal(await page.locator('[data-reader-progress]').textContent(),'1 of 1 passages marked read. Passage bookmarked.');
+  assert.equal((await page.locator('.hdc-verse').innerText()).replace(/\s+/g,' ').trim(),'कर्मण्येवाधिकारस्ते मा फलेषु कदाचन । मा कर्मफलहेतुर्भूर्मा ते सङ्गोऽस्त्वकर्मणि ॥','preserve the entire source-checked Sanskrit verse');
+  assert.equal(await page.locator('.hdc-verse').getAttribute('translate'),'no');
+  await page.locator('[data-reader-query]').fill('not-a-real-passage');assert.equal(await page.locator('[data-reader-empty]').isVisible(),true);
+  await page.locator('[data-reader-query]').fill('2.47');assert.equal(await page.locator('[data-reader-passage]').isVisible(),true);
+  await page.reload();assert.equal(await page.locator('[data-bookmark]').getAttribute('aria-pressed'),'true');
+  assert.equal(await page.locator('[data-reader-continue]').isVisible(),true);
+  assert.equal(await page.locator('[data-reader-size]').inputValue(),'1.5');
+  await page.evaluate(t=>document.body.setAttribute('data-md-color-scheme',t),theme);
+  assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));
+  assert.equal(await page.locator('main h1').count(),1);
+  await checkContrast(page);
+  await page.screenshot({path:`work/practice/reader-${width}-${theme}.png`,fullPage:true});
+  await page.emulateMedia({media:'print'});assert.equal(await page.locator('.hdc-practice-controls').isVisible(),false);await page.emulateMedia({media:'screen'});
+  await page.locator('[data-reader-clear]').click();assert.equal(await page.locator('[data-read]').getAttribute('aria-pressed'),'false');
+  assert.deepEqual(errors,[]);await context.close();console.log(`PASS sanctuary/reader ${width}px ${theme}`);
+ }
+ const context=await browser.newContext({serviceWorkers:'block'}),page=await context.newPage();
+ await page.addInitScript(()=>{localStorage.setItem('abp-japa-state-v1','{"count":54}');localStorage.setItem('hdc-reader-v1','malformed');});
+ await page.goto(base+'reader/#gita-2-47');assert.equal(await page.locator('[data-read]').getAttribute('aria-pressed'),'false');
+ await page.locator('[data-reader-clear]').click();assert.equal(await page.evaluate(()=>localStorage.getItem('abp-japa-state-v1')),'{"count":54}');
+ await page.evaluate(()=>{const set=Storage.prototype.setItem;Storage.prototype.setItem=function(k,v){if(k.startsWith('hdc-'))throw new Error('blocked');return set.call(this,k,v);};});
+ await page.locator('[data-bookmark]').click();assert.match(await page.locator('[data-reader-status]').textContent(),/this visit only/);
+ await page.evaluate(()=>{
+  Object.defineProperty(navigator,'share',{value:undefined,configurable:true});
+  Object.defineProperty(navigator,'clipboard',{value:{writeText:async()=>{throw new Error('denied');}},configurable:true});
+ });
+ await page.locator('[data-reader-share]').click();await page.locator('[data-reader-link]:visible').waitFor();
+ assert.match(await page.locator('[data-reader-link] input').inputValue(),/\/reader\/#gita-2-47$/);
+ await context.close();
+ const source=await readFile('docs/reader/index.md','utf8');
+ assert.ok(source.includes('oldid=408369')&&source.includes('heritage.iitk.ac.in/SBG/2.47'),'persistent provenance');
+ assert.ok((await readFile('site/sw.js','utf8')).includes('stylesheets/practice.css'),'offline shell includes practice stylesheet');
+ const offline=await browser.newContext({serviceWorkers:'allow'}),offlinePage=await offline.newPage();
+ await offlinePage.goto(base);await offlinePage.evaluate(()=>navigator.serviceWorker.ready);
+ await offlinePage.waitForFunction(()=>Boolean(navigator.serviceWorker.controller));
+ for(const route of ['reader/','sanctuary/'])assert.ok(await offlinePage.evaluate(async url=>Boolean(await caches.match(url)),base+route),'new route precached');
+ await offline.setOffline(true);await offlinePage.goto(base+'reader/');
+ await offlinePage.locator('[data-bookmark]').click();assert.equal(await offlinePage.locator('[data-bookmark]').getAttribute('aria-pressed'),'true');
+ await offlinePage.goto(base+'sanctuary/');await offlinePage.locator('[data-light]').click();
+ assert.equal(await offlinePage.locator('[data-light]').getAttribute('aria-pressed'),'true');
+ await offline.close();
+ console.log('PASS real first-install offline Reader bookmark and Sanctuary diya interaction');
+ console.log('PASS malformed/blocked storage, legacy Japa preservation, source and offline shell declarations');
+}finally{await browser.close();server.kill();}
