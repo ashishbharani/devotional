@@ -55,6 +55,22 @@ try {
   await page.waitForFunction(value=>document.querySelector('#dynamic-translation').textContent===value,catalogue.textTranslations.Moonrise.ta);
   await page.evaluate(()=>{document.querySelector('#dynamic-translation').firstChild.nodeValue='Moonset';});
   await page.waitForFunction(value=>document.querySelector('#dynamic-translation').textContent===value,catalogue.textTranslations.Moonset.ta);
+  await page.evaluate(()=>{
+   const fixture=document.createElement('section');fixture.id='protected-translation-fixture';
+   fixture.innerHTML='<p id="protected-trigger">Moonrise</p><p translate="no" id="protected-source">Moonrise</p><div class="notranslate"><p id="private-text">Moonrise</p><select><option value="saved-id">Moonrise</option></select><input value="Moonrise" aria-label="Moonrise"><textarea>Moonrise</textarea><span data-i18n="home" id="explicit-private-ui">Home</span><button data-i18n-aria="home">Moonrise</button></div>';
+   document.body.append(fixture);window.abpI18n.applyLanguage('ta');
+  });
+  const protectedRoot=page.locator('#protected-translation-fixture');
+  assert.equal(await protectedRoot.locator('#protected-source').textContent(),'Moonrise','translate=no protects source text');
+  assert.equal(await protectedRoot.locator('#private-text').textContent(),'Moonrise','notranslate protects private text');
+  assert.equal(await protectedRoot.locator('option').textContent(),'Moonrise');assert.equal(await protectedRoot.locator('select').inputValue(),'saved-id');
+  assert.equal(await protectedRoot.locator('input').inputValue(),'Moonrise');assert.equal(await protectedRoot.locator('input').getAttribute('aria-label'),'Moonrise');assert.equal(await protectedRoot.locator('textarea').inputValue(),'Moonrise');
+  const homeTranslation=await page.evaluate(()=>window.abpI18n.t('home'));
+  assert.equal(await protectedRoot.locator('#explicit-private-ui').textContent(),homeTranslation,'authored interface keys still translate within a protected form');
+  assert.equal(await protectedRoot.locator('button').getAttribute('aria-label'),homeTranslation);
+  await page.evaluate(()=>{document.querySelector('#private-text').textContent='Moonset';document.querySelector('#protected-source').textContent='Moonset';document.querySelector('#protected-trigger').textContent='Moonset';});
+  await page.waitForFunction(value=>document.querySelector('#protected-trigger').textContent===value,catalogue.textTranslations.Moonset.ta);
+  assert.equal(await protectedRoot.locator('#private-text').textContent(),'Moonset');assert.equal(await protectedRoot.locator('#protected-source').textContent(),'Moonset');
   assert.equal(await page.locator('#translation-fixture input').inputValue(),'Home');
   assert.equal(await page.locator('#translation-fixture input').getAttribute('aria-label'),catalogue.textTranslations.Moonrise.ta);
   assert.equal(await page.locator('#translation-fixture input').getAttribute('placeholder'),catalogue.textTranslations.Location.ta);
@@ -64,6 +80,7 @@ try {
   assert.equal(await page.locator('#translation-fixture code').textContent(),'Moonrise');
   await page.evaluate(()=>window.abpI18n.applyLanguage('en'));
   assert.equal(await page.locator('#dynamic-translation').textContent(),'Moonset','restore current source, not a stale earlier value');
+  await protectedRoot.evaluate(el=>el.remove());
   await page.evaluate(()=>document.querySelector('#translation-fixture').remove());
   for(const route of ['library/','about/','disclaimer/','panchang/']) {
    await page.goto(base+route);await page.evaluate(()=>window.abpI18n.ready);
@@ -89,6 +106,14 @@ try {
   await context.close();
   console.log('PASS '+width+'px: ten local languages, real labels, dynamic text updates, original restoration, markup/privacy/storage, routes and no Google translator');
  }
+ const sourceText='Your business is with action alone; not by any means with fruit. Let not the fruit of action be your motive (to action). Let not your attachment be (fixed) on inaction.';
+ const protectedReader=await browser.newContext({serviceWorkers:'block'}),readerPage=await protectedReader.newPage();
+ const injected=structuredClone(catalogue);injected.textTranslations[sourceText]=Object.fromEntries(languages.filter(c=>c!=='en').map(c=>[c,'TEST_ONLY_REPLACEMENT']));
+ await protectedReader.route('**/assets/i18n.json',r=>r.fulfill({body:JSON.stringify(injected),contentType:'application/json'}));
+ await protectedReader.route('https://fonts.googleapis.com/**',r=>r.fulfill({body:'',contentType:'text/css'}));
+ await readerPage.goto(base+'reader/');await readerPage.evaluate(()=>window.abpI18n.ready);
+ for(const code of languages){await readerPage.evaluate(code=>window.abpI18n.applyLanguage(code),code);assert.equal(await readerPage.locator('[data-reader-translation-text]').textContent(),sourceText,'historical source remains exact even when a test-only matching dictionary phrase exists');}
+ await protectedReader.close();console.log('PASS historical English source protection across ten language selections');
  const unavailable=await browser.newContext({serviceWorkers:'block'});
  await unavailable.addInitScript(()=>localStorage.setItem('abp-language','ta'));
  await unavailable.route('**/assets/i18n.json',route=>route.abort());

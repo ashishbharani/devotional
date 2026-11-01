@@ -37,8 +37,10 @@ these checkpoints. Refresh main before creating the next draft PR.
   optional Firebase synchronization. No new account provider is authorized.
 - Panchang settings are the shared location store. Ephemeris, calendars and
   converter reuse existing engines. Device coordinates retain session privacy.
-- Translation combines a local interface dictionary, script transliteration and
-  optional external in-page machine translation; these are not sacred translations.
+- Translation now uses the local dictionary/phrase catalogue and script
+  transliteration. Main PR54 removed Google Website Translator; do not restore
+  that provider. Whole-hosted-text coverage remains incomplete and distinct from
+  registered-key coverage. Sacred sources/private text retain explicit exclusions.
 - Current reading links use external resources. They are not a verified first-party
   verse corpus. Pilot text needs documented provenance and redistribution rights.
 - Festival rules explicitly mark regional review limitations and exclude unverified
@@ -90,7 +92,7 @@ No confirmed baseline runtime defect is asserted from inspection alone.
 | 7 Discovery | IN PROGRESS | Tested canonical facets/paths; wider verified discovery data and navigation evaluation pending |
 | 8 SEO/sharing | IN PROGRESS | Tested breadcrumbs, public sharing, metadata and unpublished editorial template; external SEO coverage unverified |
 | 9 PWA/performance | IN PROGRESS | Offline presets, update-failure/version-transition tests and session-window lab metrics; layout attribution and field/device checks remain open |
-| 10 Integration QA | IN PROGRESS | Finite 39-step runner and protected hashes implemented; full results below; final owner review still required |
+| 10 Integration QA | IN PROGRESS | Finite 42-step runner includes upstream translation audits; integrated full verification and final owner review still required |
 
 SEO files: `theme/main.html`, `scripts/test_social_metadata.py`.
 Adds only the approved 512px brand icon to Open Graph and Twitter metadata,
@@ -395,8 +397,17 @@ Phone capture inspected; protected hashes unchanged. An introductory wording
 adjustment for the upstream local-only translator will receive the integrated
 build checks. No storage schema, canonical work or provider change.
 
-Next required integration: merge current main 255fe71 preserving PR52/53/54,
-repair its implicit translator's missing explicit exclusion boundaries, add the
-two upstream translation audits to the finite runner, then run the full suite.
+The following integration checkpoint merges main 255fe71 preserving PR52/53/54,
+repairs its implicit translator's missing explicit exclusion boundaries and adds
+the two upstream translation audits to the finite runner. Full suite pending.
 The larger hosted-translation backlog and human-reviewed festival dates remain
 genuine release gates. Do not deploy this extension separately.
+
+## Latest production integration and source/private translation protection
+
+Main merged cleanly at 599d481. The missing exclusion boundary was reproduced
+with synthetic `Moonrise` text and repaired without disabling explicit authored
+UI localization. Details, regression scope and developer-override limitations:
+INTEGRATION_TRANSLATION_BOUNDARIES.md. The finite runner now includes all 42
+checks, including both upstream translation audits. Next action is the full
+committed-candidate suite. No full-suite pass or deployment is claimed yet.

@@ -53,7 +53,8 @@
   const plainText = new WeakMap(), originalAttributes = new WeakMap();
   const normalized = (value) => value.replace(/\s+/g, " ").trim().toLocaleLowerCase("en");
   const setText = (node, value) => { if (node.textContent !== value) node.textContent = value; };
-  const protectedText = 'script,style,noscript,svg,code,pre,input,textarea,option:not([value]),[contenteditable],.abp-work-title,.abp-work-original,[data-transliterate-ui],[data-category-name],.abp-account,#abp-account-summary,#abp-favourites-list,[lang="sa"],.abp-language-grid,.abp-language-btn';
+  // Explicit data-i18n UI keys still apply; implicit phrases must respect source/private boundaries.
+  const protectedText = 'script,style,noscript,svg,code,pre,input,textarea,option:not([value]),[contenteditable],.abp-work-title,.abp-work-original,[data-transliterate-ui],[data-category-name],.abp-account,#abp-account-summary,#abp-favourites-list,[lang="sa"],[translate="no"],.notranslate,.abp-language-grid,.abp-language-btn';
   function translatePlainText(root) {
     const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
     let node;
