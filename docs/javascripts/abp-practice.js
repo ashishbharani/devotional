@@ -20,6 +20,8 @@
       let flowers = 0, timer, end = 0, audio;
       q('[data-effects]').checked = previous.effects === true;
       q('[data-sound]').checked = false; // never restore permission to make sound
+      const requestedMinutes=Number(new URLSearchParams(location.search).get('minutes'));
+      if([5,10,20].includes(requestedMinutes))q('[data-duration]').value=requestedMinutes;
       q('[data-diya]').classList.toggle('has-effects', q('[data-effects]').checked);
       const silence = () => { if (audio) { audio.close().catch(()=>{}); audio = null; } };
       const finish = message => {clearInterval(timer); timer = undefined; q('[data-start]').disabled=false; q('[data-stop]').disabled=true; q('[data-session]').textContent=message; status.textContent=message;};

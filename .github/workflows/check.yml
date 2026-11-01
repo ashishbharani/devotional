@@ -40,6 +40,7 @@ jobs:
           uv run python scripts/check_site.py
           uv run python scripts/test_social_metadata.py
           uv run python scripts/test_practice_release_gate.py enabled
+          uv run python scripts/test_seo_structure.py enabled
           uv run python scripts/test_section_pager.py
           uv run python scripts/check_i18n.py
           uv run python scripts/check_project_pdfs.py
@@ -76,6 +77,13 @@ jobs:
         run: node scripts/test_royal_homepage.mjs
       - name: Test Daily Darshan, existing Japa state and responsive discovery
         run: node scripts/test_daily_darshan_browser.mjs
+      - name: Test local journeys, canonical discovery and public sharing
+        run: node scripts/test_journey_discovery_browser.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: journey-discovery-screenshots
+          path: work/journey-discovery
       - name: Test optional Sanctuary and source-attributed Sacred Reader pilot
         run: node scripts/test_practice_browser.mjs
       - name: Test festival schedule validation, India-time boundaries and preview UI
@@ -164,6 +172,7 @@ jobs:
         run: |
           uv run mkdocs build --strict
           uv run python scripts/test_practice_release_gate.py disabled
+          uv run python scripts/test_seo_structure.py disabled
       - name: Explain problems in plain language
         if: failure()
         shell: bash

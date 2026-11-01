@@ -86,9 +86,9 @@ No confirmed baseline runtime defect is asserted from inspection alone.
 | 3 Sanctuary | TESTED | Initial optional digital aids; gated preview; physical audio not certified |
 | 4 Sacred Reader | TESTED | One original Sanskrit passage; gated preview; translations/recordings unavailable |
 | 5 Festivals | IN PROGRESS | Preview/scheduling foundation implemented; reviewed real observance data still unavailable |
-| 6 Journeys | NOT STARTED | Extend existing local storage without invalidation |
-| 7 Discovery | NOT STARTED | Preserve canonical matching and complete route access |
-| 8 SEO/sharing | IN PROGRESS | Approved social image metadata plus full-site regression test |
+| 6 Journeys | IN PROGRESS | Tested initial local routine/journal/log; broader routine/history features and offline preset handoff pending |
+| 7 Discovery | IN PROGRESS | Tested canonical facets/paths; wider verified discovery data and navigation evaluation pending |
+| 8 SEO/sharing | IN PROGRESS | Tested breadcrumbs, public sharing, metadata and unpublished editorial template; external SEO coverage unverified |
 | 9 PWA/performance | NOT STARTED | Existing cache and install regression; measured limitations |
 | 10 Integration QA | NOT STARTED | Complete matrix and owner-reviewed final release PR |
 
@@ -110,6 +110,40 @@ to social metadata rather than removing functional theme tags. No existing test
 was weakened or removed.
 
 ## Recovery and continuation
+
+### Next three initial slices — Journeys, Discovery, SEO/sharing
+
+New default-OFF routes `journeys/` and `explore/`. Journey reuses the Japa count,
+Reader progress and existing favourites links; it does not copy account records
+or create a second counter. Optional journal/routine/self-reported log use
+`hdc-journey-state-v1`, with explicit note-storage consent, plaintext/shared-device
+warning, no cloud writes, no machine-translation/sharing of private form values,
+bounded content/history and journal-only erase. Cross-tab notices retain unsaved
+drafts. Query-based duration handoff is verified online; uncached offline preset
+navigation remains for PWA QA. This is not a secure/encrypted vault.
+
+Discovery populates real category/language/form selectors from the existing
+integrity-checked search service and submits its normal GET contract. No ranking,
+identity, alias, graph or canonical dataset changes. No unsupported regional or
+family-deity classifications are invented. Existing mobile navigation is retained.
+
+SEO/sharing adds preview-only actual category/group descriptions and canonical
+BreadcrumbList, public-page native/copy/manual sharing (excluding private journey,
+favourites and existing Reader control), and an unpublished source-review template
+under `templates/`. No thin work pages, ratings, tracking or ranking promises.
+
+Validation: default strict build passed 132.25s + disabled gate; preview strict
+build passed 91.88s + enabled gate. New browser matrix passed ten width/theme
+cases, private persistence/opt-in/erase, legacy Japa preservation, literal-text
+injection safety, real search submission, keyboard focus, 4.5:1 contrast,
+cross-tab draft protection, bad/blocked storage and public manual-copy fallback.
+SEO structure audit passed 2,244 real breadcrumb hierarchies; social metadata
+passed 2,273 pages; site smoke passed 16 routes/43,085 IDs. Existing numerical
+search/ranking/coverage and all six browser search cases passed. Navigation passed
+all eight widths, route/history/category/search and canonical pager cases.
+Screenshots: `work/journey-discovery`; phone
+dark-mode visual reviewed. Canonical collection hash unchanged. Full transformation
+and final release QA remain incomplete. Details: `JOURNEYS_DISCOVERY_SEO.md`.
 
 ### Festival experience foundation
 
