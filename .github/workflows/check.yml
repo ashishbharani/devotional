@@ -80,7 +80,19 @@ jobs:
       - name: Test local journeys, canonical discovery and public sharing
         run: node scripts/test_journey_discovery_browser.mjs
       - name: Verify first-install offline routines and record local performance snapshot
-        run: node scripts/test_pwa_release_browser.mjs
+        run: |
+          node scripts/test_lab_metrics.mjs
+          node scripts/test_pwa_release_browser.mjs
+          node scripts/test_pwa_upgrade_browser.mjs
+      - name: Audit shared design tokens, enhanced reading and keyboard contrast
+        run: node scripts/test_design_system_browser.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: design-and-worker-upgrade-evidence
+          path: |
+            work/design-system
+            work/pwa-upgrade
       - uses: actions/upload-artifact@v4
         if: always()
         with:

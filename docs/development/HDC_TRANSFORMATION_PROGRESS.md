@@ -81,7 +81,7 @@ No confirmed baseline runtime defect is asserted from inspection alone.
 | Increment | State | Work / next evidence required |
 | --- | --- | --- |
 | 0 Audit | TESTED | Inventory, captures, strict build, responsive header checks; limitations below |
-| 1 Design | NOT STARTED | Preserve tokens/artwork; measure representative page types |
+| 1 Design | IN PROGRESS | Shared-token/enhanced-reading audit added; high-contrast interaction accent repaired; wider visual approval remains |
 | 2 Daily Darshan | TESTED | Initial neutral-discovery module; reviewed recommendations/reader continuation remain future work |
 | 3 Sanctuary | TESTED | Initial optional digital aids; gated preview; physical audio not certified |
 | 4 Sacred Reader | TESTED | One original Sanskrit passage; gated preview; translations/recordings unavailable |
@@ -89,8 +89,8 @@ No confirmed baseline runtime defect is asserted from inspection alone.
 | 6 Journeys | IN PROGRESS | Tested initial local routine/journal/log and first-install offline preset handoff; broader routine/history features pending |
 | 7 Discovery | IN PROGRESS | Tested canonical facets/paths; wider verified discovery data and navigation evaluation pending |
 | 8 SEO/sharing | IN PROGRESS | Tested breadcrumbs, public sharing, metadata and unpublished editorial template; external SEO coverage unverified |
-| 9 PWA/performance | IN PROGRESS | Exact offline preset cache repair tested; local source budget measured; desktop layout movement and field/device checks remain open |
-| 10 Integration QA | IN PROGRESS | Finite 35-step runner and protected hashes implemented; full results below; final owner review still required |
+| 9 PWA/performance | IN PROGRESS | Offline presets, update-failure/version-transition tests and session-window lab metrics; layout attribution and field/device checks remain open |
+| 10 Integration QA | IN PROGRESS | Finite 38-step runner and protected hashes implemented; full results below; final owner review still required |
 
 SEO files: `theme/main.html`, `scripts/test_social_metadata.py`.
 Adds only the approved 512px brand icon to Open Graph and Twitter metadata,
@@ -147,6 +147,30 @@ and final release QA remain incomplete. Details: `JOURNEYS_DISCOVERY_SEO.md`.
 
 ### PWA repair and integration evidence foundation
 
+Follow-up design/PWA work is documented in `DESIGN_SYSTEM_QA.md` and
+`RELEASE_QA.md`. The shared audit covers representative page types with ordinary
+and enhanced reading, and exposed a high-contrast focused-link failure. The fix
+uses the existing maroon interaction token in high-contrast mode. Ordinary-light
+interactive text also failed at about 3.17:1 and now uses the existing deeper
+sacred saffron. Resting presentation, artwork and geometry are preserved. A real generated-worker update test
+exercises failed precache installation and recovery to a successful new version,
+with offline interaction, old CSS/cache retirement and saved-state preservation.
+Lab measurement now distinguishes raw shift sum from session-window CLS, records
+large-shift source geometry and includes tablet width. These remain local lab
+observations, not field performance or physical-device certification. The original
+desktop shift finding varies between isolated traces/preview origins; no site
+layout change is justified by that evidence yet. Do not discard adverse traces
+or mark the performance target achieved. Full release review is still pending.
+
+The upgrade audit subsequently exposed uncaught Material offline requests for
+its native search index and sitemap. Preview precaching now includes the existing
+native index/worker, sitemap and interface dictionary under a 4 MiB group budget.
+The worker adds exact XML dispatch through its existing asset strategy. This
+intentional worker edit supports the offline/version-transition repair; the
+larger universal payloads remain on demand. Native search results are exercised
+offline without changing either search engine. Provider and user-data schemas,
+canonical content, astronomical code and approved artwork remain untouched.
+
 Preview shell generation now includes exact 5/10/20-minute Sanctuary query
 aliases and existing approved portraits. First-install offline testing reproduced
 the missing-alias defect before the repair and verifies the real journey handoff,
@@ -158,7 +182,7 @@ rejected storage writes. Actions now retain their current in-memory state after
 a failure; the regression checks repeated records, routine save and journal erase
 without altering the prior persistent store. No account/provider migration.
 
-`scripts/run_release_validation.py` runs the finite 35-step automated matrix,
+`scripts/run_release_validation.py` runs the finite 38-step automated matrix,
 records exact commands/exit codes/logs and protected hashes, and distinguishes
 full runs from selected reruns. PWA CI uploads local screenshots/performance
 evidence. See `RELEASE_QA.md` for commands, scope and rollback. Generated evidence

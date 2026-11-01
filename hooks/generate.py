@@ -1295,7 +1295,7 @@ def on_files(files, config, **kw):
 
 
 def on_post_build(config, **kw):
-    """Publish a versioned, shell-only worker without precaching the catalogue."""
+    """Publish a versioned shell; preview adds bounded Material search helpers."""
     site = Path(config["site_dir"])
     tpl = (ROOT / "hooks" / "sw.template.js").read_text(encoding="utf-8")
     shell = [
@@ -1313,6 +1313,11 @@ def on_post_build(config, **kw):
     ))
     if PRACTICE_PREVIEW:
         shell.extend(["stylesheets/practice.css", "stylesheets/festivals.css", "sanctuary/", "reader/", "journeys/", "explore/"])
+        # Material requests these even on an offline shell page. Keep its
+        # built-in text search and instant-navigation bootstrap available;
+        # the larger universal-search payload pair remains on demand.
+        shell.extend(["sitemap.xml", "assets/i18n.json", "search/search_index.json"])
+        shell.extend(path.relative_to(site).as_posix() for path in sorted((site / "assets" / "javascripts" / "workers").glob("search.*.min.js")))
         shell.extend(["assets/images/deities/ganesha-640.webp", "assets/images/deities/shiva-640.webp"])
         shell.extend(path.relative_to(site).as_posix() for path in sorted((site / "assets" / "festivals").glob("*")) if path.is_file())
     shell.extend(f"javascripts/{path.name}" for path in sorted((site / "javascripts").glob("*.js"))

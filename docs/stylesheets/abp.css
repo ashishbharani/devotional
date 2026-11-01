@@ -35,7 +35,7 @@
   --md-primary-fg-color--light: #9c4a3f;
   --md-primary-fg-color--dark: #6a2c25;
   --md-primary-bg-color: #fff4dc;
-  --md-accent-fg-color: #d96c16;
+  --md-accent-fg-color: var(--sacred-saffron, #934013);
   --md-typeset-a-color: var(--abp-link);
   --md-footer-bg-color: #3b1f1a;
   --md-footer-bg-color--dark: #2c1713;
@@ -854,6 +854,7 @@ html.abp-hc [data-md-color-scheme="abp-light"] {
   --abp-gold: #000; --abp-maroon: #6b1d15; --abp-shadow: transparent; --abp-gloss: transparent;
   --md-default-bg-color: #fff; --md-typeset-color: #000; --md-typeset-a-color: #0033a0;
   --md-primary-fg-color: #5a1810;
+  --md-accent-fg-color: var(--abp-maroon);
 }
 html.abp-hc [data-md-color-scheme="abp-dark"] {
   --abp-paper: #000; --abp-paper-2: #000; --abp-row: #000;
@@ -862,6 +863,7 @@ html.abp-hc [data-md-color-scheme="abp-dark"] {
   --abp-gold: #fff; --abp-maroon: #ffb4a8; --abp-shadow: transparent; --abp-gloss: transparent;
   --md-default-bg-color: #000; --md-typeset-color: #fff; --md-typeset-a-color: #ffd75e;
   --md-primary-fg-color: #000;
+  --md-accent-fg-color: var(--abp-maroon);
 }
 html.abp-hc .abp-page, html.abp-hc .abp-catbar { --abp-cat: #6b6b6b !important; --abp-cat-ink: #000 !important; --abp-circle-1: transparent; --abp-circle-2: transparent; }
 html.abp-hc [data-md-color-scheme="abp-dark"] :is(.abp-page, .abp-catbar) { --abp-cat: #9a9a9a !important; --abp-cat-ink: #fff !important; }

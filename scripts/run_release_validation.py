@@ -26,7 +26,7 @@ STEPS = [
  *[(name,py('scripts/'+script+'.py'),True) for name,script in [
   ('site','check_site'),('metadata','test_social_metadata'),('pager','test_section_pager'),
   ('i18n','check_i18n'),('pdfs','check_project_pdfs'),('reading-data','test_reading_links'),('deity-art','test_deity_art')]],
- ('search-unit',js('test_universal_search'),True),('festival-unit',js('test_festival_themes'),True),
+ ('search-unit',js('test_universal_search'),True),('festival-unit',js('test_festival_themes'),True),('lab-unit',js('test_lab_metrics'),True),
  *[(name,js(script),True) for name,script in [
   ('search-browser','test_search_browser'),('project-info','test_project_info_browser'),
   ('panchang-browser','test_panchang_browser'),('navigation','test_navigation'),
@@ -36,6 +36,7 @@ STEPS = [
   ('reading-browser','test_reading_links_browser'),('feedback','test_feedback_browser'),
   ('daily','test_daily_darshan_browser'),('practice','test_practice_browser'),
   ('festivals','test_festival_browser'),('journeys','test_journey_discovery_browser'),
+  ('design-system','test_design_system_browser'),('pwa-upgrade','test_pwa_upgrade_browser'),
   ('pwa-release','test_pwa_release_browser')]],
 ]
 PROTECTED = ['data/collection.json','data/corrections.csv','data/additions.csv','data/search-registry.json',

@@ -79,6 +79,12 @@ self.addEventListener("fetch", (event) => {
     event.respondWith(networkFirst(request));
     return;
   }
+  // Material bootstraps instant navigation from this XML even while offline.
+  // Use the existing asset strategy; never substitute the HTML offline page.
+  if (url.pathname === `${scopeUrl.pathname}sitemap.xml`) {
+    event.respondWith(staleWhileRevalidate(request));
+    return;
+  }
   // Navigation CSS and its coordinating JS must come from the same live release;
   // use the last cached response only when offline.
   if (/\/stylesheets\/(?:hdc-header|navigation)\.css$/.test(url.pathname) || url.pathname.endsWith('/javascripts/navigation.js')) {

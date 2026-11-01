@@ -39,10 +39,11 @@ Install with `pnpm install --frozen-lockfile --ignore-scripts`, then run:
 uv run python scripts/run_release_validation.py
 ```
 
-This runs 35 named steps: both strict builds and enabled/disabled release/SEO
+This now runs 38 named steps: both strict builds and enabled/disabled release/SEO
 gates; astronomy, data and metadata checks; search, navigation, plugin, header,
 translation, reader, feedback, Daily Darshan, practice, festival, journey and PWA
-browser suites. It leaves `site/` containing the preview artifact. Do not rebuild
+browser suites, shared design/enhanced reading, worker version transitions and
+lab-metric boundary tests. It leaves `site/` containing the preview artifact. Do not rebuild
 while browser audits run. No merge, deployment or data editing is performed.
 
 `work/release-qa/validation.json` records commands, source head and dirty state,
@@ -57,18 +58,55 @@ The new feature JS/CSS/module source footprint is 29,431 bytes, below the explic
 100 KiB incremental source budget. This is not total download or runtime memory.
 `performance.json` and phone/desktop screenshots accompany an unthrottled local
 Chromium snapshot with external font CSS stubbed. No field LCP/INP/CLS claim is
-made; `layoutShiftSum` is a raw observed sum, not certified CLS.
+made; `layoutShiftSum` is a raw observed sum. `labCls` separately uses the largest
+session window (less than one second between shifts, less than five seconds per
+window), excluding recent input. Boundary/invalid-entry tests protect that math.
+The 1000ms observation interval after load/image decode ends before screenshot
+capture; viewport visibility, supported APIs and large-shift source rectangles
+are recorded. Tablet width joins phone/desktop. These are finite lab samples.
 
 The initial desktop probe observed substantial layout movement (sum about 1.97;
 phone about 0.003). A diagnostic found two major transient body/container changes
 and smaller header-control insertion changes. Attribution and remediation remain
 open; do not call the performance increment complete or its targets met.
+Isolated desktop and alternate-preview-origin traces did not reproduce those
+large shifts. This variability is not proof of a production fault or its absence;
+retain the traces and investigate before claiming a performance pass. No approved
+layout is changed speculatively to improve the measurement.
+
+## Existing-installation lifecycle
+
+`node scripts/test_pwa_upgrade_browser.mjs` serves the real generated worker with
+a test-only previous version and CSS comment marker. A deliberately unavailable
+shell asset must reject the next installation while the old offline shell stays
+interactive. Restoring the asset permits an ordinary worker update: old cache
+names/CSS bytes must retire, an unrelated cache must remain, and Japa, Reader and
+journey values must survive unchanged. The upgraded ten-minute offline timer is
+exercised, followed by real built-in Material search while offline. Fixtures live
+only in the test server; provider configurations and storage schemas are unchanged.
+The test waits for actual worker state transitions, not an asynchronous
+`waitForFunction` predicate (which can be treated as a truthy Promise by the
+installed browser harness). This covers the
+current worker's version transition, not every historical worker or native app
+installation on physical devices. Evidence: `work/pwa-upgrade`.
+
+The test exposed uncaught offline Material XHR errors for its uncached native
+search index and sitemap. Preview builds now precache the existing Material index
+and worker, sitemap and interface dictionary, with an explicit combined 4 MiB
+budget (about 2.84 MiB initially). The larger universal-search payload pair stays
+on demand; its matching/ranking and datasets are unchanged. Built-in text search
+is not a claim that every advanced universal-search query is available offline.
+`sw.template.js` adds one exact sitemap XML dispatch using its existing asset
+strategy, without returning the HTML offline page as XML. This narrow worker
+change is intentional for the tested offline/version-transition repair; there is
+no cache-name/schema migration or astronomy modification. The helper precache is
+preview-only; ordinary builds retain on-demand caching of visited resources.
 
 ## Remaining release gates
 
 - Reviewed year/region festival dates are absent; original theme remains fallback.
 - Reader is one original Sanskrit verse, without licensed translations/recordings.
-- Design increment and wider journey/discovery/editorial scope remain unfinished.
+- Wider design review and journey/discovery/editorial scope remain unfinished.
 - Real authenticated cloud sync, native installation on physical devices,
   assistive-technology testing and field performance have not been certified.
 - Full owner review and coordinated staging approval are still required.
