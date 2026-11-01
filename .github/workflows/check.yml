@@ -71,6 +71,13 @@ jobs:
         run: node scripts/test_navigation.mjs
       - name: Test royal homepage, artwork, search and destination links
         run: node scripts/test_royal_homepage.mjs
+      - name: Test Daily Darshan, existing Japa state and responsive discovery
+        run: node scripts/test_daily_darshan_browser.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: daily-darshan-screenshots
+          path: work/daily-darshan
       - name: Test shared sacred design on every page type
         run: node scripts/test_sacred_site.mjs
       - name: Verify existing HDC plugins, legacy data and restored offline styles

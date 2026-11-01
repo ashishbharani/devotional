@@ -123,3 +123,13 @@ html.abp-hc .udhc-home { --udhc-ink:#241208; }
 html.abp-hc .udhc-hero::before { background:#3c061ae8; }
 @media (prefers-reduced-motion:reduce) { .udhc-home * { transition:none!important; animation:none!important; } }
 html.abp-still .udhc-home * { transition:none!important; animation:none!important; }
+/* Daily entry points reuse the established palette and existing Panchang. */
+.hdc-daily-paths { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-block: 20px; text-align: start; }
+.hdc-daily-paths a { display: flex; flex-direction: column; justify-content: center; gap: 6px; min-height: 64px; padding: 16px; border: 1px solid var(--udhc-gold); border-radius: var(--sacred-radius, .65rem); color: var(--udhc-maroon); background: var(--udhc-paper); font-weight: 600; }
+.hdc-daily-paths a span { color: var(--udhc-ink); font-size: .85em; font-weight: 400; }
+.udhc-home .hdc-daily-paths a:is(:hover,:focus-visible), .udhc-home .hdc-daily-resume a { color: var(--udhc-maroon); }
+.hdc-daily a:focus-visible { outline: 3px solid var(--abp-maroon); outline-offset: 3px; }
+.hdc-daily-note { color: var(--udhc-ink); font-size: .85em; line-height: 1.75; }
+.hdc-daily-resume a { display: inline-flex; align-items: center; min-height: 44px; padding: 8px; gap: .3em; flex-wrap: wrap; }
+@media (max-width: 900px) { .hdc-daily-paths { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 500px) { .hdc-daily-paths { grid-template-columns: minmax(0, 1fr); } }

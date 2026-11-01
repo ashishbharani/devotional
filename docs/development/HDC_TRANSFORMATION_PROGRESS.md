@@ -9,6 +9,12 @@ No increment may be merged into main or deployed separately. Prior deployment
 approval in this chat does not authorize this new release. Final owner approval
 is required after all increments and final QA. No full-release PR is ready yet.
 
+PR #49 was externally merged at `57d4346` while Daily Darshan was in development;
+main is now `652b442`. The agent did not merge or deploy that checkpoint. Daily
+Darshan commit `c06118e` is held in draft PR #50 and was NOT included in PR #49.
+Do not merge PR #50 as an individual increment. Continue on the integration branch
+and retain the single final-release approval gate.
+
 ## Architecture and preservation map
 
 - MkDocs Material; `hooks/generate.py` generates catalogue routes and navigation
@@ -71,7 +77,7 @@ No confirmed baseline runtime defect is asserted from inspection alone.
 | --- | --- | --- |
 | 0 Audit | TESTED | Inventory, captures, strict build, responsive header checks; limitations below |
 | 1 Design | NOT STARTED | Preserve tokens/artwork; measure representative page types |
-| 2 Daily Darshan | NOT STARTED | Reuse summary Panchang; verified or neutral discovery only |
+| 2 Daily Darshan | TESTED | Initial neutral-discovery module; reviewed recommendations/reader continuation remain future work |
 | 3 Sanctuary | NOT STARTED | Optional digital aids; audio off and rights-gated |
 | 4 Sacred Reader | NOT STARTED | Rights/source-verified pilot required; no invented translations |
 | 5 Festivals | NOT STARTED | Reviewed year/region data and deterministic boundary tests |
@@ -116,7 +122,42 @@ fetch case. Strict build passed in 88.74 seconds; numerical suites passed 16/16
 Panchang groups and 10/10 Ephemeris tests. Social metadata passed all 2,266 pages
 after build completion (an earlier scan during output generation correctly
 rejected the incomplete artifact). Replacement GitHub CI must still pass; local
-results are not a claim that the remote run is green.
+results are not a claim that the remote run is green. Replacement run
+`41301714026` on commit `57d4346` subsequently completed successfully.
+
+### Daily Darshan increment
+
+`hooks/royal_home.py` wraps the existing summary in a prominent, accessible
+Daily Darshan section below the hero/statistics. `hooks/generate.py` relocates,
+but never duplicates, the one summary instance. Date, shared location, festivals,
+regional caveat and contextual discovery continue to use existing calculations.
+Six guided links use existing routes, including the canonical deity category,
+library, calendar, finder, favourites and Japa counter. No deity/day association,
+full-text availability or editorial prayer recommendation is fabricated.
+The required safe fallback is neutral discovery until reviewed selections exist.
+
+`abp-daily.js` reads the existing `abp-japa-state-v1` without writing it or copying
+private prayer names. A positive safe-integer count exposes the resume link;
+missing, corrupt, invalid or blocked storage retains neutral paths. Storage events
+update other tabs; Material document events and pageshow refresh current state.
+No timer, account, audio, tracker or new storage namespace is introduced.
+The existing PWA generator includes this script through its JS shell inventory.
+
+Scoped `royal-home.css` rules reuse current theme tokens and responsive grid.
+Approved hero/artwork/header and the canonical collection hash remain unchanged.
+Tests: `test_daily_darshan_browser.mjs`, strengthened isolated homepage hook,
+original royal homepage/header suites. CI includes the new matrix and screenshots
+under `work/daily-darshan`. Final strict build passed in 110.67 seconds. All ten
+320/375/768/1024/1440px light/dark cases passed, including 4.5:1 contrast for new
+text, keyboard focus, touch sizes and destination checks. Invalid/blocked storage,
+cross-tab update/clear and guest fallback passed. Original royal-homepage suite
+passed all seven cases; final header geometry and tablet-resize checks passed.
+Visual inspection corrected an uneven desktop grid and pale dark-mode text on
+parchment; tests now protect that contrast. No pixel-identical full-page claim.
+One local header run overlapped a build cleanup; that run was discarded, then
+rerun against the stable final artifact. Do not run browser audits during rebuilds.
+New prose is English and eligible for existing optional whole-page translation;
+no claim of authored sacred translation or full dictionary expansion is made.
 
 Resume from the first unfinished item above, inspecting git status before edits.
 Keep partial commits on the integration branch. Full baseline evidence stays under

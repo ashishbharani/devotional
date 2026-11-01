@@ -64,6 +64,7 @@ extra_javascript:
   - javascripts/abp.js
   - javascripts/abp-directory.js
   - javascripts/abp-japa.js
+  - javascripts/abp-daily.js
   - javascripts/abp-panchang.js
   - javascripts/abp-ephemeris.js
   - javascripts/abp-pwa.js
