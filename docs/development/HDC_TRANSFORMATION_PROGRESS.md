@@ -100,6 +100,24 @@ was weakened or removed.
 
 ## Recovery and continuation
 
+### CI follow-up — run 41300442644
+
+The strict build, metadata, search and earlier checks passed; the official-page
+browser test failed at Disclaimer/1440px/dark footer keyboard focus. The initial
+hash and visible heading are not a Material document-ready barrier: an in-flight
+instant navigation can replace the footer between focusing it and checking Tab.
+The unchanged test passed locally, confirming timing sensitivity. The test now
+arms a next-document subscription before the hash click and waits for that
+emission before testing focus. A delayed Material fetch exercises this path.
+All four links' real keyboard-order, active-element, focus-visible, painted-ring
+and target-size assertions remain unchanged. No production JS/CSS/data changes.
+Revised browser test passed all six width/theme groups, including the delayed
+fetch case. Strict build passed in 88.74 seconds; numerical suites passed 16/16
+Panchang groups and 10/10 Ephemeris tests. Social metadata passed all 2,266 pages
+after build completion (an earlier scan during output generation correctly
+rejected the incomplete artifact). Replacement GitHub CI must still pass; local
+results are not a claim that the remote run is green.
+
 Resume from the first unfinished item above, inspecting git status before edits.
 Keep partial commits on the integration branch. Full baseline evidence stays under
 `work/transformation`; do not commit generated `site/` or authoritative PDFs.

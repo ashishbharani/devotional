@@ -48,6 +48,14 @@ try {
       const errors = [];
       page.on('pageerror', error => errors.push(error.message));
       await page.route('https://fonts.googleapis.com/**', route => route.fulfill({ contentType: 'text/css', body: '' }));
+      // Exercise the hash/DOM race even on fast local machines: ordinary full
+      // navigations are untouched; only Material's background fetch is delayed.
+      await page.route(base + 'disclaimer/', async request => {
+        if (request.request().resourceType() === 'fetch') {
+          await new Promise(resolve => setTimeout(resolve, 200));
+        }
+        await request.continue();
+      });
       for (const route of ['foreword', 'about', 'contribution', 'disclaimer']) {
         await page.goto(base + route + '/');
         await page.locator('body').evaluate((el, value) => el.setAttribute('data-md-color-scheme', value), scheme);
@@ -59,8 +67,23 @@ try {
           assert.equal(await page.locator('h3[id^="clause-"]').count(), 72);
           assert.equal(await page.locator('h2[id^="part-"]').count(), 18);
           await page.locator('.abp-info-contents summary').click();
+          // A hash and its target can be visible in the OLD document while
+          // Material is still fetching/replacing the instant-navigation DOM.
+          // Observe the next document emission before testing footer focus;
+          // otherwise removing the focused old footer resets focus to <body>.
+          await page.evaluate(() => {
+            window.__projectHashNavigationReady = false;
+            let armed = false;
+            const subscription = window.document$.subscribe(() => {
+              if (!armed) return; // ignore the replay of the current document
+              window.__projectHashNavigationReady = true;
+              subscription.unsubscribe();
+            });
+            armed = true;
+          });
           await page.locator('.abp-info-contents a[href$="#clause-70"]').click();
           assert.match(page.url(), /#clause-70$/);
+          await page.waitForFunction(() => window.__projectHashNavigationReady === true);
           // Instant navigation may replace the initial DOM after the hash changes.
           await page.waitForFunction(() => {
             const target = document.getElementById('clause-70');
