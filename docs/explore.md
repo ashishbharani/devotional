@@ -7,6 +7,8 @@ description: Discover existing devotional categories, forms and languages using 
 
 These are discovery shortcuts, not new classifications. Search ranking, aliases and identity relationships remain those of the existing universal search.
 
+Your query and supported filters stay in this page's address for reload, browser history and optional public sharing. Do not enter private journal notes in a public search.
+
 <section class="hdc-practice" data-discovery aria-label="Canonical catalogue discovery">
 <form action="../find/" method="get" role="search" aria-label="Explore existing works">
 <label>Title, deity or phrase <input type="search" name="w" placeholder="Try a familiar work or deity"></label>

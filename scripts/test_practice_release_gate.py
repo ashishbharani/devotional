@@ -19,6 +19,7 @@ assert ('assets/festivals/themes.mjs' in worker) == enabled
 assert ('Enter the Devotional Sanctuary' in home) == enabled
 assert ('data-festival-experience' in home) == enabled
 assert ('data-share-page' in home) == enabled
+assert ('data-daily-reader' in home) == enabled
 for minutes in (5,10,20):
     assert (f'sanctuary/?minutes={minutes}' in worker) == enabled
 for asset in ('sitemap.xml', 'assets/i18n.json', 'search/search_index.json'):

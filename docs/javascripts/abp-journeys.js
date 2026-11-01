@@ -5,7 +5,8 @@
  const normalize=value=>({name:typeof value.name==='string'?value.name.slice(0,120):'',minutes:[5,10,20].includes(value.minutes)?value.minutes:5,journal:typeof value.journal==='string'?value.journal.slice(0,5000):'',sessions:Array.isArray(value.sessions)?value.sessions.filter(s=>s&&typeof s.at==='string'&&Number.isFinite(Date.parse(s.at))&&[5,10,20].includes(s.minutes)).slice(-50):[]});
  function init(){
   cleanup();const root=document.querySelector('[data-journey]');if(!root)return;
-  const controller=new AbortController(),q=s=>root.querySelector(s);cleanup=()=>controller.abort();
+  const controller=new AbortController(),q=s=>root.querySelector(s);let dayTimer;
+  cleanup=()=>{controller.abort();clearTimeout(dayTimer);};
   let state=normalize(read(key)),sessionOnly=false;const status=q('[data-journey-status]');
   q('[data-routine-name]').value=state.name;q('[data-routine-minutes]').value=state.minutes;
   q('[data-journal]').value=state.journal;q('[data-journal-consent]').checked=Boolean(state.journal);
@@ -14,9 +15,14 @@
    q('[data-journey-japa]').textContent=Number.isSafeInteger(japa.count)&&japa.count>=0?`Existing Japa count: ${japa.count.toLocaleString()}.`:'No saved Japa count available.';
    q('[data-journey-reader]').textContent=reader.bookmark===true||reader.read===true?'Your Sacred Reader pilot has saved progress.':'No saved reader progress yet.';
    const now=Date.now(),week=state.sessions.filter(s=>now-Date.parse(s.at)>=0&&now-Date.parse(s.at)<=7*86400000);
+   const today=week.filter(s=>new Date(s.at).toDateString()===new Date(now).toDateString());
+   const daily=q('[data-journey-today]');
+   if(daily)daily.textContent=`Today: ${today.length} self-reported sessions · ${today.reduce((n,s)=>n+s.minutes,0)} minutes. Day boundary uses this browser's local timezone (${Intl.DateTimeFormat().resolvedOptions().timeZone}).`;
    q('[data-journey-summary]').textContent=`${week.length} self-reported sessions · ${week.reduce((n,s)=>n+s.minutes,0)} minutes in the past seven elapsed days.`;
    const list=q('[data-journey-history]');list.replaceChildren();
    for(const s of [...state.sessions].reverse()){const li=document.createElement('li');li.textContent=`${new Date(s.at).toLocaleString()} — ${s.minutes} minutes (self-reported)`;list.append(li);}
+   clearTimeout(dayTimer);const next=new Date(now);next.setHours(24,0,0,50);
+   dayTimer=setTimeout(()=>{if(root.isConnected)summary();},next.getTime()-now);
   }
   const latest=()=>sessionOnly?state:normalize(read(key));
   function save(value){state=normalize(value);try{localStorage.setItem(key,JSON.stringify(state));sessionOnly=false;status.textContent='Saved in this browser only.';}catch(_){sessionOnly=true;status.textContent='Storage unavailable. Changes remain for this visit only.';}summary();}
@@ -27,6 +33,7 @@
   on('[data-journal-clear]','click',()=>{save({...latest(),journal:''});q('[data-journal]').value='';q('[data-journal-consent]').checked=false;});
   on('[data-session-record]','click',()=>{const current=latest(),minutes=Number(q('[data-routine-minutes]').value);if([5,10,20].includes(minutes))save({...current,sessions:[...current.sessions,{at:new Date().toISOString(),minutes}]});});
   window.addEventListener('storage',event=>{if(event.key===key)status.textContent='Journey changed in another tab. Reload to load it; your current draft has been kept.';else if(['abp-japa-state-v1','hdc-reader-v1'].includes(event.key))summary();},{signal:controller.signal});
+  document.addEventListener('visibilitychange',()=>{if(!document.hidden&&root.isConnected)summary();},{signal:controller.signal});
   summary();
  }
  window.addEventListener('pagehide',()=>cleanup());window.addEventListener('pageshow',init);

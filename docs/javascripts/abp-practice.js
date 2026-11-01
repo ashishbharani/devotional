@@ -93,19 +93,32 @@
         root.style.setProperty('--reader-size',state.size);root.style.setProperty('--reader-spacing',state.spacing);
       };
       const persist=()=>{render();save(key,state,status);};
+      window.addEventListener('storage',event=>{
+        if((event.key!==key&&event.key!==null)||!root.isConnected)return;
+        const value=load(key);
+        Object.assign(state,{bookmark:value.bookmark===true,read:value.read===true,size:[1,1.25,1.5].includes(value.size)?value.size:1,spacing:[1.8,2.2].includes(value.spacing)?value.spacing:1.8});
+        render();status.textContent='Reader progress and preferences updated from another tab.';
+      },{signal:controller.signal});
       on('[data-bookmark]','click',()=>{state.bookmark=!state.bookmark;persist();});
       on('[data-read]','click',()=>{state.read=!state.read;persist();});
       on('[data-reader-size]','change',()=>{const n=Number(q('[data-reader-size]').value);if([1,1.25,1.5].includes(n)){state.size=n;persist();}});
       on('[data-reader-spacing]','change',()=>{const n=Number(q('[data-reader-spacing]').value);if([1.8,2.2].includes(n)){state.spacing=n;persist();}});
-      on('[data-reader-query]','input',()=>{
+      const filterPassage=()=>{
         const query=q('[data-reader-query]').value.normalize('NFC').trim().toLocaleLowerCase();
         passage.hidden=!passage.textContent.normalize('NFC').toLocaleLowerCase().includes(query);
         q('[data-reader-empty]').hidden=!passage.hidden;
-      });
+      };
+      const revealPassage=()=>{q('[data-reader-query]').value='';passage.hidden=false;q('[data-reader-empty]').hidden=true;passage.focus({preventScroll:true});passage.scrollIntoView({block:'center',behavior:'auto'});};
+      on('[data-reader-query]','input',filterPassage);
+      root.addEventListener('click',event=>{
+        const link=event.target.closest('a[href]');if(!link)return;const target=new URL(link.href,location.href);
+        if(target.origin===location.origin&&target.pathname===location.pathname&&target.hash===`#${passage.id}`)revealPassage();
+      },{signal:controller.signal});
+      window.addEventListener('hashchange',()=>{if(location.hash===`#${passage.id}`)revealPassage();},{signal:controller.signal});
       on('[data-reader-clear]','click',()=>{state.bookmark=false;state.read=false;persist();});
       on('[data-reader-print]','click',()=>window.print());
       on('[data-reader-share]','click',async()=>{
-        const url=new URL(location.href);url.hash='gita-2-47';
+        const url=new URL(location.pathname,location.origin);url.hash=passage.id;
         try {
           if(navigator.share)await navigator.share({title:'Bhagavad Gita 2.47 — HDC',url:url.href});
           else if(navigator.clipboard?.writeText){await navigator.clipboard.writeText(url.href);status.textContent='Passage link copied.';}
@@ -117,6 +130,8 @@
         }
       });
       render();
+      q('[data-reader-query]').value=new URLSearchParams(location.search).get('readerQuery')||'';filterPassage();
+      if(location.hash===`#${passage.id}`)revealPassage();
     }
   }
   window.addEventListener('pagehide',()=>cleanup());

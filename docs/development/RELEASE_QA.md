@@ -39,7 +39,7 @@ Install with `pnpm install --frozen-lockfile --ignore-scripts`, then run:
 uv run python scripts/run_release_validation.py
 ```
 
-This now runs 38 named steps: both strict builds and enabled/disabled release/SEO
+This now runs 39 named steps: both strict builds and enabled/disabled release/SEO
 gates; astronomy, data and metadata checks; search, navigation, plugin, header,
 translation, reader, feedback, Daily Darshan, practice, festival, journey and PWA
 browser suites, shared design/enhanced reading, worker version transitions and
@@ -54,8 +54,9 @@ records a separate selected run and cannot masquerade as a full run. Inspect
 
 ## Performance scope and unresolved findings
 
-The new feature JS/CSS/module source footprint is 29,431 bytes, below the explicit
-100 KiB incremental source budget. This is not total download or runtime memory.
+The initial feature JS/CSS/module source footprint was 29,431 bytes. The current
+value is recorded in `performance.json` and checked against the explicit 100 KiB
+incremental source budget. This is not total download or runtime memory.
 `performance.json` and phone/desktop screenshots accompany an unthrottled local
 Chromium snapshot with external font CSS stubbed. No field LCP/INP/CLS claim is
 made; `layoutShiftSum` is a raw observed sum. `labCls` separately uses the largest

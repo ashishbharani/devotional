@@ -82,15 +82,15 @@ No confirmed baseline runtime defect is asserted from inspection alone.
 | --- | --- | --- |
 | 0 Audit | TESTED | Inventory, captures, strict build, responsive header checks; limitations below |
 | 1 Design | IN PROGRESS | Shared-token/enhanced-reading audit added; high-contrast interaction accent repaired; wider visual approval remains |
-| 2 Daily Darshan | TESTED | Initial neutral-discovery module; reviewed recommendations/reader continuation remain future work |
+| 2 Daily Darshan | TESTED | Neutral discovery plus preview-only saved Reader continuation; reviewed recommendations remain future work |
 | 3 Sanctuary | TESTED | Initial optional digital aids; gated preview; physical audio not certified |
 | 4 Sacred Reader | TESTED | One original Sanskrit passage; gated preview; translations/recordings unavailable |
 | 5 Festivals | IN PROGRESS | Preview/scheduling foundation implemented; reviewed real observance data still unavailable |
-| 6 Journeys | IN PROGRESS | Tested initial local routine/journal/log and first-install offline preset handoff; broader routine/history features pending |
+| 6 Journeys | IN PROGRESS | Local routine/journal/log, today/rolling-week summaries and offline preset handoff; broader routine/history features pending |
 | 7 Discovery | IN PROGRESS | Tested canonical facets/paths; wider verified discovery data and navigation evaluation pending |
 | 8 SEO/sharing | IN PROGRESS | Tested breadcrumbs, public sharing, metadata and unpublished editorial template; external SEO coverage unverified |
 | 9 PWA/performance | IN PROGRESS | Offline presets, update-failure/version-transition tests and session-window lab metrics; layout attribution and field/device checks remain open |
-| 10 Integration QA | IN PROGRESS | Finite 38-step runner and protected hashes implemented; full results below; final owner review still required |
+| 10 Integration QA | IN PROGRESS | Finite 39-step runner and protected hashes implemented; full results below; final owner review still required |
 
 SEO files: `theme/main.html`, `scripts/test_social_metadata.py`.
 Adds only the approved 512px brand icon to Open Graph and Twitter metadata,
@@ -110,6 +110,15 @@ to social metadata rather than removing functional theme tags. No existing test
 was weakened or removed.
 
 ## Recovery and continuation
+
+### Five continuation follow-ups
+
+`CONTINUATION_FOLLOWUPS.md` describes homepage Reader continuation, cross-tab Reader
+preferences/progress, filter-safe passage links, browser-local daily journey
+summaries and address-backed Explore filters. All reuse existing routes, stores
+and canonical search metadata. The homepage Reader entry is absent in default
+production; original Japa continuation is preserved. No text corpus, verified
+festival schedule, authenticated-sync expansion or complete release is claimed.
 
 ### Next three initial slices — Journeys, Discovery, SEO/sharing
 
@@ -182,7 +191,7 @@ rejected storage writes. Actions now retain their current in-memory state after
 a failure; the regression checks repeated records, routine save and journal erase
 without altering the prior persistent store. No account/provider migration.
 
-`scripts/run_release_validation.py` runs the finite 38-step automated matrix,
+`scripts/run_release_validation.py` runs the finite 39-step automated matrix,
 records exact commands/exit codes/logs and protected hashes, and distinguishes
 full runs from selected reruns. PWA CI uploads local screenshots/performance
 evidence. See `RELEASE_QA.md` for commands, scope and rollback. Generated evidence

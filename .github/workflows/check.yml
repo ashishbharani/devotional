@@ -79,6 +79,13 @@ jobs:
         run: node scripts/test_daily_darshan_browser.mjs
       - name: Test local journeys, canonical discovery and public sharing
         run: node scripts/test_journey_discovery_browser.mjs
+      - name: Test reading continuation, cross-tab state and shareable filters
+        run: node scripts/test_continuation_browser.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: continuation-flow-screenshots
+          path: work/continuation
       - name: Verify first-install offline routines and record local performance snapshot
         run: |
           node scripts/test_lab_metrics.mjs

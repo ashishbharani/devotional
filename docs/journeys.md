@@ -26,7 +26,7 @@ Optional, local-first tools for your own practice. No account is required. No sp
 <h2>My practice log</h2>
 <p>This is a private, self-reported log, not a measurement of spiritual progress. Up to 50 entries are kept. Recording a session does not change Japa counts.</p>
 <button type="button" data-session-record>Record a completed session of the selected duration</button>
-<p data-journey-summary></p><ol data-journey-history></ol>
+<p data-journey-today></p><p data-journey-summary></p><ol data-journey-history></ol>
 <p><a href="../explore/">Explore the collection</a> · <a href="../">Home</a></p>
 </section>
 
