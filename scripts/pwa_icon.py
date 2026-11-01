@@ -128,7 +128,7 @@ def publish_maskable(site: Path) -> None:
     """Rebuild only the published maskable PNG; leave tracked artwork intact."""
     folder = site / "assets" / "images" / "hdc-brand"
     source = folder / "icon-512.png"
-    target = folder / "icon-maskable-512.png"
-    if not (source.is_file() and target.is_file()):
+    target = folder / "icon-maskable-512-v2.png"
+    if not source.is_file():
         raise FileNotFoundError("HDC PWA icon sources missing from build")
     target.write_bytes(enlarge_maskable_icon(source.read_bytes()))
