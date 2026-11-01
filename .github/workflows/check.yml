@@ -81,6 +81,13 @@ jobs:
         run: node scripts/test_journey_discovery_browser.mjs
       - name: Test reading continuation, cross-tab state and shareable filters
         run: node scripts/test_continuation_browser.mjs
+      - name: Test routine library, explicit draft reload and scoped log erasure
+        run: node scripts/test_routine_library_browser.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: routine-library-screenshots
+          path: work/routine-library
       - uses: actions/upload-artifact@v4
         if: always()
         with:

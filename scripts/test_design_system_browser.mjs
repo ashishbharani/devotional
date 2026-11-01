@@ -32,7 +32,7 @@ try{
      const lum=c=>rgb(c).slice(0,3).map(v=>{v/=255;return v<=.04045?v/12.92:((v+.055)/1.055)**2.4;}).reduce((s,v,i)=>s+v*[.2126,.7152,.0722][i],0);
      const background=el=>{for(let n=el;n;n=n.parentElement){const c=getComputedStyle(n).backgroundColor,a=rgb(c);if(a&&(a.length===3||a[3]===1))return c;}return null;};
      const failures=[];let checked=0;
-     for(const el of document.querySelectorAll('.hdc-practice :is(p,label,button,select,textarea,a,h2,figcaption),.hdc-festival :is(p,label,summary,select,a),.abp-sacred-intro p')){
+     for(const el of document.querySelectorAll('.hdc-practice :is(p,label,button,select,textarea,a,h2,figcaption,summary),.hdc-festival :is(p,label,summary,select,a),.abp-sacred-intro p')){
       if(!el.getClientRects().length||el.closest('[hidden]')||el.disabled)continue;
       const s=getComputedStyle(el),bg=background(el);if(!bg)continue;
       const a=lum(s.color),b=lum(bg),ratio=(Math.max(a,b)+.05)/(Math.min(a,b)+.05);checked++;

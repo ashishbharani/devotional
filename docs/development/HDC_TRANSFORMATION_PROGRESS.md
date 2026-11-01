@@ -354,3 +354,23 @@ rollback only through a reviewed revert PR preserving user data and newer change
 Release blockers: all NOT STARTED increments and final QA remain open. No complete
 transformation, authoritative text pilot, verified festival schedule, performance
 target attainment, or deployment is claimed.
+
+## 2026-11-02 continuation: routine library, explicit reload and scoped erase
+
+Three preview-only journey follow-ups implemented and locally verified:
+ten-entry name/duration library isolated from the legacy active-journey writer;
+explicit cross-tab saved-state loading that keeps drafts until requested;
+confirmed session-only log erasure preserving journal/routine/Japa/Reader and
+unknown saved fields. Invalid records and failed writes retain persistent data
+with explicit status. No accounts, canonical data, calculations or location
+settings changed. Details and storage compatibility: ROUTINE_LIBRARY.md.
+
+Actual checks: 12/12 targeted build/gate/site/metadata/i18n/practice/journey/design/
+PWA checks plus the final continuation and new routine-library tests passed.
+This is not a new complete 40-step local run. CI, wider source/editorial work,
+real authenticated synchronization, physical devices and final owner approval
+remain required. Keep the PR draft and the production feature flag OFF.
+
+Separate CI repair c8192db addresses run 41353175731's Reader cross-tab test
+timeout; that run's strict build had passed. The repaired Reader check passed on
+Ubuntu in run 41355714184; complete-run status must be checked independently.

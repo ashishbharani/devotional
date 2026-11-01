@@ -36,6 +36,7 @@ STEPS = [
   ('reading-browser','test_reading_links_browser'),('feedback','test_feedback_browser'),
   ('daily','test_daily_darshan_browser'),('practice','test_practice_browser'),
   ('continuation','test_continuation_browser'),
+  ('routine-library','test_routine_library_browser'),
   ('festivals','test_festival_browser'),('journeys','test_journey_discovery_browser'),
   ('design-system','test_design_system_browser'),('pwa-upgrade','test_pwa_upgrade_browser'),
   ('pwa-release','test_pwa_release_browser')]],

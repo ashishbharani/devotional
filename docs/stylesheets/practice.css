@@ -10,8 +10,9 @@
 .hdc-practice button { cursor: pointer; }
 .hdc-practice button:disabled { opacity: .6; cursor: default; }
 .hdc-practice textarea { width: 100%; max-width: 100%; min-height: 140px; padding: 10px; color: var(--abp-ink); background: var(--abp-paper-2); border: 1px solid var(--abp-gold); font: inherit; }
-.md-typeset details.hdc-page-share { color: var(--abp-ink); background: var(--abp-paper); border: 1px solid var(--abp-gold); }
-.md-typeset details.hdc-page-share > summary { color: var(--abp-ink); background: var(--abp-paper-2); min-height: 44px; }
+.md-typeset details:is(.hdc-page-share,.hdc-practice-details) { color: var(--abp-ink); background: var(--abp-paper); border: 1px solid var(--abp-gold); }
+.md-typeset details:is(.hdc-page-share,.hdc-practice-details) > summary { color: var(--abp-ink); background: var(--abp-paper-2); min-height: 44px; }
+.md-typeset details.hdc-practice-details > summary::before { background-color: var(--abp-maroon); }
 .hdc-practice [hidden] { display: none !important; }
 .hdc-diya { position: relative; width: 100px; height: 90px; margin: 20px auto; border-radius: 50%; }
 .hdc-diya span { position: absolute; width: 80px; height: 32px; bottom: 0; left: 10px; border: 3px solid var(--abp-maroon); border-radius: 0 0 50% 50%; background: var(--abp-gold); }
