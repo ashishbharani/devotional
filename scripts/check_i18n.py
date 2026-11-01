@@ -47,9 +47,22 @@ def audit_catalogue(path: Path) -> tuple[list[str], list[str]]:
                 else:
                     missing.append(key)
         percent = round((present / len(keys)) * 100) if keys else 100
-        report.append(f"Translation completeness — {label}: {percent}% interface keys ({present}/{len(keys)})")
+        report.append(f"Registered interface keys — {label}: {percent}% ({present}/{len(keys)}); NOT whole-site coverage")
         if missing:
             errors.append(f"{label}: missing interface keys: {', '.join(missing)}")
+
+    phrases = data.get("textTranslations", {})
+    for source, translations in phrases.items():
+        if not source.strip() or not isinstance(translations, dict):
+            errors.append(f"invalid hosted-text translation entry: {source!r}")
+            continue
+        for code in LANGUAGES:
+            if code == "en":
+                continue
+            value = translations.get(code)
+            if not isinstance(value, str) or not value.strip():
+                errors.append(f"{code}: missing hosted-text translation for {source!r}")
+    report.append(f"Registered hosted-text phrases: {len(phrases)} with all nine target-language values")
 
     category_names = data.get("categoryNames", {})
     for code, label in LANGUAGES.items():

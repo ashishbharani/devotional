@@ -55,7 +55,6 @@ extra_javascript:
   - javascripts/section-pager.js
   - javascripts/navigation.js
   - javascripts/abp-transliterate.js
-  - javascripts/abp-google-translate.js
   - javascripts/abp-i18n.js
   - javascripts/abp-firebase-config.js
   - javascripts/abp-firebase.js
