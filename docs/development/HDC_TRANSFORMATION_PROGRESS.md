@@ -9,6 +9,12 @@ No increment may be merged into main or deployed separately. Prior deployment
 approval in this chat does not authorize this new release. Final owner approval
 is required after all increments and final QA. No full-release PR is ready yet.
 
+PR #49 was externally merged at `57d4346` while Daily Darshan was in development;
+main is now `652b442`. The agent did not merge or deploy that checkpoint. Daily
+Darshan commit `c06118e` is held in draft PR #50 and was NOT included in PR #49.
+Do not merge PR #50 as an individual increment. Continue on the integration branch
+and retain the single final-release approval gate.
+
 ## Architecture and preservation map
 
 - MkDocs Material; `hooks/generate.py` generates catalogue routes and navigation
