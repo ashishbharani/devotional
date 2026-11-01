@@ -204,8 +204,8 @@ jobs:
         shell: bash
         run: |
           {
-            echo "### ❌ The website could not be built"
-            echo "Fix the lines below (usually in data/corrections.csv or data/additions.csv), then push again:"
+            echo "### ❌ Website validation failed"
+            echo "Open the first failing step above for its exact error. This excerpt is from the build log; browser and data tests have their own step logs."
             echo '```'
             grep -E "WARNING|ERROR" build.log || tail -n 20 build.log
             echo '```'

@@ -49,3 +49,17 @@ These additions do not complete reviewed recommendations, a larger source-verifi
 reader corpus, comprehensive authenticated journeys or the final release matrix.
 Authored multilingual UI translations, field performance and real devices remain
 separate verification work. Do not merge/deploy before coordinated owner approval.
+
+CI run `41353175731` built the site successfully but timed out at the Reader's
+cross-tab storage-reset check. The check now explicitly activates the returning
+tab and polls state every 100ms instead of depending on animation frames in a
+background page. The original timeout is unchanged, and assertions now require
+all progress/typography defaults plus actual key removal. No application or data
+code is changed by this CI correction. The workflow failure summary also points
+to the actual failed step instead of automatically blaming a build/CSV error.
+
+Local validation of this correction: default and preview strict MkDocs builds,
+both corresponding feature gates, and the continuation browser suite passed
+(375px light, 1440px dark, plus the civil-day boundary checks). The fresh GitHub
+Actions run is the authoritative Ubuntu verification; local passes alone do not
+establish that the original runner-specific timeout has been resolved.

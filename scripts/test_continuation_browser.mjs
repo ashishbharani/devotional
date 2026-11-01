@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import {spawn} from 'node:child_process';
-import {mkdir} from 'node:fs/promises';
+import {mkdir,writeFile} from 'node:fs/promises';
 import {chromium} from 'playwright';
 const server=spawn(process.execPath,['scripts/serve_header_preview.mjs'],{env:{...process.env,HDC_PREVIEW_PORT:'4345'},stdio:['ignore','pipe','inherit']});
 await new Promise((resolve,reject)=>{server.stdout.once('data',resolve);server.once('error',reject);});
@@ -19,8 +19,8 @@ try{
   await home.locator('.hdc-daily').screenshot({path:`work/continuation/daily-saved-reader-${width}.png`});
   await home.locator('[data-daily-reader] a').click();await home.waitForURL(/reader\/#gita-2-47$/);
   await home.locator('[data-reader-passage]').waitFor();
-  await other.locator('[data-reader-size]').selectOption('1.5');await other.locator('[data-reader-spacing]').selectOption('2.2');await other.locator('[data-read]').click();
-  await home.waitForFunction(()=>document.querySelector('[data-reader-size]').value==='1.5'&&document.querySelector('[data-read]').getAttribute('aria-pressed')==='true');
+  await other.bringToFront();await other.locator('[data-reader-size]').selectOption('1.5');await other.locator('[data-reader-spacing]').selectOption('2.2');await other.locator('[data-read]').click();
+  await home.bringToFront();await home.waitForFunction(()=>document.querySelector('[data-reader-size]').value==='1.5'&&document.querySelector('[data-read]').getAttribute('aria-pressed')==='true',null,{polling:100});
   assert.equal(await home.locator('[data-reader-spacing]').inputValue(),'2.2');
   await home.locator('[data-reader-query]').fill('no matching passage');assert.equal(await home.locator('[data-reader-passage]').isVisible(),false);
   await home.locator('[data-reader-continue]').click();assert.equal(await home.locator('[data-reader-passage]').isVisible(),true);
@@ -43,8 +43,16 @@ try{
   await home.locator('[data-daily-reader] a').click();await home.waitForURL(/reader\/#gita-2-47$/);
   await home.evaluate(()=>{window.qaWrites=0;const set=Storage.prototype.setItem;Storage.prototype.setItem=function(k,v){if(k==='hdc-reader-v1')window.qaWrites++;return set.call(this,k,v);};});
   await home.locator('[data-bookmark]').click();assert.equal(await home.evaluate(()=>window.qaWrites),1,'instant navigation has one active reader listener');
-  await other.evaluate(()=>localStorage.removeItem('hdc-reader-v1'));
-  await home.waitForFunction(()=>document.querySelector('[data-reader-size]').value==='1');
+  assert.equal(await home.locator('[data-reader-size]').inputValue(),'1.5','reset starts from the nondefault saved size');
+  await other.bringToFront();await other.evaluate(()=>localStorage.removeItem('hdc-reader-v1'));
+  await home.bringToFront();
+  // This is a cross-tab state check, not an animation-frame readiness check.
+  try{
+   await home.waitForFunction(()=>localStorage.getItem('hdc-reader-v1')===null&&document.querySelector('[data-reader-size]').value==='1'&&document.querySelector('[data-reader-spacing]').value==='1.8'&&document.querySelector('[data-bookmark]').getAttribute('aria-pressed')==='false'&&document.querySelector('[data-read]').getAttribute('aria-pressed')==='false',null,{polling:100});
+  }catch(error){
+   const diagnostic=await home.evaluate(()=>({url:location.href,visibility:document.visibilityState,focused:document.hasFocus(),readerRoots:document.querySelectorAll('[data-reader]').length,saved:localStorage.getItem('hdc-reader-v1'),size:document.querySelector('[data-reader-size]')?.value,spacing:document.querySelector('[data-reader-spacing]')?.value,status:document.querySelector('[data-reader-status]')?.textContent}));
+   await writeFile(`work/continuation/reset-failure-${width}.json`,JSON.stringify(diagnostic,null,2));await home.screenshot({path:`work/continuation/reset-failure-${width}.png`});throw error;
+  }
   await home.goto(base+'explore/?w=Shiva&category=1#filters');
   await home.waitForFunction(()=>document.querySelector('[data-discovery] [name=category]')?.options.length===43);
   assert.equal(await home.locator('[data-discovery] [name=w]').inputValue(),'Shiva');assert.equal(await home.locator('[data-discovery] [name=category]').inputValue(),'1');
