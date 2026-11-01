@@ -1,0 +1,21 @@
+.hdc-practice { color: var(--abp-ink); background: var(--abp-paper); border: 1px solid var(--abp-gold); border-radius: var(--sacred-radius); padding: clamp(12px, 3vw, 28px); overflow-wrap: anywhere; }
+.hdc-practice figure { text-align: center; }
+.hdc-practice figcaption { color: var(--abp-ink-2); }
+.hdc-practice a { color: var(--abp-maroon); }
+.hdc-practice figure img { max-width: 100%; height: auto; border-radius: 50%; border: 3px double var(--abp-gold); }
+.hdc-practice-controls { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin-block: 16px; }
+.hdc-practice :is(button,select,input:not([type=checkbox])) { min-height: 44px; max-width: 100%; border: 1px solid var(--abp-gold); border-radius: 6px; padding: 8px; color: var(--abp-ink); background: var(--abp-paper-2); font: inherit; }
+.hdc-practice label { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 8px; min-height: 44px; max-width: 100%; }
+.hdc-practice :focus-visible { outline: 3px solid var(--abp-maroon); outline-offset: 3px; }
+.hdc-practice button { cursor: pointer; }
+.hdc-practice button:disabled { opacity: .6; cursor: default; }
+.hdc-practice [hidden] { display: none !important; }
+.hdc-diya { position: relative; width: 100px; height: 90px; margin: 20px auto; border-radius: 50%; }
+.hdc-diya span { position: absolute; width: 80px; height: 32px; bottom: 0; left: 10px; border: 3px solid var(--abp-maroon); border-radius: 0 0 50% 50%; background: var(--abp-gold); }
+.hdc-diya.is-lit::before { content: ''; position: absolute; width: 18px; height: 36px; bottom: 32px; left: 41px; border: 2px solid var(--abp-maroon); border-radius: 65% 25% 55% 35%; background: var(--abp-gold); box-shadow: 0 0 12px var(--abp-gold); }
+.hdc-diya.has-effects.is-lit { animation: hdc-glow 3s ease-in-out infinite alternate; }
+@keyframes hdc-glow { to { box-shadow: 0 0 25px var(--abp-gold); } }
+.hdc-verse { font-family: 'Noto Serif Devanagari', var(--abp-serif); font-size: calc(1.3rem * var(--reader-size, 1)); line-height: var(--reader-spacing, 1.8); margin-block: 1.5em; }
+@media (prefers-reduced-motion: reduce) { .hdc-diya.has-effects.is-lit { animation: none; } }
+html.abp-still .hdc-diya.has-effects.is-lit { animation: none; }
+@media print { .hdc-reader .hdc-practice-controls, .hdc-reader [data-reader-link] { display: none; } .hdc-reader { color: #000; background: #fff; border: 0; } .hdc-verse { color: #000; } }

@@ -15,6 +15,11 @@ Darshan commit `c06118e` is held in draft PR #50 and was NOT included in PR #49.
 Do not merge PR #50 as an individual increment. Continue on the integration branch
 and retain the single final-release approval gate.
 
+PR #50 was subsequently merged externally; main advanced to `78f6153`. CI run
+`41303376490` passed on `a8474f5`. The next Sanctuary/Reader increments are kept
+separate and must not be individually launched. The agent did not merge/deploy
+these checkpoints. Refresh main before creating the next draft PR.
+
 ## Architecture and preservation map
 
 - MkDocs Material; `hooks/generate.py` generates catalogue routes and navigation
@@ -78,8 +83,8 @@ No confirmed baseline runtime defect is asserted from inspection alone.
 | 0 Audit | TESTED | Inventory, captures, strict build, responsive header checks; limitations below |
 | 1 Design | NOT STARTED | Preserve tokens/artwork; measure representative page types |
 | 2 Daily Darshan | TESTED | Initial neutral-discovery module; reviewed recommendations/reader continuation remain future work |
-| 3 Sanctuary | NOT STARTED | Optional digital aids; audio off and rights-gated |
-| 4 Sacred Reader | NOT STARTED | Rights/source-verified pilot required; no invented translations |
+| 3 Sanctuary | TESTED | Initial optional digital aids; gated preview; physical audio not certified |
+| 4 Sacred Reader | TESTED | One original Sanskrit passage; gated preview; translations/recordings unavailable |
 | 5 Festivals | NOT STARTED | Reviewed year/region data and deterministic boundary tests |
 | 6 Journeys | NOT STARTED | Extend existing local storage without invalidation |
 | 7 Discovery | NOT STARTED | Preserve canonical matching and complete route access |
@@ -105,6 +110,64 @@ to social metadata rather than removing functional theme tags. No existing test
 was weakened or removed.
 
 ## Recovery and continuation
+
+### Sanctuary and Reader increments
+
+New hand-authored routes: `sanctuary/` and `reader/`, reachable through existing
+Tools navigation and Daily Darshan. `abp-practice.js` progressively enhances only
+those roots; `practice.css` uses existing theme tokens. No new dependencies.
+
+Both new features have a default-OFF build gate. Set `HDC_PRACTICE_PREVIEW=1`
+only for staging/CI. Normal production builds omit their routes, navigation,
+homepage links, script/style activation and offline shell entries. Existing
+Daily Darshan and other approved features remain enabled. PR CI explicitly
+enables the preview; the deployment workflow does not. Enabling these publicly
+requires the final coordinated release/owner approval, not merely merging a draft.
+`test_practice_release_gate.py disabled|enabled` verifies both generated artifacts.
+Local preview: set that environment variable, then `uv run mkdocs build --strict`
+and use the existing `/devotional/` preview server. Remove the variable to test
+the default production artifact. Do not mistake disabled features for regressions.
+
+Sanctuary: approved existing Ganesha image, virtual diya and flower interactions,
+guided neutral reflection, optional 5/10/20-minute quiet sessions, motion toggle,
+quiet mode and existing Japa link. Sound is off each mount; a synthesized tone is
+generated only after explicit sound opt-in and bell selection. No copyrighted
+ambient recording is included. Visual preference uses `hdc-sanctuary-v1`; running
+sessions, flowers and sound permission are not persisted. AbortController cleanup
+removes old handlers; page/document transitions close audio and stop timers.
+
+Reader: one source-cross-checked original Sanskrit verse, Gita 2.47. Fixed source,
+rights scope, institutional cross-reference and normalization are recorded in
+`READER_PILOT_SOURCES.md` and shown alongside the passage. Original text excludes
+machine translation. No modern translation/commentary/transliteration/audio is
+bundled; these require separately reviewed sources/permissions. This initial
+one-passage pilot is not a full scripture corpus or a critical edition.
+
+Reader-local bookmark, explicit read/unread progress, continue link, font/spacing,
+Unicode search, print view and passage-link sharing use `hdc-reader-v1`. No CWID
+or catalogue record changes. Sharing uses explicit native share/copy with a manual
+copy fallback. Storage failure leaves the text readable and controls session-only.
+No automatic cloud sync, tracking or private journal is introduced. Existing user
+stores are not erased or migrated. Both routes/CSS join the existing offline shell;
+the original cache strategy is retained.
+
+New `test_practice_browser.mjs` and CI screenshot artifact cover both themes and
+five widths, interaction, opt-in audio (mocked), reduced motion, instant navigation,
+reader persistence/search/print, exact Sanskrit, corrupt/blocked storage and
+legacy Japa preservation. Final default strict build passed (69.97s) with the gate
+disabled; final preview strict build passed (75.50s) with the gate enabled. Both
+artifact gate checks passed. All ten width/theme browser cases passed with contrast
+checks, the complete Sanskrit passage, no console exceptions, reader persistence,
+storage failure and manual copy fallback. Real first-install service-worker testing
+verified offline reader bookmarking and sanctuary diya interaction. Daily Darshan,
+complete existing navigation, plugin/guest-state, real offline-homepage and
+metadata/site checks also passed during integration. The final timer accessibility
+adjustment passed the refreshed browser matrix. Countdown ticks are intentionally
+not live-announced; start/end messages are announced. Phone and desktop visual
+evidence is retained under `work/practice` and uploaded by PR CI. The canonical
+collection SHA256 remains identical to the baseline. No production deployment.
+Physical audio/installation certification and authored multilingual interface
+translations are not claimed. Existing header and image designs remain unchanged.
 
 ### CI follow-up — run 41300442644
 
