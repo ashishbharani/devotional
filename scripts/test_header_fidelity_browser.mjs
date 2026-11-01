@@ -16,6 +16,7 @@ try {
   const page=await context.newPage(),errors=[];page.on('pageerror',e=>errors.push(e.message));
   await page.goto(base);await page.waitForFunction(()=>Boolean(document.querySelector('.abp-language-btn')));
   await page.evaluate(t=>document.body.setAttribute('data-md-color-scheme',t),theme);
+  await page.locator('.hdc-header img:visible').evaluateAll(images=>Promise.all(images.map(image=>image.decode())));
   const header=await page.locator('.abp-navigation-shell').boundingBox(),hero=await page.locator('.udhc-hero').boundingBox();
   assert.ok(hero.y-header.y-header.height<=28,'hero follows the shared header: no duplicate search/navigation stack');
   assert.equal(await page.locator('[data-universal-search-form]').count(),1,'one working homepage universal-search entry');
@@ -28,7 +29,8 @@ try {
    const ornament=await page.locator('.abp-navigation').evaluate(el=>getComputedStyle(el,'::after').backgroundImage);
    assert.match(ornament,/navigation-lotus/,'approved central lotus divider is actually rendered');
    assert.equal(await page.locator('.hdc-brand-long').evaluate(el=>getComputedStyle(el.parentElement).fontWeight),'400');
-   assert.ok(await page.locator('.hdc-brand-long').evaluate(el=>{const range=document.createRange();range.selectNodeContents(el);const boxes=[...range.getClientRects()].filter(b=>b.width>0);return boxes.length>0&&Math.max(...boxes.map(b=>b.top))<Math.min(...boxes.map(b=>b.bottom));}),'both sizes of the desktop brand share one text line');
+   const wordmark=await page.locator('.hdc-wordmark-desktop').boundingBox();
+   assert.ok(wordmark.width>=430 && Math.abs(wordmark.width/wordmark.height-562/75)<.01,'approved desktop wordmark is full-size and not stretched');
    if(theme==='abp-dark')assert.equal(await page.locator('.abp-navigation__item > a > .hdc-icon').first().evaluate(el=>getComputedStyle(el).color),'rgb(255, 223, 148)','dark-mode navigation icons use the approved bright gold');
    const list=await page.locator('.abp-navigation__list').boundingBox();
    assert.ok(list.width/header.width>.88,'secondary navigation fills the reference header width');
@@ -77,7 +79,7 @@ try {
       assert.equal(await pane.locator('.hdc-bottom-navigation').evaluate(el=>getComputedStyle(el).borderTopWidth),'2px','approved gold dock outline retained');
     } else {
       assert.equal(await pane.locator('.abp-menu-toggle').isVisible(),false,'no redundant hamburger on wide full-screen tablet');
-      assert.ok(await pane.locator('.hdc-header .hdc-emblem-desktop').isVisible(),'approved full-size desktop emblem is present');
+      assert.ok(await pane.locator('.hdc-header .hdc-wordmark-desktop').isVisible(),'exact approved desktop wordmark is present');
     }
     assert.ok(await pane.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'no horizontal overflow after window transition');
     await pane.screenshot({path:`work/header-fidelity/tablet-${width}x${height}-${layout}.png`});
