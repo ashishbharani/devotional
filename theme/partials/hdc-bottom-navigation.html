@@ -1,5 +1,5 @@
 {% from 'partials/hdc-controls.html' import icon %}
-{% set labels = {'HOME':'Home','TODAY PANCHANG':'Panchang','DEVOTIONAL WORKS':'Devotional Works','SCRIPTURES & BOOKS':'Library','TOOLS':'Tools','ABOUT':'About'} %}
+{% set labels = {'HOME':'Home','TODAY PANCHANG':'Panchang','DEVOTIONAL WORKS':'Devotional','SCRIPTURES & BOOKS':'Library','TOOLS':'Tools','ABOUT':'About'} %}
 <nav class="hdc-bottom-navigation" aria-label="Mobile navigation">
   {% for item in nav %}
     {% set active = item.active or (item.title == 'DEVOTIONAL WORKS' and page and page.meta and page.meta.abp_category) %}
