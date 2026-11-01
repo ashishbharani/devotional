@@ -4,10 +4,10 @@ import {readFile,stat,mkdir} from 'node:fs/promises';
 import path from 'node:path';
 import {chromium} from 'playwright';
 
-const site=path.resolve('site'), brand='HDC — Hindu Devotional Collection';
+const site=path.resolve(process.env.HDC_SITE_DIR||'site'), brand='HDC — Hindu Devotional Collection';
 const shots=process.env.HDC_SCREENSHOTS || 'work/hdc-plugin-audit';
 await mkdir(shots,{recursive:true});
-const scripts=['universal-search','section-pager','navigation','abp-transliterate','abp-google-translate','abp-i18n','abp-firebase-config','abp-firebase','abp-favourites','abp-auth','abp','abp-directory','abp-japa','abp-panchang','abp-ephemeris','abp-pwa','abp-a11y','feedback'];
+const scripts=['universal-search','section-pager','navigation','abp-transliterate','abp-i18n','abp-firebase-config','abp-firebase','abp-favourites','abp-auth','abp','abp-directory','abp-japa','abp-panchang','abp-ephemeris','abp-pwa','abp-a11y','feedback'];
 const server=createServer(async(req,res)=>{try{
   const url=new URL(req.url,'http://localhost');
   assert.ok(url.pathname.startsWith('/devotional/'));
@@ -55,14 +55,12 @@ try {
   assert.ok(await page.evaluate(async()=>(await indexedDB.databases()).some(db=>db.name==='udhc-favourites')),'legacy favourites DB retained');
   if(width<1200)await page.locator('.abp-menu-toggle').click();
   await page.locator('.abp-language-btn').click();
-  await page.locator('[data-local-language] summary').click();
   await page.locator('[data-lang="hi"]').click();
   await page.reload();
   assert.equal(await page.locator('html').getAttribute('lang'),'hi');
   assert.equal(await page.evaluate(()=>localStorage.getItem('abp-language')),'hi');
   if(width<1200)await page.locator('.abp-menu-toggle').click();
   await page.locator('.abp-language-btn').click();
-  await page.locator('[data-local-language] summary').click();
   await page.locator('[data-lang="en"]').click();
   if(width<1200)await page.locator('.abp-menu-close').click();
   await page.locator('.abp-a11y-btn').click();

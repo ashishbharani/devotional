@@ -1,7 +1,7 @@
 import {createServer} from 'node:http';
 import {readFile,stat} from 'node:fs/promises';
 import path from 'node:path';
-const root=path.resolve('site'),port=Number(process.env.HDC_PREVIEW_PORT||4310);
+const root=path.resolve(process.env.HDC_SITE_DIR||'site'),port=Number(process.env.HDC_PREVIEW_PORT||4310);
 const mime={'.html':'text/html','.css':'text/css','.js':'text/javascript','.mjs':'text/javascript','.json':'application/json','.xml':'application/xml','.svg':'image/svg+xml','.png':'image/png','.webp':'image/webp','.woff2':'font/woff2','.wasm':'application/wasm','.webmanifest':'application/manifest+json'};
 createServer(async(req,res)=>{try{
   const url=new URL(req.url,'http://localhost');

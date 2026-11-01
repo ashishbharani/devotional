@@ -1297,6 +1297,9 @@ def on_files(files, config, **kw):
 def on_post_build(config, **kw):
     """Publish a versioned shell; preview adds bounded Material search helpers."""
     site = Path(config["site_dir"])
+    # Ship larger Android launcher artwork without modifying approved source PNGs.
+    from scripts.pwa_icon import publish_maskable
+    publish_maskable(site)
     tpl = (ROOT / "hooks" / "sw.template.js").read_text(encoding="utf-8")
     shell = [
         "", "offline/", "favourites/", "manifest.webmanifest", "stylesheets/abp.css", "stylesheets/feedback.css", "stylesheets/project-info.css", "stylesheets/search.css",
@@ -1309,7 +1312,7 @@ def on_post_build(config, **kw):
         "header-emblem.webp", "header-sunset.webp", "mobile-emblem-light.webp", "mobile-emblem-dark.webp", "emblem.webp", "favicon-32.png", "favicon-48.png",
         "navigation-corner-light.webp", "navigation-corner-dark.webp", "navigation-lotus-clear.webp",
         "navigation-corner-light-right.webp", "navigation-corner-dark-right.webp",
-        "icon-192.png", "icon-512.png", "icon-maskable-512.png", "apple-touch-icon.png",
+        "icon-192.png", "icon-512.png", "icon-maskable-512.png", "icon-maskable-512-v2.png", "apple-touch-icon.png",
     ))
     if PRACTICE_PREVIEW:
         shell.extend(["stylesheets/practice.css", "stylesheets/festivals.css", "sanctuary/", "reader/", "journeys/", "explore/"])
