@@ -78,6 +78,15 @@ jobs:
         run: node scripts/test_daily_darshan_browser.mjs
       - name: Test optional Sanctuary and source-attributed Sacred Reader pilot
         run: node scripts/test_practice_browser.mjs
+      - name: Test festival schedule validation, India-time boundaries and preview UI
+        run: |
+          node scripts/test_festival_themes.mjs
+          node scripts/test_festival_browser.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: festival-preview-screenshots
+          path: work/festival-preview
       - uses: actions/upload-artifact@v4
         if: always()
         with:

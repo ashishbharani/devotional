@@ -1075,9 +1075,10 @@ def on_config(config, **kw):
     global SITE_NAME, PRACTICE_PREVIEW
     SITE_NAME = config["site_name"]
     PRACTICE_PREVIEW = os.environ.get("HDC_PRACTICE_PREVIEW") == "1"
+    config["extra"]["hdc_practice_preview"] = PRACTICE_PREVIEW
     if not PRACTICE_PREVIEW:
-        config["extra_css"] = [p for p in config["extra_css"] if p != "stylesheets/practice.css"]
-        config["extra_javascript"] = [p for p in config["extra_javascript"] if str(p) != "javascripts/abp-practice.js"]
+        config["extra_css"] = [p for p in config["extra_css"] if p not in {"stylesheets/practice.css", "stylesheets/festivals.css"}]
+        config["extra_javascript"] = [p for p in config["extra_javascript"] if str(p) not in {"javascripts/abp-practice.js", "javascripts/abp-festivals.js"}]
     d = load()
     translation_report, translation_errors = audit_catalogue(ROOT / "docs" / "assets" / "i18n.json")
     for line in translation_report:
@@ -1311,9 +1312,10 @@ def on_post_build(config, **kw):
         "icon-192.png", "icon-512.png", "icon-maskable-512.png", "apple-touch-icon.png",
     ))
     if PRACTICE_PREVIEW:
-        shell.extend(["stylesheets/practice.css", "sanctuary/", "reader/"])
+        shell.extend(["stylesheets/practice.css", "stylesheets/festivals.css", "sanctuary/", "reader/"])
+        shell.extend(path.relative_to(site).as_posix() for path in sorted((site / "assets" / "festivals").glob("*")) if path.is_file())
     shell.extend(f"javascripts/{path.name}" for path in sorted((site / "javascripts").glob("*.js"))
-                 if PRACTICE_PREVIEW or path.name != "abp-practice.js")
+                 if PRACTICE_PREVIEW or path.name not in {"abp-practice.js", "abp-festivals.js"})
     shell.extend(f"javascripts/{path.name}" for path in sorted((site / "javascripts").glob("search-*.mjs")))
     shell.extend(path.relative_to(site).as_posix() for path in sorted((site / "assets" / "panchang").glob("*.mjs")))
     shell.extend(path.relative_to(site).as_posix() for pattern in (

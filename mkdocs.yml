@@ -51,6 +51,7 @@ extra_css:
   - stylesheets/deity-art.css
   - stylesheets/hdc-header.css
   - stylesheets/practice.css
+  - stylesheets/festivals.css
 extra_javascript:
   - javascripts/universal-search.js
   - javascripts/section-pager.js
@@ -72,6 +73,7 @@ extra_javascript:
   - javascripts/abp-pwa.js
   - javascripts/abp-a11y.js
   - javascripts/feedback.js
+  - javascripts/abp-festivals.js
 
 plugins:
   - search:

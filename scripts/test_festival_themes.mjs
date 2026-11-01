@@ -1,0 +1,30 @@
+// All dates and evidence below are SYNTHETIC fixtures, never production rulings.
+import assert from 'node:assert/strict';
+import {readFile} from 'node:fs/promises';
+import {indiaDay,nextIndiaMidnight,validateSchedule,eligibleEvents} from '../docs/assets/festivals/themes.mjs';
+const event=overrides=>({id:'fixture-a',name:'Synthetic fixture, not an observance',theme:'ganesha',status:'reviewed',start:'2026-01-01',end:'2026-01-02',regions:['IN'],tradition:'Test fixture only',priority:10,reviewer:'Test-only reviewer',reviewedOn:'2025-12-01',sources:[{url:'https://example.invalid/test-only',label:'Synthetic test source'}],...overrides});
+const schedule=events=>({schema:1,year:2026,events});
+assert.equal(indiaDay(new Date('2025-12-24T18:29:59.999Z')),'2025-12-24');
+assert.equal(indiaDay(new Date('2025-12-24T18:30:00Z')),'2025-12-25');
+assert.equal(nextIndiaMidnight(Date.parse('2025-12-24T18:29:59.999Z')),1);
+assert.equal(nextIndiaMidnight(Date.parse('2025-12-24T18:30:00Z')),86400000);
+const data=schedule([event()]);validateSchedule(data);
+assert.equal(eligibleEvents([data],'2025-12-24').length,0);
+assert.equal(eligibleEvents([data],'2025-12-25')[0].phase,'approaching');
+assert.equal(eligibleEvents([data],'2026-01-01')[0].phase,'observance');
+assert.equal(eligibleEvents([data],'2026-01-02').length,1);
+assert.equal(eligibleEvents([data],'2026-01-03').length,0);
+const overlap=schedule([event({id:'national',priority:100}),event({id:'regional',regions:['IN-UP'],priority:1}),event({id:'tie-b'}),event({id:'tie-a'})]);
+assert.deepEqual(eligibleEvents([overlap],'2026-01-01','IN-UP').map(e=>e.id),['regional','national','tie-a','tie-b']);
+assert.deepEqual(eligibleEvents([schedule(['ba','b-a','a1','a-1'].map(id=>event({id})))],'2026-01-01').map(e=>e.id),['a-1','a1','b-a','ba']);
+assert.equal(eligibleEvents([overlap],'2026-01-01','IN').some(e=>e.id==='regional'),false);
+assert.equal(eligibleEvents([schedule([{id:'uncertain',status:'unreviewed'}])],'2026-01-01').length,0);
+assert.equal(eligibleEvents([schedule([event({start:'2026-12-31',end:'2027-01-01'})])],'2027-01-01').length,1);
+for(const patch of [{id:null},{theme:'unknown'},{start:'2026-02-29'},{end:'2025-12-31'},{regions:[]},{priority:NaN},{reviewer:''},{reviewedOn:'bad'},{sources:[]},{sources:[{url:'javascript:alert(1)',label:'invalid'}]}])assert.throws(()=>validateSchedule(schedule([event(patch)])));
+assert.throws(()=>validateSchedule(schedule([event(),event()])));
+assert.throws(()=>eligibleEvents([data,data],'2026-01-01'));
+assert.throws(()=>eligibleEvents([data],'2026-02-29'));
+const manifest=JSON.parse(await readFile('docs/assets/festivals/index.json','utf8'));
+assert.equal(manifest.schema,1);
+for(const year of manifest.years){const bundled=validateSchedule(JSON.parse(await readFile(`docs/assets/festivals/${year}.json`,'utf8')));assert.equal(bundled.year,year);assert.equal(bundled.events.length,0,'No unreviewed dates invented for this initial release');}
+console.log('PASS festival theme boundaries, India midnight, seven-day window, overlaps/regions, malformed data, year transitions and honest empty production registry');

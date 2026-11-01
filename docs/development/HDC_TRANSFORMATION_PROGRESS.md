@@ -85,7 +85,7 @@ No confirmed baseline runtime defect is asserted from inspection alone.
 | 2 Daily Darshan | TESTED | Initial neutral-discovery module; reviewed recommendations/reader continuation remain future work |
 | 3 Sanctuary | TESTED | Initial optional digital aids; gated preview; physical audio not certified |
 | 4 Sacred Reader | TESTED | One original Sanskrit passage; gated preview; translations/recordings unavailable |
-| 5 Festivals | NOT STARTED | Reviewed year/region data and deterministic boundary tests |
+| 5 Festivals | IN PROGRESS | Preview/scheduling foundation implemented; reviewed real observance data still unavailable |
 | 6 Journeys | NOT STARTED | Extend existing local storage without invalidation |
 | 7 Discovery | NOT STARTED | Preserve canonical matching and complete route access |
 | 8 SEO/sharing | IN PROGRESS | Approved social image metadata plus full-site regression test |
@@ -110,6 +110,39 @@ to social metadata rather than removing functional theme tags. No existing test
 was weakened or removed.
 
 ## Recovery and continuation
+
+### Festival experience foundation
+
+PR #51's Sanctuary/Reader checkpoint passed CI `41307084235` before this work.
+New festival presentation uses the same default-OFF preview gate. Existing
+astronomical/festival-rule engines are untouched. The 2026 registry is explicitly
+empty: there is no reviewed year/region observance schedule to activate yet.
+Original mode remains the honest automatic fallback, not guessed calendar dates.
+
+Implemented: strict schedule schema and evidence fields, seven-calendar-day
+eligibility in Asia/Kolkata, inclusive end, year/leap boundaries, regional scope,
+deterministic overlap priority with other eligible links, midnight refresh,
+original-theme override, labelled Ganesha/Shiva design previews, approved existing
+portraits, optional reduced-motion-aware effects, no audio and private preferences.
+Only the scoped preview panel changes; hero/header/canonical content remain intact.
+Old requests/listeners/timers are aborted/cleared on navigation. Storage events
+update tabs; blocked storage keeps a session-only setting. Year resources are
+read locally and cached after successful validation; no external API is added.
+
+Files and data-review procedure: `FESTIVAL_EXPERIENCES.md`. Tests:
+`test_festival_themes.mjs` and `test_festival_browser.mjs`. All scheduling fixtures
+are explicitly fictional, test-only and absent from production JSON. Unit tests
+passed; default strict build and disabled gate passed (118.38s). Final preview
+strict build passed (129.03s), with the enabled gate and all ten light/dark browser
+cases at 320/375/768/1024/1440px. Synthetic automatic timing/expiry, cross-tab
+preferences, malformed manifest, blocked storage and legacy Japa preservation
+passed. Dark-mode visual QA corrected Material's default white/blue details panel
+to the existing sacred palette. Locale-independent tie ordering and daily cache
+refresh were added; midnight and visible-tab return refresh without polling.
+Canonical collection hash remains unchanged. Screenshots: `work/festival-preview`.
+Keep this increment IN PROGRESS until real reviewed
+observance data and final release QA are supplied. Schema field validation is
+not independent proof that a festival date is religiously correct.
 
 ### Sanctuary and Reader increments
 
