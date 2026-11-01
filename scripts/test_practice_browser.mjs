@@ -5,6 +5,7 @@ import {chromium} from 'playwright';
 const server=spawn(process.execPath,['scripts/serve_header_preview.mjs'],{env:{...process.env,HDC_PREVIEW_PORT:'4334'},stdio:['ignore','pipe','inherit']});
 await new Promise((resolve,reject)=>{server.stdout.once('data',resolve);server.once('error',reject);});
 const browser=await chromium.launch(),base='http://127.0.0.1:4334/devotional/';
+const english='Your business is with action alone; not by any means with fruit. Let not the fruit of action be your motive (to action). Let not your attachment be (fixed) on inaction.';
 const checkContrast=async page=>assert.ok(await page.evaluate(()=>{
  const luminance=color=>color.match(/[\d.]+/g).slice(0,3).map(Number).map(v=>{v/=255;return v<=.04045?v/12.92:((v+.055)/1.055)**2.4;}).reduce((a,v,i)=>a+v*[.2126,.7152,.0722][i],0);
  const bg=luminance(getComputedStyle(document.querySelector('.hdc-practice')).backgroundColor);
@@ -42,17 +43,25 @@ try{
   assert.equal(await page.locator('[data-reader-progress]').textContent(),'1 of 1 passages marked read. Passage bookmarked.');
   assert.equal((await page.locator('.hdc-verse').innerText()).replace(/\s+/g,' ').trim(),'कर्मण्येवाधिकारस्ते मा फलेषु कदाचन । मा कर्मफलहेतुर्भूर्मा ते सङ्गोऽस्त्वकर्मणि ॥','preserve the entire source-checked Sanskrit verse');
   assert.equal(await page.locator('.hdc-verse').getAttribute('translate'),'no');
+  const translation=page.locator('[data-reader-translation]'),translatedText=page.locator('[data-reader-translation-text]');
+  assert.equal(await translatedText.textContent(),english,'preserve the source-scan English transcription and translator parentheses');
+  assert.equal(await translatedText.getAttribute('lang'),'en');assert.equal(await translatedText.getAttribute('translate'),'no');
+  assert.equal(await translatedText.evaluate(el=>el.classList.contains('notranslate')),true);
+  await translation.locator('summary').focus();await page.keyboard.press('Enter');assert.equal(await translatedText.isVisible(),true,'native keyboard expansion');
+  await page.keyboard.press('Enter');assert.equal(await translatedText.isVisible(),false);
+  await page.locator('[data-reader-query]').fill('inaction');assert.equal(await translatedText.isVisible(),true,'English search reveals its matching translation');
   await page.locator('[data-reader-query]').fill('not-a-real-passage');assert.equal(await page.locator('[data-reader-empty]').isVisible(),true);
   await page.locator('[data-reader-query]').fill('2.47');assert.equal(await page.locator('[data-reader-passage]').isVisible(),true);
   await page.reload();assert.equal(await page.locator('[data-bookmark]').getAttribute('aria-pressed'),'true');
   assert.equal(await page.locator('[data-reader-continue]').isVisible(),true);
   assert.equal(await page.locator('[data-reader-size]').inputValue(),'1.5');
   await page.evaluate(t=>document.body.setAttribute('data-md-color-scheme',t),theme);
+  await page.locator('[data-reader-translation] summary').click();
   assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));
   assert.equal(await page.locator('main h1').count(),1);
   await checkContrast(page);
   await page.screenshot({path:`work/practice/reader-${width}-${theme}.png`,fullPage:true});
-  await page.emulateMedia({media:'print'});assert.equal(await page.locator('.hdc-practice-controls').isVisible(),false);await page.emulateMedia({media:'screen'});
+  await page.emulateMedia({media:'print'});assert.equal(await page.locator('.hdc-practice-controls').isVisible(),false);assert.equal(await translatedText.isVisible(),true,'expanded verified translation is printable');await page.emulateMedia({media:'screen'});
   await page.locator('[data-reader-clear]').click();assert.equal(await page.locator('[data-read]').getAttribute('aria-pressed'),'false');
   assert.deepEqual(errors,[]);await context.close();console.log(`PASS sanctuary/reader ${width}px ${theme}`);
  }
@@ -78,9 +87,12 @@ try{
  for(const route of ['reader/','sanctuary/'])assert.ok(await offlinePage.evaluate(async url=>Boolean(await caches.match(url)),base+route),'new route precached');
  await offline.setOffline(true);await offlinePage.goto(base+'reader/');
  await offlinePage.locator('[data-bookmark]').click();assert.equal(await offlinePage.locator('[data-bookmark]').getAttribute('aria-pressed'),'true');
+  await offlinePage.locator('[data-reader-translation] summary').click();assert.equal(await offlinePage.locator('[data-reader-translation-text]').textContent(),english,'translation is part of the real offline Reader shell');
  await offlinePage.goto(base+'sanctuary/');await offlinePage.locator('[data-light]').click();
  assert.equal(await offlinePage.locator('[data-light]').getAttribute('aria-pressed'),'true');
  await offline.close();
+ const noScript=await browser.newContext({javaScriptEnabled:false,serviceWorkers:'block'}),staticPage=await noScript.newPage();
+ await staticPage.goto(base+'reader/');await staticPage.locator('[data-reader-translation] summary').click();assert.equal(await staticPage.locator('[data-reader-translation-text]').isVisible(),true);assert.equal(await staticPage.locator('[data-reader-translation-text]').textContent(),english);await noScript.close();
  console.log('PASS real first-install offline Reader bookmark and Sanctuary diya interaction');
  console.log('PASS malformed/blocked storage, legacy Japa preservation, source and offline shell declarations');
 }finally{await browser.close();server.kill();}

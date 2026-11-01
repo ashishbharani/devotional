@@ -20,6 +20,7 @@
 .hdc-diya.has-effects.is-lit { animation: hdc-glow 3s ease-in-out infinite alternate; }
 @keyframes hdc-glow { to { box-shadow: 0 0 25px var(--abp-gold); } }
 .hdc-verse { font-family: 'Noto Serif Devanagari', var(--abp-serif); font-size: calc(1.3rem * var(--reader-size, 1)); line-height: var(--reader-spacing, 1.8); margin-block: 1.5em; }
+.hdc-translation { font-size: calc(1rem * var(--reader-size, 1)); line-height: var(--reader-spacing, 1.8); }
 @media (prefers-reduced-motion: reduce) { .hdc-diya.has-effects.is-lit { animation: none; } }
 html.abp-still .hdc-diya.has-effects.is-lit { animation: none; }
 @media print { .hdc-reader .hdc-practice-controls, .hdc-reader [data-reader-link] { display: none; } .hdc-reader { color: #000; background: #fff; border: 0; } .hdc-verse { color: #000; } }

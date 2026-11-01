@@ -35,8 +35,10 @@ state instead of rereading stale persistent data. Repeated session records,
 routine saves and journal-only erase preserve the visit's history. Successful
 writes restore normal persistence; failed writes never erase the previous store.
 
-This initial slice does not implement multiple routines, authenticated journey
-sync, comprehensive Japa session history or favourite-deity preference storage.
+The follow-up in ROUTINE_LIBRARY.md adds up to ten named routines, explicit
+cross-tab draft loading and scoped practice-log erasure. Authenticated journey
+sync, comprehensive Japa session history and favourite-deity preference storage
+remain outside these implemented slices.
 
 ## Canonical discovery, not another search algorithm
 

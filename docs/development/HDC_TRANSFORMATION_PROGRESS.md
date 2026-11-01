@@ -84,7 +84,7 @@ No confirmed baseline runtime defect is asserted from inspection alone.
 | 1 Design | IN PROGRESS | Shared-token/enhanced-reading audit added; high-contrast interaction accent repaired; wider visual approval remains |
 | 2 Daily Darshan | TESTED | Neutral discovery plus preview-only saved Reader continuation; reviewed recommendations remain future work |
 | 3 Sanctuary | TESTED | Initial optional digital aids; gated preview; physical audio not certified |
-| 4 Sacred Reader | TESTED | One original Sanskrit passage; gated preview; translations/recordings unavailable |
+| 4 Sacred Reader | TESTED | One original Sanskrit passage plus source-checked 1882 English; gated preview; other languages/recordings unavailable |
 | 5 Festivals | IN PROGRESS | Preview/scheduling foundation implemented; reviewed real observance data still unavailable |
 | 6 Journeys | IN PROGRESS | Local routine/journal/log, today/rolling-week summaries and offline preset handoff; broader routine/history features pending |
 | 7 Discovery | IN PROGRESS | Tested canonical facets/paths; wider verified discovery data and navigation evaluation pending |
@@ -373,4 +373,30 @@ remain required. Keep the PR draft and the production feature flag OFF.
 
 Separate CI repair c8192db addresses run 41353175731's Reader cross-tab test
 timeout; that run's strict build had passed. The repaired Reader check passed on
-Ubuntu in run 41355714184; complete-run status must be checked independently.
+Ubuntu in run 41355714184; the complete run subsequently passed. The routine
+follow-up's run 41356718735 also passed on a246272.
+
+## Source-checked historical English Reader extension
+
+The original Bhagavad Gita 2.47 and its anchor remain unchanged. An optional
+native-details panel adds only the corresponding three English sentences from
+K. T. Telang's 1882 translation, checked against the original scanned printed p.48.
+READER_PILOT_SOURCES.md records fixed text/rights references, normalization and
+the downloaded scan hash. It is not machine translation, a modern commentary or
+a critical-edition claim. Search reveals matching English text; existing reading
+size/spacing, progress, sharing and print controls remain authoritative.
+
+Pre-integration validation: 11/11 selected strict build/gate/site/metadata/Reader/
+continuation/design/PWA checks passed. Ten phone/tablet/desktop light/dark cases
+include exact English/Sanskrit wording, native keyboard expansion, translation
+exclusion markers, English search, print, real offline reading and no-JavaScript
+availability. The 96-case enhanced-reading audit opens the translation panel.
+Phone capture inspected; protected hashes unchanged. An introductory wording
+adjustment for the upstream local-only translator will receive the integrated
+build checks. No storage schema, canonical work or provider change.
+
+Next required integration: merge current main 255fe71 preserving PR52/53/54,
+repair its implicit translator's missing explicit exclusion boundaries, add the
+two upstream translation audits to the finite runner, then run the full suite.
+The larger hosted-translation backlog and human-reviewed festival dates remain
+genuine release gates. Do not deploy this extension separately.

@@ -107,6 +107,8 @@
         const query=q('[data-reader-query]').value.normalize('NFC').trim().toLocaleLowerCase();
         passage.hidden=!passage.textContent.normalize('NFC').toLocaleLowerCase().includes(query);
         q('[data-reader-empty]').hidden=!passage.hidden;
+        const translation=q('[data-reader-translation]'),text=q('[data-reader-translation-text]');
+        if(query&&translation&&text?.textContent.normalize('NFC').toLocaleLowerCase().includes(query))translation.open=true;
       };
       const revealPassage=()=>{q('[data-reader-query]').value='';passage.hidden=false;q('[data-reader-empty]').hidden=true;passage.focus({preventScroll:true});passage.scrollIntoView({block:'center',behavior:'auto'});};
       on('[data-reader-query]','input',filterPassage);

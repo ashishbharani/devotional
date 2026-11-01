@@ -106,7 +106,8 @@ preview-only; ordinary builds retain on-demand caching of visited resources.
 ## Remaining release gates
 
 - Reviewed year/region festival dates are absent; original theme remains fallback.
-- Reader is one original Sanskrit verse, without licensed translations/recordings.
+- Reader is one original Sanskrit verse with Telang's source-checked public-domain
+  English translation; further languages/texts and licensed recordings need sources.
 - Wider design review and journey/discovery/editorial scope remain unfinished.
 - Real authenticated cloud sync, native installation on physical devices,
   assistive-technology testing and field performance have not been certified.
