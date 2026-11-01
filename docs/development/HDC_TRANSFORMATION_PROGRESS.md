@@ -43,15 +43,20 @@ Protected collection SHA256 at baseline:
 Actual source currently contains 42 categories; do not invent an extra category
 to match illustrative counts in specifications.
 
-## Increment 0 — baseline audit: IN PROGRESS
+## Increment 0 — baseline audit: TESTED (documented automation scope)
 
 Implemented evidence runner: `scripts/capture_transformation_baseline.mjs`.
 Public homepage captured in fresh profiles at 320, 375, 768, 1024 and 1440px.
 All returned HTTP 200, no page JavaScript exceptions or horizontal overflow.
 Evidence: `work/transformation/baseline/{width}.png` and `report.json` (local,
 ignored output). Request failures are separately recorded, not silently ignored.
-Baseline strict build passed in 87.20 seconds. Full local route inventory and
-light/dark responsive header checks are running; not yet marked TESTED.
+Baseline strict build passed in 87.20 seconds. Full local inventory found 2,265
+routes, 39,708 bookmarks, 10,356 internal destinations and 8,305 external
+destinations, with zero missing internal files/bookmarks. Public captures recorded
+zero failed requests or HTTP error responses. Existing header geometry checks passed
+at 320/390/768/1280/1440/1536px in light/dark, including full-to-split-screen
+tablet transitions and drawer-resize recovery. Evidence: `work/header-fidelity`.
+The 375px production screenshot was visually inspected; approved hero retained.
 Physical screen readers, native app installation and real authenticated cloud
 sessions have not been tested. Public browser capture is not a Core Web Vitals
 field measurement or a full-site functional certification.
@@ -64,7 +69,7 @@ No confirmed baseline runtime defect is asserted from inspection alone.
 
 | Increment | State | Work / next evidence required |
 | --- | --- | --- |
-| 0 Audit | IN PROGRESS | Collect inventory and light/dark screenshots; review requests |
+| 0 Audit | TESTED | Inventory, captures, strict build, responsive header checks; limitations below |
 | 1 Design | NOT STARTED | Preserve tokens/artwork; measure representative page types |
 | 2 Daily Darshan | NOT STARTED | Reuse summary Panchang; verified or neutral discovery only |
 | 3 Sanctuary | NOT STARTED | Optional digital aids; audio off and rights-gated |
@@ -80,7 +85,18 @@ SEO files: `theme/main.html`, `scripts/test_social_metadata.py`.
 Adds only the approved 512px brand icon to Open Graph and Twitter metadata,
 using an absolute site-root URL for nested routes. No images, routes or data are
 changed. Browser/social platforms ultimately control whether/when previews refresh.
-New test checks generated HTML, canonical parity and JSON-LD; build/test pending.
+New test checks generated HTML, canonical parity and JSON-LD. Release strict build
+passed in 78.25 seconds; social metadata passed on all 2,266 HTML pages (including
+404); site smoke checks passed on 16 routes and 43,085 canonical work IDs.
+CI now includes the new metadata regression. This is the social-image subtask only,
+not completion of all SEO/editorial/discovery requirements. No visual assets or
+styles were modified. Baseline commit: `36b4691`.
+
+Validation note: browser child-process launch required sandbox escalation (initial
+EPERM); rerun passed. The initial new metadata test rejected the intentionally
+repeated light/dark `theme-color` tags; uniqueness validation was correctly scoped
+to social metadata rather than removing functional theme tags. No existing test
+was weakened or removed.
 
 ## Recovery and continuation
 
