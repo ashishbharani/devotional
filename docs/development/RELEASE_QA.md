@@ -117,3 +117,13 @@ preview-only; ordinary builds retain on-demand caching of visited resources.
 Rollback this increment through a reviewed revert of its commit, followed by both
 build/gate checks. Do not reset user data or remove legacy storage. Turning off
 the existing preview flag keeps unfinished routes and activation out of production.
+
+## Combined candidate evidence — 2 November 2026
+
+Full 45/45 local run passed on 566b5f915f9342ca6290f0da2f2fb5c377b4ccae,
+including both strict build/gate/SEO modes and integrated Japa/shortcut suites.
+Protected hashes were unchanged. Source footprint 51,580 bytes; offline helpers
+3,094,626 bytes; budgets unchanged. The runner recorded the three unrelated
+untracked translation-review-export files; they remain preserved and uncommitted.
+This is local automated evidence, not completion of the release gates above or
+fresh CI/deployment approval. Progress and feature documents record exact scope.

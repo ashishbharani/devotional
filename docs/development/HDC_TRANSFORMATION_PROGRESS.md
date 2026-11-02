@@ -447,3 +447,31 @@ The previous 43-step run was interrupted after 32 passing checks; it is not a
 full pass. The next integrated candidate uses the 45-step runner, with feature
 regressions in CI and both modules in the unchanged 100 KiB source budget.
 No full integrated pass or deployment is claimed by this preparation checkpoint.
+
+## Combined two-increment QA — 2 November 2026
+
+Candidate 566b5f915f9342ca6290f0da2f2fb5c377b4ccae completed the full 45-step
+runner: all 45 passed, both strict builds/gates/SEO passed, protected-file hashes
+unchanged. This supersedes the earlier interrupted local runs; their records
+remain archived as interrupted. Generated evidence is under work/release-qa,
+with per-step logs and screenshots in the feature-specific work directories.
+
+Japa history and section shortcuts passed again against the combined artifact.
+The real first-install offline Japa test found and fixed a missing cached counter
+route; japa-counter/ is now cached only in preview, verified absent in the default
+shell. The section registry contains 2,244 generated routes, stays on demand and
+is absent from default builds. Existing guest favourites and legacy tool data
+survived the regression fixtures. Both new source scripts matched built bytes.
+Feature source total: 51,580 bytes against the unchanged 100 KiB budget; native
+offline helper assets: 3,094,626 bytes against the unchanged 4 MiB budget.
+
+The run truthfully records three preserved, untracked translation-review-export
+files in gitStatusBefore. Those separate preparatory files were not changed or
+committed as either increment. The development document was visible to this local
+build; no completed translations or production runtime from that work are claimed.
+
+Local passing tests do not close the larger release requirements: hosted text
+translation remains incomplete, real festival candidates remain unreviewed,
+physical-device/accessibility/cloud verification and final owner staging review
+remain open. PR51 stays draft; the production feature flag stays OFF. No merge
+or deployment was performed. Fresh CI on the pushed head is separate evidence.
