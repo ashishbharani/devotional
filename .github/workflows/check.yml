@@ -83,6 +83,17 @@ jobs:
         run: node scripts/test_journey_discovery_browser.mjs
       - name: Test reading continuation, cross-tab state and shareable filters
         run: node scripts/test_continuation_browser.mjs
+      - name: Test explicit Japa recordings and verified section shortcuts
+        run: |
+          node scripts/test_japa_history_browser.mjs
+          node scripts/test_section_shortcuts_browser.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: local-japa-and-section-shortcuts
+          path: |
+            work/japa-history
+            work/section-shortcuts
       - name: Test routine library, explicit draft reload and scoped log erasure
         run: node scripts/test_routine_library_browser.mjs
       - uses: actions/upload-artifact@v4

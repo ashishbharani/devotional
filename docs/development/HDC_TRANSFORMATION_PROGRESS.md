@@ -92,7 +92,7 @@ No confirmed baseline runtime defect is asserted from inspection alone.
 | 7 Discovery | IN PROGRESS | Tested canonical facets/paths; wider verified discovery data and navigation evaluation pending |
 | 8 SEO/sharing | IN PROGRESS | Tested breadcrumbs, public sharing, metadata and unpublished editorial template; external SEO coverage unverified |
 | 9 PWA/performance | IN PROGRESS | Offline presets, update-failure/version-transition tests and session-window lab metrics; layout attribution and field/device checks remain open |
-| 10 Integration QA | IN PROGRESS | Finite 43-step runner includes upstream translation audits and reduced-viewport search; full verification and final owner review still required |
+| 10 Integration QA | IN PROGRESS | Finite 45-step runner includes upstream translation audits, reduced-viewport search, Japa history and section shortcuts; full verification and final owner review still required |
 
 SEO files: `theme/main.html`, `scripts/test_social_metadata.py`.
 Adds only the approved 512px brand icon to Open Graph and Twitter metadata,
@@ -429,3 +429,21 @@ The sourced Ganesh Chaturthi civil-day candidate in review/festivals is explicit
 unreviewed, outside publication and not loaded by the application. Its inactive
 status was verified with the existing presentation engine; no human approval or
 real automatic festival activation is asserted. The published registry stays empty.
+
+## Resumed two-increment integration — Japa history and section shortcuts
+
+The preserved Japa recording and verified section-navigation workstreams are being
+integrated into this draft. The existing counter remains authoritative; recording
+is explicit and stores count deltas/timestamps only, separately from counter
+preferences. Section shortcuts resolve only actual generated catalogue routes;
+they are separate from work favourites and never copy prayer names or journals.
+Both features remain preview-only. See JAPA_HISTORY.md and SECTION_SHORTCUTS.md
+for storage, lifecycle, offline and browser-test scope.
+
+The fresh production update through main 7e88e7a (PR55) is preserved, including
+native information pages and the contribution-publication restriction. The
+on_files merge retains both that restriction and default-OFF practice routes.
+The previous 43-step run was interrupted after 32 passing checks; it is not a
+full pass. The next integrated candidate uses the 45-step runner, with feature
+regressions in CI and both modules in the unchanged 100 KiB source budget.
+No full integrated pass or deployment is claimed by this preparation checkpoint.

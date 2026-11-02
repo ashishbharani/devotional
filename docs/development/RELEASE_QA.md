@@ -39,10 +39,11 @@ Install with `pnpm install --frozen-lockfile --ignore-scripts`, then run:
 uv run python scripts/run_release_validation.py
 ```
 
-This now runs 39 named steps: both strict builds and enabled/disabled release/SEO
+This now runs 45 named steps: both strict builds and enabled/disabled release/SEO
 gates; astronomy, data and metadata checks; search, navigation, plugin, header,
 translation, reader, feedback, Daily Darshan, practice, festival, journey and PWA
-browser suites, shared design/enhanced reading, worker version transitions and
+browser suites (including explicit Japa session history and verified section
+shortcuts), shared design/enhanced reading, worker version transitions and
 lab-metric boundary tests. It leaves `site/` containing the preview artifact. Do not rebuild
 while browser audits run. No merge, deployment or data editing is performed.
 
