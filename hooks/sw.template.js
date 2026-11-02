@@ -9,7 +9,8 @@ const inScope = (url) => url.origin === scopeUrl.origin && url.pathname.startsWi
 const shellUrls = () => SHELL.map((path) => new URL(path, scopeUrl).href);
 
 self.addEventListener("install", (event) => {
-  event.waitUntil(caches.open(SHELL_CACHE).then((cache) => cache.addAll(shellUrls())).then(() => self.skipWaiting()));
+  // Never seed a new translation/engine version with still-fresh old HTTP-cache assets.
+  event.waitUntil(caches.open(SHELL_CACHE).then((cache) => cache.addAll(shellUrls().map((url) => new Request(url, { cache: "reload" })))).then(() => self.skipWaiting()));
 });
 
 self.addEventListener("activate", (event) => {
@@ -62,6 +63,13 @@ self.addEventListener("fetch", (event) => {
   const request = event.request;
   const url = new URL(request.url);
   if (request.method !== "GET" || !inScope(url)) return;
+  // Full-text locale packs are optional, versioned with the site, and fetched
+  // only when selected. Revalidate online; reuse that version's pack offline.
+  if (url.pathname.includes("/assets/translations/")) {
+    event.respondWith(fetch(request, { cache: "reload" }).then((response) => remember(request, response))
+      .catch(async () => (await caches.match(request)) || Response.error()));
+    return;
+  }
   // Search postings and compact work rows must be a matching generated pair.
   if (/\/assets\/(?:works-index|universal-search)\.json$/.test(url.pathname)) {
     event.respondWith(fetch(request).then((response) => remember(request, response))

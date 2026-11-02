@@ -16,7 +16,31 @@ for source, values in data['textTranslations'].items():
     assert all(isinstance(value, str) and value.strip() for value in values.values())
 damaged = copy.deepcopy(data)
 del damaged['textTranslations']['Moonrise']['ta']
-with patch.object(Path, 'read_text', return_value=json.dumps(damaged, ensure_ascii=False)):
-    _, errors = audit_catalogue(Path('in-memory-catalogue.json'))
-    assert any('ta: missing hosted-text' in error for error in errors)
+real_read = Path.read_text
+catalogue_path = root / 'docs/assets/i18n.json'
+
+def audit_fixture(catalogue=None, pack=None):
+    def read_fixture(path, *args, **kwargs):
+        if path == catalogue_path and catalogue is not None:
+            return json.dumps(catalogue, ensure_ascii=False)
+        if path == catalogue_path.parent / 'translations/hi.json' and pack is not None:
+            return json.dumps(pack, ensure_ascii=False)
+        return real_read(path, *args, **kwargs)
+    with patch.object(Path, 'read_text', read_fixture):
+        return audit_catalogue(catalogue_path)[1]
+
+assert any('ta: missing hosted-text' in error for error in audit_fixture(catalogue=damaged))
+assert audit_fixture() == []
+damaged = copy.deepcopy(data)
+damaged['contentCatalogues']['hi'] = 'https://untrusted.example/hi.json'
+assert any('local content catalogue must use' in error for error in audit_fixture(catalogue=damaged))
+for pack in [[], {'language': 'mr', 'translations': {}}, {'language': 'hi', 'translations': []}]:
+    assert any('structure/language' in error for error in audit_fixture(pack=pack))
+for translations, message in [
+    ({'Unchanged source': 'Unchanged source'}, 'unchanged source'),
+    ({'Example': ''}, 'empty/duplicate'),
+    ({'Example': 'उदाहरण', ' EXAMPLE ': 'नमूना'}, 'empty/duplicate'),
+]:
+    assert any(message in error for error in audit_fixture(pack={'language':'hi','translations':translations}))
 print('PASS local catalogue: ten languages, complete registered phrase matrices, missing values fail; no Google Translate offers')
+print('PASS content packs: wrong paths, wrong language, malformed values, unchanged prose and normalized duplicate keys rejected')

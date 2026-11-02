@@ -1294,7 +1294,7 @@ def on_post_build(config, **kw):
         "", "offline/", "favourites/", "manifest.webmanifest", "stylesheets/abp.css", "stylesheets/feedback.css", "stylesheets/project-info.css", "stylesheets/search.css",
         "stylesheets/navigation.css", "stylesheets/royal-home.css", "stylesheets/sacred-site.css", "stylesheets/deity-art.css",
         "stylesheets/hdc-header.css",
-        "assets/images/logo.svg", "assets/images/icon-192.png", "assets/images/icon-512.png",
+        "assets/i18n.json", "assets/images/logo.svg", "assets/images/icon-192.png", "assets/images/icon-512.png",
         "assets/images/icon-maskable-512.png", "assets/images/apple-touch-icon.png",
     ]
     shell.extend(f"assets/images/hdc-brand/{name}" for name in (
@@ -1312,6 +1312,11 @@ def on_post_build(config, **kw):
     ) for path in sorted(site.glob(pattern)))
     shell = [path for path in dict.fromkeys(shell) if path == "" or (site / path).exists()]
     signature = hashlib.sha256()
+    # Large full-text language packs load only on language choice. Version them
+    # without precaching every language for every reader.
+    for target in sorted((site / "assets" / "translations").glob("*.json")):
+        signature.update(target.relative_to(site).as_posix().encode())
+        signature.update(target.read_bytes())
     # Version the paired search assets without precaching their large payloads.
     for name in ("works-index.json", "universal-search.json"):
         signature.update((site / "assets" / name).read_bytes())

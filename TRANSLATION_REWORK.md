@@ -35,6 +35,35 @@ feature while the content backlog remains.
 
 ## Remaining content work
 
+### Sequential Hindi checkpoint
+
+The selected-language content loader now reads one local full-text pack on demand;
+English downloads none. Failed downloads can be retried, and a late response cannot
+replace a subsequently selected language. Previously loaded Hindi prose and the
+base catalogue survive an offline reload. Pack changes version the service worker;
+the base catalogue is precached and new shell versions bypass stale HTTP cache.
+
+The Hindi draft contains 187 source units: the complete About, Contribution and
+Foreword bodies, and the disclaimer through clause 18. English source documents,
+payment identifiers, QR destinations and legal clause anchors remain unchanged.
+Clauses 19–72 and the final notice remain untranslated. The other eight full-text
+packs are empty draft scaffolds; the shared interface/phrase translations remain
+available, but those packs do not constitute completed language passes.
+
+Browser authoring-preview checks passed at 320px and 1440px for those three full
+editorial bodies and all paragraphs/headings in clauses 1–18, exact English
+restoration, payment identifiers, selected-language races, failed-download retry,
+and real offline reload. The compiled checkpoint strict build passed in 127.50
+seconds; its runtime, base catalogue and Hindi pack hashes match the source.
+Catalogue regression fixtures also reject external pack
+paths, malformed structures, mismatched languages, empty/unchanged translations
+and normalized duplicate source keys. This checkpoint has not been deployed.
+
+The refreshed audit still reports 13,089 source candidates across 2,266 pages and
+43,085 catalogue rows. Hindi has 12,796 unregistered candidates; each other target
+has 13,025. These include proper names and parameterized UI needing classification,
+so the totals must not be described as untranslated paragraph counts.
+
 The source catalogue has 43,085 rows. Distinct values before deduplication across
 fields include 907 purposes, 1,098 singer/recitation descriptions, 369 forms,
 231 language descriptors, 13 timing descriptions, 10 Jyotisha descriptions and
@@ -52,8 +81,9 @@ Still required:
    legitimate proper names/identities, and source-text defects. Unknown proper
    names are deliberately reported, not silently counted as translated prose.
 2. Supply and review every remaining catalogue-description translation.
-3. Translate all hosted About/Foreword/Contribution/Disclaimer paragraphs, keeping
-   legal qualifications, contacts, numbers and the English originals intact.
+3. Complete the remaining disclaimer paragraphs in Hindi and all four editorial
+   pages in the other target languages, keeping legal qualifications, contacts,
+   numbers and the English originals intact.
 4. Finish dedicated category-name translations outside Hindi; script conversion
    alone is not completion of this task.
 5. Cover runtime-only tool messages and parameterized/date output, then validate
@@ -63,7 +93,7 @@ Still required:
 
 ## Verification commands
 
-Verified locally against the checkpoint strict build (121.23 seconds):
+Initial checkpoint verification (strict build: 121.23 seconds):
 
 - Ten local choices at 320/768/1440px, real translated labels rather than a mocked
   provider, reload persistence, no extra tabs, no translation-provider requests,
@@ -76,7 +106,7 @@ Verified locally against the checkpoint strict build (121.23 seconds):
 - Final output JS and catalogue hashes match the source files.
 - Whole-text audit: 2,266 HTML pages, 43,085 canonical rows, 13,089 candidate
   source units; 12,983 remain unregistered for Hindi and 13,025 for each other target language.
-  This is a review backlog, **not** 13,015 proven prose paragraphs: proper names,
+  This is a review backlog, **not** a count of proven prose paragraphs: proper names,
   browser titles and parameterized UI require classification and template work.
 - Machine-readable details: ignored `outputs/translation-coverage.json`; CI
   publishes the same audit as `work/translation-coverage.json` with screenshots.
