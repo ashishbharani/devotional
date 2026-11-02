@@ -120,9 +120,10 @@ def discovery(d):
     return ''.join(out)
 
 
-def closing():
+def closing(contributions_enabled=False):
     return ('<section class="udhc-section udhc-about" aria-labelledby="udhc-about"><h2 id="udhc-about">About This Collection</h2>'
             '<p>A multilingual devotional reference collected and compiled by Ashish Bharani, supporting exploration, learning and preservation of Hindu devotional literature and traditions.</p>'
-            '<a href="foreword/">Read the Foreword →</a> · <a href="about/">About the Compiler →</a> · <a href="contribution/">Contribute →</a>'
+            '<a href="foreword/">Read the Foreword →</a> · <a href="about/">About the Compiler →</a>'
+            + (' · <a href="contribution/">Contribute →</a>' if contributions_enabled else '') +
             '</section><section class="udhc-quote" aria-label="Prayer for well-being"><span aria-hidden="true">ॐ</span>'
             '<p lang="sa">लोकाः समस्ताः सुखिनो भवन्तु ॥</p><p>May all beings everywhere be happy.</p></section>')

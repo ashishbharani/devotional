@@ -1,470 +1,358 @@
 ---
 title: Disclaimer & Terms
-description: Complete Disclaimer, Terms and Conditions, Terms of Use, Copyright and Rights-Holder Policy and Voluntary Contribution Terms, version 1.1 dated 03 October 2026.
+description: Master Website Disclaimer and Terms of Use, version 3.1 dated 28 October 2026, including all 125 clauses and the supplied appendices.
 ---
 
 <article class="abp-project-info abp-project-info--legal">
 <h1>Disclaimer &amp; Terms</h1>
-<nav class="abp-info-contents" aria-label="Disclaimer contents"><details><summary>Contents — browse all parts and clauses</summary><ul><li class="abp-info-contents__part"><a href="#part-i">PART I - SCOPE, PURPOSE AND ACCEPTANCE</a></li><li class=""><a href="#clause-1">1. Definitions and Scope</a></li><li class=""><a href="#clause-2">2. Purpose and Character of the Website</a></li><li class=""><a href="#clause-3">3. Electronic Notice and Acceptance</a></li><li class=""><a href="#clause-4">4. Electronic Contracting and Evidence</a></li><li class="abp-info-contents__part"><a href="#part-ii">PART II - NON-COMMERCIAL STATUS AND VOLUNTARY CONTRIBUTIONS</a></li><li class=""><a href="#clause-5">5. Non-Commercial Project Status</a></li><li class=""><a href="#clause-6">6. Voluntary Contribution - Not a Purchase, Subscription or Investment</a></li><li class=""><a href="#clause-7">7. Permitted Use of Contributions</a></li><li class=""><a href="#clause-8">8. Tax, 80G and Foreign Contribution</a></li><li class=""><a href="#clause-9">9. Contribution Refunds and Payment Providers</a></li><li class="abp-info-contents__part"><a href="#part-iii">PART III - DEVOTIONAL, RELIGIOUS AND INFORMATIONAL DISCLAIMER</a></li><li class=""><a href="#clause-10">10. Diversity of Hindu Traditions</a></li><li class=""><a href="#clause-11">11. No Religious Authority, Endorsement or Canonical Determination</a></li><li class=""><a href="#clause-12">12. No Guaranteed Spiritual, Astrological or Material Outcomes</a></li><li class=""><a href="#clause-13">13. Panchang, Calendar, Ephemeris and Astronomical Reference</a></li><li class=""><a href="#clause-14">14. No Professional Advice or Advocate-Client Relationship</a></li><li class="abp-info-contents__part"><a href="#part-iv">PART IV - ACCURACY, RESEARCH, AUTOMATION AND CORRECTION</a></li><li class=""><a href="#clause-15">15. Good-Faith Compilation and Evolving Content</a></li><li class=""><a href="#clause-16">16. Automated and AI-Assisted Processes</a></li><li class=""><a href="#clause-17">17. No Admission by Correction</a></li><li class=""><a href="#clause-18">18. &quot;AS IS&quot; and &quot;AS AVAILABLE&quot;</a></li><li class="abp-info-contents__part"><a href="#part-v">PART V - THIRD-PARTY CONTENT, LINKS AND PLATFORMS</a></li><li class=""><a href="#clause-19">19. External Links and Search Results</a></li><li class=""><a href="#clause-20">20. YouTube and Generic Search Links</a></li><li class=""><a href="#clause-21">21. Third-Party Terms, Advertising and Transactions</a></li><li class=""><a href="#clause-22">22. Hosting and Infrastructure Providers</a></li><li class="abp-info-contents__part"><a href="#part-vi">PART VI - COPYRIGHT, TRADEMARKS AND INTELLECTUAL PROPERTY</a></li><li class=""><a href="#clause-23">23. Rights in the Compilation and Original Website Material</a></li><li class=""><a href="#clause-24">24. Third-Party Copyright</a></li><li class=""><a href="#clause-25">25. Copyright Act, 1957 - No Blanket Exception</a></li><li class=""><a href="#clause-26">26. Public-Domain Underlying Works and Modern Rights</a></li><li class=""><a href="#clause-27">27. Trademarks, Names and Logos</a></li><li class=""><a href="#clause-28">28. Limited Permission for Ordinary Users</a></li><li class="abp-info-contents__part"><a href="#part-vii">PART VII - RIGHTS-HOLDER NOTICE AND NOTICE-AND-CURE PROCEDURE</a></li><li class=""><a href="#clause-29">29. Good-Faith Rights-Holder Policy</a></li><li class=""><a href="#clause-30">30. Required Particulars of a Rights Notice</a></li><li class=""><a href="#clause-31">31. Available Responses</a></li><li class=""><a href="#clause-32">32. Ordinary 90-Day Review and Cure Period</a></li><li class=""><a href="#clause-33">33. Shorter Mandatory Deadlines Prevail</a></li><li class="abp-info-contents__part"><a href="#part-viii">PART VIII - INFORMATION TECHNOLOGY ACT AND SECTION 79</a></li><li class=""><a href="#clause-34">34. Qualified Section 79 Safe-Harbour Reservation</a></li><li class=""><a href="#clause-35">35. Intermediary Due Diligence and Rules</a></li><li class=""><a href="#clause-36">36. No Authorisation, Procurement or Abetment</a></li><li class="abp-info-contents__part"><a href="#part-ix">PART IX - BNS, BNSS, CRIMINAL PROCESS AND RELIGIOUS SENSITIVITY</a></li><li class=""><a href="#clause-37">37. No Private Immunity from Criminal Law</a></li><li class=""><a href="#clause-38">38. Bharatiya Nyaya Sanhita, 2023</a></li><li class=""><a href="#clause-39">39. Bharatiya Nagarik Suraksha Sanhita, 2023</a></li><li class=""><a href="#clause-40">40. Bharatiya Sakshya Adhiniyam, 2023 and Record Preservation</a></li><li class="abp-info-contents__part"><a href="#part-x">PART X - USER CONDUCT, SUBMISSIONS AND MISUSE</a></li><li class=""><a href="#clause-41">41. Prohibited Conduct</a></li><li class=""><a href="#clause-42">42. Independent Redistribution and Modification</a></li><li class=""><a href="#clause-43">43. No Agency, Partnership or Representation</a></li><li class=""><a href="#clause-44">44. Feedback, Corrections and Voluntary Submissions</a></li><li class=""><a href="#clause-45">45. No Confidential Submissions</a></li><li class="abp-info-contents__part"><a href="#part-xi">PART XI - PRIVACY, LOCATION, MINORS AND LOCAL STORAGE</a></li><li class=""><a href="#clause-46">46. Privacy and Data Protection</a></li><li class=""><a href="#clause-47">47. Location-Dependent Features</a></li><li class=""><a href="#clause-48">48. Local Storage, Cookies and Preferences</a></li><li class=""><a href="#clause-49">49. Children and Minors</a></li><li class="abp-info-contents__part"><a href="#part-xii">PART XII - SECURITY, AVAILABILITY AND FORCE MAJEURE</a></li><li class=""><a href="#clause-50">50. Security</a></li><li class=""><a href="#clause-51">51. Availability, Modification and Discontinuation</a></li><li class=""><a href="#clause-52">52. Force Majeure</a></li><li class="abp-info-contents__part"><a href="#part-xiii">PART XIII - LIMITATION OF LIABILITY AND USER RESPONSIBILITY</a></li><li class=""><a href="#clause-53">53. Third-Party Responsibility</a></li><li class=""><a href="#clause-54">54. Exclusion of Indirect and Consequential Loss</a></li><li class=""><a href="#clause-55">55. Contractual Monetary Cap</a></li><li class=""><a href="#clause-56">56. User Responsibility</a></li><li class="abp-info-contents__part"><a href="#part-xiv">PART XIV - INDEMNITY</a></li><li class=""><a href="#clause-57">57. User Indemnity for the User's Own Unlawful Conduct</a></li><li class="abp-info-contents__part"><a href="#part-xv">PART XV - GOVERNING LAW, JURISDICTION AND DISPUTE HANDLING</a></li><li class=""><a href="#clause-58">58. Governing Law</a></li><li class=""><a href="#clause-59">59. Delhi Forum - Qualified Exclusive Jurisdiction</a></li><li class=""><a href="#clause-60">60. Good-Faith Pre-Litigation Notice</a></li><li class=""><a href="#clause-61">61. International Users</a></li><li class="abp-info-contents__part"><a href="#part-xvi">PART XVI - CHANGES, SEVERABILITY AND INTERPRETATION</a></li><li class=""><a href="#clause-62">62. Changes to These Terms</a></li><li class=""><a href="#clause-63">63. Severability and Narrow Construction</a></li><li class=""><a href="#clause-64">64. No Waiver</a></li><li class=""><a href="#clause-65">65. Statutory Savings</a></li><li class=""><a href="#clause-66">66. Headings, Language and Entire Terms</a></li><li class=""><a href="#clause-67">67. Survival</a></li><li class="abp-info-contents__part"><a href="#part-xvii">PART XVII - CONTACT, GRIEVANCES AND FORMAL NOTICES</a></li><li class=""><a href="#clause-68">68. Error or Correction Notice</a></li><li class=""><a href="#clause-69">69. Copyright and Rights-Holder Notice</a></li><li class=""><a href="#clause-70">70. Grievance and Legal Contact</a></li><li class=""><a href="#clause-71">71. Statutory Grievance Officer</a></li><li class=""><a href="#clause-72">72. Formal Notice Requirements</a></li><li class="abp-info-contents__part"><a href="#part-xviii">PART XVIII - FINAL NOTICE</a></li></ul></details></nav>
-<h2>MASTER WEBSITE DISCLAIMER &amp; TERMS OF USE</h2>
-
-<p>Disclaimer | Terms and Conditions | Terms of Use Copyright &amp; Rights-Holder Policy | Voluntary Contribution Terms</p>
-
-<h2>HDC — Hindu Devotional Collection</h2>
-
-<p>https://ashishbharani.github.io/devotional/</p>
-
-<p>WEBSITE OPERATOR / COMPILER Ashish Bharani</p>
-
-<p>VERSION 1.1 - 03 October 2026</p>
-
+<nav class="abp-info-contents" aria-label="Disclaimer contents"><details><summary>Contents — browse all parts and clauses</summary><ul><li><a href="#part-i">PART I - SCOPE, DEFINITIONS, PURPOSE AND ACCEPTANCE</a></li><li><a href="#clause-1">1. Definitions and Scope</a></li><li><a href="#clause-2">2. Purpose and Character of HDC</a></li><li><a href="#clause-3">3. Different Legal Character of Different Content</a></li><li><a href="#clause-4">4. Access, Browsewrap Notice and Acceptance</a></li><li><a href="#clause-5">5. Affirmative Electronic Acceptance</a></li><li><a href="#clause-6">6. Electronic Contracting and Evidence</a></li><li><a href="#clause-7">7. No Waiver of Mandatory Law by Access</a></li><li><a href="#part-ii">PART II - NON-COMMERCIAL CHARACTER AND VOLUNTARY CONTRIBUTIONS</a></li><li><a href="#clause-8">8. Non-Commercial Project Character</a></li><li><a href="#clause-9">9. No Representation of Registered Charity Status</a></li><li><a href="#clause-10">10. Voluntary Contribution - Not a Purchase or Investment</a></li><li><a href="#clause-11">11. Editorial Independence from Contributors</a></li><li><a href="#clause-12">12. Permitted Use of Contributions</a></li><li><a href="#clause-13">13. Contribution Refunds</a></li><li><a href="#clause-14">14. Payment Providers</a></li><li><a href="#clause-15">15. Tax and Section 80G</a></li><li><a href="#clause-16">16. Foreign Contribution and FCRA</a></li><li><a href="#part-iii">PART III - DEVOTIONAL, RELIGIOUS, PANCHANG AND PROFESSIONAL-ADVICE DISCLAIMER</a></li><li><a href="#clause-17">17. Diversity of Hindu Traditions</a></li><li><a href="#clause-18">18. No Universal Religious Authority or Canonical Determination</a></li><li><a href="#clause-19">19. No Guaranteed Spiritual, Astrological or Material Outcome</a></li><li><a href="#clause-20">20. Religious Respect and Good-Faith Context</a></li><li><a href="#clause-21">21. Panchang, Calendar, Ephemeris and Astronomical Reference</a></li><li><a href="#clause-22">22. No Professional Advice or Advocate-Client Relationship</a></li><li><a href="#part-iv">PART IV - CONTENT CLASSIFICATION, ACCURACY, RESEARCH AND AI-ASSISTED MATERIAL</a></li><li><a href="#clause-23">23. Good-Faith Compilation and Evolving Content</a></li><li><a href="#clause-24">24. Editorial Taxonomy is Not a Legal or Theological Warranty</a></li><li><a href="#clause-25">25. Evidence-Limited and Uncertain Material</a></li><li><a href="#clause-26">26. Automated, AI-Assisted and Human-Reviewed Processes</a></li><li><a href="#clause-27">27. Synthetic, AI-Generated and Illustrative Material</a></li><li><a href="#clause-28">28. No General Duty of Continuous Verification</a></li><li><a href="#clause-29">29. No Admission by Correction, Annotation or Removal</a></li><li><a href="#clause-30">30. AS IS and AS AVAILABLE</a></li><li><a href="#part-v">PART V - THIRD-PARTY CONTENT, EXTERNAL LINKS AND INFRASTRUCTURE</a></li><li><a href="#clause-31">31. External Links Do Not Equal Hosting or Ownership</a></li><li><a href="#clause-32">32. YouTube and Generic Search Links</a></li><li><a href="#clause-33">33. External Material May Change After Linking</a></li><li><a href="#clause-34">34. No Endorsement of External Advertising or Transactions</a></li><li><a href="#clause-35">35. Hosting and Infrastructure Providers</a></li><li><a href="#clause-36">36. No Agency or Partnership with Third Parties</a></li><li><a href="#part-vi">PART VI - COPYRIGHT, TRADE MARKS AND INTELLECTUAL PROPERTY</a></li><li><a href="#clause-37">37. Rights in HDC Compilation and Original Material</a></li><li><a href="#clause-38">38. Third-Party Copyright Remains with Rights Holders</a></li><li><a href="#clause-39">39. No Blanket Fair-Dealing, Religious or Educational Immunity</a></li><li><a href="#clause-40">40. Ancient or Public-Domain Work Versus Modern Embodiment</a></li><li><a href="#clause-41">41. Section 52(1)(c) - Electronic Links and 21-Day Process</a></li><li><a href="#clause-42">42. Trade Marks, Names and Logos</a></li><li><a href="#clause-43">43. Limited Permission for Ordinary Use</a></li><li><a href="#clause-44">44. No Licence to Third-Party Material</a></li><li><a href="#part-vii">PART VII - RIGHTS-HOLDER NOTICE, COPYRIGHT PROCEDURE AND ORDINARY 90-DAY CURE</a></li><li><a href="#clause-45">45. Good-Faith Rights-Holder Policy</a></li><li><a href="#clause-46">46. Particulars of a Rights Notice</a></li><li><a href="#clause-47">47. Incomplete, Vague or Automated Notices</a></li><li><a href="#clause-48">48. Interim Measures Without Admission</a></li><li><a href="#clause-49">49. Specific Copyright Process Prevails Where Applicable</a></li><li><a href="#clause-50">50. Ordinary 90-Day Notice-and-Cure Period</a></li><li><a href="#clause-51">51. Shorter Mandatory Timelines Always Prevail</a></li><li><a href="#clause-52">52. No Admission by Voluntary Review or Cure</a></li><li><a href="#clause-53">53. Abusive or Bad-Faith Complaints</a></li><li><a href="#part-viii">PART VIII - INFORMATION TECHNOLOGY ACT, SECTION 79 AND INTERMEDIARY DUE DILIGENCE</a></li><li><a href="#clause-54">54. Qualified Section 79 Safe-Harbour Reservation</a></li><li><a href="#clause-55">55. No Section 79 Claim Merely Because HDC is Free or Non-Commercial</a></li><li><a href="#clause-56">56. Operator-Controlled Content Distinguished from Third-Party Information</a></li><li><a href="#clause-57">57. Statutory Conditions, Publication Duties and Due Diligence</a></li><li><a href="#clause-58">58. Current 2026 Intermediary Timelines - Conditional Applicability</a></li><li><a href="#clause-59">59. Grievance Appellate and Other Statutory Remedies</a></li><li><a href="#clause-60">60. Synthetic Information and Rule 3(3) - Conditional Treatment</a></li><li><a href="#clause-61">61. Preservation, Assistance and Non-Vitiation of Evidence</a></li><li><a href="#part-ix">PART IX - BNS, BNSS, BHARATIYA SAKSHYA ADHINIYAM AND CRIMINAL-LAW SAVINGS</a></li><li><a href="#clause-62">62. No Private Immunity from Criminal Law</a></li><li><a href="#clause-63">63. Bharatiya Nyaya Sanhita, 2023</a></li><li><a href="#clause-64">64. No Adoption, Conspiracy or Abetment of Independent Misconduct</a></li><li><a href="#clause-65">65. Bharatiya Nagarik Suraksha Sanhita, 2023</a></li><li><a href="#clause-66">66. Bharatiya Sakshya Adhiniyam, Electronic Records and Legal Hold</a></li><li><a href="#part-x">PART X - USER CONDUCT, REDISTRIBUTION, IMPERSONATION AND SUBMISSIONS</a></li><li><a href="#clause-67">67. Prohibited Conduct</a></li><li><a href="#clause-68">68. Independent Redistribution and Modification</a></li><li><a href="#clause-69">69. Anti-Impersonation and False Authority</a></li><li><a href="#clause-70">70. Automated Access and Technical Abuse</a></li><li><a href="#clause-71">71. Feedback, Corrections and Voluntary Submissions - Authority and Limited</a></li><li><a href="#clause-72">72. No Confidentiality Merely from Unsolicited Contact</a></li><li><a href="#part-xi">PART XI - PRIVACY, DATA, LOCATION, COOKIES, LOCAL STORAGE AND MINORS</a></li><li><a href="#clause-73">73. Privacy Framework, Data Minimisation and Purpose Limitation</a></li><li><a href="#clause-74">74. Digital Personal Data Protection Act and Rules - Current Phased</a></li><li><a href="#clause-75">75. Location-Dependent Features and Precise Location Minimisation</a></li><li><a href="#clause-76">76. Local Storage, Cookies and On-Device Preferences</a></li><li><a href="#clause-77">77. Third-Party Infrastructure and Independent Data Processing</a></li><li><a href="#clause-78">78. Children and Minors</a></li><li><a href="#clause-79">79. Complaint, Legal-Notice, Security and Compliance Records</a></li><li><a href="#part-xii">PART XII - SECURITY, AVAILABILITY, MONITORING AND FORCE MAJEURE</a></li><li><a href="#clause-80">80. Security and Incident Response</a></li><li><a href="#clause-81">81. Availability, Modification and Discontinuation</a></li><li><a href="#clause-82">82. No Contractual Duty to Monitor All Third-Party Material</a></li><li><a href="#clause-83">83. Force Majeure and Events Beyond Reasonable Control</a></li><li><a href="#part-xiii">PART XIII - LIMITATIONS OF LIABILITY, RELIANCE AND NON-EXCLUDABLE RIGHTS</a></li><li><a href="#clause-84">84. General Limitation</a></li><li><a href="#clause-85">85. Third-Party Responsibility</a></li><li><a href="#clause-86">86. Indirect and Consequential Loss</a></li><li><a href="#clause-87">87. Contractual Monetary Cap</a></li><li><a href="#clause-88">88. Reliance on Third-Party Information</a></li><li><a href="#clause-89">89. Non-Excludable Liability and Mandatory Rights</a></li><li><a href="#part-xiv">PART XIV - INDEMNITY AND THIRD-PARTY CLAIMS</a></li><li><a href="#clause-90">90. User Indemnity for the User&#x27;s Own Unlawful Conduct</a></li><li><a href="#clause-91">91. Limits on Indemnity</a></li><li><a href="#part-xv">PART XV - GOVERNING LAW, DELHI JURISDICTION AND DISPUTE HANDLING</a></li><li><a href="#clause-92">92. Governing Law</a></li><li><a href="#clause-93">93. Delhi Forum - Qualified Exclusive Jurisdiction</a></li><li><a href="#clause-94">94. Good-Faith Pre-Litigation Notice</a></li><li><a href="#clause-95">95. International Users</a></li><li><a href="#part-xvi">PART XVI - OFFICIAL VERSION, AMENDMENTS, SEVERABILITY AND INTERPRETATION</a></li><li><a href="#clause-96">96. Official Source, Canonical Version and Verification</a></li><li><a href="#clause-97">97. Unauthorised Copies, Modifications and Authenticity Records</a></li><li><a href="#clause-98">98. Changes to These Terms and Version Archive</a></li><li><a href="#clause-99">99. Severability and Narrow Construction</a></li><li><a href="#clause-100">100. No Waiver</a></li><li><a href="#clause-101">101. Statutory Savings</a></li><li><a href="#clause-102">102. Hierarchy and Entire Website Terms</a></li><li><a href="#clause-103">103. Survival</a></li><li><a href="#part-xvii">PART XVII - CONTACT, GRIEVANCE OFFICER AND FORMAL NOTICES</a></li><li><a href="#clause-104">104. Error or Ordinary Correction Notice</a></li><li><a href="#clause-105">105. Copyright and Rights-Holder Notice; Counter-Position Where Appropriate</a></li><li><a href="#clause-106">106. Designated Grievance Officer / Grievance Contact</a></li><li><a href="#clause-107">107. Formal Legal Notice Requirements</a></li><li><a href="#clause-108">108. Notice Receipt, Routing and Distinct Actual-Knowledge Standards</a></li><li><a href="#part-xviii">PART XVIII - OPERATIONAL COMPLIANCE, CYBERSECURITY, EVIDENCE AND DEPLOYMENT CONTROLS</a></li><li><a href="#clause-109">109. Compliance Priority and Process Classification</a></li><li><a href="#clause-110">110. Statutory Timeline Matrix and Internal Escalation</a></li><li><a href="#clause-111">111. Periodic User Awareness, Policy Publication and Change Notices</a></li><li><a href="#clause-112">112. CERT-In Directions - Conditional Six-Hour Incident Reporting</a></li><li><a href="#clause-113">113. Cyber Logs, Time Synchronisation and 180-Day Retention - Conditional</a></li><li><a href="#clause-114">114. Cyber-Security Point of Contact and Incident Response Record</a></li><li><a href="#clause-115">115. Evidence Preservation, Legal Hold and No Spoliation</a></li><li><a href="#clause-116">116. Notice, Counter-Notice, Clarification and Restoration Workflow</a></li><li><a href="#clause-117">117. Submission Licence, Source Integrity and Attribution Records</a></li><li><a href="#clause-118">118. Privacy-by-Design and Least-Data Implementation</a></li><li><a href="#clause-119">119. Analytics, Tracking, Advertising and New Data Practices</a></li><li><a href="#clause-120">120. Accessibility and Reasonable Access Measures</a></li><li><a href="#clause-121">121. AI Provenance, Labelling and Non-Deceptive Presentation</a></li><li><a href="#clause-122">122. Canonical Legal Text, Version Archive and Cryptographic Verification</a></li><li><a href="#clause-123">123. Acceptance Evidence, Data Minimisation and Retention</a></li><li><a href="#clause-124">124. Separate Web Policies and Incorporation by Reference</a></li><li><a href="#clause-125">125. Legal Change Monitoring and Draft Proposals</a></li><li><a href="#appendix-a">Appendix A — Statutory and Operational Timeline Matrix</a></li><li><a href="#appendix-b">Appendix B — Privacy Processing Schedule</a></li><li><a href="#appendix-c">APPENDIX C - NOTICE, RESPONSE AND RESTORATION WORKFLOW</a></li><li><a href="#appendix-d">APPENDIX D - NON-CONTRACTUAL WEBSITE DEPLOYMENT CHECKLIST</a></li></ul></details></nav>
+<p>MASTER WEBSITE DISCLAIMER &amp; TERMS OF USE</p>
+<p>Disclaimer | Terms and Conditions | Terms of Use Copyright &amp; Rights-Holder Policy | Privacy &amp; Data Terms | Voluntary Contribution Terms</p>
+<p>HINDU DEVOTIONAL COLLECTION</p>
+<p>WEBSITE OPERATOR / COMPILER: Ashish Bharani</p>
+<p>VERSION 3.1 - 28 October 2026</p>
+<p>CANONICAL TEXT SHA-256: 33ed64eda3ae5d0bd859e1698925ee6f91792fbd8f2b7189c0415519b1349ed2</p>
 <p>STATUS Non-commercial devotional, cultural, educational, archival and reference initiative; voluntary contributions only.</p>
-
-<p>These Terms seek the maximum lawful contractual, procedural and evidentiary protection available. They do not, and cannot, create immunity from liability that applicable law makes non-excludable, nor can private terms override criminal process, court orders or mandatory statutory rights.</p>
-
-<h2>IMPORTANT LEGAL NOTICE</h2>
-
-<p>Free / non-commercial service. The Website is intended as a non-commercial devotional and reference initiative. Voluntary contributions are intended for upkeep, development, hosting, hardware, software, preservation and related project costs.</p>
-
-<p>Section 79 is conditional. Where, and only where, the operator qualifies as an intermediary in relation to particular third-party information, data or communication links, all lawful protections under Section 79 of the Information Technology Act, 2000 and applicable Rules are expressly reserved. Free or non-commercial status alone does not create Section 79 protection.</p>
-
-<p>90-day ordinary correction period. For non-urgent editorial, attributional, factual and comparable civil complaints, a complete written notice should ordinarily be given and the operator should be allowed up to 90 calendar days to investigate and cure the issue. This does not override any shorter mandatory statutory deadline, urgent court remedy, lawful government direction or criminal process.</p>
-
-<p>Third-party rights remain with third parties. Search links, YouTube links, books, recordings, websites, images and external resources remain subject to the rights and terms of their respective owners and platforms.</p>
-
-<p>No guaranteed results. Religious, ritual, Jyotisha, Panchang, traditional-purpose and other references are informational and do not guarantee spiritual, medical, legal, financial, matrimonial or other outcomes.</p>
-
-<p>Acceptance. Access, continued use, download, retention, sharing or use after reasonable and conspicuous notice may be relied upon as evidence of acceptance to the fullest extent permitted by law. For downloads and contributions, affirmative click-wrap acceptance should be used wherever technically practicable.</p>
-
-<p>Indian law / Delhi. Indian law governs. Subject to mandatory statutory jurisdiction and only where Delhi courts otherwise have lawful jurisdiction, Delhi is the selected forum for civil and contractual disputes.</p>
-
-<p>If any provision conflicts with a mandatory law, court order, statutory authority or non-waivable right, the mandatory law or order prevails and the remaining provisions continue to the fullest extent legally possible.</p>
-
-<h2 id="part-i">PART I - SCOPE, PURPOSE AND ACCEPTANCE</h2>
-
+<p>These Terms seek the maximum lawful contractual, procedural and evidentiary protection reasonably available. They do not, and cannot, create immunity from liability that applicable law makes non-excludable, nor can private terms override criminal process, court orders, mandatory statutory duties or non-waivable rights.</p>
+<h2>IMPORTANT LEGAL ARCHITECTURE - VERSION 3.1</h2>
+<p>Non-commercial status is context, not blanket immunity. HDC is not operated as a marketplace for devotional works. Voluntary contributions support project maintenance and development, but that fact does not itself create immunity under copyright, criminal, data, tax, consumer, foreign-contribution or other mandatory law.</p>
+<p>Section 79 is reserved conditionally and function-by-function. HDC invokes intermediary safe harbour only where the Operator actually satisfies the statutory definition and conditions for particular third-party information, data or communication links. Operator-authored and creator-controlled material is analysed according to its own legal character.</p>
+<p>Private complaints, statutory grievances and &quot;actual knowledge&quot; are different legal events. The ordinary 90-day correction process does not replace the shorter timelines in applicable intermediary, copyright, cyber-security, privacy, court or Government processes.</p>
+<p>The 90-day period remains only for ordinary non-urgent correction and cure. Any shorter binding law, court order, governmental direction, criminal process or non-waivable remedy prevails.</p>
+<p>Copyright receives a separate workflow. Where section 52(1)(c) of the Copyright Act actually applies, the statutory 21-day electronic-link process controls that situation. HDC does not concede that every external link involves storage of the underlying work.</p>
+<p>Cyber-security is now part of the legal architecture. Version 3.1 adds conditional CERT-In incident reporting, log-retention, incident-response and evidence-preservation controls rather than treating security as a generic disclaimer.</p>
+<p>Privacy is implementation-specific. Appendix B identifies HDC-relevant data categories and deployment controls. The schedule must be updated if the Website adds analytics, accounts, comments/uploads, new payment rails or other material data practices.</p>
+<p>Evidence and version control are deliberate. HDC may maintain a canonical legal text, cryptographic hash, version archive, acceptance records and proportionate legal holds so the applicable terms and actions can be proved without relying on screenshots alone.</p>
+<p>Legal framework review date: 28 October 2026. References to statutes, rules, directions and notifications mean the provisions as amended, notified and brought into force from time to time. Draft proposals are not treated as binding law merely because they are published for consultation.</p>
+<p>DOCUMENT MAP</p>
+<p>PART I - Scope, Definitions, Purpose and Acceptance</p>
+<p>PART II - Non-Commercial Character and Voluntary Contributions</p>
+<p>PART III - Devotional, Religious, Panchang and Professional-Advice Disclaimer</p>
+<p>PART IV - Content Classification, Accuracy, Research and AI-Assisted Material</p>
+<p>PART V - Third-Party Content, External Links and Infrastructure</p>
+<p>PART VI - Copyright, Trade Marks and Intellectual Property</p>
+<p>PART VII - Rights-Holder Notice, Copyright Procedure and Ordinary 90-Day Cure</p>
+<p>PART VIII - Information Technology Act, Section 79 and Intermediary Due Diligence</p>
+<p>PART IX - BNS, BNSS, Bharatiya Sakshya Adhiniyam and Criminal-Law Savings</p>
+<p>PART X - User Conduct, Redistribution, Impersonation and Submissions</p>
+<p>PART XI - Privacy, Data, Location, Cookies, Local Storage and Minors</p>
+<p>PART XII - Security, Availability, Monitoring and Force Majeure</p>
+<p>PART XIII - Limitations of Liability, Reliance and Non-Excludable Rights</p>
+<p>PART XIV - Indemnity and Third-Party Claims</p>
+<p>PART XV - Governing Law, Delhi Jurisdiction and Dispute Handling</p>
+<p>PART XVI - Official Version, Amendments, Severability and Interpretation</p>
+<p>PART XVII - Contact, Grievance Officer and Formal Notices</p>
+<p>PART XVIII - Operational Compliance, Cybersecurity, Evidence and Deployment Controls</p>
+<p>APPENDIX A - Statutory and Operational Timeline Matrix</p>
+<p>APPENDIX B - Privacy Processing Schedule</p>
+<p>APPENDIX C - Notice, Response and Restoration Workflow</p>
+<p>APPENDIX D - Non-Contractual Website Deployment Checklist PRIMARY LEGAL SOURCES REVIEWED</p>
+<p>The structure deliberately separates contractual terms from statutory processes and operational controls. A user-facing term cannot change a mandatory statutory timeline, and an internal compliance control is not represented as a private waiver of another person&#x27;s legal rights.</p>
+<h2 id="part-i">PART I - SCOPE, DEFINITIONS, PURPOSE AND ACCEPTANCE</h2>
 <h3 id="clause-1">1. Definitions and Scope</h3>
-
-<p>For these Terms, the &quot;Website&quot; or &quot;Service&quot; means the HDC — Hindu Devotional Collection website and all creator-controlled pages, directories, databases, indexes, downloadable PDFs, documents, search functions, devotional listings, Scripture and Books resources, religious-music references, Panchang and calendar tools, ephemeris or astronomical-reference tools, favourites, counters, external links, YouTube search links, images, metadata, explanatory text and other material made available through or in connection with the Website.</p>
-
-<p>&quot;Operator&quot; means Ashish Bharani acting as the compiler and administrator of the Website, and includes any lawful successor or person expressly authorised in writing to administer the Website.</p>
-
-<h3 id="clause-2">2. Purpose and Character of the Website</h3>
-
-<p>The Website is a devotional, cultural, educational, historical, archival, research and informational reference initiative intended to organise, identify, catalogue, classify and make devotional and related material easier to discover. It is not represented as a commercial marketplace, streaming platform, publisher of all linked works, licensed repository of every underlying work, religious authority, or substitute for professional advice.</p>
-
-<p>The Website may refer to material created, published, performed, translated, recorded, digitised or hosted by third parties. Inclusion ordinarily means that the work or resource has been identified for reference; it does not, by itself, mean that the Operator authored, owns or controls the underlying third-party material.</p>
-
-<h3 id="clause-3">3. Electronic Notice and Acceptance</h3>
-
-<p>A user who voluntarily accesses, browses, searches, continues to use, downloads, saves, prints, links to, shares, contributes through or otherwise uses the Website after receiving reasonable and conspicuous notice of these Terms acknowledges them and agrees to be bound by them to the fullest extent permitted by applicable law.</p>
-
-<p>Where applicable law requires a stronger or affirmative form of consent, the Website may use a checkbox, &quot;I AGREE&quot;, &quot;I AGREE &amp; DOWNLOAD&quot;, &quot;I AGREE &amp; CONTINUE&quot;, contribution confirmation or similar electronic control. Nothing in these Terms attempts to manufacture consent where the law requires a different method of assent.</p>
-
-<p>A person who does not agree with the applicable Terms should discontinue use and should not voluntarily download, retain, reproduce or redistribute creator-controlled material.</p>
-
-<h3 id="clause-4">4. Electronic Contracting and Evidence</h3>
-
-<p>The parties intend these Terms to operate consistently with the Information Technology Act, 2000, including the law governing electronic records and electronic contracting, and with the Bharatiya Sakshya Adhiniyam, 2023 in relation to electronic records and evidence. The Operator may preserve lawful technical records of affirmative acceptance, including the date, time, Terms version and relevant transaction or download event.</p>
-
-<h2 id="part-ii">PART II - NON-COMMERCIAL STATUS AND VOLUNTARY CONTRIBUTIONS</h2>
-
-<h3 id="clause-5">5. Non-Commercial Project Status</h3>
-
-<p>The Website is presently intended to operate as a non-commercial public-service and devotional reference initiative. Access to the principal devotional reference material is not sold by the Operator as a commercial devotional product.</p>
-
-<p>The expressions &quot;non-commercial&quot;, &quot;not-for-profit initiative&quot; and similar language describe the intended manner of operation. They do not represent that the project is a registered charitable trust, society, Section 8 company, tax-exempt entity or other legally constituted non-profit body unless such status is expressly and truthfully stated after obtaining the necessary registration.</p>
-
-<h3 id="clause-6">6. Voluntary Contribution - Not a Purchase, Subscription or Investment</h3>
-
-<p>Any contribution is voluntary and is intended to assist with the reasonable costs of maintaining, preserving, developing, securing and making the Website available. A contribution is not the purchase price of a devotional work and does not buy copyright, ownership, partnership, equity, voting rights, editorial control, priority treatment, investment return, interest, religious benefit, guaranteed service, or any other proprietary entitlement.</p>
-
-<p>The Operator retains editorial independence. A contributor does not acquire the right to require the inclusion, exclusion, promotion or ranking of any work, deity, community, tradition, source, performer or third-party service.</p>
-
-<h3 id="clause-7">7. Permitted Use of Contributions</h3>
-
-<p>Subject to applicable law, voluntary contributions may be used for reasonable project expenses including domain registration, website hosting, storage, backups, bandwidth, software, hardware, computer equipment, security, development, maintenance, digitisation, accessibility, research tools, database services, archival preservation and other expenses reasonably connected with the Website.</p>
-
-<p>Exact allocation may vary according to operational requirements. No contribution creates a trust or fiduciary fund in favour of the contributor unless expressly created by a separate legally binding instrument.</p>
-
-<h3 id="clause-8">8. Tax, 80G and Foreign Contribution</h3>
-
-<p>Unless the Website expressly provides a legally valid certificate to the contrary, no representation is made that a contribution qualifies for deduction under Section 80G of the Income-tax Act, 1961 or for any other tax benefit. Contributors should obtain independent tax advice where required.</p>
-
-<p>The Website does not intend to solicit or knowingly accept any contribution prohibited by the Foreign Contribution (Regulation) Act, 2010. A payment that constitutes foreign contribution shall be accepted only where all applicable registration, permission, banking, reporting and other legal requirements have been satisfied. Where the legal position is uncertain, a foreign source should not send funds merely because a technical payment route exists.</p>
-
-<h3 id="clause-9">9. Contribution Refunds and Payment Providers</h3>
-
-<p>Except where applicable law requires otherwise, or where a payment is demonstrably unauthorised, duplicated or processed in error, a voluntary contribution may be treated as final once received and lawfully applied toward project expenses.</p>
-
-<p>Banks, UPI services, payment gateways and other financial institutions are independent third parties. Their downtime, charges, fraud controls, processing errors and terms remain outside the Operator's direct control.</p>
-
-<h2 id="part-iii">PART III - DEVOTIONAL, RELIGIOUS AND INFORMATIONAL DISCLAIMER</h2>
-
-<h3 id="clause-10">10. Diversity of Hindu Traditions</h3>
-
-<p>The Website recognises that Hindu traditions are diverse. Names, classifications, ritual procedures, theological interpretations, calendar conventions, lineages, regional practices, textual recensions and devotional associations may differ between communities, sampradayas, temples, families, scholars and practitioners.</p>
-
-<p>Inclusion or classification of a tradition is an editorial and reference function. It does not declare that another reasonably documented tradition is false, invalid or inferior.</p>
-
-<h3 id="clause-11">11. No Religious Authority, Endorsement or Canonical Determination</h3>
-
-<p>The Operator does not present the Website as the final religious, theological or ritual authority. Unless expressly supported by the relevant source, the Website does not claim that an item is universally canonical, universally orthodox, mandatory, exclusive or endorsed by every practitioner or institution.</p>
-
-<p>References to a deity, saint, temple, sampradaya, scripture, community, performer, author, institution or platform do not by themselves imply sponsorship, affiliation, endorsement, certification or approval.</p>
-
-<h3 id="clause-12">12. No Guaranteed Spiritual, Astrological or Material Outcomes</h3>
-
-<p>Nothing on the Website guarantees that reading, chanting, hearing, reciting, performing or following any mantra, stotra, prayer, bhajan, ritual, fast, Jyotisha association, Panchang indication, remedial practice or other devotional material will produce a particular spiritual, medical, matrimonial, financial, employment, examination, litigation, business, fertility, healing, protective or supernatural result.</p>
-
-<p>Traditional purposes, &quot;Best Time&quot;, Jyotisha, horoscope or similar metadata describe documented or reported devotional associations and are not warranties.</p>
-
-<h3 id="clause-13">13. Panchang, Calendar, Ephemeris and Astronomical Reference</h3>
-
-<p>Panchang, Tithi, Nakshatra, Yoga, Karana, sunrise, sunset, moonrise, Muhurta, festival and astronomical or astrological calculations may vary according to geographical location, time zone, astronomical model, ayanamsha, sunrise convention, calendar tradition, regional practice and software implementation.</p>
-
-<p>Such outputs are provided as reference information. A user requiring a religiously binding, professional, legal, medical, financial or ceremonial determination should consult a suitably qualified person or authoritative local tradition.</p>
-
-<h3 id="clause-14">14. No Professional Advice or Advocate-Client Relationship</h3>
-
-<p>Nothing on the Website constitutes personalised legal, medical, psychiatric, psychological, financial, investment, tax, accounting, matrimonial or other regulated professional advice.</p>
-
-<p>The Operator's professional background as an advocate does not create an advocate-client relationship, retainer, fiduciary relationship, duty of confidentiality or professional engagement merely because a person accesses the Website, sends general feedback, makes a contribution or reads material on the Website. A professional relationship can arise only through a separate express engagement where legally appropriate.</p>
-
-<h2 id="part-iv">PART IV - ACCURACY, RESEARCH, AUTOMATION AND CORRECTION</h2>
-
-<h3 id="clause-15">15. Good-Faith Compilation and Evolving Content</h3>
-
-<p>The Website is maintained on a good-faith and reasonable-efforts basis. The project is intended to remain a living collection that can be corrected, expanded, reorganised and improved as stronger sources become available.</p>
-
-<p>A large evolving reference collection may contain inadvertent typographical errors, broken links, duplicate entries, incorrect classifications, incomplete metadata, mistaken attributions, transliteration differences, outdated source information, omitted works, technical defects or material that subsequently becomes unavailable.</p>
-
-<h3 id="clause-16">16. Automated and AI-Assisted Processes</h3>
-
-<p>Research, indexing, deduplication, classification, transcription, translation, data cleanup, link generation, technical development or other processes may be assisted by software, search systems, algorithms or artificial-intelligence tools. Such assistance does not guarantee accuracy and does not replace source verification where source verification is required.</p>
-
-<p>Users should not treat automated output as a representation that every spelling, attribution, translation, doctrinal classification, calendar calculation or legal description is infallible.</p>
-
-<h3 id="clause-17">17. No Admission by Correction</h3>
-
-<p>Correction, annotation, replacement, link disabling, reclassification or removal of material after notice does not, by itself, constitute an admission of negligence, infringement, defamation, malice, knowledge of wrongdoing or legal liability.</p>
-
-<h3 id="clause-18">18. &quot;AS IS&quot; and &quot;AS AVAILABLE&quot;</h3>
-
-<p>To the fullest extent permitted by law, the Website is provided on an &quot;AS IS&quot;, &quot;AS AVAILABLE&quot; and informational basis. No express or implied warranty is given that the Website will be uninterrupted, error-free, complete, permanently available, suitable for every person, compatible with every device, free from all security risks, or accurate in every detail.</p>
-
-<p>Nothing in this clause excludes a warranty or statutory right that applicable law does not permit to be excluded.</p>
-
-<h2 id="part-v">PART V - THIRD-PARTY CONTENT, LINKS AND PLATFORMS</h2>
-
-<h3 id="clause-19">19. External Links and Search Results</h3>
-
-<p>The Website may provide links or search links to YouTube, Google, libraries, archives, publishers, temples, organisations, scripture sites, audio platforms, repositories and other independent services. These are provided principally for identification, reference and navigation.</p>
-
-<p>A hyperlink does not by itself constitute ownership, hosting, republication, sponsorship, endorsement, authorship, adoption, approval or authorisation of the linked content. Search results, rankings, advertisements, comments, recommendations, uploads, channel policies and platform availability are controlled by third parties.</p>
-
-<h3 id="clause-20">20. YouTube and Generic Search Links</h3>
-
-<p>Where a play icon or work title opens a generic YouTube search or other search-results page, the Website ordinarily supplies a navigational query rather than a fixed recording. The Operator does not select or control every result generated by the third-party search algorithm and does not represent that every result is licensed, authentic, complete or appropriate.</p>
-
-<h3 id="clause-21">21. Third-Party Terms, Advertising and Transactions</h3>
-
-<p>A user's interaction with a third-party platform is additionally governed by that platform's own terms, privacy policy, intellectual-property policy, advertisements, payment rules and applicable law. The Operator is not responsible for independent purchases, subscriptions, advertisements, malware, account suspensions, representations or disputes arising solely between the user and a third party.</p>
-
-<h3 id="clause-22">22. Hosting and Infrastructure Providers</h3>
-
-<p>The Website may depend on third-party hosting, domain, repository, code-hosting, content-delivery, analytics, banking or infrastructure providers. Service interruption, policy changes, repository suspension, outages, third-party cyber incidents or infrastructure failures may affect availability without creating liability merely because the Website uses those providers.</p>
-
-<h2 id="part-vi">PART VI - COPYRIGHT, TRADEMARKS AND INTELLECTUAL PROPERTY</h2>
-
-<h3 id="clause-23">23. Rights in the Compilation and Original Website Material</h3>
-
-<p>To the extent recognised by law, the original selection, arrangement, taxonomy, database structure, compilation logic, original explanatory material, original graphics, original code, original metadata and other creator-produced material remain subject to the Operator's or other identified owner's intellectual-property rights.</p>
-
-<p>This clause does not assert ownership over underlying scriptures, devotional compositions, performances, translations, photographs, recordings, editions or other material belonging to third parties.</p>
-
-<h3 id="clause-24">24. Third-Party Copyright</h3>
-
-<p>All third-party literary works, compositions, translations, sound recordings, performances, photographs, illustrations, publications, videos and other protected material remain subject to the rights of their respective owners. Identifying, cataloguing or linking to a work does not transfer copyright in that work to the Operator or to a user.</p>
-
-<h3 id="clause-25">25. Copyright Act, 1957 - No Blanket Exception</h3>
-
-<p>The Website is intended to operate consistently with the Copyright Act, 1957 and applicable Rules. Where the Website relies upon fair dealing, public-domain status, statutory exceptions, licence, consent or another lawful basis, that reliance extends only so far as the applicable legal requirements are actually satisfied.</p>
-
-<p>The fact that the project is devotional, educational, non-commercial or free does not by itself create unlimited permission to copy protected material. Users must independently respect third-party rights when reproducing, adapting, communicating, uploading, commercialising or redistributing protected works.</p>
-
-<h3 id="clause-26">26. Public-Domain Underlying Works and Modern Rights</h3>
-
-<p>An ancient, traditional or public-domain underlying composition may coexist with separately protected rights in a modern translation, critical edition, typesetting, photograph, illustration, sound recording, cinematograph film, digital restoration, commentary or performance. Users must distinguish between the underlying traditional work and protected modern embodiments of that work.</p>
-
-<h3 id="clause-27">27. Trademarks, Names and Logos</h3>
-
-<p>Third-party trade marks, service marks, names, insignia and logos remain the property of their respective owners. Reference to them for identification, citation or navigation does not imply sponsorship, partnership or endorsement.</p>
-
-<h3 id="clause-28">28. Limited Permission for Ordinary Users</h3>
-
-<p>Subject to third-party rights and these Terms, users may ordinarily access, bookmark and share links to the Website for lawful personal, devotional, educational and non-commercial purposes. Unmodified creator-controlled free publications may be shared only where their notices are preserved and such sharing does not violate third-party rights or any specific licence attached to the publication.</p>
-
-<p>No permission is granted to falsely claim authorship, remove legal notices, sell the Website as one's own product, use the Operator's identity deceptively, conduct unauthorised bulk extraction, or create a misleading commercial mirror of the Website.</p>
-
-<h2 id="part-vii">PART VII - RIGHTS-HOLDER NOTICE AND NOTICE-AND-CURE PROCEDURE</h2>
-
-<h3 id="clause-29">29. Good-Faith Rights-Holder Policy</h3>
-
-<p>The Operator does not intend knowingly to infringe third-party intellectual-property, privacy, publicity or other lawful rights. A genuine claimant is requested to send a complete written notice identifying the precise issue so that it can be examined responsibly.</p>
-
-<h3 id="clause-30">30. Required Particulars of a Rights Notice</h3>
-
-<p>So far as reasonably possible, a notice should identify the claimant; contact information; the protected work or right; the legal basis asserted; evidence of ownership or authority; the exact Website URL, title, page or link complained of; an explanation of the alleged problem; the remedy requested; and supporting documents. An agent should provide evidence of authority to act for the rights holder.</p>
-
-<h3 id="clause-31">31. Available Responses</h3>
-
-<p>Following receipt of a sufficiently identifiable complaint, the Operator may investigate, seek clarification, preserve records, correct metadata, add attribution, replace a link, temporarily disable creator-controlled access, remove creator-controlled content, obtain legal advice, communicate with relevant parties or take another lawful and proportionate step.</p>
-
-<p>Taking such a step does not amount to an admission of liability.</p>
-
-<h3 id="clause-32">32. Ordinary 90-Day Review and Cure Period</h3>
-
-<p>Except where a shorter period is mandatorily required by applicable law, a court order, governmental direction or legally applicable intermediary rule, a person complaining of an ordinary non-urgent factual, editorial, attributional, classification, reputational, contractual or comparable civil issue is requested first to provide a complete and verifiable written notice.</p>
-
-<p>The Operator shall be afforded a reasonable opportunity, not exceeding 90 calendar days after receipt of such complete notice, to investigate and, where appropriate, correct, clarify, annotate, update, replace, disable or remove creator-controlled material.</p>
-
-<p>The 90-day period is a good-faith ordinary correction mechanism. It does not suspend mandatory legal timelines, limitation periods that cannot be altered, emergency injunctions, criminal process or lawful orders requiring earlier action.</p>
-
-<h3 id="clause-33">33. Shorter Mandatory Deadlines Prevail</h3>
-
-<p>Where the Information Technology Act, applicable Intermediary Rules, a competent court, law-enforcement authority, statutory authority or another mandatory legal regime requires acknowledgement, preservation, disablement, removal, reporting or other action within a shorter period, the shorter lawful period controls.</p>
-
-<h2 id="part-viii">PART VIII - INFORMATION TECHNOLOGY ACT AND SECTION 79</h2>
-
-<h3 id="clause-34">34. Qualified Section 79 Safe-Harbour Reservation</h3>
-
-<p>To the extent, and only to the extent, that the Operator qualifies as an &quot;intermediary&quot; under the Information Technology Act, 2000 in relation to particular third-party information, data or communication links, the Operator expressly reserves and relies upon every exemption, defence, protection, limitation of liability and safe-harbour right lawfully available under Section 79 and the Rules made thereunder, subject to fulfilment of the statutory conditions.</p>
-
-<p>Nothing in these Terms voluntarily surrenders a safe harbour that is otherwise available. Conversely, nothing in these Terms represents that Section 79 necessarily applies to</p>
-
-<p>creator-authored, creator-selected, creator-controlled or otherwise non-intermediary material where the statutory conditions are not satisfied.</p>
-
-<p>Non-commercial or free status is not, by itself, the legal test for Section 79 protection. Intermediary status, the nature of the particular material, the Operator's role, actual knowledge standards where applicable, and statutory due diligence remain relevant.</p>
-
-<h3 id="clause-35">35. Intermediary Due Diligence and Rules</h3>
-
-<p>Where the Operator is legally treated as an intermediary, the Information Technology (Intermediary Guidelines and Digital Media Ethics Code) Rules, 2021, as amended from time to time, and any other applicable statutory rules shall prevail over inconsistent contractual wording. Required terms, grievance information, takedown procedures and statutory response periods shall be maintained to the extent legally applicable.</p>
-
-<h3 id="clause-36">36. No Authorisation, Procurement or Abetment</h3>
-
-<p>The Website does not authorise, procure, direct, conspire in, intentionally assist, induce, ratify or abet copyright infringement, unlawful publication, defamation, privacy violations or other illegal conduct. An independent unlawful act by a third party does not become an act of the Operator merely because the person accessed the Website or followed a link.</p>
-
-<p>This clause does not shield the Operator's own conduct where a competent authority establishes the legal ingredients of liability.</p>
-
-<h2 id="part-ix">PART IX - BNS, BNSS, CRIMINAL PROCESS AND RELIGIOUS SENSITIVITY</h2>
-
-<h3 id="clause-37">37. No Private Immunity from Criminal Law</h3>
-
-<p>No disclaimer or contract can lawfully confer immunity from criminal liability where the ingredients of an offence are established. These Terms are intended to define purpose, demonstrate good-faith procedures, allocate contractual responsibility where lawful, preserve available defences and safe harbours, and facilitate lawful compliance. They are not intended to obstruct investigation, evidence preservation, search, seizure, prosecution, judicial process or any lawful exercise of power.</p>
-
-<h3 id="clause-38">38. Bharatiya Nyaya Sanhita, 2023</h3>
-
-<p>The Website is intended to operate consistently with the Bharatiya Nyaya Sanhita, 2023. It does not intend to defame any person, deliberately and maliciously outrage religious feelings, promote unlawful hatred, threaten, harass, impersonate, cheat, publish unlawful obscenity or commit another offence. Historical, theological or regional differences are presented, where included, for devotional, cultural, educational, archival or documentary purposes.</p>
-
-<h3 id="clause-39">39. Bharatiya Nagarik Suraksha Sanhita, 2023</h3>
-
-<p>Nothing in the Website or these Terms limits the powers lawfully available to investigating agencies, police, prosecutors, magistrates or criminal courts under the Bharatiya Nagarik Suraksha Sanhita, 2023 or other applicable criminal-procedure law. The 90-day ordinary correction mechanism does not delay or restrict mandatory criminal process.</p>
-
-<h3 id="clause-40">40. Bharatiya Sakshya Adhiniyam, 2023 and Record Preservation</h3>
-
-<p>Where reasonably necessary to investigate misuse, establish acceptance, defend a claim or comply with law, the Operator may preserve relevant electronic records, logs, communications, versions and notices in a lawful manner, subject to applicable privacy and data-protection requirements.</p>
-
-<h2 id="part-x">PART X - USER CONDUCT, SUBMISSIONS AND MISUSE</h2>
-
-<h3 id="clause-41">41. Prohibited Conduct</h3>
-
-<p>A user must not use the Website to infringe intellectual-property, privacy, publicity or other rights; impersonate another person; falsely claim agency or affiliation; introduce malware; attack infrastructure; bypass security; commit fraud; unlawfully harvest personal information; threaten or harass; publish unlawful content; or use the Website in a manner prohibited by Indian law.</p>
-
-<h3 id="clause-42">42. Independent Redistribution and Modification</h3>
-
-<p>A user who independently copies, republishes, edits, uploads, commercialises or redistributes material does so on that user's own responsibility. Permission to access the Website is not permission to violate third-party rights. Altered copies must not be deceptively represented as official or authorised versions of the Operator's publication.</p>
-
-<h3 id="clause-43">43. No Agency, Partnership or Representation</h3>
-
-<p>No visitor, volunteer, contributor, donor, sharer, researcher, feedback provider or other person becomes the Operator's employee, agent, representative, partner, franchisee, trustee, fiduciary or authorised intermediary merely by interacting with the Website. Express written authority is required before any person may represent that they act on behalf of the Operator.</p>
-
-<h3 id="clause-44">44. Feedback, Corrections and Voluntary Submissions</h3>
-
-<p>If a user voluntarily sends corrections, suggestions, source references, public-domain material, metadata, translations, code, feedback or other submissions for possible inclusion, the user represents that they have lawful authority to send the material and that the submission does not knowingly violate third-party rights.</p>
-
-<p>Unless a separate written agreement states otherwise, the user grants the Operator a non-exclusive, worldwide, royalty-free licence to review, reproduce, edit, adapt, incorporate and publish the submitted material for the Website and related non-commercial archival or reference purposes. The Operator is under no obligation to publish any submission.</p>
-
-<h3 id="clause-45">45. No Confidential Submissions</h3>
-
-<p>General Website feedback channels should not be used to send confidential legal instructions, privileged material, passwords, highly sensitive personal information or information that the sender is not authorised to disclose. A general Website message does not create professional privilege or an advocate-client relationship.</p>
-
-<h2 id="part-xi">PART XI - PRIVACY, LOCATION, MINORS AND LOCAL STORAGE</h2>
-
-<h3 id="clause-46">46. Privacy and Data Protection</h3>
-
-<p>Any processing of personal data shall be subject to applicable Indian law, including the Digital Personal Data Protection Act, 2023, applicable Rules and commencement notifications, as they apply from time to time. The Website should maintain a separate Privacy Policy describing actual data practices.</p>
-
-<p>Nothing in these Terms represents that the Website collects categories of data that it does not in fact collect. Technical implementation and the Privacy Policy should be kept consistent.</p>
-
-<h3 id="clause-47">47. Location-Dependent Features</h3>
-
-<p>Where a user voluntarily activates a location-dependent feature, such as a Panchang or astronomical calculation, the user authorises the technically necessary handling of location input for the requested function, subject to browser permissions, the Privacy Policy and applicable law. A user may decline location permission where the feature permits manual location entry.</p>
-
-<h3 id="clause-48">48. Local Storage, Cookies and Preferences</h3>
-
-<p>Favourites, counters, settings and similar features may use browser local storage, cookies or comparable technologies where technically implemented. Deleting browser data, changing devices, clearing storage, reinstalling software or modifying privacy settings may remove local preferences. The Operator does not guarantee recovery of locally stored information.</p>
-
-<h3 id="clause-49">49. Children and Minors</h3>
-
-<p>The Website may contain devotional material suitable for family use, but it is not intended to solicit unnecessary personal data from children. Minors should use interactive, location, contribution or communication features under appropriate parental or guardian supervision. Where law requires verifiable parental consent for processing a child's personal data, that requirement must be followed.</p>
-
-<h2 id="part-xii">PART XII - SECURITY, AVAILABILITY AND FORCE MAJEURE</h2>
-
-<h3 id="clause-50">50. Security</h3>
-
-<p>Reasonable efforts may be made to maintain Website security, but no Internet service can be represented as completely immune from hacking, malware, denial-of-service attacks, third-party compromise, software defects or data loss. Users remain responsible for securing their own devices, accounts and backups.</p>
-
-<h3 id="clause-51">51. Availability, Modification and Discontinuation</h3>
-
-<p>The Operator may add, remove, reorganise, correct, suspend, replace or discontinue Website content or functionality because of legal, technical, editorial, financial, preservation or security reasons. There is no guarantee that every historical feature, third-party link, PDF version or external resource will remain available indefinitely.</p>
-
-<h3 id="clause-52">52. Force Majeure</h3>
-
-<p>To the fullest extent permitted by law, the Operator shall not be responsible for delay or failure caused by circumstances beyond reasonable control, including natural disaster, fire, flood, war, civil disorder, government action, power failure, telecommunications failure, hosting outage, repository outage, cyberattack, hardware failure, software failure, payment-network interruption or comparable events.</p>
-
-<h2 id="part-xiii">PART XIII - LIMITATION OF LIABILITY AND USER RESPONSIBILITY</h2>
-
-<h3 id="clause-53">53. Third-Party Responsibility</h3>
-
-<p>Each independent third party remains responsible for that party's own conduct. The Operator is not liable merely because another person independently uses, misuses, downloads, uploads, copies, modifies, republishes, distributes, commercialises, extracts, impersonates, misrepresents or creates an unauthorised derivative from Website material or from external material discovered through the Website.</p>
-
-<h3 id="clause-54">54. Exclusion of Indirect and Consequential Loss</h3>
-
-<p>To the fullest extent permitted by applicable law, liability is excluded or limited for indirect, remote, consequential, incidental, exemplary or special loss, including loss of profit, income, opportunity, business, data, reputation or anticipated benefit, where such exclusion is lawful, particularly where the loss results from third-party platforms, altered copies, malicious mirrors, external services or independent user conduct.</p>
-
-<h3 id="clause-55">55. Contractual Monetary Cap</h3>
-
-<p>Where contractual monetary liability arising solely from use of the Website may lawfully be limited, the aggregate contractual monetary liability shall not exceed the amount actually paid directly by the claimant to the Operator for the specific Website service giving rise to the liability. Where the Website was used free of charge, no purchase price was received from that user.</p>
-
-<p>Nothing in this clause excludes or limits liability that applicable law expressly prohibits from being excluded or limited.</p>
-
-<h3 id="clause-56">56. User Responsibility</h3>
-
-<p>Each user remains responsible for their own downloads, uploads, copies, communications, republication, commercialisation, infringement, technical actions, representations, reliance and compliance with law. The appearance of a title or external search link grants no permission to violate third-party rights.</p>
-
-<h2 id="part-xiv">PART XIV - INDEMNITY</h2>
-
-<h3 id="clause-57">57. User Indemnity for the User's Own Unlawful Conduct</h3>
-
-<p>To the fullest extent legally enforceable, a user whose own unlawful, unauthorised or contractually prohibited conduct directly causes a claim shall indemnify and hold harmless the Operator against reasonable claims, losses, liabilities, costs and expenses directly arising from that conduct, including where the user independently republishes protected material, falsely claims authority from the Operator, introduces malware, misuses personal data or creates a deceptive commercial copy.</p>
-
-<p>No indemnity applies to the extent applicable law prohibits such transfer of responsibility or to the extent the claim arises from the Operator's own proven non-excludable liability.</p>
-
-<h2 id="part-xv">PART XV - GOVERNING LAW, JURISDICTION AND DISPUTE HANDLING</h2>
-
-<h3 id="clause-58">58. Governing Law</h3>
-
-<p>These Terms and the contractual relationship arising from lawful use of the Website are governed by the laws of India. Depending on the circumstances, relevant legislation may include the Information Technology Act, 2000; applicable Information Technology Rules; Copyright Act, 1957; Bharatiya Nyaya Sanhita, 2023; Bharatiya Nagarik Suraksha Sanhita, 2023; Bharatiya Sakshya Adhiniyam, 2023; Indian Contract Act, 1872; Trade Marks Act, 1999; Digital Personal Data Protection Act, 2023; Consumer Protection Act, 2019 where applicable; Foreign Contribution (Regulation) Act, 2010 where applicable; Income-tax Act, 1961; and other applicable Central or State law.</p>
-
-<p>References to legislation include lawful amendments, rules, notifications, replacements and subordinate legislation applicable from time to time.</p>
-
-<h3 id="clause-59">59. Delhi Forum - Qualified Exclusive Jurisdiction</h3>
-
-<p>The Website is compiled and administered from Delhi. Subject to mandatory statutory jurisdiction, and provided that competent courts at Delhi otherwise possess jurisdiction under applicable law, the parties intend that courts at Delhi, India shall have exclusive territorial jurisdiction over civil and contractual disputes directly between the Operator and a legally bound user.</p>
-
-<p>This clause does not create jurisdiction where none otherwise exists, alter criminal territorial jurisdiction, override a mandatory consumer or statutory forum, prevent a competent authority from exercising lawful powers, or bind an unrelated person who never became contractually bound.</p>
-
-<h3 id="clause-60">60. Good-Faith Pre-Litigation Notice</h3>
-
-<p>For ordinary civil disputes where the law permits such an arrangement, a claimant is requested to send a sufficiently detailed written notice and allow a reasonable opportunity for good-faith resolution before commencing adversarial proceedings. This request is not intended to restrain urgent lawful remedies, non-waivable rights or limitation periods.</p>
-
-<h3 id="clause-61">61. International Users</h3>
-
-<p>A person accessing the Website from outside India is responsible for compliance with any local law that lawfully applies to that person. The fact that the Website can technically be accessed in another jurisdiction does not constitute a representation that every feature or contribution mechanism is lawful or appropriate in every country.</p>
-
-<h2 id="part-xvi">PART XVI - CHANGES, SEVERABILITY AND INTERPRETATION</h2>
-
-<h3 id="clause-62">62. Changes to These Terms</h3>
-
-<p>The Operator may update these Terms when reasonably necessary because of changes in law, Website functionality, payment methods, data practices, security, project structure or other legitimate requirements. The current version and effective date should be displayed conspicuously. Material changes should be brought to users' attention where reasonably appropriate.</p>
-
-<h3 id="clause-63">63. Severability and Narrow Construction</h3>
-
-<p>If a competent court determines that a provision is invalid, illegal or unenforceable, that provision shall, where legally possible, be interpreted or narrowed to the minimum extent necessary, and the remaining provisions shall continue in effect. These Terms seek the maximum lawful protection available without claiming immunity prohibited by law.</p>
-
-<h3 id="clause-64">64. No Waiver</h3>
-
-<p>Failure to enforce a provision on one occasion does not automatically waive that provision or any other provision on a later occasion. A waiver is effective only to the extent clearly made by the person legally entitled to grant it.</p>
-
-<h3 id="clause-65">65. Statutory Savings</h3>
-
-<p>Every disclaimer, exclusion, limitation, indemnity, notice requirement and jurisdiction clause is qualified by the expression &quot;to the fullest extent permitted by applicable law&quot;. Nothing in these Terms waives a non-waivable statutory right, obstructs lawful criminal process, defeats a competent court order, prevents lawful regulatory action, or excludes liability that cannot legally be excluded.</p>
-
-<h3 id="clause-66">66. Headings, Language and Entire Terms</h3>
-
-<p>Headings are for convenience and do not enlarge the operative provisions. If translations of these Terms are provided, the English version shall control to the extent permitted by law where there is a material inconsistency. These Terms, together with the applicable Privacy Policy, Copyright / Rights-Holder Notice Policy and Contribution Policy, constitute the principal Website terms unless a separate written agreement expressly applies.</p>
-
-<h3 id="clause-67">67. Survival</h3>
-
-<p>Provisions concerning intellectual property, user responsibility, limitations of liability, indemnity, governing law, jurisdiction, electronic evidence, dispute handling and any term that by its nature should survive shall continue after a user stops using the Website to the extent legally applicable.</p>
-
-<h2 id="part-xvii">PART XVII - CONTACT, GRIEVANCES AND FORMAL NOTICES</h2>
-
-<h3 id="clause-68">68. Error or Correction Notice</h3>
-
-<p>A user discovering a genuine error is encouraged to identify the exact page or URL, work title or feature, nature of the alleged error, proposed correction and, where possible, supporting source material. Clear notices help distinguish genuine issues from automated or vague complaints.</p>
-
-<h3 id="clause-69">69. Copyright and Rights-Holder Notice</h3>
-
-<p>Copyright and other rights-holder complaints should be clearly marked &quot;RIGHTS-HOLDER / COPYRIGHT NOTICE - URGENT REVIEW&quot; and should contain the particulars described in these Terms. Incomplete notices may require clarification, subject always to any mandatory legal timeline.</p>
-
-<h3 id="clause-70">70. Grievance and Legal Contact</h3>
-
-<p>For Website complaints, rights notices and formal communications, the following contact details may be used unless the Website publishes a more specific dedicated grievance address:</p>
-
-<ul>
-
-<li>Name: Ashish Bharani</li>
-
-<li>Email: ashishbharani984@gmail.com</li>
-
-<li>Mobile: +91-9289800984; 9870521478</li>
-
-</ul>
-
-<h3 id="clause-71">71. Statutory Grievance Officer</h3>
-
-<p>For grievances relating to the Website, and if and to the extent appointment or publication of a Grievance Officer is legally required for the Website's actual status and functions, the following Grievance Officer is designated. Complaints shall be handled in accordance with the mandatory timelines and procedures applicable under law:</p>
-
-<ul>
-
-<li>GRIEVANCE OFFICER: Adv. R.K. Bharani</li>
-
-<li>EMAIL: bharani.law.chambers@gmail.com</li>
-
-<li>CONTACT: P-37, P.O. Lane, Tis Hazari Courts, Delhi 110 0054</li>
-
-</ul>
-
-<h3 id="clause-72">72. Formal Notice Requirements</h3>
-
-<p>A formal legal notice should identify the sender, legal capacity, complete contact details, exact material complained of, legal basis asserted, relevant evidence and specific relief requested. Sending a notice does not itself establish the correctness of the allegation, and the Operator reserves all available substantive and procedural rights, defences, exceptions and safe harbours.</p>
-
-<h2 id="part-xviii">PART XVIII - FINAL NOTICE</h2>
-
-<p>The HDC — Hindu Devotional Collection is intended as a good-faith, non-commercial devotional, cultural, educational, archival and reference initiative. It is not operated for the sale of devotional works. Third-party rights remain with their respective owners, and external links are provided primarily for identification, reference and navigation.</p>
-
-<p>The Operator does not knowingly authorise copyright infringement, defamation, unlawful publication, privacy violations or other illegal activity.</p>
-
-<p>To the extent that the Operator qualifies as an intermediary in relation to particular third-party information, data or communication links, every protection lawfully available under Section 79 of the Information Technology Act, 2000 and applicable Rules is expressly reserved. No representation is made that Section 79 applies where its statutory requirements are not fulfilled.</p>
-
-<p>A person identifying a genuine mistake, copyright issue, rights issue, inaccurate attribution or other problem is requested to notify the Operator with sufficient particulars. Ordinary non-urgent editorial and civil complaints may require up to 90 calendar days for investigation and appropriate correction. Where applicable law, a court order, governmental direction or statutory intermediary rule requires action within a shorter period, the shorter mandatory period prevails.</p>
-
-<p>Nothing in these Terms limits or excludes liability, rights, remedies, statutory duties or governmental powers that cannot lawfully be limited or excluded.</p>
-
+<p>For these Terms, the &quot;Website&quot; or &quot;Service&quot; means the Hindu Devotional Collection website and all creator-controlled pages, directories, databases, indexes, downloadable PDFs and documents, search functions, devotional listings, Scripture and Books resources, religious-music references, Panchang and calendar tools, ephemeris or astronomical-reference tools, favourites, counters, images, metadata, explanatory text, external links, YouTube search links and other material made available through or in connection with the Website. &quot;Operator&quot; means Ashish Bharani acting as compiler and administrator of the Website, and includes any lawful successor or person expressly authorised in writing to administer the Website. &quot;Creator-Controlled Material&quot; means material whose publication, wording or removal is under the Operator&#x27;s practical control. &quot;Third-Party Material&quot; means information, works, recordings, websites, search results, publications, platforms or other material originating from or controlled by an independent third party.</p>
+<h3 id="clause-2">2. Purpose and Character of HDC</h3>
+<p>The Website is intended as a devotional, cultural, educational, historical, archival, research and informational reference initiative. Its principal purpose is to organise, identify, catalogue, classify and make devotional and related material easier to discover. It is not represented as a commercial marketplace, paid streaming service, publisher of all linked works, licensed repository of every underlying third-party work, universal religious authority or substitute for professional advice.</p>
+<h3 id="clause-3">3. Different Legal Character of Different Content</h3>
+<p>The legal character of material on HDC depends on what that material is. Original explanatory text, taxonomy, compilation structure and creator-made material are treated as Operator-controlled material. A title, bibliographic reference, search query, hyperlink, third-party thumbnail, external publication or third-party recording remains subject to the rights and responsibility of the relevant third party. Nothing in these Terms collapses those categories into one legal status.</p>
+<h3 id="clause-4">4. Access, Browsewrap Notice and Acceptance</h3>
+<p>A user who voluntarily accesses, browses, searches, continues to use, downloads, saves, prints, links to, shares, contributes through or otherwise uses the Website after receiving reasonable and conspicuous notice of these Terms acknowledges them and agrees to be bound by them to the fullest extent recognised by applicable law. A person who does not agree should discontinue use and should not voluntarily download, retain or redistribute creator-controlled material.</p>
+<h3 id="clause-5">5. Affirmative Electronic Acceptance</h3>
+<p>Where law requires, or where the Website elects to obtain, stronger assent, the Website may use an unchecked checkbox, &quot;I AGREE&quot;, &quot;I AGREE &amp; DOWNLOAD&quot;, &quot;I AGREE &amp; CONTINUE&quot;, contribution confirmation or comparable electronic control. For downloads and contributions, affirmative click-wrap or equivalent assent is preferred where technically practicable. Nothing here attempts to manufacture consent where applicable law requires a different method.</p>
+<h3 id="clause-6">6. Electronic Contracting and Evidence</h3>
+<p>These Terms are intended to operate consistently with the Information Technology Act, 2000, including section 10A and other provisions relating to electronic records and electronic contracting, and with applicable evidentiary law. The Operator may lawfully preserve the date, time, Terms version, acceptance event, relevant URL, complaint record, download event or other technical record where reasonably necessary to establish consent, security, compliance or a legal position.</p>
+<h3 id="clause-7">7. No Waiver of Mandatory Law by Access</h3>
+<p>Acceptance of these Terms does not waive a right, remedy, statutory obligation or governmental power that applicable law does not permit to be waived. Conversely, the existence of a mandatory legal remedy does not invalidate the remaining contractual provisions that are independently lawful and enforceable.</p>
+<h2 id="part-ii">PART II - NON-COMMERCIAL CHARACTER AND VOLUNTARY CONTRIBUTIONS</h2>
+<h3 id="clause-8">8. Non-Commercial Project Character</h3>
+<p>The Website is presently intended to operate as a non-commercial public-service and devotional reference initiative. The Operator does not sell the underlying devotional works merely because they are identified, catalogued or linked through HDC, and access to the principal devotional reference material is not presented as the sale of a devotional product.</p>
+<h3 id="clause-9">9. No Representation of Registered Charity Status</h3>
+<p>The expressions &quot;non-commercial&quot;, &quot;non-profit service&quot;, &quot;not-for-profit initiative&quot; or similar wording describe the intended manner of operation. They do not represent that HDC is a registered charitable trust, society, Section 8 company, tax-exempt body or other legally constituted charitable entity unless that status is expressly and truthfully stated after the necessary registration or approval.</p>
+<h3 id="clause-10">10. Voluntary Contribution - Not a Purchase or Investment</h3>
+<p>Any contribution is entirely voluntary and is intended to assist with reasonable costs of maintaining, preserving, developing, securing and making the Website available. A contribution is not the purchase price of a devotional work and does not buy copyright, ownership, partnership, equity, voting rights, investment return, interest, editorial control, preferential religious treatment, guaranteed support, guaranteed Website continuation or any other proprietary entitlement.</p>
+<h3 id="clause-11">11. Editorial Independence from Contributors</h3>
+<p>The Operator retains editorial independence. A contributor acquires no right to require inclusion, exclusion, promotion, ranking or favourable treatment of a work, deity, community, tradition, source, publisher, performer, platform or viewpoint. A contribution does not create an agency, partnership, trust, fiduciary relationship or membership right unless a separate written instrument expressly creates one.</p>
+<h3 id="clause-12">12. Permitted Use of Contributions</h3>
+<p>Subject to applicable law, contributions may be used for reasonable project expenses including domain registration, website hosting, storage, backups, bandwidth, software, hardware, computer equipment, security, development, maintenance, digitisation, accessibility, research tools, database services, preservation and other expenses reasonably connected with HDC. Exact allocation may vary according to operational requirements.</p>
+<h3 id="clause-13">13. Contribution Refunds</h3>
+<p>Except where law or a payment-system rule requires otherwise, or where a payment is demonstrably unauthorised, duplicated or processed in error, a voluntary contribution may be treated as final once received and lawfully applied toward project expenses. This clause does not override mandatory banking, payment-service or statutory refund rights.</p>
+<h3 id="clause-14">14. Payment Providers</h3>
+<p>Banks, UPI services, payment gateways and financial institutions are independent third parties. Their downtime, charges, verification requirements, fraud controls, processing errors and terms remain outside the Operator&#x27;s direct control. HDC does not receive or control a contributor&#x27;s banking credentials merely because a third-party payment rail is linked from the Website.</p>
+<h3 id="clause-15">15. Tax and Section 80G</h3>
+<p>Unless the Website provides a legally valid certificate stating otherwise, no representation is made that a contribution qualifies for deduction under section 80G of the Income-tax Act, 1961 or for any other tax benefit. Contributors remain responsible for obtaining their own tax advice where required.</p>
+<h3 id="clause-16">16. Foreign Contribution and FCRA</h3>
+<p>HDC does not intend to solicit or knowingly accept any contribution prohibited by the Foreign Contribution (Regulation) Act, 2010. Where a proposed payment constitutes &quot;foreign contribution&quot; within applicable law, it shall be accepted only if the applicable registration, prior-permission, banking, reporting and other legal conditions are satisfied. In particular, section 11 regulates acceptance of foreign contribution by a person having a definite cultural, educational, religious or social programme. A foreign source should not send funds merely because a technical payment route is visible or operational.</p>
+<h2 id="part-iii">PART III - DEVOTIONAL, RELIGIOUS, PANCHANG AND PROFESSIONAL-ADVICE DISCLAIMER</h2>
+<h3 id="clause-17">17. Diversity of Hindu Traditions</h3>
+<p>Hindu traditions are diverse. Names, classifications, ritual procedures, theological interpretations, calendar conventions, lineages, regional practices, textual recensions and devotional associations may differ between communities, sampradayas, temples, families, scholars and practitioners. Inclusion or classification is an editorial reference function and does not declare another reasonably documented tradition false, invalid or inferior.</p>
+<h3 id="clause-18">18. No Universal Religious Authority or Canonical Determination</h3>
+<p>The Operator does not present HDC as the final religious, theological or ritual authority. Unless expressly supported by an identified source, HDC does not claim that an item is universally canonical, universally orthodox, mandatory or exclusive. Reference to a deity, temple, saint, sampradaya, scripture, community, performer, author, publisher, institution or platform does not by itself imply sponsorship, endorsement, certification or affiliation.</p>
+<h3 id="clause-19">19. No Guaranteed Spiritual, Astrological or Material Outcome</h3>
+<p>Nothing on HDC guarantees that reading, chanting, hearing, reciting, performing or following a mantra, stotra, prayer, bhajan, ritual, fast, Jyotisha association, Panchang indication, remedial practice or other devotional material will produce any particular spiritual, medical, matrimonial, financial, employment, examination, litigation, business, fertility, healing, protective or supernatural result. Traditional purposes and similar metadata describe documented or reported associations and are not warranties.</p>
+<h3 id="clause-20">20. Religious Respect and Good-Faith Context</h3>
+<p>HDC is devotional in purpose and is not intended deliberately or maliciously to insult religion or religious beliefs. Historical, regional, linguistic, sectarian or theological differences may be described as documentary information. A disputed description should be reported through the correction procedure so that context, source and wording can be examined.</p>
+<h3 id="clause-21">21. Panchang, Calendar, Ephemeris and Astronomical Reference</h3>
+<p>Tithi, Nakshatra, Yoga, Karana, sunrise, sunset, moonrise, Muhurta, festival and astronomical or astrological calculations may vary according to geographical location, time zone, astronomical model, ayanamsha, sunrise convention, calendar tradition, regional practice and software implementation. Such outputs are reference information, not a representation of universal ceremonial authority.</p>
+<h3 id="clause-22">22. No Professional Advice or Advocate-Client Relationship</h3>
+<p>Nothing on HDC constitutes personalised legal, medical, psychiatric, psychological, financial, investment, tax, accounting, matrimonial or other regulated professional advice. The Operator&#x27;s professional background as an advocate does not create an advocate-client relationship, retainer, fiduciary duty, duty of confidentiality or professional engagement merely because a person accesses HDC, sends general feedback or reads a legal disclaimer. A professional relationship arises only through an express engagement where applicable.</p>
+<h2 id="part-iv">PART IV - CONTENT CLASSIFICATION, ACCURACY, RESEARCH AND AI-ASSISTED MATERIAL</h2>
+<h3 id="clause-23">23. Good-Faith Compilation and Evolving Content</h3>
+<p>HDC is a large evolving reference collection. Reasonable efforts may be made to improve accuracy, attribution, classification, completeness and accessibility, but errors can occur, including typographical mistakes, broken links, duplicated entries, omissions, incorrect metadata, transliteration differences, regional naming differences, mistaken attributions, source conflicts and obsolete third-party information.</p>
+<h3 id="clause-24">24. Editorial Taxonomy is Not a Legal or Theological Warranty</h3>
+<p>Categories, tiers, headings, work types, deity associations, community placements and similar taxonomy are editorial reference tools. They do not themselves establish legal ownership, theological superiority, authorship, religious orthodoxy or factual certainty beyond the evidence on which the relevant entry is based.</p>
+<h3 id="clause-25">25. Evidence-Limited and Uncertain Material</h3>
+<p>Where evidence is incomplete or conflicting, HDC may use expressions such as probable, disputed, uncertain, unverified, evidence-limited or on hold. Absence of such a label does not create a warranty of infallibility. The Operator may revise an entry when better evidence becomes available.</p>
+<h3 id="clause-26">26. Automated, AI-Assisted and Human-Reviewed Processes</h3>
+<p>Research, translation, deduplication, classification, link generation, image preparation, metadata checking and other workflows may use automated or AI-assisted tools. Such tools can make mistakes and may produce invented, incomplete or contextually incorrect material. Automated output is not treated as a verified fact, legal opinion, historical source or religious authority merely because a tool produced it. HDC may apply human review, source verification, provenance records, correction, withdrawal or re-generation according to the importance and risk of the material.</p>
+<h3 id="clause-27">27. Synthetic, AI-Generated and Illustrative Material</h3>
+<p>Where HDC uses AI-generated, AI-assisted or digitally created devotional illustrations, they are artistic or illustrative representations unless expressly identified otherwise. They must not be presented as documentary photographs of real historical events or real persons where that would be misleading. HDC does not, merely by displaying operator-created AI-assisted images, represent that it offers users a computer resource for creating synthetically generated information. If a particular HDC feature later falls within Rule 3(3) of the Information Technology (Intermediary Guidelines and Digital Media Ethics Code) Rules, 2021 as amended, the applicable prevention, labelling, metadata, provenance, warning and other binding requirements shall prevail. As a defensive practice, HDC may maintain internal provenance identifying generated or materially altered images even where a specific statutory labelling duty is not established.</p>
+<h3 id="clause-28">28. No General Duty of Continuous Verification</h3>
+<p>The Operator does not undertake a contractual duty to continuously monitor every external website, recording, search result, metadata field, historical claim or third-party change after publication. A voluntary review, correction or removal in one instance does not create a continuing duty to investigate all analogous material or imply approval of material not reviewed.</p>
+<h3 id="clause-29">29. No Admission by Correction, Annotation or Removal</h3>
+<p>Correction, annotation, replacement, disabling a link, adding attribution, changing classification, temporary restriction or removal following a complaint is a precautionary or good-faith editorial act and does not, by itself, constitute an admission of infringement, negligence, defamation, knowledge, malice, intent, causation, damage, statutory status or legal liability.</p>
+<h3 id="clause-30">30. AS IS and AS AVAILABLE</h3>
+<p>To the fullest extent permitted by law, the Website and its content are supplied on an &quot;AS IS&quot;, &quot;AS AVAILABLE&quot; and informational basis. No warranty is made that every link, recording, translation, search result, classification, calculation, third-party description or feature will remain available, universally accepted, completely accurate or suitable for every user.</p>
+<h2 id="part-v">PART V - THIRD-PARTY CONTENT, EXTERNAL LINKS AND INFRASTRUCTURE</h2>
+<h3 id="clause-31">31. External Links Do Not Equal Hosting or Ownership</h3>
+<p>A hyperlink, bibliographic reference, title, search query, thumbnail reference or navigational button does not by itself mean that the Operator owns, hosts, stores, republishes, licenses, sponsors, endorses, adopts or controls the underlying third-party material. Third-party rights remain with their respective owners and operators.</p>
+<h3 id="clause-32">32. YouTube and Generic Search Links</h3>
+<p>Where a play icon, title or button opens a YouTube search, web search or comparable results page, HDC ordinarily directs the user to a query or external destination rather than supplying the underlying recording. Search rankings, advertisements, suggested content, comments, channels and subsequent navigation are controlled by the relevant platform and/or its users.</p>
+<h3 id="clause-33">33. External Material May Change After Linking</h3>
+<p>An external page, video, channel, recording, policy, advertisement or search result may be changed, replaced, removed, monetised, geo-restricted, hacked or republished after HDC links to it. The Operator is not deemed to have adopted later third-party changes merely because an earlier link remains present.</p>
+<h3 id="clause-34">34. No Endorsement of External Advertising or Transactions</h3>
+<p>Advertisements, subscriptions, donations, sales, purchases or other transactions occurring on an independent platform are between the user and the relevant third party unless HDC expressly states otherwise. The Operator is not responsible for third-party prices, refunds, advertising claims, malware, privacy practices or commercial representations merely because the external service was reached through a link.</p>
+<h3 id="clause-35">35. Hosting and Infrastructure Providers</h3>
+<p>GitHub, GitHub Pages, browsers, DNS providers, networks, content-delivery systems, search engines and other infrastructure providers are independent service providers. Outages, deployment failures, caching, security incidents, platform restrictions, repository decisions, service discontinuation and provider-side technical behaviour may occur outside the Operator&#x27;s direct control.</p>
+<h3 id="clause-36">36. No Agency or Partnership with Third Parties</h3>
+<p>No external platform, publisher, performer, rights holder, temple, institution or service becomes the Operator&#x27;s agent, employee, partner, joint venturer or authorised representative merely because it is referenced or linked. Likewise, no HDC user or contributor may claim such status without express written authority.</p>
+<h2 id="part-vi">PART VI - COPYRIGHT, TRADE MARKS AND INTELLECTUAL PROPERTY</h2>
+<h3 id="clause-37">37. Rights in HDC Compilation and Original Material</h3>
+<p>To the extent recognised by law, original HDC explanatory text, selection, arrangement, taxonomy, compilation structure, original graphics, database organisation and other creator-made material remain subject to the rights of their lawful owner. This clause does not assert ownership of underlying third-party devotional works merely because they are catalogued or referenced.</p>
+<h3 id="clause-38">38. Third-Party Copyright Remains with Rights Holders</h3>
+<p>All third-party literary works, devotional compositions, translations, edited texts, sound recordings, performances, films, photographs, illustrations, publications and other protected subject matter remain subject to the rights of their respective owners. Identification or cataloguing does not transfer those rights to HDC.</p>
+<h3 id="clause-39">39. No Blanket Fair-Dealing, Religious or Educational Immunity</h3>
+<p>HDC does not claim that every non-commercial, religious, educational, archival or research-related use is automatically non-infringing. The Copyright Act, 1957 contains specific rights, infringement rules and exceptions. Any reliance on public-domain status, licence, permission, section 52 or another exception is limited to situations where the legal requirements for that position are actually satisfied.</p>
+<h3 id="clause-40">40. Ancient or Public-Domain Work Versus Modern Embodiment</h3>
+<p>An ancient or public-domain underlying text may coexist with modern rights in a translation, critical edition, typesetting, illustration, photograph, sound recording, cinematograph film, performance, annotation or other protected embodiment. Users must distinguish the status of the underlying traditional work from the status of the modern version they access.</p>
+<h3 id="clause-41">41. Section 52(1)(c) - Electronic Links and 21-Day Process</h3>
+<p>If, and only if, section 52(1)(c) of the Copyright Act, 1957 applies to transient or incidental storage for the purpose of providing electronic links, access or integration, the statutory process in that provision governs that specific situation. A written complaint by the copyright owner may require refraining from facilitating access for the statutory period described there, including the 21-day period, subject to the provision and any competent-court order. This clause does not concede that HDC stores the linked work or that section 52(1)(c) applies to every link.</p>
+<h3 id="clause-42">42. Trade Marks, Names and Logos</h3>
+<p>Third-party trade marks, service marks, names, emblems and logos belong to their respective owners. Their nominative or informational reference does not imply sponsorship, affiliation, licence or endorsement unless expressly stated.</p>
+<h3 id="clause-43">43. Limited Permission for Ordinary Use</h3>
+<p>Subject to third-party rights and applicable law, users may ordinarily access HDC for personal devotional, informational and non-commercial reference. No permission is granted to falsely claim authorship, sell HDC as one&#x27;s own product, strip notices for deceptive redistribution, impersonate the Operator or exploit third-party protected material beyond the rights actually available to the user.</p>
+<h3 id="clause-44">44. No Licence to Third-Party Material</h3>
+<p>The appearance of a title, image reference, search link or external resource on HDC grants no licence from the Operator to reproduce, adapt, publicly communicate, distribute or commercially exploit third-party protected material. Permission, if required, must be obtained from the relevant rights holder.</p>
+<h2 id="part-vii">PART VII - RIGHTS-HOLDER NOTICE, COPYRIGHT PROCEDURE AND ORDINARY 90-DAY CURE</h2>
+<h3 id="clause-45">45. Good-Faith Rights-Holder Policy</h3>
+<p>The Operator does not intend knowingly to infringe third-party intellectual-property rights. A bona fide rights holder who identifies creator-controlled material or a creator-controlled link that is said to violate a legal right is requested to send a sufficiently detailed written notice so that the precise issue can be evaluated.</p>
+<h3 id="clause-46">46. Particulars of a Rights Notice</h3>
+<p>A rights notice should, so far as reasonably possible, identify: (a) the claimant and contact details; (b) the protected work or right asserted; (c) evidence of ownership or authority to act; (d) the exact URL, title, image, file or communication link complained of; (e) the legal basis of the complaint; (f) the remedy requested; and (g) a good-faith declaration that the information supplied is accurate. An agent should provide evidence of authority.</p>
+<h3 id="clause-47">47. Incomplete, Vague or Automated Notices</h3>
+<p>An incomplete, vague, bulk-generated or unverifiable notice may require clarification before a reliable merits determination can be made, except where mandatory law requires immediate or time-bound action regardless of completeness. Requesting clarification does not waive any defence or concede liability.</p>
+<h3 id="clause-48">48. Interim Measures Without Admission</h3>
+<p>Pending review, the Operator may temporarily disable a creator-controlled link, preserve evidence, annotate an entry, restrict access, seek clarification, replace a link, add attribution or take another proportionate precautionary step. Such action is without admission of liability and may be reversed if the complaint is unsupported or the legal basis changes.</p>
+<h3 id="clause-49">49. Specific Copyright Process Prevails Where Applicable</h3>
+<p>Where the Copyright Act, Copyright Rules, a competent-court order or another binding copyright procedure prescribes a particular response, period or evidentiary step, that specific legal procedure prevails over a general HDC correction timeline.</p>
+<h3 id="clause-50">50. Ordinary 90-Day Notice-and-Cure Period</h3>
+<p>For an ordinary, non-urgent factual, editorial, attributional, classification, reputational, contractual or comparable civil issue, the claimant is requested, where legally permissible, to give clear written notice and allow the Operator a reasonable opportunity of up to 90 calendar days after receipt of a complete and verifiable notice to investigate and, where appropriate, correct, clarify, annotate, replace, disable or remove creator-controlled material. This is a contractual good-faith resolution mechanism, not a universal bar on statutory remedies.</p>
+<h3 id="clause-51">51. Shorter Mandatory Timelines Always Prevail</h3>
+<p>The 90-day period does not override a court order, governmental direction, mandatory intermediary timeline, urgent injunctive remedy, criminal process, non-waivable right, statutory limitation period, data-protection requirement or any other binding rule requiring earlier action. Where law requires action sooner, the shorter lawful period controls.</p>
+<h3 id="clause-52">52. No Admission by Voluntary Review or Cure</h3>
+<p>Voluntarily investigating or correcting a complaint does not establish that HDC had prior knowledge of illegality, that the complaint was legally valid, that a monitoring duty existed, or that similar material elsewhere has been approved. A cure offered to reduce dispute or inconvenience does not waive available defences.</p>
+<h3 id="clause-53">53. Abusive or Bad-Faith Complaints</h3>
+<p>HDC may reasonably seek verification where a complaint appears fraudulent, impersonated, abusive, repetitive, technically impossible to identify or unsupported by the claimed right, subject always to any duty to act under binding law. Nothing authorises obstruction of a lawful order or genuine statutory complaint.</p>
+<h2 id="part-viii">PART VIII - INFORMATION TECHNOLOGY ACT, SECTION 79 AND INTERMEDIARY DUE DILIGENCE</h2>
+<h3 id="clause-54">54. Qualified Section 79 Safe-Harbour Reservation</h3>
+<p>To the extent, and only to the extent, that the Operator qualifies as an &quot;intermediary&quot; under the Information Technology Act, 2000 in relation to particular third-party information, data or communication links, the Operator expressly reserves every exemption, defence, limitation and safe-harbour protection lawfully available under section 79 and applicable rules, subject to fulfilment of the statutory conditions.</p>
+<h3 id="clause-55">55. No Section 79 Claim Merely Because HDC is Free or Non-Commercial</h3>
+<p>Non-commercial operation, absence of a sale price and voluntary contributions are relevant factual context but are not the legal test for section 79. Nothing in these Terms represents that intermediary protection automatically applies merely because HDC is devotional, educational, free to access or non-commercial.</p>
+<h3 id="clause-56">56. Operator-Controlled Content Distinguished from Third-Party Information</h3>
+<p>Section 79 is not invoked as a blanket label for all HDC material. Original text or material whose creation, selection, modification or publication is attributable to the Operator is treated according to its actual legal character. The section 79 reservation is directed to third-party information, data or communication links only where the facts and statutory conditions support intermediary treatment.</p>
+<h3 id="clause-57">57. Statutory Conditions, Publication Duties and Due Diligence</h3>
+<p>Where intermediary status applies, HDC intends to comply with applicable due-diligence duties, including prominent publication of applicable rules, privacy information, user terms and grievance particulars; reasonable user-awareness measures; lawful court orders; valid reasoned governmental intimations; grievance requirements; evidence-preservation duties; security obligations; accessibility requirements; and other binding obligations under the Information Technology Act, 2000 and the Information Technology (Intermediary Guidelines and Digital Media Ethics Code) Rules, 2021 as amended and in force from time to time. Nothing in these Terms narrows a mandatory obligation or converts HDC into an intermediary where the statutory definition is not otherwise satisfied.</p>
+<h3 id="clause-58">58. Current 2026 Intermediary Timelines - Conditional Applicability</h3>
+<p>If and to the extent Rule 3 of the IT Rules, 2021 applies to HDC as an intermediary in a particular matter, the statutory timelines then in force prevail. As reviewed on 28 October 2026, the amended framework includes acknowledgement of a qualifying grievance within 24 hours; general grievance resolution within 7 days; specified Rule 3(1)(b)-related removal requests within 36 hours; specified Rule 3(2)(b) complaints involving private-area, nudity, sexual-act or electronic-impersonation content within 2 hours; and removal or disabling upon qualifying actual knowledge under Rule 3(1)(d) within 3 hours. These timelines do not convert every ordinary editorial complaint into an intermediary grievance. A private complaint is not, merely by being sent, the court-order or authorised governmental intimation that Rule 3(1)(d) specifies as the route for actual knowledge, although a private complaint may engage other grievance duties where their conditions are met.</p>
+<h3 id="clause-59">59. Grievance Appellate and Other Statutory Remedies</h3>
+<p>Nothing in these Terms restricts a statutory appeal, complaint to a competent authority, Grievance Appellate Committee process or other remedy that applicable law makes available. HDC may refer a complainant to the appropriate statutory mechanism where relevant.</p>
+<h3 id="clause-60">60. Synthetic Information and Rule 3(3) - Conditional Treatment</h3>
+<p>The IT Rules, as amended in 2026, contain due-diligence provisions concerning synthetically generated information for intermediaries within their scope. HDC does not represent that it operates a user-facing AI-generation intermediary merely because some devotional illustrations or internal research workflows may use AI assistance. If HDC later introduces a feature that enables users to create, generate, materially alter, publish, transmit, share or disseminate synthetically generated information within the statutory scope, HDC shall treat the then-applicable prevention, prominent-labelling, metadata, provenance, user-warning and associated duties as controlling.</p>
+<h3 id="clause-61">61. Preservation, Assistance and Non-Vitiation of Evidence</h3>
+<p>Where intermediary status and the relevant rule apply, information removed or disabled upon qualifying actual knowledge, voluntary action for a Rule 3(1)(b) violation, or an applicable grievance may be preserved together with associated records for the period prescribed by law, including the 180-day preservation period in Rule 3(1)(g), or longer where lawfully required by a court or authorised Government agency. If HDC introduces user registration, any legally applicable post-cancellation retention duty will also be observed. HDC may provide information or assistance to a competent authority only in accordance with lawful authority. Nothing here authorises destruction, alteration or vitiation of evidence, nor requires HDC to create a record that never existed.</p>
+<h2 id="part-ix">PART IX - BNS, BNSS, BHARATIYA SAKSHYA ADHINIYAM AND CRIMINAL-LAW SAVINGS</h2>
+<h3 id="clause-62">62. No Private Immunity from Criminal Law</h3>
+<p>No disclaimer, contract, non-commercial status or contribution policy can confer private immunity from criminal liability where a competent authority or court finds the statutory elements of an offence established. These Terms instead document purpose, allocation of responsibility, lack of authorisation for third-party misconduct, good-faith procedures and available legal defences.</p>
+<h3 id="clause-63">63. Bharatiya Nyaya Sanhita, 2023</h3>
+<p>HDC is not intended to defame, criminally intimidate, cheat, impersonate, deliberately and maliciously outrage religious feelings, promote unlawful hostility, forge records, abet offences or engage in another act prohibited by the Bharatiya Nyaya Sanhita, 2023. A statement of purpose does not defeat liability where unlawful intent, knowledge, conduct and other statutory ingredients are independently proved.</p>
+<h3 id="clause-64">64. No Adoption, Conspiracy or Abetment of Independent Misconduct</h3>
+<p>An independent unlawful act committed by a user or third party is not authorised, directed, procured, conspired in, adopted, ratified or abetted by the Operator merely because that person previously accessed HDC or followed an external link. This clause does not protect the Operator&#x27;s own conduct if the legal requirements for liability are actually established.</p>
+<h3 id="clause-65">65. Bharatiya Nagarik Suraksha Sanhita, 2023</h3>
+<p>Nothing in these Terms obstructs lawful investigation, search, seizure, notice, summons, preservation, prosecution, court process or other power under the Bharatiya Nagarik Suraksha Sanhita, 2023 or another applicable procedural law. Jurisdiction and procedure in criminal matters are determined by law, not by a private Delhi-jurisdiction clause.</p>
+<h3 id="clause-66">66. Bharatiya Sakshya Adhiniyam, Electronic Records and Legal Hold</h3>
+<p>HDC may preserve legally permissible electronic records relevant to acceptance, downloads, contributions, complaints, revisions, cyber incidents and compliance. When a credible dispute, lawful demand, court process, rights complaint or cyber-security incident makes particular records reasonably relevant, HDC may suspend routine deletion of those records and apply a proportionate legal hold to the extent technically available and legally permissible. Where electronic evidence is relied upon in proceedings, admissibility, proof and evidentiary weight are governed by applicable law, including the Bharatiya Sakshya Adhiniyam, 2023. These Terms do not predetermine evidentiary weight and do not create a duty to retain data beyond lawful necessity.</p>
+<h2 id="part-x">PART X - USER CONDUCT, REDISTRIBUTION, IMPERSONATION AND SUBMISSIONS</h2>
+<h3 id="clause-67">67. Prohibited Conduct</h3>
+<p>A user must not use HDC to infringe intellectual-property rights, impersonate another person, commit fraud, issue threats, upload or distribute malware, attack Website infrastructure, bypass security, unlawfully harvest personal data, deceive others about the source of HDC material, use HDC in connection with an offence, or otherwise violate applicable law.</p>
+<h3 id="clause-68">68. Independent Redistribution and Modification</h3>
+<p>A user who independently downloads, edits, republishes, uploads, commercialises or redistributes HDC material is responsible for that user&#x27;s own conduct and for obtaining permissions required by law. A modified copy must not be falsely presented as the Operator&#x27;s official or unchanged version.</p>
+<h3 id="clause-69">69. Anti-Impersonation and False Authority</h3>
+<p>No user, volunteer, contributor, rights claimant or third party may falsely represent that they are the Operator&#x27;s employee, partner, collecting agent, rights agent, publisher, spokesperson, grievance officer, authorised intermediary or representative without express written authority. HDC is not responsible for unauthorised persons who make such claims.</p>
+<h3 id="clause-70">70. Automated Access and Technical Abuse</h3>
+<p>Ordinary indexing and reasonable personal access are not prohibited merely because automated technology exists. However, a person must not use bots, scrapers, crawlers or automated tools in a manner that circumvents access controls, materially degrades service, extracts protected data unlawfully, facilitates deceptive cloning or otherwise violates law or these Terms.</p>
+<h3 id="clause-71">71. Feedback, Corrections and Voluntary Submissions - Authority and Limited</h3>
+<p>Licence A person who voluntarily sends a correction, source citation, translation, image, text, suggestion or other non-confidential submission represents that the person has the right and authority to provide it for the stated purpose and that doing so does not knowingly violate another person&#x27;s rights. The sender grants HDC a non-exclusive, worldwide, royalty-free licence, to the extent of the sender&#x27;s rights, to receive, reproduce, store, analyse and format the submission for evaluation and verification and, if HDC accepts it, to incorporate, display, archive and maintain it as part of the project. This licence does not transfer ownership, does not override third-party rights and does not oblige HDC to publish the submission. A sender wishing to impose a material restriction should communicate it clearly before HDC accepts or incorporates the submission.</p>
+<h3 id="clause-72">72. No Confidentiality Merely from Unsolicited Contact</h3>
+<p>An unsolicited message to a general Website, grievance or correction address does not by itself create an advocate-client relationship, settlement privilege, fiduciary duty or contractual confidentiality obligation beyond duties imposed by applicable law. A sender should not transmit unnecessary sensitive information.</p>
+<h2 id="part-xi">PART XI - PRIVACY, DATA, LOCATION, COOKIES, LOCAL STORAGE AND MINORS</h2>
+<h3 id="clause-73">73. Privacy Framework, Data Minimisation and Purpose Limitation</h3>
+<p>HDC intends to process personal data only where reasonably necessary for operating the Website, responding to communications, providing a user-requested feature, protecting security, documenting assent, administering voluntary contributions, handling rights or grievance notices, maintaining legal records or complying with law. HDC should minimise collection, avoid requesting unnecessary sensitive information, restrict access according to need, and avoid retaining exact location, payment credentials or other high-risk data when the Website can function without them. The Privacy Processing Schedule in Appendix B forms part of this Version 3.1 framework and must be updated if the deployed Website materially changes its data practices.</p>
+<h3 id="clause-74">74. Digital Personal Data Protection Act and Rules - Current Phased</h3>
+<p>Commencement The Digital Personal Data Protection Act, 2023 and Digital Personal Data Protection Rules, 2025 were brought into force through staged commencement. As of the Version 3.1 review date, only the provisions already commenced by notification are treated as presently operative; provisions scheduled for one year or eighteen months after publication are treated as future obligations until their commencement date is reached, subject to any later lawful notification or amendment. HDC should maintain implementation readiness for the later-operating notice, consent, security, breach, rights and related provisions rather than prematurely representing every provision as already enforceable.</p>
+<h3 id="clause-75">75. Location-Dependent Features and Precise Location Minimisation</h3>
+<p>If a user voluntarily enables a location-dependent feature, such as Panchang or local astronomical calculation, the technically necessary location information may be processed for that requested purpose subject to the actual implementation, browser or device permissions and the Privacy Policy. Where practical, HDC should use the least precise location sufficient for the feature, provide a manual-location alternative, process location ephemerally, and avoid retaining or transmitting precise location beyond what is reasonably necessary and disclosed. A browser permission prompt does not authorise unrelated use.</p>
+<h3 id="clause-76">76. Local Storage, Cookies and On-Device Preferences</h3>
+<p>Favourites, counters, theme choices, language settings or similar preferences may use browser local storage, cookies or comparable technologies. Where a preference is stored only on the user&#x27;s device, HDC does not treat that local value as server-held personal data merely because the Website code reads it locally. Clearing browser data, changing devices, private browsing, software updates or browser settings may remove such preferences. Non-essential analytics or tracking technologies should not be introduced without corresponding disclosure and any consent mechanism required by law.</p>
+<h3 id="clause-77">77. Third-Party Infrastructure and Independent Data Processing</h3>
+<p>GitHub and GitHub Pages, DNS and network providers, payment services, external video platforms, browsers and other independent services may process technical or transaction information under their own terms and privacy policies. HDC does not control all such processing merely because the user reaches the service from HDC. Where HDC itself receives or controls data originating from a third-party provider, HDC will treat that data according to its own applicable legal duties.</p>
+<h3 id="clause-78">78. Children and Minors</h3>
+<p>HDC is a devotional reference resource and may be viewed by families, but it does not intend to solicit unnecessary personal data from children. If a feature would require processing of a child&#x27;s personal data, the Website should apply the legal requirements in force for such processing. Parents or guardians should supervise minors&#x27; use of payment or external-platform features.</p>
+<h3 id="clause-79">79. Complaint, Legal-Notice, Security and Compliance Records</h3>
+<p>A person who sends a complaint, rights notice, cyber-security report or legal notice understands that identifying, contact, evidentiary and routing information supplied with that communication may be retained for investigation, response, restoration or removal decisions, security, record-keeping, legal hold, dispute handling and compliance for a period reasonably necessary for those purposes, subject to mandatory retention or deletion requirements. HDC should segregate such records from ordinary public Website content and limit unnecessary disclosure.</p>
+<h2 id="part-xii">PART XII - SECURITY, AVAILABILITY, MONITORING AND FORCE MAJEURE</h2>
+<h3 id="clause-80">80. Security and Incident Response</h3>
+<p>Reasonable technical and organisational security measures may be used, but no Internet service can be represented as completely immune from hacking, malware, repository compromise, credential theft, denial-of-service attack, data loss, misconfiguration or third-party platform failure. HDC should maintain a proportionate incident-response process covering detection, containment, recovery, evidence preservation, notification and lessons learned. Where the CERT-In Directions under section 70B of the Information Technology Act or another binding cyber-security rule applies to HDC, the applicable reporting, log-retention, point-of-contact and cooperation requirements prevail.</p>
+<h3 id="clause-81">81. Availability, Modification and Discontinuation</h3>
+<p>The Operator may correct, reorganise, suspend, remove or discontinue content or functionality for maintenance, security, legal compliance, research integrity, technical limitations or project reasons. No user or contributor acquires a contractual right to indefinite availability of a particular page, feature, file or external link merely through use or contribution.</p>
+<h3 id="clause-82">82. No Contractual Duty to Monitor All Third-Party Material</h3>
+<p>Except where mandatory law imposes a specific duty, HDC does not assume a contractual duty to proactively monitor every external destination, user action, mirror, repost, search result or unauthorised copy. A voluntary monitoring measure does not enlarge liability or create a general duty beyond applicable law.</p>
+<h3 id="clause-83">83. Force Majeure and Events Beyond Reasonable Control</h3>
+<p>To the fullest extent permitted by law, the Operator is not responsible for delay or failure caused by events beyond reasonable control, including natural disaster, fire, flood, war, civil disorder, governmental action, Internet or telecommunications failure, power failure, hosting outage, platform suspension, cyberattack, hardware failure or comparable events.</p>
+<h2 id="part-xiii">PART XIII - LIMITATIONS OF LIABILITY, RELIANCE AND NON-EXCLUDABLE RIGHTS</h2>
+<h3 id="clause-84">84. General Limitation</h3>
+<p>To the fullest extent permitted by applicable law, HDC is provided for devotional, cultural, educational, archival and informational reference. Users remain responsible for decisions they make on the basis of Website material, external resources or third-party services.</p>
+<h3 id="clause-85">85. Third-Party Responsibility</h3>
+<p>Each independent third party remains responsible for that party&#x27;s own conduct, content, advertising, payments, publications, recordings, uploads, modifications, redistribution and legal compliance. HDC is not liable merely because an independent third party was discovered through a title, search or link.</p>
+<h3 id="clause-86">86. Indirect and Consequential Loss</h3>
+<p>To the fullest extent lawfully excludable, the Operator is not liable for indirect, remote, consequential, incidental, exemplary or special loss, including loss of profit, opportunity, business, data, reputation or anticipated benefit, where such exclusion is permitted by law and the loss arises from use of or inability to use HDC or an independent third-party service.</p>
+<h3 id="clause-87">87. Contractual Monetary Cap</h3>
+<p>Where contractual monetary liability arising solely from permitted use of HDC may lawfully be limited, aggregate contractual liability shall not exceed the amount actually paid directly by the claimant to the Operator for the particular Website service giving rise to the claim. Where HDC was used free of charge, no purchase price was received from that user. This clause does not limit liability that law makes non-excludable.</p>
+<h3 id="clause-88">88. Reliance on Third-Party Information</h3>
+<p>A user who requires a legally, medically, financially, academically, religiously or professionally authoritative determination should verify the matter from the relevant primary source or qualified professional. HDC is not a substitute for such verification merely because it is detailed or extensive.</p>
+<h3 id="clause-89">89. Non-Excludable Liability and Mandatory Rights</h3>
+<p>Nothing in these Terms excludes or limits liability for fraud, wilful unlawful conduct or another matter to the extent applicable law prohibits exclusion or limitation. Nothing waives a mandatory consumer, data-protection, criminal, intellectual-property or other right where the law does not permit waiver.</p>
+<h2 id="part-xiv">PART XIV - INDEMNITY AND THIRD-PARTY CLAIMS</h2>
+<h3 id="clause-90">90. User Indemnity for the User&#x27;s Own Unlawful Conduct</h3>
+<p>To the fullest extent permitted by law, a user whose own unauthorised, unlawful or contractually prohibited conduct directly causes a third-party claim shall indemnify and hold harmless the Operator from reasonable loss, liability, cost and expense directly arising from that conduct, including where the user independently republishes protected material, falsely claims authority from HDC, introduces malware, misuses personal data or creates a deceptive commercial copy.</p>
+<h3 id="clause-91">91. Limits on Indemnity</h3>
+<p>No indemnity applies to the extent applicable law prohibits transfer of responsibility or to the extent a claim results from the Operator&#x27;s own proven non-excludable liability. The indemnity is not intended to punish lawful criticism, bona fide rights claims or protected statutory activity.</p>
+<h2 id="part-xv">PART XV - GOVERNING LAW, DELHI JURISDICTION AND DISPUTE HANDLING</h2>
+<h3 id="clause-92">92. Governing Law</h3>
+<p>These Terms and the contractual relationship arising from lawful use of HDC are governed by the laws of India. Depending on the circumstances, relevant legislation may include the Information Technology Act, 2000; applicable Information Technology Rules; Copyright Act, 1957; Bharatiya Nyaya Sanhita, 2023; Bharatiya Nagarik Suraksha Sanhita, 2023; Bharatiya Sakshya Adhiniyam, 2023; Indian Contract Act, 1872; Trade Marks Act, 1999; Digital Personal Data Protection Act, 2023 and Rules; Consumer Protection Act, 2019 where applicable; Foreign Contribution (Regulation) Act, 2010 where applicable; Income-tax Act, 1961; and other applicable law.</p>
+<h3 id="clause-93">93. Delhi Forum - Qualified Exclusive Jurisdiction</h3>
+<p>HDC is compiled and administered from Delhi. Subject to mandatory statutory jurisdiction, and only where competent courts at Delhi otherwise possess jurisdiction under applicable law, the parties intend that courts at Delhi, India have exclusive territorial jurisdiction over civil and contractual disputes directly between the Operator and a legally bound user. This clause does not create jurisdiction where none exists, alter criminal territorial jurisdiction, displace a mandatory forum or prevent a competent authority from exercising statutory powers.</p>
+<h3 id="clause-94">94. Good-Faith Pre-Litigation Notice</h3>
+<p>For an ordinary civil dispute where the law permits, a claimant is requested to provide a sufficiently detailed written notice and allow a reasonable opportunity for good-faith resolution before commencing adversarial proceedings. This request does not restrain urgent lawful remedies, criminal process, non-waivable rights, statutory appeals or limitation periods.</p>
+<h3 id="clause-95">95. International Users</h3>
+<p>A person accessing HDC from outside India is responsible for compliance with local law that lawfully applies to that person. Technical accessibility in another jurisdiction is not a representation that every feature, contribution route, external link or religious reference is lawful or suitable in every country.</p>
+<h2 id="part-xvi">PART XVI - OFFICIAL VERSION, AMENDMENTS, SEVERABILITY AND INTERPRETATION</h2>
+<h3 id="clause-96">96. Official Source, Canonical Version and Verification</h3>
+<p>The current creator-controlled Website and any official legal-document location expressly identified there should be used to verify the current Terms. Mirrors, cached copies, forwarded PDFs, modified copies, social-media reposts and third-party archives may be incomplete or outdated. HDC may publish a version identifier, effective date, canonical-text hash or release record to permit objective verification of the legal text in force at a particular time.</p>
+<h3 id="clause-97">97. Unauthorised Copies, Modifications and Authenticity Records</h3>
+<p>The Operator is not responsible for alterations made by a third party after a copy leaves creator control. A person distributing a modified copy must not falsely represent it as the current official version. HDC may maintain an archive of superseded legal versions for evidentiary and transparency purposes, and may publish cryptographic hashes or release notes. Preservation of an old version does not mean it remains the current contract for future use.</p>
+<h3 id="clause-98">98. Changes to These Terms and Version Archive</h3>
+<p>The Operator may update these Terms when reasonably necessary because of changes in law, Website functionality, payment methods, data practices, security, project structure or other legitimate requirements. The current version and effective date should be displayed conspicuously. Material changes should be brought to users&#x27; attention where reasonably appropriate and, where affirmative assent is legally or operationally appropriate, the Website may require renewed acceptance. HDC should retain a reasonable version history sufficient to identify the text applicable to a recorded acceptance event.</p>
+<h3 id="clause-99">99. Severability and Narrow Construction</h3>
+<p>If a competent court determines that a provision is invalid, illegal or unenforceable, that provision shall, where legally possible, be interpreted or narrowed to the minimum extent necessary and the remainder shall continue in effect. These Terms seek maximum lawful protection without claiming immunity prohibited by law.</p>
+<h3 id="clause-100">100. No Waiver</h3>
+<p>Failure to enforce a provision on one occasion does not automatically waive it on another occasion. A waiver is effective only to the extent clearly made by a person legally entitled to grant it.</p>
+<h3 id="clause-101">101. Statutory Savings</h3>
+<p>Every disclaimer, exclusion, limitation, indemnity, notice requirement, cure mechanism and jurisdiction clause is qualified by the expression &quot;to the fullest extent permitted by applicable law&quot;. Mandatory law, lawful court orders, statutory authorities and non-waivable rights prevail to the extent of any inconsistency.</p>
+<h3 id="clause-102">102. Hierarchy and Entire Website Terms</h3>
+<p>These Master Terms, together with any specific Privacy Policy, Copyright / Rights-Holder Policy, Contribution Policy, Grievance Procedure and affirmative transaction notice, constitute the principal Website terms. A specific policy governs its subject matter where consistent with law. No casual email, social-media post or informal statement varies these Terms unless made with authority and intended to do so.</p>
+<h3 id="clause-103">103. Survival</h3>
+<p>Provisions concerning intellectual property, user responsibility, limitations of liability, indemnity, governing law, jurisdiction, evidence, official-version status, dispute handling and any term that by its nature should survive shall continue after a user stops using HDC to the extent legally applicable.</p>
+<h2 id="part-xvii">PART XVII - CONTACT, GRIEVANCE OFFICER AND FORMAL NOTICES</h2>
+<h3 id="clause-104">104. Error or Ordinary Correction Notice</h3>
+<p>A user discovering a genuine ordinary error is encouraged to identify the exact page or URL, work title or feature, nature of the alleged error, proposed correction and, where possible, supporting source. Such an ordinary correction notice is distinct from a statutory intermediary grievance, copyright complaint, privacy request, cyber-security report, court order or governmental intimation. Routing a matter to the correct process avoids falsely applying the 90-day ordinary cure period to an issue governed by a shorter mandatory rule.</p>
+<h3 id="clause-105">105. Copyright and Rights-Holder Notice; Counter-Position Where Appropriate</h3>
+<p>Copyright and other rights-holder complaints should be clearly marked &quot;RIGHTS-HOLDER / COPYRIGHT NOTICE - URGENT REVIEW&quot; and should contain the particulars described in these Terms. Mandatory legal timelines, including any Copyright Act procedure that actually applies, prevail over the ordinary 90-day correction mechanism. Where legally permissible and useful to a fair determination, HDC may seek clarification from the claimant, notify an identifiable affected submitter or source, receive a response, and restore a link or entry if the complaint is withdrawn, unsupported or no longer requires restriction. No counter-position delays a mandatory court order, governmental direction or statutory deadline.</p>
+<h3 id="clause-106">106. Designated Grievance Officer / Grievance Contact</h3>
+<p>For grievances relating to HDC, and if and to the extent appointment or publication of a Grievance Officer is legally required for the Website&#x27;s actual status and functions, the following person is designated. Statutory intermediary timelines apply only where the relevant law applies, but HDC may use the same contact for ordinary complaints as a matter of convenience: GRIEVANCE OFFICER: Adv. R.K. Bharani EMAIL: bharani.law.chambers@gmail.com CONTACT: P-37, P.O. Lane, Tis Hazari Courts, Delhi 110 0054</p>
+<p>Mob. No.: +91 - 9289800984; +91 - 7838085278</p>
+<h3 id="clause-107">107. Formal Legal Notice Requirements</h3>
+<p>A formal legal notice should identify the sender, legal capacity, complete contact details, exact material complained of, legal basis asserted, relevant evidence, urgency, applicable statutory timeline if relied upon and specific relief requested. Sending a notice does not itself establish the correctness of the allegation. The Operator reserves every available substantive and procedural right, defence, exception and safe harbour.</p>
+<h3 id="clause-108">108. Notice Receipt, Routing and Distinct Actual-Knowledge Standards</h3>
+<p>A notice is easier to process when sent to a currently published address with sufficient information to identify the issue and its urgency. A failed, bounced, incomplete or misdirected communication does not establish actual receipt merely because it was sent somewhere on the Internet, subject to any statutory rule determining receipt differently. For avoidance of doubt, the special actual-knowledge route in Rule 3(1)(d) of the IT Rules is distinct from an ordinary private complaint and, as reviewed for Version 3.1, arises through the prescribed court order or valid reasoned governmental intimation. Private grievances may nonetheless engage other statutory complaint duties where their separate conditions are satisfied.</p>
+<h2 id="part-xviii">PART XVIII - OPERATIONAL COMPLIANCE, CYBERSECURITY, EVIDENCE AND DEPLOYMENT CONTROLS</h2>
+<h3 id="clause-109">109. Compliance Priority and Process Classification</h3>
+<p>HDC shall classify incoming issues by their legal character before applying a response period. An ordinary editorial correction, a Copyright Act section 52(1)(c) complaint, an intermediary grievance, a Rule 3(2)(b) sensitive-content complaint, a Rule 3(1)(d) court or Government actual-knowledge event, a cyber-security incident, a personal-data matter and a court process are not interchangeable. The shortest binding statutory or judicial requirement applicable to the actual facts prevails over any longer contractual review period.</p>
+<h3 id="clause-110">110. Statutory Timeline Matrix and Internal Escalation</h3>
+<p>The timeline matrix in Appendix A is an operational summary for routing and escalation. It is not a substitute for the primary law and must be read subject to the Website&#x27;s actual legal status, the nature of the material, the date of the event, later amendments and any specific order. HDC should internally mark time-sensitive notices on receipt, record the receipt time, identify the governing process and escalate urgent matters to the Grievance Officer or Operator without waiting for the ordinary correction queue.</p>
+<h3 id="clause-111">111. Periodic User Awareness, Policy Publication and Change Notices</h3>
+<p>If HDC qualifies as an intermediary for a relevant service, it should implement the user-awareness duties then in force. As reviewed on 28 October 2026, Rule 3(1)(c) requires the intermediary to periodically inform users, at least once every three months, in a simple and effective manner of specified consequences of non-compliance; Rule 3(1)(f) separately requires periodic, at-least-annual information concerning the rules and regulations, privacy policy or user agreement or changes to them. Where applicable, HDC should also make the required policies and grievance mechanism prominently accessible and provide language access required by the Rules.</p>
+<h3 id="clause-112">112. CERT-In Directions - Conditional Six-Hour Incident Reporting</h3>
+<p>The CERT-In Directions issued under section 70B of the Information Technology Act impose cyber-security obligations on entities within their scope. Where those Directions apply to HDC or the Operator in the relevant capacity, reportable cyber incidents should be reported to CERT-In within the applicable period, including the six-hour period specified by the Directions, calculated from noticing the incident or being brought to notice of it, and related information should be supplied as lawfully required. This clause is conditional and does not represent that every technical fault is a reportable cyber incident.</p>
+<h3 id="clause-113">113. Cyber Logs, Time Synchronisation and 180-Day Retention - Conditional</h3>
+<p>Where the CERT-In Directions apply, HDC should maintain the logs, time synchronisation and other security records required by those Directions, including the minimum rolling retention period specified there, currently 180 days for logs within scope, and should furnish logs or information to CERT-In when lawfully required. Separately, where Rule 3(1)(g) of the IT Rules applies, removed or disabled information and associated records may carry a 180-day preservation duty. These are distinct legal bases and should not be conflated.</p>
+<h3 id="clause-114">114. Cyber-Security Point of Contact and Incident Response Record</h3>
+<p>Where legally required, HDC should maintain and keep current a cyber-security point of contact for communications with CERT-In or other competent authorities. For material incidents, HDC should create a proportionate incident record identifying detection time, affected systems, containment, restoration, evidence preserved, notifications made and remediation. Creating an incident record after detection does not constitute an admission that the incident resulted from negligence.</p>
+<h3 id="clause-115">115. Evidence Preservation, Legal Hold and No Spoliation</h3>
+<p>Upon a credible legal dispute, lawful demand, cyber incident, rights complaint or anticipated proceeding, HDC may suspend routine deletion of relevant records and preserve the smallest reasonably necessary evidentiary set, including notices, source records, acceptance logs, version identifiers, relevant URLs, screenshots, transaction references, repository history and technical logs that actually exist. HDC should preserve evidence without material alteration and document any necessary technical transformation. This clause does not authorise indefinite retention or require creation of evidence that never existed.</p>
+<h3 id="clause-116">116. Notice, Counter-Notice, Clarification and Restoration Workflow</h3>
+<p>Where mandatory law does not prescribe a different procedure, HDC may use a balanced notice workflow: identify the claimant and material; verify authority and legal basis; preserve the complained-of record; take proportionate interim action where justified; seek clarification or a response from an identifiable affected source; decide whether to correct, annotate, replace, disable, remove, restore or take no action; record the decision; and communicate it where appropriate. Restoration after a complaint is withdrawn, unsupported or expired is without admission that the original restriction was wrongful.</p>
+<h3 id="clause-117">117. Submission Licence, Source Integrity and Attribution Records</h3>
+<p>For material voluntarily submitted for possible incorporation, HDC may maintain source and attribution records sufficient to show who supplied the material, the stated source, any permission or restriction, and the date of submission. The limited licence in clause 71 is intended to permit evaluation, verification, formatting, incorporation and archival maintenance of accepted submissions. HDC may refuse anonymous, unverifiable or rights-sensitive submissions where provenance is inadequate.</p>
+<h3 id="clause-118">118. Privacy-by-Design and Least-Data Implementation</h3>
+<p>HDC should implement privacy controls in a manner proportionate to a non-commercial static or primarily client-side devotional website: collect the least data reasonably necessary; prefer on-device processing for favourites and preferences where practicable; prefer coarse or user-entered location where adequate; avoid centralising precise location merely for convenience; avoid collecting payment credentials that can remain with the payment provider; and limit access to complaint and legal records. Where functionality changes, the privacy schedule and notice should be updated before or at deployment.</p>
+<h3 id="clause-119">119. Analytics, Tracking, Advertising and New Data Practices</h3>
+<p>These Terms do not silently authorise undisclosed analytics, behavioural advertising, fingerprinting or cross-site tracking. If HDC later introduces analytics, telemetry, advertising identifiers or a new provider that materially changes personal-data processing, the then-current Privacy Policy should identify the relevant categories, purposes, recipients, retention and user controls and obtain any consent or provide any notice required by law. Third-party platforms may independently display advertising outside HDC&#x27;s control.</p>
+<h3 id="clause-120">120. Accessibility and Reasonable Access Measures</h3>
+<p>HDC should take reasonable measures to make its services and legal notices accessible, proportionate to the project and technology used. Measures may include semantic headings, keyboard operability, readable contrast, scalable text, meaningful link labels, alternative text for informational images where practicable, captions or text alternatives where available, and avoiding design choices that unnecessarily obstruct assistive technology. Where Rule 3(1)(m) or another binding accessibility duty applies, that duty prevails.</p>
+<h3 id="clause-121">121. AI Provenance, Labelling and Non-Deceptive Presentation</h3>
+<p>HDC should maintain reasonable provenance for operator-created AI-assisted devotional images and materially synthetic media, including an internal source record, generation or editing status, or other traceable identifier where practicable. Where applicable law requires prominent labelling, embedded metadata, an identifier or another provenance mechanism for synthetically generated information, HDC shall apply the binding standard. This clause does not require HDC to label routine good-faith formatting, compression, accessibility, translation or document-layout operations that the applicable law excludes from the relevant SGI definition.</p>
+<h3 id="clause-122">122. Canonical Legal Text, Version Archive and Cryptographic Verification</h3>
+<p>HDC may maintain a canonical plain-text or source version of these Terms and publish a cryptographic hash of that canonical text or an official release record. The purpose is to identify the legal wording corresponding to a version and acceptance event without depending on the appearance of a screenshot or third-party copy. A hash verifies identity of the hashed text; it does not itself prove that a particular user accepted that text.</p>
+<h3 id="clause-123">123. Acceptance Evidence, Data Minimisation and Retention</h3>
+<p>Where HDC deploys affirmative acceptance for downloads, contributions, submissions or other higher-risk actions, it may record the Terms version, date and time, action type, transaction or download reference and only such additional technical information as is reasonably necessary to evidence the event or protect security. Acceptance records should not become a pretext for unnecessary tracking and should be retained only for a proportionate legal, accounting, security or evidentiary period subject to mandatory law.</p>
+<h3 id="clause-124">124. Separate Web Policies and Incorporation by Reference</h3>
+<p>For usability and conspicuous notice, HDC should publish separately accessible pages for at least the Terms of Use, Legal Disclaimer, Privacy Policy, Copyright / Rights-Holder Policy, Voluntary Contribution Policy and Grievance / Notice Procedure, while this master document may remain the consolidated legal instrument. Each separate page should identify its effective version and link back to the current master terms. A specific policy governs its subject matter to the extent consistent with mandatory law and the master hierarchy.</p>
+<h3 id="clause-125">125. Legal Change Monitoring and Draft Proposals</h3>
+<p>HDC should review the legal framework periodically and when a material statutory amendment, notification, binding direction or relevant judicial order changes the obligations described here. Draft rules, consultation papers, advisories without binding force and proposed amendments are not treated as enacted law merely because they are published; however, HDC may prepare for them operationally. Binding law in force at the relevant time prevails over an outdated summary in these Terms.</p>
+<section id="appendix-a"><h2>APPENDIX A - STATUTORY AND OPERATIONAL TIMELINE MATRIX</h2><p>This matrix is a routing aid, not a substitute for primary law. It applies only where the stated legal regime governs the facts and HDC has the relevant statutory status. The law, a valid order and later amendments prevail.</p><div class="abp-support-grid"><section class="abp-info-card"><h3>Ordinary non-urgent editorial / factual correction</h3><dl><dt><strong>Legal / HDC Basis</strong></dt><dd>Contractual HDC process</dd><dt><strong>Current Routing Target</strong></dt><dd>Up to 90 calendar days after complete and verifiable notice</dd><dt><strong>Qualification</strong></dt><dd>Not a statutory moratorium; shorter binding law prevails.</dd></dl></section><section class="abp-info-card"><h3>General qualifying intermediary grievance</h3><dl><dt><strong>Legal / HDC Basis</strong></dt><dd>IT Rules, Rule 3(2)(a)</dd><dt><strong>Current Routing Target</strong></dt><dd>Acknowledge within 24 hours; resolve within 7 days</dd><dt><strong>Qualification</strong></dt><dd>Only if HDC is an intermediary for the relevant matter.</dd></dl></section><section class="abp-info-card"><h3>Specified Rule 3(1)(b) removal grievance</h3><dl><dt><strong>Legal / HDC Basis</strong></dt><dd>IT Rules, Rule 3(2)(a) proviso</dd><dt><strong>Current Routing Target</strong></dt><dd>Resolve within 36 hours</dd><dt><strong>Qualification</strong></dt><dd>Subject to the Rule&#x27;s exclusions and safeguards.</dd></dl></section><section class="abp-info-card"><h3>Private-area / nudity / sexual-act / electronic-impersonation complaint</h3><dl><dt><strong>Legal / HDC Basis</strong></dt><dd>IT Rules, Rule 3(2)(b)</dd><dt><strong>Current Routing Target</strong></dt><dd>Take reasonable and practicable removal / disablement measures within 2 hours</dd><dt><strong>Qualification</strong></dt><dd>Applies only where the statutory conditions are met.</dd></dl></section><section class="abp-info-card"><h3>Qualifying actual knowledge</h3><dl><dt><strong>Legal / HDC Basis</strong></dt><dd>IT Rules, Rule 3(1)(d)</dd><dt><strong>Current Routing Target</strong></dt><dd>Remove or disable within 3 hours</dd><dt><strong>Qualification</strong></dt><dd>Actual knowledge arises through the prescribed court order or valid reasoned governmental intimation, not merely any private email.</dd></dl></section><section class="abp-info-card"><h3>Preservation after qualifying removal / disablement</h3><dl><dt><strong>Legal / HDC Basis</strong></dt><dd>IT Rules, Rule 3(1)(g)</dd><dt><strong>Current Routing Target</strong></dt><dd>180 days, or longer if lawfully required</dd><dt><strong>Qualification</strong></dt><dd>Conditional on intermediary status and rule applicability.</dd></dl></section><section class="abp-info-card"><h3>Registered-user information after cancellation, if HDC later introduces registration</h3><dl><dt><strong>Legal / HDC Basis</strong></dt><dd>IT Rules, Rule 3(1)(h)</dd><dt><strong>Current Routing Target</strong></dt><dd>180 days</dd><dt><strong>Qualification</strong></dt><dd>Not relevant if HDC has no user registration.</dd></dl></section><section class="abp-info-card"><h3>Lawful Government information / assistance request</h3><dl><dt><strong>Legal / HDC Basis</strong></dt><dd>IT Rules, Rule 3(1)(j)</dd><dt><strong>Current Routing Target</strong></dt><dd>As soon as possible, generally not later than 72 hours</dd><dt><strong>Qualification</strong></dt><dd>Special online-gaming timing is not an HDC assumption.</dd></dl></section><section class="abp-info-card"><h3>User-awareness consequences of non-compliance</h3><dl><dt><strong>Legal / HDC Basis</strong></dt><dd>IT Rules, Rule 3(1)(c)</dd><dt><strong>Current Routing Target</strong></dt><dd>At least once every 3 months</dd><dt><strong>Qualification</strong></dt><dd>Conditional on intermediary status.</dd></dl></section><section class="abp-info-card"><h3>Rules / privacy policy / user agreement or changes</h3><dl><dt><strong>Legal / HDC Basis</strong></dt><dd>IT Rules, Rule 3(1)(f)</dd><dt><strong>Current Routing Target</strong></dt><dd>Periodically and at least once a year</dd><dt><strong>Qualification</strong></dt><dd>Conditional on intermediary status.</dd></dl></section><section class="abp-info-card"><h3>CERT-In reportable cyber incident</h3><dl><dt><strong>Legal / HDC Basis</strong></dt><dd>CERT-In Directions under IT Act section 70B</dd><dt><strong>Current Routing Target</strong></dt><dd>Within 6 hours of noticing or being brought to notice, where Directions apply</dd><dt><strong>Qualification</strong></dt><dd>Not every technical error is a reportable incident.</dd></dl></section><section class="abp-info-card"><h3>Copyright transient/incidental link storage complaint</h3><dl><dt><strong>Legal / HDC Basis</strong></dt><dd>Copyright Act, section 52(1)(c)</dd><dt><strong>Current Routing Target</strong></dt><dd>Refrain from facilitating access for 21 days or until competent-court order; may continue if no such order before expiry</dd><dt><strong>Qualification</strong></dt><dd>Applies only if section 52(1)(c) facts are satisfied.</dd></dl></section><section class="abp-info-card"><h3>DPDP Act / Rules</h3><dl><dt><strong>Legal / HDC Basis</strong></dt><dd>Commencement notifications and DPDP Rules, 2025</dd><dt><strong>Current Routing Target</strong></dt><dd>Phased commencement; check operative provision on the event date</dd><dt><strong>Qualification</strong></dt><dd>Major notice, consent, rights, security and breach provisions are scheduled by notified commencement and must not be treated as universally operative before their date.</dd></dl></section></div></section>
+
+<section id="appendix-b"><h2>APPENDIX B - PRIVACY PROCESSING SCHEDULE</h2><p>This schedule describes the intended HDC processing architecture based on the Website functions contemplated in these Terms. It must be reconciled with the deployed code and providers. If actual processing differs materially, the Privacy Policy should be updated before or at deployment.</p><div class="abp-support-grid"><section class="abp-info-card"><h3>Core site access / infrastructure metadata</h3><dl><dt><strong>Purpose</strong></dt><dd>Technical delivery of Website; security</dd><dt><strong>Processing / Recipient</strong></dt><dd>GitHub / GitHub Pages, DNS, network and browser infrastructure may process request metadata independently. HDC should not claim direct control over all such logs.</dd><dt><strong>Retention / Control</strong></dt><dd>Provider terms and lawful retention; HDC retains only data it actually receives and needs.</dd></dl></section><section class="abp-info-card"><h3>Favourites, counters, theme or language preferences</h3><dl><dt><strong>Purpose</strong></dt><dd>User-requested convenience</dd><dt><strong>Processing / Recipient</strong></dt><dd>Prefer browser local storage or equivalent on-device storage where practicable.</dd><dt><strong>Retention / Control</strong></dt><dd>User can clear browser storage; no guarantee of recovery.</dd></dl></section><section class="abp-info-card"><h3>Location for Panchang / astronomical calculation</h3><dl><dt><strong>Purpose</strong></dt><dd>Produce location-dependent devotional/calendar result requested by user</dd><dt><strong>Processing / Recipient</strong></dt><dd>Prefer manual or coarse location where adequate; browser/device permission for precise location only when needed.</dd><dt><strong>Retention / Control</strong></dt><dd>Prefer ephemeral processing; no retention of exact location unless necessary and disclosed.</dd></dl></section><section class="abp-info-card"><h3>Grievance, rights-holder and legal notices</h3><dl><dt><strong>Purpose</strong></dt><dd>Investigate and respond; preserve legal record</dd><dt><strong>Processing / Recipient</strong></dt><dd>Name, email/contact details, asserted right, URLs, evidence and correspondence supplied by sender.</dd><dt><strong>Retention / Control</strong></dt><dd>Retain for the period reasonably necessary for dispute, compliance or legal hold, subject to law.</dd></dl></section><section class="abp-info-card"><h3>Voluntary contributions</h3><dl><dt><strong>Purpose</strong></dt><dd>Process and account for maintenance contribution</dd><dt><strong>Processing / Recipient</strong></dt><dd>Payment provider handles credentials; HDC may receive payer name, transaction reference, amount and limited payment metadata.</dd><dt><strong>Retention / Control</strong></dt><dd>Accounting, fraud, legal and reconciliation period; do not collect bank credentials unnecessarily.</dd></dl></section><section class="abp-info-card"><h3>Affirmative Terms acceptance / download record, if deployed</h3><dl><dt><strong>Purpose</strong></dt><dd>Evidence consent or transaction terms; security</dd><dt><strong>Processing / Recipient</strong></dt><dd>Terms version, date/time, action, transaction/download reference and minimal technical event data.</dd><dt><strong>Retention / Control</strong></dt><dd>Proportionate legal/evidentiary period; minimise tracking.</dd></dl></section><section class="abp-info-card"><h3>Voluntary corrections / submissions</h3><dl><dt><strong>Purpose</strong></dt><dd>Evaluate, verify, attribute and incorporate accepted material</dd><dt><strong>Processing / Recipient</strong></dt><dd>Submission content, source information and contact details supplied by sender.</dd><dt><strong>Retention / Control</strong></dt><dd>Unaccepted submissions may be deleted when no longer needed; accepted-source records may be archived to maintain provenance.</dd></dl></section><section class="abp-info-card"><h3>Analytics / telemetry</h3><dl><dt><strong>Purpose</strong></dt><dd>Only if later introduced and disclosed</dd><dt><strong>Processing / Recipient</strong></dt><dd>No undisclosed non-essential analytics or behavioural tracking is authorised by omission from this schedule.</dd><dt><strong>Retention / Control</strong></dt><dd>Update Privacy Policy and consent/notice controls before or at deployment.</dd></dl></section></div></section>
+<h2 id="appendix-c">APPENDIX C - NOTICE, RESPONSE AND RESTORATION WORKFLOW</h2>
+<p>The purpose of this workflow is to prevent an ordinary correction request from being confused with a statutory or urgent matter. The governing law and facts always control.</p>
+<p>Ordinary Error / Editorial Correction Route to ordinary correction queue; record URL and evidence; investigate; correct/clarify/annotate as appropriate. Up to 90 days may be used only where no shorter law controls. Copyright / Rights-Holder Notice Verify claimant, right, exact material and authority; apply any specific Copyright Act / court procedure; preserve the disputed record; consider interim disabling; seek clarification or affected-source response where legally permissible; document final action. Intermediary Grievance If HDC qualifies as intermediary for the matter, classify under Rule 3 and apply the applicable 24-hour / 7-day / 36-hour / 2-hour process rather than the ordinary 90-day queue. Court Order / Government Actual Knowledge Verify authenticity, authority, legal basis, specific URL or identifier and time of receipt; escalate immediately; comply with the binding timeline, including the 3-hour Rule 3(1)(d) period where applicable; preserve evidence. Cyber-Security Incident Contain, preserve logs and evidence, assess whether CERT-In Directions apply, make any required six-hour report, recover safely, record remediation and perform post-incident review. Privacy / Personal-Data Matter Identify the operative DPDP / other privacy provision on the event date; apply current rights, notice, security or breach duties only to the extent in force and applicable; preserve a minimal response record.</p>
+<h2 id="appendix-d">APPENDIX D - NON-CONTRACTUAL WEBSITE DEPLOYMENT CHECKLIST</h2>
+<p>This appendix is an implementation checklist for the Operator. It is not a representation that each technical control is already deployed on the Website, and it does not create a private cause of action where none otherwise exists.</p>
+<p>1. Permanent footer links: Terms of Use; Disclaimer; Privacy; Copyright / Report a Problem; Contribution Policy; Grievance / Notice Procedure.</p>
+<p>2. Use an unchecked &quot;I agree&quot; control before contributions, master-PDF downloads and voluntary submissions where technically practicable; record the current Terms version with the event.</p>
+<p>3. Publish the Grievance Officer details on a page directly accessible from the home page when intermediary rules require prominent publication.</p>
+<p>4. Place a short rights-holder / report-a-problem link near content pages and downloads so a claimant can identify the exact URL or work.</p>
+<p>5. Contribution page must say &quot;voluntary contribution for project maintenance&quot;, not purchase price; retain the FCRA foreign-source warning and no-80G representation unless legally supported.</p>
+<p>6. Location feature should request permission only when invoked, offer manual location where practical and avoid retaining exact coordinates by default.</p>
+<p>7. AI-assisted devotional images should carry internal provenance; add visible or embedded labelling where applicable law or the deployment context requires it.</p>
+<p>8. Keep a release archive for legal-policy versions and, if acceptance is logged, map each event to the exact version in force.</p>
+<p>9. Create an internal incident-response sheet containing CERT-In contact/reporting path, repository rollback procedure, credential-reset steps, evidence-preservation steps and responsible contact.</p>
+<p>10. Before enabling analytics, advertising, new payment technology, accounts, comments/uploads or other user-generated content, update the Privacy Schedule and reassess Section 79 / IT Rules obligations.</p>
+<h2>PRIMARY LEGAL SOURCES REVIEWED</h2>
+<p>Version 3.1 was prepared against the following primary official sources available on the review date. The official text in force on the date of a particular event prevails over this summary.</p>
+<p>1. Information Technology (Intermediary Guidelines and Digital Media Ethics Code) Rules, 2021, updated as on 10 February 2026; G.S.R. 120(E), effective 20 February 2026 https://www.meity.gov.in/static/uploads/2026/02/550681ab908f8afb135b0ad42816a1c9.pdf</p>
+<p>2. Information Technology Act, 2000 - including sections 10A, 70B and 79 https://www.meity.gov.in/documents/act-and-policies</p>
+<p>3. Copyright Act, 1957, India Code, as updated through 15 June 2026 - including sections 51 and 52 https://www.indiacode.nic.in/bitstream/123456789/1367/1/a195714.pdf</p>
+<p>4. CERT-In Directions under section 70B dated 28 April 2022 and official FAQs https://cert-in.org.in/Directions70B.jsp</p>
+<p>5. Digital Personal Data Protection Rules, 2025, G.S.R. 846(E), and commencement notification G.S.R. 843(E) https://www.meity.gov.in/documents/act-and-policies/digital-personal-data-protection-rules-2025-gDOxUjMtQWa</p>
+<p>6. Foreign Contribution (Regulation) Act, 2010 - including section 11 https://www.indiacode.nic.in/bitstream/123456789/2098/1/a2010-42.pdf</p>
+<p>7. Bharatiya Nyaya Sanhita, 2023; Bharatiya Nagarik Suraksha Sanhita, 2023; Bharatiya Sakshya Adhiniyam, 2023 https://www.indiacode.nic.in/</p>
+<p>Draft-rule caution: MeitY published further draft IT Rules amendments for consultation in March/April 2026. Those drafts are not treated in this document as binding merely because they were published; any later notified and commenced amendment will prevail from its lawful effective date.</p>
+<h2>FINAL LEGAL NOTICE</h2>
+<p>GOOD-FAITH PROJECT. HDC is intended as a good-faith, non-commercial devotional, cultural, educational, archival and reference initiative. It is not operated for the sale of third-party devotional works. Third-party rights remain with their respective owners.</p>
+<p>SECTION 79. To the extent the Operator qualifies as an intermediary in relation to particular third-party information, data or communication links, every protection lawfully available under section 79 of the Information Technology Act, 2000 and applicable rules is expressly reserved. No broader status is claimed where the statutory conditions are not satisfied.</p>
+<p>90-DAY ORDINARY CURE. A genuine ordinary non-urgent mistake, attribution problem, classification issue or comparable civil concern may require up to 90 calendar days after a complete and verifiable notice for investigation and appropriate cure. Any shorter mandatory statutory period, copyright process, cyber-security duty, court order, governmental direction, criminal process or non-waivable remedy prevails.</p>
+<p>NO IMPOSSIBLE IMMUNITY CLAIM. These Terms maximise lawful protection, evidentiary clarity and responsible dispute handling. They do not erase civil or criminal liability where applicable law independently establishes it.</p>
+<p>OFFICIAL VERSION. Verify the current version through the HDC Website. Canonical text SHA-256 for this Version 3.1: 427455b32f6352c6e5f2aa9788c079c4775799aaaadaf835043566a97ace2d55.</p>
+<p>GRIEVANCE OFFICER: Adv. R.K. Bharani EMAIL: bharani.law.chambers@gmail.com CONTACT: P-37, P.O. Lane, Tis Hazari Courts, Delhi 110 0054 Mob. No.: +91 - 9289800984; +91 - 7838085278</p>
 <p>With responsibility, transparency and respect for rights,</p>
-
-<p>Ashish Bharani Compiler - HDC — Hindu Devotional Collection</p>
-
-<p>Document version 1.1 - 03 October 2026</p>
+<p>Ashish Bharani Compiler - Hindu Devotional Collection</p>
+<p>Document Version 3.1 - 28 October 2026</p>
 </article>

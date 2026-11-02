@@ -1,6 +1,7 @@
 """Verify archived source bytes and complete native information pages."""
 
 from hashlib import sha256
+import re
 from html.parser import HTMLParser
 from pathlib import Path
 from urllib.parse import urljoin, urlsplit
@@ -17,10 +18,9 @@ PDFS = {
 # Normalised full native article text, verified against the source documents.
 # The legal contact page follows its visible correction, not hidden older text.
 NATIVE_TEXT_SHA = {
-    "about": "eed71a977769b49ece87816230092123fc0fe8782228cd4a362eb291f4b7e75d",
-    "contribution": "22e9ee675cd6674762195c19982984905b261badc75aa54174639645a9ee2040",
-    "foreword": "0606595b3b750aa41dbbaa6c26355246fc7c688bc7072c9508976079602dc09a",
-    "disclaimer": "4c951f0ec09d5b02f5118f0b5efb99db1fdba5c25c2315f851a83e36f5bef0e4",
+    "about": "dd5e784028a0a41473e898f5e2e24d2616bbd9a2488eebfcfd1ddddcdd3f3265",
+    "foreword": "25ff19cefd11b9e1c672631e0654ea5bd60eaf31a833e9dd15041aeca827c480",
+    "disclaimer": "d4ed60e6a88a1fe70b61e7ef4e7e51da29902529750152a671aeeddeace33e02",
 }
 
 
@@ -66,20 +66,26 @@ class Page(HTMLParser):
 
 
 def main():
-    for route in (*ROUTES, "about", "contribution"):
+    for route in (*ROUTES, "about"):
         content = (ROOT / "site" / route / "index.html").read_text(encoding="utf-8")
         assert content.count('aria-label="About this project"') == 1, f"missing/duplicate footer: {route}"
     for name, expected in PDFS.items():
         for directory in ("docs", "site"):
+            if name == "contribution" and directory == "site":
+                assert not (ROOT / directory / "assets/pdfs/contribution.pdf").exists()
+                continue
             file = ROOT / directory / "assets" / "pdfs" / f"{name}.pdf"
             assert sha256(file.read_bytes()).hexdigest() == expected, f"altered PDF: {file}"
         route = "about" if name == "about-me" else name
+        if route == "contribution":
+            assert not (ROOT / "site/contribution/index.html").exists(), "withheld contribution page published"
+            continue
         page = Page((ROOT / "site" / route / "index.html").read_text(encoding="utf-8"))
         assert page.headings.count("h1") == 1, route
         assert page.description, f"missing description: {route}"
         native = " ".join(" ".join(page.native_text).split())
-        # Only the owner-authorized current project brand may differ from the
-        # archived source. All other native wording and PDF bytes stay exact.
+        # Freeze the reviewed replacement HTML, including the owner's domain
+        # omission. Historical PDF assets have separate immutable-byte checks.
         native = native.replace("HDC — Hindu Devotional Collection", "Hindu Devotional Collections")
         assert sha256(native.encode()).hexdigest() == NATIVE_TEXT_SHA[route], f"native source text changed: {route}"
         assert not any(a.get("href", "").lower().endswith(".pdf") for a in page.links), f"PDF dependency: {route}"
@@ -90,18 +96,33 @@ def main():
             assert resolved.startswith("/devotional/assets/images/"), resolved
             assert (ROOT / "site" / resolved.removeprefix("/devotional/")).exists(), resolved
         if route == "disclaimer":
-            assert all(f"clause-{i}" in page.ids for i in range(1, 73)), "missing legal clause"
+            assert all(f"clause-{i}" in page.ids for i in range(1, 126)), "missing legal clause"
             assert len([i for i in page.ids if i.startswith("part-")]) == 18, "missing legal part"
+            assert all(f"appendix-{letter}" in page.ids for letter in "abcd"), "missing appendix"
+            assert "Document Version 3.1 - 28 October 2026" in native
+            assert "bharani.law.chambers@gmail.com" in native
             for anchor in ("#clause-70", "#clause-72", "#part-xviii"):
                 assert any(a.get("href") == anchor for a in page.links), anchor
-    contribution = (ROOT / "site/contribution/index.html").read_text(encoding="utf-8")
+    contribution = (ROOT / "docs/contribution.md").read_text(encoding="utf-8")
     for detail in ("38480100004053", "BARB0IPEDEL", "bharani.ashish@okhdfcbank", "5th character is zero (0)"):
         assert detail in contribution, f"payment detail missing: {detail}"
-    for name in ("ashish-bharani-portrait.png", "contribution-phonepe-qr.png"):
+    for name in ("ashish-bharani-portrait.png",):
         assert (ROOT / "docs/assets/images" / name).read_bytes() == (ROOT / "site/assets/images" / name).read_bytes()
     qr = ROOT / "docs/assets/images/contribution-phonepe-qr.png"
     assert sha256(qr.read_bytes()).hexdigest() == "5b39a827661cf343bef76b4847a9a99568ed5b6758128da48571358fb75b0085", "original QR image changed"
-    print("Native information-page audit passed: four full HTML pages, 72 clauses / 18 parts, source archives unchanged and payment details intact")
+    assert "There is no fixed or suggested contribution amount." in contribution
+    assert "Suggested only:" not in contribution
+    assert not (ROOT / "site/assets/images/contribution-phonepe-qr.png").exists()
+    for file in (ROOT / "site").rglob("*.html"):
+        content = file.read_text(encoding="utf-8")
+        assert not re.search(r'''href\s*=\s*["'][^"']*contribution/''', content, re.I), f"withheld link: {file}"
+    for relative in ("sitemap.xml", "search/search_index.json", "assets/universal-search.json"):
+        content = (ROOT / "site" / relative).read_text(encoding="utf-8")
+        assert 'contribution/' not in content and 'contribution.md' not in content, f"withheld route indexed: {relative}"
+        assert '38480100004053' not in content and 'bharani.ashish@okhdfcbank' not in content, f"withheld payment data indexed: {relative}"
+    legal = Page((ROOT / "site/disclaimer/index.html").read_text(encoding="utf-8"))
+    assert 'ashishbharani.github.io' not in ' '.join(legal.native_text)
+    print("Native page audit passed: 125 clauses, 18 parts, four appendices; contribution page, assets, links and search listing withheld")
 
 
 if __name__ == "__main__":
