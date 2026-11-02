@@ -1,4 +1,5 @@
 # Preview PWA and integration validation
+> **Completion-status authority (3 November 2026):** see the [Master Completion Dashboard](HDC_MASTER_COMPLETION_DASHBOARD.md), [original requirement matrix](HDC_REQUIREMENTS_TRACEABILITY.md) and [finite remaining plan](HDC_REMAINING_INCREMENT_PLAN.md). The historical entries below retain their original source heads/results; stage/test/commit counts are not overall completion percentages. No deployment is authorized.
 
 All transformation additions remain behind the default-OFF
 `HDC_PRACTICE_PREVIEW=1` gate. This is development evidence, not release approval.
