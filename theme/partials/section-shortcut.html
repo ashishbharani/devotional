@@ -1,0 +1,8 @@
+{% if config.extra.hdc_practice_preview and page.meta and page.meta.abp_category %}
+<section class="hdc-practice" data-section-shortcut-control data-section-path="{{ page.url | e }}" aria-label="Browser-local section shortcut">
+<details class="hdc-practice-details"><summary>Save a section shortcut</summary>
+<p>Keep this existing category or section in your browser-local journey. These are navigation shortcuts, separate from saved devotional works and account favourites. No sign-in or cloud synchronization.</p>
+<button type="button" data-shortcut-save>Save this section shortcut</button>
+<p role="status" aria-live="polite" data-shortcut-status></p><p><a href="{{ 'journeys/' | url }}">Manage my section shortcuts</a></p>
+</details></section>
+{% endif %}

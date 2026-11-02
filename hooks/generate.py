@@ -1078,7 +1078,7 @@ def on_config(config, **kw):
     config["extra"]["hdc_practice_preview"] = PRACTICE_PREVIEW
     if not PRACTICE_PREVIEW:
         config["extra_css"] = [p for p in config["extra_css"] if p not in {"stylesheets/practice.css", "stylesheets/festivals.css"}]
-        config["extra_javascript"] = [p for p in config["extra_javascript"] if str(p) not in {"javascripts/abp-practice.js", "javascripts/abp-festivals.js", "javascripts/abp-journeys.js", "javascripts/abp-discovery.js", "javascripts/abp-sharing.js"}]
+        config["extra_javascript"] = [p for p in config["extra_javascript"] if str(p) not in {"javascripts/abp-practice.js", "javascripts/abp-festivals.js", "javascripts/abp-journeys.js", "javascripts/abp-discovery.js", "javascripts/abp-sharing.js", "javascripts/abp-section-shortcuts.js"}]
     d = load()
     translation_report, translation_errors = audit_catalogue(ROOT / "docs" / "assets" / "i18n.json")
     for line in translation_report:
@@ -1321,6 +1321,9 @@ def on_post_build(config, **kw):
         "icon-192.png", "icon-512.png", "icon-maskable-512.png", "icon-maskable-512-v2.png", "apple-touch-icon.png",
     ))
     if PRACTICE_PREVIEW:
+        # Public route metadata only. Loaded on demand; never duplicate work favourites.
+        shortcut_registry = {"schema": 1, "sections": [{"path": url_of(p["src"]), "title": p["title"]} for p in _pages if "cat" in p]}
+        (site / "assets" / "section-shortcuts.json").write_text(json.dumps(shortcut_registry, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
         shell.extend(["stylesheets/practice.css", "stylesheets/festivals.css", "sanctuary/", "reader/", "journeys/", "explore/"])
         # Material requests these even on an offline shell page. Keep its
         # built-in text search and instant-navigation bootstrap available;
@@ -1330,7 +1333,7 @@ def on_post_build(config, **kw):
         shell.extend(["assets/images/deities/ganesha-640.webp", "assets/images/deities/shiva-640.webp"])
         shell.extend(path.relative_to(site).as_posix() for path in sorted((site / "assets" / "festivals").glob("*")) if path.is_file())
     shell.extend(f"javascripts/{path.name}" for path in sorted((site / "javascripts").glob("*.js"))
-                 if PRACTICE_PREVIEW or path.name not in {"abp-practice.js", "abp-festivals.js", "abp-journeys.js", "abp-discovery.js", "abp-sharing.js"})
+                 if PRACTICE_PREVIEW or path.name not in {"abp-practice.js", "abp-festivals.js", "abp-journeys.js", "abp-discovery.js", "abp-sharing.js", "abp-section-shortcuts.js"})
     shell.extend(f"javascripts/{path.name}" for path in sorted((site / "javascripts").glob("search-*.mjs")))
     shell.extend(path.relative_to(site).as_posix() for path in sorted((site / "assets" / "panchang").glob("*.mjs")))
     shell.extend(path.relative_to(site).as_posix() for pattern in (
@@ -1343,8 +1346,8 @@ def on_post_build(config, **kw):
         # existing worker strategy and avoid treating arbitrary queries as hits.
         shell.extend(f"sanctuary/?minutes={minutes}" for minutes in (5, 10, 20))
     signature = hashlib.sha256()
-    # Version the paired search assets without precaching their large payloads.
-    for name in ("works-index.json", "universal-search.json"):
+    # Version on-demand route metadata too, without adding it to the global shell.
+    for name in ("works-index.json", "universal-search.json", *(("section-shortcuts.json",) if PRACTICE_PREVIEW else ())):
         signature.update((site / "assets" / name).read_bytes())
     # The large ephemeris assets affect the cache version but are never
     # precached on the homepage. A changed JS/WASM pair invalidates old caches.
