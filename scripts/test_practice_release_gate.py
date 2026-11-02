@@ -12,7 +12,7 @@ worker = (site / 'sw.js').read_text(encoding='utf-8')
 shell = json.loads(re.search(r'^const SHELL = (.+);', worker, re.MULTILINE).group(1))
 for route in ('reader', 'sanctuary', 'journeys', 'explore'):
     assert (site / route / 'index.html').exists() == enabled, route
-for asset in ('stylesheets/practice.css', 'javascripts/abp-practice.js', 'stylesheets/festivals.css', 'javascripts/abp-festivals.js', 'javascripts/abp-journeys.js', 'javascripts/abp-discovery.js', 'javascripts/abp-sharing.js', 'javascripts/abp-japa-history.js'):
+for asset in ('stylesheets/practice.css', 'javascripts/abp-practice.js', 'stylesheets/festivals.css', 'javascripts/abp-festivals.js', 'javascripts/abp-journeys.js', 'javascripts/abp-discovery.js', 'javascripts/abp-sharing.js', 'javascripts/abp-japa-history.js', 'javascripts/abp-section-shortcuts.js'):
     assert (asset in home) == enabled, asset
     assert (asset in worker) == enabled, asset
 assert ('assets/festivals/themes.mjs' in worker) == enabled
@@ -31,4 +31,11 @@ japa = (site / 'japa-counter/index.html').read_text(encoding='utf-8')
 assert ('data-japa-history-enabled' in japa) == enabled
 assert ('data-japa-history' in japa) == enabled
 assert ('japa-counter/' in shell) == enabled
+registry = site / 'assets/section-shortcuts.json'
+assert registry.exists() == enabled
+assert 'assets/section-shortcuts.json' not in shell, 'section metadata remains on demand'
+category = next((site / 'categories').glob('*/index.html')).read_text(encoding='utf-8')
+assert ('data-section-shortcut-control' in category) == enabled
+if enabled:
+    assert 'data-section-shortcut-list' in (site / 'journeys/index.html').read_text(encoding='utf-8')
 print(f'PASS practice release gate: {sys.argv[1]}')
