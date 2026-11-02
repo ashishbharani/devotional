@@ -6,6 +6,9 @@ import {chromium} from 'playwright';
 const catalogue=JSON.parse(await readFile('docs/assets/i18n.json','utf8'));
 const languages=['hi','mr','gu','bn','pa','te','kn','ml','ta','en'];
 const base='http://127.0.0.1:4328/devotional/';
+// Poll the current document instead of exporting a promise that can belong to
+// a superseded Material navigation context.
+const waitForI18n=page=>page.waitForFunction(()=>Boolean(window.abpI18n&&document.querySelector('.abp-language-btn:not(:disabled)')));
 const preview=spawn(process.execPath,['scripts/serve_header_preview.mjs'],{env:{...process.env,HDC_PREVIEW_PORT:'4328'},stdio:['ignore','pipe','inherit']});
 await new Promise((resolve,reject)=>{preview.stdout.once('data',resolve);preview.once('error',reject);});
 const browser=await chromium.launch({...(process.env.PANCHANG_BROWSER?{executablePath:process.env.PANCHANG_BROWSER}:{})});
@@ -21,7 +24,7 @@ try {
   await context.addCookies([{name:'googtrans',value:'/en/hi',url:base},{name:'unrelated-cookie',value:'preserve',url:base}]);
   await context.addInitScript(()=>{localStorage.setItem('abp-google-translate-consent-v1','yes');localStorage.setItem('unrelated-preference','preserve');});
   await page.goto(base+'?test=preserve#preserve');
-  await page.evaluate(()=>window.abpI18n.ready);
+  await waitForI18n(page);
   const originalURL=page.url();
   const originalHomeLabel=await page.locator('#abp-navigation .abp-navigation__item > a').first().textContent().then(x=>x.trim());
   async function picker() {
@@ -66,7 +69,7 @@ try {
   assert.equal(await page.locator('#dynamic-translation').textContent(),'Moonset','restore current source, not a stale earlier value');
   await page.evaluate(()=>document.querySelector('#translation-fixture').remove());
   for(const route of ['library/','about/','disclaimer/','panchang/']) {
-   await page.goto(base+route);await page.evaluate(()=>window.abpI18n.ready);
+   await page.goto(base+route);await waitForI18n(page);
    for(const code of languages) {
     await page.evaluate(code=>window.abpI18n.applyLanguage(code),code);
     assert.equal(await page.locator('html').getAttribute('lang'),code);
@@ -75,7 +78,7 @@ try {
    assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));
   }
   await page.evaluate(()=>window.abpI18n.applyLanguage('ta'));await page.reload();
-  await page.evaluate(()=>window.abpI18n.ready);
+  await waitForI18n(page);
   assert.equal(await page.locator('html').getAttribute('lang'),'ta');
   assert.equal(await page.evaluate(()=>localStorage.getItem('abp-google-translate-consent-v1')),null);
   assert.equal(await page.evaluate(()=>document.cookie.includes('googtrans=')),false);
@@ -93,7 +96,7 @@ try {
  await unavailable.addInitScript(()=>localStorage.setItem('abp-language','ta'));
  await unavailable.route('**/assets/i18n.json',route=>route.abort());
  const failedPage=await unavailable.newPage();
- await failedPage.goto(base);await failedPage.evaluate(()=>window.abpI18n.ready);
+ await failedPage.goto(base);await failedPage.waitForFunction(()=>/catalogue unavailable/.test(document.querySelector('.abp-language-btn')?.getAttribute('aria-label')||''));
  assert.equal(await failedPage.locator('.abp-language-btn').isDisabled(),true);
  assert.match(await failedPage.locator('.abp-language-btn').getAttribute('aria-label'),/catalogue unavailable/);
  assert.equal(await failedPage.locator('html').getAttribute('lang'),'en');

@@ -49,7 +49,36 @@
   let locales = Object.fromEntries(order.map((code) => [code, { name: localeNames[code], strings: {} }]));
   let categoryNames = {};
   let catalogueLoaded = false;
-  let phrases = new Map();
+  let phrases = new Map(), contentUrls = {};
+  const contentCache = new Map(), contentLoads = new Map();
+  let languageReady = Promise.resolve();
+  const phraseFor = source => contentCache.get(current)?.get(normalized(source)) || phrases.get(normalized(source))?.[current];
+  function loadContent(code) {
+    if (code === "en" || !contentUrls[code] || contentCache.has(code)) return Promise.resolve();
+    if (contentLoads.has(code)) return contentLoads.get(code);
+    let url;
+    try {
+      url = new URL(contentUrls[code], rootUrl);
+      if (url.origin !== rootUrl.origin || !url.pathname.startsWith(rootUrl.pathname + "assets/translations/")) throw new Error("Invalid local language catalogue path");
+    } catch (error) {
+      console.warn("Local language catalogue path rejected", error);
+      return Promise.resolve();
+    }
+    const pending = fetch(url.href).then(response => {
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      return response.json();
+    }).then(data => {
+      if (data.language !== code || !data.translations || typeof data.translations !== "object" || Array.isArray(data.translations)) throw new Error("Invalid language catalogue");
+      const entries = Object.entries(data.translations);
+      if (entries.some(([key, value]) => !key.trim() || typeof value !== "string" || !value.trim())) throw new Error("Empty translation entry");
+      contentCache.set(code, new Map(entries.map(([key, value]) => [normalized(key), value])));
+    }).catch(error => {
+      contentLoads.delete(code);
+      console.warn(`Local ${code} text catalogue could not be loaded`, error);
+    });
+    contentLoads.set(code, pending);
+    return pending;
+  }
   const plainText = new WeakMap(), originalAttributes = new WeakMap();
   const normalized = (value) => value.replace(/\s+/g, " ").trim().toLocaleLowerCase("en");
   const setText = (node, value) => { if (node.textContent !== value) node.textContent = value; };
@@ -62,9 +91,9 @@
       if (!parent || parent.closest(protectedText + ',[data-i18n],[data-i18n-value],[data-i18n-all]')) continue;
       const previous = plainText.get(node);
       const source = previous && node.nodeValue === previous.rendered ? previous.source : node.nodeValue;
-      const entry = phrases.get(normalized(source));
-      if (!entry) continue;
-      const value = current === "en" ? source : source.match(/^\s*/)[0] + (entry[current] || source.trim()) + source.match(/\s*$/)[0];
+      const entry = phraseFor(source);
+      if (!entry && !previous) continue;
+      const value = current === "en" ? source : source.match(/^\s*/)[0] + (entry || source.trim()) + source.match(/\s*$/)[0];
       if (node.nodeValue !== value) node.nodeValue = value;
       plainText.set(node, {source, rendered: value});
     }
@@ -78,9 +107,9 @@
         if (value === null) continue;
         const previous = saved[attribute];
         const source = previous && value === previous.rendered ? previous.source : value;
-        const entry = phrases.get(normalized(source));
-        if (!entry) continue;
-        const rendered = current === "en" ? source : entry[current] || source;
+        const entry = phraseFor(source);
+        if (!entry && !previous) continue;
+        const rendered = current === "en" ? source : entry || source;
         if (value !== rendered) element.setAttribute(attribute, rendered);
         saved[attribute] = {source, rendered};
       }
@@ -106,6 +135,7 @@
         return [code, { name: data.localeNames?.[code] || localeNames[code], strings }];
       }));
       categoryNames = data.categoryNames || {};
+      contentUrls = data.contentCatalogues || {};
       phrases = new Map();
       for (const section of sections) (section.keys || []).forEach((key, index) => {
         const source = section.values?.en?.[index];
@@ -122,6 +152,13 @@
     const engine = window.abpTransliterate;
     const original = originalText.get(node) || explicit || node.textContent.trim();
     originalText.set(node, original);
+    const translated = current !== "en" && phraseFor(original);
+    if (translated) {
+      setText(node, translated);
+      node.lang = current;
+      node.title = `${t("original")}: ${original}`;
+      return;
+    }
     if (!engine || current === "en" || !engine.languages.has(current)) {
       setText(node, original);
       node.removeAttribute("lang");
@@ -206,6 +243,14 @@
       button.title = `${t("language")}: ${locales[current].name}`;
     });
     document.dispatchEvent(new CustomEvent("abp-languagechange", { detail: { language: current } }));
+    const requested = current;
+    languageReady = loadContent(requested).then(() => {
+      if (current === requested) {
+        translate();
+        document.dispatchEvent(new CustomEvent("abp-languagecontentready", {detail: {language: requested}}));
+      }
+    });
+    return languageReady;
   }
 
   function openPicker() {
@@ -282,7 +327,7 @@
     }
   }
 
-  window.abpI18n = { t, translate, applyLanguage, ready, get language() { return current; }, get locales() { return locales; } };
+  window.abpI18n = { t, translate, applyLanguage, ready, get language() { return current; }, get languageReady() { return languageReady; }, get locales() { return locales; } };
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", initPage);
   else initPage();
   if (window.document$ && typeof window.document$.subscribe === "function") window.document$.subscribe(initPage);
