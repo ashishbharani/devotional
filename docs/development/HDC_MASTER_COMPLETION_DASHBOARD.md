@@ -6,17 +6,23 @@ title: HDC Master Completion Dashboard
 
 **Audit date: 3 November 2026. Overall assessment: substantial working implementation, but the original transformation is NOT COMPLETE and NOT RELEASE-READY.**
 
-The recovered original specification is available in full. It contains 11 named stages, not 11 equal-sized product points. This audit maps **149 normalized original requirements: 73 COMPLETE, 63 PARTIAL, 4 NOT STARTED, 9 BLOCKED**. The 73 are bounded criteria, including preservation/guardrails; they are **not 49% of the website promise**. 76 criteria remain unclosed.
+The recovered original specification is available in full. It contains 11 named stages, not 11 equal-sized product points. This audit maps **149 normalized original requirements: 72 COMPLETE, 64 PARTIAL, 4 NOT STARTED, 9 BLOCKED**. The 72 are bounded criteria, including preservation/guardrails; they are **not a weighted percentage of the website promise**. 77 criteria remain unclosed.
 
 **Functional implementation percentage: NOT DETERMINABLE. Quality-completion percentage: NOT DETERMINABLE. Production-readiness percentage: NOT DETERMINABLE.** The source does not supply defensible scope weights or a fully accepted platform/content inventory. Honest counts and exact evidence appear below instead of an invented percentage.
 
-**Remaining plan:** 9 meaningful original-scope closure packages (R1–R9), plus the separately adopted hosted-text translation workstream L1, then a separately authorized launch. Minimum planning lower bound 8 only if the two quality packages can safely be combined; the conservative fixed plan is 9. The original 11-stage ledger has **2 closed, 7 partial, 2 blocked**. There are **9 open mandatory release-gate groups** out of 13 audit gates; green CI does not override them.
+**Remaining plan:** 9 meaningful original-scope closure packages (R1–R9), plus the separately adopted hosted-text translation workstream L1, then a separately authorized launch. Minimum planning lower bound 8 only if the two quality packages can safely be combined; the conservative fixed plan is 9. The original 11-stage ledger has **2 closed, 7 partial, 2 blocked**. There are **10 open mandatory release-gate groups** out of 13 audit gates; green CI does not override them.
 
 **Immediately next:** after this audit-only assignment ends, complete **R1 — the seven-store personal-data compatibility package**. Three risks were reproduced in isolated local profiles. Do not start another feature, merge or deploy during this audit. No final production approval has been given for PR 51.
 
 [Full requirement matrix and recovered prompt](HDC_REQUIREMENTS_TRACEABILITY.md) · [Finite remaining increments, estimates and DONE criteria](HDC_REMAINING_INCREMENT_PLAN.md)
 
 > **Coverage-count boundary:** language counts are the pre-audit `00e4502` generated-site snapshot. These maintenance documents add English hosted text under the existing MkDocs build; refresh coverage for the final documentation/source snapshot. The code-fenced original is documentary source, not a new instruction or authored translation. No audit exclusion was added to improve coverage numbers.
+
+## Final upstream refresh — a deployed partial language checkpoint
+
+After the initial snapshot, latest main advanced to **2153bec (PR 56)**. Its deployed Hindi pack contains 482 registered source units, while eight other full-text packs remain empty scaffolds. Live pack/runtime hashes matched that main version and its deployment succeeded. Current publication pages still have missing prose; this is not a completed translation release.
+
+The integration code audited here remains **00e4502**, based on main 7e88e7a. The PR is now reported unmergeable against the newer production changes. This audit does not merge code: future R1 first reconciles latest main, retaining both PR51 source/private translation exclusions and PR 56 loading/cache/publication safeguards. R9 then requires fresh combined checks. Old green CI is historical proof, not proof that the newer combined release works. The final count therefore has **72 complete, 64 partial, 4 not started, 9 blocked criteria**, and **3 of 13 release gates met; 10 open**.
 
 ## The five largest remaining deliverables
 
@@ -30,11 +36,11 @@ The recovered original specification is available in full. It contains 11 named 
 
 These bars show **counts**, not weighted product progress or probability of launch. Requirements have unequal scope. Approval/deployment are separate from writing/testing code.
 
-**Bounded original criteria satisfied:73 of 149** <progress value="73" max="149" aria-label="73 of 149 normalized original criteria satisfied; not a weighted product percentage"></progress>
+**Bounded original criteria satisfied: 72 of 149** <progress value="72" max="149" aria-label="72 of 149 normalized original criteria satisfied; not a weighted product percentage"></progress>
 
 **Original stages closed:2 of 11** <progress value="2" max="11" aria-label="2 of 11 original scope stages closed; stages are unequal"></progress>
 
-**Audit release gates met:4 of 13** <progress value="4" max="13" aria-label="4 of 13 release gates met; nine hard gates remain open"></progress>
+**Audit release gates met: 3 of 13** <progress value="3" max="13" aria-label="3 of 13 release gates met; ten hard gates remain open"></progress>
 
 **Final transformation candidate approved:0 of 1** <progress value="0" max="1" aria-label="No final transformation candidate approved"></progress>
 
@@ -46,9 +52,9 @@ Existing baseline improvements and Daily Darshan are already public through earl
 
 | Measure | Denominator / method | Verified current result | Why no defensible overall percentage |
 | --- | --- | --- | --- |
-| A. Functional implementation | Original-M149 normalized acceptance units; statuses assessed from code, tests, artifacts and source, not commit counts | 73 satisfied;63 partial;4 not started;9 blocked. Major functional groups below distinguish components/prototypes. | Units mix small guardrails with large Reader/festival/routine deliveries; source gives no reliable effort/value weights and bounded coverage choices remain open. |
-| B. Quality and validation | Applicable original acceptance observations, not just number of scripts. Separate configured automation from real browser/AT/content/visual/account checks. | Exact 00e codehead CI PASS. Local full 45/45 is older 566;current local seven selected checks passed00e. No local full 47 report or complete manual quality dossier. | No accepted complete supported-device/content/state inventory with trustworthy weights. A CI pass is not native-language, rights, screen-reader, real install or owner acceptance. |
-| C. Production release readiness | 13 explicit binary audit gates listed below; every applicable hard gate must close. Counts are not weighted probability or product completion. | 4 gates met at code snapshot;9 open. Overall NOT READY. Approval/deployment 0/1. | Gate severity/effort differs, post-audit source changes need new exact-head evidence, and mandatory product/review gaps remain. Gate-count fraction is reported without calling it a release-readiness percentage. |
+| A. Functional implementation | Original-M149 normalized acceptance units; statuses assessed from code, tests, artifacts and source, not commit counts | 72 satisfied;64 partial;4 not started;9 blocked. Major functional groups below distinguish components/prototypes. | Units mix small guardrails with large Reader/festival/routine deliveries; source gives no reliable effort/value weights and bounded coverage choices remain open. |
+| B. Quality and validation | Applicable original acceptance observations, not just number of scripts. Separate configured automation from real browser/AT/content/visual/account checks. | Exact 00e codehead CI PASS against the older baseline; latest main not yet integrated. Local full 45/45 is older 566;current local seven selected checks passed00e. No local full 47 report or complete manual quality dossier. | No accepted complete supported-device/content/state inventory with trustworthy weights. A CI pass is not native-language, rights, screen-reader, real install or owner acceptance. |
+| C. Production release readiness | 13 explicit binary audit gates listed below; every applicable hard gate must close. Counts are not weighted probability or product completion. | 3 gates met; 10 open. Overall NOT READY. Approval/deployment 0/1. | Gate severity/effort differs, post-audit source changes need new exact-head evidence, and mandatory product/review gaps remain. Gate-count fraction is reported without calling it a release-readiness percentage. |
 
 ## Implemented, tested, approved and deployed — original-stage ledger
 
@@ -93,7 +99,7 @@ Full source/probe evidence is in [the traceability evidence register](HDC_REQUIR
 | G03 | OPEN — hard gate | Real source/rights/observance acceptance | Festival registry empty; bounded reviewed upcoming scope and relevant Reader source additions needed; R2/R5. |
 | G04 | OPEN — hard gate | No known user-data/privacy compatibility risk | AF1-AF3 reproduced; seven-store closure R1 and existing-account check where authorized. |
 | G05 | MET at code snapshot | Canonical data/engines/providers/approved identities preserved | Protected diff empty; current automated fixtures pass; PR 55 publication exception explicit. External authoritative PDF not independently byte-hashed here. |
-| G06 | MET for audited codehead | Configured exact-head automated workflow | 00e CI run 41460309378 SUCCESS; does not transfer automatically to newer runtime/configuration. Final artifact rechecked in R9. |
+| G06 | OPEN — latest baseline unintegrated | Automated checks on the current combined candidate | 00e CI83 passed against older main. Main2153/PR 56 is now deployed, PR51 is unmergeable and combined language/worker/prose checks have not run. R1 reconciles baseline;R9 revalidates the complete candidate. |
 | G07 | MET at code snapshot | No unauthorized provider/tracking/secret/placeholder material | No new provider/config/dependency; source and test-fixture boundaries inspected. Future additions require review. |
 | G08 | OPEN — hard gate | Supported actual-platform/accessibility/install acceptance | R7:real browsers/devices, assistive/zoom/safe-area and visual tasks; not external certification. |
 | G09 | OPEN — hard gate | Credible performance/input evidence | R8:INP and realistic supported load measurement; field data only where available; no current severe CLS defect asserted. |
@@ -102,7 +108,7 @@ Full source/probe evidence is in [the traceability evidence register](HDC_REQUIR
 | G12 | OPEN — hard gate | Explicit owner release authorization and live verification plan | No approval to merge/deploy now. H1 occurs only after exact-candidate approval; live success must then be observed. |
 | G13 | OPEN — adopted-scope hard gate | Hosted-text language request resolved | L1 full applicable text/meaning review or explicit owner-approved revision; blank export is not delivery. |
 
-All nine OPEN groups block the currently requested release; they are not nine known live defects. Several are missing product/review/validation deliveries. G13 is the separately adopted language dependency; it is not silently added to the149 original-M count. Privacy/provider/field/asset exceptions must not be invented merely to close a gate.
+All ten OPEN groups block the currently requested release; they are not ten known live defects. Several are missing product/review/validation deliveries. G13 is the separately adopted language dependency; it is not silently added to the149 original-M count. Privacy/provider/field/asset exceptions must not be invented merely to close a gate.
 
 ## Exact test and PR evidence, not interchangeable claims
 
@@ -126,7 +132,7 @@ Read-only live checks on 3 November 2026 returned homepage200 with Daily Darshan
 
 Implemented/tested components hidden from the live site include Sanctuary interactions/timers, the verified Reader pilot and its controls, local Journey dashboard/routine/journal/log, new Japa session history, verified section shortcuts, Explore, festival manual preview/new automatic schedule interface, and new gated breadcrumb/public-sharing interfaces. Several still have acceptance gaps; hidden does not mean completed or approved.
 
-**Already public:** established catalogue/search/library/Panchang/Ephemeris/Japa/favourites/navigation/install behavior, baseline design/metadata improvements and neutral Daily Darshan through earlier merges. PR 49/50 were merged externally despite the single-launch restriction; the history cannot be erased. PR 52/53/54/55 are also on main; their approved changes and explicit Contribution withholding are preserved. No undo/merge/deploy is authorized by this audit.
+**Already public:** established catalogue/search/library/Panchang/Ephemeris/Japa/favourites/navigation/install behavior, baseline design/metadata improvements and neutral Daily Darshan through earlier merges. PR 49/50 were merged externally despite the single-launch restriction; the history cannot be erased. PR 52/53/54/55/56 are also on main; their approved production changes and explicit Contribution withholding must be preserved. PR 56 partial Hindi loading is live but not yet incorporated into this integration branch. No undo/merge/deploy is authorized by this audit.
 
 ## What can run concurrently, and what needs people
 
@@ -150,12 +156,12 @@ Termination requires original mandatory criteria satisfied or explicitly owner-r
 | Category | Current status |
 | --- | --- |
 | Original requirements identified | 149 normalized acceptance units; full 1007-line original recovered, high coverage confidence; bounded interpretation choices explicit |
-| Verified complete | 73 bounded criteria;2 of 11 original stages closed, not weighted product completion |
-| Partially implemented | 63 original criteria;7 original stages |
+| Verified complete | 72 bounded criteria;2 of 11 original stages closed, not weighted product completion |
+| Partially implemented | 64 original criteria;7 original stages |
 | Not started | 4 original criteria:transliteration, mobile-model evaluation, repo description/topics, final operational checklist |
 | Blocked | 9 original criteria;2 original stages. 3 remaining packages have direct external/manual completion gates; L1 additionally review-dependent. |
 | Remaining increments | Fixed plan 9 original-scope closure packages; minimum 8 only if quality packages combine; plus separately adopted L1 and separately authorized launch |
-| Hard release blockers | 9 OPEN gate groups:feature/content/data-safety/platform/performance/discovery-publication/final package/owner authorization/adopted language |
+| Hard release blockers | 10 OPEN gate groups: feature/content/data-safety/current-base automation/platform/performance/discovery-publication/final package/owner authorization/adopted language |
 | Next increment | R1 — seven-store personal-data compatibility closure; not started as part of this audit |
 | Production deployment | NOT AUTHORIZED; PR 51 remains draft and preview default-OFF |
 

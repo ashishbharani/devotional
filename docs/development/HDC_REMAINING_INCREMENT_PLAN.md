@@ -6,7 +6,7 @@ title: HDC Remaining Increment Plan
 
 [Master dashboard](HDC_MASTER_COMPLETION_DASHBOARD.md) · [Original requirement matrix](HDC_REQUIREMENTS_TRACEABILITY.md)
 
-Snapshot: code `00e4502`, main `7e88e7a`, **3 November 2026**. This is the plan produced by the audit-only assignment. **No package below is authorized to be implemented during this audit; no merge, production activation or deployment is authorized.**
+Snapshot: integration code `00e4502` incorporates main through `7e88e7a`; final production refresh is `2153bec` (PR 56), **3 November 2026**. This is the plan produced by the audit-only assignment. **No package below is authorized to be implemented during this audit; no merge, production activation or deployment is authorized.**
 
 > **Coverage-count boundary:** language counts are the pre-audit `00e4502` generated-site snapshot. These maintenance documents add English hosted text under the existing MkDocs build; refresh coverage for the final documentation/source snapshot. The code-fenced original is documentary source, not a new instruction or authored translation. No audit exclusion was added to improve coverage numbers.
 
@@ -23,7 +23,13 @@ Estimates are rough active engineer/reviewer effort, not elapsed delivery promis
 
 ## Immediately next action
 
-The audit first establishes this scope and dashboard. **The next coding package, after this audit assignment ends, is R1: all new-store data compatibility closure.** It closes a genuine original no-data-loss release condition. Do not first add another cosmetic feature, translation export format or isolated button fix. R2 source research, R5 evidence preparation and L1 language classification can run independently, using existing source IDs and no shared-file writes.
+The audit first establishes this scope and dashboard. **The next coding package, after this audit assignment ends, is R1: latest-main baseline reconciliation and all new-store data compatibility closure.** It closes a genuine original no-data-loss release condition. Do not first add another cosmetic feature, translation export format or isolated button fix. R2 source research, R5 evidence preparation and L1 language classification can run independently, using existing source IDs and no shared-file writes.
+
+## Latest-main integration prerequisite
+
+Main advanced to `2153bec` via merged/deployed PR 56 during the audit refresh. It adds selected-language local packs (482 Hindi source units, eight empty full-text packs), runtime loading/readiness, cache/version handling and publication-compatible prose tests. PR51 still has older main 7e88e7a and is reported unmergeable. Do not use old CI as combined proof.
+
+**R1's first development subtask** is the reviewed baseline reconciliation, not a new feature increment: preserve both PR51 translate=no/notranslate protections and PR 56 language loading/offline/publication behavior, then rerun combined current-source tests. Shared files include abp-i18n.js, hooks/generate.py, hooks/sw.template.js and the relevant translation/prose/PWA tests. The present audit is documentation-only and does not perform that merge. R9 refreshes the baseline again before the final freeze.
 
 ## Seven-store compatibility boundary for R1
 
@@ -50,10 +56,10 @@ The audit first establishes this scope and dashboard. **The next coding package,
 | Likely files/subsystems | abp-journeys.js; abp-practice.js; abp-japa-history.js; remaining preview-store modules and existing browser tests |
 | Expected observable result | Existing records survive ordinary edits, blocked reads/writes, cross-tab changes and recovery; no new duplicated preference/account store. |
 | Tests and objective acceptance | Reproduce each risk first; cover missing/valid/unknown/malformed/future records, permission/quota failures, cross-tab removal/replacement, recovery, navigation and offline update. Include routine-library envelope/row unknown fields, Reader state and Japa history combined recovery. |
-| Dependencies / approvals | None for code work. Scope is every new store listed below, not every storage key on the internet. |
+| Dependencies / approvals | First reconcile latest main/PR 56 with existing protection and tests. Scope is every new store listed below, not every storage key on the internet. |
 | Safe parallelism | Safe in a separate worktree; serialize shared practice/Reader/Journey runtime and generator changes with R2/R3. |
 | Release/regression risks | High data risk; no cosmetic schema/key rename, reset or unreviewed migration. |
-| Precise DONE | All seven-store acceptance cases pass; AF1-AF3 closed with new regressions and existing records unchanged. |
+| Precise DONE | Latest-main reconciliation and applicable combined tests pass;all seven-store acceptance cases pass; AF1-AF3 closed with new regressions and existing records unchanged. |
 | Evidence-based effort / uncertainty | 2-4 engineer-days; medium/high uncertainty from seven-store combined edge cases. |
 
 <a id="r 2"></a>
@@ -199,7 +205,7 @@ The audit first establishes this scope and dashboard. **The next coding package,
 - **Deliverable:** classify the13,696 current audit candidates, separate brands/proper names/canonical titles/fragments from real prose, author applicable English-plus-nine-language hosted/runtime UI content, record native meaning/source review and preserve protected source/private fields. Counts change with source; use fingerprints/IDs, not a fixed quota.
 - **Files:** existing i18n catalogues/runtime and reviewed text sources, not frozen canonical collection or an embedded private provider key. Reuse the existing review export; no new export iteration is needed merely to show activity.
 - **DONE:** applicable hosted/runtime text inventory resolved and completeness checks pass with documented legitimate exclusions; native meaning reviewed; no transliteration-as-translation or private/sacred-source overwrite; site functionality/design unchanged.
-- **Dependencies:** native-language reviewer capacity, source/rights where needed, stable source snapshot. Source classification can proceed alongside R1-R8; runtime/catalogue changes must be coordinated and audited. Do not merge the separate unmerged translation branch merely by assuming it is complete.
+- **Dependencies:** native-language reviewer capacity, source/rights where needed, stable source snapshot. PR54/56 records specify sequential translation authoring without agents; respect that within L1. Classification/authoring may proceed alongside independent non-language R1-R8 work with separate file ownership; runtime/catalogue changes must be coordinated and audited. PR 56 is already merged/deployed but explicitly partial; integrate that verified checkpoint without treating it as full coverage or assuming any later uncommitted work is included.
 - **Effort:** **NOT DETERMINABLE** before classification and capacity review.13,696 are candidates, not 13,696 necessarily distinct prose passages; nine target languages multiply real work. An invented days-per-string schedule would be misleading.
 - **Gate:** retained for the current requested release unless the owner explicitly revises it. A narrower original-M release cannot silently discard this independently adopted requirement.
 
@@ -225,7 +231,7 @@ Each row refers to the complete package above for tests, dependency, parallelism
 ## Dependency and concurrency plan
 
 1. **First closure:** R1. In parallel, prepare R2 source/transliteration evidence, R5 real festival evidence, R6 metadata inventory and L1 classification. Preparation is not source approval.
-2. **Content/personal workflows:** after R1 establishes safe state contracts, implement R2 then R3. R4 verified pathways can proceed with real source metadata; festival-specific links depend on R5. Do not concurrently edit abp-practice.js,abp-journeys.js, theme/main.html or hooks/generate.py without file ownership/serialization.
+2. **Content/personal workflows:** after R1 establishes safe state contracts, implement R2 then R3. R4 verified pathways can proceed with real source metadata; festival-specific links depend on R5. Do not concurrently edit abp-practice.js, abp-journeys.js, theme/main.html or hooks/generate.py without file ownership/serialization.
 3. **Quality:** prepare R7 device/assistive/visual matrix and R8 measurement plan early. Repeat actual acceptance after relevant final feature changes. Performance/visual observations must identify exact artifact and settings.
 4. **Final:** R9 only after mandatory original and adopted scope is complete or the owner explicitly accepts documented scoped limitations. Complete exact-head checks and staging review; never infer readiness from historical CI or aggregate test counts.
 
