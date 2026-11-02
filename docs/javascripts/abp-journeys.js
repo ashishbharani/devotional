@@ -44,7 +44,7 @@
   }
   const latest=()=>{
    if(sessionOnly&&externalChanged){status.textContent='Another tab changed the saved journey. Your visit-only changes have been kept; reload or load valid saved changes before editing.';return null;}
-   try{return sessionOnly?state:readJourney();}catch(_){status.textContent='Saved journey could not be read or has an unsupported format. Existing data and your draft have been kept.';return null;}
+   try{if(sessionOnly)return state;const saved=readJourney();externalChanged=false;return saved;}catch(_){status.textContent='Saved journey could not be read or has an unsupported format. Existing data and your draft have been kept.';return null;}
   };
   function save(value){state={...value,...normalize(value)};try{localStorage.setItem(key,JSON.stringify(state));sessionOnly=false;status.textContent='Saved in this browser only.';}catch(_){sessionOnly=true;status.textContent='Storage unavailable. Changes remain for this visit only.';}summary();}
   const on=(s,e,f)=>q(s).addEventListener(e,f,{signal:controller.signal});

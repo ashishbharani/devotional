@@ -63,7 +63,11 @@ try{
  await page.goto(base+'journeys/');assert.equal(await page.locator('[data-routine-minutes]').inputValue(),'5');
  await page.locator('[data-journal]').fill('Unsent synthetic draft');
  const other=await context.newPage();await other.goto(base+'journeys/');await other.locator('[data-routine-name]').fill('Other tab routine');await other.locator('[data-journey-save]').click();
- await page.waitForFunction(()=>document.querySelector('[data-journey-status]').textContent.includes('draft has been kept'));
+ assert.equal(await other.evaluate(()=>localStorage.getItem('hdc-journey-state-v1')),'{bad-json','another tab must not silently repair or overwrite corrupt saved data');
+ // Seed a separate valid external-change fixture; the app has no implicit repair action.
+ await other.evaluate(()=>localStorage.setItem('hdc-journey-state-v1',JSON.stringify({name:'Other tab routine',minutes:5,journal:'',sessions:[]})));
+ await page.bringToFront();
+ await page.waitForFunction(()=>document.querySelector('[data-journey-status]').textContent.includes('draft has been kept'),null,{polling:100});
  assert.equal(await page.locator('[data-journal]').inputValue(),'Unsent synthetic draft');await other.close();
  await page.evaluate(()=>{const set=Storage.prototype.setItem;Storage.prototype.setItem=function(k,v){if(k==='hdc-journey-state-v1')throw new Error('blocked');return set.call(this,k,v);};});
  await page.locator('[data-journey-save]').click();assert.match(await page.locator('[data-journey-status]').textContent(),/this visit only/);

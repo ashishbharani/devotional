@@ -30,3 +30,10 @@ blocked reads/writes, repeated memory-only session recording, cross-tab recovery
 and explicit valid/invalid loads. Existing routine, continuation, Journey and PWA
 suites remain required. This does not certify cloud sync, physical devices or
 native-language coverage. The coordinated release stays draft and default-OFF.
+
+
+Integration caught an old cross-tab test setup that expected corrupt JSON to be
+overwritten by Save. It now asserts that Save preserves corrupt data, then seeds
+an explicit valid external-change fixture while retaining all original draft and
+blocked-write assertions. Consuming a valid fresh saved snapshot clears the old
+external-change flag; only subsequent external changes block visit-only recovery.
