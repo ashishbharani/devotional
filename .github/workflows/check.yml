@@ -100,7 +100,7 @@ jobs:
           path: work/approved-header-staging
       - name: Test ten local languages without Google Translate
         run: node scripts/test_translation_browser.mjs
-      - name: Test real editorial prose, selected-language loading and offline reuse
+      - name: Test registered editorial translations, exact fallback and offline reuse
         run: node scripts/test_prose_translation_browser.mjs
       - name: Test English library handoffs and Vrat Katha / Parayan discovery
         run: node scripts/test_reading_links_browser.mjs
@@ -116,6 +116,7 @@ jobs:
           path: |
             work/translation-browser
             work/translation-coverage.json
+            work/prose-translation
       - uses: actions/upload-artifact@v4
         if: always()
         with:

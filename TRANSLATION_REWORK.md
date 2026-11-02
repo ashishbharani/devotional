@@ -2,6 +2,36 @@
 
 ## Status: INCOMPLETE — draft technical foundation, not a full translated release
 
+## Current-main compatibility update
+
+PR #55 replaced the editorial sources after the earlier Hindi checkpoint and
+withheld Contribution from publication. PR #56's GitHub merge-ref checks therefore
+exercised different pages than its original local build. The new Disclaimer has
+125 clauses, not 72. Earlier descriptions below of complete editorial bodies refer
+only to the superseded source revision; they are not current coverage claims.
+
+This PR now includes current main without replacing any supplied publication page.
+The functional browser regression checks every current text node against either
+its registered translation or exact English fallback, restores all originals,
+preserves all 125 clause IDs/contents links and verifies Contribution stays 404.
+It also checks that the Hindi pack does not republish the withheld payment handle.
+Missing editorial units are written to `work/prose-translation/coverage.json` and
+uploaded by CI. `REQUIRE_COMPLETE_PROSE=1` enables the separate completion gate;
+it must fail while the current source translation backlog remains. Passing runtime
+checks must never be presented as completing the new publication-page translations.
+
+The larger 522-unit dynamic-feedback work remains paused and uncommitted in its
+original checkout. This compatibility fix does not publish that work or revive the
+withheld payment page. Full current-source translation remains unfinished/draft.
+
+Compatibility validation: strict build passed in 79.75 seconds. Chromium checks
+passed at 320/1440px for registered current text, exact English fallback/restoration,
+all 125 clause IDs, contribution 404, lazy loading, race/retry and offline reload.
+The explicit completion gate was run and failed as expected on missing current
+About text. The runtime report counted 33 About, 34 Foreword and 639 Disclaimer
+missing rendered text units per viewport; duplicates/identities are included, so
+these are not counts of unique paragraphs or linguistic quality certification.
+
 The owner's confirmed scope is **all hosted text**, including editorial pages and
 catalogue descriptions, in English, Hindi, Marathi, Gujarati, Bengali, Punjabi,
 Telugu, Kannada, Malayalam and Tamil. External book readers remain external;
