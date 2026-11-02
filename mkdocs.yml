@@ -38,6 +38,7 @@ theme:
     - toc.follow
 
 extra:
+  contributions_enabled: false  # Owner approval is required before public release.
   generator: false
 
 extra_css:
