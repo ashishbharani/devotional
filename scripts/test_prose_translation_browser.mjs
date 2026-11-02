@@ -3,6 +3,7 @@ import {spawn} from 'node:child_process';
 import {readFile,mkdir,writeFile} from 'node:fs/promises';
 import {chromium} from 'playwright';
 const base='http://127.0.0.1:4331/devotional/';
+const waitForI18n=page=>page.waitForFunction(()=>Boolean(window.abpI18n&&document.querySelector('.abp-language-btn:not(:disabled)')));
 const hi=JSON.parse(await readFile('docs/assets/translations/hi.json','utf8')).translations;
 const mr=JSON.parse(await readFile('docs/assets/translations/mr.json','utf8')).translations;
 const catalogue=JSON.parse(await readFile('docs/assets/i18n.json','utf8'));
@@ -30,7 +31,7 @@ try {
   const context=await browser.newContext({viewport:{width,height:1000},serviceWorkers:'block',reducedMotion:'reduce'}),page=await context.newPage();
   const requests=[],errors=[];context.on('request',r=>{if(r.url().includes('/assets/translations/'))requests.push(r.url());});
   page.on('pageerror',e=>errors.push(e.message));
-  await page.goto(base+'about/');await page.evaluate(()=>window.abpI18n.ready);
+  await page.goto(base+'about/');await waitForI18n(page);
   assert.equal(requests.length,0,'English must not download nine prose dictionaries');
   const paragraphs=page.locator('.abp-project-info p');
   const original=await paragraphs.allTextContents();
@@ -59,7 +60,7 @@ try {
   assert.equal(withheld.status(),404,'preserve main: contribution is withheld from publication');
   assert.equal(await page.locator('.abp-contribution-qr').count(),0,'withheld payment UI is absent');
   for(const route of ['about/','foreword/','disclaimer/']) {
-   await page.goto(base+route);await page.evaluate(()=>window.abpI18n.ready);
+   await page.goto(base+route);await waitForI18n(page);
    await page.evaluate(()=>window.abpI18n.applyLanguage('en'));
    const originalUnits=await page.locator('.abp-project-info').evaluate(el=>{const walker=document.createTreeWalker(el,NodeFilter.SHOW_TEXT),out=[];let node;while(node=walker.nextNode())if(node.textContent.trim())out.push(node.textContent);return out;});
    const identity=new Set(['Ashish Bharani','HDC — Hindu Devotional Collection']);
@@ -77,7 +78,7 @@ try {
    assert.deepEqual(restored,originalUnits,'restore all current editorial text exactly');
   }
   for(const catalogueRoute of ['categories/01-deities-sub-deities-and-divine-forms/agni/','categories/35-jyotisha-navagraha-nakshatra-and-astral-devotional-traditions/navagraha/']) {
-  await page.goto(base+catalogueRoute);await page.evaluate(()=>window.abpI18n.ready);
+  await page.goto(base+catalogueRoute);await waitForI18n(page);
   await page.evaluate(()=>window.abpI18n.applyLanguage('en'));
   const catalogueCells=page.locator('tbody td.singer,tbody td.purp,tbody td.time,tbody td.jyo,tbody td.aff');
   const sourceCells=await catalogueCells.allTextContents();
@@ -95,7 +96,7 @@ try {
   assert.deepEqual(await catalogueCells.allTextContents(),sourceCells);
   assert.deepEqual(await page.locator('.abp-work-title').allTextContents(),workTitles,'restore sacred titles exactly');
   }
-  await page.goto(base+'disclaimer/');await page.evaluate(()=>window.abpI18n.ready);
+  await page.goto(base+'disclaimer/');await waitForI18n(page);
   await page.evaluate(()=>window.abpI18n.applyLanguage('en'));
   const readLegal=()=>page.locator('h3[id^="clause-"]').evaluateAll(headings=>headings.flatMap(heading=>{
    const nodes=[heading];
@@ -123,7 +124,7 @@ try {
  }
  const context=await browser.newContext({serviceWorkers:'block'}),page=await context.newPage();
  await context.route('**/assets/translations/hi.json',async route=>{await new Promise(r=>setTimeout(r,250));await route.continue();});
- await page.goto(base+'about/');await page.evaluate(()=>window.abpI18n.ready);
+ await page.goto(base+'about/');await waitForI18n(page);
  const original=await page.locator('.abp-project-info p').allTextContents();
  await page.evaluate(()=>{window.abpI18n.applyLanguage('hi');return window.abpI18n.applyLanguage('mr');});
  await page.waitForTimeout(400);
@@ -133,7 +134,7 @@ try {
  console.log('PASS delayed language response cannot overwrite the latest selected language');
  const retry=await browser.newContext({serviceWorkers:'block'}),retryPage=await retry.newPage();let attempts=0;
  await retry.route('**/assets/translations/hi.json',route=>++attempts===1?route.abort():route.continue());
- await retryPage.goto(base+'about/');await retryPage.evaluate(()=>window.abpI18n.ready);
+ await retryPage.goto(base+'about/');await waitForI18n(retryPage);
  await retryPage.evaluate(()=>window.abpI18n.applyLanguage('hi'));
  assert.equal(attempts,1);
  await retryPage.evaluate(()=>window.abpI18n.applyLanguage('hi'));
@@ -146,10 +147,11 @@ try {
  await offlinePage.goto(base+'about/');
  await offlinePage.evaluate(()=>navigator.serviceWorker.ready);
  await offlinePage.waitForFunction(()=>Boolean(navigator.serviceWorker.controller));
- await offlinePage.reload();await offlinePage.evaluate(()=>window.abpI18n.ready);
+ await offlinePage.reload();await waitForI18n(offlinePage);
  await offlinePage.evaluate(()=>window.abpI18n.applyLanguage('hi'));
  await offline.setOffline(true);await offlinePage.reload();
- await offlinePage.evaluate(async()=>{await window.abpI18n.ready;await window.abpI18n.languageReady;});
+ await waitForI18n(offlinePage);
+ await offlinePage.waitForFunction(value=>document.querySelector('.abp-project-info')?.textContent.includes(value),hi[currentIntro]);
  const firstSource=currentIntro;
  assert.ok((await offlinePage.locator('.abp-project-info').textContent()).includes(hi[firstSource]),'previously loaded Hindi prose survives a real offline reload');
  await offline.close();
