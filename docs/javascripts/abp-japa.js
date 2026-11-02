@@ -53,6 +53,7 @@
     const dialogMessage = byId("abp-japa-dialog-message");
     const announcement = byId("abp-japa-announcement");
     let state = readState();
+    let historyEpoch = 0; // ephemeral continuity marker; never added to the legacy store
     let pendingAction = null;
     let audioContext = null;
 
@@ -61,6 +62,10 @@
     }
 
     function render() {
+      if (root.hasAttribute("data-japa-history-enabled")) {
+        root.dataset.japaCount = String(state.count);
+        root.dataset.japaEpoch = String(historyEpoch);
+      }
       count.textContent = state.count.toLocaleString();
       malas.textContent = Math.floor(state.count / MALA_SIZE).toLocaleString();
       remainder.textContent = `${state.count % MALA_SIZE} / ${MALA_SIZE}`;
@@ -146,9 +151,11 @@
     dialog.querySelector("[data-cancel]").addEventListener("click", () => dialog.close());
     dialog.querySelector("[data-confirm]").addEventListener("click", () => {
       if (pendingAction === "fresh") {
+        historyEpoch += 1;
         state.count = 0;
         state.canUndo = false;
       } else if (pendingAction === "reset") {
+        historyEpoch += 1;
         state = { ...freshState(), name: state.name, target: state.target, haptic: state.haptic, sound: state.sound };
       }
       pendingAction = null;

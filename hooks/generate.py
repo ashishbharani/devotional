@@ -984,8 +984,9 @@ def page_az(d):
 
 def page_japa(d):
     presets = "".join(f'<button type="button" class="abp-japa__preset" data-target="{n}">{n}</button>' for n in (11, 21, 51, 108, 1008))
+    history_attributes = ' data-japa-history-enabled' if PRACTICE_PREVIEW else ''
     return titlebar("Japa / Devotional Counter", "A private counter stored only on this device", "abp-titlebar--sand") + (
-        '<div class="abp-japa" id="abp-japa" markdown="0">\n'
+        f'<div class="abp-japa" id="abp-japa" markdown="0"{history_attributes}>\n'
         '<label class="abp-japa__name"><span data-i18n="practiceName">Practice name (optional)</span>'
         '<input id="abp-japa-name" type="text" maxlength="80" autocomplete="off" data-i18n-placeholder="practicePlaceholder" placeholder="Om Namah Shivaya, Gayatri Mantra, Prayer…"></label>\n'
         '<section class="abp-japa__dashboard" aria-label="Current counter" data-i18n-aria="currentCount">'
@@ -1011,6 +1012,22 @@ def page_japa(d):
         '<p id="abp-japa-dialog-message"></p><div><button type="button" class="abp-btn" data-cancel data-i18n="cancel">Cancel</button>'
         '<button type="button" class="abp-btn abp-btn--primary" data-confirm data-i18n="confirm">Confirm</button></div></dialog>\n'
         "</div>\n"
+    ) + (japa_history_panel() if PRACTICE_PREVIEW else '')
+
+
+def japa_history_panel():
+    return (
+        '<section class="hdc-practice notranslate" translate="no" id="japa-history" data-japa-history aria-label="Optional local Japa session history">\n'
+        '<h2>Optional Japa session history</h2>\n'
+        '<p>Start recording before counting, then Finish to save only the repetitions added with the existing counter. This does not create another counter or change your target, sound or saved counter. Ordinary Undo corrects the session total. Undo below its starting count, Fresh session or Reset cancels recording; start again afterwards. Leaving this page cancels an unfinished recording.</p>\n'
+        '<p>Finishing stores counts and start/end timestamps as plain text in this browser profile, not prayer names or account data. Anyone using this profile can read them. Nothing is synchronized to Firebase. Up to 50 finished sessions are kept; the oldest is replaced when the limit is reached.</p>\n'
+        '<div class="hdc-practice-controls"><button type="button" data-japa-session-start>Start recording a Japa session</button><button type="button" data-japa-session-finish disabled>Finish and save this session</button><button type="button" data-japa-session-cancel disabled>Cancel recording</button></div>\n'
+        '<p data-japa-session-progress aria-live="off">No session recording.</p>\n'
+        '<p data-japa-history-status role="status" aria-live="polite"></p>\n'
+        '<h3>Finished sessions in this browser</h3><p data-japa-history-summary></p><ol data-japa-history-list></ol>\n'
+        '<details class="hdc-practice-details" data-japa-history-erase><summary>Erase only Japa session history</summary><p>This does not reset the current counter, today’s total, target, Japa preferences, journey notes, routines, practice log, Reader progress or favourites.</p><label><input type="checkbox" data-japa-history-erase-consent>I want to erase only this browser’s Japa session history.</label><button type="button" data-japa-history-erase-confirm disabled>Erase saved Japa session history</button></details>\n'
+        '<p><a href="../journeys/">My Devotional Journey</a></p>\n'
+        '</section>\n'
     )
 
 
@@ -1078,7 +1095,7 @@ def on_config(config, **kw):
     config["extra"]["hdc_practice_preview"] = PRACTICE_PREVIEW
     if not PRACTICE_PREVIEW:
         config["extra_css"] = [p for p in config["extra_css"] if p not in {"stylesheets/practice.css", "stylesheets/festivals.css"}]
-        config["extra_javascript"] = [p for p in config["extra_javascript"] if str(p) not in {"javascripts/abp-practice.js", "javascripts/abp-festivals.js", "javascripts/abp-journeys.js", "javascripts/abp-discovery.js", "javascripts/abp-sharing.js", "javascripts/abp-section-shortcuts.js"}]
+        config["extra_javascript"] = [p for p in config["extra_javascript"] if str(p) not in {"javascripts/abp-practice.js", "javascripts/abp-festivals.js", "javascripts/abp-journeys.js", "javascripts/abp-discovery.js", "javascripts/abp-sharing.js", "javascripts/abp-section-shortcuts.js", "javascripts/abp-japa-history.js"}]
     d = load()
     translation_report, translation_errors = audit_catalogue(ROOT / "docs" / "assets" / "i18n.json")
     for line in translation_report:
@@ -1324,7 +1341,7 @@ def on_post_build(config, **kw):
         # Public route metadata only. Loaded on demand; never duplicate work favourites.
         shortcut_registry = {"schema": 1, "sections": [{"path": url_of(p["src"]), "title": p["title"]} for p in _pages if "cat" in p]}
         (site / "assets" / "section-shortcuts.json").write_text(json.dumps(shortcut_registry, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
-        shell.extend(["stylesheets/practice.css", "stylesheets/festivals.css", "sanctuary/", "reader/", "journeys/", "explore/"])
+        shell.extend(["stylesheets/practice.css", "stylesheets/festivals.css", "sanctuary/", "reader/", "journeys/", "explore/", "japa-counter/"])
         # Material requests these even on an offline shell page. Keep its
         # built-in text search and instant-navigation bootstrap available;
         # the larger universal-search payload pair remains on demand.
@@ -1333,7 +1350,7 @@ def on_post_build(config, **kw):
         shell.extend(["assets/images/deities/ganesha-640.webp", "assets/images/deities/shiva-640.webp"])
         shell.extend(path.relative_to(site).as_posix() for path in sorted((site / "assets" / "festivals").glob("*")) if path.is_file())
     shell.extend(f"javascripts/{path.name}" for path in sorted((site / "javascripts").glob("*.js"))
-                 if PRACTICE_PREVIEW or path.name not in {"abp-practice.js", "abp-festivals.js", "abp-journeys.js", "abp-discovery.js", "abp-sharing.js", "abp-section-shortcuts.js"})
+                 if PRACTICE_PREVIEW or path.name not in {"abp-practice.js", "abp-festivals.js", "abp-journeys.js", "abp-discovery.js", "abp-sharing.js", "abp-section-shortcuts.js", "abp-japa-history.js"})
     shell.extend(f"javascripts/{path.name}" for path in sorted((site / "javascripts").glob("search-*.mjs")))
     shell.extend(path.relative_to(site).as_posix() for path in sorted((site / "assets" / "panchang").glob("*.mjs")))
     shell.extend(path.relative_to(site).as_posix() for pattern in (

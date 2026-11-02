@@ -13,6 +13,7 @@ Optional, local-first tools for your own practice. No account is required. No sp
 <p data-journey-japa>Open your existing counter to continue Japa.</p>
 <p><a href="../japa-counter/">Existing Japa counter</a> · <a href="../favourites/">Existing saved works and favourites</a> · <a href="../reader/">Continue Sacred Reader pilot</a></p>
 <p data-journey-reader></p>
+<p><a href="../japa-counter/#japa-history">View local Japa session history and record a session with the existing counter</a></p>
 <section data-section-shortcut-list aria-label="Favourite section shortcuts">
 <h2>Favourite section shortcuts</h2>
 <p>Save an existing deity, tradition or category section using its Save a section shortcut control. Up to ten navigation paths are kept as plain text in this browser, not encrypted or account-synchronized. They are separate from existing saved works and do not copy your journal or prayer names.</p>
