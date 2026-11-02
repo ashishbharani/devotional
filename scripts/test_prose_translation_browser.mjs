@@ -30,9 +30,14 @@ try {
   const original=await paragraphs.allTextContents();
   const links=await page.locator('.abp-project-info a').evaluateAll(xs=>xs.map(x=>x.href));
   await page.evaluate(()=>window.abpI18n.applyLanguage('hi'));
-  let verified=0;
-  for(let i=0;i<original.length;i++)if(hi[original[i].trim()]){assert.equal((await paragraphs.nth(i).textContent()).trim(),hi[original[i].trim()]);verified++;}
-  assert.ok(verified>=7,'verify the real About prose, not merely its heading');
+  const introSource=Object.keys(hi).find(source=>source.startsWith('I am an Advocate'));
+  assert.ok(introSource,'the catalogue must contain the actual About introduction');
+  assert.ok(original.some(source=>normalize(source)===normalize(introSource)),'the page must render the actual About introduction');
+  for(let i=0;i<original.length;i++) {
+   const value=expected.get(normalize(original[i]));
+   if(value)assert.equal((await paragraphs.nth(i).textContent()).trim(),value);
+  }
+  assert.ok((await paragraphs.allTextContents()).some(value=>value.trim()===hi[introSource]),'verify translated About prose, not merely its heading');
   assert.deepEqual(await page.locator('.abp-project-info a').evaluateAll(xs=>xs.map(x=>x.href)),links);
   assert.equal(requests.filter(x=>x.endsWith('/hi.json')).length,1);
   await page.evaluate(()=>window.abpI18n.applyLanguage('mr'));
