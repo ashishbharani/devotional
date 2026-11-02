@@ -70,6 +70,11 @@ def main():
             translations[norm(source)].update({code: section["values"].get(code, [])[index] for code in CODES})
     for source, values in data.get("textTranslations", {}).items():
         translations[norm(source)].update(values)
+    for code, relative in data.get("contentCatalogues", {}).items():
+        pack = json.loads((ROOT / "docs" / relative).read_text(encoding="utf-8"))
+        for source, value in pack.get("translations", {}).items():
+            if value and value != source:
+                translations[norm(source)][code] = value
     catalogue_bytes = (ROOT / "data/collection.json").read_bytes()
     raw = json.loads(catalogue_bytes)
     for category in raw["categories"]:

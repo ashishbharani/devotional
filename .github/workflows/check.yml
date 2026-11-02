@@ -181,6 +181,8 @@ jobs:
         with:
           name: mobile-keyboard-screenshots
           path: work/mobile-keyboard
+      - name: Test registered editorial translations, exact fallback and offline reuse
+        run: node scripts/test_prose_translation_browser.mjs
       - name: Test English library handoffs and Vrat Katha / Parayan discovery
         run: node scripts/test_reading_links_browser.mjs
       - uses: actions/upload-artifact@v4
@@ -195,6 +197,7 @@ jobs:
           path: |
             work/translation-browser
             work/translation-coverage.json
+            work/prose-translation
       - uses: actions/upload-artifact@v4
         if: always()
         with:

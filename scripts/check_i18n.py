@@ -64,6 +64,34 @@ def audit_catalogue(path: Path) -> tuple[list[str], list[str]]:
                 errors.append(f"{code}: missing hosted-text translation for {source!r}")
     report.append(f"Registered hosted-text phrases: {len(phrases)} with all nine target-language values")
 
+    packs = data.get("contentCatalogues", {})
+    if packs:
+        for code, label in LANGUAGES.items():
+            if code == "en":
+                continue
+            relative = packs.get(code, "")
+            expected = f"assets/translations/{code}.json"
+            if relative != expected:
+                errors.append(f"{label}: local content catalogue must use {expected}")
+                continue
+            try:
+                pack = json.loads((path.parent / "translations" / f"{code}.json").read_text(encoding="utf-8"))
+            except (OSError, ValueError) as error:
+                errors.append(f"{label}: unreadable local content catalogue: {error}")
+                continue
+            if not isinstance(pack, dict) or pack.get("language") != code or not isinstance(pack.get("translations"), dict):
+                errors.append(f"{label}: invalid local content catalogue structure/language")
+                continue
+            seen = set()
+            for source, value in pack["translations"].items():
+                normalized = " ".join(source.split()).lower()
+                if not normalized or normalized in seen or not isinstance(value, str) or not value.strip():
+                    errors.append(f"{label}: empty/duplicate content translation for {source!r}")
+                if value == source:
+                    errors.append(f"{label}: unchanged source cannot be counted as a prose translation: {source!r}")
+                seen.add(normalized)
+            report.append(f"{label} full-text pack: {len(pack['translations'])} registered units; status {pack.get('status', 'unreviewed')} (NOT completeness)")
+
     category_names = data.get("categoryNames", {})
     for code, label in LANGUAGES.items():
         count = len([value for value in category_names.get(code, []) if isinstance(value, str) and value.strip()])

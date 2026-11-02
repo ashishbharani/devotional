@@ -1328,7 +1328,7 @@ def on_post_build(config, **kw):
         "", "offline/", "favourites/", "manifest.webmanifest", "stylesheets/abp.css", "stylesheets/feedback.css", "stylesheets/project-info.css", "stylesheets/search.css",
         "stylesheets/navigation.css", "stylesheets/royal-home.css", "stylesheets/sacred-site.css", "stylesheets/deity-art.css",
         "stylesheets/hdc-header.css",
-        "assets/images/logo.svg", "assets/images/icon-192.png", "assets/images/icon-512.png",
+        "assets/i18n.json", "assets/images/logo.svg", "assets/images/icon-192.png", "assets/images/icon-512.png",
         "assets/images/icon-maskable-512.png", "assets/images/apple-touch-icon.png",
     ]
     shell.extend(f"assets/images/hdc-brand/{name}" for name in (
@@ -1363,7 +1363,10 @@ def on_post_build(config, **kw):
         # existing worker strategy and avoid treating arbitrary queries as hits.
         shell.extend(f"sanctuary/?minutes={minutes}" for minutes in (5, 10, 20))
     signature = hashlib.sha256()
-    # Version on-demand route metadata too, without adding it to the global shell.
+    # Optional language packs and section metadata are versioned, not globally precached.
+    for target in sorted((site / "assets" / "translations").glob("*.json")):
+        signature.update(target.relative_to(site).as_posix().encode())
+        signature.update(target.read_bytes())
     for name in ("works-index.json", "universal-search.json", *(("section-shortcuts.json",) if PRACTICE_PREVIEW else ())):
         signature.update((site / "assets" / name).read_bytes())
     # The large ephemeris assets affect the cache version but are never
