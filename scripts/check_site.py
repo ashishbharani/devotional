@@ -195,6 +195,31 @@ def main() -> int:
     require("request.auth != null && request.auth.uid == uid" in rules, "Firestore rules do not isolate each user", errors)
     require("allow read, write: if false" in rules, "Firestore rules have no default deny", errors)
 
+    # Validate the actual published launcher icon, not merely PNG dimensions.
+    from pwa_icon import BACKGROUND, MASKABLE_FILL, decode_rgba_png, enlarge_maskable_icon
+    brand = site / "assets" / "images" / "hdc-brand"
+    source_icon = brand / "icon-512.png"
+    enlarged_icon = brand / "icon-maskable-512-v2.png"
+    require(source_icon.is_file() and enlarged_icon.is_file(),
+            "approved PWA source or enlarged maskable icon is missing", errors)
+    if source_icon.is_file() and enlarged_icon.is_file():
+        generated = enlarged_icon.read_bytes()
+        require(generated == enlarge_maskable_icon(source_icon.read_bytes()),
+                "published Android maskable icon differs from reviewed 72% artwork", errors)
+        width, height, pixels = decode_rgba_png(generated)
+        require((width, height) == (512, 512), "maskable launcher icon must be 512x512", errors)
+        require(pixels[:4] == bytes((*BACKGROUND, 255)),
+                "maskable icon must retain the full-bleed burgundy background", errors)
+    manifest = json.loads((site / "manifest.webmanifest").read_text(encoding="utf-8"))
+    require(any(icon.get("purpose") == "maskable" and
+                icon.get("src") == "assets/images/hdc-brand/icon-maskable-512-v2.png"
+                for icon in manifest.get("icons", [])),
+            "PWA manifest must reference the larger, versioned Android icon", errors)
+    require("assets/images/hdc-brand/icon-maskable-512-v2.png" in
+            (site / "sw.js").read_text(encoding="utf-8"),
+            "new PWA launcher icon is missing from the offline shell", errors)
+    require(MASKABLE_FILL >= .7, "maskable artwork is still too small", errors)
+
     stylesheet = (site / "stylesheets" / "abp.css").read_text(encoding="utf-8")
     require(".md-header__title { display: none; }" not in stylesheet, "mobile CSS still hides the site name", errors)
 

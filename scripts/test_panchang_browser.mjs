@@ -99,8 +99,15 @@ try {
     assert.ok(await page.locator('a[href$="master-index/"]').count() > 0, "legitimate devotional navigation remains");
     assert.equal((await page.locator(".md-header__topic").first().innerText()).trim(), width < 1200 ? "HDC" : brandName, `${width}px: approved responsive header brand text`);
     assert.equal(await page.locator('a[data-md-component="logo"]').getAttribute('aria-label'), brandName, 'compact logo retains full accessible branding');
-    assert.ok(await page.locator(".md-header__title").isVisible(), `${width}px: header brand remains visible`);
-    const brandBox = await page.locator(".md-header__title").boundingBox();
+    // Desktop uses the approved board wordmark; the semantic title remains
+    // accessible but visually clipped. Mobile retains the live HDC text.
+    const visibleBrand = page.locator(width < 1200 ? '.md-header__title' : '.hdc-wordmark-desktop');
+    assert.ok(await visibleBrand.isVisible(), `${width}px: header brand remains visible`);
+    if (width >= 1200) {
+      await visibleBrand.evaluate(image => image.decode());
+      assert.ok(await visibleBrand.evaluate(image => image.naturalWidth > 0 && image.getBoundingClientRect().width >= 430), 'desktop wordmark loads at readable size');
+    }
+    const brandBox = await visibleBrand.boundingBox();
     assert.ok(brandBox && brandBox.x >= -1 && brandBox.x + brandBox.width <= width + 1, `${width}px: header brand stays inside the viewport`);
     assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), `${width}px: branding creates no horizontal overflow`);
     assert.equal(await page.locator('meta[property="og:site_name"]').getAttribute("content"), brandName, `${width}px: Open Graph site name`);
@@ -108,7 +115,7 @@ try {
     const schema = JSON.parse(await page.locator('script[type="application/ld+json"]').textContent());
     assert.equal(schema.isPartOf.name, brandName, `${width}px: structured-data site name`);
     await page.evaluate(() => scrollTo(0, 400));
-    assert.ok(await page.locator(".md-header__topic").first().isVisible(), `${width}px: brand remains visible after scrolling`);
+    assert.ok(await visibleBrand.isVisible(), `${width}px: brand remains visible after scrolling`);
     await page.evaluate(() => scrollTo(0, 0));
     if (width === 320 || width === 1440) {
       await page.goto(base + "find/");

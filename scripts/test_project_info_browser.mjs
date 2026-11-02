@@ -56,7 +56,9 @@ try {
         }
         await request.continue();
       });
-      for (const route of ['foreword', 'about', 'contribution', 'disclaimer']) {
+      const withheld = await page.goto(base + 'contribution/');
+      assert.equal(withheld.status(), 404, 'direct contribution URL is not published');
+      for (const route of ['foreword', 'about', 'disclaimer']) {
         await page.goto(base + route + '/');
         await page.locator('body').evaluate((el, value) => el.setAttribute('data-md-color-scheme', value), scheme);
         assert.equal(await page.locator('main h1').count(), 1);
@@ -64,8 +66,11 @@ try {
         assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), `${route} ${width}: overflow`);
         assert.equal(await page.locator('a[href$=".pdf"], iframe, object, embed').count(), 0, 'full content is native, not a PDF link/embed');
         if (route === 'disclaimer') {
-          assert.equal(await page.locator('h3[id^="clause-"]').count(), 72);
+          assert.equal(await page.locator('h3[id^="clause-"]').count(), 125);
           assert.equal(await page.locator('h2[id^="part-"]').count(), 18);
+          assert.equal(await page.locator('#appendix-a .abp-info-card').count(), 13);
+          assert.equal(await page.locator('#appendix-b .abp-info-card').count(), 8);
+          assert.ok(await page.locator('#clause-125').count());
           await page.locator('.abp-info-contents summary').click();
           // A hash and its target can be visible in the OLD document while
           // Material is still fetching/replacing the instant-navigation DOM.
@@ -92,7 +97,7 @@ try {
             const box = target.getBoundingClientRect();
             return box.height > 0 && box.top >= (header?.getBoundingClientRect().bottom || 100) && box.top < innerHeight;
           });
-          assert.match(await page.locator('.abp-project-info').innerText(), /ashishbharani984@gmail.com/);
+          assert.match(await page.locator('.abp-project-info').innerText(), /bharani\.law\.chambers@gmail\.com/);
         }
         if (route === 'about' || route === 'contribution') {
           const image = page.locator(route === 'about' ? '.abp-author-portrait' : '.abp-contribution-qr');
@@ -100,13 +105,13 @@ try {
           assert.ok(await image.evaluate(el => el.complete && el.naturalWidth > 0));
         }
         const footerLinks = page.locator('.abp-project-footer a');
-        assert.equal(await footerLinks.count(), 4);
+        assert.equal(await footerLinks.count(), 3);
         // Seed the second link, then enter the first with a real keyboard action.
         // Programmatic focus after a pointer action need not match :focus-visible.
         // Check every link's actual Tab order, active element and painted ring.
         await footerLinks.nth(1).focus();
         await page.keyboard.press('Shift+Tab');
-        for (let index = 0; index < 4; index++) {
+        for (let index = 0; index < 3; index++) {
           const focusControl = footerLinks.nth(index);
           const focusState = await focusControl.evaluate(el => ({
             active: document.activeElement === el,
@@ -121,7 +126,7 @@ try {
           assert.notEqual(focusState.outline, 'none', `visible keyboard focus: ${message}`);
           assert.ok(focusState.outlineWidth >= 2, `painted focus ring: ${message}`);
           assert.ok((await focusControl.boundingBox()).height >= 44);
-          if (index < 3) await page.keyboard.press('Tab');
+          if (index < 2) await page.keyboard.press('Tab');
         }
         assert.match(await page.locator('.md-copyright').textContent(), /Ashish Bharani/);
         assert.equal(await page.locator('.abp-pager__n.is-disabled').count(), 0, 'reading-order pager retained');
@@ -147,11 +152,10 @@ try {
       if (width < 1200) await page.locator('.abp-menu-toggle').click();
       await page.locator('.abp-navigation__section').last().click();
       const aboutLinks = page.locator('#abp-navigation .abp-navigation__submenu').last().locator('a');
-      assert.deepEqual((await aboutLinks.allTextContents()).map(s => s.trim()), ['Foreword', 'About Me', 'Contribution', 'Disclaimer & Terms', 'Legend', 'Reconciliation Rules']);
+      assert.deepEqual((await aboutLinks.allTextContents()).map(s => s.trim()), ['Foreword', 'About Me', 'Disclaimer & Terms', 'Legend', 'Reconciliation Rules']);
       await aboutLinks.filter({ hasText: /^About Me$/ }).click();
       await page.waitForURL(base + 'about/');
-      await page.locator('.abp-project-footer').getByRole('link', { name: 'Contribution', exact: true }).click();
-      await page.waitForURL(base + 'contribution/');
+      assert.equal(await page.locator('.abp-project-footer').getByRole('link', { name: 'Contribution', exact: true }).count(), 0);
       await page.locator('.abp-project-footer').getByRole('link', { name: 'Disclaimer & Terms', exact: true }).click();
       await page.waitForURL(base + 'disclaimer/');
       assert.equal(await page.locator('main h1').textContent(), 'Disclaimer & Terms');

@@ -771,7 +771,7 @@ def page_date_converter(d):
     )
 
 
-def page_home(d):
+def page_home(d, contributions_enabled=False):
     total = sum(c["works_stated"] for c in d["categories"])
     groups = sum(len(c["merged"]) for c in d["categories"])
     return (
@@ -805,7 +805,7 @@ def page_home(d):
         '<a class="abp-btn abp-btn--big" href="japa-counter/">'
         '<span aria-hidden="true">📿</span><span data-i18n="japa">Japa / Devotional Counter</span></a>'
         '<a class="abp-btn abp-btn--big" href="tools/indian-ephemeris/">Indian Ephemeris</a>'
-        "</nav>\n" + closing() + '</div>'
+        "</nav>\n" + closing(contributions_enabled) + '</div>'
     )
 
 
@@ -1095,7 +1095,8 @@ def on_config(config, **kw):
     add("index.md", "Home", "front")
     add("foreword.md", "Foreword", "front")
     add("about.md", "About Me", "front")
-    add("contribution.md", "Support the Project", "front")
+    if config.get("extra", {}).get("contributions_enabled", False):
+        add("contribution.md", "Support the Project", "front")
     add("disclaimer.md", "Disclaimer & Terms", "front")
     add("legend.md", "Legend", "front")
     add("rules.md", "Final Reconciliation Rules Applied", "front")
@@ -1148,7 +1149,7 @@ def on_config(config, **kw):
             "ABOUT": [
                 {"Foreword": "foreword.md"},
                 {"About Me": "about.md"},
-                {"Contribution": "contribution.md"},
+                *([{"Contribution": "contribution.md"}] if config.get("extra", {}).get("contributions_enabled", False) else []),
                 {"Disclaimer & Terms": "disclaimer.md"},
                 {"Legend": "legend.md"},
                 {"Reconciliation Rules": "rules.md"},
@@ -1209,10 +1210,15 @@ def on_files(files, config, **kw):
     if not PRACTICE_PREVIEW:
         for file in list(files):
             if file.src_uri in {"sanctuary.md", "reader/index.md", "journeys.md", "explore.md"}:
+    contributions_enabled = config.get("extra", {}).get("contributions_enabled", False)
+    if not contributions_enabled:
+        withheld = {"contribution.md", "assets/pdfs/contribution.pdf", "assets/images/contribution-phonepe-qr.png"}
+        for file in list(files):
+            if file.src_uri in withheld:
                 files.remove(file)
     d = load()
     builders = {
-        "index.md": lambda p: page_home(d),
+        "index.md": lambda p: page_home(d, contributions_enabled),
         "foreword.md": lambda p: page_foreword(d),
         "disclaimer.md": lambda p: page_disclaimer(d),
         "legend.md": lambda p: page_legend(d),
@@ -1297,6 +1303,9 @@ def on_files(files, config, **kw):
 def on_post_build(config, **kw):
     """Publish a versioned shell; preview adds bounded Material search helpers."""
     site = Path(config["site_dir"])
+    # Ship larger Android launcher artwork without modifying approved source PNGs.
+    from scripts.pwa_icon import publish_maskable
+    publish_maskable(site)
     tpl = (ROOT / "hooks" / "sw.template.js").read_text(encoding="utf-8")
     shell = [
         "", "offline/", "favourites/", "manifest.webmanifest", "stylesheets/abp.css", "stylesheets/feedback.css", "stylesheets/project-info.css", "stylesheets/search.css",
@@ -1309,7 +1318,7 @@ def on_post_build(config, **kw):
         "header-emblem.webp", "header-sunset.webp", "mobile-emblem-light.webp", "mobile-emblem-dark.webp", "emblem.webp", "favicon-32.png", "favicon-48.png",
         "navigation-corner-light.webp", "navigation-corner-dark.webp", "navigation-lotus-clear.webp",
         "navigation-corner-light-right.webp", "navigation-corner-dark-right.webp",
-        "icon-192.png", "icon-512.png", "icon-maskable-512.png", "apple-touch-icon.png",
+        "icon-192.png", "icon-512.png", "icon-maskable-512.png", "icon-maskable-512-v2.png", "apple-touch-icon.png",
     ))
     if PRACTICE_PREVIEW:
         shell.extend(["stylesheets/practice.css", "stylesheets/festivals.css", "sanctuary/", "reader/", "journeys/", "explore/"])
