@@ -770,7 +770,7 @@ def page_date_converter(d):
     )
 
 
-def page_home(d):
+def page_home(d, contributions_enabled=False):
     total = sum(c["works_stated"] for c in d["categories"])
     groups = sum(len(c["merged"]) for c in d["categories"])
     return (
@@ -804,7 +804,7 @@ def page_home(d):
         '<a class="abp-btn abp-btn--big" href="japa-counter/">'
         '<span aria-hidden="true">📿</span><span data-i18n="japa">Japa / Devotional Counter</span></a>'
         '<a class="abp-btn abp-btn--big" href="tools/indian-ephemeris/">Indian Ephemeris</a>'
-        "</nav>\n" + closing() + '</div>'
+        "</nav>\n" + closing(contributions_enabled) + '</div>'
     )
 
 
@@ -1089,7 +1089,8 @@ def on_config(config, **kw):
     add("index.md", "Home", "front")
     add("foreword.md", "Foreword", "front")
     add("about.md", "About Me", "front")
-    add("contribution.md", "Support the Project", "front")
+    if config.get("extra", {}).get("contributions_enabled", False):
+        add("contribution.md", "Support the Project", "front")
     add("disclaimer.md", "Disclaimer & Terms", "front")
     add("legend.md", "Legend", "front")
     add("rules.md", "Final Reconciliation Rules Applied", "front")
@@ -1141,7 +1142,7 @@ def on_config(config, **kw):
             "ABOUT": [
                 {"Foreword": "foreword.md"},
                 {"About Me": "about.md"},
-                {"Contribution": "contribution.md"},
+                *([{"Contribution": "contribution.md"}] if config.get("extra", {}).get("contributions_enabled", False) else []),
                 {"Disclaimer & Terms": "disclaimer.md"},
                 {"Legend": "legend.md"},
                 {"Reconciliation Rules": "rules.md"},
@@ -1199,9 +1200,15 @@ def on_page_markdown(markdown, page, config, **kw):
 
 
 def on_files(files, config, **kw):
+    contributions_enabled = config.get("extra", {}).get("contributions_enabled", False)
+    if not contributions_enabled:
+        withheld = {"contribution.md", "assets/pdfs/contribution.pdf", "assets/images/contribution-phonepe-qr.png"}
+        for file in list(files):
+            if file.src_uri in withheld:
+                files.remove(file)
     d = load()
     builders = {
-        "index.md": lambda p: page_home(d),
+        "index.md": lambda p: page_home(d, contributions_enabled),
         "foreword.md": lambda p: page_foreword(d),
         "disclaimer.md": lambda p: page_disclaimer(d),
         "legend.md": lambda p: page_legend(d),
