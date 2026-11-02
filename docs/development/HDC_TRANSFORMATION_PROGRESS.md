@@ -92,7 +92,7 @@ No confirmed baseline runtime defect is asserted from inspection alone.
 | 7 Discovery | IN PROGRESS | Tested canonical facets/paths; wider verified discovery data and navigation evaluation pending |
 | 8 SEO/sharing | IN PROGRESS | Tested breadcrumbs, public sharing, metadata and unpublished editorial template; external SEO coverage unverified |
 | 9 PWA/performance | IN PROGRESS | Offline presets, update-failure/version-transition tests and session-window lab metrics; layout attribution and field/device checks remain open |
-| 10 Integration QA | IN PROGRESS | Finite 45-step runner includes upstream translation audits, reduced-viewport search, Japa history and section shortcuts; full verification and final owner review still required |
+| 10 Integration QA | IN PROGRESS | Finite 46-step runner includes source-checked translation-review export, reduced-viewport search, Japa history and section shortcuts; full verification and final owner review still required |
 
 SEO files: `theme/main.html`, `scripts/test_social_metadata.py`.
 Adds only the approved 512px brand icon to Open Graph and Twitter metadata,
@@ -475,3 +475,18 @@ translation remains incomplete, real festival candidates remain unreviewed,
 physical-device/accessibility/cloud verification and final owner staging review
 remain open. PR51 stays draft; the production feature flag stays OFF. No merge
 or deployment was performed. Fresh CI on the pushed head is separate evidence.
+
+## Next increment — source-checked translation review handoff
+
+The preserved review-export preparation is now integrated as maintenance tooling,
+not production translation. The audit fingerprints the canonical collection and
+interface dictionary; export rejects missing or changed catalogue fingerprints.
+Exact source IDs, metadata-only suggestions, blank target fields, CSV formula
+safety and no-overwrite directories protect future native-language review.
+Synthetic fixtures exercise the real audit and prove the completeness gate still
+fails for missing public text. No meaning review, completed translation, catalogue
+edit, new online provider or deployment is implied. See TRANSLATION_REVIEW_EXPORT.md.
+
+The new regression is included in CI and the now 46-step finite runner. The prior
+full 45/45 run remains valid historical evidence; targeted validation for this
+tooling increment is recorded separately, never labelled a full 46-step run.

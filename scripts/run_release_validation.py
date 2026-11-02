@@ -26,6 +26,7 @@ STEPS = [
  *[(name,py('scripts/'+script+'.py'),True) for name,script in [
   ('site','check_site'),('metadata','test_social_metadata'),('pager','test_section_pager'),
   ('i18n','check_i18n'),('local-translation','test_local_translation_catalogue'),('pdfs','check_project_pdfs'),('reading-data','test_reading_links'),('deity-art','test_deity_art')]],
+ ('translation-review-export',py('scripts/test_translation_review_export.py'),True),
  ('translation-coverage',py('scripts/audit_hosted_translations.py','--output','work/translation-coverage.json'),True),
  ('search-unit',js('test_universal_search'),True),('festival-unit',js('test_festival_themes'),True),('lab-unit',js('test_lab_metrics'),True),
  *[(name,js(script),True) for name,script in [

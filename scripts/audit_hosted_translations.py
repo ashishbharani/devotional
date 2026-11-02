@@ -70,7 +70,8 @@ def main():
             translations[norm(source)].update({code: section["values"].get(code, [])[index] for code in CODES})
     for source, values in data.get("textTranslations", {}).items():
         translations[norm(source)].update(values)
-    raw = json.loads((ROOT / "data/collection.json").read_text(encoding="utf-8"))
+    catalogue_bytes = (ROOT / "data/collection.json").read_bytes()
+    raw = json.loads(catalogue_bytes)
     for category in raw["categories"]:
         index = int(category["num"]) - 1
         for code in CODES:
@@ -103,6 +104,8 @@ def main():
                 origins[key].add(page.relative_to(args.site).as_posix())
     report = {
         "status": "incomplete",
+        "inputs": {"catalogueSha256": hashlib.sha256(catalogue_bytes).hexdigest(),
+                   "i18nSha256": hashlib.sha256((ROOT / "docs/assets/i18n.json").read_bytes()).hexdigest()},
         "scope": "Hosted HTML text/attributes and every canonical catalogue metadata field, excluding sacred work titles/code. Unknown proper names require review. Runtime-only message variants and translation quality also require browser/native-language review.",
         "pages": len(pages), "canonicalRows": len(works), "uniqueHostedCandidates": len(candidates),
         "languages": {}, "backlog": [],
