@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import {spawn} from 'node:child_process';
-import {readFile} from 'node:fs/promises';
+import {readFile,mkdir} from 'node:fs/promises';
 import {chromium} from 'playwright';
 const base='http://127.0.0.1:4331/devotional/';
 const hi=JSON.parse(await readFile('docs/assets/translations/hi.json','utf8')).translations;
@@ -48,7 +48,7 @@ try {
   assert.deepEqual(await page.locator('.abp-payment-details dd').evaluateAll(xs=>xs.map(x=>x.firstChild.textContent)),identifiers,'recipient/bank/account/IFSC identifiers unchanged');
   assert.equal(await page.locator('.abp-contribution-qr').getAttribute('src'),qr);
   assert.equal(await page.locator('.abp-project-info h1').textContent(),hi['Support the Project']);
-  for(const route of ['about/','contribution/','foreword/']) {
+  for(const route of ['about/','contribution/','foreword/','disclaimer/']) {
    await page.goto(base+route);await page.evaluate(()=>window.abpI18n.ready);
    await page.evaluate(()=>window.abpI18n.applyLanguage('en'));
    const originalUnits=await page.locator('.abp-project-info').evaluate(el=>{const walker=document.createTreeWalker(el,NodeFilter.SHOW_TEXT),out=[];let node;while(node=walker.nextNode())if(node.textContent.trim())out.push(node.textContent);return out;});
@@ -61,9 +61,28 @@ try {
    assert.equal(translated.length,originalUnits.length,'text translation preserves markup/node count');
    originalUnits.forEach((source,index)=>{const value=expected.get(normalize(source));if(value)assert.equal(translated[index].trim(),value,route+': '+source.slice(0,60));});
   }
+  for(const catalogueRoute of ['categories/01-deities-sub-deities-and-divine-forms/agni/','categories/35-jyotisha-navagraha-nakshatra-and-astral-devotional-traditions/navagraha/']) {
+  await page.goto(base+catalogueRoute);await page.evaluate(()=>window.abpI18n.ready);
+  await page.evaluate(()=>window.abpI18n.applyLanguage('en'));
+  const catalogueCells=page.locator('tbody td.singer,tbody td.purp,tbody td.time,tbody td.jyo,tbody td.aff');
+  const sourceCells=await catalogueCells.allTextContents();
+  const workLinks=await page.locator('tbody th.w a').evaluateAll(xs=>xs.map(x=>x.href));
+  const workTitles=await page.locator('.abp-work-title').allTextContents();
+  const forms=await page.locator('.abp-formbar').allTextContents();
+  await page.evaluate(()=>window.abpI18n.applyLanguage('hi'));
+  const translatedCells=await catalogueCells.allTextContents();let matched=0;
+  sourceCells.forEach((source,i)=>{const value=expected.get(normalize(source));if(value){assert.equal(translatedCells[i].trim(),value);matched++;}});
+  assert.ok(matched>=5,'verify real generated catalogue descriptions');
+  const translatedForms=await page.locator('.abp-formbar').allTextContents();
+  forms.forEach((source,i)=>{const value=expected.get(normalize(source));if(value)assert.equal(translatedForms[i].trim(),value,'use translated form labels before fallback transliteration');});
+  assert.deepEqual(await page.locator('tbody th.w a').evaluateAll(xs=>xs.map(x=>x.href)),workLinks,'catalogue translation preserves external recordings');
+  await page.evaluate(()=>window.abpI18n.applyLanguage('en'));
+  assert.deepEqual(await catalogueCells.allTextContents(),sourceCells);
+  assert.deepEqual(await page.locator('.abp-work-title').allTextContents(),workTitles,'restore sacred titles exactly');
+  }
   await page.goto(base+'disclaimer/');await page.evaluate(()=>window.abpI18n.ready);
   await page.evaluate(()=>window.abpI18n.applyLanguage('en'));
-  const legalUnits=await page.evaluate(()=>Array.from({length:18},(_,i)=>{
+  const legalUnits=await page.evaluate(()=>Array.from({length:72},(_,i)=>{
    const heading=document.getElementById('clause-'+(i+1)),nodes=[heading];
    for(let next=heading.nextElementSibling;next&&next.tagName==='P';next=next.nextElementSibling)nodes.push(next);
    return nodes.map(node=>({id:heading.id,source:node.textContent}));
@@ -71,7 +90,7 @@ try {
   for(const {source} of legalUnits)assert.ok(expected.has(normalize(source)),'registered Hindi disclaimer clause missing: '+source.slice(0,80));
   const anchors=await page.locator('.abp-info-contents a').evaluateAll(xs=>xs.map(x=>x.getAttribute('href')));
   await page.evaluate(()=>window.abpI18n.applyLanguage('hi'));
-  const translatedLegal=await page.evaluate(()=>Array.from({length:18},(_,i)=>{
+  const translatedLegal=await page.evaluate(()=>Array.from({length:72},(_,i)=>{
    const heading=document.getElementById('clause-'+(i+1)),nodes=[heading];
    for(let next=heading.nextElementSibling;next&&next.tagName==='P';next=next.nextElementSibling)nodes.push(next);
    return nodes.map(node=>node.textContent);
@@ -79,11 +98,16 @@ try {
   assert.equal(translatedLegal.length,legalUnits.length);
   legalUnits.forEach(({source},i)=>assert.equal(translatedLegal[i].trim(),expected.get(normalize(source))));
   assert.deepEqual(await page.locator('.abp-info-contents a').evaluateAll(xs=>xs.map(x=>x.getAttribute('href'))),anchors,'translated legal contents preserve every clause anchor');
+  assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'Hindi legal text fits the viewport');
+  if(process.env.PROSE_SCREENSHOTS) {
+   await mkdir(process.env.PROSE_SCREENSHOTS,{recursive:true});
+   await page.screenshot({path:process.env.PROSE_SCREENSHOTS+'/hindi-disclaimer-'+width+'.png'});
+  }
   await page.evaluate(()=>window.abpI18n.applyLanguage('en'));
   assert.equal(await page.locator('#clause-18 + p').textContent(),legalUnits.findLast(x=>x.id==='clause-18'&&x.source.startsWith('To the fullest')).source);
   assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));
   assert.deepEqual(errors,[]);await context.close();
-  console.log('PASS prose '+width+'px: all About/Contribution/Foreword body units, lazy language-only loading, cache, English restoration, and unchanged payment identifiers/QR');
+  console.log('PASS prose '+width+'px: all About/Contribution/Foreword/Disclaimer body units, 72 legal clauses, lazy language-only loading, cache, English restoration, and unchanged payment identifiers/QR');
  }
  const context=await browser.newContext({serviceWorkers:'block'}),page=await context.newPage();
  await context.route('**/assets/translations/hi.json',async route=>{await new Promise(r=>setTimeout(r,250));await route.continue();});

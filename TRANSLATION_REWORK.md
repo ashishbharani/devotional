@@ -43,10 +43,13 @@ replace a subsequently selected language. Previously loaded Hindi prose and the
 base catalogue survive an offline reload. Pack changes version the service worker;
 the base catalogue is precached and new shell versions bypass stale HTTP cache.
 
-The Hindi draft contains 187 source units: the complete About, Contribution and
-Foreword bodies, and the disclaimer through clause 18. English source documents,
-payment identifiers, QR destinations and legal clause anchors remain unchanged.
-Clauses 19–72 and the final notice remain untranslated. The other eight full-text
+The Hindi draft now contains 482 source units: the complete About, Contribution,
+Foreword and Disclaimer bodies (all 72 clauses and final notice), plus recurring
+catalogue descriptions and interface labels. English source documents, payment
+identifiers, QR destinations, contact details and legal clause anchors remain
+unchanged. All 13 distinct timing descriptions, 10 Jyotisha descriptions and nine
+affliction descriptions have draft Hindi entries, preserving their traditional-use
+and individual-assessment qualifications. The other eight full-text
 packs are empty draft scaffolds; the shared interface/phrase translations remain
 available, but those packs do not constitute completed language passes.
 
@@ -63,6 +66,26 @@ The refreshed audit still reports 13,089 source candidates across 2,266 pages an
 43,085 catalogue rows. Hindi has 12,796 unregistered candidates; each other target
 has 13,025. These include proper names and parameterized UI needing classification,
 so the totals must not be described as untranslated paragraph counts.
+
+The browser regression now extends this to every Disclaimer text node and all
+72 clause headings/paragraphs, plus actual Agni and Navagraha catalogue rows.
+Registered UI/form-label translations take precedence over script conversion;
+sacred work titles continue to retain their original text and external links.
+PR #54 was merged externally while work was paused. The tested 187-unit checkpoint
+is committed as `9c67d4d` in follow-up draft PR #56; later Hindi work continues there.
+
+The 482-unit checkpoint strict build passed in 202.14 seconds; compiled runtime,
+base dictionary and Hindi pack hashes match their authored files. The 187-unit
+checkpoint also passed the complete GitHub Actions workflow (run 41411017367).
+Reapplying the current Hindi dictionary to the unchanged 450-unit HTML inventory
+leaves 12,501 Hindi candidates unregistered (other targets: 13,025 each). This is
+an inventory-based update, not a new linguistic or dynamic-state certification.
+Phone/desktop Hindi legal-page screenshots are saved in ignored
+`outputs/hindi-prose-482/` when `PROSE_SCREENSHOTS` is set.
+Visual inspection at both widths showed the Hindi editorial content fitting the
+existing design. The floating feedback button still has an emoji-prefixed English
+string (`💡 Suggestion / Report Issue`); its full dynamic form/messages and other
+runtime-only controls remain part of the explicitly unfinished translation pass.
 
 The source catalogue has 43,085 rows. Distinct values before deduplication across
 fields include 907 purposes, 1,098 singer/recitation descriptions, 369 forms,

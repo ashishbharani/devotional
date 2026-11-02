@@ -152,6 +152,13 @@
     const engine = window.abpTransliterate;
     const original = originalText.get(node) || explicit || node.textContent.trim();
     originalText.set(node, original);
+    const translated = current !== "en" && phraseFor(original);
+    if (translated) {
+      setText(node, translated);
+      node.lang = current;
+      node.title = `${t("original")}: ${original}`;
+      return;
+    }
     if (!engine || current === "en" || !engine.languages.has(current)) {
       setText(node, original);
       node.removeAttribute("lang");

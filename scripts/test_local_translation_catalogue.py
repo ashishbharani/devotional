@@ -44,3 +44,15 @@ for translations, message in [
     assert any(message in error for error in audit_fixture(pack={'language':'hi','translations':translations}))
 print('PASS local catalogue: ten languages, complete registered phrase matrices, missing values fail; no Google Translate offers')
 print('PASS content packs: wrong paths, wrong language, malformed values, unchanged prose and normalized duplicate keys rejected')
+
+hi = json.loads((root / 'docs/assets/translations/hi.json').read_text(encoding='utf-8'))['translations']
+collection = json.loads((root / 'data/collection.json').read_text(encoding='utf-8'))
+works = [work for category in collection['categories'] for group in category['groups'] for form in group['forms'] for work in form['works']]
+for field, expected_count in [('best_time', 13), ('jyotisha', 10), ('affliction', 9)]:
+    sources = {work[field] for work in works if work.get(field)}
+    assert len(sources) == expected_count, f'{field}: source changed; review translation coverage'
+    assert sources <= hi.keys(), f'{field}: missing Hindi source descriptors'
+    for source in sources:
+        if 'individual' in source or 'horoscope-specific' in source:
+            assert 'मूल्यांकन' in hi[source], f'{field}: retain the individual-assessment qualification'
+print('PASS Hindi catalogue: all current timing/Jyotisha/affliction descriptors registered; assessment qualifications retained')
