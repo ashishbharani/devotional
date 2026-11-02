@@ -34,6 +34,7 @@ STEPS = [
   ('royal-home','test_royal_homepage'),('sacred-site','test_sacred_site'),
   ('plugins','test_hdc_plugins_browser'),('approved-header','test_approved_header_browser'),
   ('header-fidelity','test_header_fidelity_browser'),('translation','test_translation_browser'),
+  ('mobile-keyboard','test_mobile_keyboard_browser'),
   ('reading-browser','test_reading_links_browser'),('feedback','test_feedback_browser'),
   ('daily','test_daily_darshan_browser'),('practice','test_practice_browser'),
   ('continuation','test_continuation_browser'),

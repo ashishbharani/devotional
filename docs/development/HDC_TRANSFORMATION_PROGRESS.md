@@ -92,7 +92,7 @@ No confirmed baseline runtime defect is asserted from inspection alone.
 | 7 Discovery | IN PROGRESS | Tested canonical facets/paths; wider verified discovery data and navigation evaluation pending |
 | 8 SEO/sharing | IN PROGRESS | Tested breadcrumbs, public sharing, metadata and unpublished editorial template; external SEO coverage unverified |
 | 9 PWA/performance | IN PROGRESS | Offline presets, update-failure/version-transition tests and session-window lab metrics; layout attribution and field/device checks remain open |
-| 10 Integration QA | IN PROGRESS | Finite 42-step runner includes upstream translation audits; integrated full verification and final owner review still required |
+| 10 Integration QA | IN PROGRESS | Finite 43-step runner includes upstream translation audits and reduced-viewport search; full verification and final owner review still required |
 
 SEO files: `theme/main.html`, `scripts/test_social_metadata.py`.
 Adds only the approved 512px brand icon to Open Graph and Twitter metadata,
@@ -411,3 +411,21 @@ UI localization. Details, regression scope and developer-override limitations:
 INTEGRATION_TRANSLATION_BOUNDARIES.md. The finite runner now includes all 42
 checks, including both upstream translation audits. Next action is the full
 committed-candidate suite. No full-suite pass or deployment is claimed yet.
+
+## Resume after owner pause — native search preservation
+
+The 42-step run on d64b885 was interrupted by the explicit pause. Both strict
+builds/gates/SEO, numerical engines, data/translation/artwork audits and search
+unit/browser checks had passed; remaining steps did not execute. Its generated
+report and archived interruption record retain that status, not a full pass.
+
+A separate reduced-viewport probe confirmed the header wrapper prevented
+Material's search-state CSS from matching. Reusing the original toggle beside
+the header restores the native panel; bounding its mobile backdrop prevents
+layout-width expansion. MOBILE_SEARCH_RECOVERY.md records red/prototype evidence,
+scope and physical-device limits. The next full committed-source run has 43 steps.
+
+The sourced Ganesh Chaturthi civil-day candidate in review/festivals is explicitly
+unreviewed, outside publication and not loaded by the application. Its inactive
+status was verified with the existing presentation engine; no human approval or
+real automatic festival activation is asserted. The published registry stays empty.

@@ -70,6 +70,14 @@ html, html:not(.abp-cards):has(.abp-sheet--head) { scroll-padding-top: calc(var(
   .hdc-install-header .hdc-install-label { position: static; width: auto; height: auto; overflow: visible; clip-path: none; }
   .hdc-install-header { white-space: nowrap; padding: 10px 12px; }
 }
+/* Match Material's full-screen search breakpoint without its oversized circle
+   expanding the mobile layout viewport inside the shared header wrapper. */
+@media screen and (max-width: 59.984375em) {
+  [data-md-toggle=search]:checked ~ .hdc-header .md-search__overlay {
+    position: fixed; inset: 0; width: 100vw; height: 100dvh;
+    transform: none; border-radius: 0;
+  }
+}
 @media (max-width: 1199px), (max-height: 599px) and (any-pointer: coarse) {
   :root { --hdc-bottom-space: calc(72px + env(safe-area-inset-bottom, 0px)); }
   .abp-navigation-shell { margin: 0; border: 0; border-radius: 0; }

@@ -46,6 +46,10 @@
   function init() {
     const nav = document.querySelector('#abp-navigation');
     if (!nav) return;
+    // Material's search-state CSS requires its existing toggle beside the header.
+    const header = document.querySelector('.abp-navigation-shell > .md-header');
+    const searchToggle = document.querySelector('[data-md-toggle="search"]');
+    if (header && searchToggle && searchToggle.parentElement !== header.parentElement) header.before(searchToggle);
     nav.querySelectorAll('a').forEach(link => {
       if (new URL(link.href).pathname === location.pathname) link.setAttribute('aria-current', 'page');
       else link.removeAttribute('aria-current');

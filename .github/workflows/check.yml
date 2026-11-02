@@ -160,6 +160,13 @@ jobs:
           path: work/approved-header-staging
       - name: Test ten local languages without Google Translate
         run: node scripts/test_translation_browser.mjs
+      - name: Test header search through keyboard-sized viewport changes
+        run: node scripts/test_mobile_keyboard_browser.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: mobile-keyboard-screenshots
+          path: work/mobile-keyboard
       - name: Test English library handoffs and Vrat Katha / Parayan discovery
         run: node scripts/test_reading_links_browser.mjs
       - uses: actions/upload-artifact@v4
