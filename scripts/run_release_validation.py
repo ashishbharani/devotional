@@ -40,6 +40,7 @@ STEPS = [
   ('daily','test_daily_darshan_browser'),('practice','test_practice_browser'),
   ('continuation','test_continuation_browser'),
   ('routine-library','test_routine_library_browser'),
+  ('journey-data','test_journey_data_browser'),
   ('japa-history','test_japa_history_browser'),
   ('section-shortcuts','test_section_shortcuts_browser'),
   ('festivals','test_festival_browser'),('journeys','test_journey_discovery_browser'),

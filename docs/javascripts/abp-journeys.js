@@ -3,11 +3,21 @@
  'use strict';const key='hdc-journey-state-v1',routineKey='hdc-journey-routines-v1';let cleanup=()=>{};
  const read=k=>{try{return JSON.parse(localStorage.getItem(k)||'{}')||{};}catch(_){return {};}};
  const normalize=value=>({name:typeof value.name==='string'?value.name.slice(0,120):'',minutes:[5,10,20].includes(value.minutes)?value.minutes:5,journal:typeof value.journal==='string'?value.journal.slice(0,5000):'',sessions:Array.isArray(value.sessions)?value.sessions.filter(s=>s&&typeof s.at==='string'&&Number.isFinite(Date.parse(s.at))&&[5,10,20].includes(s.minutes)).slice(-50):[]});
+ function readJourney(){
+  const raw=localStorage.getItem(key),value=raw===null?{}:JSON.parse(raw);
+  if(!value||typeof value!=='object'||Array.isArray(value)||Object.hasOwn(value,'schema')||
+   (Object.hasOwn(value,'name')&&(typeof value.name!=='string'||value.name.length>120))||
+   (Object.hasOwn(value,'minutes')&&![5,10,20].includes(value.minutes))||
+   (Object.hasOwn(value,'journal')&&(typeof value.journal!=='string'||value.journal.length>5000))||
+   (Object.hasOwn(value,'sessions')&&(!Array.isArray(value.sessions)||value.sessions.length>50||value.sessions.some(row=>!row||typeof row.at!=='string'||!Number.isFinite(Date.parse(row.at))||![5,10,20].includes(row.minutes)))))throw new Error('Unsupported saved journey');
+  return {...value,...normalize(value)};
+ }
  function init(){
   cleanup();const root=document.querySelector('[data-journey]');if(!root)return;
   const controller=new AbortController(),q=s=>root.querySelector(s);let dayTimer;
   cleanup=()=>{controller.abort();clearTimeout(dayTimer);};
-  let state=normalize(read(key)),sessionOnly=false;const status=q('[data-journey-status]');
+  let state=normalize({}),sessionOnly=false,externalChanged=false;const status=q('[data-journey-status]');
+  try{state=readJourney();}catch(_){status.textContent='Saved journey is unavailable or has an unsupported format. Existing data has been kept; no changes will be saved.';}
   let routines=[],librarySessionOnly=false;
   function readLibrary(){
    const raw=localStorage.getItem(routineKey);if(raw===null)return [];
@@ -32,8 +42,11 @@
    clearTimeout(dayTimer);const next=new Date(now);next.setHours(24,0,0,50);
    dayTimer=setTimeout(()=>{if(root.isConnected)summary();},next.getTime()-now);
   }
-  const latest=()=>sessionOnly?state:normalize(read(key));
-  function save(value){state=normalize(value);try{localStorage.setItem(key,JSON.stringify(state));sessionOnly=false;status.textContent='Saved in this browser only.';}catch(_){sessionOnly=true;status.textContent='Storage unavailable. Changes remain for this visit only.';}summary();}
+  const latest=()=>{
+   if(sessionOnly&&externalChanged){status.textContent='Another tab changed the saved journey. Your visit-only changes have been kept; reload or load valid saved changes before editing.';return null;}
+   try{return sessionOnly?state:readJourney();}catch(_){status.textContent='Saved journey could not be read or has an unsupported format. Existing data and your draft have been kept.';return null;}
+  };
+  function save(value){state={...value,...normalize(value)};try{localStorage.setItem(key,JSON.stringify(state));sessionOnly=false;status.textContent='Saved in this browser only.';}catch(_){sessionOnly=true;status.textContent='Storage unavailable. Changes remain for this visit only.';}summary();}
   const on=(s,e,f)=>q(s).addEventListener(e,f,{signal:controller.signal});
   const start=()=>{const minutes=Number(q('[data-routine-minutes]').value);q('[data-routine-start]').href=new URL(`../sanctuary/?minutes=${[5,10,20].includes(minutes)?minutes:5}`,location.href).href;};
   on('[data-routine-minutes]','change',start);start();
@@ -63,15 +76,13 @@
    });
    on('[data-routine-library-remove]','click',()=>{const rows=latestLibrary(),id=q('[data-routine-library]').value;if(rows&&id)saveLibrary(rows.filter(r=>r.id!==id));});
   }
-  on('[data-journey-save]','click',()=>save({...latest(),name:q('[data-routine-name]').value,minutes:Number(q('[data-routine-minutes]').value),journal:q('[data-journal-consent]').checked?q('[data-journal]').value:''}));
-  on('[data-journal-clear]','click',()=>{save({...latest(),journal:''});q('[data-journal]').value='';q('[data-journal-consent]').checked=false;});
-  on('[data-session-record]','click',()=>{const current=latest(),minutes=Number(q('[data-routine-minutes]').value);if([5,10,20].includes(minutes))save({...current,sessions:[...current.sessions,{at:new Date().toISOString(),minutes}]});});
+  on('[data-journey-save]','click',()=>{const current=latest();if(current)save({...current,name:q('[data-routine-name]').value,minutes:Number(q('[data-routine-minutes]').value),journal:q('[data-journal-consent]').checked?q('[data-journal]').value:''});});
+  on('[data-journal-clear]','click',()=>{const current=latest();if(!current)return;save({...current,journal:''});q('[data-journal]').value='';q('[data-journal-consent]').checked=false;});
+  on('[data-session-record]','click',()=>{const current=latest(),minutes=Number(q('[data-routine-minutes]').value);if(current&&[5,10,20].includes(minutes))save({...current,sessions:[...current.sessions,{at:new Date().toISOString(),minutes}]});});
   if(q('[data-journey-load]'))on('[data-journey-load]','click',()=>{
    try{
-    const value=JSON.parse(localStorage.getItem(key)||'{}');
-    if(!value||typeof value!=='object'||Array.isArray(value))throw new Error('Invalid journey');
-    const saved=normalize(value),library=readLibrary();
-    state=saved;routines=library;sessionOnly=false;librarySessionOnly=false;
+    const saved=readJourney(),library=readLibrary();
+    state=saved;routines=library;sessionOnly=false;externalChanged=false;librarySessionOnly=false;
     q('[data-routine-name]').value=state.name;q('[data-routine-minutes]').value=state.minutes;q('[data-journal]').value=state.journal;q('[data-journal-consent]').checked=Boolean(state.journal);
     renderLibrary();start();summary();q('[data-journey-load]').hidden=true;status.textContent='Saved changes loaded. The previous draft has been replaced.';
    }catch(_){status.textContent='Saved changes could not be loaded. Your current draft has been kept.';}
@@ -81,17 +92,17 @@
    on('[data-log-erase-confirm]','click',()=>{
     if(!q('[data-log-erase-consent]').checked)return;
     let current;
-    try{current=sessionOnly?state:JSON.parse(localStorage.getItem(key)||'{}');if(!current||typeof current!=='object'||Array.isArray(current))throw new Error('Invalid journey');}
+    try{current=latest();if(!current)return;}
     catch(_){status.textContent='Saved practice log could not be read. Existing saved data and your draft have been kept.';return;}
     const next={...current,sessions:[]};let persisted=false;
     try{localStorage.setItem(key,JSON.stringify(next));sessionOnly=false;persisted=true;}catch(_){sessionOnly=true;}
-    state=normalize(next);summary();q('[data-log-erase-consent]').checked=false;q('[data-log-erase-confirm]').disabled=true;
+    state={...next,...normalize(next)};summary();q('[data-log-erase-consent]').checked=false;q('[data-log-erase-confirm]').disabled=true;
     status.textContent=persisted?'Practice log erased. Saved notes, routines, Japa and Reader state were kept.':'Practice log cleared for this visit only. The saved copy could not be changed.';
     if(persisted){q('[data-log-erase]').open=false;q('[data-log-erase] summary').focus();}
    });
   }
   window.addEventListener('storage',event=>{
-   if([key,routineKey,null].includes(event.key)){status.textContent='Journey changed in another tab. Reload to load it; your current draft has been kept. Or choose Load saved changes to replace this draft.';if(q('[data-journey-load]'))q('[data-journey-load]').hidden=false;}
+   if([key,routineKey,null].includes(event.key)){if(event.key===key||event.key===null)externalChanged=true;status.textContent='Journey changed in another tab. Reload to load it; your current draft has been kept. Or choose Load saved changes to replace this draft.';if(q('[data-journey-load]'))q('[data-journey-load]').hidden=false;}
    if(['abp-japa-state-v1','hdc-reader-v1',null].includes(event.key))summary();
   },{signal:controller.signal});
   document.addEventListener('visibilitychange',()=>{if(!document.hidden&&root.isConnected)summary();},{signal:controller.signal});

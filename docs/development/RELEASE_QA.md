@@ -39,7 +39,7 @@ Install with `pnpm install --frozen-lockfile --ignore-scripts`, then run:
 uv run python scripts/run_release_validation.py
 ```
 
-This now runs 46 named steps: both strict builds and enabled/disabled release/SEO
+This now runs 47 named steps: both strict builds and enabled/disabled release/SEO
 gates; astronomy, data and metadata checks; search, navigation, plugin, header,
 translation, reader, feedback, Daily Darshan, practice, festival, journey and PWA
 browser suites (including explicit Japa session history and verified section

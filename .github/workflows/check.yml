@@ -84,6 +84,8 @@ jobs:
         run: node scripts/test_journey_discovery_browser.mjs
       - name: Test reading continuation, cross-tab state and shareable filters
         run: node scripts/test_continuation_browser.mjs
+      - name: Test Journey saved-data compatibility and visit-only recovery
+        run: node scripts/test_journey_data_browser.mjs
       - name: Test explicit Japa recordings and verified section shortcuts
         run: |
           node scripts/test_japa_history_browser.mjs

@@ -92,7 +92,7 @@ No confirmed baseline runtime defect is asserted from inspection alone.
 | 7 Discovery | IN PROGRESS | Tested canonical facets/paths; wider verified discovery data and navigation evaluation pending |
 | 8 SEO/sharing | IN PROGRESS | Tested breadcrumbs, public sharing, metadata and unpublished editorial template; external SEO coverage unverified |
 | 9 PWA/performance | IN PROGRESS | Offline presets, update-failure/version-transition tests and session-window lab metrics; layout attribution and field/device checks remain open |
-| 10 Integration QA | IN PROGRESS | Finite 46-step runner includes source-checked translation-review export, reduced-viewport search, Japa history and section shortcuts; full verification and final owner review still required |
+| 10 Integration QA | IN PROGRESS | Finite 47-step runner includes Journey data compatibility, source-checked translation-review export, reduced-viewport search, Japa history and section shortcuts; full verification and final owner review still required |
 
 SEO files: `theme/main.html`, `scripts/test_social_metadata.py`.
 Adds only the approved 512px brand icon to Open Graph and Twitter metadata,
@@ -490,3 +490,14 @@ edit, new online provider or deployment is implied. See TRANSLATION_REVIEW_EXPOR
 The new regression is included in CI and the now 46-step finite runner. The prior
 full 45/45 run remains valid historical evidence; targeted validation for this
 tooling increment is recorded separately, never labelled a full 46-step run.
+
+## Next increment — Journey saved-data preservation
+
+A real browser test failed against the prior artifact because saving a routine
+dropped an unknown saved field. Strict reads and raw-field-preserving writes now
+protect valid legacy data and refuse corrupt/future records, including during
+scoped erase or explicit reload. Visit-only edits cannot overwrite another tab's
+newer saved data after storage permission recovery. The existing key, interface,
+account settings and other tools are unchanged. Details and test coverage are in
+JOURNEY_DATA_COMPATIBILITY.md. The new browser regression joins CI and the now
+47-step finite runner; selected validation is distinct from the earlier full45.
