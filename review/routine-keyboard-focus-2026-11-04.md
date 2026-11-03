@@ -1,0 +1,5 @@
+# Routine reference keyboard focus — 4 November 2026
+
+The final review of the first-release candidate identified that completion changes destroyed the focused checkbox and removal destroyed its button without a surviving focus target. Completed state now updates the draft model without rebuilding its controls. Removal retains the existing renderer but restores focus to the next/previous surviving Remove button, or the add-passage control after the final removal. If the user has already moved focus elsewhere during an asynchronous render, it is not stolen back. Source-load failure uses the surviving add control.
+
+The existing routine browser regression now checks Space twice on the same focused checkbox, next/previous/final removal focus, row counts and unchanged future-format saved data at phone and desktop widths. Fresh CI must pass on the repair before the review is resolved and before guarded merge. Existing draft-save and compatibility behavior is unchanged; no canonical data, calculations, theme or books are included in this repair.

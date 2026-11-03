@@ -1,0 +1,41 @@
+{
+  "schema": 1,
+  "year": 2026,
+  "status": "unreviewed-candidates-not-published",
+  "evidenceCheckedOn": "2026-11-02",
+  "events": [
+    {
+      "id": "2026-mh-ganesh-chaturthi-civil-day",
+      "name": "Shree Ganesh Chaturthi — named civil calendar day",
+      "status": "unreviewed",
+      "theme": "ganesha",
+      "start": "2026-09-14",
+      "end": "2026-09-14",
+      "regions": ["IN-MH"],
+      "tradition": "Published Ganesh Chaturthi calendar date of Shree Siddhivinayak Ganapati Mandir Trust, Maharashtra",
+      "sources": [
+        {
+          "url": "https://www.siddhivinayak.org/important-dates/",
+          "label": "Shree Siddhivinayak Ganapati Mandir Trust — Vinayak Chaturthi 2026",
+          "pinpoint": "2026 table, Monday 14 September, Shree Ganesh Chaturthi; distinguish the separate 2025 table"
+        },
+        {
+          "url": "https://www.incredibleindia.gov.in/en/festivals-and-events/maharashtra/ganesh-chaturthi",
+          "label": "Incredible India — Ganesh Chaturthi; source field Maharashtra Tourism",
+          "pinpoint": "Venue Address: Maharashtra; Date: 14th September 2026; Source: Maharashtra Tourism"
+        }
+      ],
+      "reviewDecisionsRequired": [
+        "Approve or reject the proposed one-civil-day presentation scope",
+        "Confirm region/tradition wording and source currency",
+        "Assign presentation priority and a real human reviewer/date before publication"
+      ],
+      "limitations": [
+        "Same-day end is a proposed presentation scope, not evidence of the conclusion of Ganeshotsav, immersion, tithi or associated rituals",
+        "No all-India uniform date, puja timing or automatic annual recurrence is asserted",
+        "The source pages do not state their publication or update timestamps",
+        "Not loaded by the site manifest; unreviewed records are ineligible even if passed to the presentation engine"
+      ]
+    }
+  ]
+}

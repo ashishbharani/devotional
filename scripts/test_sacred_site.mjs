@@ -3,8 +3,15 @@ import {createServer} from 'node:http';
 import {readFile, readdir, stat, mkdir} from 'node:fs/promises';
 import path from 'node:path';
 import {chromium} from 'playwright';
+import {createHash} from 'node:crypto';
 
 const site=path.resolve('site'), shots=process.env.SACRED_SCREENSHOTS || 'work/sacred-site';
+let bundle=null;
+try{bundle=JSON.parse(await readFile(path.join(site,'assets/stylesheet-bundle.json'),'utf8'));}catch(error){if(error.code!=='ENOENT')throw error;}
+if(bundle){
+ const original=await readFile(path.join(site,'stylesheets/sacred-site.css'));
+ assert.equal(bundle.sources.find(s=>s.path==='stylesheets/sacred-site.css')?.sha256,createHash('sha256').update(original).digest('hex'));
+}
 await mkdir(shots,{recursive:true});
 const categoryRoot='categories/01-deities-sub-deities-and-divine-forms/';
 const categories=(await readdir(path.join(site,'categories'),{withFileTypes:true})).filter(x=>x.isDirectory());
@@ -16,7 +23,7 @@ async function audit(dir) {
     if(entry.isDirectory()) await audit(file);
     else if(entry.name.endsWith('.html')) {
       const html=await readFile(file,'utf8');
-      assert.ok(html.includes('stylesheets/sacred-site.css'),`shared theme: ${file}`);
+      assert.ok(html.includes(bundle?.bundle||'stylesheets/sacred-site.css'),`shared exact-source theme delivery: ${file}`);
       assert.ok(html.includes('data-sacred-kind='),`shared page shell: ${file}`);
       assert.equal((html.match(/<h1\b/g)||[]).length,1,`preserve one main heading: ${file}`);
       assert.ok(!/<use\b[^>]*\bhref=/.test(html),'no SVG href incompatible with Material instant navigation');

@@ -1,0 +1,81 @@
+{
+  "schema": 1,
+  "status": "authored-draft-awaiting-native-review",
+  "releaseEligible": false,
+  "authoringMethod": "Model-authored candidates; not independently native-reviewed",
+  "reviewer": null,
+  "sourceCommit": "2402fa0e16bbec1a408bb95989b7d6a46ac933ef",
+  "sourceReviewPack": "a5c4bd512fa57c00",
+  "sourceAuditSha256": "ce7372aef2d34185ba1b8ba2ac4dde8de68c858df0afede9884b9462fa147a3b",
+  "scope": "Twelve existing interface labels only. Not imported into runtime catalogues. Brand HDC retained. No sacred text, canonical title, entered value or private text translated.",
+  "languageOrder": ["hi", "mr", "gu", "bn", "pa", "te", "kn", "ml", "ta"],
+  "records": [
+    {
+      "source": "Switch to dark (lamp-light) mode",
+      "context": "Theme button; switch to dark theme. Parenthesis names the site's lamp-light treatment.",
+      "values": ["गहरे (दीप-प्रकाश) मोड पर जाएँ", "गडद (दिव्याच्या प्रकाशाचा) मोड निवडा", "ઘેરો (દીવાના પ્રકાશનો) મોડ પસંદ કરો", "গাঢ় (প্রদীপের আলো) মোডে যান", "ਗੂੜ੍ਹੇ (ਦੀਵੇ ਦੀ ਰੌਸ਼ਨੀ ਵਾਲੇ) ਮੋਡ ਵਿੱਚ ਜਾਓ", "ముదురు (దీపకాంతి) మోడ్‌కు మారండి", "ಗಾಢ (ದೀಪದ ಬೆಳಕಿನ) ಮೋಡ್‌ಗೆ ಬದಲಿಸಿ", "ഇരുണ്ട (വിളക്കുവെളിച്ച) മോഡിലേക്ക് മാറുക", "இருண்ட (விளக்கொளி) பயன்முறைக்கு மாறவும்"]
+    },
+    {
+      "source": "Switch to light (parchment) mode",
+      "context": "Theme button; switch to light theme. Parchment is a visual surface description.",
+      "values": ["हल्के (चर्मपत्र) मोड पर जाएँ", "फिकट (चर्मपत्र) मोड निवडा", "હળવો (ચર્મપત્ર) મોડ પસંદ કરો", "হালকা (পার্চমেন্ট) মোডে যান", "ਹਲਕੇ (ਚਰਮਪੱਤਰ) ਮੋਡ ਵਿੱਚ ਜਾਓ", "లేత (పార్చ్‌మెంట్) మోడ్‌కు మారండి", "ತಿಳಿ (ಪಾರ್ಚ್‌ಮೆಂಟ್) ಮೋಡ್‌ಗೆ ಬದಲಿಸಿ", "ഇളം (പാർച്ച്മെന്റ്) മോഡിലേക്ക് മാറുക", "வெளிர் (பார்ச்மென்ட்) பயன்முறைக்கு மாறவும்"]
+    },
+    {
+      "source": "Install HDC App",
+      "context": "Accessible name of the existing installation control; an action, not a claim of success.",
+      "values": ["HDC ऐप इंस्टॉल करें", "HDC ॲप स्थापित करा", "HDC ઍપ ઇન્સ્ટોલ કરો", "HDC অ্যাপ ইনস্টল করুন", "HDC ਐਪ ਇੰਸਟਾਲ ਕਰੋ", "HDC యాప్‌ను ఇన్‌స్టాల్ చేయండి", "HDC ಆ್ಯಪ್ ಸ್ಥಾಪಿಸಿ", "HDC ആപ്പ് ഇൻസ്റ്റാൾ ചെയ്യുക", "HDC செயலியை நிறுவவும்"]
+    },
+    {
+      "source": "Mobile navigation",
+      "context": "Accessible name of navigation region on small screens.",
+      "values": ["मोबाइल नेविगेशन", "मोबाइल नेव्हिगेशन", "મોબાઇલ નેવિગેશન", "মোবাইল নেভিগেশন", "ਮੋਬਾਈਲ ਨੈਵੀਗੇਸ਼ਨ", "మొబైల్ నావిగేషన్", "ಮೊಬೈಲ್ ನ್ಯಾವಿಗೇಷನ್", "മൊബൈൽ നാവിഗേഷൻ", "கைபேசி வழிசெலுத்தல்"]
+    },
+    {
+      "source": "Open Tools menu",
+      "context": "Accessible name of Tools menu toggle in its closed state.",
+      "values": ["उपकरण मेनू खोलें", "साधनांचा मेनू उघडा", "સાધનોનું મેનૂ ખોલો", "সরঞ্জামের মেনু খুলুন", "ਸਾਧਨਾਂ ਦਾ ਮੀਨੂ ਖੋਲ੍ਹੋ", "సాధనాల మెనూను తెరవండి", "ಪರಿಕರಗಳ ಮೆನು ತೆರೆಯಿರಿ", "ഉപകരണങ്ങളുടെ മെനു തുറക്കുക", "கருவிகள் பட்டியலைத் திறக்கவும்"]
+    },
+    {
+      "source": "Account and language controls",
+      "context": "Accessible group label for existing account and language controls.",
+      "values": ["खाता और भाषा नियंत्रण", "खाते आणि भाषा नियंत्रणे", "ખાતું અને ભાષાના નિયંત્રણો", "অ্যাকাউন্ট ও ভাষার নিয়ন্ত্রণ", "ਖਾਤੇ ਅਤੇ ਭਾਸ਼ਾ ਦੇ ਨਿਯੰਤਰਣ", "ఖాతా మరియు భాష నియంత్రణలు", "ಖಾತೆ ಮತ್ತು ಭಾಷೆಯ ನಿಯಂತ್ರಣಗಳು", "അക്കൗണ്ട്, ഭാഷ നിയന്ത്രണങ്ങൾ", "கணக்கு மற்றும் மொழிக் கட்டுப்பாடுகள்"]
+    },
+    {
+      "source": "Suggestion / Report Issue",
+      "context": "Existing feedback destination; suggestion or issue reporting, not an emergency report.",
+      "values": ["सुझाव दें / समस्या बताएँ", "सूचना द्या / समस्या नोंदवा", "સૂચન આપો / સમસ્યા જણાવો", "পরামর্শ দিন / সমস্যার কথা জানান", "ਸੁਝਾਅ ਦਿਓ / ਸਮੱਸਿਆ ਦੱਸੋ", "సూచన ఇవ్వండి / సమస్యను నివేదించండి", "ಸಲಹೆ ನೀಡಿ / ಸಮಸ್ಯೆ ವರದಿ ಮಾಡಿ", "നിർദേശം നൽകുക / പ്രശ്നം അറിയിക്കുക", "பரிந்துரை வழங்கவும் / சிக்கலைத் தெரிவிக்கவும்"]
+    },
+    {
+      "source": "Date Converter",
+      "context": "Existing calendar/date conversion tool; not a currency converter.",
+      "values": ["तिथि परिवर्तक", "दिनांक रूपांतरक", "તારીખ રૂપાંતરક", "তারিখ রূপান্তরক", "ਤਾਰੀਖ਼ ਬਦਲਣ ਵਾਲਾ ਸਾਧਨ", "తేదీ మార్పిడి సాధనం", "ದಿನಾಂಕ ಪರಿವರ್ತಕ", "തീയതി പരിവർത്തന ഉപകരണം", "தேதி மாற்றி"]
+    },
+    {
+      "source": "Clear",
+      "context": "Clear the current search/filter input. Review each usage before import; this must not imply deleting saved records.",
+      "values": ["साफ़ करें", "साफ करा", "સાફ કરો", "মুছুন", "ਸਾਫ਼ ਕਰੋ", "క్లియర్ చేయండి", "ತೆರವುಗೊಳಿಸಿ", "മായ്ക്കുക", "அழிக்கவும்"]
+    },
+    {
+      "source": "Library",
+      "context": "Existing Scriptures and Books library navigation label.",
+      "values": ["पुस्तकालय", "ग्रंथालय", "પુસ્તકાલય", "গ্রন্থাগার", "ਪੁਸਤਕਾਲਾ", "గ్రంథాలయం", "ಗ್ರಂಥಾಲಯ", "ഗ്രന്ഥശാല", "நூலகம்"]
+    },
+    {
+      "source": "Explore the Collection",
+      "context": "Navigation/discovery action for the existing devotional collection.",
+      "values": ["संग्रह देखें", "संग्रह पाहा", "સંગ્રહ જુઓ", "সংগ্রহ ঘুরে দেখুন", "ਸੰਗ੍ਰਹਿ ਵੇਖੋ", "సంకలనాన్ని అన్వేషించండి", "ಸಂಗ್ರಹವನ್ನು ಅನ್ವೇಷಿಸಿ", "ശേഖരം പര്യവേക്ഷണം ചെയ്യുക", "தொகுப்பை ஆராயுங்கள்"]
+    },
+    {
+      "source": "About this project",
+      "context": "Existing project information destination.",
+      "values": ["इस परियोजना के बारे में", "या प्रकल्पाविषयी", "આ પ્રોજેક્ટ વિશે", "এই প্রকল্প সম্পর্কে", "ਇਸ ਪ੍ਰੋਜੈਕਟ ਬਾਰੇ", "ఈ ప్రాజెక్ట్ గురించి", "ಈ ಯೋಜನೆಯ ಕುರಿತು", "ഈ പദ്ധതിയെക്കുറിച്ച്", "இந்தத் திட்டத்தைப் பற்றி"]
+    }
+  ],
+  "reviewRequirements": [
+    "Native reviewer for each language must verify meaning, natural usage, spelling and accessible announcement in context.",
+    "Check theme metaphors, date/tithi terminology and each Clear usage before import; one source string can occur in different contexts.",
+    "Record reviewer identity or agreed attribution, date, approved source fingerprint and revisions; do not infer approval from a populated value.",
+    "Import only accepted entries through existing catalogue formats, then run existing i18n, protection, browser and strict-build checks.",
+    "This batch is not whole-site translation completeness and grants no staging or deployment approval."
+  ]
+}

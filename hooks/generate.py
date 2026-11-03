@@ -47,6 +47,7 @@ DATA_FILE = ROOT / "data" / "collection.json"
 CORRECTIONS_FILE = ROOT / "data" / "corrections.csv"  # community fixes (see CONTRIBUTING.md)
 ADDITIONS_FILE = ROOT / "data" / "additions.csv"  # community additions
 SITE_NAME = ""  # populated from the canonical site_name in mkdocs.yml
+PRACTICE_PREVIEW = False  # no partial public launch; explicitly enabled in staging only
 EDITABLE = {
     "title": "title", "language": "language", "form": "form", "tier": "tier",
     "singer": "singer", "preferred singer": "singer", "recitation": "singer",
@@ -779,7 +780,7 @@ def page_home(d, contributions_enabled=False):
         f'<li><b>{fmt(total)}</b> <span data-i18n="works">works</span></li>'
         f'<li><b>{len(d["categories"])}</b> <span data-i18n="categories">categories</span></li>'
         f'<li><b>{fmt(groups)}</b> <span data-i18n="deitiesGroups">deities, traditions &amp; groups</span></li>'
-        "</ul>\n\n" + daily_darshan(panchang_summary_card()) + discovery(d) +
+        "</ul>\n\n" + daily_darshan(panchang_summary_card(), PRACTICE_PREVIEW) + discovery(d) +
         '<nav class="abp-home-actions" markdown="0" aria-label="Main sections" data-i18n-aria="mainSections">'
         '<div class="abp-home-actions__row">'
         '<a class="abp-btn abp-btn--big" href="foreword/" data-i18n="foreword">Foreword</a>'
@@ -906,8 +907,9 @@ def page_group(c, g, part):
         canonical_location = f'{part["url"]}#{f["anchor"]}'
         for n, w in enumerate(f["works"], f["start"] + 1):
             rows.append(
-                f'<tr data-work-id="{esc(w["cwid"])}">'
-                f'<td class="n">{n}</td>'
+                f'<tr data-work-id="{esc(w["cwid"])}"'
+                + (f' id="work-{esc(w["cwid"])}"' if PRACTICE_PREVIEW else "") + ">"
+                + f'<td class="n">{n}</td>'
                 f'<th scope="row" class="w"><a href="{esc(w["url"])}" target="_blank" rel="noopener" title="Search YouTube for this work">'
                 f'<span class="abp-play" aria-hidden="true"></span><span class="abp-work-title">{esc(w["title"])}</span></a>'
                 f'<button type="button" class="abp-favourite" data-work-id="{esc(w["cwid"])}" data-title="{esc(w["title"])}" data-location="{esc(canonical_location)}" '
@@ -983,8 +985,9 @@ def page_az(d):
 
 def page_japa(d):
     presets = "".join(f'<button type="button" class="abp-japa__preset" data-target="{n}">{n}</button>' for n in (11, 21, 51, 108, 1008))
+    history_attributes = ' data-japa-history-enabled' if PRACTICE_PREVIEW else ''
     return titlebar("Japa / Devotional Counter", "A private counter stored only on this device", "abp-titlebar--sand") + (
-        '<div class="abp-japa" id="abp-japa" markdown="0">\n'
+        f'<div class="abp-japa" id="abp-japa" markdown="0"{history_attributes}>\n'
         '<label class="abp-japa__name"><span data-i18n="practiceName">Practice name (optional)</span>'
         '<input id="abp-japa-name" type="text" maxlength="80" autocomplete="off" data-i18n-placeholder="practicePlaceholder" placeholder="Om Namah Shivaya, Gayatri Mantra, Prayer…"></label>\n'
         '<section class="abp-japa__dashboard" aria-label="Current counter" data-i18n-aria="currentCount">'
@@ -1010,6 +1013,22 @@ def page_japa(d):
         '<p id="abp-japa-dialog-message"></p><div><button type="button" class="abp-btn" data-cancel data-i18n="cancel">Cancel</button>'
         '<button type="button" class="abp-btn abp-btn--primary" data-confirm data-i18n="confirm">Confirm</button></div></dialog>\n'
         "</div>\n"
+    ) + (japa_history_panel() if PRACTICE_PREVIEW else '')
+
+
+def japa_history_panel():
+    return (
+        '<section class="hdc-practice notranslate" translate="no" id="japa-history" data-japa-history aria-label="Optional local Japa session history">\n'
+        '<h2>Optional Japa session history</h2>\n'
+        '<p>Start recording before counting, then Finish to save only the repetitions added with the existing counter. This does not create another counter or change your target, sound or saved counter. Ordinary Undo corrects the session total. Undo below its starting count, Fresh session or Reset cancels recording; start again afterwards. Leaving this page cancels an unfinished recording.</p>\n'
+        '<p>Finishing stores counts and start/end timestamps as plain text in this browser profile, not prayer names or account data. Anyone using this profile can read them. Nothing is synchronized to Firebase. Up to 50 finished sessions are kept; the oldest is replaced when the limit is reached.</p>\n'
+        '<div class="hdc-practice-controls"><button type="button" data-japa-session-start>Start recording a Japa session</button><button type="button" data-japa-session-finish disabled>Finish and save this session</button><button type="button" data-japa-session-cancel disabled>Cancel recording</button></div>\n'
+        '<p data-japa-session-progress aria-live="off">No session recording.</p>\n'
+        '<p data-japa-history-status role="status" aria-live="polite"></p>\n'
+        '<h3>Finished sessions in this browser</h3><p data-japa-history-summary></p><ol data-japa-history-list></ol>\n'
+        '<details class="hdc-practice-details" data-japa-history-erase><summary>Erase only Japa session history</summary><p>This does not reset the current counter, today’s total, target, Japa preferences, journey notes, routines, practice log, Reader progress or favourites.</p><label><input type="checkbox" data-japa-history-erase-consent>I want to erase only this browser’s Japa session history.</label><button type="button" data-japa-history-erase-confirm disabled>Erase saved Japa session history</button></details>\n'
+        '<p><a href="../journeys/">My Devotional Journey</a></p>\n'
+        '</section>\n'
     )
 
 
@@ -1071,8 +1090,13 @@ def works_index(d) -> str:
 
 
 def on_config(config, **kw):
-    global SITE_NAME
+    global SITE_NAME, PRACTICE_PREVIEW
     SITE_NAME = config["site_name"]
+    PRACTICE_PREVIEW = os.environ.get("HDC_PRACTICE_PREVIEW") == "1"
+    config["extra"]["hdc_practice_preview"] = PRACTICE_PREVIEW
+    if not PRACTICE_PREVIEW:
+        config["extra_css"] = [p for p in config["extra_css"] if p not in {"stylesheets/practice.css", "stylesheets/festivals.css"}]
+        config["extra_javascript"] = [p for p in config["extra_javascript"] if str(p) not in {"javascripts/abp-local-state.js", "javascripts/abp-practice.js", "javascripts/abp-festivals.js", "javascripts/abp-journeys.js", "javascripts/abp-discovery.js", "javascripts/abp-sharing.js", "javascripts/abp-section-shortcuts.js", "javascripts/abp-japa-history.js"}]
     d = load()
     translation_report, translation_errors = audit_catalogue(ROOT / "docs" / "assets" / "i18n.json")
     for line in translation_report:
@@ -1132,6 +1156,7 @@ def on_config(config, **kw):
         ]},
         {"SCRIPTURES & BOOKS": "library.md"},
         {"TOOLS": [
+            *([{"My Devotional Journey": "journeys.md"}, {"Explore the Collection": "explore.md"}, {"Devotional Sanctuary": "sanctuary.md"}, {"Sacred Reader pilot": "reader/index.md"}] if PRACTICE_PREVIEW else []),
             {"Find a Work": "find.md"},
             {"A–Z Work Directory": "a-z.md"},
             {"Japa / Devotional Counter": "japa-counter.md"},
@@ -1183,7 +1208,44 @@ def canonical_section_navigation(d):
     return neighbours
 
 
+def discovery_paths(d):
+    """Preview discovery derived from existing catalogue groups; no new classifications."""
+    categories = {c["num"]: c for c in d["categories"]}
+    out = ['<h2 id="featured-devotion">Explore devotional identities</h2><div class="abp-cards" data-discovery-cards>']
+    groups = {g["name"]: g for g in categories[1]["merged"]}
+    for name, query in (("GANESHA", "Ganesha"), ("SHIVA / MAHESH", "Shiva"), ("VISHNU", "Vishnu"), ("HANUMAN", "Hanuman")):
+        group = groups[name]
+        art = deity_portrait(name, "explore/")
+        out.append(f'<div class="abp-card"><span class="abp-card__num" aria-hidden="true">❖</span><div><h3><a class="abp-reading-link" href="../{esc(group["url"])}">{esc(group["name"])}</a></h3>{art}'
+                   f'<p>{fmt(group["count"])} indexed works in the existing section.</p><p><a class="abp-reading-link" href="../find/?w={quote_plus(query)}">Documented aliases and related identities</a></p></div></div>')
+    out.append('</div><h2 id="featured-works">Featured work references</h2><ul data-discovery-works>')
+    featured = {"HDL2-CWID-25F980F2BD34A2107382", "HDL2-CWID-E73C30069833764A47B2"}
+    found = set()
+    for category in d["categories"]:
+        for group in category["merged"]:
+            for form in group["forms"]:
+                for work in form["works"]:
+                    if work["cwid"] in featured:
+                        found.add(work["cwid"])
+                        path = form["url"] + "#work-" + work["cwid"]
+                        out.append(f'<li><a class="abp-reading-link" href="../{esc(path)}" data-featured-work-id="{esc(work["cwid"])}">{esc(work["title"])}</a> — {esc(group["name"])}; {esc(category["title"])}</li>')
+    if found != featured:
+        raise ValueError("Featured discovery work identities are missing; review the source rather than invent a replacement")
+    out.append('</ul><p>Each link identifies an existing catalogue record in its original context. Other records with the same title remain distinct. Reading and listening availability remain those of the catalogue.</p>')
+    out.append('<h2 id="documented-pathways">Discover documented traditions</h2><p>These paths use existing catalogue classifications, not inferred birthplace, family deity, festival dates or new relationships. Expand a path to browse all its existing sections.</p>')
+    for number in (12, 3, 7, 5, 9):
+        category = categories[number]
+        out.append(f'<details class="hdc-practice-details" data-discovery-pathway="{number}"><summary>{esc(category["title"])}</summary><p><a href="../{esc(category["url"])}">Open complete category</a></p><ul>')
+        for group in category["merged"]:
+            out.append(f'<li><a href="../{esc(group["url"])}">{esc(group["name"])}</a></li>')
+        out.append('</ul></details>')
+    out.append('<p>For dates and location-dependent observances, use the <a href="../panchang/">existing Panchang</a> and <a href="../hindu-calendar/">Hindu Calendar</a>. Catalogue festival links do not announce observance dates.</p>')
+    return "\n".join(out)
+
+
 def on_page_markdown(markdown, page, config, **kw):
+    if PRACTICE_PREVIEW and page.file.src_uri == "explore.md":
+        markdown = markdown.replace("<!-- HDC_DISCOVERY_PATHS -->", discovery_paths(load()))
     # Also apply to hand-written overrides of catalogue pages.
     sections = _section_navigation.get(url_of(page.file.src_uri))
     if sections:
@@ -1201,11 +1263,14 @@ def on_page_markdown(markdown, page, config, **kw):
 
 def on_files(files, config, **kw):
     contributions_enabled = config.get("extra", {}).get("contributions_enabled", False)
+    withheld = set()
+    if not PRACTICE_PREVIEW:
+        withheld.update({"sanctuary.md", "reader/index.md", "journeys.md", "explore.md"})
     if not contributions_enabled:
-        withheld = {"contribution.md", "assets/pdfs/contribution.pdf", "assets/images/contribution-phonepe-qr.png"}
-        for file in list(files):
-            if file.src_uri in withheld:
-                files.remove(file)
+        withheld.update({"contribution.md", "assets/pdfs/contribution.pdf", "assets/images/contribution-phonepe-qr.png"})
+    for file in list(files):
+        if file.src_uri in withheld:
+            files.remove(file)
     d = load()
     builders = {
         "index.md": lambda p: page_home(d, contributions_enabled),
@@ -1291,11 +1356,15 @@ def on_files(files, config, **kw):
 
 
 def on_post_build(config, **kw):
-    """Publish a versioned, shell-only worker without precaching the catalogue."""
+    """Publish a versioned shell; preview adds bounded Material search helpers."""
     site = Path(config["site_dir"])
     # Ship larger Android launcher artwork without modifying approved source PNGs.
     from scripts.pwa_icon import publish_maskable
     publish_maskable(site)
+    bundle = None
+    if PRACTICE_PREVIEW:
+        from scripts.stylesheet_bundle import publish_bundle
+        bundle = publish_bundle(site, urlsplit(config['site_url']).path)
     tpl = (ROOT / "hooks" / "sw.template.js").read_text(encoding="utf-8")
     shell = [
         "", "offline/", "favourites/", "manifest.webmanifest", "stylesheets/abp.css", "stylesheets/feedback.css", "stylesheets/project-info.css", "stylesheets/search.css",
@@ -1310,7 +1379,21 @@ def on_post_build(config, **kw):
         "navigation-corner-light-right.webp", "navigation-corner-dark-right.webp",
         "icon-192.png", "icon-512.png", "icon-maskable-512.png", "icon-maskable-512-v2.png", "apple-touch-icon.png",
     ))
-    shell.extend(f"javascripts/{path.name}" for path in sorted((site / "javascripts").glob("*.js")))
+    if PRACTICE_PREVIEW:
+        shell.extend([bundle, "assets/stylesheet-bundle.json"])
+        # Public route metadata only. Loaded on demand; never duplicate work favourites.
+        shortcut_registry = {"schema": 1, "sections": [{"path": url_of(p["src"]), "title": p["title"]} for p in _pages if "cat" in p]}
+        (site / "assets" / "section-shortcuts.json").write_text(json.dumps(shortcut_registry, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
+        shell.extend(["stylesheets/practice.css", "stylesheets/festivals.css", "sanctuary/", "reader/", "journeys/", "explore/", "japa-counter/"])
+        # Material requests these even on an offline shell page. Keep its
+        # built-in text search and instant-navigation bootstrap available;
+        # the larger universal-search payload pair remains on demand.
+        shell.extend(["sitemap.xml", "assets/i18n.json", "search/search_index.json"])
+        shell.extend(path.relative_to(site).as_posix() for path in sorted((site / "assets" / "javascripts" / "workers").glob("search.*.min.js")))
+        shell.extend(["assets/images/deities/ganesha-640.webp", "assets/images/deities/shiva-640.webp"])
+        shell.extend(path.relative_to(site).as_posix() for path in sorted((site / "assets" / "festivals").glob("*")) if path.is_file())
+    shell.extend(f"javascripts/{path.name}" for path in sorted((site / "javascripts").glob("*.js"))
+                 if PRACTICE_PREVIEW or path.name not in {"abp-local-state.js", "abp-practice.js", "abp-festivals.js", "abp-journeys.js", "abp-discovery.js", "abp-sharing.js", "abp-section-shortcuts.js", "abp-japa-history.js"})
     shell.extend(f"javascripts/{path.name}" for path in sorted((site / "javascripts").glob("search-*.mjs")))
     shell.extend(path.relative_to(site).as_posix() for path in sorted((site / "assets" / "panchang").glob("*.mjs")))
     shell.extend(path.relative_to(site).as_posix() for pattern in (
@@ -1318,14 +1401,16 @@ def on_post_build(config, **kw):
         "assets/javascripts/bundle.*.min.js",
     ) for path in sorted(site.glob(pattern)))
     shell = [path for path in dict.fromkeys(shell) if path == "" or (site / path).exists()]
+    if PRACTICE_PREVIEW:
+        # Exact query aliases for the three supported presets. Preserve the
+        # existing worker strategy and avoid treating arbitrary queries as hits.
+        shell.extend(f"sanctuary/?minutes={minutes}" for minutes in (5, 10, 20))
     signature = hashlib.sha256()
-    # Large full-text language packs load only on language choice. Version them
-    # without precaching every language for every reader.
+    # Optional language packs and section metadata are versioned, not globally precached.
     for target in sorted((site / "assets" / "translations").glob("*.json")):
         signature.update(target.relative_to(site).as_posix().encode())
         signature.update(target.read_bytes())
-    # Version the paired search assets without precaching their large payloads.
-    for name in ("works-index.json", "universal-search.json"):
+    for name in ("works-index.json", "universal-search.json", *(("section-shortcuts.json",) if PRACTICE_PREVIEW else ())):
         signature.update((site / "assets" / name).read_bytes())
     # The large ephemeris assets affect the cache version but are never
     # precached on the homepage. A changed JS/WASM pair invalidates old caches.
@@ -1337,7 +1422,9 @@ def on_post_build(config, **kw):
     if ephemeris_css.exists():
         signature.update(ephemeris_css.read_bytes())
     for path in shell:
-        target = site / (path or "index.html")
+        if "?" in path:
+            signature.update(path.encode())
+        target = site / (urlsplit(path).path or "index.html")
         if target.is_dir():
             target = target / "index.html"
         if target.is_file():

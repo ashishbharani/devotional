@@ -51,6 +51,8 @@ extra_css:
   - stylesheets/sacred-site.css
   - stylesheets/deity-art.css
   - stylesheets/hdc-header.css
+  - stylesheets/practice.css
+  - stylesheets/festivals.css
 extra_javascript:
   - javascripts/universal-search.js
   - javascripts/section-pager.js
@@ -64,12 +66,20 @@ extra_javascript:
   - javascripts/abp.js
   - javascripts/abp-directory.js
   - javascripts/abp-japa.js
+  - javascripts/abp-local-state.js
+  - javascripts/abp-japa-history.js
   - javascripts/abp-daily.js
+  - javascripts/abp-practice.js
   - javascripts/abp-panchang.js
   - javascripts/abp-ephemeris.js
   - javascripts/abp-pwa.js
   - javascripts/abp-a11y.js
   - javascripts/feedback.js
+  - javascripts/abp-festivals.js
+  - javascripts/abp-journeys.js
+  - javascripts/abp-discovery.js
+  - javascripts/abp-sharing.js
+  - javascripts/abp-section-shortcuts.js
 
 plugins:
   - search:

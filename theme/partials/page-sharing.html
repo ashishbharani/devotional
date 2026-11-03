@@ -1,0 +1,6 @@
+{% if config.extra.hdc_practice_preview and page.url not in ['journeys/', 'favourites/', 'reader/', 'sanctuary/'] %}
+<details class="hdc-practice hdc-page-share" data-share-page><summary>Share this public page</summary>
+<p>Shares the current address, including search filters or an anchor. Saved notes and private practice data are not included.</p>
+<button type="button" data-page-share>Share or copy page link</button>
+<p data-page-share-status role="status"></p><label data-page-share-link hidden>Copy page link<input type="text" readonly></label></details>
+{% endif %}

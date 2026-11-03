@@ -1,0 +1,70 @@
+import assert from 'node:assert/strict';
+import {spawn} from 'node:child_process';
+import {readFile} from 'node:fs/promises';
+import {chromium} from 'playwright';
+const server=spawn(process.execPath,['scripts/serve_header_preview.mjs'],{env:{...process.env,HDC_PREVIEW_PORT:'4358'},stdio:['ignore','pipe','inherit']});
+await new Promise((resolve,reject)=>{server.stdout.once('data',resolve);server.once('error',reject);});
+const browser=await chromium.launch(),base='http://127.0.0.1:4358/devotional/',key='hdc-reader-v1';
+const original=await readFile('site/reader/index.html','utf8');
+const fixture='<article id="test-passage" tabindex="-1" data-reader-passage><h2>Isolated test fixture — not sacred content</h2><p class="hdc-verse notranslate" lang="en" translate="no">Synthetic Unicode fixture: नमस्ते • śāntiḥ.</p></article>';
+try{
+ for(const width of [375,1440]){
+  const context=await browser.newContext({viewport:{width,height:1000},serviceWorkers:'block'}),errors=[];
+  context.on('page',p=>p.on('pageerror',e=>errors.push(e.message)));
+  await context.route('https://fonts.googleapis.com/**',r=>r.fulfill({body:'',contentType:'text/css'}));
+  await context.route(base+'reader/**',r=>r.fulfill({body:original.replace('<p data-reader-status',fixture+'<p data-reader-status'),contentType:'text/html'}));
+  const page=await context.newPage();await page.goto(base);
+  const legacy={bookmark:true,read:true,size:1.5,spacing:2.2,unknown:{keep:true}};
+  await page.evaluate(({key,legacy})=>localStorage.setItem(key,JSON.stringify(legacy)),{key,legacy});
+  await page.goto(base+'reader/#gita-2-47');
+  await page.locator('[data-reader-transliteration] summary').click();
+  assert.equal((await page.locator('[lang="sa-Latn"]').innerText()).replace(/\s+/g,' ').trim(),'karmaṇy evādhikāras te mā phaleṣu kadācana | mā karmaphalahetur bhūr mā te saṅgo ’stv akarmaṇi ||');
+  assert.equal(await page.locator('[lang="sa-Latn"]').getAttribute('translate'),'no');
+  assert.match(await page.locator('[data-reader-progress]').textContent(),/1 of 2/);
+  await page.locator('[data-reader-select]').selectOption('test-passage');
+  assert.equal(await page.locator('[data-bookmark]').getAttribute('aria-pressed'),'false');
+  await page.locator('[data-bookmark]').click();await page.locator('[data-read]').click();
+  let saved=await page.evaluate(key=>JSON.parse(localStorage.getItem(key)),key);
+  assert.deepEqual(saved.unknown,legacy.unknown);assert.equal(saved.bookmark,true);assert.equal(saved.read,true);
+  assert.deepEqual(saved.passages['test-passage'],{bookmark:true,read:true});
+  assert.equal(saved.history.length,1);assert.equal(saved.history[0].id,'test-passage');assert.ok(Number.isFinite(Date.parse(saved.history[0].at)));
+  assert.equal(await page.locator('[data-reader-history-items] li').count(),1,'only explicit read marking creates reading history');
+  await page.locator('[data-reader-select]').selectOption('gita-2-47');await page.locator('[data-read]').click();
+  saved=await page.evaluate(key=>JSON.parse(localStorage.getItem(key)),key);
+  assert.equal(saved.read,false);assert.equal(saved.passages['test-passage'].read,true);
+  await page.reload();await page.locator('[data-reader-select]').selectOption('test-passage');
+  assert.equal(await page.locator('[data-read]').getAttribute('aria-pressed'),'true');
+  await page.locator('[data-reader-query]').fill('śāntiḥ');assert.equal(await page.locator('#test-passage').isVisible(),true);assert.equal(await page.locator('#gita-2-47').isVisible(),false);
+  await page.evaluate(()=>{Object.defineProperty(navigator,'share',{value:undefined,configurable:true});Object.defineProperty(navigator,'clipboard',{value:undefined,configurable:true});});
+  await page.locator('[data-reader-share]').click();assert.equal(await page.locator('[data-reader-link] input').inputValue(),base+'reader/#test-passage');
+  const other=await context.newPage();await other.goto(base);await other.evaluate(key=>localStorage.removeItem(key),key);
+  await page.waitForFunction(()=>document.querySelector('[data-read]').getAttribute('aria-pressed')==='false',null,{polling:100});
+  assert.match(await page.locator('[data-reader-progress]').textContent(),/0 of 2/);
+  assert.equal(await page.locator('[data-reader-history-items] li').count(),0);
+  await page.evaluate(key=>localStorage.setItem(key,JSON.stringify({history:Array.from({length:50},(_,i)=>({id:'gita-2-47',at:new Date(Date.UTC(2026,10,1,0,0,i)).toISOString(),extra:'keep row metadata'}))})),key);
+  await page.reload();await page.locator('[data-read]').click();
+  saved=await page.evaluate(key=>JSON.parse(localStorage.getItem(key)),key);
+  assert.equal(saved.history.length,50);assert.equal(saved.history[0].extra,'keep row metadata');assert.equal(saved.history[0].at,'2026-11-01T00:00:01.000Z');
+  const badHistory=JSON.stringify({...saved,history:[{id:'gita-2-47',at:'invalid'}]});
+  await page.evaluate(({key,raw})=>localStorage.setItem(key,raw),{key,raw:badHistory});await page.locator('[data-read]').click();
+  assert.equal(await page.evaluate(key=>localStorage.getItem(key),key),badHistory,'unsupported history cannot be silently reset');
+  assert.deepEqual(errors,[]);await context.close();console.log(`PASS independent passage state, Unicode search, legacy progress, share and cross-tab reset at ${width}px`);
+ }
+ for(const invalid of ['missing','duplicate','missing-source']){
+  const context=await browser.newContext({serviceWorkers:'block'}),page=await context.newPage();
+  await context.route('https://fonts.googleapis.com/**',r=>r.fulfill({body:'',contentType:'text/css'}));
+  let html=original;
+  if(invalid==='missing')html=html.replace(/<article id="gita-2-47"[\s\S]*?<\/article>/,'');
+  else if(invalid==='duplicate')html=html.replace('<p data-reader-status',fixture.replace('test-passage','gita-2-47')+'<p data-reader-status');
+  else html=html.replace('class="hdc-verse notranslate" lang="sa"','class="missing-source" lang="sa"');
+  await context.route(base+'reader/**',r=>r.fulfill({body:html,contentType:'text/html'}));
+  await page.goto(base+'reader/');assert.match(await page.locator('[data-reader-status]').textContent(),/Pilot text unavailable/);
+  await page.locator('[data-bookmark]').click();assert.equal(await page.evaluate(key=>localStorage.getItem(key),key),null);
+  await context.close();console.log('PASS actual invalid Reader payload: '+invalid);
+ }
+ const context=await browser.newContext({serviceWorkers:'block'}),page=await context.newPage();
+ await context.route('https://fonts.googleapis.com/**',r=>r.fulfill({body:'',contentType:'text/css'}));
+ await context.addInitScript(()=>{window.AudioContext=undefined;window.webkitAudioContext=undefined;});
+ await page.goto(base+'sanctuary/');await page.locator('[data-sound]').check();await page.locator('[data-bell]').click();assert.match(await page.locator('[data-practice-status]').textContent(),/works silently/);await context.close();
+ console.log('PASS actual unavailable AudioContext fallback');
+}finally{await browser.close();server.kill();}
