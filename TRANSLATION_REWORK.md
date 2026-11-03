@@ -2,6 +2,36 @@
 
 ## Status: INCOMPLETE — draft technical foundation, not a full translated release
 
+## Current-main compatibility update
+
+PR #55 replaced the editorial sources after the earlier Hindi checkpoint and
+withheld Contribution from publication. PR #56's GitHub merge-ref checks therefore
+exercised different pages than its original local build. The new Disclaimer has
+125 clauses, not 72. Earlier descriptions below of complete editorial bodies refer
+only to the superseded source revision; they are not current coverage claims.
+
+This PR now includes current main without replacing any supplied publication page.
+The functional browser regression checks every current text node against either
+its registered translation or exact English fallback, restores all originals,
+preserves all 125 clause IDs/contents links and verifies Contribution stays 404.
+It also checks that the Hindi pack does not republish the withheld payment handle.
+Missing editorial units are written to `work/prose-translation/coverage.json` and
+uploaded by CI. `REQUIRE_COMPLETE_PROSE=1` enables the separate completion gate;
+it must fail while the current source translation backlog remains. Passing runtime
+checks must never be presented as completing the new publication-page translations.
+
+The larger 522-unit dynamic-feedback work remains paused and uncommitted in its
+original checkout. This compatibility fix does not publish that work or revive the
+withheld payment page. Full current-source translation remains unfinished/draft.
+
+Compatibility validation: strict build passed in 79.75 seconds. Chromium checks
+passed at 320/1440px for registered current text, exact English fallback/restoration,
+all 125 clause IDs, contribution 404, lazy loading, race/retry and offline reload.
+The explicit completion gate was run and failed as expected on missing current
+About text. The runtime report counted 33 About, 34 Foreword and 639 Disclaimer
+missing rendered text units per viewport; duplicates/identities are included, so
+these are not counts of unique paragraphs or linguistic quality certification.
+
 The owner's confirmed scope is **all hosted text**, including editorial pages and
 catalogue descriptions, in English, Hindi, Marathi, Gujarati, Bengali, Punjabi,
 Telugu, Kannada, Malayalam and Tamil. External book readers remain external;
@@ -35,6 +65,58 @@ feature while the content backlog remains.
 
 ## Remaining content work
 
+### Sequential Hindi checkpoint
+
+The selected-language content loader now reads one local full-text pack on demand;
+English downloads none. Failed downloads can be retried, and a late response cannot
+replace a subsequently selected language. Previously loaded Hindi prose and the
+base catalogue survive an offline reload. Pack changes version the service worker;
+the base catalogue is precached and new shell versions bypass stale HTTP cache.
+
+The Hindi draft now contains 482 source units: the complete About, Contribution,
+Foreword and Disclaimer bodies (all 72 clauses and final notice), plus recurring
+catalogue descriptions and interface labels. English source documents, payment
+identifiers, QR destinations, contact details and legal clause anchors remain
+unchanged. All 13 distinct timing descriptions, 10 Jyotisha descriptions and nine
+affliction descriptions have draft Hindi entries, preserving their traditional-use
+and individual-assessment qualifications. The other eight full-text
+packs are empty draft scaffolds; the shared interface/phrase translations remain
+available, but those packs do not constitute completed language passes.
+
+Browser authoring-preview checks passed at 320px and 1440px for those three full
+editorial bodies and all paragraphs/headings in clauses 1–18, exact English
+restoration, payment identifiers, selected-language races, failed-download retry,
+and real offline reload. The compiled checkpoint strict build passed in 127.50
+seconds; its runtime, base catalogue and Hindi pack hashes match the source.
+Catalogue regression fixtures also reject external pack
+paths, malformed structures, mismatched languages, empty/unchanged translations
+and normalized duplicate source keys. This checkpoint has not been deployed.
+
+The refreshed audit still reports 13,089 source candidates across 2,266 pages and
+43,085 catalogue rows. Hindi has 12,796 unregistered candidates; each other target
+has 13,025. These include proper names and parameterized UI needing classification,
+so the totals must not be described as untranslated paragraph counts.
+
+The browser regression now extends this to every Disclaimer text node and all
+72 clause headings/paragraphs, plus actual Agni and Navagraha catalogue rows.
+Registered UI/form-label translations take precedence over script conversion;
+sacred work titles continue to retain their original text and external links.
+PR #54 was merged externally while work was paused. The tested 187-unit checkpoint
+is committed as `9c67d4d` in follow-up draft PR #56; later Hindi work continues there.
+
+The 482-unit checkpoint strict build passed in 202.14 seconds; compiled runtime,
+base dictionary and Hindi pack hashes match their authored files. The 187-unit
+checkpoint also passed the complete GitHub Actions workflow (run 41411017367).
+Reapplying the current Hindi dictionary to the unchanged 450-unit HTML inventory
+leaves 12,501 Hindi candidates unregistered (other targets: 13,025 each). This is
+an inventory-based update, not a new linguistic or dynamic-state certification.
+Phone/desktop Hindi legal-page screenshots are saved in ignored
+`outputs/hindi-prose-482/` when `PROSE_SCREENSHOTS` is set.
+Visual inspection at both widths showed the Hindi editorial content fitting the
+existing design. The floating feedback button still has an emoji-prefixed English
+string (`💡 Suggestion / Report Issue`); its full dynamic form/messages and other
+runtime-only controls remain part of the explicitly unfinished translation pass.
+
 The source catalogue has 43,085 rows. Distinct values before deduplication across
 fields include 907 purposes, 1,098 singer/recitation descriptions, 369 forms,
 231 language descriptors, 13 timing descriptions, 10 Jyotisha descriptions and
@@ -52,8 +134,9 @@ Still required:
    legitimate proper names/identities, and source-text defects. Unknown proper
    names are deliberately reported, not silently counted as translated prose.
 2. Supply and review every remaining catalogue-description translation.
-3. Translate all hosted About/Foreword/Contribution/Disclaimer paragraphs, keeping
-   legal qualifications, contacts, numbers and the English originals intact.
+3. Complete the remaining disclaimer paragraphs in Hindi and all four editorial
+   pages in the other target languages, keeping legal qualifications, contacts,
+   numbers and the English originals intact.
 4. Finish dedicated category-name translations outside Hindi; script conversion
    alone is not completion of this task.
 5. Cover runtime-only tool messages and parameterized/date output, then validate
@@ -63,7 +146,7 @@ Still required:
 
 ## Verification commands
 
-Verified locally against the checkpoint strict build (121.23 seconds):
+Initial checkpoint verification (strict build: 121.23 seconds):
 
 - Ten local choices at 320/768/1440px, real translated labels rather than a mocked
   provider, reload persistence, no extra tabs, no translation-provider requests,
@@ -76,7 +159,7 @@ Verified locally against the checkpoint strict build (121.23 seconds):
 - Final output JS and catalogue hashes match the source files.
 - Whole-text audit: 2,266 HTML pages, 43,085 canonical rows, 13,089 candidate
   source units; 12,983 remain unregistered for Hindi and 13,025 for each other target language.
-  This is a review backlog, **not** 13,015 proven prose paragraphs: proper names,
+  This is a review backlog, **not** a count of proven prose paragraphs: proper names,
   browser titles and parameterized UI require classification and template work.
 - Machine-readable details: ignored `outputs/translation-coverage.json`; CI
   publishes the same audit as `work/translation-coverage.json` with screenshots.
