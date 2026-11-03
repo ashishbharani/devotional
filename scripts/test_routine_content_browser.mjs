@@ -31,7 +31,12 @@ try{
    const work=compact.works.find(w=>w[6]===id),link=page.locator(`[data-routine-work-id="${id}"]`);
    assert.equal(await link.textContent(),'Open '+work[0]);assert.equal(await link.getAttribute('href'),new URL(compact.places[work[5]][0].split('#')[0]+'#work-'+id,base).href);
   }
-  await page.locator('[data-reference-done]').first().check();await page.locator('[data-journey-save]').click();await page.locator('[data-session-record]').click();
+  const completed=page.locator('[data-reference-done]').first();
+  await completed.focus();await page.keyboard.press('Space');
+  assert.equal(await completed.isChecked(),true);assert.equal(await completed.evaluate(el=>el===document.activeElement),true,'completion toggle retains visible keyboard focus');
+  await page.keyboard.press('Space');
+  assert.equal(await completed.isChecked(),false);assert.equal(await completed.evaluate(el=>el===document.activeElement),true,'Space reverses completion without navigating back');
+  await completed.check();await page.locator('[data-journey-save]').click();await page.locator('[data-session-record]').click();
   saved=await page.evaluate(key=>JSON.parse(localStorage.getItem(key)),key);
   assert.equal(saved.references[0].done,true);assert.equal(saved.references[1].done,false);assert.deepEqual(saved.sessions.at(-1).references,saved.references);
   await page.locator('[data-routine-library]').selectOption(library.routines[0].id);assert.equal(await page.locator('[data-reference-done]').first().isChecked(),false,'saved library routine and active progress stay independent');
@@ -41,6 +46,17 @@ try{
   const future=JSON.stringify({...saved,schema:2});await other.evaluate(({key,future})=>localStorage.setItem(key,future),{key,future});
   await page.locator('[data-journey-load]:visible').waitFor();await page.locator('[data-journey-save]').click();
   assert.equal(await page.evaluate(key=>localStorage.getItem(key),key),future);assert.equal(await page.locator('[data-routine-work-query]').inputValue(),'Private draft query');
+  const remove=page.locator('[data-reference-remove]'),nextToken=await remove.nth(1).getAttribute('data-reference-remove');
+  await remove.first().focus();await page.keyboard.press('Enter');
+  await page.waitForFunction(token=>document.activeElement?.dataset.referenceRemove===token,nextToken);
+  assert.equal(await remove.count(),2,'removed only the chosen draft reference');
+  await remove.last().focus();await page.keyboard.press('Enter');
+  await page.waitForFunction(token=>document.activeElement?.dataset.referenceRemove===token,nextToken);
+  assert.equal(await remove.count(),1,'last-row removal focuses the surviving previous control');
+  await remove.first().focus();await page.keyboard.press('Enter');
+  await page.waitForFunction(()=>document.activeElement===document.querySelector('[data-routine-passage-add]'));
+  assert.equal(await remove.count(),0,'final removal focuses the surviving add-passage control');
+  assert.equal(await page.evaluate(key=>localStorage.getItem(key),key),future,'draft focus repair never overwrites future saved data');
   assert.deepEqual(errors,[]);assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));
   await context.close();console.log(`PASS canonical routine references, independent completion, reload, session snapshot and future-record preservation ${width}px`);
  }

@@ -58,9 +58,10 @@
    if(!path.startsWith('categories/')||url.origin!==location.origin)return null;
    return {title:work[0],url:url.href};
   }
-  async function renderReferences(){
+  async function renderReferences(focusToken){
    if(!referencesList)return;const run=++referenceRun;referencesList.replaceChildren();
-   if(draftReferences.some(r=>r.type==='work')){try{await sources();}catch(_){if(current()&&run===referenceRun)referenceStatus.textContent='Catalogue references are unavailable. Saved IDs have been kept; retry the search when online.';return;}}
+   const restoreFocus=()=>{if(focusToken!==undefined&&document.activeElement===document.body){const target=[...referencesList.querySelectorAll('[data-reference-remove]')].find(button=>button.dataset.referenceRemove===focusToken);(target||q('[data-routine-passage-add]')).focus();}};
+   if(draftReferences.some(r=>r.type==='work')){try{await sources();}catch(_){if(current()&&run===referenceRun){referenceStatus.textContent='Catalogue references are unavailable. Saved IDs have been kept; retry the search when online.';restoreFocus();}return;}}
    if(!current()||run!==referenceRun)return;
    for(const ref of draftReferences){
     const li=document.createElement('li'),found=referenceLink(ref),label=document.createElement('label'),check=document.createElement('input'),remove=document.createElement('button');
@@ -68,8 +69,9 @@
     if(found){const link=document.createElement('a');link.href=found.url;link.textContent='Open '+found.title;link.className='abp-reading-link notranslate';link.setAttribute('translate','no');link.dataset.routineWorkId=ref.id;li.append(link);}
     remove.type='button';remove.textContent='Remove from draft';remove.setAttribute('aria-label','Remove reference: '+(found?.title||ref.id));remove.dataset.referenceRemove=ref.type+':'+ref.id;li.append(' ',remove);referencesList.append(li);
    }
+   restoreFocus();
   }
-  const setReferences=(rows,dirty)=>{draftReferences=rows.map(r=>({...r}));referencesDirty=dirty;renderReferences();};
+  const setReferences=(rows,dirty,focusToken)=>{draftReferences=rows.map(r=>({...r}));referencesDirty=dirty;renderReferences(focusToken);};
   function addReference(ref){
    if(draftReferences.some(r=>r.type===ref.type&&r.id===ref.id)){referenceStatus.textContent='This reference is already in the draft.';return;}
    if(draftReferences.length>=10){referenceStatus.textContent='A routine can contain ten references. Remove one before adding another.';return;}
@@ -77,8 +79,8 @@
   }
   if(referencesList){
    q('[data-routine-passage-add]').addEventListener('click',()=>addReference({type:'passage',id:'gita-2-47'}),{signal:controller.signal});
-   referencesList.addEventListener('change',event=>{const token=event.target.dataset.referenceDone;if(!token)return;setReferences(draftReferences.map(ref=>ref.type+':'+ref.id===token?{...ref,done:event.target.checked}:ref),true);referenceStatus.textContent='Completion changed in this draft. Save the active routine to keep it.';},{signal:controller.signal});
-   referencesList.addEventListener('click',event=>{const token=event.target.closest('[data-reference-remove]')?.dataset.referenceRemove;if(token){setReferences(draftReferences.filter(ref=>ref.type+':'+ref.id!==token),true);referenceStatus.textContent='Reference removed from this draft. Save to keep the change.';}},{signal:controller.signal});
+   referencesList.addEventListener('change',event=>{const token=event.target.dataset.referenceDone;if(!token)return;draftReferences=draftReferences.map(ref=>ref.type+':'+ref.id===token?{...ref,done:event.target.checked}:ref);referencesDirty=true;referenceStatus.textContent='Completion changed in this draft. Save the active routine to keep it.';},{signal:controller.signal});
+   referencesList.addEventListener('click',event=>{const button=event.target.closest('[data-reference-remove]'),token=button?.dataset.referenceRemove;if(token){const index=draftReferences.findIndex(ref=>ref.type+':'+ref.id===token),rows=draftReferences.filter(ref=>ref.type+':'+ref.id!==token),next=rows[Math.min(index,rows.length-1)],focusToken=button===document.activeElement?(next?next.type+':'+next.id:null):undefined;setReferences(rows,true,focusToken);referenceStatus.textContent='Reference removed from this draft. Save to keep the change.';}},{signal:controller.signal});
    q('[data-routine-work-search]').addEventListener('click',async()=>{
     const query=q('[data-routine-work-query]').value.trim(),run=++searchRun,results=q('[data-routine-work-results]');results.replaceChildren();
     if(query.length<2){referenceStatus.textContent='Enter at least two characters to search existing works.';return;}
