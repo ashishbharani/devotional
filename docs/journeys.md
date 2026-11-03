@@ -11,7 +11,7 @@ Optional, local-first tools for your own practice. No account is required. No sp
 <section class="hdc-practice notranslate" translate="no" data-journey aria-label="Browser-local devotional journey">
 <h2>Continue your practice</h2>
 <p data-journey-japa>Open your existing counter to continue Japa.</p>
-<p><a href="../japa-counter/">Existing Japa counter</a> · <a href="../favourites/">Existing saved works and favourites</a> · <a href="../reader/">Continue Sacred Reader pilot</a></p>
+<p><a href="../japa-counter/">Existing Japa counter</a> · <a href="../favourites/">Existing saved works and favourites</a> · <a href="../reader/">Continue Sacred Reader</a></p>
 <p data-journey-reader></p>
 <p><a href="../japa-counter/#japa-history">View local Japa session history and record a session with the existing counter</a></p>
 <section data-section-shortcut-list aria-label="Favourite section shortcuts">

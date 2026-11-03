@@ -147,6 +147,10 @@ jobs:
         run: node scripts/test_practice_browser.mjs
       - name: Test extensible Reader passages, legacy progress and unavailable content
         run: node scripts/test_reader_model_browser.mjs
+      - name: Verify complete original-language Reader books and visited-page offline reading
+        run: |
+          uv run python scripts/test_reader_books.py enabled
+          node scripts/test_reader_books_browser.mjs
       - name: Test festival schedule validation, India-time boundaries and preview UI
         run: |
           node scripts/test_festival_themes.mjs
@@ -245,6 +249,7 @@ jobs:
         run: |
           uv run mkdocs build --strict
           uv run python scripts/test_practice_release_gate.py disabled
+          uv run python scripts/test_reader_books.py disabled
           uv run python scripts/test_seo_structure.py disabled
       - name: Explain problems in plain language
         if: failure()

@@ -25,7 +25,7 @@
   function summary(){
    const japa=read('abp-japa-state-v1'),reader=read('hdc-reader-v1');
    q('[data-journey-japa]').textContent=Number.isSafeInteger(japa.count)&&japa.count>=0?`Existing Japa count: ${japa.count.toLocaleString()}.`:'No saved Japa count available.';
-   q('[data-journey-reader]').textContent=reader.bookmark===true||reader.read===true?'Your Sacred Reader pilot has saved progress.':'No saved reader progress yet.';
+   q('[data-journey-reader]').textContent=reader.bookmark===true||reader.read===true||Object.values(reader.passages||{}).some(p=>p&&(p.bookmark===true||p.read===true))?'Your Sacred Reader has saved progress.':'No saved reader progress yet.';
    const now=Date.now(),week=state.sessions.filter(s=>now-Date.parse(s.at)>=0&&now-Date.parse(s.at)<=7*86400000);
    const today=week.filter(s=>new Date(s.at).toDateString()===new Date(now).toDateString());
    const daily=q('[data-journey-today]');

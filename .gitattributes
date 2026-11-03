@@ -1,2 +1,5 @@
 # Preserve official PDF bytes on Windows and suppress textual/binary stream diffs.
 docs/assets/pdfs/*.pdf binary
+# Stable Reader corpus/download hashes across Windows and CI checkouts.
+data/reader-books/*.json text eol=lf
+data/reader-books/*.txt text eol=lf

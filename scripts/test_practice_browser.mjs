@@ -37,7 +37,7 @@ try{
   assert.equal(await page.locator('[data-session]').getAttribute('aria-live'),'off','do not announce every timer tick');
   await checkContrast(page);
   await page.screenshot({path:`work/practice/sanctuary-${width}-${theme}.png`,fullPage:true});
-  await page.getByRole('link',{name:'Read the Sacred Reader pilot',exact:true}).click();await page.waitForURL(base+'reader/');
+  await page.getByRole('link',{name:'Read the Sacred Reader',exact:true}).click();await page.waitForURL(base+'reader/');
   await page.locator('[data-bookmark]').click();await page.locator('[data-read]').click();
   await page.locator('[data-reader-size]').selectOption('1.5');await page.locator('[data-reader-spacing]').selectOption('2.2');
   assert.equal(await page.locator('[data-reader-progress]').textContent(),'1 of 1 passages marked read. Passage bookmarked.');
