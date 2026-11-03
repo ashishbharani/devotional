@@ -4,7 +4,13 @@ title: HDC Final Acceptance and Launch Checklist
 
 # Final acceptance and launch checklist
 
-This is the operational review checklist for the finite [completion roadmap](HDC_REMAINING_INCREMENT_PLAN.md), prepared on 3 November 2026. It is **not** a record of final approval, a frozen release candidate, or permission to deploy. The [execution ledger](HDC_COMPLETION_EXECUTION.md) records implemented/tested work separately.
+## Limited first-release authorization — 4 November 2026
+
+The owner explicitly selected **“Approve the limited first release; publish books separately”** after reviewing the tested private preview and the listed limitations. This approves the existing staging appearance/tested functionality, production activation and deployment of the current PR 51 features. It accepts partial translations and the unverified actual iOS/Android update/dismissal checks as documented follow-up limitations for this release; it does not certify those requirements as complete.
+
+The whole Bhagavad Gita/Ramcharitmanas expansion is excluded from this first release and is being prepared on `feature/full-sacred-reader-20261104`. The current one-passage Reader remains for the first deployment. Native-authenticated cloud sync is not claimed. The ordinary source build remains default-OFF; only the approved production workflow explicitly supplies `HDC_PRACTICE_PREVIEW=1`, matching the tested preview configuration. Fresh CI, protected-branch requirements, a guarded merge and actual Pages verification are still required. No successful deployment is claimed by this authorization record.
+
+This is the operational review checklist for the finite [completion roadmap](HDC_REMAINING_INCREMENT_PLAN.md), prepared on 3 November 2026. It is not a declaration of full-scope completion. The bounded first-release authorization above supersedes the earlier no-deployment boundary only for its stated scope. The [execution ledger](HDC_COMPLETION_EXECUTION.md) records implemented/tested work separately.
 
 ## Content and public identity decisions
 
