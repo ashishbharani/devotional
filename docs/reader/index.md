@@ -17,7 +17,7 @@ This initial pilot contains **one passage in original Sanskrit, with an optional
 <button type="button" data-read aria-pressed="false">Mark passage read</button>
 <button type="button" data-reader-share>Share passage link</button>
 <button type="button" data-reader-print>Print passage</button>
-<button type="button" data-reader-clear>Clear reader progress</button>
+<button type="button" data-reader-clear>Clear reader progress and history</button>
 </div>
 <p data-reader-progress role="status">0 of 1 passages marked read.</p>
 <p><a href="#gita-2-47" data-reader-continue hidden>Continue saved passage</a></p>
@@ -29,6 +29,7 @@ This initial pilot contains **one passage in original Sanskrit, with an optional
 <details class="hdc-practice-details" data-reader-translation><summary>Read English — K. T. Telang (1882)</summary><p class="hdc-translation notranslate" lang="en" translate="no" data-reader-translation-text>Your business is with action alone; not by any means with fruit. Let not the fruit of action be your motive (to action). Let not your attachment be (fixed) on inaction.</p><p>Historical translation by Kashinath Trimbak Telang, <cite>Sacred Books of the East</cite>, volume 8 (Oxford: Clarendon Press, 1882), printed page 48. Translator's parentheses are retained; the footnote marker is omitted. This is a historical translation, not machine translation or a newly authored interpretation.</p><p><a href="https://en.wikisource.org/w/index.php?title=Page:Sacred_Books_of_the_East_-_Volume_VIII.djvu/54&amp;oldid=15736168">Text witness and original page image</a> · <a href="https://en.wikisource.org/wiki/File:Sacred_Books_of_the_East_-_Volume_VIII.djvu">1882 source scan and public-domain record</a></p></details>
 <p><a href="#gita-2-47">Permanent passage link</a></p>
 </article>
+<details class="hdc-practice-details"><summary>My local reading history</summary><p>Only explicitly marking a passage read adds an entry. Up to 50 entries stay as plain text in this browser, not encrypted or account-synchronized. Clearing reader progress also erases this history.</p><ol data-reader-history-items class="notranslate" translate="no"></ol></details>
 <p data-reader-status role="status" aria-live="polite"></p>
 <label data-reader-link hidden>Passage link (copy manually if needed)<input type="text" readonly></label>
 <h2>Source and availability</h2>

@@ -30,3 +30,20 @@ reviewer and review date. Do not invent a reviewer or silently promote `status`.
 Then copy only the approved record into the existing year-specific registry,
 validate it and test seven-day eligibility, overlaps, expiry and rendered wording.
 This review queue is not sufficient authorization to deploy the whole release.
+
+## Upcoming candidate: Maha Shivaratri, 6 March 2027
+
+`2027-candidates.json` adds a real upcoming source-review candidate, inspected on
+3 November 2026. The IMD Positional Astronomy Centre's Rashtriya Panchanga festival
+table has a distinct 2027 segment, row 81, listing 6 March. The Isha Yoga Center's
+own Coimbatore announcement corroborates the starting civil day and explicitly
+describes a nightlong event, 6 PM to 6 AM. That overnight duration is why the
+proposed same-day presentation end is a review decision, not an established
+ritual conclusion. No organizer imagery, programme prose or teachings are copied.
+
+The proposed release slice is this one reference civil day with the existing
+Shiva illustration, seven-day preparation window, no audio, and original-theme
+fallback outside the window. A human reviewer must decide the exact regional
+scope and end boundary and supply their real name/date and priority. Until then,
+do not put it in `docs/assets/festivals/index.json` or label it reviewed. Existing
+synthetic timing tests and inspected sources cannot stand in for that decision.

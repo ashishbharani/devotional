@@ -19,6 +19,7 @@ Your query and supported filters stay in this page's address for reload, browser
 </form>
 <p data-discovery-status role="status">Loading existing catalogue filters…</p>
 <button type="button" data-discovery-retry hidden>Retry loading filters</button>
+<!-- HDC_DISCOVERY_PATHS -->
 <h2>Choose your path</h2>
 <ul><li><a href="../master-index/">Complete canonical category structure</a></li><li><a href="../categories/01-deities-sub-deities-and-divine-forms/">Deities, sub-deities and divine forms</a></li><li><a href="../a-z/">A–Z Work Directory</a></li><li><a href="../library/">Scriptures and Books Library</a></li><li><a href="../find/">Advanced search, exact identities, aliases and related forms</a></li><li><a href="../journeys/">My Devotional Journey</a></li></ul>
 <p>Regions, traditions and family deities are not inferred from similar names. Use documented categories and identity relationships; unsupported classifications are not invented. Full-text availability is distinct from catalogue indexing.</p>

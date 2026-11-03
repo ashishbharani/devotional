@@ -80,6 +80,8 @@ jobs:
         run: node scripts/test_royal_homepage.mjs
       - name: Test Daily Darshan, existing Japa state and responsive discovery
         run: node scripts/test_daily_darshan_browser.mjs
+      - name: Test complete canonical discovery pathways and exact work landings
+        run: uv run python scripts/test_discovery_paths.py
       - name: Test local journeys, canonical discovery and public sharing
         run: node scripts/test_journey_discovery_browser.mjs
       - name: Test reading continuation, cross-tab state and shareable filters
@@ -101,6 +103,8 @@ jobs:
           path: |
             work/japa-history
             work/section-shortcuts
+      - name: Test canonical custom routine references and offline continuity
+        run: node scripts/test_routine_content_browser.mjs
       - name: Test routine library, explicit draft reload and scoped log erasure
         run: node scripts/test_routine_library_browser.mjs
       - uses: actions/upload-artifact@v4

@@ -907,8 +907,9 @@ def page_group(c, g, part):
         canonical_location = f'{part["url"]}#{f["anchor"]}'
         for n, w in enumerate(f["works"], f["start"] + 1):
             rows.append(
-                f'<tr data-work-id="{esc(w["cwid"])}">'
-                f'<td class="n">{n}</td>'
+                f'<tr data-work-id="{esc(w["cwid"])}"'
+                + (f' id="work-{esc(w["cwid"])}"' if PRACTICE_PREVIEW else "") + ">"
+                + f'<td class="n">{n}</td>'
                 f'<th scope="row" class="w"><a href="{esc(w["url"])}" target="_blank" rel="noopener" title="Search YouTube for this work">'
                 f'<span class="abp-play" aria-hidden="true"></span><span class="abp-work-title">{esc(w["title"])}</span></a>'
                 f'<button type="button" class="abp-favourite" data-work-id="{esc(w["cwid"])}" data-title="{esc(w["title"])}" data-location="{esc(canonical_location)}" '
@@ -1207,7 +1208,44 @@ def canonical_section_navigation(d):
     return neighbours
 
 
+def discovery_paths(d):
+    """Preview discovery derived from existing catalogue groups; no new classifications."""
+    categories = {c["num"]: c for c in d["categories"]}
+    out = ['<h2 id="featured-devotion">Explore devotional identities</h2><div class="abp-cards" data-discovery-cards>']
+    groups = {g["name"]: g for g in categories[1]["merged"]}
+    for name in ("GANESHA", "SHIVA / MAHESH", "VISHNU", "HANUMAN"):
+        group = groups[name]
+        art = deity_portrait(name, "explore/")
+        out.append(f'<div class="abp-card"><span class="abp-card__num" aria-hidden="true">❖</span><div><h3><a href="../{esc(group["url"])}">{esc(group["name"])}</a></h3>{art}'
+                   f'<p>{fmt(group["count"])} indexed works in the existing section.</p><p><a href="../find/?w={quote_plus(name)}">Documented aliases and related identities</a></p></div></div>')
+    out.append('</div><h2 id="featured-works">Featured work references</h2><ul data-discovery-works>')
+    featured = {"HDL2-CWID-25F980F2BD34A2107382", "HDL2-CWID-E73C30069833764A47B2"}
+    found = set()
+    for category in d["categories"]:
+        for group in category["merged"]:
+            for form in group["forms"]:
+                for work in form["works"]:
+                    if work["cwid"] in featured:
+                        found.add(work["cwid"])
+                        path = form["url"] + "#work-" + work["cwid"]
+                        out.append(f'<li><a href="../{esc(path)}" data-featured-work-id="{esc(work["cwid"])}">{esc(work["title"])}</a> — {esc(group["name"])}; {esc(category["title"])}</li>')
+    if found != featured:
+        raise ValueError("Featured discovery work identities are missing; review the source rather than invent a replacement")
+    out.append('</ul><p>Each link identifies an existing catalogue record in its original context. Other records with the same title remain distinct. Reading and listening availability remain those of the catalogue.</p>')
+    out.append('<h2 id="documented-pathways">Discover documented traditions</h2><p>These paths use existing catalogue classifications, not inferred birthplace, family deity, festival dates or new relationships. Expand a path to browse all its existing sections.</p>')
+    for number in (12, 3, 7, 5, 9):
+        category = categories[number]
+        out.append(f'<details class="hdc-practice-details" data-discovery-pathway="{number}"><summary>{esc(category["title"])}</summary><p><a href="../{esc(category["url"])}">Open complete category</a></p><ul>')
+        for group in category["merged"]:
+            out.append(f'<li><a href="../{esc(group["url"])}">{esc(group["name"])}</a></li>')
+        out.append('</ul></details>')
+    out.append('<p>For dates and location-dependent observances, use the <a href="../panchang/">existing Panchang</a> and <a href="../hindu-calendar/">Hindu Calendar</a>. Catalogue festival links do not announce observance dates.</p>')
+    return "\n".join(out)
+
+
 def on_page_markdown(markdown, page, config, **kw):
+    if PRACTICE_PREVIEW and page.file.src_uri == "explore.md":
+        markdown = markdown.replace("<!-- HDC_DISCOVERY_PATHS -->", discovery_paths(load()))
     # Also apply to hand-written overrides of catalogue pages.
     sections = _section_navigation.get(url_of(page.file.src_uri))
     if sections:

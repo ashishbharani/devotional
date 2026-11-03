@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import {layoutMetrics} from './lab_metrics.mjs';
+import {layoutMetrics,interactionMetrics} from './lab_metrics.mjs';
 assert.deepEqual(layoutMetrics([]),{layoutShiftSum:0,labCls:0});
 const entry=(startTime,value,hadRecentInput=false)=>({startTime,value,hadRecentInput});
 assert.deepEqual(layoutMetrics([entry(0,.1),entry(999,.2),entry(1999,.4)]),{layoutShiftSum:.1+.2+.4,labCls:.4},'a gap of exactly one second starts a new session');
@@ -8,3 +8,9 @@ assert.ok(Math.abs(layoutMetrics(long).labCls-.6)<1e-10,'a session is capped at 
 assert.deepEqual(layoutMetrics([entry(0,.05),entry(10,1,true),entry(20,NaN),entry(NaN,1),entry(30,-1)]),{layoutShiftSum:.05,labCls:.05},'recent input and invalid entries do not inflate CLS');
 assert.deepEqual(layoutMetrics([entry(100,.1),entry(0,.2)]),{layoutShiftSum:.2+.1,labCls:.2+.1},'trace order is normalized without mutating the supplied entries');
 console.log('PASS lab CLS session boundaries, five-second cap, recent-input exclusion and invalid/unordered traces');
+const interactions=[{interactionId:1,duration:24},{interactionId:1,duration:48},{interactionId:2,duration:32},{interactionId:0,duration:999},{interactionId:3,duration:NaN}];
+assert.deepEqual(interactionMetrics(interactions,2),{observedInteractions:2,interactionCount:2,labInpCandidateMs:48,belowThresholdMs:null});
+assert.equal(interactionMetrics(interactions,50).labInpCandidateMs,32,'one worst interaction is excluded per fifty interactions');
+assert.deepEqual(interactionMetrics([],8),{observedInteractions:0,interactionCount:8,labInpCandidateMs:null,belowThresholdMs:16},'unobserved fast events are a bound, not fabricated zero');
+assert.equal(interactionMetrics(interactions,undefined).interactionCount,null,'lack of native count is disclosed');
+console.log('PASS grouped Event Timing, p98 exclusion, censoring and unavailable interaction counts');

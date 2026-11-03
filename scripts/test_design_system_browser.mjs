@@ -29,8 +29,11 @@ try{
     const link=page.locator('.hdc-practice a[href]:visible').first();
     if(await link.count()){await link.hover();await link.evaluate(el=>Promise.all(el.getAnimations().map(a=>a.finished)));}
     const result=await page.evaluate(()=>{
-     const rgb=c=>c.match(/[\d.]+/g)?.map(Number);
+     const rgb=c=>{const values=c.match(/[\d.]+/g)?.map(Number);return c.startsWith('color(srgb ')?values?.map((v,i)=>i<3?v*255:v):values;};
      const lum=c=>rgb(c).slice(0,3).map(v=>{v/=255;return v<=.04045?v/12.92:((v+.055)/1.055)**2.4;}).reduce((s,v,i)=>s+v*[.2126,.7152,.0722][i],0);
+     // CSS color-mix() is serialized as normalized color(srgb), not 0–255 rgb.
+     // Verify both representations before using them in the same contrast check.
+     for(const [a,b] of [['color(srgb 1 1 1)','rgb(255, 255, 255)'],['color(srgb 0 0 0)','rgb(0, 0, 0)'],['color(srgb 0.2 0.4 0.6)','rgb(51, 102, 153)']])if(Math.abs(lum(a)-lum(b))>1e-8)throw Error('Contrast parser disagrees across sRGB representations');
      const background=el=>{for(let n=el;n;n=n.parentElement){const c=getComputedStyle(n).backgroundColor,a=rgb(c);if(a&&(a.length===3||a[3]===1))return c;}return null;};
      const failures=[];let checked=0;
      for(const el of document.querySelectorAll('.hdc-practice :is(p,label,button,select,textarea,a,h2,figcaption,summary),.hdc-festival :is(p,label,summary,select,a),.abp-sacred-intro p')){

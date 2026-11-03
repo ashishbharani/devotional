@@ -10,3 +10,14 @@ export function layoutMetrics(entries){
  }
  return {layoutShiftSum:sum,labCls:maximum};
 }
+
+// Event Timing groups events belonging to one interaction. Values below the
+// requested 16ms threshold are censored, not invented zero-duration samples.
+export function interactionMetrics(entries,interactionCount){
+ const groups=new Map();
+ for(const e of entries)if(Number.isSafeInteger(e.interactionId)&&e.interactionId>0&&Number.isFinite(e.duration)&&e.duration>=0)groups.set(e.interactionId,Math.max(groups.get(e.interactionId)||0,e.duration));
+ const observed=[...groups.values()].sort((a,b)=>b-a);
+ const count=Number.isSafeInteger(interactionCount)&&interactionCount>=groups.size?interactionCount:null;
+ const index=count===null?0:Math.floor(count/50);
+ return {observedInteractions:groups.size,interactionCount:count,labInpCandidateMs:observed[index]??null,belowThresholdMs:observed[index]===undefined?16:null};
+}

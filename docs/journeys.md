@@ -21,12 +21,20 @@ Optional, local-first tools for your own practice. No account is required. No sp
 <details class="hdc-practice-details"><summary>Erase only section shortcuts</summary><label><input type="checkbox" data-shortcut-erase-consent>I want to erase only my saved section shortcut list.</label><button type="button" data-shortcut-erase disabled>Erase section shortcuts</button></details>
 </section>
 <h2>Your optional routine</h2>
-<p>Save up to ten named routines in this browser. The routine library stores names and durations only, separately from your active routine and private journal.</p>
+<p>Save up to ten named routines in this browser. The routine library stores names, durations and explicitly selected work or passage references, separately from your active routine and private journal. Up to ten references per routine can be saved; completion is self-reported, not a measure of spiritual progress.</p>
 <label>Saved routine <select data-routine-library><option value="">Choose a saved routine</option></select></label>
 <div class="hdc-practice-controls"><button type="button" data-routine-library-save>Save as new routine</button><button type="button" data-routine-library-remove disabled>Remove selected saved routine</button></div>
 <label>Routine name <input type="text" maxlength="120" data-routine-name></label>
 <label>Duration <select data-routine-minutes><option value="5">5 minutes</option><option value="10">10 minutes</option><option value="20">20 minutes</option></select></label>
 <p><a data-routine-start href="../sanctuary/?minutes=5">Start a quiet session in the existing sanctuary</a></p>
+<h2>Works and reading in this routine</h2>
+<p>Choose real catalogue works or the verified Reader pilot. Links open existing catalogue sections or passages; catalogue indexing does not imply that full text or audio is hosted. Reference choices and completion marks are private browser-local data, not encrypted or automatically synchronized. The saved session log includes selected reference IDs when you explicitly record a session. Draft changes are kept only when you use Save routine and note preference or Save as new routine.</p>
+<label>Search existing works <input type="search" data-routine-work-query maxlength="200" placeholder="Title or deity, at least two characters"></label>
+<button type="button" data-routine-work-search>Find works for this routine</button>
+<ul data-routine-work-results></ul>
+<button type="button" data-routine-passage-add>Add Bhagavad Gita 2.47 Reader passage</button>
+<p><a href="../find/">Existing advanced search</a> · <a href="../favourites/">Existing saved works and favourites</a></p>
+<ul data-routine-references></ul><p data-routine-reference-status role="status" aria-live="polite"></p>
 <h2>Private journal — optional</h2>
 <p>Notes are plain text, NOT encrypted, and are accessible to anyone using this browser profile. They are never synchronized to Firebase by this tool. Avoid sensitive personal information on shared devices. Clearing browser data removes them.</p>
 <label><input type="checkbox" data-journal-consent>Store my notes in this browser. Uncheck and Save to remove previously saved notes.</label>

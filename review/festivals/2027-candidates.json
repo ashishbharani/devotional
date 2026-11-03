@@ -1,0 +1,36 @@
+{
+  "schema": 1,
+  "year": 2027,
+  "status": "unreviewed-candidates-not-published",
+  "evidenceCheckedOn": "2026-11-03",
+  "events": [{
+    "id": "2027-maha-shivaratri-reference-civil-day",
+    "name": "Maha Shivaratri — published reference civil day",
+    "status": "unreviewed",
+    "theme": "shiva",
+    "start": "2027-03-06",
+    "end": "2027-03-06",
+    "regions": ["IN"],
+    "tradition": "Rashtriya Panchanga reference civil date; regional and nightlong observances may differ",
+    "sources": [{
+      "url": "https://packolkata.imd.gov.in/panchang/index.php/en/festivals",
+      "label": "IMD Positional Astronomy Centre — Rashtriya Panchanga 1948, festivals table",
+      "pinpoint": "2027 A.D. segment, row 81; Maha Shivaratri entries including Kashmir and S.India, 06 Mar 2027"
+    }, {
+      "url": "https://isha.sadhguru.org/mahashivratri/attend-in-person/",
+      "label": "Isha Yoga Center Coimbatore — organizer's 2027 event announcement",
+      "pinpoint": "2027 announcement; 6 March 2027, 6 PM to 6 AM; Isha Yoga Center Coimbatore"
+    }],
+    "reviewDecisionsRequired": [
+      "Approve or reject the bounded one-reference-civil-day scope and all-India presentation eligibility; do not infer a universal ritual timetable",
+      "Decide whether the overnight organizer event instead needs a separately scoped Tamil Nadu event ending 7 March; current region controls must not silently claim that support",
+      "Confirm source currency, choose priority and record a real human reviewer and review date before promotion"
+    ],
+    "limitations": [
+      "The organizer's event continues overnight; this proposed same-day presentation end does not assert the end of that event, tithi or puja",
+      "No annual Gregorian recurrence, muhurta, exact tithi timing or universal regional rule is inferred",
+      "Sources were inspected, not approved by a human maintenance reviewer; no reviewer identity is fabricated",
+      "Not in the site manifest; automatic mode continues using only published reviewed records"
+    ]
+  }]
+}

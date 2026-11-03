@@ -27,6 +27,8 @@ try{
   let saved=await page.evaluate(key=>JSON.parse(localStorage.getItem(key)),key);
   assert.deepEqual(saved.unknown,legacy.unknown);assert.equal(saved.bookmark,true);assert.equal(saved.read,true);
   assert.deepEqual(saved.passages['test-passage'],{bookmark:true,read:true});
+  assert.equal(saved.history.length,1);assert.equal(saved.history[0].id,'test-passage');assert.ok(Number.isFinite(Date.parse(saved.history[0].at)));
+  assert.equal(await page.locator('[data-reader-history-items] li').count(),1,'only explicit read marking creates reading history');
   await page.locator('[data-reader-select]').selectOption('gita-2-47');await page.locator('[data-read]').click();
   saved=await page.evaluate(key=>JSON.parse(localStorage.getItem(key)),key);
   assert.equal(saved.read,false);assert.equal(saved.passages['test-passage'].read,true);
@@ -38,6 +40,14 @@ try{
   const other=await context.newPage();await other.goto(base);await other.evaluate(key=>localStorage.removeItem(key),key);
   await page.waitForFunction(()=>document.querySelector('[data-read]').getAttribute('aria-pressed')==='false',null,{polling:100});
   assert.match(await page.locator('[data-reader-progress]').textContent(),/0 of 2/);
+  assert.equal(await page.locator('[data-reader-history-items] li').count(),0);
+  await page.evaluate(key=>localStorage.setItem(key,JSON.stringify({history:Array.from({length:50},(_,i)=>({id:'gita-2-47',at:new Date(Date.UTC(2026,10,1,0,0,i)).toISOString(),extra:'keep row metadata'}))})),key);
+  await page.reload();await page.locator('[data-read]').click();
+  saved=await page.evaluate(key=>JSON.parse(localStorage.getItem(key)),key);
+  assert.equal(saved.history.length,50);assert.equal(saved.history[0].extra,'keep row metadata');assert.equal(saved.history[0].at,'2026-11-01T00:00:01.000Z');
+  const badHistory=JSON.stringify({...saved,history:[{id:'gita-2-47',at:'invalid'}]});
+  await page.evaluate(({key,raw})=>localStorage.setItem(key,raw),{key,raw:badHistory});await page.locator('[data-read]').click();
+  assert.equal(await page.evaluate(key=>localStorage.getItem(key),key),badHistory,'unsupported history cannot be silently reset');
   assert.deepEqual(errors,[]);await context.close();console.log(`PASS independent passage state, Unicode search, legacy progress, share and cross-tab reset at ${width}px`);
  }
  for(const invalid of ['missing','duplicate','missing-source']){

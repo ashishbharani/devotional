@@ -26,7 +26,7 @@ STEPS = [
  ('panchang', js('test_panchang'), True), ('ephemeris', js('test_ephemeris'), True),
  ('hook', [UV,'run','python','-I','scripts/test_homepage_hook.py'], True),
  *[(name,py('scripts/'+script+'.py'),True) for name,script in [
-  ('site','check_site'),('metadata','test_social_metadata'),('pager','test_section_pager'),
+  ('discovery-paths','test_discovery_paths'),('site','check_site'),('metadata','test_social_metadata'),('pager','test_section_pager'),
   ('i18n','check_i18n'),('local-translation','test_local_translation_catalogue'),('pdfs','check_project_pdfs'),('reading-data','test_reading_links'),('deity-art','test_deity_art')]],
  ('translation-review-export',py('scripts/test_translation_review_export.py'),True),
  ('translation-coverage',py('scripts/audit_hosted_translations.py','--output','work/translation-coverage.json'),True),
@@ -44,6 +44,7 @@ STEPS = [
   ('reader-model','test_reader_model_browser'),
   ('continuation','test_continuation_browser'),
   ('routine-library','test_routine_library_browser'),
+  ('routine-content','test_routine_content_browser'),
   ('journey-data','test_journey_data_browser'),
   ('japa-history','test_japa_history_browser'),
   ('section-shortcuts','test_section_shortcuts_browser'),

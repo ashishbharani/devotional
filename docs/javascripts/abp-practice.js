@@ -5,7 +5,7 @@
   const optional=(value,key,test)=>!Object.hasOwn(value,key)||test(value[key]);
   const sanctuary=globalThis.hdcLocalState?.create({key:'hdc-sanctuary-v1',defaults:{effects:false},validate:value=>!Object.hasOwn(value,'schema')&&optional(value,'effects',v=>typeof v==='boolean')});
   const passageState=value=>value&&typeof value==='object'&&!Array.isArray(value)&&!Object.hasOwn(value,'schema')&&optional(value,'bookmark',v=>typeof v==='boolean')&&optional(value,'read',v=>typeof v==='boolean');
-  const reader=globalThis.hdcLocalState?.create({key:'hdc-reader-v1',defaults:{bookmark:false,read:false,size:1,spacing:1.8},validate:value=>!Object.hasOwn(value,'schema')&&optional(value,'bookmark',v=>typeof v==='boolean')&&optional(value,'read',v=>typeof v==='boolean')&&optional(value,'size',v=>[1,1.25,1.5].includes(v))&&optional(value,'spacing',v=>[1.8,2.2].includes(v))&&optional(value,'passages',v=>v&&typeof v==='object'&&!Array.isArray(v)&&Object.entries(v).every(([id,entry])=>/^[-a-z0-9]{1,80}$/.test(id)&&passageState(entry)))});
+  const reader=globalThis.hdcLocalState?.create({key:'hdc-reader-v1',defaults:{bookmark:false,read:false,size:1,spacing:1.8},validate:value=>!Object.hasOwn(value,'schema')&&optional(value,'bookmark',v=>typeof v==='boolean')&&optional(value,'read',v=>typeof v==='boolean')&&optional(value,'size',v=>[1,1.25,1.5].includes(v))&&optional(value,'spacing',v=>[1.8,2.2].includes(v))&&optional(value,'lastPassage',v=>typeof v==='string'&&/^[-a-z0-9]{1,80}$/.test(v))&&optional(value,'history',v=>Array.isArray(v)&&v.length<=50&&v.every(row=>row&&typeof row.id==='string'&&/^[-a-z0-9]{1,80}$/.test(row.id)&&typeof row.at==='string'&&Number.isFinite(Date.parse(row.at))&&new Date(row.at).toISOString()===row.at))&&optional(value,'passages',v=>v&&typeof v==='object'&&!Array.isArray(v)&&Object.entries(v).every(([id,entry])=>/^[-a-z0-9]{1,80}$/.test(id)&&passageState(entry)))});
   const unavailable=status=>{status.textContent='Saved preferences are unavailable, changed elsewhere or have an unsupported format. Existing saved data and visit-only changes have been kept; this action was not saved.';};
   function load(record,status){try{if(!record)throw new Error('Unavailable local records');return record.get();}catch(_){unavailable(status);return record?.snapshot()||{};}}
   function save(record,edit,status){
@@ -92,7 +92,7 @@
       const key='hdc-reader-v1',status=q('[data-reader-status]'),previous=load(reader,status),passages=[...root.querySelectorAll('[data-reader-passage]')];
       if(!passages.length||passages.some(p=>!/^[-a-z0-9]{1,80}$/.test(p.id)||!p.querySelector('.hdc-verse[lang]:not([lang$="-Latn"])')?.textContent.trim())||new Set(passages.map(p=>p.id)).size!==passages.length){status.textContent='Pilot text unavailable. Use the Books Library links.';return;}
       const primary='gita-2-47',byId=new Map(passages.map(p=>[p.id,p]));
-      let active=byId.get(location.hash.slice(1))||passages[0];
+      let active=byId.get(location.hash.slice(1))||byId.get(previous.lastPassage)||passages[0];
       // Legacy scalar flags remain authoritative for the original permanent passage.
       const flags=(value,id)=>id===primary?{bookmark:value.bookmark===true,read:value.read===true}:value.passages?.[id]||{};
       let state={...previous,bookmark:previous.bookmark===true,read:previous.read===true,
@@ -105,16 +105,19 @@
         q('[data-read]').setAttribute('aria-pressed',String(current.read===true));
         q('[data-read]').textContent=current.read?'Mark passage unread':'Mark passage read';
         q('[data-reader-progress]').textContent=`${passages.filter(p=>flags(state,p.id).read).length} of ${passages.length} passages marked read.${current.bookmark?' Passage bookmarked.':''}`;
-        const continued=passages.find(p=>flags(state,p.id).bookmark||flags(state,p.id).read);
+        const last=byId.get(state.lastPassage);
+        const continued=last&&(flags(state,last.id).bookmark||flags(state,last.id).read)?last:passages.find(p=>flags(state,p.id).bookmark||flags(state,p.id).read);
         q('[data-reader-continue]').hidden=!continued;
         if(continued)q('[data-reader-continue]').href='#'+continued.id;
+        const history=q('[data-reader-history-items]');
+        if(history){history.replaceChildren();for(const entry of [...(state.history||[])].reverse()){const li=document.createElement('li'),passage=byId.get(entry.id);li.append(new Date(entry.at).toLocaleString()+' — ');if(passage){const a=document.createElement('a');a.href='#'+passage.id;a.textContent=passage.querySelector('h2')?.textContent||passage.id;li.append(a);}else li.append('Saved passage unavailable: '+entry.id);history.append(li);}}
         q('[data-reader-size]').value=state.size;q('[data-reader-spacing]').value=state.spacing;
         if(q('[data-reader-select]'))q('[data-reader-select]').value=active.id;
         root.style.setProperty('--reader-size',state.size);root.style.setProperty('--reader-spacing',state.spacing);
       };
       const editPassage=(value,edit)=>{
         const next=edit(flags(value,active.id));
-        return {...value,...(active.id===primary?next:{}),passages:{...value.passages,[active.id]:{...value.passages?.[active.id],...next}}};
+        return {...value,lastPassage:active.id,...(active.id===primary?next:{}),passages:{...value.passages,[active.id]:{...value.passages?.[active.id],...next}}};
       };
       const persist=edit=>{const value=save(reader,edit,status);if(value)state=value;render();};
       window.addEventListener('storage',event=>{
@@ -124,15 +127,15 @@
         catch(_){unavailable(status);}
       },{signal:controller.signal});
       on('[data-bookmark]','click',()=>persist(value=>editPassage(value,current=>({...current,bookmark:!current.bookmark}))));
-      on('[data-read]','click',()=>persist(value=>editPassage(value,current=>({...current,read:!current.read}))));
+      on('[data-read]','click',()=>persist(value=>{const next=editPassage(value,current=>({...current,read:!current.read}));return flags(next,active.id).read?{...next,history:[...(value.history||[]),{id:active.id,at:new Date().toISOString()}].slice(-50)}:next;}));
       on('[data-reader-size]','change',()=>{const n=Number(q('[data-reader-size]').value);if([1,1.25,1.5].includes(n))persist(value=>({...value,size:n}));});
       on('[data-reader-spacing]','change',()=>{const n=Number(q('[data-reader-spacing]').value);if([1.8,2.2].includes(n))persist(value=>({...value,spacing:n}));});
       const filterPassage=()=>{
         const query=q('[data-reader-query]').value.normalize('NFC').trim().toLocaleLowerCase();
         for(const passage of passages){
           passage.hidden=!passage.textContent.normalize('NFC').toLocaleLowerCase().includes(query);
-          for(const translation of passage.querySelectorAll('[data-reader-translation]')){
-            const text=translation.querySelector('[data-reader-translation-text]');
+          for(const translation of passage.querySelectorAll('[data-reader-translation],[data-reader-transliteration]')){
+            const text=translation.querySelector('[data-reader-translation-text],.hdc-verse');
             if(query&&text?.textContent.normalize('NFC').toLocaleLowerCase().includes(query))translation.open=true;
           }
         }
@@ -148,7 +151,7 @@
         if(target.origin===location.origin&&target.pathname===location.pathname)revealPassage(target.hash.slice(1));
       },{signal:controller.signal});
       window.addEventListener('hashchange',()=>revealPassage(location.hash.slice(1)),{signal:controller.signal});
-      on('[data-reader-clear]','click',()=>persist(value=>({...value,bookmark:false,read:false,passages:{...value.passages,...Object.fromEntries(passages.map(p=>[p.id,{...value.passages?.[p.id],bookmark:false,read:false}]))}})));
+      on('[data-reader-clear]','click',()=>persist(value=>({...value,bookmark:false,read:false,history:[],passages:{...value.passages,...Object.fromEntries(passages.map(p=>[p.id,{...value.passages?.[p.id],bookmark:false,read:false}]))}})));
       on('[data-reader-print]','click',()=>window.print());
       on('[data-reader-share]','click',async()=>{
         const url=new URL(location.pathname,location.origin);url.hash=active.id;
