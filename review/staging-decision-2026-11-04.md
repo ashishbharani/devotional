@@ -1,6 +1,6 @@
 # Staging decision package — 4 November 2026
 
-**Decision: pending owner response.** Preparing this package or asking for approval does not constitute approval.
+**Decision: changes requested; not approved.** On 4 November the owner selected “Changes needed — describe them” in response to the exact-candidate staging question. No description accompanied that choice. A follow-up asks which page/control needs changing and the expected versus actual behaviour. Preparing this package or asking for approval does not constitute approval.
 
 ## Exact preview
 
@@ -26,4 +26,4 @@ The owner is asked to approve **appearance and tested functionality of this exac
 
 Production GitHub Pages is unchanged; PR 51 stays draft and preview stays default-OFF. The private preview does not transfer or modify the live origin's saved records. Use reviewed reverts or the existing default-OFF configuration for any later authorized rollback; do not clear user records or provider settings.
 
-The owner may approve this bounded staging review, request corrections, or continue reviewing. Record the actual response and its exact scope before changing this decision status.
+The owner has requested corrections; their details are pending. Do not infer the issue or treat the response as approval. Once the specific changes are supplied, address them and return the updated exact candidate for review. Translation/native-platform requirements and production authorization remain separate.
