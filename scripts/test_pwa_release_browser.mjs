@@ -9,7 +9,7 @@ const browser=await chromium.launch(),base='http://127.0.0.1:4337/devotional/';
 await mkdir('work/release-qa',{recursive:true});
 const report={scope:'Local lab only. Not physical-device installation, field LCP/INP/CLS or authenticated sync certification.',bytes:0,lab:[]};
 try{
- for(const path of ['docs/javascripts/abp-practice.js','docs/javascripts/abp-festivals.js','docs/javascripts/abp-journeys.js','docs/javascripts/abp-discovery.js','docs/javascripts/abp-sharing.js','docs/javascripts/abp-japa-history.js','docs/javascripts/abp-section-shortcuts.js','docs/stylesheets/practice.css','docs/stylesheets/festivals.css','docs/assets/festivals/themes.mjs'])report.bytes+=(await stat(path)).size;
+ for(const path of ['docs/javascripts/abp-local-state.js','docs/javascripts/abp-practice.js','docs/javascripts/abp-festivals.js','docs/javascripts/abp-journeys.js','docs/javascripts/abp-discovery.js','docs/javascripts/abp-sharing.js','docs/javascripts/abp-japa-history.js','docs/javascripts/abp-section-shortcuts.js','docs/stylesheets/practice.css','docs/stylesheets/festivals.css','docs/assets/festivals/themes.mjs'])report.bytes+=(await stat(path)).size;
  assert.ok(report.bytes<100*1024,'incremental feature code stays below the explicit 100 KiB source budget');
  const helpers=['sitemap.xml','assets/i18n.json','search/search_index.json',...(await readdir('site/assets/javascripts/workers')).filter(n=>/^search\..*\.min\.js$/.test(n)).map(n=>'assets/javascripts/workers/'+n)];
  report.offlineHelperBytes=0;for(const path of helpers)report.offlineHelperBytes+=(await stat('site/'+path)).size;
