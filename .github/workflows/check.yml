@@ -139,6 +139,8 @@ jobs:
           path: work/journey-discovery
       - name: Test optional Sanctuary and source-attributed Sacred Reader pilot
         run: node scripts/test_practice_browser.mjs
+      - name: Test extensible Reader passages, legacy progress and unavailable content
+        run: node scripts/test_reader_model_browser.mjs
       - name: Test festival schedule validation, India-time boundaries and preview UI
         run: |
           node scripts/test_festival_themes.mjs

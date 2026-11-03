@@ -41,8 +41,8 @@ try{
   await page.locator('[data-bookmark]').click();await page.locator('[data-read]').click();
   await page.locator('[data-reader-size]').selectOption('1.5');await page.locator('[data-reader-spacing]').selectOption('2.2');
   assert.equal(await page.locator('[data-reader-progress]').textContent(),'1 of 1 passages marked read. Passage bookmarked.');
-  assert.equal((await page.locator('.hdc-verse').innerText()).replace(/\s+/g,' ').trim(),'कर्मण्येवाधिकारस्ते मा फलेषु कदाचन । मा कर्मफलहेतुर्भूर्मा ते सङ्गोऽस्त्वकर्मणि ॥','preserve the entire source-checked Sanskrit verse');
-  assert.equal(await page.locator('.hdc-verse').getAttribute('translate'),'no');
+  assert.equal((await page.locator('.hdc-verse[lang="sa"]').innerText()).replace(/\s+/g,' ').trim(),'कर्मण्येवाधिकारस्ते मा फलेषु कदाचन । मा कर्मफलहेतुर्भूर्मा ते सङ्गोऽस्त्वकर्मणि ॥','preserve the entire source-checked Sanskrit verse');
+  assert.equal(await page.locator('.hdc-verse[lang="sa"]').getAttribute('translate'),'no');
   const translation=page.locator('[data-reader-translation]'),translatedText=page.locator('[data-reader-translation-text]');
   assert.equal(await translatedText.textContent(),english,'preserve the source-scan English transcription and translator parentheses');
   assert.equal(await translatedText.getAttribute('lang'),'en');assert.equal(await translatedText.getAttribute('translate'),'no');

@@ -41,6 +41,7 @@ STEPS = [
   ('mobile-keyboard','test_mobile_keyboard_browser'),
   ('reading-browser','test_reading_links_browser'),('feedback','test_feedback_browser'),
   ('daily','test_daily_darshan_browser'),('practice','test_practice_browser'),
+  ('reader-model','test_reader_model_browser'),
   ('continuation','test_continuation_browser'),
   ('routine-library','test_routine_library_browser'),
   ('journey-data','test_journey_data_browser'),
