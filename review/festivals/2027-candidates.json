@@ -11,6 +11,7 @@
     "start": "2027-03-06",
     "end": "2027-03-06",
     "regions": ["IN"],
+    "priority": 10,
     "tradition": "Rashtriya Panchanga reference civil date; regional and nightlong observances may differ",
     "sources": [{
       "url": "https://packolkata.imd.gov.in/panchang/index.php/en/festivals",
@@ -24,7 +25,7 @@
     "reviewDecisionsRequired": [
       "Approve or reject the bounded one-reference-civil-day scope and all-India presentation eligibility; do not infer a universal ritual timetable",
       "Decide whether the overnight organizer event instead needs a separately scoped Tamil Nadu event ending 7 March; current region controls must not silently claim that support",
-      "Confirm source currency, choose priority and record a real human reviewer and review date before promotion"
+      "Confirm source currency, approve or change proposed priority 10, and record a real human reviewer and review date before promotion"
     ],
     "limitations": [
       "The organizer's event continues overnight; this proposed same-day presentation end does not assert the end of that event, tithi or puja",

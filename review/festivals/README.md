@@ -41,7 +41,7 @@ describes a nightlong event, 6 PM to 6 AM. That overnight duration is why the
 proposed same-day presentation end is a review decision, not an established
 ritual conclusion. No organizer imagery, programme prose or teachings are copied.
 
-The proposed release slice is this one reference civil day with the existing
+The proposed release slice is this one reference civil day, priority 10, with the existing
 Shiva illustration, seven-day preparation window, no audio, and original-theme
 fallback outside the window. A human reviewer must decide the exact regional
 scope and end boundary and supply their real name/date and priority. Until then,
