@@ -15,7 +15,9 @@
    let value;try{value=JSON.parse(text);}catch(_){throw failure('unsupported');}
    valid(value);return {...copy(defaults),...value};
   }
-  function reload(){const text=raw(),value=decode(text);memory=copy(value);seen=text;loaded=true;dirty=false;conflicted=false;return copy(memory);}
+  // Explicit multi-record loads may supply a snapshot already read/validated.
+  // Avoid a second storage read failing after another draft was already replaced.
+  function reload(text=raw()){const value=decode(text);memory=copy(value);seen=text;loaded=true;dirty=false;conflicted=false;return copy(memory);}
   function get(){
    if(dirty){
     if(conflicted)throw failure('conflict');

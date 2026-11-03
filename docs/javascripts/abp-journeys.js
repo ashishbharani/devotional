@@ -133,7 +133,7 @@
     const rawJourney=localStorage.getItem(key),rawLibrary=localStorage.getItem(routineKey);
     // Probe using each record's validator without mutating its current visit-only state.
     journey.check(rawJourney);library.check(rawLibrary);
-    state=journey.reload();routines=library.reload().routines;sessionOnly=false;setReferences(state.references||[],false);
+    state=journey.reload(rawJourney);routines=library.reload(rawLibrary).routines;sessionOnly=false;setReferences(state.references||[],false);
     q('[data-routine-name]').value=state.name;q('[data-routine-minutes]').value=state.minutes;q('[data-journal]').value=state.journal;q('[data-journal-consent]').checked=Boolean(state.journal);
     renderLibrary();start();summary();q('[data-journey-load]').hidden=true;status.textContent='Saved changes loaded. The previous draft has been replaced.';
    }catch(_){status.textContent='Saved changes could not be loaded. Your current draft has been kept.';}

@@ -41,7 +41,10 @@ try{
   await page.bringToFront();
   await page.locator('[data-journey-load]:visible').waitFor();
   assert.equal(await page.locator('[data-journal]').inputValue(),'Unsent synthetic draft');assert.equal(await page.locator('[data-routine-name]').inputValue(),'Unsaved draft');
+  await page.evaluate(key=>{const get=Storage.prototype.getItem;window.libraryLoadReads=0;window.restoreLibraryReads=()=>{Storage.prototype.getItem=get;};Storage.prototype.getItem=function(k){if(k===key&&++window.libraryLoadReads>1)throw new Error('second-read failure fixture');return get.call(this,k);};},libraryKey);
   await page.locator('[data-journey-load]').click();assert.equal(await page.locator('[data-journal]').inputValue(),'Remote synthetic note');
+  assert.equal(await page.evaluate(()=>window.libraryLoadReads),1,'validate both saved snapshots before replacing either draft; do not reread one store after replacing the other');
+  await page.evaluate(()=>window.restoreLibraryReads());
   assert.equal(await page.locator('[data-routine-name]').inputValue(),'Remote routine');assert.equal(await page.locator('[data-routine-library] option').count(),4);
   const validLibrary=await page.evaluate(key=>localStorage.getItem(key),libraryKey);
   await other.evaluate(key=>localStorage.setItem(key,'{bad-json'),libraryKey);await page.locator('[data-journey-load]:visible').waitFor();

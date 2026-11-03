@@ -105,4 +105,12 @@ test('invalid outgoing records cannot mutate valid memory or persistent data',()
  const f=fixture(JSON.stringify(defaults));f.record.get();
  unsupported(()=>f.record.write({...defaults,schema:2}));assert.deepEqual(plain(f.record.snapshot()),defaults);assert.equal(f.access.writes,0);
 });
+test('explicit validated snapshot loading needs no second storage read',()=>{
+ const f=fixture(JSON.stringify(defaults));f.record.get();f.access.write=false;
+ f.record.write({...defaults,rows:[{id:'visit-only'}]});
+ const raw=JSON.stringify({...defaults,rows:[{id:'explicit-saved-copy',metadata:'keep'}]});
+ f.data.set('test',raw);f.record.check(raw);f.access.read=false;
+ assert.deepEqual(plain(f.record.reload(raw)),JSON.parse(raw));
+ assert.equal(f.record.dirty,false);assert.equal(f.data.get('test'),raw);
+});
 console.log(`Local-state regression checks passed: ${cases}/${cases}.`);
