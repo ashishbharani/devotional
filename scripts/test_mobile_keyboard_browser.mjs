@@ -15,7 +15,11 @@ try{
   assert.equal(await page.locator('[data-md-toggle=search]').evaluate(el=>el.parentElement===document.querySelector('.hdc-header').parentElement),true,'native search CSS sibling contract');
   const input=page.locator('.md-search__input'),opener=page.locator('.hdc-header .md-header__button[for="__search"]');
   if(await opener.isVisible())await opener.click();else await input.click();
-  await input.fill('Ganesha');assert.equal(await page.locator('#__search').isChecked(),true);
+  await input.fill('Ganesha');
+  // Material's reactive focus stream updates the native toggle asynchronously.
+  // Wait for that actual state; keep the checked/focus/viewport assertions below.
+  await page.waitForFunction(()=>document.querySelector('#__search')?.checked===true,null,{polling:100,timeout:5000});
+  assert.equal(await page.locator('#__search').isChecked(),true);
   await page.setViewportSize({width,height:430});
   await page.waitForFunction(width=>{
    const r=document.querySelector('.md-search__input').getBoundingClientRect();
