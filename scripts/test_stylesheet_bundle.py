@@ -45,7 +45,7 @@ if manifest_file.exists():
     manifest = json.loads(manifest_file.read_text(encoding='utf-8'))
     content = (site / manifest['bundle']).read_bytes()
     assert hashlib.sha256(content).hexdigest()[:16] in manifest['bundle']
-    expected = '\n'.join(rebase_css((site / item['path']).read_text(encoding='utf-8'), item['path']) for item in manifest['sources'])
+    expected = '\n'.join(rebase_css((site / item['path']).read_bytes().decode('utf-8'), item['path']) for item in manifest['sources'])
     assert content == expected.encode('utf-8')
     for item in manifest['sources']:
         assert hashlib.sha256((site / item['path']).read_bytes()).hexdigest() == item['sha256']
