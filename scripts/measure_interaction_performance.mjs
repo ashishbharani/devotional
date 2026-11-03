@@ -3,19 +3,28 @@ import assert from 'node:assert/strict';
 import {spawn,execFileSync} from 'node:child_process';
 import {mkdir,writeFile,readFile} from 'node:fs/promises';
 import {createHash} from 'node:crypto';
+import path from 'node:path';
 import {chromium} from 'playwright';
 import {layoutMetrics,interactionMetrics} from './lab_metrics.mjs';
 const server=spawn(process.execPath,['scripts/serve_header_preview.mjs'],{env:{...process.env,HDC_PREVIEW_PORT:'4360'},stdio:['ignore','pipe','inherit']});
 await new Promise((resolve,reject)=>{server.stdout.once('data',resolve);server.once('error',reject);});
 const browser=await chromium.launch(),base='http://127.0.0.1:4360/devotional/';
+const baseline=process.env.HDC_PERFORMANCE_VARIANT==='baseline',siteDir=process.env.HDC_SITE_DIR||'site';
+const output=process.env.HDC_PERFORMANCE_OUTPUT||'work/performance-input/report.json';
 const report={method:'Chromium CDP: cold contexts, real font requests, disabled HTTP cache and worker, 4x CPU, 150ms latency, 1.6Mbps download/750Kbps upload. Finite real click/key tasks; Event Timing p98 candidate, not field INP.',limitations:['One local host, not physical Android/iOS','No field RUM or CrUX','No production-origin/baseline comparison yet','External request failures are reported, not stubbed or treated as successful font loads'],samples:[]};
-report.sourceCommit=execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8'}).trim();
-report.sourceStatus=execFileSync('git',['status','--short'],{encoding:'utf8'});
+report.variant=baseline?'baseline':'candidate';
+report.benchmarkCommit=execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8'}).trim();
+report.sourceCommit=execFileSync('git',['-C',process.env.HDC_PERFORMANCE_SOURCE_DIR||'.','rev-parse','HEAD'],{encoding:'utf8'}).trim();
+report.sourceStatus=execFileSync('git',['-C',process.env.HDC_PERFORMANCE_SOURCE_DIR||'.','status','--short'],{encoding:'utf8'});
 report.browser=browser.version();report.builtAssets={};
-for(const path of ['javascripts/abp-practice.js','javascripts/abp-journeys.js','javascripts/abp-local-state.js','sw.js'])report.builtAssets[path]=createHash('sha256').update(await readFile('site/'+path)).digest('hex');
-await mkdir('work/performance-input',{recursive:true});
+for(const file of ['javascripts/abp-practice.js','javascripts/abp-journeys.js','javascripts/abp-local-state.js','sw.js']){
+ try{report.builtAssets[file]=createHash('sha256').update(await readFile(path.join(siteDir,file))).digest('hex');}
+ catch(error){if(!baseline||error.code!=='ENOENT')throw error;report.builtAssets[file]=null;}
+}
+if(baseline)report.limitations.push('Only existing home/find tasks have a production baseline; the new Reader/Journey have no equivalent old interface.');
+await mkdir(path.dirname(output),{recursive:true});
 try{
- for(const width of [375,1440])for(const route of ['','find/','reader/','journeys/']){
+ for(const width of [375,1440])for(const route of baseline?['','find/']:['','find/','reader/','journeys/']){
   const context=await browser.newContext({viewport:{width,height:1000},serviceWorkers:'block',reducedMotion:'reduce'}),page=await context.newPage(),failed=[],errors=[];
   page.on('requestfailed',request=>failed.push({url:request.url(),error:request.failure()?.errorText}));page.on('pageerror',error=>errors.push(error.message));
   const session=await context.newCDPSession(page);
@@ -63,10 +72,10 @@ try{
   const metrics={...layoutMetrics(sample.shifts),...interactionMetrics(sample.events,sample.interactionCount)};
   const inp=metrics.labInpCandidateMs??metrics.belowThresholdMs;
   report.samples.push({width,route:route||'home',...metrics,lcpMs:sample.lcp,gestures:sample.gestures,nativeInteractionCount:sample.interactionCount,eventTimingSupported:sample.supported.includes('event'),fonts:sample.fonts,failedRequests:failed,targets:{lcp:sample.lcp<=2500,inpCandidate:sample.supported.includes('event')&&inp<=200,cls:metrics.labCls<=.1},events:sample.events});
-  await writeFile('work/performance-input/report.json',JSON.stringify(report,null,2));
+  await writeFile(output,JSON.stringify(report,null,2));
   await context.close();console.log(`MEASURED ${width}px ${route||'home'} LCP ${sample.lcp.toFixed(0)}ms, INP candidate ${metrics.labInpCandidateMs??'<16'}ms, CLS ${metrics.labCls.toFixed(4)}`);
  }
  report.allTargetsMet=report.samples.every(s=>Object.values(s.targets).every(Boolean));
- await writeFile('work/performance-input/report.json',JSON.stringify(report,null,2));
+ await writeFile(output,JSON.stringify(report,null,2));
  console.log('Finite lab targets all met: '+report.allTargetsMet+'; see limitations and per-task results.');
 }finally{await browser.close();server.kill();}
