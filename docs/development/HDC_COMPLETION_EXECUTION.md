@@ -6,7 +6,7 @@ title: HDC Completion Execution
 
 The owner resumed implementation on **3 November 2026** with “complete it.” The [completion audit](HDC_MASTER_COMPLETION_DASHBOARD.md) remains the historical evidence baseline; the [finite R1–R9 and L1 roadmap](HDC_REMAINING_INCREMENT_PLAN.md) defines the remaining scope. This ledger records subsequent delivery without rewriting historical test results or claiming approval.
 
-**Release boundary:** PR 51 stays draft. `HDC_PRACTICE_PREVIEW` stays default-OFF. No merge, production activation or GitHub Pages deployment is performed by this continuation. A separate owner-private HTTPS device preview is published for manual QA. The complete final candidate still requires staging approval.
+**Release boundary — updated 4 November:** the owner approved the limited first release of the existing tested PR 51 functionality, explicitly accepting partial translations and unverified actual iOS/Android update/dismissal checks as follow-up limitations. Production activation/deployment is authorized after fresh checks; ordinary builds remain default-OFF. The whole-book Reader expansion is excluded and will use a separate branch/PR and subsequent checked release. See `review/limited-first-release-2026-11-04.md`; this is not a full-scope completion or successful-deployment claim.
 
 ## R1 — Saved-data compatibility
 
