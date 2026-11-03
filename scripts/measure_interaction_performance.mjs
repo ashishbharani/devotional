@@ -50,6 +50,12 @@ try{
    const disclosure=page.locator('main details > summary:visible').first();
    if(await disclosure.count()){await disclosure.click();await disclosure.click();}
    else{await page.locator('main h1').click();await page.keyboard.press('Tab');}
+   const native=page.locator('.md-search__input'),opener=page.locator('.hdc-header .md-header__button[for="__search"]');
+   if(await opener.isVisible())await opener.click();else await native.click();
+   await page.waitForFunction(()=>document.querySelector('#__search')?.checked===true,null,{polling:100});
+   await native.pressSequentially('Ganesha',{delay:80});
+   await page.locator('.md-search-result__list a[href]').first().waitFor({timeout:120000});
+   await page.keyboard.press('Escape');if(await page.locator('#__search').isChecked())await page.keyboard.press('Escape');
   }
   await page.waitForTimeout(1500); // Flush Event Timing entries after the final painted interaction.
   const sample=await page.evaluate(()=>({...hdcLab,interactionCount:performance.interactionCount??null,visible:document.visibilityState,fonts:document.fonts.status}));
