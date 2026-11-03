@@ -3,7 +3,9 @@ import hashlib
 import json
 from pathlib import Path
 import tempfile
-from stylesheet_bundle import local_styles, publish_bundle, rebase_css
+import posixpath
+from urllib.parse import urlsplit
+from stylesheet_bundle import CSS_URL, local_styles, publish_bundle, rebase_css
 
 assert rebase_css('a{background:url("../images/a.webp?v=2#x")}', 'assets/stylesheets/main.css') == 'a{background:url("../assets/images/a.webp?v=2#x")}'
 for value in ('data:image/svg+xml,%3Csvg%3E', 'https://example.org/a.svg', '/devotional/a.svg', '#mark'):
@@ -47,6 +49,17 @@ if manifest_file.exists():
     assert hashlib.sha256(content).hexdigest()[:16] in manifest['bundle']
     expected = '\n'.join(rebase_css((site / item['path']).read_bytes().decode('utf-8'), item['path']) for item in manifest['sources'])
     assert content == expected.encode('utf-8')
+    for match in CSS_URL.finditer(content.decode('utf-8')):
+        value = match.group(2) if match.group(1) else match.group(3)
+        parsed = urlsplit(value)
+        if not value or value.startswith('#') or parsed.scheme or parsed.netloc:
+            continue
+        if parsed.path.startswith('/'):
+            assert parsed.path.startswith(manifest['sitePath'])
+            resource = parsed.path[len(manifest['sitePath']):]
+        else:
+            resource = posixpath.normpath(posixpath.join('stylesheets', parsed.path))
+        assert (site / resource).is_file(), resource
     for item in manifest['sources']:
         assert hashlib.sha256((site / item['path']).read_bytes()).hexdigest() == item['sha256']
     for target in site.rglob('*.html'):

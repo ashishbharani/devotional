@@ -23,6 +23,10 @@ for(const file of ['javascripts/abp-practice.js','javascripts/abp-journeys.js','
  catch(error){if(!baseline||error.code!=='ENOENT')throw error;report.builtAssets[file]=null;}
 }
 if(baseline)report.limitations.push('Only existing home/find tasks have a production baseline; the new Reader/Journey have no equivalent old interface.');
+try{
+ const manifest=JSON.parse(await readFile(path.join(siteDir,'assets/stylesheet-bundle.json'),'utf8'));
+ report.stylesheetBundle={...manifest,sha256:createHash('sha256').update(await readFile(path.join(siteDir,manifest.bundle))).digest('hex')};
+}catch(error){if(error.code!=='ENOENT')throw error;}
 await mkdir(path.dirname(output),{recursive:true});
 try{
  for(const width of [375,1440])for(const route of baseline?['','find/']:['','find/','reader/','journeys/']){
