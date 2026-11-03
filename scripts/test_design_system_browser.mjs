@@ -48,6 +48,7 @@ try{
     assert.deepEqual(result.failures,[],`${route} ${width} ${theme} enhanced=${enhanced}: text contrast`);
     assert.ok(result.checked>0);
     assert.ok(await page.locator('.hdc-practice :is(button,select,input:not([type=checkbox]),textarea):visible').evaluateAll(nodes=>nodes.every(el=>el.getBoundingClientRect().height>=44)),'preview form controls keep 44px touch height');
+    assert.ok(await page.locator('.hdc-practice .abp-reading-link:visible').evaluateAll(nodes=>nodes.every(el=>el.getBoundingClientRect().height>=44)),'new reading/discovery actions reuse the existing 44px link treatment');
     if(!enhanced){if(!tokens)tokens=result.tokens;else assert.deepEqual(result.tokens,tokens,'one shared palette/type/radius contract across page types');}
     if(enhanced&&['reader/','library/','journeys/'].includes(route))await page.screenshot({path:`work/design-system/${route.replaceAll('/','_')}-${width}-${theme}-enhanced.png`});
     report.push({route,width,theme,enhanced,checkedText:result.checked});

@@ -1216,8 +1216,8 @@ def discovery_paths(d):
     for name in ("GANESHA", "SHIVA / MAHESH", "VISHNU", "HANUMAN"):
         group = groups[name]
         art = deity_portrait(name, "explore/")
-        out.append(f'<div class="abp-card"><span class="abp-card__num" aria-hidden="true">❖</span><div><h3><a href="../{esc(group["url"])}">{esc(group["name"])}</a></h3>{art}'
-                   f'<p>{fmt(group["count"])} indexed works in the existing section.</p><p><a href="../find/?w={quote_plus(name)}">Documented aliases and related identities</a></p></div></div>')
+        out.append(f'<div class="abp-card"><span class="abp-card__num" aria-hidden="true">❖</span><div><h3><a class="abp-reading-link" href="../{esc(group["url"])}">{esc(group["name"])}</a></h3>{art}'
+                   f'<p>{fmt(group["count"])} indexed works in the existing section.</p><p><a class="abp-reading-link" href="../find/?w={quote_plus(name)}">Documented aliases and related identities</a></p></div></div>')
     out.append('</div><h2 id="featured-works">Featured work references</h2><ul data-discovery-works>')
     featured = {"HDL2-CWID-25F980F2BD34A2107382", "HDL2-CWID-E73C30069833764A47B2"}
     found = set()
@@ -1228,7 +1228,7 @@ def discovery_paths(d):
                     if work["cwid"] in featured:
                         found.add(work["cwid"])
                         path = form["url"] + "#work-" + work["cwid"]
-                        out.append(f'<li><a href="../{esc(path)}" data-featured-work-id="{esc(work["cwid"])}">{esc(work["title"])}</a> — {esc(group["name"])}; {esc(category["title"])}</li>')
+                        out.append(f'<li><a class="abp-reading-link" href="../{esc(path)}" data-featured-work-id="{esc(work["cwid"])}">{esc(work["title"])}</a> — {esc(group["name"])}; {esc(category["title"])}</li>')
     if found != featured:
         raise ValueError("Featured discovery work identities are missing; review the source rather than invent a replacement")
     out.append('</ul><p>Each link identifies an existing catalogue record in its original context. Other records with the same title remain distinct. Reading and listening availability remain those of the catalogue.</p>')

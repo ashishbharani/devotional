@@ -64,9 +64,9 @@
    if(!current()||run!==referenceRun)return;
    for(const ref of draftReferences){
     const li=document.createElement('li'),found=referenceLink(ref),label=document.createElement('label'),check=document.createElement('input'),remove=document.createElement('button');
-    check.type='checkbox';check.checked=ref.done===true;check.dataset.referenceDone=ref.type+':'+ref.id;label.append(check,' Completed for my own reference: ');
-    if(found){const link=document.createElement('a');link.href=found.url;link.textContent=found.title;link.className='notranslate';link.setAttribute('translate','no');link.dataset.routineWorkId=ref.id;label.append(link);}else label.append('Saved reference unavailable: '+ref.id);
-    remove.type='button';remove.textContent='Remove from draft';remove.dataset.referenceRemove=ref.type+':'+ref.id;li.append(label,' ',remove);referencesList.append(li);
+    check.type='checkbox';check.checked=ref.done===true;check.dataset.referenceDone=ref.type+':'+ref.id;label.append(check,' Completed: '+(found?.title||'Saved reference unavailable: '+ref.id));li.append(label);
+    if(found){const link=document.createElement('a');link.href=found.url;link.textContent='Open '+found.title;link.className='abp-reading-link notranslate';link.setAttribute('translate','no');link.dataset.routineWorkId=ref.id;li.append(link);}
+    remove.type='button';remove.textContent='Remove from draft';remove.setAttribute('aria-label','Remove reference: '+(found?.title||ref.id));remove.dataset.referenceRemove=ref.type+':'+ref.id;li.append(' ',remove);referencesList.append(li);
    }
   }
   const setReferences=(rows,dirty)=>{draftReferences=rows.map(r=>({...r}));referencesDirty=dirty;renderReferences();};

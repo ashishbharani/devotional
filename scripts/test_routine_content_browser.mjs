@@ -29,7 +29,7 @@ try{
   await page.reload();await page.locator('[data-routine-references] li').nth(2).waitFor();
   for(const id of ids){
    const work=compact.works.find(w=>w[6]===id),link=page.locator(`[data-routine-work-id="${id}"]`);
-   assert.equal(await link.textContent(),work[0]);assert.equal(await link.getAttribute('href'),new URL(compact.places[work[5]][0].split('#')[0]+'#work-'+id,base).href);
+   assert.equal(await link.textContent(),'Open '+work[0]);assert.equal(await link.getAttribute('href'),new URL(compact.places[work[5]][0].split('#')[0]+'#work-'+id,base).href);
   }
   await page.locator('[data-reference-done]').first().check();await page.locator('[data-journey-save]').click();await page.locator('[data-session-record]').click();
   saved=await page.evaluate(key=>JSON.parse(localStorage.getItem(key)),key);
