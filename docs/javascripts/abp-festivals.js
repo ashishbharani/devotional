@@ -3,13 +3,16 @@
  'use strict';
  const base=new URL('../',document.currentScript.src).href,key='hdc-festival-preferences-v1';
  let cleanup=()=>{},manifest,cachedDay;const cache=new Map();
+ const modes=['auto','original','ganesha','shiva'],regions=['IN','IN-UP','IN-MH','IN-DL'];
+ const record=globalThis.hdcLocalState?.create({key,defaults:{mode:'auto',region:'IN',effects:false},validate:value=>!Object.hasOwn(value,'schema')&&(!Object.hasOwn(value,'mode')||modes.includes(value.mode))&&(!Object.hasOwn(value,'region')||regions.includes(value.region))&&(!Object.hasOwn(value,'effects')||typeof value.effects==='boolean')});
  const engine=import(new URL('assets/festivals/themes.mjs',base).href);
  async function init(){
   cleanup();const root=document.querySelector('[data-festival-experience]');if(!root)return;
   const controller=new AbortController(),q=s=>root.querySelector(s);let timer,ready=false,schedules=[],failure=false;
   cleanup=()=>{controller.abort();clearTimeout(timer);};
-  let prefs={};try{prefs=JSON.parse(localStorage.getItem(key)||'{}')||{};}catch(_){}
-  const modes=['auto','original','ganesha','shiva'],regions=['IN','IN-UP','IN-MH','IN-DL'];
+  let prefs={mode:'auto',region:'IN',effects:false},notice='';
+  try{if(!record)throw new Error('Unavailable local record');prefs=record.get();if(record.dirty)notice=' Preferences remain for this visit only; the saved copy is unchanged.';}
+  catch(_){prefs=record?.snapshot()||prefs;notice=' Saved preferences are unavailable or changed. Existing data has been kept; preference changes cannot be saved.';}
   q('[data-festival-mode]').value=modes.includes(prefs.mode)?prefs.mode:'auto';
   q('[data-festival-region]').value=regions.includes(prefs.region)?prefs.region:'IN';
   q('[data-festival-effects]').checked=prefs.effects===true;
@@ -17,7 +20,7 @@
   if(controller.signal.aborted||!root.isConnected)return;
   const today=tools.indiaDay();
   if(cachedDay!==today){manifest=undefined;cache.clear();cachedDay=today;}
-  function render(){
+  function renderPresentation(){
    const mode=q('[data-festival-mode]').value,region=q('[data-festival-region]').value,day=tools.indiaDay();
    const status=q('[data-festival-status]'),display=q('[data-festival-display]'),list=q('[data-festival-overlaps]');
    root.classList.toggle('has-effects',q('[data-festival-effects]').checked);list.replaceChildren();
@@ -40,9 +43,14 @@
    }
    if(event&&!manual)for(const source of event.sources){const li=document.createElement('li'),a=document.createElement('a');a.textContent=`Date source: ${source.label}`;a.href=source.url;li.append(a);list.append(li);}
   }
+  function render(){renderPresentation();q('[data-festival-status]').textContent+=notice;}
   for(const selector of ['[data-festival-mode]','[data-festival-region]','[data-festival-effects]'])q(selector).addEventListener('change',()=>{
-   render();try{localStorage.setItem(key,JSON.stringify({mode:q('[data-festival-mode]').value,region:q('[data-festival-region]').value,effects:q('[data-festival-effects]').checked}));}
-   catch(_){q('[data-festival-status]').textContent+=' Preferences could not be saved; this visit only.';}
+   try{
+    if(!record)throw new Error('Unavailable local record');
+    const current=record.get(),result=record.write({...current,mode:q('[data-festival-mode]').value,region:q('[data-festival-region]').value,effects:q('[data-festival-effects]').checked});
+    notice=result.persisted?'':' Preferences could not be saved; this visit only.';
+   }catch(_){notice=' Saved preferences could not be read or changed. Existing data has been kept; this selection was not saved.';}
+   render();
   },{signal:controller.signal});
   render();
   try{
@@ -57,7 +65,7 @@
   if(controller.signal.aborted||!root.isConnected)return;
   ready=true;render();timer=setTimeout(init,Math.max(100,tools.nextIndiaMidnight()));
  }
- window.addEventListener('storage',e=>{if(e.key===key||e.key===null)init();});
+ window.addEventListener('storage',e=>{if(e.key===key||e.key===null){record?.changed();init();}});
  window.addEventListener('pagehide',()=>cleanup());window.addEventListener('pageshow',init);
  document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')init();});
  if(window.document$?.subscribe)window.document$.subscribe(init);

@@ -66,6 +66,7 @@ extra_javascript:
   - javascripts/abp.js
   - javascripts/abp-directory.js
   - javascripts/abp-japa.js
+  - javascripts/abp-local-state.js
   - javascripts/abp-japa-history.js
   - javascripts/abp-daily.js
   - javascripts/abp-practice.js

@@ -69,6 +69,8 @@ try{
  await page.addInitScript(()=>{localStorage.setItem('abp-japa-state-v1','{"count":54}');localStorage.setItem('hdc-reader-v1','malformed');});
  await page.goto(base+'reader/#gita-2-47');assert.equal(await page.locator('[data-read]').getAttribute('aria-pressed'),'false');
  await page.locator('[data-reader-clear]').click();assert.equal(await page.evaluate(()=>localStorage.getItem('abp-japa-state-v1')),'{"count":54}');
+ assert.equal(await page.evaluate(()=>localStorage.getItem('hdc-reader-v1')),'malformed','clear must not silently replace an unreadable record');
+ await page.evaluate(()=>localStorage.setItem('hdc-reader-v1','{}'));
  await page.evaluate(()=>{const set=Storage.prototype.setItem;Storage.prototype.setItem=function(k,v){if(k.startsWith('hdc-'))throw new Error('blocked');return set.call(this,k,v);};});
  await page.locator('[data-bookmark]').click();assert.match(await page.locator('[data-reader-status]').textContent(),/this visit only/);
  await page.evaluate(()=>{

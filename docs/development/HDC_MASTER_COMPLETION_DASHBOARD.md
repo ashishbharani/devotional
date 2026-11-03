@@ -4,6 +4,8 @@ title: HDC Master Completion Dashboard
 
 # HDC master completion dashboard
 
+> Implementation resumed on 3 November 2026. See the [execution ledger](HDC_COMPLETION_EXECUTION.md) for changes after this audit snapshot. Historical counts below are not a claim that later code has passed acceptance. Preview remains default-OFF; deployment remains approval-gated.
+
 **Audit date: 3 November 2026. Overall assessment: substantial working implementation, but the original transformation is NOT COMPLETE and NOT RELEASE-READY.**
 
 The recovered original specification is available in full. It contains 11 named stages, not 11 equal-sized product points. This audit maps **149 normalized original requirements: 72 COMPLETE, 64 PARTIAL, 4 NOT STARTED, 9 BLOCKED**. The 72 are bounded criteria, including preservation/guardrails; they are **not a weighted percentage of the website promise**. 77 criteria remain unclosed.

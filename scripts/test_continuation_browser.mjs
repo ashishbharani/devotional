@@ -39,6 +39,9 @@ try{
   await home.goto(base);assert.equal(await home.locator('[data-daily-reader]').isVisible(),false);
   await other.evaluate(()=>localStorage.setItem('hdc-reader-v1','{"bookmark":"true","read":1}'));
   assert.equal(await home.locator('[data-daily-reader]').isVisible(),false,'malformed flags do not create false progress');
+  await other.locator('[data-bookmark]').click();
+  assert.equal(await other.evaluate(()=>localStorage.getItem('hdc-reader-v1')),'{"bookmark":"true","read":1}','a bookmark action must preserve unreadable saved flags');
+  await other.evaluate(()=>localStorage.setItem('hdc-reader-v1','{"size":1.5,"spacing":2.2}'));
   await other.locator('[data-bookmark]').click();await home.locator('[data-daily-reader]:visible').waitFor();
   await home.locator('[data-daily-reader] a').click();await home.waitForURL(/reader\/#gita-2-47$/);
   await home.evaluate(()=>{window.qaWrites=0;const set=Storage.prototype.setItem;Storage.prototype.setItem=function(k,v){if(k==='hdc-reader-v1')window.qaWrites++;return set.call(this,k,v);};});

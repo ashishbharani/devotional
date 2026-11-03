@@ -3,28 +3,20 @@
  'use strict';const key='hdc-journey-state-v1',routineKey='hdc-journey-routines-v1';let cleanup=()=>{};
  const read=k=>{try{return JSON.parse(localStorage.getItem(k)||'{}')||{};}catch(_){return {};}};
  const normalize=value=>({name:typeof value.name==='string'?value.name.slice(0,120):'',minutes:[5,10,20].includes(value.minutes)?value.minutes:5,journal:typeof value.journal==='string'?value.journal.slice(0,5000):'',sessions:Array.isArray(value.sessions)?value.sessions.filter(s=>s&&typeof s.at==='string'&&Number.isFinite(Date.parse(s.at))&&[5,10,20].includes(s.minutes)).slice(-50):[]});
- function readJourney(){
-  const raw=localStorage.getItem(key),value=raw===null?{}:JSON.parse(raw);
-  if(!value||typeof value!=='object'||Array.isArray(value)||Object.hasOwn(value,'schema')||
-   (Object.hasOwn(value,'name')&&(typeof value.name!=='string'||value.name.length>120))||
-   (Object.hasOwn(value,'minutes')&&![5,10,20].includes(value.minutes))||
-   (Object.hasOwn(value,'journal')&&(typeof value.journal!=='string'||value.journal.length>5000))||
-   (Object.hasOwn(value,'sessions')&&(!Array.isArray(value.sessions)||value.sessions.length>50||value.sessions.some(row=>!row||typeof row.at!=='string'||!Number.isFinite(Date.parse(row.at))||![5,10,20].includes(row.minutes)))))throw new Error('Unsupported saved journey');
-  return {...value,...normalize(value)};
- }
+ const optional=(value,key,test)=>!Object.hasOwn(value,key)||test(value[key]);
+ const journey=globalThis.hdcLocalState?.create({key,defaults:normalize({}),validate:value=>!Object.hasOwn(value,'schema')&&
+  optional(value,'name',v=>typeof v==='string'&&v.length<=120)&&optional(value,'minutes',v=>[5,10,20].includes(v))&&
+  optional(value,'journal',v=>typeof v==='string'&&v.length<=5000)&&optional(value,'sessions',v=>Array.isArray(v)&&v.length<=50&&!v.some(row=>!row||typeof row.at!=='string'||!Number.isFinite(Date.parse(row.at))||![5,10,20].includes(row.minutes)))});
+ const library=globalThis.hdcLocalState?.create({key:routineKey,defaults:{schema:1,routines:[]},validate:value=>value.schema===1&&Array.isArray(value.routines)&&value.routines.length<=10&&!value.routines.some(r=>!r||typeof r.id!=='string'||!/^[-a-zA-Z0-9]{1,80}$/.test(r.id)||typeof r.name!=='string'||!r.name.trim()||r.name.length>120||![5,10,20].includes(r.minutes))&&new Set(value.routines.map(r=>r.id)).size===value.routines.length});
+ const readJourney=()=>{if(!journey)throw new Error('Unavailable local records');return journey.get();};
+ const readLibrary=()=>{if(!library)throw new Error('Unavailable local records');return library.get().routines;};
  function init(){
   cleanup();const root=document.querySelector('[data-journey]');if(!root)return;
   const controller=new AbortController(),q=s=>root.querySelector(s);let dayTimer;
   cleanup=()=>{controller.abort();clearTimeout(dayTimer);};
-  let state=normalize({}),sessionOnly=false,externalChanged=false;const status=q('[data-journey-status]');
+  let state=journey?.snapshot()||normalize({}),sessionOnly=false;const status=q('[data-journey-status]');
   try{state=readJourney();}catch(_){status.textContent='Saved journey is unavailable or has an unsupported format. Existing data has been kept; no changes will be saved.';}
-  let routines=[],librarySessionOnly=false;
-  function readLibrary(){
-   const raw=localStorage.getItem(routineKey);if(raw===null)return [];
-   const value=JSON.parse(raw),rows=value?.routines;
-   if(value?.schema!==1||!Array.isArray(rows)||rows.length>10||rows.some(r=>!r||typeof r.id!=='string'||!/^[-a-zA-Z0-9]{1,80}$/.test(r.id)||typeof r.name!=='string'||!r.name.trim()||r.name.length>120||![5,10,20].includes(r.minutes))||new Set(rows.map(r=>r.id)).size!==rows.length)throw new Error('Unsupported routine library');
-   return rows.map(({id,name,minutes})=>({id,name,minutes}));
-  }
+  let routines=library?.snapshot().routines||[];
   try{routines=readLibrary();}catch(_){status.textContent='Routine library unavailable. Existing saved data has been kept; your active routine and journal remain available.';}
   q('[data-routine-name]').value=state.name;q('[data-routine-minutes]').value=state.minutes;
   q('[data-journal]').value=state.journal;q('[data-journal-consent]').checked=Boolean(state.journal);
@@ -43,10 +35,12 @@
    dayTimer=setTimeout(()=>{if(root.isConnected)summary();},next.getTime()-now);
   }
   const latest=()=>{
-   if(sessionOnly&&externalChanged){status.textContent='Another tab changed the saved journey. Your visit-only changes have been kept; reload or load valid saved changes before editing.';return null;}
-   try{if(sessionOnly)return state;const saved=readJourney();externalChanged=false;return saved;}catch(_){status.textContent='Saved journey could not be read or has an unsupported format. Existing data and your draft have been kept.';return null;}
+   try{return readJourney();}catch(_){status.textContent='Saved journey could not be read, changed elsewhere or has an unsupported format. Existing data and your draft have been kept.';return null;}
   };
-  function save(value){state={...value,...normalize(value)};try{localStorage.setItem(key,JSON.stringify(state));sessionOnly=false;status.textContent='Saved in this browser only.';}catch(_){sessionOnly=true;status.textContent='Storage unavailable. Changes remain for this visit only.';}summary();}
+  function save(value){
+   try{if(!journey)throw new Error('Unavailable local record');const result=journey.write({...value,...normalize(value)});state=result.value;sessionOnly=!result.persisted;status.textContent=result.persisted?'Saved in this browser only.':'Storage unavailable. Changes remain for this visit only.';summary();return result;}
+   catch(_){status.textContent='Saved journey changed or is unavailable. Existing saved data and your draft have been kept.';return null;}
+  }
   const on=(s,e,f)=>q(s).addEventListener(e,f,{signal:controller.signal});
   const start=()=>{const minutes=Number(q('[data-routine-minutes]').value);q('[data-routine-start]').href=new URL(`../sanctuary/?minutes=${[5,10,20].includes(minutes)?minutes:5}`,location.href).href;};
   on('[data-routine-minutes]','change',start);start();
@@ -56,12 +50,14 @@
    for(const r of routines)select.append(new Option(`${r.name} — ${r.minutes} minutes`,r.id));
    select.value=routines.some(r=>r.id===selected)?selected:'';q('[data-routine-library-remove]').disabled=!select.value;
   }
-  const latestLibrary=()=>{if(librarySessionOnly)return routines;try{return readLibrary();}catch(_){status.textContent='Routine library could not be read. The previous saved copy has been kept.';return null;}};
+  const latestLibrary=()=>{try{return readLibrary();}catch(_){status.textContent='Routine library could not be read or changed elsewhere. The previous saved copy and visit-only changes have been kept.';return null;}};
   function saveLibrary(rows,selected=''){
-   routines=rows;
-   try{localStorage.setItem(routineKey,JSON.stringify({schema:1,routines}));librarySessionOnly=false;status.textContent='Routine library saved in this browser only. Journal notes are not included.';}
-   catch(_){librarySessionOnly=true;status.textContent='Routine library storage unavailable. These routine changes remain for this visit only.';}
-   renderLibrary(selected);
+   try{
+    if(!library)throw new Error('Unavailable local record');
+    const result=library.write({...library.get(),routines:rows});routines=result.value.routines;
+    status.textContent=result.persisted?'Routine library saved in this browser only. Journal notes are not included.':'Routine library storage unavailable. These routine changes remain for this visit only.';
+    renderLibrary(selected);
+   }catch(_){status.textContent='Routine library changed or could not be saved. Existing data and this draft have been kept.';}
   }
   if(q('[data-routine-library]')){
    renderLibrary();
@@ -77,12 +73,17 @@
    on('[data-routine-library-remove]','click',()=>{const rows=latestLibrary(),id=q('[data-routine-library]').value;if(rows&&id)saveLibrary(rows.filter(r=>r.id!==id));});
   }
   on('[data-journey-save]','click',()=>{const current=latest();if(current)save({...current,name:q('[data-routine-name]').value,minutes:Number(q('[data-routine-minutes]').value),journal:q('[data-journal-consent]').checked?q('[data-journal]').value:''});});
-  on('[data-journal-clear]','click',()=>{const current=latest();if(!current)return;save({...current,journal:''});q('[data-journal]').value='';q('[data-journal-consent]').checked=false;});
+  on('[data-journal-clear]','click',()=>{const current=latest();if(!current||!save({...current,journal:''}))return;q('[data-journal]').value='';q('[data-journal-consent]').checked=false;});
   on('[data-session-record]','click',()=>{const current=latest(),minutes=Number(q('[data-routine-minutes]').value);if(current&&[5,10,20].includes(minutes))save({...current,sessions:[...current.sessions,{at:new Date().toISOString(),minutes}]});});
   if(q('[data-journey-load]'))on('[data-journey-load]','click',()=>{
    try{
-    const saved=readJourney(),library=readLibrary();
-    state=saved;routines=library;sessionOnly=false;externalChanged=false;librarySessionOnly=false;
+    if(!journey||!library)throw new Error('Unavailable local records');
+    // Validate both before replacing either draft, then explicitly accept saved copies.
+    // get() intentionally refuses dirty conflicts; reload is the explicit discard action.
+    const rawJourney=localStorage.getItem(key),rawLibrary=localStorage.getItem(routineKey);
+    // Probe using each record's validator without mutating its current visit-only state.
+    journey.check(rawJourney);library.check(rawLibrary);
+    state=journey.reload();routines=library.reload().routines;sessionOnly=false;
     q('[data-routine-name]').value=state.name;q('[data-routine-minutes]').value=state.minutes;q('[data-journal]').value=state.journal;q('[data-journal-consent]').checked=Boolean(state.journal);
     renderLibrary();start();summary();q('[data-journey-load]').hidden=true;status.textContent='Saved changes loaded. The previous draft has been replaced.';
    }catch(_){status.textContent='Saved changes could not be loaded. Your current draft has been kept.';}
@@ -94,15 +95,14 @@
     let current;
     try{current=latest();if(!current)return;}
     catch(_){status.textContent='Saved practice log could not be read. Existing saved data and your draft have been kept.';return;}
-    const next={...current,sessions:[]};let persisted=false;
-    try{localStorage.setItem(key,JSON.stringify(next));sessionOnly=false;persisted=true;}catch(_){sessionOnly=true;}
-    state={...next,...normalize(next)};summary();q('[data-log-erase-consent]').checked=false;q('[data-log-erase-confirm]').disabled=true;
+    const result=save({...current,sessions:[]});if(!result)return;const persisted=result.persisted;
+    q('[data-log-erase-consent]').checked=false;q('[data-log-erase-confirm]').disabled=true;
     status.textContent=persisted?'Practice log erased. Saved notes, routines, Japa and Reader state were kept.':'Practice log cleared for this visit only. The saved copy could not be changed.';
     if(persisted){q('[data-log-erase]').open=false;q('[data-log-erase] summary').focus();}
    });
   }
   window.addEventListener('storage',event=>{
-   if([key,routineKey,null].includes(event.key)){if(event.key===key||event.key===null)externalChanged=true;status.textContent='Journey changed in another tab. Reload to load it; your current draft has been kept. Or choose Load saved changes to replace this draft.';if(q('[data-journey-load]'))q('[data-journey-load]').hidden=false;}
+   if([key,routineKey,null].includes(event.key)){if(event.key===key||event.key===null)journey?.changed();if(event.key===routineKey||event.key===null)library?.changed();status.textContent='Journey changed in another tab. Reload to load it; your current draft has been kept. Or choose Load saved changes to replace this draft.';if(q('[data-journey-load]'))q('[data-journey-load]').hidden=false;}
    if(['abp-japa-state-v1','hdc-reader-v1',null].includes(event.key))summary();
   },{signal:controller.signal});
   document.addEventListener('visibilitychange',()=>{if(!document.hidden&&root.isConnected)summary();},{signal:controller.signal});

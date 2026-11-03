@@ -4,6 +4,8 @@ title: HDC Remaining Increment Plan
 
 # HDC finite remaining increment plan
 
+> Implementation resumed on 3 November 2026. See the [execution ledger](HDC_COMPLETION_EXECUTION.md) for changes after this audit snapshot. Historical counts below are not a claim that later code has passed acceptance. Preview remains default-OFF; deployment remains approval-gated.
+
 [Master dashboard](HDC_MASTER_COMPLETION_DASHBOARD.md) · [Original requirement matrix](HDC_REQUIREMENTS_TRACEABILITY.md)
 
 Snapshot: integration code `00e4502` incorporates main through `7e88e7a`; final production refresh is `2153bec` (PR 56), **3 November 2026**. This is the plan produced by the audit-only assignment. **No package below is authorized to be implemented during this audit; no merge, production activation or deployment is authorized.**

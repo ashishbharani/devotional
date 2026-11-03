@@ -21,6 +21,8 @@ STEPS = [
  ('preview-build', [UV,'run','mkdocs','build','--strict'], True),
  ('preview-gate', py('scripts/test_practice_release_gate.py','enabled'), True),
  ('preview-seo', py('scripts/test_seo_structure.py','enabled'), True),
+ ('local-state', js('test_local_state'), True),
+ ('local-state-browser', js('test_local_state_browser'), True),
  ('panchang', js('test_panchang'), True), ('ephemeris', js('test_ephemeris'), True),
  ('hook', [UV,'run','python','-I','scripts/test_homepage_hook.py'], True),
  *[(name,py('scripts/'+script+'.py'),True) for name,script in [
@@ -35,6 +37,7 @@ STEPS = [
   ('royal-home','test_royal_homepage'),('sacred-site','test_sacred_site'),
   ('plugins','test_hdc_plugins_browser'),('approved-header','test_approved_header_browser'),
   ('header-fidelity','test_header_fidelity_browser'),('translation','test_translation_browser'),
+  ('prose-translation','test_prose_translation_browser'),
   ('mobile-keyboard','test_mobile_keyboard_browser'),
   ('reading-browser','test_reading_links_browser'),('feedback','test_feedback_browser'),
   ('daily','test_daily_darshan_browser'),('practice','test_practice_browser'),

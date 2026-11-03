@@ -1095,7 +1095,7 @@ def on_config(config, **kw):
     config["extra"]["hdc_practice_preview"] = PRACTICE_PREVIEW
     if not PRACTICE_PREVIEW:
         config["extra_css"] = [p for p in config["extra_css"] if p not in {"stylesheets/practice.css", "stylesheets/festivals.css"}]
-        config["extra_javascript"] = [p for p in config["extra_javascript"] if str(p) not in {"javascripts/abp-practice.js", "javascripts/abp-festivals.js", "javascripts/abp-journeys.js", "javascripts/abp-discovery.js", "javascripts/abp-sharing.js", "javascripts/abp-section-shortcuts.js", "javascripts/abp-japa-history.js"}]
+        config["extra_javascript"] = [p for p in config["extra_javascript"] if str(p) not in {"javascripts/abp-local-state.js", "javascripts/abp-practice.js", "javascripts/abp-festivals.js", "javascripts/abp-journeys.js", "javascripts/abp-discovery.js", "javascripts/abp-sharing.js", "javascripts/abp-section-shortcuts.js", "javascripts/abp-japa-history.js"}]
     d = load()
     translation_report, translation_errors = audit_catalogue(ROOT / "docs" / "assets" / "i18n.json")
     for line in translation_report:
@@ -1350,7 +1350,7 @@ def on_post_build(config, **kw):
         shell.extend(["assets/images/deities/ganesha-640.webp", "assets/images/deities/shiva-640.webp"])
         shell.extend(path.relative_to(site).as_posix() for path in sorted((site / "assets" / "festivals").glob("*")) if path.is_file())
     shell.extend(f"javascripts/{path.name}" for path in sorted((site / "javascripts").glob("*.js"))
-                 if PRACTICE_PREVIEW or path.name not in {"abp-practice.js", "abp-festivals.js", "abp-journeys.js", "abp-discovery.js", "abp-sharing.js", "abp-section-shortcuts.js", "abp-japa-history.js"})
+                 if PRACTICE_PREVIEW or path.name not in {"abp-local-state.js", "abp-practice.js", "abp-festivals.js", "abp-journeys.js", "abp-discovery.js", "abp-sharing.js", "abp-section-shortcuts.js", "abp-japa-history.js"})
     shell.extend(f"javascripts/{path.name}" for path in sorted((site / "javascripts").glob("search-*.mjs")))
     shell.extend(path.relative_to(site).as_posix() for path in sorted((site / "assets" / "panchang").glob("*.mjs")))
     shell.extend(path.relative_to(site).as_posix() for pattern in (

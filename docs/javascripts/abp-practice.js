@@ -2,10 +2,14 @@
 (() => {
   'use strict';
   let cleanup = () => {};
-  const load = key => { try { return JSON.parse(localStorage.getItem(key) || '{}') || {}; } catch (_) { return {}; } };
-  function save(key, state, status) {
-    try { localStorage.setItem(key, JSON.stringify(state)); return true; }
-    catch (_) { status.textContent = 'Storage is unavailable. Changes work for this visit only.'; return false; }
+  const optional=(value,key,test)=>!Object.hasOwn(value,key)||test(value[key]);
+  const sanctuary=globalThis.hdcLocalState?.create({key:'hdc-sanctuary-v1',defaults:{effects:false},validate:value=>!Object.hasOwn(value,'schema')&&optional(value,'effects',v=>typeof v==='boolean')});
+  const reader=globalThis.hdcLocalState?.create({key:'hdc-reader-v1',defaults:{bookmark:false,read:false,size:1,spacing:1.8},validate:value=>!Object.hasOwn(value,'schema')&&optional(value,'bookmark',v=>typeof v==='boolean')&&optional(value,'read',v=>typeof v==='boolean')&&optional(value,'size',v=>[1,1.25,1.5].includes(v))&&optional(value,'spacing',v=>[1.8,2.2].includes(v))});
+  const unavailable=status=>{status.textContent='Saved preferences are unavailable, changed elsewhere or have an unsupported format. Existing saved data and visit-only changes have been kept; this action was not saved.';};
+  function load(record,status){try{if(!record)throw new Error('Unavailable local records');return record.get();}catch(_){unavailable(status);return record?.snapshot()||{};}}
+  function save(record,edit,status){
+    try{if(!record)throw new Error('Unavailable local records');const result=record.write(edit(record.get()));if(!result.persisted)status.textContent='Storage is unavailable. Changes work for this visit only.';return result.value;}
+    catch(_){unavailable(status);return null;}
   }
   function init() {
     cleanup();
@@ -16,7 +20,7 @@
     let stop = () => {};
     cleanup = () => {controller.abort(); stop();};
     if (root.matches('[data-sanctuary]')) {
-      const key = 'hdc-sanctuary-v1', previous = load(key), status = q('[data-practice-status]');
+      const key = 'hdc-sanctuary-v1', status = q('[data-practice-status]'), previous = load(sanctuary,status);
       let flowers = 0, timer, end = 0, audio;
       q('[data-effects]').checked = previous.effects === true;
       q('[data-sound]').checked = false; // never restore permission to make sound
@@ -28,6 +32,13 @@
       stop = () => {clearInterval(timer); silence();};
       finish('No session running.');
       q('[data-flowers]').textContent='No digital flowers offered this session.';
+      if(!sanctuary||sanctuary.conflicted)unavailable(status);
+      window.addEventListener('storage',event=>{
+        if((event.key!==key&&event.key!==null)||!root.isConnected)return;
+        sanctuary?.changed();
+        try{if(!sanctuary)throw new Error('Unavailable local records');const value=sanctuary.get();q('[data-effects]').checked=value.effects;q('[data-diya]').classList.toggle('has-effects',value.effects);status.textContent='Sanctuary preferences updated from another tab.';}
+        catch(_){unavailable(status);}
+      },{signal:controller.signal});
       on('[data-light]', 'click', () => {
         const lit = q('[data-diya]').classList.toggle('is-lit');
         q('[data-diya]').setAttribute('aria-label', `Digital diya is ${lit?'lit':'unlit'}`);
@@ -38,7 +49,7 @@
       on('[data-effects]', 'change', () => {
         const effects = q('[data-effects]').checked;
         q('[data-diya]').classList.toggle('has-effects',effects);
-        save(key,{effects},status);
+        save(sanctuary,value=>({...value,effects}),status);
       });
       on('[data-sound]', 'change', () => {if(!q('[data-sound]').checked)silence();});
       on('[data-bell]', 'click', () => {
@@ -59,7 +70,7 @@
       on('[data-quiet]', 'click', () => {
         silence();q('[data-sound]').checked=false;q('[data-effects]').checked=false;
         q('[data-diya]').classList.remove('has-effects');
-        status.textContent='Quiet mode: sound and motion effects off.';save(key,{effects:false},status);
+        status.textContent='Quiet mode: sound and motion effects off.';save(sanctuary,value=>({...value,effects:false}),status);
       });
       on('[data-start]', 'click', () => {
         if(timer)return;
@@ -77,9 +88,9 @@
       });
       on('[data-stop]', 'click', () => finish('Session ended.'));
     } else {
-      const key='hdc-reader-v1', previous=load(key), status=q('[data-reader-status]'), passage=q('[data-reader-passage]');
+      const key='hdc-reader-v1', status=q('[data-reader-status]'), previous=load(reader,status), passage=q('[data-reader-passage]');
       if(!passage){status.textContent='Pilot text unavailable. Use the Books Library links.';return;}
-      const state={bookmark:previous.bookmark===true,read:previous.read===true,
+      const state={...previous,bookmark:previous.bookmark===true,read:previous.read===true,
         size:[1,1.25,1.5].includes(previous.size)?previous.size:1,
         spacing:[1.8,2.2].includes(previous.spacing)?previous.spacing:1.8};
       const render=()=>{
@@ -92,17 +103,17 @@
         q('[data-reader-size]').value=state.size;q('[data-reader-spacing]').value=state.spacing;
         root.style.setProperty('--reader-size',state.size);root.style.setProperty('--reader-spacing',state.spacing);
       };
-      const persist=()=>{render();save(key,state,status);};
+      const persist=edit=>{const value=save(reader,edit,status);if(value)Object.assign(state,value);render();};
       window.addEventListener('storage',event=>{
         if((event.key!==key&&event.key!==null)||!root.isConnected)return;
-        const value=load(key);
-        Object.assign(state,{bookmark:value.bookmark===true,read:value.read===true,size:[1,1.25,1.5].includes(value.size)?value.size:1,spacing:[1.8,2.2].includes(value.spacing)?value.spacing:1.8});
-        render();status.textContent='Reader progress and preferences updated from another tab.';
+        reader?.changed();
+        try{if(!reader)throw new Error('Unavailable local records');const value=reader.get();Object.assign(state,value);render();status.textContent='Reader progress and preferences updated from another tab.';}
+        catch(_){unavailable(status);}
       },{signal:controller.signal});
-      on('[data-bookmark]','click',()=>{state.bookmark=!state.bookmark;persist();});
-      on('[data-read]','click',()=>{state.read=!state.read;persist();});
-      on('[data-reader-size]','change',()=>{const n=Number(q('[data-reader-size]').value);if([1,1.25,1.5].includes(n)){state.size=n;persist();}});
-      on('[data-reader-spacing]','change',()=>{const n=Number(q('[data-reader-spacing]').value);if([1.8,2.2].includes(n)){state.spacing=n;persist();}});
+      on('[data-bookmark]','click',()=>persist(value=>({...value,bookmark:!value.bookmark})));
+      on('[data-read]','click',()=>persist(value=>({...value,read:!value.read})));
+      on('[data-reader-size]','change',()=>{const n=Number(q('[data-reader-size]').value);if([1,1.25,1.5].includes(n))persist(value=>({...value,size:n}));});
+      on('[data-reader-spacing]','change',()=>{const n=Number(q('[data-reader-spacing]').value);if([1.8,2.2].includes(n))persist(value=>({...value,spacing:n}));});
       const filterPassage=()=>{
         const query=q('[data-reader-query]').value.normalize('NFC').trim().toLocaleLowerCase();
         passage.hidden=!passage.textContent.normalize('NFC').toLocaleLowerCase().includes(query);
@@ -117,7 +128,7 @@
         if(target.origin===location.origin&&target.pathname===location.pathname&&target.hash===`#${passage.id}`)revealPassage();
       },{signal:controller.signal});
       window.addEventListener('hashchange',()=>{if(location.hash===`#${passage.id}`)revealPassage();},{signal:controller.signal});
-      on('[data-reader-clear]','click',()=>{state.bookmark=false;state.read=false;persist();});
+      on('[data-reader-clear]','click',()=>persist(value=>({...value,bookmark:false,read:false})));
       on('[data-reader-print]','click',()=>window.print());
       on('[data-reader-share]','click',async()=>{
         const url=new URL(location.pathname,location.origin);url.hash=passage.id;

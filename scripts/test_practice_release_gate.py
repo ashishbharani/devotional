@@ -12,7 +12,7 @@ worker = (site / 'sw.js').read_text(encoding='utf-8')
 shell = json.loads(re.search(r'^const SHELL = (.+);', worker, re.MULTILINE).group(1))
 for route in ('reader', 'sanctuary', 'journeys', 'explore'):
     assert (site / route / 'index.html').exists() == enabled, route
-for asset in ('stylesheets/practice.css', 'javascripts/abp-practice.js', 'stylesheets/festivals.css', 'javascripts/abp-festivals.js', 'javascripts/abp-journeys.js', 'javascripts/abp-discovery.js', 'javascripts/abp-sharing.js', 'javascripts/abp-japa-history.js', 'javascripts/abp-section-shortcuts.js'):
+for asset in ('javascripts/abp-local-state.js', 'stylesheets/practice.css', 'javascripts/abp-practice.js', 'stylesheets/festivals.css', 'javascripts/abp-festivals.js', 'javascripts/abp-journeys.js', 'javascripts/abp-discovery.js', 'javascripts/abp-sharing.js', 'javascripts/abp-japa-history.js', 'javascripts/abp-section-shortcuts.js'):
     assert (asset in home) == enabled, asset
     assert (asset in worker) == enabled, asset
 assert ('assets/festivals/themes.mjs' in worker) == enabled
