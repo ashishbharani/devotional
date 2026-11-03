@@ -6,7 +6,7 @@ title: HDC Completion Execution
 
 The owner resumed implementation on **3 November 2026** with “complete it.” The [completion audit](HDC_MASTER_COMPLETION_DASHBOARD.md) remains the historical evidence baseline; the [finite R1–R9 and L1 roadmap](HDC_REMAINING_INCREMENT_PLAN.md) defines the remaining scope. This ledger records subsequent delivery without rewriting historical test results or claiming approval.
 
-**Release boundary:** PR 51 stays draft. `HDC_PRACTICE_PREVIEW` stays default-OFF. No merge, activation or deployment is performed by this continuation. The complete final candidate still requires staging approval.
+**Release boundary:** PR 51 stays draft. `HDC_PRACTICE_PREVIEW` stays default-OFF. No merge, production activation or GitHub Pages deployment is performed by this continuation. A separate owner-private HTTPS device preview is published for manual QA. The complete final candidate still requires staging approval.
 
 ## R1 — Saved-data compatibility
 
@@ -76,7 +76,9 @@ Fresh bundled captures again passed all 24 page/width/theme combinations. Compar
 
 ## Current finite boundary
 
-R1–R6 engineering and the bounded R8 lab repair now have passing automated evidence. R7 actual-device/assistive observations and L1 authored/native-reviewed translation remain open because the owner confirmed those resources are unavailable. R9's exact final freeze and staging decision therefore remain open. No requirement was waived and no merge, production activation or deployment occurred. The older 149-criterion matrix remains a historical audit, not a newly calculated completion percentage.
+R1–R6 engineering and the bounded R8 lab repair have passing automated evidence. R7 now has six owner-reported Windows Narrator/zoom passes and six Android task-group passes: homepage loading, native install prompt, installed standalone launch with install controls hidden, offline Reader/bookmark retention, portrait/landscape navigation and search/history/Library links, and the full Meerut preset shared across Panchang/calendar/Ephemeris after reload. The tested source is `fb74884a18358804fcf584662a81ad34f038aadd`; the detailed evidence and its attribution are retained in `review/platform-observations-2026-11-04.md`. The Android owner reports Samsung A57, Android 17 and Chrome 156.0.8078.75. No independent speech capture or phone instrumentation is claimed.
+
+Android actual update and dismissed-prompt observations, actual iOS checks, and L1 authored/native-reviewed translations remain open. R9's exact final freeze and staging decision also remain open. No requirement was waived and no merge, production activation or GitHub Pages deployment occurred. The separate owner-private HTTPS staging copy is for device QA only. The older 149-criterion matrix remains a historical audit, not a newly calculated completion percentage.
 
 ## Remaining completion boundaries
 

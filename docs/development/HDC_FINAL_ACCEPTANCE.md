@@ -16,6 +16,8 @@ This is the operational review checklist for the finite [completion roadmap](HDC
 
 ## Finite supported-platform observation plan
 
+**4 November observation update:** on candidate `fb74884a18358804fcf584662a81ad34f038aadd`, the owner reports all six Windows Narrator/zoom tasks passing, plus six Android task groups: homepage, native install prompt, standalone launch with install controls hidden, offline Reader/bookmark retention, portrait/landscape navigation/search/history/Library links, and full Meerut preset synchronization across Panchang/calendar/Ephemeris after reload. Exact task outcomes and evidence limitations are recorded in `review/platform-observations-2026-11-04.md` in the repository. These are actual owner-assisted reports, not independently captured speech or phone telemetry. Android update/dismissal and actual iOS observations remain open. A separate owner-private HTTPS test site is published; GitHub Pages production is unchanged. Final approval and L1 remain open.
+
 | Observation | Automated evidence | Actual observation still required |
 | --- | --- | --- |
 | Windows Chromium, 320–1440 widths, light/dark, reduced motion | Existing header, keyboard, navigation, practice and design-system suites | Exact final screenshot comparison with approved design; real zoom and focus/dialog task review |
