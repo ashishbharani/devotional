@@ -20,19 +20,26 @@ assert.deepEqual(eligibleEvents([schedule(['ba','b-a','a1','a-1'].map(id=>event(
 assert.equal(eligibleEvents([overlap],'2026-01-01','IN').some(e=>e.id==='regional'),false);
 assert.equal(eligibleEvents([schedule([{id:'uncertain',status:'unreviewed'}])],'2026-01-01').length,0);
 assert.equal(eligibleEvents([schedule([event({start:'2026-12-31',end:'2027-01-01'})])],'2027-01-01').length,1);
-for(const patch of [{id:null},{theme:'unknown'},{start:'2026-02-29'},{end:'2025-12-31'},{regions:[]},{priority:NaN},{reviewer:''},{reviewedOn:'bad'},{sources:[]},{sources:[{url:'javascript:alert(1)',label:'invalid'}]}])assert.throws(()=>validateSchedule(schedule([event(patch)])));
+for(const patch of [{id:null},{theme:'unknown'},{start:'2026-02-29'},{end:'2025-12-31'},{regions:[]},{priority:NaN},{reviewer:''},{presentationScope:'unrecognized'},{presentationScope:'reference-civil-day',end:'2026-01-02'},{reviewedOn:'bad'},{sources:[]},{sources:[{url:'javascript:alert(1)',label:'invalid'}]}])assert.throws(()=>validateSchedule(schedule([event(patch)])));
 assert.throws(()=>validateSchedule(schedule([event(),event()])));
 assert.throws(()=>eligibleEvents([data,data],'2026-01-01'));
 assert.throws(()=>eligibleEvents([data],'2026-02-29'));
 const manifest=JSON.parse(await readFile('docs/assets/festivals/index.json','utf8'));
 assert.equal(manifest.schema,1);
-for(const year of manifest.years){const bundled=validateSchedule(JSON.parse(await readFile(`docs/assets/festivals/${year}.json`,'utf8')));assert.equal(bundled.year,year);assert.equal(bundled.events.length,0,'No unreviewed dates invented for this initial release');}
-console.log('PASS festival theme boundaries, India midnight, seven-day window, overlaps/regions, malformed data, year transitions and honest empty production registry');
-for(const year of [2026,2027]){
- const queue=validateSchedule(JSON.parse(await readFile(`review/festivals/${year}-candidates.json`,'utf8')));
- for(const candidate of queue.events){
-  assert.equal(candidate.status,'unreviewed');assert.ok(candidate.sources.length>=2);
-  assert.equal(eligibleEvents([queue],candidate.start).length,0,'source research alone cannot activate an unreviewed real date');
- }
-}
-console.log('PASS past and upcoming real source candidates stay unpublished and ineligible');
+const reviewed=validateSchedule(JSON.parse(await readFile('docs/assets/festivals/2027.json','utf8')));
+assert.deepEqual(manifest.years,[2026,2027]);
+assert.equal(validateSchedule(JSON.parse(await readFile('docs/assets/festivals/2026.json','utf8'))).events.length,0);
+assert.equal(reviewed.events.length,1);const real=reviewed.events[0];
+assert.equal(real.id,'2027-maha-shivaratri-reference-civil-day');assert.equal(real.status,'reviewed');assert.equal(real.presentationScope,'reference-civil-day');assert.equal(real.priority,10);assert.deepEqual(real.regions,['IN']);assert.equal(real.start,'2027-03-06');assert.equal(real.end,real.start);assert.equal(real.reviewedOn,'2026-11-03');assert.match(real.reviewer,/Repository owner/);
+assert.equal(eligibleEvents([reviewed],'2027-02-26').length,0);
+assert.equal(eligibleEvents([reviewed],'2027-02-27')[0].phase,'approaching');
+assert.equal(eligibleEvents([reviewed],'2027-03-05')[0].phase,'approaching');
+for(const region of ['IN','IN-UP','IN-MH','IN-DL'])assert.equal(eligibleEvents([reviewed],'2027-03-06',region)[0].id,real.id);
+assert.equal(eligibleEvents([reviewed],'2027-03-07').length,0);
+const regional={schema:1,year:2027,events:[event({id:'synthetic-regional-2027',start:'2027-03-06',end:'2027-03-06',regions:['IN-UP'],priority:50})]};
+assert.deepEqual(eligibleEvents([reviewed,regional],'2027-03-06','IN-UP').map(e=>e.id),['synthetic-regional-2027',real.id]);
+const uncertain=validateSchedule(JSON.parse(await readFile('review/festivals/2026-candidates.json','utf8')));
+for(const candidate of uncertain.events){assert.equal(candidate.status,'unreviewed');assert.equal(eligibleEvents([uncertain],candidate.start).length,0);}
+const approval=JSON.parse(await readFile('review/festivals/2027-candidates.json','utf8'));
+assert.equal(approval.status,'owner-approved-promoted');assert.equal(approval.approvalEvidence.deploymentApproved,false);assert.deepEqual(approval.events,reviewed.events);
+console.log('PASS synthetic boundaries, real reviewed 2027 preparation/expiry/regions/overlap, source approval and continued exclusion of unreviewed candidates');

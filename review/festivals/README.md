@@ -31,19 +31,10 @@ Then copy only the approved record into the existing year-specific registry,
 validate it and test seven-day eligibility, overlaps, expiry and rendered wording.
 This review queue is not sufficient authorization to deploy the whole release.
 
-## Upcoming candidate: Maha Shivaratri, 6 March 2027
+## Approved upcoming slice: Maha Shivaratri, 6 March 2027
 
-`2027-candidates.json` adds a real upcoming source-review candidate, inspected on
-3 November 2026. The IMD Positional Astronomy Centre's Rashtriya Panchanga festival
-table has a distinct 2027 segment, row 81, listing 6 March. The Isha Yoga Center's
-own Coimbatore announcement corroborates the starting civil day and explicitly
-describes a nightlong event, 6 PM to 6 AM. That overnight duration is why the
-proposed same-day presentation end is a review decision, not an established
-ritual conclusion. No organizer imagery, programme prose or teachings are copied.
+The owner explicitly replied **“approved both”** on 3 November 2026 to the two prepared proposals, including this exact one-reference-civil-day scope for India, priority 10, existing Shiva illustration, seven-day preparation window, and no claim about ritual timing or the end of Isha's overnight event. This is actual owner content-scope approval, not a fabricated expert or GitHub PR approval. Deployment was explicitly excluded.
 
-The proposed release slice is this one reference civil day, priority 10, with the existing
-Shiva illustration, seven-day preparation window, no audio, and original-theme
-fallback outside the window. A human reviewer must decide the exact regional
-scope and end boundary and supply their real name/date and priority. Until then,
-do not put it in `docs/assets/festivals/index.json` or label it reviewed. Existing
-synthetic timing tests and inspected sources cannot stand in for that decision.
+`2027-candidates.json` retains that decision and source evidence; its event is promoted to `docs/assets/festivals/2027.json` and the existing manifest. The IMD Rashtriya Panchanga 1948 table's 2027 segment, row 81, and Isha's own Coimbatore announcement corroborate the starting civil day. The latter describes a nightlong event, so the UI explicitly states that its reference-day presentation does not specify ritual or overnight end times. No organizer artwork, teaching or programme prose is copied.
+
+The actual schedule has one reviewed event. The 2026 Ganesh candidate remains unreviewed and ineligible. No annual recurrence or wider festival quota is inferred. The preview release remains default-OFF; native-language/device acceptance and final staging approval remain open. Real-record timing/region/expiry and rendered-wording tests must pass before closing this slice.

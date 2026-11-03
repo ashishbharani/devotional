@@ -5,10 +5,9 @@ the existing Panchang, devotional identities or canonical data are modified.
 
 ## Current availability — important
 
-The 2026 presentation registry contains **zero reviewed observances**. Automatic
-mode therefore retains the original theme. Existing rule-engine results are
-explicitly marked as requiring regional review; they are not silently promoted
-to verified presentation dates. No recurring Gregorian date is guessed.
+The 2026 presentation registry remains empty. The owner approved one bounded 2027 reference civil day on 3 November 2026: **Maha Shivaratri, 6 March 2027**, India reference eligibility, priority 10, existing Shiva artwork and a seven-day preparation window. The approval/evidence is retained in `review/festivals/2027-candidates.json`; the actual record is in `docs/assets/festivals/2027.json`.
+
+Automatic presentation begins on 27 February 2027 in Asia/Kolkata, labels 6 March as the published reference civil day, and returns to original on 7 March. It does **not** assert ritual timings or the end of Isha's overnight event. Regional calendars may differ. Original mode always overrides it. Unreviewed records remain ineligible; no Gregorian annual recurrence is guessed. All practice presentation still follows the default-OFF staging gate; this content approval is not deployment approval.
 
 Manual Ganesha/Shiva previews use existing approved portraits and collection
 routes. They are visibly labelled design previews, NOT festival announcements.

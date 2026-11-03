@@ -35,9 +35,9 @@
    const manual=mode!=='auto';display.hidden=false;root.dataset.festivalTheme=manual?mode:event.theme;
    const image=q('[data-festival-image]');image.src=new URL(theme.image,base).href;image.alt=`Approved devotional illustration of ${theme.name}`;
    q('[data-festival-title]').textContent=manual?`${theme.name} design preview`:event.name;
-   q('[data-festival-note]').textContent=manual?'Design preview only — not a festival date or observance announcement.':`${event.phase==='approaching'?'Preparation window; observance begins':'Observance window'} ${event.start} through ${event.end}. Tradition: ${event.tradition}. Regions: ${event.regions.join(', ')}.`;
+   q('[data-festival-note]').textContent=manual?'Design preview only — not a festival date or observance announcement.':event.presentationScope==='reference-civil-day'?`${event.phase==='approaching'?'Preparation for reference civil day':'Published reference civil day'} ${event.start}. This presentation does not specify ritual or overnight event end times. Regional traditions may differ. Reference: ${event.tradition}. Regions: ${event.regions.join(', ')}.`:`${event.phase==='approaching'?'Preparation window; observance begins':'Observance window'} ${event.start} through ${event.end}. Tradition: ${event.tradition}. Regions: ${event.regions.join(', ')}.`;
    q('[data-festival-link]').href=new URL(theme.path,base).href;
-   status.textContent=manual?'Manual design preview; Panchang and the original website layout are unchanged.':'Reviewed presentation schedule applied; regional traditions may differ.';
+   status.textContent=manual?'Manual design preview; Panchang and the original website layout are unchanged.':event.presentationScope==='reference-civil-day'?'Reviewed reference civil-date presentation applied; not a ritual timetable.':'Reviewed presentation schedule applied; regional traditions may differ.';
    for(const other of active.slice(1)){
     const li=document.createElement('li'),a=document.createElement('a');a.textContent=`Also applicable: ${other.name} (${other.tradition})`;a.href=new URL(tools.THEMES[other.theme].path,base).href;li.append(a);list.append(li);
    }

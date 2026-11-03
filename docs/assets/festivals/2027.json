@@ -1,0 +1,45 @@
+{
+  "schema": 1,
+  "year": 2027,
+  "status": "reviewed-reference-civil-day-slice",
+  "events": [
+    {
+      "id": "2027-maha-shivaratri-reference-civil-day",
+      "name": "Maha Shivaratri — published reference civil day",
+      "status": "reviewed",
+      "theme": "shiva",
+      "start": "2027-03-06",
+      "end": "2027-03-06",
+      "regions": [
+        "IN"
+      ],
+      "priority": 10,
+      "tradition": "Rashtriya Panchanga reference civil date; regional and nightlong observances may differ",
+      "sources": [
+        {
+          "url": "https://packolkata.imd.gov.in/panchang/index.php/en/festivals",
+          "label": "IMD Positional Astronomy Centre — Rashtriya Panchanga 1948, festivals table",
+          "pinpoint": "2027 A.D. segment, row 81; Maha Shivaratri entries including Kashmir and S.India, 06 Mar 2027"
+        },
+        {
+          "url": "https://isha.sadhguru.org/mahashivratri/attend-in-person/",
+          "label": "Isha Yoga Center Coimbatore — organizer's 2027 event announcement",
+          "pinpoint": "2027 announcement; 6 March 2027, 6 PM to 6 AM; Isha Yoga Center Coimbatore"
+        }
+      ],
+      "limitations": [
+        "This is a reference civil-date presentation, not a location-specific tithi, puja time or ritual/event end",
+        "The Isha organizer source describes an overnight event; no conclusion time is inferred from the same-day presentation end",
+        "Regional observances may differ; no automatic annual Gregorian recurrence is inferred",
+        "The coordinated practice release remains default-OFF pending remaining acceptance gates"
+      ],
+      "presentationScope": "reference-civil-day",
+      "reviewer": "Repository owner (explicit content-scope approval in Codex chat)",
+      "reviewedOn": "2026-11-03",
+      "reviewDecisions": [
+        "Owner approved one reference civil day, India eligibility and priority 10; no ritual timetable or overnight event end is asserted",
+        "Owner approved existing Shiva artwork and seven-day preparation window; no production deployment was approved"
+      ]
+    }
+  ]
+}

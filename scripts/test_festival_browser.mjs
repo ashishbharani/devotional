@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import {spawn} from 'node:child_process';
-import {mkdir} from 'node:fs/promises';
+import {mkdir,readFile} from 'node:fs/promises';
 import {chromium} from 'playwright';
 const server=spawn(process.execPath,['scripts/serve_header_preview.mjs'],{env:{...process.env,HDC_PREVIEW_PORT:'4335'},stdio:['ignore','pipe','inherit']});
 await new Promise((resolve,reject)=>{server.stdout.once('data',resolve);server.once('error',reject);});
@@ -11,9 +11,10 @@ try{
   const context=await browser.newContext({viewport:{width,height:1000},serviceWorkers:'block',reducedMotion:'reduce'});
   await context.route('https://fonts.googleapis.com/**',r=>r.fulfill({body:'',contentType:'text/css'}));
   const page=await context.newPage(),errors=[];page.on('pageerror',e=>errors.push(e.message));
+  await page.clock.install({time:new Date('2026-11-03T06:30:00Z')});
   await page.goto(base);await page.waitForFunction(()=>document.querySelector('[data-festival-status]')?.textContent.includes('Original theme retained'));
   await page.evaluate(t=>document.body.setAttribute('data-md-color-scheme',t),theme);
-  assert.equal(await page.locator('[data-festival-display]').isVisible(),false,'no invented automatic dates');
+  assert.equal(await page.locator('[data-festival-display]').isVisible(),false,'no reviewed window applies on the pinned November 2026 test day');
   await page.locator('.hdc-festival summary').click();await page.locator('[data-festival-mode]').selectOption('ganesha');
   assert.match(await page.locator('[data-festival-note]').textContent(),/not a festival date/);
   await page.waitForFunction(()=>document.querySelector('[data-festival-image]').naturalWidth>0);
@@ -31,6 +32,48 @@ try{
   await page.locator('[data-festival-mode]').selectOption('original');assert.equal(await page.locator('[data-festival-display]').isVisible(),false);
   assert.deepEqual(errors,[]);await context.close();console.log(`PASS festival preview ${width}px ${theme}`);
  }
+ // Real owner-reviewed data, fetched through the actual manifest and year files.
+ // The browser clock is a test control; no production date or astronomy is changed.
+ const reviewed=JSON.parse(await readFile('docs/assets/festivals/2027.json','utf8')).events[0];
+ const realContext=await browser.newContext({viewport:{width:375,height:1000},serviceWorkers:'block',reducedMotion:'reduce'}),realPage=await realContext.newPage(),realErrors=[];
+ realPage.on('pageerror',error=>realErrors.push(error.message));
+ await realContext.route('https://fonts.googleapis.com/**',r=>r.fulfill({body:'',contentType:'text/css'}));
+ await realPage.clock.install({time:new Date('2027-02-26T12:00:00Z')});
+ await realPage.goto(base);await realPage.waitForFunction(()=>document.querySelector('[data-festival-status]')?.textContent.includes('2027-02-26'));
+ assert.equal(await realPage.locator('[data-festival-display]').isVisible(),false);
+ await realPage.clock.fastForward(6.5*3600000);
+ await realPage.waitForFunction(()=>document.querySelector('[data-festival-title]')?.textContent.includes('Maha Shivaratri'));
+ assert.equal(await realPage.locator('[data-festival-title]').textContent(),reviewed.name);
+ assert.match(await realPage.locator('[data-festival-note]').textContent(),/Preparation for reference civil day 2027-03-06/);
+ assert.match(await realPage.locator('[data-festival-note]').textContent(),/does not specify ritual or overnight event end times/);
+ assert.match(await realPage.locator('[data-festival-image]').getAttribute('src'),/shiva-640.webp$/);
+ const sourceLinks=await realPage.locator('[data-festival-overlaps] a').evaluateAll(nodes=>nodes.map(a=>a.href));
+ assert.deepEqual(sourceLinks,reviewed.sources.map(source=>source.url));
+ await realPage.locator('.hdc-festival summary').click();await realPage.locator('[data-festival-region]').selectOption('IN-MH');
+ assert.equal(await realPage.locator('[data-festival-title]').textContent(),reviewed.name,'reviewed India reference applies to selected Indian regions');
+ await realPage.clock.fastForward(7*86400000);
+ await realPage.waitForFunction(()=>document.querySelector('[data-festival-note]')?.textContent.includes('Published reference civil day'));
+ assert.ok(!(await realPage.locator('[data-festival-note]').textContent()).includes('Observance window'));
+ await realPage.locator('[data-festival-mode]').selectOption('original');assert.equal(await realPage.locator('[data-festival-display]').isVisible(),false,'explicit original choice overrides automatic presentation');
+ await realPage.locator('[data-festival-mode]').selectOption('auto');assert.equal(await realPage.locator('[data-festival-title]').textContent(),reviewed.name);
+ await realPage.locator('[data-festival-image]').evaluate(image=>image.decode());
+ assert.ok(await realPage.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'real civil-date wording fits the mobile viewport');
+ await realPage.locator('[data-festival-experience]').screenshot({path:'work/festival-preview/reviewed-maha-shivaratri-2027.png'});
+ await realPage.clock.fastForward(86400000);
+ await realPage.waitForFunction(()=>document.querySelector('[data-festival-status]')?.textContent.includes('2027-03-07'));
+ assert.equal(await realPage.locator('[data-festival-display]').isVisible(),false,'reviewed one-civil-day presentation expires automatically');
+ assert.deepEqual(realErrors,[]);await realContext.close();
+ console.log('PASS actual approved 2027 record: seven-day India midnight activation, civil-day wording, sources, regions, original override and automatic expiry');
+ const offlineContext=await browser.newContext({serviceWorkers:'allow'}),offlinePage=await offlineContext.newPage();
+ await offlineContext.route('https://fonts.googleapis.com/**',r=>r.fulfill({body:'',contentType:'text/css'}));
+ await offlinePage.clock.install({time:new Date('2027-03-06T06:30:00Z')});
+ await offlinePage.goto(base);await offlinePage.evaluate(()=>navigator.serviceWorker.ready);await offlinePage.waitForFunction(()=>Boolean(navigator.serviceWorker.controller));
+ assert.ok(await offlinePage.evaluate(async url=>Boolean(await caches.match(url)),base+'assets/festivals/2027.json'),'the actual reviewed year is part of the gated offline shell');
+ await offlineContext.setOffline(true);await offlinePage.reload();
+ await offlinePage.waitForFunction(()=>document.querySelector('[data-festival-title]')?.textContent.includes('Maha Shivaratri'));
+ assert.match(await offlinePage.locator('[data-festival-note]').textContent(),/Published reference civil day 2027-03-06/);
+ await offlinePage.clock.fastForward(86400000);await offlinePage.waitForFunction(()=>document.querySelector('[data-festival-display]')?.hidden);
+ await offlineContext.close();console.log('PASS actual reviewed festival record works and expires through the real worker offline shell');
  // Deliberately fictional scheduling evidence: injected only inside this test.
  const event={id:'synthetic',name:'Synthetic test, not a real festival',theme:'ganesha',status:'reviewed',start:'2026-01-01',end:'2026-01-02',regions:['IN'],tradition:'Test fixture only',priority:1,reviewer:'Test-only reviewer',reviewedOn:'2025-12-01',sources:[{url:'https://example.invalid/test-only',label:'Synthetic test source'}]};
  const context=await browser.newContext({serviceWorkers:'block'}),page=await context.newPage();

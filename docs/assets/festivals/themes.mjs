@@ -29,6 +29,7 @@ export function validateSchedule(data){
     if(event.status!=='reviewed')continue; // uncertain records must never activate
     if(typeof event.name!=='string'||!event.name.trim()||!Object.hasOwn(THEMES,event.theme))throw new Error('Invalid theme/label');
     if(!event.start.startsWith(`${data.year}-`)||ordinal(event.end)<ordinal(event.start)||ordinal(event.end)-ordinal(event.start)>366)throw new Error('Invalid observance window');
+    if(event.presentationScope!==undefined&&(event.presentationScope!=='reference-civil-day'||event.start!==event.end))throw new Error('Invalid reference civil-day scope');
     if(!Array.isArray(event.regions)||!event.regions.length||event.regions.some(r=>typeof r!=='string'||!/^IN(?:-[A-Z]{2,3})?$/.test(r)))throw new Error('Missing region');
     if(typeof event.tradition!=='string'||!event.tradition.trim()||!Number.isInteger(event.priority)||event.priority<0||event.priority>100)throw new Error('Missing tradition/priority');
     if(typeof event.reviewer!=='string'||!event.reviewer.trim()||!Array.isArray(event.sources)||!event.sources.length)throw new Error('Missing review evidence');
