@@ -1213,11 +1213,11 @@ def discovery_paths(d):
     categories = {c["num"]: c for c in d["categories"]}
     out = ['<h2 id="featured-devotion">Explore devotional identities</h2><div class="abp-cards" data-discovery-cards>']
     groups = {g["name"]: g for g in categories[1]["merged"]}
-    for name in ("GANESHA", "SHIVA / MAHESH", "VISHNU", "HANUMAN"):
+    for name, query in (("GANESHA", "Ganesha"), ("SHIVA / MAHESH", "Shiva"), ("VISHNU", "Vishnu"), ("HANUMAN", "Hanuman")):
         group = groups[name]
         art = deity_portrait(name, "explore/")
         out.append(f'<div class="abp-card"><span class="abp-card__num" aria-hidden="true">❖</span><div><h3><a class="abp-reading-link" href="../{esc(group["url"])}">{esc(group["name"])}</a></h3>{art}'
-                   f'<p>{fmt(group["count"])} indexed works in the existing section.</p><p><a class="abp-reading-link" href="../find/?w={quote_plus(name)}">Documented aliases and related identities</a></p></div></div>')
+                   f'<p>{fmt(group["count"])} indexed works in the existing section.</p><p><a class="abp-reading-link" href="../find/?w={quote_plus(query)}">Documented aliases and related identities</a></p></div></div>')
     out.append('</div><h2 id="featured-works">Featured work references</h2><ul data-discovery-works>')
     featured = {"HDL2-CWID-25F980F2BD34A2107382", "HDL2-CWID-E73C30069833764A47B2"}
     found = set()
