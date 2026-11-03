@@ -10,10 +10,19 @@ site = Path(__file__).resolve().parent.parent / 'site'
 home = (site / 'index.html').read_text(encoding='utf-8')
 worker = (site / 'sw.js').read_text(encoding='utf-8')
 shell = json.loads(re.search(r'^const SHELL = (.+);', worker, re.MULTILINE).group(1))
+bundle_file = site / 'assets/stylesheet-bundle.json'
+assert bundle_file.exists() == enabled
+bundled = json.loads(bundle_file.read_text(encoding='utf-8')) if enabled else {'sources': []}
+if enabled:
+    assert bundled['bundle'] in home and bundled['bundle'] in shell
+    assert (site / bundled['bundle']).is_file()
 for route in ('reader', 'sanctuary', 'journeys', 'explore'):
     assert (site / route / 'index.html').exists() == enabled, route
 for asset in ('javascripts/abp-local-state.js', 'stylesheets/practice.css', 'javascripts/abp-practice.js', 'stylesheets/festivals.css', 'javascripts/abp-festivals.js', 'javascripts/abp-journeys.js', 'javascripts/abp-discovery.js', 'javascripts/abp-sharing.js', 'javascripts/abp-japa-history.js', 'javascripts/abp-section-shortcuts.js'):
-    assert (asset in home) == enabled, asset
+    if asset.startswith('stylesheets/'):
+        assert (asset in [item['path'] for item in bundled['sources']]) == enabled, asset
+    else:
+        assert (asset in home) == enabled, asset
     assert (asset in worker) == enabled, asset
 assert ('assets/festivals/themes.mjs' in worker) == enabled
 assert ('Enter the Devotional Sanctuary' in home) == enabled

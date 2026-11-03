@@ -5,6 +5,7 @@ import {readFile,stat,mkdir,writeFile} from 'node:fs/promises';
 import path from 'node:path';
 import {chromium} from 'playwright';
 const root=path.resolve('site'),worker=await readFile('site/sw.js','utf8');
+const bundled=JSON.parse(await readFile('site/assets/stylesheet-bundle.json','utf8')).bundle;
 const version=worker.match(/const VERSION = "([^"]+)";/)?.[1];assert.ok(version);
 const oldVersion='qa-previous-release',marker='/* QA previous release CSS */';let phase='old';
 const oldWorker=worker.replace(`const VERSION = "${version}";`,`const VERSION = "${oldVersion}";`);
@@ -13,11 +14,11 @@ const server=createServer(async(req,res)=>{try{
  const url=new URL(req.url,'http://localhost');assert.ok(url.pathname.startsWith('/devotional/'));
  const relative=decodeURIComponent(url.pathname.slice(12));let file=path.resolve(root,relative);
  assert.ok(file===root||file.startsWith(root+path.sep));
- if(phase==='broken'&&relative==='stylesheets/practice.css')return res.writeHead(503,{'Cache-Control':'no-store'}).end('Intentional update fixture');
+ if(phase==='broken'&&(relative==='stylesheets/practice.css'||relative===bundled))return res.writeHead(503,{'Cache-Control':'no-store'}).end('Intentional update fixture');
  if((await stat(file)).isDirectory())file=path.join(file,'index.html');
  let body=await readFile(file);
  if(relative==='sw.js')body=phase==='old'?oldWorker:worker;
- if(phase==='old'&&relative==='stylesheets/practice.css')body=Buffer.concat([body,Buffer.from('\n'+marker)]);
+ if(phase==='old'&&(relative==='stylesheets/practice.css'||relative===bundled))body=Buffer.concat([body,Buffer.from('\n'+marker)]);
  res.writeHead(200,{'Content-Type':mime[path.extname(file)]||'application/octet-stream','Cache-Control':'no-store'}).end(body);
 }catch{res.writeHead(404).end();}});
 await new Promise(r=>server.listen(0,'127.0.0.1',r));
@@ -32,7 +33,9 @@ try{
  await page.goto(base+'sanctuary/');await page.evaluate(()=>navigator.serviceWorker.ready);
  await page.waitForFunction(()=>Boolean(navigator.serviceWorker.controller));
  const cacheText=()=>page.evaluate(async url=>(await caches.match(url))?.text(),base+'stylesheets/practice.css');
+ const bundleText=()=>page.evaluate(async url=>(await caches.match(url))?.text(),base+bundled);
  assert.ok((await cacheText()).includes(marker),'old release actually cached before update');
+ assert.ok((await bundleText()).includes(marker),'old release has the actual linked CSS bundle');
  const saved={'abp-japa-state-v1':'{"count":108}','hdc-reader-v1':'{"bookmark":true}','hdc-journey-state-v1':'{"name":"Saved routine","minutes":10,"journal":"","sessions":[]}'};
  await page.evaluate(async data=>{for(const [k,v] of Object.entries(data))localStorage.setItem(k,v);await caches.open('unrelated-qa-cache');},saved);
  // A failed precache must not evict the working release or its offline view.
@@ -47,6 +50,7 @@ try{
  });
  assert.equal(state,'redundant','missing shell asset rejects the incomplete update');
  assert.ok((await cacheText()).includes(marker),'failed update keeps old cached styling');
+ assert.ok((await bundleText()).includes(marker),'failed bundle precache keeps the working linked CSS');
  await context.setOffline(true);await page.reload();await page.locator('[data-light]').click();
  assert.equal(await page.locator('[data-light]').getAttribute('aria-pressed'),'true','old shell remains interactive offline');
  await context.setOffline(false);phase='current';
@@ -63,6 +67,7 @@ try{
  assert.ok(evidence.cachesAfterUpdate.every(c=>!c.name.includes(oldVersion)),'activation retires old caches');
  assert.ok(evidence.cachesAfterUpdate.some(c=>c.name===`udhc-shell-${version}`&&c.hasCss),'activated release has its complete shell');
  assert.ok(!(await cacheText()).includes(marker),'successful upgrade replaces old CSS bytes');
+ assert.ok(!(await bundleText()).includes(marker),'successful upgrade replaces actual linked bundle bytes');
  assert.ok(await page.evaluate(async()=> (await caches.keys()).includes('unrelated-qa-cache')),'unrelated cache preserved');
  await context.setOffline(true);await page.goto(base+'sanctuary/?minutes=10');
  assert.equal(await page.locator('[data-duration]').inputValue(),'10');

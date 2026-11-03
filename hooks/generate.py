@@ -1361,6 +1361,10 @@ def on_post_build(config, **kw):
     # Ship larger Android launcher artwork without modifying approved source PNGs.
     from scripts.pwa_icon import publish_maskable
     publish_maskable(site)
+    bundle = None
+    if PRACTICE_PREVIEW:
+        from scripts.stylesheet_bundle import publish_bundle
+        bundle = publish_bundle(site, urlsplit(config['site_url']).path)
     tpl = (ROOT / "hooks" / "sw.template.js").read_text(encoding="utf-8")
     shell = [
         "", "offline/", "favourites/", "manifest.webmanifest", "stylesheets/abp.css", "stylesheets/feedback.css", "stylesheets/project-info.css", "stylesheets/search.css",
@@ -1376,6 +1380,7 @@ def on_post_build(config, **kw):
         "icon-192.png", "icon-512.png", "icon-maskable-512.png", "icon-maskable-512-v2.png", "apple-touch-icon.png",
     ))
     if PRACTICE_PREVIEW:
+        shell.extend([bundle, "assets/stylesheet-bundle.json"])
         # Public route metadata only. Loaded on demand; never duplicate work favourites.
         shortcut_registry = {"schema": 1, "sections": [{"path": url_of(p["src"]), "title": p["title"]} for p in _pages if "cat" in p]}
         (site / "assets" / "section-shortcuts.json").write_text(json.dumps(shortcut_registry, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")

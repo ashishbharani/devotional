@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import {spawn} from 'node:child_process';
-import {mkdir,stat,writeFile,readdir} from 'node:fs/promises';
+import {mkdir,stat,writeFile,readdir,readFile} from 'node:fs/promises';
 import {chromium} from 'playwright';
 import {layoutMetrics} from './lab_metrics.mjs';
 const server=spawn(process.execPath,['scripts/serve_header_preview.mjs'],{env:{...process.env,HDC_PREVIEW_PORT:'4337'},stdio:['ignore','pipe','inherit']});
@@ -12,6 +12,8 @@ try{
  for(const path of ['docs/javascripts/abp-local-state.js','docs/javascripts/abp-practice.js','docs/javascripts/abp-festivals.js','docs/javascripts/abp-journeys.js','docs/javascripts/abp-discovery.js','docs/javascripts/abp-sharing.js','docs/javascripts/abp-japa-history.js','docs/javascripts/abp-section-shortcuts.js','docs/stylesheets/practice.css','docs/stylesheets/festivals.css','docs/assets/festivals/themes.mjs'])report.bytes+=(await stat(path)).size;
  assert.ok(report.bytes<100*1024,'incremental feature code stays below the explicit 100 KiB source budget');
  const helpers=['sitemap.xml','assets/i18n.json','search/search_index.json',...(await readdir('site/assets/javascripts/workers')).filter(n=>/^search\..*\.min\.js$/.test(n)).map(n=>'assets/javascripts/workers/'+n)];
+ const bundled=JSON.parse(await readFile('site/assets/stylesheet-bundle.json','utf8'));
+ helpers.push(bundled.bundle,'assets/stylesheet-bundle.json');
  report.offlineHelperBytes=0;for(const path of helpers)report.offlineHelperBytes+=(await stat('site/'+path)).size;
  assert.ok(report.offlineHelperBytes<4*1024*1024,'native search/navigation/language cache additions stay below 4 MiB');
  for(const width of [375,768,1440]){
