@@ -34,7 +34,7 @@ Regression coverage: `test_local_state.mjs` tests the common record contract; `t
 
 The owner approved the scoped 2027 reference civil-day proposal on 3 November 2026. One real reviewed record is now in the year manifest, with explicit reference-day wording and automatic preparation/expiry tests. The owner also confirmed that native-language reviewers and actual-device/assistive test resources are currently unavailable. Those gates remain open; no full translation, device verification or final staging approval is claimed. The [final acceptance checklist](HDC_FINAL_ACCEPTANCE.md) supplies concrete review tasks and rollback/launch steps without checking them off.
 
-R8 has a finite CPU/network-throttled click/key experiment and tested Event Timing aggregation, but **does not pass acceptance**. The production-like comparison uses Chromium 151, 4× CPU, 150 ms latency, 1.6 Mbps download/750 Kbps upload, cold profiles, real font requests, disabled HTTP cache/worker and gzip text transport. Public Pages response headers confirmed gzip for the stylesheet and canonical index. The opt-in preview transport has exact-byte/decompression tests and leaves ordinary serving unchanged. Earlier uncompressed runs and failed probes are retained as diagnostics, not acceptance evidence.
+R8 initially missed its targets; the subsequent source-preserving delivery repair meets the finite lab targets recorded below. The production-like comparison uses Chromium 151, 4× CPU, 150 ms latency, 1.6 Mbps download/750 Kbps upload, cold profiles, real font requests, disabled HTTP cache/worker and gzip text transport. Public Pages response headers confirmed gzip for the stylesheet and canonical index. The opt-in preview transport has exact-byte/decompression tests and leaves ordinary serving unchanged. Earlier uncompressed runs and failed probes are retained as diagnostics, not acceptance evidence.
 
 | Pre-bundle candidate task | Width | LCP ms | Lab input candidate ms | Session-window CLS | Task |
 | --- | --- | --- | --- | --- | --- |
@@ -52,6 +52,31 @@ Baseline `2153bec` under the same transport has home LCP 9520/11852 ms and CLS 3
 The candidate measurements identify built application source `35c9941` and exact script/worker hashes; `cea7811` adds history reconciliation without runtime changes. Reports retain failed requests and shift-source rectangles. A diagnostic caught partial stylesheet availability around large early shifts; an isolated explicit-render-blocking probe did not resolve them, so that speculative change was not adopted. Further loading/layout diagnosis or an explicit accepted limitation is still required. Approved art, CSS appearance and engines were not changed to game a score. Local reports: `work/performance-input/baseline-gzip-report.json`, `candidate-gzip-report.json`; neither has `allTargetsMet: true`.
 
 A subsequent isolated CSS-delivery experiment retained all original CSS in its existing order and delivered it as one asset: mobile Reader measured LCP 1924 ms, lab input candidate 104 ms and CLS 0.0554. This identified a concrete loading-boundary repair. Preview builds now emit one content-hashed stylesheet with rebased local resource URLs, exact source-hash manifest and offline precache entry; original CSS files/URLs and the default-OFF production output remain intact. No colours, selectors, fonts or artwork are redesigned. Different/conditional cascades fail the build rather than being silently reordered; root-absolute 404 links preserve missing-nested-route behavior. The first strict preview attempt exposed that 404 case; its regression and corrected strict build pass. Representative performance, visual equivalence and combined regression acceptance must be repeated on this implementation before R8 is closed.
+
+### Bundled implementation results
+
+All eight tasks completed and met the chosen lab targets on the actual bundled artifact. These supersede the pre-bundle failure table for this delivery configuration; they do not rewrite its historical results.
+
+| Task | Width | LCP ms | Lab input candidate ms | Session-window CLS |
+| --- | --- | --- | --- | --- |
+| Home/header search | 375 | 2104 | 56 | 0.0030 |
+| Find | 375 | 1376 | 16 | 0.0051 |
+| Reader | 375 | 1684 | 80 | 0.0484 |
+| Journeys | 375 | 1312 | 72 | 0.0700 |
+| Home/header search | 1440 | 2040 | 112 | 0.0031 |
+| Find | 1440 | 1104 | 16 | 0.0042 |
+| Reader | 1440 | 1652 | 96 | 0.0088 |
+| Journeys | 1440 | 1252 | 112 | 0.0208 |
+
+`work/performance-input/candidate-bundled-report.json` records the full method, source/build identities, requests, events, shift sources and artifact hashes, with `allTargetsMet: true`. CSS SHA-256: `a2653b83664f54fa7cf1d57ccb20b04bb7be4310928fcafc5128271b5a4c5d43`. This is one finite sample per cell, not field INP, physical Android/iOS evidence or a zero-regression guarantee. Local HTTP transport and external font variability remain documented measurement limits.
+
+The 16-check bundled regression run passed, including all-page theme/cascade audits, supported viewport/header/keyboard checks, Reader/routines, actual reviewed festival timing and real-worker failed/successful offline upgrades. Protected hashes were unchanged. [Full GitHub CI 41683060053](https://github.com/ashishbharani/devotional/actions/runs/41683060053) passed on implementation head `0661fa7db77c24286f8f702dae15b01408d24447`, including strict preview/default builds and the configured regression suites. Earlier checkpoint `d211a4d` also passed its fresh 11/11 local build/metadata/coverage/tool checks; it predates this loading repair.
+
+Fresh bundled captures again passed all 24 page/width/theme combinations. Compared with the pre-bundle captures, 23 PNGs are byte-identical. The remaining mobile-light Reader differs in 28 button-edge pixels (same 375×3694 dimensions), with no material visual/content difference on inspection. Full image decoding, no page exceptions, no unexpected first-party failures and no overflow were verified. This demonstrates delivery equivalence to the existing approved implementation; it is not a new claim of pixel identity with the owner's design board or final owner visual approval.
+
+## Current finite boundary
+
+R1–R6 engineering and the bounded R8 lab repair now have passing automated evidence. R7 actual-device/assistive observations and L1 authored/native-reviewed translation remain open because the owner confirmed those resources are unavailable. R9's exact final freeze and staging decision therefore remain open. No requirement was waived and no merge, production activation or deployment occurred. The older 149-criterion matrix remains a historical audit, not a newly calculated completion percentage.
 
 ## Remaining completion boundaries
 
