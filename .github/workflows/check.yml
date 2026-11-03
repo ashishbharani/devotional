@@ -120,6 +120,7 @@ jobs:
       - name: Verify first-install offline routines and record local performance snapshot
         run: |
           node scripts/test_lab_metrics.mjs
+          node scripts/test_preview_transport.mjs
           node scripts/test_pwa_release_browser.mjs
           node scripts/test_pwa_upgrade_browser.mjs
       - name: Audit shared design tokens, enhanced reading and keyboard contrast

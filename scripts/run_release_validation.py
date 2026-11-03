@@ -31,6 +31,7 @@ STEPS = [
  ('translation-review-export',py('scripts/test_translation_review_export.py'),True),
  ('translation-coverage',py('scripts/audit_hosted_translations.py','--output','work/translation-coverage.json'),True),
  ('search-unit',js('test_universal_search'),True),('festival-unit',js('test_festival_themes'),True),('lab-unit',js('test_lab_metrics'),True),
+ ('preview-transport',js('test_preview_transport'),True),
  *[(name,js(script),True) for name,script in [
   ('search-browser','test_search_browser'),('project-info','test_project_info_browser'),
   ('panchang-browser','test_panchang_browser'),('navigation','test_navigation'),
