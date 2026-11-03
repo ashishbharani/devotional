@@ -22,8 +22,11 @@ assert ('data-share-page' in home) == enabled
 assert ('data-daily-reader' in home) == enabled
 for minutes in (5,10,20):
     assert (f'sanctuary/?minutes={minutes}' in worker) == enabled
-for asset in ('sitemap.xml', 'assets/i18n.json', 'search/search_index.json'):
+for asset in ('sitemap.xml', 'search/search_index.json'):
     assert (asset in shell) == enabled, asset
+assert 'assets/i18n.json' in shell, 'PR56 base interface dictionary is available offline in both build modes'
+for code in ('hi', 'mr', 'gu', 'bn', 'pa', 'te', 'kn', 'ml', 'ta'):
+    assert f'assets/translations/{code}.json' not in shell, 'full language packs remain selected-language, on-demand assets'
 assert any(asset.startswith('assets/javascripts/workers/search.') for asset in shell) == enabled
 assert 'assets/works-index.json' not in shell and 'assets/universal-search.json' not in shell, 'large universal payload pair remains on demand'
 assert 'data-panchang-view="summary"' in home, 'existing Daily Darshan must remain'

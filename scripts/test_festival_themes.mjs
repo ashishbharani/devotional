@@ -1,4 +1,4 @@
-// All dates and evidence below are SYNTHETIC fixtures, never production rulings.
+// Boundary cases use SYNTHETIC fixtures; real review-queue records remain unreviewed.
 import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
 import {indiaDay,nextIndiaMidnight,validateSchedule,eligibleEvents} from '../docs/assets/festivals/themes.mjs';
@@ -28,3 +28,11 @@ const manifest=JSON.parse(await readFile('docs/assets/festivals/index.json','utf
 assert.equal(manifest.schema,1);
 for(const year of manifest.years){const bundled=validateSchedule(JSON.parse(await readFile(`docs/assets/festivals/${year}.json`,'utf8')));assert.equal(bundled.year,year);assert.equal(bundled.events.length,0,'No unreviewed dates invented for this initial release');}
 console.log('PASS festival theme boundaries, India midnight, seven-day window, overlaps/regions, malformed data, year transitions and honest empty production registry');
+for(const year of [2026,2027]){
+ const queue=validateSchedule(JSON.parse(await readFile(`review/festivals/${year}-candidates.json`,'utf8')));
+ for(const candidate of queue.events){
+  assert.equal(candidate.status,'unreviewed');assert.ok(candidate.sources.length>=2);
+  assert.equal(eligibleEvents([queue],candidate.start).length,0,'source research alone cannot activate an unreviewed real date');
+ }
+}
+console.log('PASS past and upcoming real source candidates stay unpublished and ineligible');
