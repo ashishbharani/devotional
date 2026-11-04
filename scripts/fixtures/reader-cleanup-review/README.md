@@ -12,3 +12,5 @@ the separate legacy-controls regression fixture are test-only, not site assets.
 
 Reproduce with `node scripts/test_reader_cleanup_browser.mjs`; `--live`
 captures a baseline rather than asserting that deployment is already updated.
+
+The after images were refreshed from the combined four-book Reader on 4 November 2026. Before images retain the earlier two-book/demo baseline; the combined after images include the epic additions and owner-approved panel removal.

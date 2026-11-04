@@ -47,6 +47,13 @@ without publishing the removed demo.
 
 ## Verification
 
-Source coverage/transcription/licence/unique-ID tests pass. Final strict build,
-generated-route/source-download checks, existing regressions and responsive/
-offline browser checks are pending at this checkpoint; no deployment is claimed.
+Source coverage/transcription/licence/unique-ID tests pass. Combined enabled
+strict MkDocs build passed locally in 222.19 seconds; the branch workflow also
+passed its strict build. Four-book navigation, chapter endpoints, the old Gita
+directory fragment, bookmarks and layout passed at 320/768/1440px in both themes.
+Both epic visited chapters and bookmarks passed with the actual offline worker.
+The removed-demo/panel checks passed at 375/1440px; refreshed before/after
+screenshots are in scripts/fixtures/reader-cleanup-review. Catalogue/engine diff
+is empty and the built Reader runtime matches its source. Remaining existing
+regressions and final exact-head GitHub CI must pass before merging; this note
+records that pre-merge checkpoint and does not claim production deployment.
