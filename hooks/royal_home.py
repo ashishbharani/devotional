@@ -30,7 +30,7 @@ def daily_darshan(panchang, practice_preview=False):
         '</nav>'
         + ('<p><a href="sanctuary/">Enter the Devotional Sanctuary</a> · '
            '<a href="reader/">Open the Sacred Reader</a></p>'
-           '<p class="hdc-daily-resume" data-daily-reader hidden><a href="reader/#gita-2-47">Continue reading: Bhagavad Gita 2.47</a></p>' if practice_preview else '')
+           '<p class="hdc-daily-resume" data-daily-reader hidden><a href="reader/bhagavad-gita/chapter-2/#gita-2-47">Continue reading: Bhagavad Gita 2.47</a></p>' if practice_preview else '')
         + '<p class="hdc-daily-resume" data-daily-resume hidden>'
         '<a href="japa-counter/">Continue Japa: <span data-daily-count></span> repetitions</a>'
         '</p><p class="hdc-daily-note">No daily deity or prayer is prescribed here. '

@@ -151,6 +151,7 @@ jobs:
         run: |
           uv run python scripts/test_reader_books.py enabled
           node scripts/test_reader_books_browser.mjs
+          node scripts/test_reader_cleanup_browser.mjs
       - name: Test festival schedule validation, India-time boundaries and preview UI
         run: |
           node scripts/test_festival_themes.mjs

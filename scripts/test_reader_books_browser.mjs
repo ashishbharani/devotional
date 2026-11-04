@@ -14,6 +14,8 @@ try{
   await page.addInitScript(({key})=>{if(!sessionStorage.getItem('reader-books-seeded')){localStorage.setItem(key,JSON.stringify({bookmark:true,read:true,unknown:{keep:true}}));sessionStorage.setItem('reader-books-seeded','yes');}},{key});
   await page.goto(base+'reader/');
   assert.equal(await page.locator('h1').textContent(),'Sacred Reader');
+  assert.equal(await page.locator('[data-reader]').count(),0,'removed saved-reading area is absent');
+  assert.equal(await page.getByRole('heading',{name:'Saved reading — Bhagavad Gita 2.47'}).count(),0);
   assert.equal(await page.getByRole('link',{name:/^Chapter \d+$/}).count(),18);
   assert.equal(await page.locator('section[aria-label="Complete original-language books"] a').evaluateAll(links=>links.filter(a=>new URL(a.href).pathname.includes('/reader/ramcharitmanas/chapter-')).length),7);
   await page.goto(base+'reader/bhagavad-gita/chapter-13/#gita-13-35');
@@ -49,13 +51,13 @@ try{
  await page.getByRole('link',{name:'Chapter 1',exact:true}).click();await page.waitForURL(base+'reader/bhagavad-gita/chapter-1/');
  await page.waitForFunction(async url=>!!await caches.match(url),base+'reader/bhagavad-gita/chapter-1/');
  await page.locator('[data-bookmark]').click();
- await page.goto(base+'reader/');await page.locator('[data-reader-global-continue]').waitFor({state:'visible'});
+  await page.goto(base+'reader/bhagavad-gita/chapter-2/');await page.locator('[data-reader-global-continue]').waitFor({state:'visible'});
  assert.equal(await page.locator('[data-reader-global-continue]').getAttribute('href'),'/devotional/reader/bhagavad-gita/chapter-1/#gita-1-1');
  await context.setOffline(true);await page.goto(base+'reader/bhagavad-gita/chapter-1/#gita-1-1');
  assert.equal(await page.locator('[data-reader-passage]').count(),47);assert.equal(await page.locator('[data-bookmark]').getAttribute('aria-pressed'),'true');
  await context.setOffline(false);
  await page.evaluate(key=>{const value=JSON.parse(localStorage.getItem(key));value.lastReadingPath='https://example.org/private?notes=secret';value.history=[{id:'gita-18-78',path:'javascript:alert(1)',at:new Date().toISOString()}];localStorage.setItem(key,JSON.stringify(value));},key);
- await page.goto(base+'reader/');assert.equal(await page.locator('[data-reader-global-continue]').isVisible(),false);assert.equal(await page.locator('[data-reader-history-items] a').count(),0);
+ await page.goto(base+'reader/bhagavad-gita/chapter-2/');assert.equal(await page.locator('[data-reader-global-continue]').isVisible(),false);assert.equal(await page.locator('[data-reader-history-items] a').count(),0);
  await context.close();
  const noJS=await browser.newContext({javaScriptEnabled:false}),staticPage=await noJS.newPage();
  await staticPage.goto(base+'reader/ramcharitmanas/chapter-1/');assert.match(await staticPage.locator('.hdc-verse').first().textContent(),/वर्णानामर्थसंघानां/);assert.ok(await staticPage.getByRole('link',{name:/Next reading page/}).count());await noJS.close();
