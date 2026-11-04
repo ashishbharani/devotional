@@ -19,7 +19,7 @@ report.sourceCommit=execFileSync('git',['-C',process.env.HDC_PERFORMANCE_SOURCE_
 report.builtSourceCommit=process.env.HDC_PERFORMANCE_BUILD_COMMIT||report.sourceCommit;
 report.sourceStatus=execFileSync('git',['-C',process.env.HDC_PERFORMANCE_SOURCE_DIR||'.','status','--short'],{encoding:'utf8'});
 report.browser=browser.version();report.builtAssets={};
-for(const file of ['javascripts/abp-practice.js','javascripts/abp-journeys.js','javascripts/abp-local-state.js','sw.js']){
+for(const file of ['javascripts/abp-practice.js','javascripts/abp-journeys.js','javascripts/abp-local-state.js','sw.js',...(living?['javascripts/abp-living-festivals.js','assets/festivals/living-scheduler.mjs','assets/festivals/living-presentation.mjs','assets/festivals/living-registry.json','assets/festivals/living-policy.json']:[])]){
  try{report.builtAssets[file]=createHash('sha256').update(await readFile(path.join(siteDir,file))).digest('hex');}
  catch(error){if(!baseline||error.code!=='ENOENT')throw error;report.builtAssets[file]=null;}
 }

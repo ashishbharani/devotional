@@ -1,9 +1,12 @@
 // Read-only audit: never proposes inferred dates or changes verification status.
-import {readFile} from 'node:fs/promises';
+import {readFile,mkdir,writeFile} from 'node:fs/promises';
 import assert from 'node:assert/strict';
+import {validateRegistry,validateWindow} from '../docs/assets/festivals/living-scheduler.mjs';
 const registry=JSON.parse(await readFile('review/festivals/living-coverage.json','utf8'));
 const activation=JSON.parse(await readFile(registry.activationRegistry,'utf8'));
 const research=JSON.parse(await readFile(registry.candidateRegister,'utf8'));
+validateRegistry(activation);
+for(const record of activation.windows)if(record.status==='verified')assert.equal(validateWindow(record,activation),true,`invalid supposedly verified window ${record.id}`);
 assert.deepEqual(registry.regions.map(r=>r.id).sort(),activation.regions.filter(r=>r!=='IN').sort(),'coverage jurisdictions match the runtime registry');
 assert.deepEqual(research.jurisdictionAudits.map(r=>r.region).sort(),registry.regions.map(r=>r.id).sort());
 assert.equal(new Set(research.candidates.map(c=>c.id)).size,research.candidates.length,'unique research IDs');
@@ -15,11 +18,11 @@ assert.deepEqual(registry.years,[2026,2027,2028,2029,2030]);
 console.log('# V2 coverage review matrix — incomplete, no automatic activation');
 console.log('| Region | Discovery status | '+registry.years.join(' | ')+' |');
 console.log('| --- | --- | '+registry.years.map(()=>'---').join(' | ')+' |');
-let missing=0;
+let missing=0;const tasks=[];
 for(const region of registry.regions){
  const cells=registry.years.map(year=>{
   const records=activation.windows.filter(w=>(w.regions.includes(region.id)||w.regions.includes('IN'))&&w.start.startsWith(`${year}-`)&&w.status==='verified'&&w.approval?.approved===true);
-  if(!records.length)missing++;
+  if(!records.length){missing++;tasks.push({region:region.id,year,status:'research-required',proposedStart:null,proposedEnd:null,required:['Local tradition and festival inventory review','Year-specific primary source and corroboration','Complete family endpoints and variations','Art direction and approval'],automaticPublication:false});}
   return records.length?`${records.length} reviewed records; completeness still requires audit`:'GAP — no V2 verified window';
  });
  const discovery=research.jurisdictionAudits.find(a=>a.region===region.id);
@@ -28,4 +31,10 @@ for(const region of registry.regions){
 console.log(`\nMissing verified region-year cells: ${missing}/180. A record count never certifies comprehensive coverage.`);
 const incomplete=research.jurisdictionAudits.filter(a=>!a.complete).length;
 console.log(`Initial candidates: ${research.candidates.length}; incomplete jurisdiction audits: ${incomplete}/36. No date proposals are automatically generated or published.`);
-if(process.argv.includes('--require-ready')&&(missing||incomplete))process.exitCode=1;
+const nextYear=new Date().getUTCFullYear()+1,nextYearGap=!registry.years.includes(nextYear);
+console.log(`Next-year maintenance: ${nextYear}${nextYearGap?' is outside the supported register — add a reviewed year before activation.':' is in scope; verified regional coverage still requires the matrix review above.'}`);
+if(process.argv.includes('--write-tasks')){
+ await mkdir('work/festival-coverage',{recursive:true});
+ await writeFile('work/festival-coverage/review-tasks.json',JSON.stringify({nextYear,nextYearGap,tasks},null,2));
+}
+if(process.argv.includes('--require-ready')&&(missing||incomplete||nextYearGap))process.exitCode=1;

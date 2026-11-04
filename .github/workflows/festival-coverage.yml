@@ -16,7 +16,7 @@ jobs:
       - name: Produce gap inventory without changing or approving dates
         run: |
           mkdir -p work/festival-coverage
-          node scripts/audit_living_festival_coverage.mjs > work/festival-coverage/COVERAGE_MATRIX.md
+          node scripts/audit_living_festival_coverage.mjs --write-tasks > work/festival-coverage/COVERAGE_MATRIX.md
       - uses: actions/upload-artifact@v4
         with:
           name: festival-coverage-review-required

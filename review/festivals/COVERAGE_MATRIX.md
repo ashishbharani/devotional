@@ -40,3 +40,4 @@
 
 Missing verified region-year cells: 180/180. A record count never certifies comprehensive coverage.
 Initial candidates: 151; incomplete jurisdiction audits: 36/36. No date proposals are automatically generated or published.
+Next-year maintenance: 2027 is in scope; verified regional coverage still requires the matrix review above.
