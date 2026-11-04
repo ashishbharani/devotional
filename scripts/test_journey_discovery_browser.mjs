@@ -30,7 +30,7 @@ try{
   await page.reload();assert.match(await page.locator('[data-journal]').inputValue(),/Synthetic private note/);
   assert.equal(await page.evaluate(()=>window.bad),undefined);
   assert.equal(await page.locator('[data-routine-name]').inputValue(),'Test-only quiet routine');
-  assert.match(await page.locator('[data-routine-start]').getAttribute('href'),/minutes=10$/);
+  assert.match(await page.locator('[data-routine-start]').getAttribute('href'),/reader\/$/);
   await page.evaluate(t=>document.body.setAttribute('data-md-color-scheme',t),theme);
   assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));
   await contrast(page);

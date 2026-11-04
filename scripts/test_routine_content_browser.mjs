@@ -12,9 +12,23 @@ try{
   context.on('page',p=>p.on('pageerror',e=>errors.push(e.message)));
   await context.route('https://fonts.googleapis.com/**',r=>r.fulfill({body:'',contentType:'text/css'}));
   const page=await context.newPage();await page.goto(base+'journeys/');
+  await page.locator('[data-journey-ready="true"]').waitFor();
   await page.locator('[data-routine-name]').fill('Synthetic selected-work routine');
+  // Hold the first lazy search fetch so a duplicate lifecycle notification
+  // deterministically arrives while the user's query is still in flight.
+  let releaseSearch;
+  const searchGate=new Promise(resolve=>{releaseSearch=resolve;});
+  await page.route('**/assets/works-index.json',async route=>{await searchGate;await route.continue();});
+  const requested=page.waitForRequest('**/assets/works-index.json');
   await page.locator('[data-routine-work-query]').fill('Hanuman Chalisa');await page.locator('[data-routine-work-search]').click();
-  const results=page.locator('[data-routine-result-id]');await results.first().waitFor();
+  await requested;
+  await page.evaluate(()=>dispatchEvent(new Event('pageshow')));
+  releaseSearch();
+  assert.equal(await page.locator('[data-routine-name]').inputValue(),'Synthetic selected-work routine','duplicate pageshow preserves the active draft');
+  const results=page.locator('[data-routine-result-id]');
+  try{await results.first().waitFor();}catch(error){
+   console.error('Routine search diagnostic',await page.evaluate(()=>({ready:document.querySelector('[data-journey]')?.dataset.journeyReady,status:document.querySelector('[data-routine-reference-status]')?.textContent,query:document.querySelector('[data-routine-work-query]')?.value,searchAvailable:Boolean(window.abpSearch),errors:performance.getEntriesByType('resource').filter(r=>r.name.includes('search')||r.name.includes('works-index')).map(r=>({name:r.name,duration:r.duration}))})));throw error;
+  }
   const ids=[await results.nth(0).getAttribute('data-routine-result-id'),await results.nth(1).getAttribute('data-routine-result-id')];
   assert.notEqual(ids[0],ids[1]);for(const id of ids)assert.ok(compact.works.some(w=>w[6]===id));
   await results.nth(0).click();await results.nth(1).click();await page.locator('[data-routine-passage-add]').click();
