@@ -56,4 +56,3 @@ try{
  }
  await context.close();console.log('PASS both epic visited chapters and bookmarks with real offline service worker');
 }finally{await browser.close();server.kill();}
-
