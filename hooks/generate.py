@@ -1156,7 +1156,7 @@ def on_config(config, **kw):
         ]},
         {"SCRIPTURES & BOOKS": "library.md"},
         {"TOOLS": [
-            *([{"My Devotional Journey": "journeys.md"}, {"Explore the Collection": "explore.md"}, {"Devotional Sanctuary": "sanctuary.md"}, {"Sacred Reader pilot": "reader/index.md"}] if PRACTICE_PREVIEW else []),
+            *([{"My Devotional Journey": "journeys.md"}, {"Explore the Collection": "explore.md"}, {"Devotional Sanctuary": "sanctuary.md"}, {"Sacred Reader": "reader/index.md"}] if PRACTICE_PREVIEW else []),
             {"Find a Work": "find.md"},
             {"A–Z Work Directory": "a-z.md"},
             {"Japa / Devotional Counter": "japa-counter.md"},
@@ -1244,6 +1244,9 @@ def discovery_paths(d):
 
 
 def on_page_markdown(markdown, page, config, **kw):
+    if PRACTICE_PREVIEW and page.file.src_uri == "reader/index.md":
+        from hooks.reader_books import hub
+        markdown = markdown.replace("<!-- HDC_READER_BOOKS -->", hub())
     if PRACTICE_PREVIEW and page.file.src_uri == "explore.md":
         markdown = markdown.replace("<!-- HDC_DISCOVERY_PATHS -->", discovery_paths(load()))
     # Also apply to hand-written overrides of catalogue pages.
@@ -1340,6 +1343,17 @@ def on_files(files, config, **kw):
         meta = {k: v for k, v in meta.items() if v is not None}
         files.append(File.generated(config, src, content=front_matter(**meta) + body))
 
+    if PRACTICE_PREVIEW:
+        from hooks.reader_books import DATA as reader_data, generated_pages
+        for src, title, body in generated_pages():
+            # Original books load on demand. Keep their full text out of the
+            # first-install Material index; the chapter hub stays searchable,
+            # and each reading page retains its original-text search control.
+            files.append(File.generated(config, src, content=front_matter(title=title, hide=["toc"], search={"exclude": True}) + body))
+        for source in sorted(reader_data.iterdir()):
+            if source.is_file() and source.suffix in {".json", ".txt"}:
+                files.append(File.generated(config, "assets/reader-books/" + source.name, content=source.read_bytes()))
+
     compact = works_index(d)
     files.append(File.generated(config, "assets/works-index.json", content=compact))
     search = build_search(d, json.loads(compact), ROOT / "data" / "search-registry.json")
@@ -1410,6 +1424,12 @@ def on_post_build(config, **kw):
     for target in sorted((site / "assets" / "translations").glob("*.json")):
         signature.update(target.relative_to(site).as_posix().encode())
         signature.update(target.read_bytes())
+    if PRACTICE_PREVIEW:
+        # Books are on demand, not part of the first-install shell. Their
+        # provenance/content still advances the worker version when edited.
+        for target in sorted((site / "assets" / "reader-books").glob("*")):
+            signature.update(target.name.encode())
+            signature.update(target.read_bytes())
     for name in ("works-index.json", "universal-search.json", *(("section-shortcuts.json",) if PRACTICE_PREVIEW else ())):
         signature.update((site / "assets" / name).read_bytes())
     # The large ephemeris assets affect the cache version but are never

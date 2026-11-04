@@ -1,0 +1,49 @@
+{
+  "schema": 1,
+  "importedOn": "2026-11-04",
+  "inputs": {
+    "gita-verse.json": "bb599e666e552bd65080f1f8da6d488f067237f64091ab265978861cf3fadec7",
+    "balkanda.json": "0e1253afa6816501bc5f0433b9d6ccad68513d27a84c7462fdf8974a250ec768",
+    "dharmic-1_बाल_काण्ड_data.json": "e7d77c8094ad1c2de8f39b0c9b5b5c52ea1a2086ddd9be64df1d5e924a614719",
+    "ayodhyakanda.json": "67bddebb204ab0e7039634e8f517f9fec7bb8da3076a0404400f63c7968c28f8",
+    "dharmic-2_अयोध्या_काण्ड_data.json": "b7aa6e74e057b6c3fc784b62b871a51168a02ca7936a5cd4b02aadd2b63260d4",
+    "aranyakanda.json": "ece69b631cea2d842285156f144c8e1b545df2fc494f70c92dafc8ce0686d702",
+    "dharmic-3_अरण्य_काण्ड_data.json": "90288231b1191577f8ee9c73a4e51af68194e964e096e3e53772a51abfb12976",
+    "kishkindhakanda.json": "f407d99b6d621f68abb5a6d7677793ffeede4fcb5a0dd06cf021057ec9ad77c9",
+    "dharmic-4_किष्किन्धा_काण्ड_data.json": "b6b623357ce05164d777e3e112b60c395798a80c2ecd499c3f27d3e2000b04b0",
+    "sundarkanda.json": "ec64dd5359fd1e070c0d203398db30916e12af7821d5c04957dfda61c0320cdb",
+    "dharmic-5_सुंदर_काण्ड_data.json": "0a206bf837b94ee1c4112c94cb0b3a45b3f02b1ffefcc11b464418401bfd9a53",
+    "lankakanda.json": "ba38b97a7d036d120f8272fc9885c5e6de79019cacbbc0299d61b6547a61de65",
+    "dharmic-6_लंका_काण्ड_data.json": "6c93babe2e8dceea4194438fb387ffb776974505e50b1e4441604a602d79f30f",
+    "uttarakanda.json": "454baae0153780ba735f2a2291dfe71962ed092ce7b6aabd31e561dc6d044fa7",
+    "dharmic-7_उत्तर_काण्ड_data.json": "0238ce4e5c96a1e12f71d7162a09b5717a87146004a3c0283abc0f063eadc374"
+  },
+  "outputs": {
+    "bhagavad-gita.json": "7669258a869eba553dfbfac488ba3c948d7b5db071640d6155ac7c667958c686",
+    "ramcharitmanas.json": "cbca38fb7dd6b6ff99d69d21a7bb4bb6420d2c9d6a312d7bb065a0ee2024efb3"
+  },
+  "sources": {
+    "gita": {
+      "repository": "https://github.com/gita/gita",
+      "commit": "c6fce39595445768876ddbb8d1268a9c935e1d2b",
+      "path": "data/verse.json"
+    },
+    "manas": {
+      "repository": "https://github.com/WirelessAlien/Ramcharitmanas",
+      "commit": "a8734282b3f95648032a53447f08ad77acb2ecd4",
+      "path": "main/data/verses/"
+    },
+    "openings": {
+      "repository": "https://github.com/bhavykhatri/DharmicData",
+      "commit": "96b3bafd47ffbfe1902f3f0ef7a1928dd43c34d7",
+      "path": "Ramcharitmanas/"
+    }
+  },
+  "transformations": [
+    "Only original Gita text and chapter/verse identifiers; no transliteration, word meanings, translations or commentary imported.",
+    "Manas primary body retained in source order; literal escaped CRLF converted to line breaks; outer whitespace trimmed.",
+    "Original opening invocations added from the separately licensed supplement, only before its first chaupai.",
+    "Manas passage numbers are ordered reading units, not claims of canonical verse numbering. All original printed verse suffixes remain in text."
+  ],
+  "editionNote": "Gita witness includes Arjuna's opening question in chapter 13 and therefore has 701 numbered entries. Manas is an attributed composite electronic witness, not a critical edition or a claim that all textual variants have been resolved."
+}

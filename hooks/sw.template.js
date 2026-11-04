@@ -83,7 +83,9 @@ self.addEventListener("fetch", (event) => {
       .catch(async () => (await caches.match(request)) || Response.error()));
     return;
   }
-  if (request.mode === "navigate") {
+  // Material instant-navigation HTML requests also need to cache visited
+  // book pages; they are not navigation-mode requests. Never prefetch books.
+  if (request.mode === "navigate" || /^reader\/(?:bhagavad-gita|ramcharitmanas)\//.test(url.pathname.slice(scopeUrl.pathname.length))) {
     event.respondWith(networkFirst(request));
     return;
   }

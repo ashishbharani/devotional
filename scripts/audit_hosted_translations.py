@@ -34,6 +34,9 @@ class Texts(HTMLParser):
         classes = set(attrs.get("class", "").split())
         protected = tag in ("script", "style", "svg", "code", "pre", "noscript", "input", "textarea")
         protected |= bool(classes & {"abp-work-title", "abp-work-original"}) or attrs.get("lang") == "sa"
+        # Original-language Reader verses are sacred source text, including
+        # Awadhi and IAST; they are not missing interface/prose translations.
+        protected |= "hdc-verse" in classes and attrs.get("translate") == "no" and attrs.get("lang") in {"awa", "sa-Latn"}
         protected |= any(key in attrs for key in ("data-i18n", "data-i18n-value", "data-i18n-all"))
         if tag not in ("area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "param", "source", "track", "wbr"):
             self.stack.append((tag, protected, attrs.get("data-category-name")))

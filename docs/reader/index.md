@@ -1,11 +1,15 @@
 ---
-title: Sacred Reader — Sanskrit pilot
-description: Original Sanskrit and a source-checked historical English translation with private reading controls.
+title: Sacred Reader
+description: Read the Bhagavad Gita and Ramcharitmanas in their original languages, with private reading controls and attributed sources.
 ---
 
-# Sacred Reader — Sanskrit pilot
+# Sacred Reader
 
-This initial pilot contains **one passage in original Sanskrit, with an optional historical English translation**, not the full Bhagavad Gita or every catalogue work. An optional IAST transliteration accompanies the original. Other translations, commentary and recordings are not bundled without verified sources and rights. Website interface translations do not replace the source-attributed sacred texts.
+<!-- HDC_READER_BOOKS -->
+
+## Saved reading — Bhagavad Gita 2.47
+
+The original saved passage below retains its permanent link, optional IAST transliteration and historical English translation. Other chapters contain original-language text; full translations, commentary and recordings are not bundled without verified sources and rights. Website interface translations do not replace the source-attributed sacred texts.
 
 <section class="hdc-practice hdc-reader" data-reader aria-label="Sanskrit and source-attributed English reader">
 <div class="hdc-practice-controls">
@@ -20,6 +24,7 @@ This initial pilot contains **one passage in original Sanskrit, with an optional
 <button type="button" data-reader-clear>Clear reader progress and history</button>
 </div>
 <p data-reader-progress role="status">0 of 1 passages marked read.</p>
+<p><a href="#" data-reader-global-continue hidden>Continue last saved reading page</a></p>
 <p><a href="#gita-2-47" data-reader-continue hidden>Continue saved passage</a></p>
 <p data-reader-empty hidden>No matching passage in this pilot. <a href="../find/">Search the complete catalogue instead</a>.</p>
 <article id="gita-2-47" tabindex="-1" data-reader-passage>

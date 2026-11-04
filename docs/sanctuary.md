@@ -26,7 +26,7 @@ These optional digital aids are not substitutes for prescribed physical rituals.
 <button type="button" data-stop disabled>End session</button>
 <p data-session role="timer" aria-live="off">No session running.</p>
 <p data-practice-status role="status" aria-live="polite"></p>
-<p><a href="../japa-counter/">Open the existing Japa counter</a> · <a href="../reader/">Read the Sacred Reader pilot</a> · <a href="../">Leave the sanctuary</a></p>
+<p><a href="../japa-counter/">Open the existing Japa counter</a> · <a href="../reader/">Read the Sacred Reader</a> · <a href="../">Leave the sanctuary</a></p>
 <p>Your visual preferences stay in this browser. Sound starts off every visit. No account or cloud synchronization is used. No licensed ambient recordings are bundled; the experience works silently.</p>
 </section>
 
