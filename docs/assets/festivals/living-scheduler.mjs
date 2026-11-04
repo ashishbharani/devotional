@@ -9,6 +9,7 @@ const object=value=>value!==null&&typeof value==='object'&&!Array.isArray(value)
 function milliseconds(value){
  if(!(value instanceof Date)&&typeof value!=='number'&&typeof value!=='string')throw Error('Invalid clock');
  if(typeof value==='string'&&!/^\d{4}-\d{2}-\d{2}$/.test(value)&&!/^\d{4}-.*(?:Z|[+-]\d{2}:\d{2})$/.test(value))throw Error('Clock needs an explicit offset');
+ if(typeof value==='string')ordinal(value.slice(0,10));
  const time=new Date(value).getTime();if(!Number.isFinite(time))throw Error('Invalid clock');return time;
 }
 export function ordinal(value){
@@ -54,6 +55,10 @@ export function validateWindow(record,registry){
  return evidence(record);
 }
 const compare=(a,b)=>a===b?0:a<b?-1:1;
+function overrideTime(value){
+ if(typeof value!=='string'||!/^\d{4}-\d{2}-\d{2}T(?:[01]\d|2[0-3]):[0-5]\d:[0-5]\d(?:\.\d{1,3})?(?:Z|[+-]\d{2}:\d{2})$/.test(value))throw Error('Invalid override timestamp');
+ return milliseconds(value);
+}
 export function validateRegistry(registry){
  if(!object(registry)||registry.schema!==2||!Array.isArray(registry.windows)||!Array.isArray(registry.families)||!Array.isArray(registry.regions)||!Array.isArray(registry.themes))throw Error('Invalid registry shape');
  if(!registry.regions.includes('IN')||!unique(registry.regions)||registry.regions.some(r=>typeof r!=='string'||!/^IN(?:-[A-Z]{2,3})?$/.test(r)))throw Error('Invalid region registry');
@@ -91,7 +96,7 @@ export function selectExperience(registry,{clock=()=>new Date(),region='IN',mode
    const overrides=(policy.overrides||[]).filter(o=>o.windowId===record.id);
    if(overrides.length>1)throw Error('Ambiguous override');
    if(overrides.length){
-    const o=overrides[0],start=Date.parse(o.startsAt),end=Date.parse(o.expiresAt);
+    const o=overrides[0],start=overrideTime(o.startsAt),end=overrideTime(o.expiresAt);
     if(o.approved!==true||!o.reviewer?.trim()||!/^\d{4}-.*(?:Z|[+-]\d{2}:\d{2})$/.test(o.startsAt)||!/^\d{4}-.*(?:Z|[+-]\d{2}:\d{2})$/.test(o.expiresAt)||!Number.isFinite(start)||!Number.isFinite(end)||start>=end||!['anticipation','approach','celebration'].includes(o.stage))throw Error('Invalid override');
     if(now>=start&&now<end){stage=o.stage;override=o;}
    }

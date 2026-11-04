@@ -47,7 +47,8 @@ assert.equal(at('2026-11-09',{}, {...family,members:[{...family.members[0],end:'
 assert.equal(at('2026-11-09',{}, {...registry,windows:[{...registry.windows[0],approval:{approved:true}}]}).kind,'original');
 const before=JSON.stringify(ties);at('2026-11-09',{},ties);assert.equal(JSON.stringify(ties),before,'selection never mutates publication data');
 for(const date of ['2026-11-01T00:00:00Z','2026-11-01T05:30:00+05:30','2026-10-31T17:00:00-07:00'])assert.equal(at(date).stage,'anticipation');
-for(const date of [null,true,{},'2026-11-01T00:00:00'])assert.equal(at(date).reason,'invalid-clock');
+for(const date of [null,true,{},'2026-11-01T00:00:00','2026-02-30','2026-02-30T00:00:00Z'])assert.equal(at(date).reason,'invalid-clock');
+for(const startsAt of ['2026-02-30T00:00:00Z','2026-10-01T25:00:00Z','2026-10-01T00:00:00'])assert.equal(at('2026-11-09',{policy:{enabled:true,overrides:[{...policy.overrides[0],startsAt}]}}).kind,'original');
 assert.equal(at('2026-11-09',{}, {...family,members:[{...family.members[0],windowId:'another-regional-period'}]}).variations.length,0);
 assert.equal(at('2026-11-09',{}, {...registry,families:[{id:'test-family',theme:'unavailable'}]}).kind,'original');
 console.log('PASS V2 scheduler: stages, IST midnight, multi-day/family, active-first overlaps, regions, opt-out, overrides, leap/year boundaries and fail-closed evidence');

@@ -1,11 +1,11 @@
 // Five authored prototypes, not religious calendar evidence or approved release art.
 // Original artwork and category colours are never replaced by these atmospheres.
 export const THEMES=Object.freeze({
- diwali:{name:'Diwali',motif:'lamp',path:'master-index/',summary:'Lamp-light, maroon and gold, with an ornamental rangoli perimeter.',greeting:'May this season of light bring peace and well-being.'},
- holi:{name:'Holi',motif:'petal',path:'master-index/',summary:'Spring colour clouds and drifting floral shapes, outside the reading surface.',greeting:'Wishing you a peaceful and joyful spring celebration.'},
+ diwali:{name:'Diwali',motif:'lamp',path:'categories/01-deities-sub-deities-and-divine-forms/lakshmi/',summary:'Lamp-light, maroon and gold, with an ornamental rangoli perimeter.',greeting:'May this season of light bring peace and well-being.'},
+ holi:{name:'Holi',motif:'petal',path:'categories/01-deities-sub-deities-and-divine-forms/krishna/',summary:'Spring colour clouds and drifting floral shapes, outside the reading surface.',greeting:'Wishing you a peaceful and joyful spring celebration.'},
  shivaratri:{name:'Maha Shivaratri',motif:'moon',path:'categories/01-deities-sub-deities-and-divine-forms/shiva-mahesh/',summary:'Midnight blue, silver moonlight and a calm celestial perimeter.',greeting:'A peaceful Maha Shivaratri to you and your family.'},
- chhath:{name:'Chhath',motif:'sun',path:'master-index/',summary:'Sunrise gold and river-like horizontal light, without invented ritual instructions.',greeting:'Warm wishes for Chhath.'},
- pongal:{name:'Pongal',motif:'grain',path:'master-index/',summary:'Harvest green, warm sunlight and a geometric kolam-inspired perimeter.',greeting:'Wishing you peace and abundance this Pongal.'}
+ chhath:{name:'Chhath',motif:'sun',path:'categories/01-deities-sub-deities-and-divine-forms/surya/',summary:'Sunrise gold and river-like horizontal light, without invented ritual instructions.',greeting:'Warm wishes for Chhath.'},
+ pongal:{name:'Pongal',motif:'grain',path:'categories/01-deities-sub-deities-and-divine-forms/surya/',summary:'Harvest green, warm sunlight and a geometric kolam-inspired perimeter.',greeting:'Wishing you peace and abundance this Pongal.'}
 });
 // Abstract ornaments only. No deity is generated or modified; no external assets.
 const paths={
