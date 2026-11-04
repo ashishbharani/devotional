@@ -12,12 +12,12 @@
   original-theme preferences remain. Old saved design-demo modes cannot revive
   a preview on reload. Internal inputs remain hidden for the existing engine;
   tests exercise them programmatically, not as exposed visitor controls.
-- Reader source/reuse/licence details are collapsed by default in accessible,
-  keyboard-operable disclosures, including the original saved-passage pilot.
-  Licence files, copyright, source credits, disclaimers and source-code notices
-  remain intact. Do not add prominent optional licence-credit blocks in future
-  content changes; keep detailed notices in the same discoverable disclosures.
-  This is presentation cleanup, not licence removal or a change in reuse rights.
+- Newer main-branch PR #59 removed the saved-passage demo and repeated Reader
+  source/reuse panels. Preserve that cleanup rather than restoring those panels
+  as disclosures. Original licence files, the minimal required Manas attribution,
+  copyright, disclaimers and source-code notices remain intact. Do not add
+  prominent optional licence-credit blocks in future content changes. This is
+  presentation cleanup, not licence removal or a change in reuse rights.
 
 Retired-Sanctuary tests now assert absence and retain Reader/offline/state checks.
 No catalogue records, astronomy calculations or existing user data are removed.
@@ -28,3 +28,6 @@ cancel a lazy catalogue search. The search button waits for listener readiness.
 The routine regression holds its first index request while issuing a duplicate
 pageshow; saved library durations remain tested while their handoff now targets
 Reader rather than the retired Sanctuary URL.
+
+Merge integration with PR #59 retains the full-chapter Reader UI. Reader/PWA
+tests operate on the actual chapter containing Gita 2.47, not the removed demo.

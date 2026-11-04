@@ -44,9 +44,9 @@ try{
  assert.equal(await page.evaluate(async url=>Boolean(await caches.match(url)),base+'sanctuary/'),false,'retired route is not precached');
  await context.setOffline(true);
  await page.goto(base+'journeys/');await page.locator('[data-routine-start]').click();await page.waitForURL(/reader\/$/);
- await page.locator('[data-reader]').waitFor();
+ await page.getByRole('heading',{name:'Sacred Reader',exact:true}).waitFor();
  assert.equal(await page.evaluate(()=>localStorage.getItem('abp-japa-state-v1')),'{"count":54}');
- await context.setOffline(false);await page.goto(base+'reader/');assert.equal(await page.locator('[data-reader-passage]').isVisible(),true);
+ await context.setOffline(false);await page.goto(base+'reader/bhagavad-gita/chapter-2/');assert.equal(await page.locator('#gita-2-47').isVisible(),true);
  await context.close();report.offlineReader='PASS: retired Sanctuary not precached; offline Journey-to-Reader handoff and online recovery; legacy counter intact';
  console.log('PASS retired Sanctuary absent from cache, offline Reader handoff, online recovery and incremental source budget');
 }finally{await writeFile('work/release-qa/performance.json',JSON.stringify(report,null,2));await browser.close();server.kill();}

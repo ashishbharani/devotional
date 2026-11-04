@@ -71,7 +71,7 @@ try{
  // Actual UI regression for AF2: unfamiliar reader fields survive bookmark edits.
  const readerKey='hdc-reader-v1';
  await page.evaluate(({key,value})=>localStorage.setItem(key,JSON.stringify(value)),{key:readerKey,value:{...fixtures[readerKey],sourceMetadata:{keep:true}}});
- await page.goto(base+'reader/');await page.locator('[data-bookmark]').click();
+ await page.goto(base+'reader/bhagavad-gita/chapter-2/#gita-2-47');await page.locator('[data-bookmark]').click();
  saved=await page.evaluate(key=>JSON.parse(localStorage.getItem(key)),readerKey);
  assert.deepEqual(saved.sourceMetadata,{keep:true});assert.equal(saved.bookmark,true);
  // Actual UI regression for AF3: failed Finish then newer external history.

@@ -41,13 +41,13 @@ def pages(book):
 
 def hub():
     out = ['<section aria-label="Complete original-language books"><h2>Read complete books</h2>',
-           '<p>Choose a chapter or kāṇḍa below. The Bhagavad Gita is in Sanskrit; Ramcharitmanas is in Awadhi with its Sanskrit invocations. These are original texts, not newly generated translations or commentary. The source-attributed 2.47 reading and saved link below remain available.</p>']
+           '<p>Choose a chapter or kāṇḍa below. The Bhagavad Gita is in Sanskrit; Ramcharitmanas is in Awadhi with its Sanskrit invocations. These are original texts, not newly generated translations or commentary.</p>']
     for book in load_books():
         out.append(f'<h3>{html.escape(book["title"])}</h3><ul>')
         for chapter in book["chapters"]:
-            out.append(f'<li><a href="{book["id"]}/chapter-{chapter["number"]}/">{html.escape(chapter["title"])}</a></li>')
+            legacy = ' id="gita-2-47"' if book['id'] == 'bhagavad-gita' and chapter['number'] == 2 else ''
+            out.append(f'<li{legacy}><a href="{book["id"]}/chapter-{chapter["number"]}/">{html.escape(chapter["title"])}</a></li>')
         out.append('</ul>')
-    out.append('<p>The Gita witness includes Arjuna’s opening question in chapter 13: 701 numbered entries across 18 chapters. Ramcharitmanas contains all seven kāṇḍas, with opening invocations and terminal passages. Textual variants and electronic transcription errors may exist; source records identify the witnesses used. This is not a critical edition.</p>')
     out.append('<p>Books are split into manageable reading pages. Visited pages can be reused offline once cached by the installed app; this does not download every chapter on installation. Open the chapters you need while online.</p></section>')
     return "\n".join(out)
 
@@ -88,20 +88,11 @@ def render(book, page, all_pages):
         if 0 <= neighbour < len(all_pages):
             target = all_pages[neighbour]
             out.append(f'<li><a href="{relative(target["path"].rstrip("/"))}">{label}: {esc(target["title"])}</a></li>')
-    out.append('</ul></nav><details class="hdc-practice-details" data-reader-sources><summary>Sources, licences and downloads</summary>')
-    manifest = json.loads((DATA / "manifest.json").read_text(encoding="utf-8"))
-    names = ['gita'] if book['id'] == 'bhagavad-gita' else ['manas', 'openings']
-    for name in names:
-        source = manifest['sources'][name]
-        out.append(f'<p><a href="{source["repository"]}/tree/{source["commit"]}/{source["path"]}">{esc(name)} witness — pinned source and contributors</a></p>')
-    out.append(f'<p>{esc(manifest["editionNote"])}</p>')
-    out.append('<p>Underlying ancient text is public domain. Electronic source and assembled database terms are retained with the download. Only original-language text is included; no modern translation or commentary is copied.</p>')
-    asset = relative('assets/reader-books').rstrip('/') + '/'
-    out.append(f'<p><a href="{asset}{book["id"]}.json">Download this original-text database (JSON)</a> · <a href="{asset}manifest.json">Provenance, input/output hashes and transformations</a></p>')
-    licences = ['GITA-UNLICENSE.txt'] if book['id'] == 'bhagavad-gita' else ['MANAS-UNLICENSE.txt', 'MANAS-ODBL.txt']
-    out.append('<ul>' + ''.join(f'<li><a href="{asset}{name}">{name}</a></li>' for name in licences) + '</ul>')
-    out.append('</details>')
-    out.append('<p>Visited reading pages can be reopened offline after successful caching. Unvisited pages require a connection. Existing theme, text size, bookmarks and read flags are retained; no account synchronization is claimed.</p>')
+    out.append('</ul></nav>')
+    if book['id'] == 'ramcharitmanas':
+        # Retain the database's required attribution without the removed panel.
+        asset = relative('assets/reader-books').rstrip('/') + '/'
+        out.append(f'<p class="hdc-reader-credit">Database credit: <a href="https://github.com/bhavykhatri/DharmicData">DharmicData contributors</a> · <a href="{asset}MANAS-ODBL.txt">ODbL 1.0</a> · <a href="{asset}ramcharitmanas.json">Database copy</a></p>')
     out.append('<noscript>The complete original text and reading-order links on this page work without JavaScript. Private progress controls require JavaScript.</noscript>')
     return '\n'.join(out)
 

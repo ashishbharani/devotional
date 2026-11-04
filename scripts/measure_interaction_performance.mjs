@@ -29,7 +29,7 @@ try{
 }catch(error){if(error.code!=='ENOENT')throw error;}
 await mkdir(path.dirname(output),{recursive:true});
 try{
- for(const width of [375,1440])for(const route of baseline?['','find/']:['','find/','reader/','journeys/']){
+ for(const width of [375,1440])for(const route of baseline?['','find/']:['','find/','reader/bhagavad-gita/chapter-2/','journeys/']){
   const context=await browser.newContext({viewport:{width,height:1000},serviceWorkers:'block',reducedMotion:'reduce'}),page=await context.newPage(),failed=[],errors=[];
   page.on('requestfailed',request=>failed.push({url:request.url(),error:request.failure()?.errorText}));page.on('pageerror',error=>errors.push(error.message));
   const session=await context.newCDPSession(page);
@@ -48,10 +48,10 @@ try{
   // Defined quiet observation period before input; not a substitute for readiness.
   await page.waitForTimeout(3000);
   let taskError=null;
-  try{if(route==='reader/'){
+  try{if(route.startsWith('reader/')){
    await page.locator('[data-bookmark]').click();await page.locator('[data-read]').click();
-   await page.locator('[data-reader-query]').pressSequentially('śāntiḥ',{delay:80});await page.locator('[data-reader-query]').fill('');
-   await page.locator('[data-reader-transliteration] summary').click();
+   await page.locator('[data-reader-query]').pressSequentially('2.47',{delay:80});await page.locator('[data-reader-query]').fill('');
+   await page.locator('[data-reader-size]').selectOption('1.5');
   }else if(route==='journeys/'){
    await page.locator('[data-routine-name]').pressSequentially('Lab routine',{delay:80});
    await page.locator('[data-routine-passage-add]').click();await page.locator('[data-journey-save]').click();await page.locator('[data-session-record]').click();
