@@ -1,0 +1,292 @@
+{
+  "schema": 1,
+  "reviewedOn": "2026-11-04",
+  "automaticActivationAllowed": false,
+  "scope": "Evidence reconciliation only; these claims are NOT activation records.",
+  "sources": [
+    {
+      "id": "imd",
+      "url": "https://packolkata.imd.gov.in/panchang/index.php/en/festivals",
+      "access": "Full page reviewed",
+      "reviewedOn": "2026-11-04"
+    },
+    {
+      "id": "odisha",
+      "url": "https://odishatourism.gov.in/en/ratha-jatra-2026",
+      "access": "Festival calendar and concluding-ritual text reviewed",
+      "reviewedOn": "2026-11-04"
+    },
+    {
+      "id": "holi",
+      "url": "https://www.incredibleindia.gov.in/en/festivals-and-events/holi",
+      "access": "Page opened; year-specific date surfaced by indexed Essential Information",
+      "reviewedOn": "2026-11-04"
+    },
+    {
+      "id": "shiva",
+      "url": "https://www.incredibleindia.gov.in/en/festivals-and-events/maha-shivratri",
+      "access": "Page opened; indexed Essential Information; no verified overnight endpoint",
+      "reviewedOn": "2026-11-04"
+    },
+    {
+      "id": "goa",
+      "url": "https://www.incredibleindia.gov.in/en/festivals-and-events/goa/ganesh-chavath-goa",
+      "access": "Year-specific beginning and variable family durations reviewed",
+      "reviewedOn": "2026-11-04"
+    },
+    {
+      "id": "chhath",
+      "url": "https://www.incredibleindia.gov.in/en/festivals-and-events/madhya-pradesh/chhath-mohotsav",
+      "access": "Indexed event venue and dates reviewed; not a full-family calendar",
+      "reviewedOn": "2026-11-04"
+    },
+    {
+      "id": "bihar",
+      "url": "https://upyog.bihar.gov.in/c/holiday-calendar",
+      "access": "Indexed civil holiday dates; not ritual-duration approval",
+      "reviewedOn": "2026-11-04"
+    },
+    {
+      "id": "bastar",
+      "url": "https://www.incredibleindia.gov.in/en/festivals-and-events/chhattisgarh/bastar-dussehra",
+      "access": "Body and Essential Information contain different endpoints",
+      "reviewedOn": "2026-11-04"
+    },
+    {
+      "id": "gujarat-pdf",
+      "url": "https://www.gujarattourism.com/content/dam/gujrattourism/images/festival-list/LokmelaFestivalsofGujarat.pdf",
+      "access": "Downloaded and page 1 visually reviewed with Poppler; no images redistributed",
+      "sha256": "20ba50639bd9ce1035caf84f47627b1fe3bced5fb3daf49331014b47a4f503f0",
+      "reviewedOn": "2026-11-04"
+    },
+    {
+      "id": "rajasthan-pdf",
+      "url": "https://www.tourism.rajasthan.gov.in/content/dam/rajasthan-tourism/english/pdf/FairsandFestivals.pdf",
+      "access": "Downloaded and both pages visually reviewed with Poppler (page 2 blank); no PDF redistributed",
+      "sha256": "b2f8c4de74607eee1b76dc680238a38e18a1f278638db14157cb50a984651c5c",
+      "reviewedOn": "2026-11-04"
+    },
+    {
+      "id": "drik-2028",
+      "url": "https://www.drikpanchang.com/calendars/hindu/hinducalendar.html?year=2028",
+      "access": "Search-index discovery; New Delhi location. Not yet source-body/tradition review or approval for other regions.",
+      "reviewedOn": "2026-11-04"
+    },
+    {
+      "id": "drik-2029",
+      "url": "https://www.drikpanchang.com/calendars/hindu/hinducalendar.html?year=2029",
+      "access": "Search-index discovery; New Delhi location. Not yet source-body/tradition review or approval for other regions.",
+      "reviewedOn": "2026-11-04"
+    },
+    {
+      "id": "drik-2030",
+      "url": "https://www.drikpanchang.com/calendars/hindu/hinducalendar.html?year=2030",
+      "access": "Search-index discovery; New Delhi location. Not yet source-body/tradition review or approval for other regions.",
+      "reviewedOn": "2026-11-04"
+    }
+  ],
+  "claims": [
+    {
+      "id": "ratha-2026",
+      "festival": "Puri Ratha Jatra family",
+      "regions": [
+        "IN-OD"
+      ],
+      "year": 2026,
+      "status": "corroboration-needed",
+      "sourceIds": [
+        "odisha",
+        "imd"
+      ],
+      "claims": [
+        {
+          "source": "odisha",
+          "start": "2026-07-16",
+          "end": "2026-07-27",
+          "scope": "Procession through Niladri Bije; intermediate dates explicitly listed"
+        },
+        {
+          "source": "imd",
+          "start": "2026-06-26",
+          "end": null,
+          "scope": "Rathayatra row also has inconsistent weekday"
+        }
+      ],
+      "resolution": "Odisha tourism directly specifies July dates, but temple/organiser corroboration is still needed before promoting a complete V2 family."
+    },
+    {
+      "id": "holi-2026",
+      "festival": "Holi / regional Dhulandi",
+      "regions": [
+        "IN"
+      ],
+      "year": 2026,
+      "status": "regional-scope-review",
+      "sourceIds": [
+        "holi",
+        "rajasthan-pdf"
+      ],
+      "claims": [
+        {
+          "source": "holi",
+          "start": "2026-03-04",
+          "end": null,
+          "scope": "Holi civil day"
+        },
+        {
+          "source": "rajasthan-pdf",
+          "start": "2026-03-03",
+          "end": null,
+          "scope": "Dhulandi row; same PDF's Braj Holi is 26–27 March"
+        }
+      ],
+      "resolution": "Do not combine different regional labels into a universal two-day period or automatically choose the older table."
+    },
+    {
+      "id": "shiva-2026",
+      "festival": "Maha Shivaratri",
+      "regions": [
+        "IN"
+      ],
+      "year": 2026,
+      "status": "period-end-unverified",
+      "sourceIds": [
+        "shiva"
+      ],
+      "claims": [
+        {
+          "source": "shiva",
+          "start": "2026-02-15",
+          "end": null,
+          "scope": "Civil date, not overnight end"
+        }
+      ],
+      "resolution": "A civil date does not verify the full overnight observance."
+    },
+    {
+      "id": "pongal-2027",
+      "festival": "Pongal family",
+      "regions": [
+        "IN-TN"
+      ],
+      "year": 2027,
+      "status": "family-incomplete",
+      "sourceIds": [
+        "imd"
+      ],
+      "claims": [
+        {
+          "source": "imd",
+          "start": "2027-01-14",
+          "end": "2027-01-16",
+          "scope": "Separate rows: Bhogi 14 January, Thai Pongal 15 January, Mattu Pongal 16 January"
+        }
+      ],
+      "resolution": "No verified Kaanum endpoint; source alone does not authorize a four-day family."
+    },
+    {
+      "id": "chhath-2026",
+      "festival": "Chhath family",
+      "regions": [
+        "IN-BR",
+        "IN-MP"
+      ],
+      "year": 2026,
+      "status": "family-incomplete",
+      "sourceIds": [
+        "chhath",
+        "bihar",
+        "imd"
+      ],
+      "claims": [
+        {
+          "source": "chhath",
+          "start": "2026-11-15",
+          "end": "2026-11-16",
+          "scope": "Bhopal event"
+        },
+        {
+          "source": "bihar",
+          "start": "2026-11-14",
+          "end": null,
+          "scope": "Kharna holiday; 15–16 November Chhath holidays"
+        },
+        {
+          "source": "imd",
+          "start": "2026-11-15",
+          "end": null,
+          "scope": "Surya Shashthi reference"
+        }
+      ],
+      "resolution": "Bhopal event dates and Bihar holidays do not alone verify every constituent-day boundary for all regions."
+    },
+    {
+      "id": "ganesh-2026",
+      "festival": "Goan Chavath / Ganeshotsav",
+      "regions": [
+        "IN-GA"
+      ],
+      "year": 2026,
+      "status": "variable-duration",
+      "sourceIds": [
+        "goa",
+        "imd"
+      ],
+      "claims": [
+        {
+          "source": "goa",
+          "start": "2026-09-14",
+          "end": null,
+          "scope": "Explicitly varies between household and village traditions"
+        }
+      ],
+      "resolution": "Do not impose one universal Visarjan endpoint."
+    },
+    {
+      "id": "bastar-2026",
+      "festival": "Bastar Dussehra",
+      "regions": [
+        "IN-CT"
+      ],
+      "year": 2026,
+      "status": "conflicting-endpoints",
+      "sourceIds": [
+        "bastar"
+      ],
+      "claims": [
+        {
+          "source": "bastar",
+          "start": "2026-08-12",
+          "end": "2026-10-20",
+          "scope": "Essential Information"
+        },
+        {
+          "source": "bastar",
+          "start": "2026-10-18",
+          "end": "2026-10-22",
+          "scope": "Body's main phase; approximately 75-day total"
+        }
+      ],
+      "resolution": "One source is internally inconsistent about the complete endpoint; do not calculate an end from approximate duration."
+    },
+    {
+      "id": "future-tables",
+      "festival": "Multi-year regional discovery",
+      "regions": [
+        "IN-GJ",
+        "IN-RJ"
+      ],
+      "year": null,
+      "status": "not-sufficient-for-verification",
+      "sourceIds": [
+        "gujarat-pdf",
+        "rajasthan-pdf",
+        "drik-2028",
+        "drik-2029",
+        "drik-2030"
+      ],
+      "claims": [],
+      "resolution": "Gujarat explicitly labels dates tentative. Rajasthan includes an impossible 28–30 February 2029 range. Later-year calendar publisher pages were discovered for New Delhi, not verified for regional temple observances. Review each claim independently; no blanket approval or calculated corrections."
+    }
+  ]
+}

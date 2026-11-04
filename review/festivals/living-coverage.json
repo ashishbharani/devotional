@@ -56,12 +56,14 @@
   {"id":"chhath","members":["nahay-khay","kharna","sandhya-arghya","usha-arghya"]},
   {"id":"pongal","members":["bhogi","thai-pongal","mattu-pongal","kaanum-pongal"]}
  ],
- "windows":[],
+ "activationRegistry":"docs/assets/festivals/living-registry.json",
+ "candidateRegister":"review/festivals/research-register.json",
  "gaps":[
   "All 180 region-year cells need complete coverage research and reviewed source-backed observance windows.",
   "Family names are requirements supplied by the owner, not approvals of dates, pan-India uniformity or religious equivalence.",
   "Major festivals beyond these family examples require systematic discovery; this list is not a coverage cap.",
-  "2028-2030 sources have not been established. Do not extrapolate Gregorian dates.",
+  "151 initial candidate entries have been recorded from source discovery across 36 jurisdiction worklists. None is an approved V2 annual presentation period; completeness and duplicate/tradition review remain open.",
+  "Future-year official tables were found but are not sufficient for verification: Gujarat marks dates tentative; Rajasthan contains impossible dates including 28-30 February 2029 and apparent stale Holi rows. Do not extrapolate Gregorian dates.",
   "The old 2027 Shiva reference civil-day approval is retained in its original file; it is not approval of a full overnight family window.",
   "Official IMD page opened 2026-11-04 lists Rathayatra as 26 Jun 2026 (Thu), while official holiday listings surface 16 July 2026. Needs source-level reconciliation, not automatic promotion.",
   "Know India states/UT page returned 502; Chhath detail page timed out on direct open. Search snippets are discovery evidence only."

@@ -2,6 +2,12 @@
 import {readFile} from 'node:fs/promises';
 import assert from 'node:assert/strict';
 const registry=JSON.parse(await readFile('review/festivals/living-coverage.json','utf8'));
+const activation=JSON.parse(await readFile(registry.activationRegistry,'utf8'));
+const research=JSON.parse(await readFile(registry.candidateRegister,'utf8'));
+assert.deepEqual(registry.regions.map(r=>r.id).sort(),activation.regions.filter(r=>r!=='IN').sort(),'coverage jurisdictions match the runtime registry');
+assert.deepEqual(research.jurisdictionAudits.map(r=>r.region).sort(),registry.regions.map(r=>r.id).sort());
+assert.equal(new Set(research.candidates.map(c=>c.id)).size,research.candidates.length,'unique research IDs');
+assert.equal(research.automaticActivationAllowed,false,'discovery is never an activation source');
 assert.equal(registry.regions.filter(r=>r.kind==='state').length,28);
 assert.equal(registry.regions.filter(r=>r.kind==='union-territory').length,8);
 assert.equal(new Set(registry.regions.map(r=>r.id)).size,36);
@@ -12,11 +18,14 @@ console.log('| --- | --- | '+registry.years.map(()=>'---').join(' | ')+' |');
 let missing=0;
 for(const region of registry.regions){
  const cells=registry.years.map(year=>{
-  const records=registry.windows.filter(w=>w.regions.includes(region.id)&&w.start.startsWith(`${year}-`)&&w.status==='verified'&&w.approval?.approved===true);
+  const records=activation.windows.filter(w=>(w.regions.includes(region.id)||w.regions.includes('IN'))&&w.start.startsWith(`${year}-`)&&w.status==='verified'&&w.approval?.approved===true);
   if(!records.length)missing++;
   return records.length?`${records.length} reviewed records; completeness still requires audit`:'GAP — no V2 verified window';
  });
- console.log(`| ${region.name} | ${region.status} | ${cells.join(' | ')} |`);
+ const discovery=research.jurisdictionAudits.find(a=>a.region===region.id);
+ console.log(`| ${region.name} | ${discovery.status}; completeness pending | ${cells.join(' | ')} |`);
 }
 console.log(`\nMissing verified region-year cells: ${missing}/180. A record count never certifies comprehensive coverage.`);
-if(process.argv.includes('--require-ready')&&missing)process.exitCode=1;
+const incomplete=research.jurisdictionAudits.filter(a=>!a.complete).length;
+console.log(`Initial candidates: ${research.candidates.length}; incomplete jurisdiction audits: ${incomplete}/36. No date proposals are automatically generated or published.`);
+if(process.argv.includes('--require-ready')&&(missing||incomplete))process.exitCode=1;

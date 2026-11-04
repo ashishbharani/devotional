@@ -1,0 +1,125 @@
+{
+  "schema": 2,
+  "status": "incomplete-review-build",
+  "years": [
+    2026,
+    2027,
+    2028,
+    2029,
+    2030
+  ],
+  "regions": [
+    "IN",
+    "IN-AP",
+    "IN-AR",
+    "IN-AS",
+    "IN-BR",
+    "IN-CT",
+    "IN-GA",
+    "IN-GJ",
+    "IN-HR",
+    "IN-HP",
+    "IN-JH",
+    "IN-KA",
+    "IN-KL",
+    "IN-MP",
+    "IN-MH",
+    "IN-MN",
+    "IN-ML",
+    "IN-MZ",
+    "IN-NL",
+    "IN-OD",
+    "IN-PB",
+    "IN-RJ",
+    "IN-SK",
+    "IN-TN",
+    "IN-TG",
+    "IN-TR",
+    "IN-UP",
+    "IN-UK",
+    "IN-WB",
+    "IN-AN",
+    "IN-CH",
+    "IN-DH",
+    "IN-DL",
+    "IN-JK",
+    "IN-LA",
+    "IN-LD",
+    "IN-PY"
+  ],
+  "regionNames": {
+    "IN": "Nationwide",
+    "IN-AP": "Andhra Pradesh",
+    "IN-AR": "Arunachal Pradesh",
+    "IN-AS": "Assam",
+    "IN-BR": "Bihar",
+    "IN-CT": "Chhattisgarh",
+    "IN-GA": "Goa",
+    "IN-GJ": "Gujarat",
+    "IN-HR": "Haryana",
+    "IN-HP": "Himachal Pradesh",
+    "IN-JH": "Jharkhand",
+    "IN-KA": "Karnataka",
+    "IN-KL": "Kerala",
+    "IN-MP": "Madhya Pradesh",
+    "IN-MH": "Maharashtra",
+    "IN-MN": "Manipur",
+    "IN-ML": "Meghalaya",
+    "IN-MZ": "Mizoram",
+    "IN-NL": "Nagaland",
+    "IN-OD": "Odisha",
+    "IN-PB": "Punjab",
+    "IN-RJ": "Rajasthan",
+    "IN-SK": "Sikkim",
+    "IN-TN": "Tamil Nadu",
+    "IN-TG": "Telangana",
+    "IN-TR": "Tripura",
+    "IN-UP": "Uttar Pradesh",
+    "IN-UK": "Uttarakhand",
+    "IN-WB": "West Bengal",
+    "IN-AN": "Andaman and Nicobar Islands",
+    "IN-CH": "Chandigarh",
+    "IN-DH": "Dadra and Nagar Haveli and Daman and Diu",
+    "IN-DL": "Delhi",
+    "IN-JK": "Jammu and Kashmir",
+    "IN-LA": "Ladakh",
+    "IN-LD": "Lakshadweep",
+    "IN-PY": "Puducherry"
+  },
+  "themes": [
+    "diwali",
+    "holi",
+    "shivaratri",
+    "chhath",
+    "pongal"
+  ],
+  "families": [
+    {
+   "id": "diwali", "theme": "diwali"
+    },
+    {
+      "id": "navratri"
+    },
+    {
+      "id": "ganeshotsav"
+    },
+    {
+      "id": "durga-puja"
+    },
+    {
+   "id": "chhath", "theme": "chhath"
+    },
+    {
+   "id": "pongal", "theme": "pongal"
+    },
+    {
+   "id": "holi", "theme": "holi"
+    },
+    {
+   "id": "shivaratri", "theme": "shivaratri"
+    }
+  ],
+  "windows": [],
+  "members": [],
+  "note": "No V2 date window is approved. Existing V1 owner-reviewed records are unchanged. Do not infer dates from prototypes or research candidates."
+}

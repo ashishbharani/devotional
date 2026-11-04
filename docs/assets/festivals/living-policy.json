@@ -1,0 +1,10 @@
+{
+  "schema": 1,
+  "enabled": false,
+  "previewEnabled": true,
+  "disabledIds": [],
+  "disabledFamilies": [],
+  "priorities": {},
+  "overrides": [],
+  "note": "Research/prototypes are incomplete. This version-controlled kill switch stays OFF. Separate HDC_LIVING_FESTIVAL_PREVIEW=1 build flag is also required; never enable it in deployment until gates pass."
+}

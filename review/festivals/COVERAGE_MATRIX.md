@@ -1,0 +1,42 @@
+# V2 coverage review matrix — incomplete, no automatic activation
+| Region | Discovery status | 2026 | 2027 | 2028 | 2029 | 2030 |
+| --- | --- | --- | --- | --- | --- | --- |
+| Andhra Pradesh | initial-discovery-screen; completeness pending | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window |
+| Arunachal Pradesh | initial-discovery-screen; completeness pending | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window |
+| Assam | initial-discovery-screen; completeness pending | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window |
+| Bihar | initial-discovery-screen; completeness pending | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window |
+| Chhattisgarh | initial-discovery-screen; completeness pending | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window |
+| Goa | initial-discovery-screen; completeness pending | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window |
+| Gujarat | initial-discovery-screen; completeness pending | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window |
+| Haryana | initial-discovery-screen; completeness pending | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window |
+| Himachal Pradesh | initial-discovery-screen; completeness pending | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window |
+| Jharkhand | initial-discovery-screen; completeness pending | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window |
+| Karnataka | initial-discovery-screen; completeness pending | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window |
+| Kerala | initial-discovery-screen; completeness pending | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window |
+| Madhya Pradesh | initial-discovery-screen; completeness pending | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window |
+| Maharashtra | initial-discovery-screen; completeness pending | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window |
+| Manipur | initial-discovery-screen; completeness pending | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window |
+| Meghalaya | initial-discovery-screen; completeness pending | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window |
+| Mizoram | evidence-gap; completeness pending | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window |
+| Nagaland | initial-discovery-screen; completeness pending | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window |
+| Odisha | initial-discovery-screen; completeness pending | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window |
+| Punjab | initial-discovery-screen; completeness pending | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window |
+| Rajasthan | initial-discovery-screen; completeness pending | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window |
+| Sikkim | initial-discovery-screen; completeness pending | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window |
+| Tamil Nadu | initial-discovery-screen; completeness pending | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window |
+| Telangana | initial-discovery-screen; completeness pending | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window |
+| Tripura | initial-discovery-screen; completeness pending | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window |
+| Uttar Pradesh | initial-discovery-screen; completeness pending | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window |
+| Uttarakhand | initial-discovery-screen; completeness pending | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window |
+| West Bengal | initial-discovery-screen; completeness pending | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window |
+| Andaman and Nicobar Islands | evidence-gap; completeness pending | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window |
+| Chandigarh | initial-discovery-screen; completeness pending | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window |
+| Dadra and Nagar Haveli and Daman and Diu | initial-discovery-screen; completeness pending | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window |
+| Delhi | initial-discovery-screen; completeness pending | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window |
+| Jammu and Kashmir | initial-discovery-screen; completeness pending | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window |
+| Ladakh | initial-discovery-screen; completeness pending | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window |
+| Lakshadweep | evidence-gap; completeness pending | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window |
+| Puducherry | initial-discovery-screen; completeness pending | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window |
+
+Missing verified region-year cells: 180/180. A record count never certifies comprehensive coverage.
+Initial candidates: 151; incomplete jurisdiction audits: 36/36. No date proposals are automatically generated or published.
