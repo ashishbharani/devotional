@@ -37,12 +37,13 @@ The original saved passage below retains its permanent link, optional IAST trans
 <details class="hdc-practice-details"><summary>My local reading history</summary><p>Only explicitly marking a passage read adds an entry. Up to 50 entries stay as plain text in this browser, not encrypted or account-synchronized. Clearing reader progress also erases this history.</p><ol data-reader-history-items class="notranslate" translate="no"></ol></details>
 <p data-reader-status role="status" aria-live="polite"></p>
 <label data-reader-link hidden>Passage link (copy manually if needed)<input type="text" readonly></label>
-<h2>Source and availability</h2>
+<details class="hdc-practice-details" data-reader-sources><summary>Sources and availability</summary>
 <p>Ancient Sanskrit text and Telang's 1882 English translation are public-domain texts. No modern translation or commentary is copied. Sanskrit typography normalizes spaces and omits the source's verse-number suffix; wording is retained. The English transcription was compared with the original printed page on 2 November 2026; only the three sentences corresponding to this verse are included.</p>
 <ul><li><a href="https://sa.wikisource.org/w/index.php?oldid=408369&amp;title=भगवद्गीता/साङ्ख्ययोगः">Sanskrit Wikisource, fixed revision 408369, chapter 2 verse 47</a></li><li><a href="https://heritage.iitk.ac.in/SBG/2.47">IIT Kanpur Heritage reference: Bhagavad Gita 2.47</a></li></ul>
 <p>Original source checked 1 November 2026. IAST spelling cross-checked 3 November 2026 against the Sanskrit and the <a href="https://vanisource.org/w/index.php?title=BG_2.47&amp;oldid=781133">published Sanskrit/romanization witness (revision 781133)</a>; no modern translation, synonyms or commentary from that witness are reproduced. Compound hyphens are omitted consistently; the avagraha is shown as a typographic apostrophe. This is a source-cross-checked pilot, not a critical edition. Report textual concerns through the existing feedback facility. Modern source-site contributions remain subject to their own terms; no rights in those contributions are asserted.</p>
+</details>
 <p>Bookmarks and explicit read progress stay in this browser, separately from existing favourites and Japa. Use the site's existing theme control for light/dark reading.</p>
-<p><a href="../library/">Books Library and existing external reading links</a> · <a href="../master-index/">Catalogue-only works</a> · <a href="../sanctuary/">Devotional Sanctuary</a></p>
+<p><a href="../library/">Books Library and existing external reading links</a> · <a href="../master-index/">Catalogue-only works</a></p>
 </section>
 
 <noscript>The Sanskrit passage, expandable English translation and sources remain readable without JavaScript. Private bookmarks and reading controls require JavaScript.</noscript>

@@ -21,23 +21,10 @@ try{
    window.AudioContext=class{constructor(){window.audioCreated++;this.currentTime=0;this.destination={};}resume(){return Promise.resolve();}close(){window.audioClosed++;return Promise.resolve();}createOscillator(){return{frequency:{},connect(){return{connect(){}};},start(){},stop(){}};}createGain(){return{gain:{setValueAtTime(){},exponentialRampToValueAtTime(){}}};}};
   });
   const page=await context.newPage(),errors=[];page.on('pageerror',e=>errors.push(e.message));
-  await page.goto(base+'sanctuary/');await page.locator('[data-light]').click();
+  assert.equal((await page.request.get(base+'sanctuary/')).status(),404,'Sanctuary retired');
+  await page.goto(base+'reader/');
   await page.evaluate(t=>document.body.setAttribute('data-md-color-scheme',t),theme);
-  assert.equal(await page.locator('[data-light]').getAttribute('aria-pressed'),'true');
-  await page.locator('[data-flower]').click();assert.match(await page.locator('[data-flowers]').textContent(),/1 digital flower/);
-  assert.equal(await page.evaluate(()=>window.audioCreated),0,'no autoplay or sound on load');
-  await page.locator('[data-bell]').click();assert.equal(await page.evaluate(()=>window.audioCreated),0,'bell stays silent without opt-in');
-  await page.locator('[data-sound]').check();await page.locator('[data-bell]').click();
-  assert.equal(await page.evaluate(()=>window.audioCreated),1,'explicit sound + explicit gesture only');
-  await page.locator('[data-effects]').check();
-  assert.equal(await page.locator('[data-diya]').evaluate(el=>getComputedStyle(el).animationName),'none','reduced motion');
-  await page.locator('[data-quiet]').click();assert.equal(await page.locator('[data-sound]').isChecked(),false);
-  assert.equal(await page.evaluate(()=>window.audioClosed),1);
-  await page.locator('[data-start]').click();assert.match(await page.locator('[data-session]').textContent(),/remaining/);
-  assert.equal(await page.locator('[data-session]').getAttribute('aria-live'),'off','do not announce every timer tick');
   await checkContrast(page);
-  await page.screenshot({path:`work/practice/sanctuary-${width}-${theme}.png`,fullPage:true});
-  await page.getByRole('link',{name:'Read the Sacred Reader',exact:true}).click();await page.waitForURL(base+'reader/');
   await page.locator('[data-bookmark]').click();await page.locator('[data-read]').click();
   await page.locator('[data-reader-size]').selectOption('1.5');await page.locator('[data-reader-spacing]').selectOption('2.2');
   assert.equal(await page.locator('[data-reader-progress]').textContent(),'1 of 1 passages marked read. Passage bookmarked.');
@@ -63,7 +50,7 @@ try{
   await page.screenshot({path:`work/practice/reader-${width}-${theme}.png`,fullPage:true});
   await page.emulateMedia({media:'print'});assert.equal(await page.locator('.hdc-practice-controls').isVisible(),false);assert.equal(await translatedText.isVisible(),true,'expanded verified translation is printable');await page.emulateMedia({media:'screen'});
   await page.locator('[data-reader-clear]').click();assert.equal(await page.locator('[data-read]').getAttribute('aria-pressed'),'false');
-  assert.deepEqual(errors,[]);await context.close();console.log(`PASS sanctuary/reader ${width}px ${theme}`);
+  assert.deepEqual(errors,[]);await context.close();console.log(`PASS reader / retired Sanctuary ${width}px ${theme}`);
  }
  const context=await browser.newContext({serviceWorkers:'block'}),page=await context.newPage();
  await page.addInitScript(()=>{localStorage.setItem('abp-japa-state-v1','{"count":54}');localStorage.setItem('hdc-reader-v1','malformed');});
@@ -86,15 +73,14 @@ try{
  const offline=await browser.newContext({serviceWorkers:'allow'}),offlinePage=await offline.newPage();
  await offlinePage.goto(base);await offlinePage.evaluate(()=>navigator.serviceWorker.ready);
  await offlinePage.waitForFunction(()=>Boolean(navigator.serviceWorker.controller));
- for(const route of ['reader/','sanctuary/'])assert.ok(await offlinePage.evaluate(async url=>Boolean(await caches.match(url)),base+route),'new route precached');
+ for(const route of ['reader/'])assert.ok(await offlinePage.evaluate(async url=>Boolean(await caches.match(url)),base+route),'new route precached');
  await offline.setOffline(true);await offlinePage.goto(base+'reader/');
  await offlinePage.locator('[data-bookmark]').click();assert.equal(await offlinePage.locator('[data-bookmark]').getAttribute('aria-pressed'),'true');
   await offlinePage.locator('[data-reader-translation] summary').click();assert.equal(await offlinePage.locator('[data-reader-translation-text]').textContent(),english,'translation is part of the real offline Reader shell');
- await offlinePage.goto(base+'sanctuary/');await offlinePage.locator('[data-light]').click();
- assert.equal(await offlinePage.locator('[data-light]').getAttribute('aria-pressed'),'true');
+ assert.equal(await offlinePage.locator('[data-sanctuary]').count(),0);
  await offline.close();
  const noScript=await browser.newContext({javaScriptEnabled:false,serviceWorkers:'block'}),staticPage=await noScript.newPage();
  await staticPage.goto(base+'reader/');await staticPage.locator('[data-reader-translation] summary').click();assert.equal(await staticPage.locator('[data-reader-translation-text]').isVisible(),true);assert.equal(await staticPage.locator('[data-reader-translation-text]').textContent(),english);await noScript.close();
- console.log('PASS real first-install offline Reader bookmark and Sanctuary diya interaction');
+ console.log('PASS real first-install offline Reader bookmark and translation');
  console.log('PASS malformed/blocked storage, legacy Japa preservation, source and offline shell declarations');
 }finally{await browser.close();server.kill();}

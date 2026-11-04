@@ -88,7 +88,7 @@ def render(book, page, all_pages):
         if 0 <= neighbour < len(all_pages):
             target = all_pages[neighbour]
             out.append(f'<li><a href="{relative(target["path"].rstrip("/"))}">{label}: {esc(target["title"])}</a></li>')
-    out.append('</ul></nav><h2>Text source and reuse</h2>')
+    out.append('</ul></nav><details class="hdc-practice-details" data-reader-sources><summary>Sources, licences and downloads</summary>')
     manifest = json.loads((DATA / "manifest.json").read_text(encoding="utf-8"))
     names = ['gita'] if book['id'] == 'bhagavad-gita' else ['manas', 'openings']
     for name in names:
@@ -100,6 +100,7 @@ def render(book, page, all_pages):
     out.append(f'<p><a href="{asset}{book["id"]}.json">Download this original-text database (JSON)</a> · <a href="{asset}manifest.json">Provenance, input/output hashes and transformations</a></p>')
     licences = ['GITA-UNLICENSE.txt'] if book['id'] == 'bhagavad-gita' else ['MANAS-UNLICENSE.txt', 'MANAS-ODBL.txt']
     out.append('<ul>' + ''.join(f'<li><a href="{asset}{name}">{name}</a></li>' for name in licences) + '</ul>')
+    out.append('</details>')
     out.append('<p>Visited reading pages can be reopened offline after successful caching. Unvisited pages require a connection. Existing theme, text size, bookmarks and read flags are retained; no account synchronization is claimed.</p>')
     out.append('<noscript>The complete original text and reading-order links on this page work without JavaScript. Private progress controls require JavaScript.</noscript>')
     return '\n'.join(out)

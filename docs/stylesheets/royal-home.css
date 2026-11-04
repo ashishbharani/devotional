@@ -127,6 +127,7 @@ html.abp-still .udhc-home * { transition:none!important; animation:none!importan
 .hdc-daily-paths { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-block: 20px; text-align: start; }
 .hdc-daily-paths a { display: flex; flex-direction: column; justify-content: center; gap: 6px; min-height: 64px; padding: 16px; border: 1px solid var(--udhc-gold); border-radius: var(--sacred-radius, .65rem); color: var(--udhc-maroon); background: var(--udhc-paper); font-weight: 600; }
 .hdc-daily-paths a span { color: var(--udhc-ink); font-size: .85em; font-weight: 400; }
+.hdc-daily-paths .hdc-daily-reader-tab { grid-column: 1 / -1; justify-self: center; width: min(100%, 360px); text-align: center; box-sizing: border-box; }
 .udhc-home .hdc-daily-paths a:is(:hover,:focus-visible), .udhc-home .hdc-daily-resume a { color: var(--udhc-maroon); }
 .hdc-daily a:focus-visible { outline: 3px solid var(--abp-maroon); outline-offset: 3px; }
 .hdc-daily-note { color: var(--udhc-ink); font-size: .85em; line-height: 1.75; }

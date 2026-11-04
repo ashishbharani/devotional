@@ -41,16 +41,12 @@ try{
  await page.goto(base);await page.evaluate(()=>navigator.serviceWorker.ready);await page.waitForFunction(()=>Boolean(navigator.serviceWorker.controller));
  for(const path of helpers)assert.ok(await page.evaluate(async url=>Boolean(await caches.match(url)),base+path),'offline Material/language helper installed: '+path);
  await page.evaluate(()=>{localStorage.setItem('abp-japa-state-v1','{"count":54}');localStorage.setItem('hdc-journey-state-v1','{"name":"Offline test routine","minutes":10,"journal":"","sessions":[]}');});
- for(const minutes of [5,10,20])assert.ok(await page.evaluate(async url=>Boolean(await caches.match(url)),base+`sanctuary/?minutes=${minutes}`),'preset installed without a prior visit');
+ assert.equal(await page.evaluate(async url=>Boolean(await caches.match(url)),base+'sanctuary/'),false,'retired route is not precached');
  await context.setOffline(true);
- for(const minutes of [5,10,20]){
-  await page.goto(base+`sanctuary/?minutes=${minutes}`);assert.equal(await page.locator('[data-duration]').inputValue(),String(minutes));
-  await page.locator('[data-start]').click();assert.match(await page.locator('[data-session]').textContent(),/remaining/);await page.locator('[data-stop]').click();
- }
- await page.goto(base+'journeys/');await page.locator('[data-routine-start]').click();await page.waitForURL(/minutes=10$/);assert.equal(await page.locator('[data-duration]').inputValue(),'10');
- await page.waitForFunction(()=>document.querySelector('[data-sanctuary] img').naturalWidth>0);
+ await page.goto(base+'journeys/');await page.locator('[data-routine-start]').click();await page.waitForURL(/reader\/$/);
+ await page.locator('[data-reader]').waitFor();
  assert.equal(await page.evaluate(()=>localStorage.getItem('abp-japa-state-v1')),'{"count":54}');
  await context.setOffline(false);await page.goto(base+'reader/');assert.equal(await page.locator('[data-reader-passage]').isVisible(),true);
- await context.close();report.offlinePresets='PASS: first-install 5/10/20, actual journey handoff, image and online recovery; legacy counter intact';
- console.log('PASS first-install offline presets, journey handoff, online recovery, approved image and incremental source budget');
+ await context.close();report.offlineReader='PASS: retired Sanctuary not precached; offline Journey-to-Reader handoff and online recovery; legacy counter intact';
+ console.log('PASS retired Sanctuary absent from cache, offline Reader handoff, online recovery and incremental source budget');
 }finally{await writeFile('work/release-qa/performance.json',JSON.stringify(report,null,2));await browser.close();server.kill();}

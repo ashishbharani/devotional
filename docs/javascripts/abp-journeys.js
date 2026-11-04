@@ -94,7 +94,7 @@
    renderReferences();
   }
 
-  const start=()=>{const minutes=Number(q('[data-routine-minutes]').value);q('[data-routine-start]').href=new URL(`../sanctuary/?minutes=${[5,10,20].includes(minutes)?minutes:5}`,location.href).href;};
+  const start=()=>{q('[data-routine-start]').href=new URL('../reader/',location.href).href;};
   on('[data-routine-minutes]','change',start);start();
   function renderLibrary(selected=''){
    const select=q('[data-routine-library]');if(!select)return;

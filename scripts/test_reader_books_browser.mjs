@@ -17,6 +17,11 @@ try{
   assert.equal(await page.getByRole('link',{name:/^Chapter \d+$/}).count(),18);
   assert.equal(await page.locator('section[aria-label="Complete original-language books"] a').evaluateAll(links=>links.filter(a=>new URL(a.href).pathname.includes('/reader/ramcharitmanas/chapter-')).length),7);
   await page.goto(base+'reader/bhagavad-gita/chapter-13/#gita-13-35');
+  const sources=page.locator('[data-reader-sources]');
+  assert.equal(await sources.getAttribute('open'),null,'source credits are collapsed by default');
+  await sources.locator('summary').click();
+  assert.equal(await sources.getByRole('link',{name:'GITA-UNLICENSE.txt',exact:true}).isVisible(),true,'licence remains discoverable');
+  await sources.locator('summary').click();
   await page.evaluate(t=>document.body.setAttribute('data-md-color-scheme',t),theme);
   assert.equal(await page.locator('[data-reader-passage]').count(),35);
   assert.equal(await page.locator('[data-reader-select]').inputValue(),'gita-13-35');

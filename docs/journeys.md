@@ -26,7 +26,7 @@ Optional, local-first tools for your own practice. No account is required. No sp
 <div class="hdc-practice-controls"><button type="button" data-routine-library-save>Save as new routine</button><button type="button" data-routine-library-remove disabled>Remove selected saved routine</button></div>
 <label>Routine name <input type="text" maxlength="120" data-routine-name></label>
 <label>Duration <select data-routine-minutes><option value="5">5 minutes</option><option value="10">10 minutes</option><option value="20">20 minutes</option></select></label>
-<p><a data-routine-start href="../sanctuary/?minutes=5">Start a quiet session in the existing sanctuary</a></p>
+<p><a data-routine-start href="../reader/">Open Sacred Reader for this routine</a></p>
 <h2>Works and reading in this routine</h2>
 <p>Choose real catalogue works or the verified Reader pilot. Links open existing catalogue sections or passages; catalogue indexing does not imply that full text or audio is hosted. Reference choices and completion marks are private browser-local data, not encrypted or automatically synchronized. The saved session log includes selected reference IDs when you explicitly record a session. Draft changes are kept only when you use Save routine and note preference or Save as new routine.</p>
 <label>Search existing works <input type="search" data-routine-work-query maxlength="200" placeholder="Title or deity, at least two characters"></label>
