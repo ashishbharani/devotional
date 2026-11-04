@@ -30,7 +30,7 @@ Optional, local-first tools for your own practice. No account is required. No sp
 <h2>Works and reading in this routine</h2>
 <p>Choose real catalogue works or the verified Reader pilot. Links open existing catalogue sections or passages; catalogue indexing does not imply that full text or audio is hosted. Reference choices and completion marks are private browser-local data, not encrypted or automatically synchronized. The saved session log includes selected reference IDs when you explicitly record a session. Draft changes are kept only when you use Save routine and note preference or Save as new routine.</p>
 <label>Search existing works <input type="search" data-routine-work-query maxlength="200" placeholder="Title or deity, at least two characters"></label>
-<button type="button" data-routine-work-search>Find works for this routine</button>
+<button type="button" data-routine-work-search disabled>Find works for this routine</button>
 <ul data-routine-work-results></ul>
 <button type="button" data-routine-passage-add>Add Bhagavad Gita 2.47 Reader passage</button>
 <p><a href="../find/">Existing advanced search</a> · <a href="../favourites/">Existing saved works and favourites</a></p>

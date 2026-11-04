@@ -21,3 +21,10 @@
 
 Retired-Sanctuary tests now assert absence and retain Reader/offline/state checks.
 No catalogue records, astronomy calculations or existing user data are removed.
+
+CI follow-up: Journey initialization is idempotent per connected root, so
+duplicate Material/pageshow notifications cannot discard an unsaved draft or
+cancel a lazy catalogue search. The search button waits for listener readiness.
+The routine regression holds its first index request while issuing a duplicate
+pageshow; saved library durations remain tested while their handoff now targets
+Reader rather than the retired Sanctuary URL.
