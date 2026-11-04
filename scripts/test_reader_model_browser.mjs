@@ -5,7 +5,8 @@ import {chromium} from 'playwright';
 const server=spawn(process.execPath,['scripts/serve_header_preview.mjs'],{env:{...process.env,HDC_PREVIEW_PORT:'4358'},stdio:['ignore','pipe','inherit']});
 await new Promise((resolve,reject)=>{server.stdout.once('data',resolve);server.once('error',reject);});
 const browser=await chromium.launch(),base='http://127.0.0.1:4358/devotional/',key='hdc-reader-v1';
-const original=await readFile('site/reader/index.html','utf8');
+// Isolate the legacy-state fixture from the public chapter-directory UI.
+const original=(await readFile('site/reader/index.html','utf8')).replace(' id="gita-2-47"','').replace('</article>',(await readFile('scripts/fixtures/reader-legacy-controls.html','utf8'))+'</article>');
 const fixture='<article id="test-passage" tabindex="-1" data-reader-passage><h2>Isolated test fixture — not sacred content</h2><p class="hdc-verse notranslate" lang="en" translate="no">Synthetic Unicode fixture: नमस्ते • śāntiḥ.</p></article>';
 try{
  for(const width of [375,1440]){
@@ -59,7 +60,6 @@ try{
   else html=html.replace('class="hdc-verse notranslate" lang="sa"','class="missing-source" lang="sa"');
   await context.route(base+'reader/**',r=>r.fulfill({body:html,contentType:'text/html'}));
   await page.goto(base+'reader/');assert.match(await page.locator('[data-reader-status]').textContent(),/Pilot text unavailable/);
-  await page.locator('[data-legacy-reader] > summary').click();
   await page.locator('[data-bookmark]').click();assert.equal(await page.evaluate(key=>localStorage.getItem(key),key),null);
   await context.close();console.log('PASS actual invalid Reader payload: '+invalid);
  }

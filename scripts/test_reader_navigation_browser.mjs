@@ -13,7 +13,7 @@ try{
   await context.route('https://fonts.googleapis.com/**',r=>r.fulfill({body:'',contentType:'text/css'}));
   await page.goto(base+'reader/');await page.evaluate(t=>document.body.setAttribute('data-md-color-scheme',t),theme);
   assert.equal(await page.locator('.hdc-reader-books article').count(),4);
-  assert.equal(await page.locator('[data-bookmark]').isVisible(),false,'legacy controls do not clutter the book picker');
+  assert.equal(await page.locator('[data-reader]').count(),0,'removed demo does not clutter the book picker');
   await page.screenshot({path:`work/reader-navigation/books-${width}-${theme}.png`});
   for(const [title,id,groups,total,first,last] of [
    ['Mahabharata','mahabharata',18,1995,'नारायणं नमस्कृत्य','mbh-18-5'],
@@ -23,6 +23,7 @@ try{
    await page.waitForFunction(n=>document.querySelectorAll('[data-book-contents] details').length===n,groups);
    assert.equal(await page.locator('[data-book-contents] details').count(),groups);
    assert.equal(await page.locator('[data-book-contents] details a').count(),total);
+   assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'book contents has no horizontal overflow');
    await page.locator('[data-book-contents] details > summary').first().click();
    await page.locator('[data-book-contents] details a').first().click();
    await page.waitForURL(base+`reader/${id}/chapter-1/`);
@@ -40,7 +41,7 @@ try{
    assert.equal(await page.getByRole('link',{name:/Next reading page/}).count(),0);
    await page.goto(base+'reader/');
   }
-  await page.goto(base+'reader/#gita-2-47');assert.equal(await page.locator('[data-bookmark]').isVisible(),true,'old bookmark opens its collapsed section');
+  await page.goto(base+'reader/#gita-2-47');await page.locator('#gita-2-47 a').click();await page.waitForURL(base+'reader/bhagavad-gita/chapter-2/#gita-2-47');assert.equal(await page.locator('[data-bookmark]').isVisible(),true,'old directory fragment links to the full chapter');
   assert.deepEqual(errors,[]);await context.close();console.log(`PASS four-book navigation, epic endpoints, preserved deep links and decluttered controls ${width}px ${theme}`);
  }
  const context=await browser.newContext({serviceWorkers:'allow'}),page=await context.newPage();

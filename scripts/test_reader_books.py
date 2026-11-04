@@ -98,6 +98,8 @@ if len(sys.argv)>1:
                     assert unquote(u.fragment) in parsed[target].ids,(source,href)
         for filename in [*manifest['outputs'],'manifest.json',*(p.name for p in DATA.glob('*.txt'))]:
             assert (site/'assets/reader-books'/filename).read_bytes()==(DATA/filename).read_bytes(),filename
-        assert 'Choose a book' in (site/'reader/index.html').read_text(encoding='utf-8')
+        hub_html=(site/'reader/index.html').read_text(encoding='utf-8')
+        assert 'Choose a book' in hub_html and 'Saved reading — Bhagavad Gita 2.47' not in hub_html
+        assert all('Text source and reuse' not in body and 'Text source, edition and reuse' not in body for _,_,body in generated)
     else:assert not (site/'assets/reader-books').exists()
     print(f'PASS Reader book routes, links, source downloads and release gate: {sys.argv[1]}')

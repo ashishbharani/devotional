@@ -33,12 +33,17 @@ committed data. All book databases/downloads retain source-specific licences.
 The hub has four book cards. Each book has its own contents page; the epics
 group chapters under expandable parva/kanda headings. Reading pages show the
 original text and bookmark/read controls, with search/typography/sharing/clear
-actions in an expandable options panel and sources in a separate disclosure.
-The saved 2.47 passage remains on its original URL, collapsed on an ordinary
-hub visit and automatically opened by its existing hash. Cross-page Continue
-remains visible on the hub. Existing flags, store keys and older chapter URLs
-are retained. New epic pages cache only after visits, including instant
-navigation; whole epics are not precached and do not inflate the native index.
+actions in an expandable options panel. At the owner's explicit request this
+branch combines PR #59: the standalone 2.47 demo and repeated source panels
+are removed. Its old directory fragment points to a direct chapter-2 verse-47
+link. Existing homepage and routine shortcuts open that full chapter. Required
+Manas, Mahabharata and Ramayana credits/licences remain as compact credit
+lines; the original databases, licence files and provenance remain available.
+Existing flags, store keys and older chapter URLs are retained. New epic pages
+cache only after visits, including instant navigation; whole epics are not
+precached and do not inflate the native index. Historical transliteration and
+translation protection remains covered by an isolated test-only fixture,
+without publishing the removed demo.
 
 ## Verification
 

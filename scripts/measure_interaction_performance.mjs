@@ -49,10 +49,11 @@ try{
   await page.waitForTimeout(3000);
   let taskError=null;
   try{if(route==='reader/'){
-   await page.locator('[data-legacy-reader] > summary').click();
+   await page.goto(base+'reader/bhagavad-gita/chapter-2/#gita-2-47');
+   await page.locator('[data-reader-options] > summary').click();
    await page.locator('[data-bookmark]').click();await page.locator('[data-read]').click();
    await page.locator('[data-reader-query]').pressSequentially('śāntiḥ',{delay:80});await page.locator('[data-reader-query]').fill('');
-   await page.locator('[data-reader-transliteration] summary').click();
+   await page.locator('[data-reader-spacing]').selectOption('2.2');
   }else if(route==='journeys/'){
    await page.locator('[data-routine-name]').pressSequentially('Lab routine',{delay:80});
    await page.locator('[data-routine-passage-add]').click();await page.locator('[data-journey-save]').click();await page.locator('[data-session-record]').click();

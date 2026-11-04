@@ -7,7 +7,7 @@ import {chromium} from 'playwright';
 const server=spawn(process.execPath,['scripts/serve_header_preview.mjs'],{env:{...process.env,HDC_PREVIEW_PORT:'4342'},stdio:['ignore','pipe','inherit']});
 await new Promise((resolve,reject)=>{server.stdout.once('data',resolve);server.once('error',reject);});
 const browser=await chromium.launch(),base='http://127.0.0.1:4342/devotional/';
-const routes=['library/','categories/01-deities-sub-deities-and-divine-forms/ganesha/','find/','panchang/','reader/','journeys/','sanctuary/','explore/'];
+const routes=['library/','categories/01-deities-sub-deities-and-divine-forms/ganesha/','find/','panchang/','reader/','reader/bhagavad-gita/chapter-2/','journeys/','sanctuary/','explore/'];
 const report=[];await mkdir('work/design-system',{recursive:true});
 try{
  for(const width of [320,768,1440])for(const theme of ['abp-light','abp-dark']){
@@ -18,7 +18,6 @@ try{
   for(const route of routes){
    assert.equal((await page.goto(base+route)).status(),200,route);
    await page.evaluate(t=>document.body.setAttribute('data-md-color-scheme',t),theme);
-   if(route==='reader/'){await page.locator('[data-legacy-reader] > summary').click();await page.locator('[data-reader-translation] summary').click();}
    for(const enhanced of [false,true]){
     await page.evaluate(on=>{for(const c of ['abp-hc','abp-text-2','abp-cards','abp-spacing','abp-still'])document.documentElement.classList.toggle(c,on);},enhanced);
     assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),`${route} ${width} ${theme} enhanced=${enhanced}: no overflow`);

@@ -43,8 +43,9 @@ def hub():
     out = ['<section aria-label="Complete original-language books"><h2>Choose a book</h2>',
            '<p>Open a book, choose a chapter, then read. Your bookmarks and reading progress stay in this browser.</p><div class="hdc-reader-books">']
     for book in load_books():
-        out.append(f'<article><h3><a href="{book["id"]}/">{html.escape(book["title"])}</a></h3><p>{len(book["chapters"])} reading chapters · Original {"Awadhi and Sanskrit" if book["language"]=="awa" else "Sanskrit"}</p><a href="{book["id"]}/">Choose a chapter →</a></article>')
-    out.append('</div><details class="hdc-practice-details"><summary>Languages, editions and offline reading</summary><p>These are original-language electronic texts. Hindi translations are not bundled. The Gita witness includes Arjuna’s opening chapter-13 question and has 701 numbered entries. Source details identify edition differences; these are not critical editions. Open chapters online before using them offline; installation does not download all books.</p></details></section>')
+        legacy = '<p id="gita-2-47"><a href="bhagavad-gita/chapter-2/#gita-2-47">Bhagavad Gita 2.47</a></p>' if book['id']=='bhagavad-gita' else ''
+        out.append(f'<article><h3><a href="{book["id"]}/">{html.escape(book["title"])}</a></h3><p>{len(book["chapters"])} reading chapters · Original {"Awadhi and Sanskrit" if book["language"]=="awa" else "Sanskrit"}</p><a href="{book["id"]}/">Choose a chapter →</a>{legacy}</article>')
+    out.append('</div><p>Original-language texts; Hindi translations are not included. Open chapters online before reading them offline.</p></section>')
     return "\n".join(out)
 
 
@@ -101,26 +102,16 @@ def render(book, page, all_pages):
         if 0 <= neighbour < len(all_pages):
             target = all_pages[neighbour]
             out.append(f'<li><a href="{relative(target["path"].rstrip("/"))}">{label}: {esc(target["title"])}</a></li>')
-    out.append('</ul></nav><details class="hdc-practice-details"><summary>Text source, edition and reuse</summary>')
-    manifest = json.loads((DATA / "manifest.json").read_text(encoding="utf-8"))
-    names = book.get('sourceKeys') or (['gita'] if book['id'] == 'bhagavad-gita' else ['manas', 'openings'])
-    for name in names:
-        source = manifest['sources'][name]
-        url=source.get('url') or f'{source["repository"]}/tree/{source["commit"]}/{source["path"]}'
-        out.append(f'<p><a href="{esc(url,quote=True)}">{esc(source.get("label",name))} — source and contributors</a></p>')
-    chapter=page['chapter']
-    if chapter.get('sourceRevision'):
-        out.append(f'<p><a href="https://sa.wikisource.org/w/index.php?oldid={chapter["sourceRevision"]}">Exact source revision {chapter["sourceRevision"]}: {esc(chapter["sourceTitle"])}</a> — Sanskrit Wikisource contributors. Formatting adapted to this Reader.</p>')
-    if chapter.get('sourceUrl'):out.append(f'<p><a href="{chapter["sourceUrl"]}">This parva’s source and licence</a>. SLP1 transcribed into Devanagari; source encoding retained in the download.</p>')
-    out.append(f'<p>{esc(book.get("editionNote",manifest["editionNote"]))}</p>')
-    out.append('<p>Underlying ancient text is public domain. Electronic source and assembled database terms are retained with the download. Only original-language text is included; no modern translation or commentary is copied.</p>')
+    out.append('</ul></nav>')
     asset = relative('assets/reader-books').rstrip('/') + '/'
-    out.append(f'<p><a href="{asset}{book["id"]}.json">Download this original-text database (JSON)</a> · <a href="{asset}manifest.json">Provenance, input/output hashes and transformations</a></p>')
-    licences = book.get('licences') or (['GITA-UNLICENSE.txt'] if book['id'] == 'bhagavad-gita' else ['MANAS-UNLICENSE.txt', 'MANAS-ODBL.txt'])
-    out.append('<ul>' + ''.join(f'<li><a href="{asset}{name}">{name}</a></li>' for name in licences) + '</ul>')
-    out.append('<p>Visited reading pages can be reopened offline after successful caching. Unvisited pages require a connection. Existing theme, text size, bookmarks and read flags are retained; no account synchronization is claimed.</p>')
+    chapter=page['chapter']
+    if book['id']=='ramcharitmanas':
+        out.append(f'<p class="hdc-reader-credit">Database credit: <a href="https://github.com/bhavykhatri/DharmicData">DharmicData contributors</a> · <a href="{asset}MANAS-ODBL.txt">ODbL 1.0</a> · <a href="{asset}ramcharitmanas.json">Database copy</a></p>')
+    elif book['id']=='mahabharata':
+        out.append(f'<p class="hdc-reader-credit"><a href="{chapter["sourceUrl"]}">The Sanskrit Library — Scharf / Ahlborn (2010)</a> · <a href="{asset}MAHABHARATA-LICENCE.txt">CC BY-NC-SA 3.0 and full credits</a> · SLP1 transcribed into Devanagari · <a href="{asset}mahabharata.json">Database copy</a></p>')
+    elif book['id']=='valmiki-ramayana':
+        out.append(f'<p class="hdc-reader-credit"><a href="https://sa.wikisource.org/w/index.php?oldid={chapter["sourceRevision"]}">Sanskrit Wikisource contributors — source revision {chapter["sourceRevision"]}</a> · <a href="{asset}VALMIKI-LICENCE.txt">CC BY-SA 4.0</a> · Formatting adapted · <a href="{asset}valmiki-ramayana.json">Database copy</a></p>')
     out.append('<noscript>The complete original text and reading-order links on this page work without JavaScript. Private progress controls require JavaScript.</noscript>')
-    out.append('</details>')
     return '\n'.join(out)
 
 
