@@ -52,7 +52,7 @@
    return sourcePromise;
   }
   function referenceLink(ref){
-   if(ref.type==='passage'&&ref.id==='gita-2-47')return {title:'Bhagavad Gita 2.47',url:new URL('../reader/#gita-2-47',location.href).href};
+   if(ref.type==='passage'&&ref.id==='gita-2-47')return {title:'Bhagavad Gita 2.47',url:new URL('../reader/bhagavad-gita/chapter-2/#gita-2-47',location.href).href};
    const work=source?.works.get(ref.id);if(ref.type!=='work'||!work)return null;
    const path=source.service.compact.places[work[5]][0].split('#')[0]+'#work-'+work[6],url=new URL(path,source.service.base);
    if(!path.startsWith('categories/')||url.origin!==location.origin)return null;

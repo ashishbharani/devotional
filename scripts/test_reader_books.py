@@ -80,6 +80,7 @@ if len(sys.argv)>1:
         assert (Path(os.path.abspath(target)) in existing)==enabled,target
         if not enabled:continue
         parser=Links();parser.feed(target.read_text(encoding='utf-8'));parsed[Path(os.path.abspath(target))]=parser
+        assert 'Text source and reuse' not in target.read_text(encoding='utf-8'), 'removed provenance panel reappeared'
     if enabled:
         native_index=json.loads((site/'search/search_index.json').read_text(encoding='utf-8'))
         assert not any(re.search(r'reader/(bhagavad-gita|ramcharitmanas)/chapter-', doc['location']) for doc in native_index['docs']), 'on-demand sacred books must not inflate the first-install search cache'
@@ -98,5 +99,6 @@ if len(sys.argv)>1:
         for filename in [*manifest['outputs'],'manifest.json','GITA-UNLICENSE.txt','MANAS-UNLICENSE.txt','MANAS-ODBL.txt']:
             assert (site/'assets/reader-books'/filename).read_bytes()==(DATA/filename).read_bytes(),filename
         assert 'Read complete books' in (site/'reader/index.html').read_text(encoding='utf-8')
+        assert 'data-reader-passage' not in (site/'reader/index.html').read_text(encoding='utf-8'), 'removed single-verse demo reappeared'
     else:assert not (site/'assets/reader-books').exists()
     print(f'PASS Reader book routes, links, source downloads and release gate: {sys.argv[1]}')
