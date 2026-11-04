@@ -1,4 +1,6 @@
-{% if config.extra.hdc_practice_preview %}
+{% if config.extra.hdc_living_festival_preview %}
+{% include "partials/living-festival.html" %}
+{% elif config.extra.hdc_practice_preview %}
 <aside class="hdc-festival" data-festival-experience aria-label="Festival experience preview">
   <details><summary>Festival appearance (preview)</summary>
     <label>Theme <select data-festival-mode><option value="auto">Automatic reviewed observances</option><option value="original">Original theme</option><option value="ganesha">Ganesha design preview</option><option value="shiva">Shiva design preview</option></select></label>

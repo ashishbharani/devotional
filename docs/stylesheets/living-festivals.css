@@ -1,0 +1,64 @@
+/* Isolated review build only. Every atmospheric rule requires an active root attribute.
+   No canonical ABP/category colour, typography, layout or artwork token is changed. */
+.hdc-living { margin-block:1rem; padding:.75rem; border:1px solid var(--abp-gold); border-radius:var(--sacred-radius); color:var(--abp-ink); background:var(--abp-paper); font:400 16px/1.7 var(--abp-sans); overflow-wrap:anywhere; }
+.hdc-living [hidden] { display:none!important; }
+.hdc-living summary { min-height:44px; cursor:pointer; font-weight:600; }
+.md-typeset .hdc-living details { color:var(--abp-ink); background:var(--abp-paper); border:0; box-shadow:none; }
+.md-typeset .hdc-living details > summary { color:var(--abp-ink); background:var(--abp-paper-2); }
+.hdc-living label { display:flex; flex-wrap:wrap; align-items:center; gap:.5rem; margin-block:.75rem; }
+.hdc-living :is(button,select) { max-width:100%; min-height:44px; padding:.5rem; border:1px solid var(--abp-gold); border-radius:.3rem; color:var(--abp-ink); background:var(--abp-paper-2); font:inherit; }
+.hdc-living button { cursor:pointer; }
+.hdc-living :focus-visible { outline:3px solid var(--abp-maroon); outline-offset:3px; }
+.hdc-living a { color:var(--abp-maroon); display:inline-block; min-height:44px; text-decoration:underline; }
+.hdc-living-preview { display:flex; flex-wrap:wrap; gap:.5rem; }
+.hdc-living-info { border-inline-start:3px solid var(--abp-gold); padding-inline-start:.75rem; }
+.hdc-living-info svg { width:64px; height:64px; float:inline-end; fill:none; stroke:var(--abp-maroon); stroke-width:1.5; }
+.hdc-living small { font-size:1em; }
+html[data-hdc-festival] { --fest-night:#35101b; --fest-light:#d4a64a; --fest-second:#ba652b; --fest-strength:.4; }
+html[data-hdc-stage="approach"] { --fest-strength:.65; }
+html[data-hdc-stage="celebration"] { --fest-strength:.85; }
+html[data-hdc-festival="holi"] { --fest-night:#442147; --fest-light:#ca5989; --fest-second:#59885b; }
+html[data-hdc-festival="shivaratri"] { --fest-night:#101d3c; --fest-light:#a8c6e5; --fest-second:#4d7198; }
+html[data-hdc-festival="chhath"] { --fest-night:#48311e; --fest-light:#e5a13f; --fest-second:#b35426; }
+html[data-hdc-festival="pongal"] { --fest-night:#223b2d; --fest-light:#b99d49; --fest-second:#71844a; }
+html[data-hdc-festival] body { isolation:isolate; background-color:var(--fest-night); background-image:radial-gradient(ellipse at 50% 12%,var(--fest-second),transparent 65%); }
+.hdc-living-scenery { position:fixed; inset:0; z-index:-1; overflow:hidden; pointer-events:none; user-select:none; color:var(--fest-light); opacity:var(--fest-strength); background:radial-gradient(ellipse at 50% 0%,var(--fest-light),transparent 54%); }
+.hdc-living-scenery::before { content:""; position:absolute; inset:0; background:repeating-radial-gradient(circle at 0 100%,transparent 0 2rem,currentColor 2.06rem 2.1rem,transparent 2.16rem 4rem); opacity:.18; }
+.hdc-living-scenery svg { position:absolute; width:clamp(32px,5vw,76px); height:auto; fill:none; stroke:currentColor; stroke-width:1.2; stroke-linecap:round; stroke-linejoin:round; }
+.hdc-living-scenery svg:nth-child(odd) { left:1vw; }
+.hdc-living-scenery svg:nth-child(even) { right:1vw; }
+.hdc-living-scenery svg:nth-child(1),.hdc-living-scenery svg:nth-child(2) { top:24%; }
+.hdc-living-scenery svg:nth-child(3),.hdc-living-scenery svg:nth-child(4) { top:45%; }
+.hdc-living-scenery svg:nth-child(5),.hdc-living-scenery svg:nth-child(6) { top:66%; }
+.hdc-living-scenery svg:nth-child(7),.hdc-living-scenery svg:nth-child(8) { top:85%; }
+.hdc-living-hero { position:absolute; inset:0; z-index:-1; pointer-events:none; color:var(--fest-light); opacity:var(--fest-strength); }
+.hdc-living-hero svg { position:absolute; width:clamp(14px,3vw,42px); height:auto; fill:none; stroke:currentColor; stroke-width:1.3; }
+.hdc-living-hero svg:nth-child(odd) { left:3px; }
+.hdc-living-hero svg:nth-child(even) { right:3px; }
+.hdc-living-hero svg:nth-child(1),.hdc-living-hero svg:nth-child(2) { top:35%; }
+.hdc-living-hero svg:nth-child(3),.hdc-living-hero svg:nth-child(4) { top:75%; }
+html[data-hdc-festival] .md-content { box-shadow:0 0 38px color-mix(in srgb,var(--fest-light) 32%,transparent); }
+html[data-hdc-festival] .udhc-hero { box-shadow:inset 0 0 45px color-mix(in srgb,var(--fest-light) 40%,transparent); }
+html[data-hdc-festival] .udhc-hero::before { background:linear-gradient(90deg,color-mix(in srgb,var(--fest-night) 96%,transparent),color-mix(in srgb,var(--fest-night) 84%,transparent) 50%,color-mix(in srgb,var(--fest-night) 25%,transparent)); }
+html[data-hdc-festival] .udhc-hero::after { color:var(--fest-light); }
+html[data-hdc-festival="holi"] .hdc-living-scenery { background:radial-gradient(ellipse at 0 22%,#d186a7,transparent 48%),radial-gradient(ellipse at 100% 65%,#6c9564,transparent 50%),radial-gradient(ellipse at 80% 0,#d6b36a,transparent 45%); }
+html[data-hdc-festival="holi"] .hdc-living-scenery::before { background:radial-gradient(circle at 0 40%,currentColor,transparent 50%); }
+html[data-hdc-festival="shivaratri"] .hdc-living-scenery { background:radial-gradient(circle at 96% 21%,#e2ebf0 0 2rem,transparent 2.1rem),radial-gradient(ellipse at 100% 25%,#52789f,transparent 55%); }
+html[data-hdc-festival="shivaratri"] .hdc-living-scenery::before { background:radial-gradient(circle,currentColor 1px,transparent 2px) 0 0/75px 105px; opacity:.65; }
+html[data-hdc-festival="chhath"] .hdc-living-scenery { background:radial-gradient(circle at 50% 34%,#f2c65d,transparent 45%),linear-gradient(#6c2526,#c18040 48%,#744a32); }
+html[data-hdc-festival="chhath"] .hdc-living-scenery::before { inset:45% 0 0; background:repeating-linear-gradient(0deg,transparent 0 13px,currentColor 14px,transparent 15px 31px); opacity:.35; }
+html[data-hdc-festival="pongal"] .hdc-living-scenery { background:radial-gradient(ellipse at 50% 15%,#c2a557,transparent 50%),linear-gradient(#344731,#5d6936); }
+html[data-hdc-festival="pongal"] .hdc-living-scenery::before { background:repeating-conic-gradient(from 45deg,transparent 0 20%,currentColor 20% 25%,transparent 25% 45%,currentColor 45% 50%) 0 0/140px 140px; opacity:.13; }
+html[data-hdc-quality="full"] .hdc-living-scenery svg { animation:hdc-living-drift 9s ease-in-out infinite alternate; }
+html[data-hdc-quality="full"] .hdc-living-scenery svg:nth-child(even) { animation-delay:-4s; }
+html[data-hdc-quality="full"] .hdc-living-hero svg { animation:hdc-living-drift 9s ease-in-out infinite alternate; }
+@keyframes hdc-living-drift { from { transform:translateY(-5px); opacity:.5; } to { transform:translateY(7px); opacity:.9; } }
+@media(max-width:1100px) { .hdc-living-scenery svg { opacity:.35; } }
+@media(prefers-reduced-motion:reduce) { :is(.hdc-living-scenery,.hdc-living-hero) svg { animation:none!important; } }
+html.abp-still :is(.hdc-living-scenery,.hdc-living-hero) svg { animation:none!important; }
+html.abp-hc[data-hdc-festival] body { background:var(--abp-paper); }
+html.abp-hc :is(.hdc-living-scenery,.hdc-living-hero) { display:none; }
+html.abp-hc[data-hdc-festival] :is(.md-content,.udhc-hero) { box-shadow:none; }
+html.abp-hc[data-hdc-festival] .udhc-hero::before { background:#3c061ae8; }
+@media(forced-colors:active),(prefers-contrast:more) { .hdc-living-scenery,.hdc-living-hero { display:none; } html[data-hdc-festival] body { background:var(--abp-paper); } html[data-hdc-festival] .md-content { box-shadow:none; } }
+@media print { .hdc-living,.hdc-living-scenery,.hdc-living-hero { display:none!important; } html[data-hdc-festival] body { background:var(--abp-paper); } html[data-hdc-festival] .md-content { box-shadow:none; } }

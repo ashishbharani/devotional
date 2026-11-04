@@ -1,0 +1,23 @@
+name: Festival coverage review inventory
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '15 4 1 11 *'
+permissions:
+  contents: read
+jobs:
+  report:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Produce gap inventory without changing or approving dates
+        run: |
+          mkdir -p work/festival-coverage
+          node scripts/audit_living_festival_coverage.mjs > work/festival-coverage/COVERAGE_MATRIX.md
+      - uses: actions/upload-artifact@v4
+        with:
+          name: festival-coverage-review-required
+          path: work/festival-coverage

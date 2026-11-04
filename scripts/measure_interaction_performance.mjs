@@ -9,10 +9,11 @@ import {layoutMetrics,interactionMetrics} from './lab_metrics.mjs';
 const server=spawn(process.execPath,['scripts/serve_header_preview.mjs'],{env:{...process.env,HDC_PREVIEW_PORT:'4360',HDC_PREVIEW_GZIP:'1'},stdio:['ignore','pipe','inherit']});
 await new Promise((resolve,reject)=>{server.stdout.once('data',resolve);server.once('error',reject);});
 const browser=await chromium.launch(),base='http://127.0.0.1:4360/devotional/';
-const baseline=process.env.HDC_PERFORMANCE_VARIANT==='baseline',siteDir=process.env.HDC_SITE_DIR||'site';
+const baseline=process.env.HDC_PERFORMANCE_VARIANT==='baseline',living=process.env.HDC_PERFORMANCE_VARIANT==='living',siteDir=process.env.HDC_SITE_DIR||'site';
 const output=process.env.HDC_PERFORMANCE_OUTPUT||'work/performance-input/report.json';
 const report={method:'Chromium CDP: cold contexts, real font requests, gzip text transport matching public Pages, disabled HTTP cache and worker, 4x CPU, 150ms latency, 1.6Mbps download/750Kbps upload. Finite real click/key tasks; Event Timing p98 candidate, not field INP.',limitations:['One local host, not physical Android/iOS','No field RUM or CrUX','Separate baseline/candidate reports; no production-origin field comparison','External request failures are reported, not stubbed or treated as successful font loads'],samples:[]};
-report.variant=baseline?'baseline':'candidate';
+report.variant=living?'living-festival-fixture':baseline?'baseline':'candidate';
+if(living)report.limitations.push('Synthetic V2 celebration fixture, reduced motion to match the baseline; no religious date approval or physical-device animation certification. Single-run values are indicative, not a regression/CWV certificate.');
 report.benchmarkCommit=execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8'}).trim();
 report.sourceCommit=execFileSync('git',['-C',process.env.HDC_PERFORMANCE_SOURCE_DIR||'.','rev-parse','HEAD'],{encoding:'utf8'}).trim();
 report.builtSourceCommit=process.env.HDC_PERFORMANCE_BUILD_COMMIT||report.sourceCommit;
@@ -29,8 +30,15 @@ try{
 }catch(error){if(error.code!=='ENOENT')throw error;}
 await mkdir(path.dirname(output),{recursive:true});
 try{
- for(const width of [375,1440])for(const route of baseline?['','find/']:['','find/','reader/bhagavad-gita/chapter-2/','journeys/']){
+ for(const width of [375,1440])for(const route of baseline||living?['','find/']:['','find/','reader/bhagavad-gita/chapter-2/','journeys/']){
   const context=await browser.newContext({viewport:{width,height:1000},serviceWorkers:'block',reducedMotion:'reduce'}),page=await context.newPage(),failed=[],errors=[];
+  if(living){
+   await page.clock.setFixedTime(new Date('2026-11-11T06:30:00Z'));
+   const registry=JSON.parse(await readFile('docs/assets/festivals/living-registry.json','utf8'));
+   registry.windows=[{id:'synthetic-performance',family:'diwali',theme:'diwali',name:'Synthetic performance fixture — not a festival date',tradition:'Lab only',regions:['IN'],priority:1,start:'2026-11-11',end:'2026-11-13',status:'verified',approval:{approved:true,reviewer:'Lab fixture only',reviewedOn:'2026-01-01'},sources:[{url:'https://example.invalid/lab-only',label:'Synthetic performance evidence',reviewedOn:'2026-01-01'}]}];
+   await context.route('**/assets/festivals/living-registry.json',r=>r.fulfill({json:registry}));
+   await context.route('**/assets/festivals/living-policy.json',r=>r.fulfill({json:{schema:1,enabled:true,previewEnabled:false}}));
+  }
   page.on('requestfailed',request=>failed.push({url:request.url(),error:request.failure()?.errorText}));page.on('pageerror',error=>errors.push(error.message));
   const session=await context.newCDPSession(page);
   await session.send('Network.enable');await session.send('Network.setCacheDisabled',{cacheDisabled:true});
@@ -44,6 +52,7 @@ try{
    try{new PerformanceObserver(list=>{for(const e of list.getEntries())hdcLab.events.push({interactionId:e.interactionId,duration:e.duration,name:e.name});}).observe({type:'event',buffered:true,durationThreshold:16});}catch(_){}
   });
   await page.goto(base+route,{timeout:120000});await page.evaluate(()=>document.fonts.ready);
+  if(living)await page.waitForFunction(()=>document.documentElement.dataset.hdcStage==='celebration');
   if(!route)await page.locator('.udhc-hero-art img').evaluate(img=>img.decode());
   // Defined quiet observation period before input; not a substitute for readiness.
   await page.waitForTimeout(3000);
