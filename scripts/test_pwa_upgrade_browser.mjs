@@ -53,7 +53,7 @@ try{
  assert.equal(state,'redundant','missing shell asset rejects the incomplete update');
  assert.ok((await cacheText()).includes(marker),'failed update keeps old cached styling');
  assert.ok((await bundleText()).includes(marker),'failed bundle precache keeps the working linked CSS');
- await context.setOffline(true);await page.reload();await page.locator('[data-reader-query]').fill('2.47');
+ await context.setOffline(true);await page.reload();await page.locator('[data-reader-options] > summary').click();await page.locator('[data-reader-query]').fill('2.47');
  assert.equal(await page.locator('[data-reader-passage]:visible').count(),1,'old reader shell remains interactive offline');
  await context.setOffline(false);phase='current';
  await page.evaluate(async()=>{

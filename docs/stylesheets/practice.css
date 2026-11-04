@@ -1,5 +1,9 @@
 .hdc-practice { color: var(--abp-ink); background: var(--abp-paper); border: 1px solid var(--abp-gold); border-radius: var(--sacred-radius); padding: clamp(12px, 3vw, 28px); overflow-wrap: anywhere; }
 .hdc-practice figure { text-align: center; }
+.hdc-reader-books { display: grid; grid-template-columns: repeat(auto-fit,minmax(min(100%,260px),1fr)); gap: 16px; margin-block: 20px; }
+.hdc-reader-books article { border: 1px solid var(--abp-gold); border-radius: var(--sacred-radius); background: var(--abp-paper); color: var(--abp-ink); padding: 20px; }
+.hdc-reader-books article h3 { margin-top: 0; }
+.hdc-reader-books article > a { display: inline-flex; align-items: center; min-height: 44px; }
 .hdc-practice figcaption { color: var(--abp-ink-2); }
 .hdc-practice a { color: var(--abp-maroon); }
 .hdc-practice figure img { max-width: 100%; height: auto; border-radius: 50%; border: 3px double var(--abp-gold); }

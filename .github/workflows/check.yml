@@ -150,6 +150,7 @@ jobs:
       - name: Verify complete original-language Reader books and visited-page offline reading
         run: |
           uv run python scripts/test_reader_books.py enabled
+          uv run python scripts/test_reader_epics.py
           node scripts/test_reader_books_browser.mjs
           node scripts/test_reader_cleanup_browser.mjs
       - name: Test festival dates, India-time boundaries and removed preview controls

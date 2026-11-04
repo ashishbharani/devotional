@@ -53,6 +53,10 @@ jobs:
           uv run python scripts/check_project_pdfs.py
       - name: Verify retired Sanctuary absence and source-attributed Reader controls
         run: node scripts/test_practice_browser.mjs
+      - name: Verify deployed epic coverage and generated Reader links
+        run: |
+          uv run python scripts/test_reader_epics.py
+          uv run python scripts/test_reader_books.py enabled
       - name: Test owner-approved deity artwork and exact identity mappings
         run: uv run python scripts/test_deity_art.py
       - name: Test universal search coverage, graph and multilingual ranking

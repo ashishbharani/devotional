@@ -24,6 +24,7 @@ try{
   await page.goto(base+'reader/bhagavad-gita/chapter-2/#gita-2-47');
   await page.evaluate(t=>document.body.setAttribute('data-md-color-scheme',t),theme);
   await page.locator('[data-bookmark]').click();await page.locator('[data-read]').click();
+  await page.locator('[data-reader-options] > summary').click();
   await page.locator('[data-reader-size]').selectOption('1.5');await page.locator('[data-reader-spacing]').selectOption('2.2');
   assert.equal(await page.locator('[data-reader-progress]').textContent(),'1 of 72 passages marked read. Passage bookmarked.');
   assert.match(await page.locator('#gita-2-47 .hdc-verse').innerText(),/कर्मण्येवाधिकारस्ते/,'original verse remains in the full chapter');
@@ -31,6 +32,7 @@ try{
   await page.locator('[data-reader-query]').fill('not-a-real-passage');assert.equal(await page.locator('[data-reader-empty]').isVisible(),true);
   await page.locator('[data-reader-query]').fill('2.47');assert.equal(await page.locator('#gita-2-47').isVisible(),true);
   await page.reload();assert.equal(await page.locator('[data-bookmark]').getAttribute('aria-pressed'),'true');
+  await page.locator('[data-reader-options] > summary').click();
   assert.equal(await page.locator('[data-reader-continue]').isVisible(),true);
   assert.equal(await page.locator('[data-reader-size]').inputValue(),'1.5');
   await page.evaluate(t=>document.body.setAttribute('data-md-color-scheme',t),theme);
@@ -44,6 +46,7 @@ try{
  const context=await browser.newContext({serviceWorkers:'block'}),page=await context.newPage();
  await page.addInitScript(()=>{localStorage.setItem('abp-japa-state-v1','{"count":54}');localStorage.setItem('hdc-reader-v1','malformed');});
  await page.goto(base+'reader/bhagavad-gita/chapter-2/#gita-2-47');assert.equal(await page.locator('[data-read]').getAttribute('aria-pressed'),'false');
+ await page.locator('[data-reader-options] > summary').click();
  await page.locator('[data-reader-clear]').click();assert.equal(await page.evaluate(()=>localStorage.getItem('abp-japa-state-v1')),'{"count":54}');
  assert.equal(await page.evaluate(()=>localStorage.getItem('hdc-reader-v1')),'malformed','clear must not silently replace an unreadable record');
  await page.evaluate(()=>localStorage.setItem('hdc-reader-v1','{}'));
