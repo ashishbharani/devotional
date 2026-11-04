@@ -16,11 +16,64 @@
     "lankakanda.json": "ba38b97a7d036d120f8272fc9885c5e6de79019cacbbc0299d61b6547a61de65",
     "dharmic-6_लंका_काण्ड_data.json": "6c93babe2e8dceea4194438fb387ffb776974505e50b1e4441604a602d79f30f",
     "uttarakanda.json": "454baae0153780ba735f2a2291dfe71962ed092ce7b6aabd31e561dc6d044fa7",
-    "dharmic-7_उत्तर_काण्ड_data.json": "0238ce4e5c96a1e12f71d7162a09b5717a87146004a3c0283abc0f063eadc374"
+    "dharmic-7_उत्तर_काण्ड_data.json": "0238ce4e5c96a1e12f71d7162a09b5717a87146004a3c0283abc0f063eadc374",
+    "library-mbh01.json": "5e92d65092d3394b4eb4bb895d3b594b28b8093f9c3cce6d13d0b4da6374c80f",
+    "library-mbh02.json": "64f2998d1f1a0ca260ebe07aa71739fd7d839600be8fd8890b3c7f89f8f77fc9",
+    "library-mbh03.json": "b53a0e8728b641f6485784e6727e77a5abd474ab482264443c29da3c60104873",
+    "library-mbh04.json": "81c983428d82d049c74e700a5c21dfe8e4d0331d4effd9192074ecfbd5542617",
+    "library-mbh05.json": "e3f0cda7917c1162081525119d03ccdfffe5461a57f7b88fe4c3fed0b2222be7",
+    "library-mbh06.json": "b4622d830ab664bd1b04934022b9a868f8b2941ac77a6902d4d48453e0d72a20",
+    "library-mbh07.json": "6e073e555c48e8c5e1ec4f22cce67207bc7a8345223320adec75eb6577101878",
+    "library-mbh08.json": "a1fc9ff7266bf157fded64e9ce1e7e4e8c810f52c951241e7ca8ac3c8f638061",
+    "library-mbh09.json": "76e392c2591ab44ba1b1a5a528caa7b3c7406e94ac51242d1175de32d1bc7b3b",
+    "library-mbh10.json": "211d3243cb692a29aedaf3bb9f0bb74c73ce9e9ed6ec07edd57022122db158f4",
+    "library-mbh11.json": "dec3241673aa7d23a0ebff39259a775794df97cc34f8a1abe9ec1fbae85091d1",
+    "library-mbh12.json": "d02726c7ac288888b2cdca1cf829914ce6ef0586b35a166a18987b20185346a9",
+    "library-mbh13.json": "650331c1ec3b434d459a938ce7df547e7e929af54aa8c67dd4fb46d68c03ceb2",
+    "library-mbh14.json": "9943cc7f7cae32413a60e09e9c0850ae8e7f39565a4347bf891a6d5b4e9033a0",
+    "library-mbh15.json": "a9bd2b0ae44ab67f0f4aec5455b103ffb1d3e6a8cd60f89b6b1995b08ee440f6",
+    "library-mbh16.json": "01f43f8aea1d4a1685c6d5132f87be572ffc6ad1831756364c6af3d47a08a983",
+    "library-mbh17.json": "3c5c808ed6fed3095e8ce0d7c4ab4e87a95a182585d02fd70b70f952d5e86fb4",
+    "library-mbh18.json": "82244d42cac15f0a2c03cf061a18130ca09ab696e8192ff3e102d2101ba762f2",
+    "valmiki-0000.json": "ecb5797102ef89231fff67813b5e8c455ffd396f53164e68b32ea73e8f18e44a",
+    "valmiki-0020.json": "808a44f9dcb9caf93f7643c510d7ca5bfc530c1fe60cb119e11ae583ff7b0ccf",
+    "valmiki-0040.json": "ea20a832e55c3173d556b4b01716bf74e3dfe8d4883dad62eb1425a23d274467",
+    "valmiki-0060.json": "19b5bd08ec7d683ef5bc656a7a5cb9134cea9565961a6feb7adaf3c8b3895896",
+    "valmiki-0080.json": "9c0e10ead05775a6c0e47ae1b66e9cb3cb6c74f144c4d8c434f2c615cc05ef40",
+    "valmiki-0100.json": "50402429bf6c6c07f9a12e2ab5d637daec57643082f8ff550bbafa7038731a6c",
+    "valmiki-0120.json": "82bd9baf2c88ba9c91db1c1a92a84a93d68bd8200179941797f2451b335de49d",
+    "valmiki-0140.json": "d76009fd95be5fd0dbb5575a030ae076f1375c1c9e596e66ae7e79d23c8b80d8",
+    "valmiki-0160.json": "ed648c45efaf733e7af65d8a2a3170159cffbf02afc19e927826ff13ff4ebe02",
+    "valmiki-0180.json": "b096371bf8b6bdc3e8b53e74728a30f2339a08989ae9878152e38b88a44e09ff",
+    "valmiki-0200.json": "5bf86b78df69995a8c4d95c8593dc4d3e0db7a62bdb4cf938a2f0d004ba2ae14",
+    "valmiki-0220.json": "39bd6c65cf43df9381c5729fe9d96d37978c6ef72ff55fa28f22e4dcbe91bc7e",
+    "valmiki-0240.json": "5af2c9c6b7fa23eee6e7bd712022331dd0882829c09dede1480aac8202f05c81",
+    "valmiki-0260.json": "f9f360e5934d30f6ff76adaebe6a4c622b1d6e4ce89b12a71c513feb8372d05b",
+    "valmiki-0280.json": "5620f785c1328155c04d8fefce2b7f848fb5179e43dead08ce262bc494848409",
+    "valmiki-0300.json": "1d14892c2617b587c4f8e8f07e95a5c5f36ad47d1f6bd45987c0fe11b08564b3",
+    "valmiki-0320.json": "cb3c8ef0d4d6f641e6e2aa6f22f90cb0143a1b0b7caea77b2618d7c47ee89f2b",
+    "valmiki-0340.json": "a64881bb04c0bd86e6878cf21e5e65bd6e32b7b371fb0cad7a1765a56461c52b",
+    "valmiki-0360.json": "51808aef9359600a58fa1471a7ce94a4678cfaaaebc76b0795805e5d208c3feb",
+    "valmiki-0380.json": "8e9d900e61f6fe71b0972b90cb509ad1b93b2914d6fcb9c7cc955c7d2a4eb5b2",
+    "valmiki-0400.json": "932c23a37081f68ab7d2cbfa12d5e77edffb78841db89c28e183ae093aa97b68",
+    "valmiki-0420.json": "14a0b7d67708f134fc3a6b88e2c3a6e471381f327c52fd8c46e0b406111acb92",
+    "valmiki-0440.json": "35c9df2f26ff80d1158183da2b731e73dba1ad26ca20312c56a4f62f3cf23ee0",
+    "valmiki-0460.json": "cdb0c3d8493f61a4fb8f97e0331e7de29d2eb814ed9f89b553d8bd470a262519",
+    "valmiki-0480.json": "c7a0c67ae2a3e26facc3595d7a815dd53e4ce2380acc103dc238ad9b76e9bee1",
+    "valmiki-0500.json": "4a67088febc39214d48b120b0bbce45e15f9c088780111ae0446743b687c2f57",
+    "valmiki-0520.json": "1f6e89ad30ca168546b50f80140b2248dc71e9999807b3e4eeb964656c53d80f",
+    "valmiki-0540.json": "3cb0f611088edcf97bfe748b6b8d32803d5812fdd5cb5702387e868b835f26f3",
+    "valmiki-0560.json": "6a1fe717a57a67d6b61bd7e978ef44c70c5d1c9297cd7e991e705b306407bb9e",
+    "valmiki-0580.json": "1f970de577a48bef9a67d98cd036b1ab9f532454f64b932102df552a68318908",
+    "valmiki-0600.json": "48dfa1fcef76f25591def9724e95fa17f46632d44481d85908f9ee4bcba7a077",
+    "valmiki-0620.json": "251577e920b0c75123fc82503744566388cfeaf4bd3d051e683c4ebfbff918e8",
+    "valmiki-0640.json": "c3ef611dd5d778ab96193fbef930b7279f35a90bff5a7aaa7144c8f36a09a5cf"
   },
   "outputs": {
     "bhagavad-gita.json": "7669258a869eba553dfbfac488ba3c948d7b5db071640d6155ac7c667958c686",
-    "ramcharitmanas.json": "cbca38fb7dd6b6ff99d69d21a7bb4bb6420d2c9d6a312d7bb065a0ee2024efb3"
+    "ramcharitmanas.json": "cbca38fb7dd6b6ff99d69d21a7bb4bb6420d2c9d6a312d7bb065a0ee2024efb3",
+    "mahabharata.json": "0e2c1b67b9dbb0a8f7e769d939cead464720fc4c82cd76ad1e6e79700329c09e",
+    "valmiki-ramayana.json": "e0271a826558478926aae9de99d5ed233a7727e963497b03596ef47cd0b925bf"
   },
   "sources": {
     "gita": {
@@ -37,6 +90,16 @@
       "repository": "https://github.com/bhavykhatri/DharmicData",
       "commit": "96b3bafd47ffbfe1902f3f0ef7a1928dd43c34d7",
       "path": "Ramcharitmanas/"
+    },
+    "mahabharata": {
+      "url": "https://sanskritlibrary.org/catalogsText/titus/mbh/mbh01.html",
+      "label": "The Sanskrit Library, Peter M. Scharf and Matthias H. Ahlborn (2010), TITUS/Muneo Tokunaga critical-edition electronic text",
+      "licence": "CC BY-NC-SA 3.0"
+    },
+    "valmiki": {
+      "url": "https://sa.wikisource.org/wiki/रामायणम्",
+      "label": "Sanskrit Wikisource contributors; exact source revisions listed per sarga",
+      "licence": "CC BY-SA; see retained licence and per-page histories"
     }
   },
   "transformations": [
@@ -45,5 +108,115 @@
     "Original opening invocations added from the separately licensed supplement, only before its first chaupai.",
     "Manas passage numbers are ordered reading units, not claims of canonical verse numbering. All original printed verse suffixes remain in text."
   ],
-  "editionNote": "Gita witness includes Arjuna's opening question in chapter 13 and therefore has 701 numbered entries. Manas is an attributed composite electronic witness, not a critical edition or a claim that all textual variants have been resolved."
+  "editionNote": "Gita witness includes Arjuna's opening question in chapter 13 and therefore has 701 numbered entries. Manas is an attributed composite electronic witness, not a critical edition or a claim that all textual variants have been resolved.",
+  "licenceEvidence": [
+    {
+      "parva": 1,
+      "url": "https://sanskritlibrary.org/catalogsText/titus/mbh/mbh01.html",
+      "sha256": "4450fea0b9967b373bab17945657f7c6441cdeea473bb8c8b53ea8b2a8360cd3",
+      "licence": "CC BY-NC-SA 3.0"
+    },
+    {
+      "parva": 2,
+      "url": "https://sanskritlibrary.org/catalogsText/titus/mbh/mbh02.html",
+      "sha256": "42f2ef6ebe7d96fa5ce083109f99fb43770de9a7c0130ccfe1b471c3f604cd6a",
+      "licence": "CC BY-NC-SA 3.0"
+    },
+    {
+      "parva": 3,
+      "url": "https://sanskritlibrary.org/catalogsText/titus/mbh/mbh03.html",
+      "sha256": "d3f413b80a036cbc3ce00feb9d7ab875f0cc237b2b550d7970adc2b6e1efc7f8",
+      "licence": "CC BY-NC-SA 3.0"
+    },
+    {
+      "parva": 4,
+      "url": "https://sanskritlibrary.org/catalogsText/titus/mbh/mbh04.html",
+      "sha256": "7bfe28289691afc273e794d8614e0f7e4fadd2f4b0b7601087614b0fd523e40e",
+      "licence": "CC BY-NC-SA 3.0"
+    },
+    {
+      "parva": 5,
+      "url": "https://sanskritlibrary.org/catalogsText/titus/mbh/mbh05.html",
+      "sha256": "a054250feb8238c7fed3ad9f5d634e5d972193e1d1ef5f4e44abbf6232f5f369",
+      "licence": "CC BY-NC-SA 3.0"
+    },
+    {
+      "parva": 6,
+      "url": "https://sanskritlibrary.org/catalogsText/titus/mbh/mbh06.html",
+      "sha256": "1c5e36515c623ef24cac0c0beea8c4a6b52172d6cac5e74f6b54c2c8dccdfc8f",
+      "licence": "CC BY-NC-SA 3.0"
+    },
+    {
+      "parva": 7,
+      "url": "https://sanskritlibrary.org/catalogsText/titus/mbh/mbh07.html",
+      "sha256": "19dc7f20041ec27337155424d96ffbdb48b7a6d85675d5fcc55d02503e5c9623",
+      "licence": "CC BY-NC-SA 3.0"
+    },
+    {
+      "parva": 8,
+      "url": "https://sanskritlibrary.org/catalogsText/titus/mbh/mbh08.html",
+      "sha256": "967e6ef3d706f70ffe9230a2e2ba1f3a367bc6be31c203bed5544d82ebd35c21",
+      "licence": "CC BY-NC-SA 3.0"
+    },
+    {
+      "parva": 9,
+      "url": "https://sanskritlibrary.org/catalogsText/titus/mbh/mbh09.html",
+      "sha256": "070956f86247e5d775ffadea58c860ffadd8a25668ab4ef43069355932aa1474",
+      "licence": "CC BY-NC-SA 3.0"
+    },
+    {
+      "parva": 10,
+      "url": "https://sanskritlibrary.org/catalogsText/titus/mbh/mbh10.html",
+      "sha256": "942cd062b649312af79990889c24d247e65e521bb8fb57cfd8b61330a5b3c17a",
+      "licence": "CC BY-NC-SA 3.0"
+    },
+    {
+      "parva": 11,
+      "url": "https://sanskritlibrary.org/catalogsText/titus/mbh/mbh11.html",
+      "sha256": "77e7e9d3943edbfc3213d3c5fc73965c52a37062397d8a1890bb2862d5548f8b",
+      "licence": "CC BY-NC-SA 3.0"
+    },
+    {
+      "parva": 12,
+      "url": "https://sanskritlibrary.org/catalogsText/titus/mbh/mbh12.html",
+      "sha256": "f38f54834f6d0fadd1b9106df78e600a6ce73d7aa973063e136c5375049aa1a0",
+      "licence": "CC BY-NC-SA 3.0"
+    },
+    {
+      "parva": 13,
+      "url": "https://sanskritlibrary.org/catalogsText/titus/mbh/mbh13.html",
+      "sha256": "3f99d5906aebc3b26456819e7b75c688f775c5a789edb302d0fe4e042e300417",
+      "licence": "CC BY-NC-SA 3.0"
+    },
+    {
+      "parva": 14,
+      "url": "https://sanskritlibrary.org/catalogsText/titus/mbh/mbh14.html",
+      "sha256": "654cdabddadaa94ec0cf04941c88ee66ccb9f10c4d9e5f982544aa8ce6759a77",
+      "licence": "CC BY-NC-SA 3.0"
+    },
+    {
+      "parva": 15,
+      "url": "https://sanskritlibrary.org/catalogsText/titus/mbh/mbh15.html",
+      "sha256": "104b17be0455e44a816b4469b96d2df70addc352547f6c5e8a5537b21ec73186",
+      "licence": "CC BY-NC-SA 3.0"
+    },
+    {
+      "parva": 16,
+      "url": "https://sanskritlibrary.org/catalogsText/titus/mbh/mbh16.html",
+      "sha256": "20e7f7d12f813e2d40b54f52d4308121c426310856da556a45c92389ea9d127b",
+      "licence": "CC BY-NC-SA 3.0"
+    },
+    {
+      "parva": 17,
+      "url": "https://sanskritlibrary.org/catalogsText/titus/mbh/mbh17.html",
+      "sha256": "afc1c4fcfb18c9b141dd3c1ecc57894d702c654a0c23050f8534187f0039f7e4",
+      "licence": "CC BY-NC-SA 3.0"
+    },
+    {
+      "parva": 18,
+      "url": "https://sanskritlibrary.org/catalogsText/titus/mbh/mbh18.html",
+      "sha256": "f9d6caa9f20a0269c89a78aafb2ce13371b7950ec4fc5febd00dca63059a3d3d",
+      "licence": "CC BY-NC-SA 3.0"
+    }
+  ]
 }

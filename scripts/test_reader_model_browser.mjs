@@ -59,6 +59,7 @@ try{
   else html=html.replace('class="hdc-verse notranslate" lang="sa"','class="missing-source" lang="sa"');
   await context.route(base+'reader/**',r=>r.fulfill({body:html,contentType:'text/html'}));
   await page.goto(base+'reader/');assert.match(await page.locator('[data-reader-status]').textContent(),/Pilot text unavailable/);
+  await page.locator('[data-legacy-reader] > summary').click();
   await page.locator('[data-bookmark]').click();assert.equal(await page.evaluate(key=>localStorage.getItem(key),key),null);
   await context.close();console.log('PASS actual invalid Reader payload: '+invalid);
  }

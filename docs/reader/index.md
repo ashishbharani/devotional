@@ -1,13 +1,16 @@
 ---
 title: Sacred Reader
-description: Read the Bhagavad Gita and Ramcharitmanas in their original languages, with private reading controls and attributed sources.
+description: Read Bhagavad Gita, Ramcharitmanas, Mahabharata and Valmiki Ramayana in their original languages, with chapter navigation and private reading controls.
 ---
 
 # Sacred Reader
 
 <!-- HDC_READER_BOOKS -->
 
-## Saved reading — Bhagavad Gita 2.47
+<p><a href="#" data-reader-global-continue hidden>Continue last saved reading page</a></p>
+
+<details class="hdc-practice-details" data-legacy-reader>
+<summary>Saved passage — Bhagavad Gita 2.47, transliteration and English</summary>
 
 The original saved passage below retains its permanent link, optional IAST transliteration and historical English translation. Other chapters contain original-language text; full translations, commentary and recordings are not bundled without verified sources and rights. Website interface translations do not replace the source-attributed sacred texts.
 
@@ -24,7 +27,6 @@ The original saved passage below retains its permanent link, optional IAST trans
 <button type="button" data-reader-clear>Clear reader progress and history</button>
 </div>
 <p data-reader-progress role="status">0 of 1 passages marked read.</p>
-<p><a href="#" data-reader-global-continue hidden>Continue last saved reading page</a></p>
 <p><a href="#gita-2-47" data-reader-continue hidden>Continue saved passage</a></p>
 <p data-reader-empty hidden>No matching passage in this pilot. <a href="../find/">Search the complete catalogue instead</a>.</p>
 <article id="gita-2-47" tabindex="-1" data-reader-passage>
@@ -46,3 +48,4 @@ The original saved passage below retains its permanent link, optional IAST trans
 </section>
 
 <noscript>The Sanskrit passage, expandable English translation and sources remain readable without JavaScript. Private bookmarks and reading controls require JavaScript.</noscript>
+</details>

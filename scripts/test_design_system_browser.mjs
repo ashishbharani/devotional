@@ -18,7 +18,7 @@ try{
   for(const route of routes){
    assert.equal((await page.goto(base+route)).status(),200,route);
    await page.evaluate(t=>document.body.setAttribute('data-md-color-scheme',t),theme);
-   if(route==='reader/')await page.locator('[data-reader-translation] summary').click();
+   if(route==='reader/'){await page.locator('[data-legacy-reader] > summary').click();await page.locator('[data-reader-translation] summary').click();}
    for(const enhanced of [false,true]){
     await page.evaluate(on=>{for(const c of ['abp-hc','abp-text-2','abp-cards','abp-spacing','abp-still'])document.documentElement.classList.toggle(c,on);},enhanced);
     assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),`${route} ${width} ${theme} enhanced=${enhanced}: no overflow`);

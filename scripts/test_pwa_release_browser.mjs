@@ -50,7 +50,7 @@ try{
  await page.goto(base+'journeys/');await page.locator('[data-routine-start]').click();await page.waitForURL(/minutes=10$/);assert.equal(await page.locator('[data-duration]').inputValue(),'10');
  await page.waitForFunction(()=>document.querySelector('[data-sanctuary] img').naturalWidth>0);
  assert.equal(await page.evaluate(()=>localStorage.getItem('abp-japa-state-v1')),'{"count":54}');
- await context.setOffline(false);await page.goto(base+'reader/');assert.equal(await page.locator('[data-reader-passage]').isVisible(),true);
+ await context.setOffline(false);await page.goto(base+'reader/');await page.locator('[data-legacy-reader] > summary').click();assert.equal(await page.locator('[data-reader-passage]').isVisible(),true);
  await context.close();report.offlinePresets='PASS: first-install 5/10/20, actual journey handoff, image and online recovery; legacy counter intact';
  console.log('PASS first-install offline presets, journey handoff, online recovery, approved image and incremental source budget');
 }finally{await writeFile('work/release-qa/performance.json',JSON.stringify(report,null,2));await browser.close();server.kill();}

@@ -1,5 +1,30 @@
 # Sacred Reader original-language sources
 
+## Epic additions and simpler navigation
+
+The owner subsequently requested Mahabharata and Valmiki Ramayana. The former
+uses The Sanskrit Library's eighteen-parva critical-edition electronic witness
+(1,995 chapters), under CC BY-NC-SA 3.0 with editor/contributor attribution.
+Continuous SLP1 text is retained alongside deterministic Devanagari transcription.
+The latter uses all seven Sanskrit Wikisource kandas (645 sargas), with exact
+source revisions per chapter under CC BY-SA 4.0. Source spelling/edition variants
+are retained; these are not newly corrected critical texts or Hindi translations.
+Their separate licence files govern these databases, not unrelated site code.
+
+Explicit maintenance: run `python scripts/fetch_reader_epics.py`, then
+`python scripts/import_reader_epics.py`. Fetching is resumable and outside the
+build. The fetcher checks all eighteen Library licence declarations and requests
+the Wikisource revisions pinned in the database. Input/output hashes and licence
+evidence are in the manifest. Review any changed source hash before publishing.
+Run `python scripts/test_reader_epics.py` and the full Reader/build regression
+suite after import. The ordinary build has no network corpus dependency.
+
+Readers choose a book, then a chapter. Existing Gita/Manas chapter URLs and the
+original `reader/#gita-2-47` bookmark remain compatible. Epic pages are on demand;
+the installation shell does not download whole books or their full-text indexes.
+
+## Earlier Gita and Manas imports
+
 This separate text collection supports the owner's 4 November 2026 request for the whole Bhagavad Gita and Ramcharitmanas in Sacred Reader. It does not change `data/collection.json`, CWIDs, catalogue classification, PDFs or existing external reading links.
 
 ## Witnesses and scope

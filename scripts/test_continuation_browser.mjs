@@ -14,7 +14,7 @@ try{
   const home=await context.newPage();await home.goto(base);
   assert.equal(await home.locator('[data-daily-reader]').isVisible(),false);
   await home.locator('.hdc-daily').screenshot({path:`work/continuation/daily-no-reader-progress-${width}.png`});
-  const other=await context.newPage();await other.goto(base+'reader/');await other.locator('[data-bookmark]').click();
+  const other=await context.newPage();await other.goto(base+'reader/');await other.locator('[data-legacy-reader] > summary').click();await other.locator('[data-bookmark]').click();
   await home.locator('[data-daily-reader]:visible').waitFor();
   await home.locator('.hdc-daily').screenshot({path:`work/continuation/daily-saved-reader-${width}.png`});
   await home.locator('[data-daily-reader] a').click();await home.waitForURL(/reader\/#gita-2-47$/);

@@ -49,6 +49,7 @@ try{
   await page.waitForTimeout(3000);
   let taskError=null;
   try{if(route==='reader/'){
+   await page.locator('[data-legacy-reader] > summary').click();
    await page.locator('[data-bookmark]').click();await page.locator('[data-read]').click();
    await page.locator('[data-reader-query]').pressSequentially('śāntiḥ',{delay:80});await page.locator('[data-reader-query]').fill('');
    await page.locator('[data-reader-transliteration] summary').click();

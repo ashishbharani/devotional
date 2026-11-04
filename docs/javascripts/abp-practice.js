@@ -115,7 +115,7 @@
         const continued=last&&(flags(state,last.id).bookmark||flags(state,last.id).read)?last:passages.find(p=>flags(state,p.id).bookmark||flags(state,p.id).read);
         q('[data-reader-continue]').hidden=!continued;
         if(continued)q('[data-reader-continue]').href='#'+continued.id;
-        const globalContinue=q('[data-reader-global-continue]'),savedLink=readingLink(state.lastReadingPath,state.lastPassage);
+        const globalContinue=q('[data-reader-global-continue]')||document.querySelector('[data-reader-global-continue]'),savedLink=readingLink(state.lastReadingPath,state.lastPassage);
         if(globalContinue){globalContinue.hidden=!savedLink;if(savedLink)globalContinue.href=savedLink;}
         const history=q('[data-reader-history-items]');
         if(history){history.replaceChildren();for(const entry of [...(state.history||[])].reverse()){const li=document.createElement('li'),passage=byId.get(entry.id),link=readingLink(entry.path,entry.id);li.append(new Date(entry.at).toLocaleString()+' — ');if(passage||link){const a=document.createElement('a');a.href=passage?'#'+passage.id:link;a.textContent=passage?.querySelector('h2')?.textContent||entry.id;li.append(a);}else li.append('Saved passage unavailable: '+entry.id);history.append(li);}}
@@ -149,7 +149,7 @@
         }
         q('[data-reader-empty]').hidden=passages.some(p=>!p.hidden);
       };
-      const revealPassage=id=>{const passage=byId.get(id);if(!passage)return;active=passage;q('[data-reader-query]').value='';filterPassage();render();passage.focus({preventScroll:true});passage.scrollIntoView({block:'center',behavior:'auto'});};
+      const revealPassage=id=>{const passage=byId.get(id);if(!passage)return;for(let parent=passage.parentElement;parent;parent=parent.parentElement){if(parent.tagName==='DETAILS')parent.open=true;}active=passage;q('[data-reader-query]').value='';filterPassage();render();passage.focus({preventScroll:true});passage.scrollIntoView({block:'center',behavior:'auto'});};
       on('[data-reader-query]','input',filterPassage);
       const select=q('[data-reader-select]');
       if(select){select.replaceChildren(...passages.map(p=>new Option(p.querySelector('h2')?.textContent||p.id,p.id)));select.closest('label').hidden=passages.length<2;on('[data-reader-select]','change',()=>revealPassage(select.value));}
@@ -175,6 +175,7 @@
       });
       render();
       q('[data-reader-query]').value=new URLSearchParams(location.search).get('readerQuery')||'';filterPassage();
+      if(new URLSearchParams(location.search).has('readerQuery')){const legacy=root.closest('[data-legacy-reader]');if(legacy)legacy.open=true;}
       if(byId.has(location.hash.slice(1)))revealPassage(location.hash.slice(1));
     }
   }

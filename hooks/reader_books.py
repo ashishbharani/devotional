@@ -40,30 +40,43 @@ def pages(book):
 
 
 def hub():
-    out = ['<section aria-label="Complete original-language books"><h2>Read complete books</h2>',
-           '<p>Choose a chapter or kāṇḍa below. The Bhagavad Gita is in Sanskrit; Ramcharitmanas is in Awadhi with its Sanskrit invocations. These are original texts, not newly generated translations or commentary. The source-attributed 2.47 reading and saved link below remain available.</p>']
+    out = ['<section aria-label="Complete original-language books"><h2>Choose a book</h2>',
+           '<p>Open a book, choose a chapter, then read. Your bookmarks and reading progress stay in this browser.</p><div class="hdc-reader-books">']
     for book in load_books():
-        out.append(f'<h3>{html.escape(book["title"])}</h3><ul>')
-        for chapter in book["chapters"]:
-            out.append(f'<li><a href="{book["id"]}/chapter-{chapter["number"]}/">{html.escape(chapter["title"])}</a></li>')
-        out.append('</ul>')
-    out.append('<p>The Gita witness includes Arjuna’s opening question in chapter 13: 701 numbered entries across 18 chapters. Ramcharitmanas contains all seven kāṇḍas, with opening invocations and terminal passages. Textual variants and electronic transcription errors may exist; source records identify the witnesses used. This is not a critical edition.</p>')
-    out.append('<p>Books are split into manageable reading pages. Visited pages can be reused offline once cached by the installed app; this does not download every chapter on installation. Open the chapters you need while online.</p></section>')
+        out.append(f'<article><h3><a href="{book["id"]}/">{html.escape(book["title"])}</a></h3><p>{len(book["chapters"])} reading chapters · Original {"Awadhi and Sanskrit" if book["language"]=="awa" else "Sanskrit"}</p><a href="{book["id"]}/">Choose a chapter →</a></article>')
+    out.append('</div><details class="hdc-practice-details"><summary>Languages, editions and offline reading</summary><p>These are original-language electronic texts. Hindi translations are not bundled. The Gita witness includes Arjuna’s opening chapter-13 question and has 701 numbered entries. Source details identify edition differences; these are not critical editions. Open chapters online before using them offline; installation does not download all books.</p></details></section>')
     return "\n".join(out)
+
+
+def contents(book):
+    out=[f'# {book["title"]}\n','<p><a href="../">All books</a></p>', '<h2>Choose a chapter</h2><div data-book-contents>']
+    groups={}
+    for chapter in book['chapters']:
+        groups.setdefault(chapter.get('group','Chapters'),[]).append(chapter)
+    for name,chapters in groups.items():
+        if len(groups)>1:out.append(f'<details class="hdc-practice-details"><summary>{html.escape(name)} · {len(chapters)} chapters</summary>')
+        out.append('<ol>')
+        for chapter in chapters:out.append(f'<li><a href="chapter-{chapter["number"]}/">{html.escape(chapter["title"])}</a></li>')
+        out.append('</ol>')
+        if len(groups)>1:out.append('</details>')
+    out.append('</div>')
+    return '\n'.join(out)
 
 
 def controls():
     return '''<div class="hdc-practice-controls">
 <label hidden>Reading passage <select data-reader-select></select></label>
-<label>Text size <select data-reader-size><option value="1">Comfortable</option><option value="1.25">Large</option><option value="1.5">Extra large</option></select></label>
-<label>Line spacing <select data-reader-spacing><option value="1.8">Comfortable</option><option value="2.2">Spacious</option></select></label>
-<label>Find on this reading page <input type="search" data-reader-query placeholder="Original text or passage number"></label>
 <button type="button" data-bookmark aria-pressed="false">Bookmark passage</button>
 <button type="button" data-read aria-pressed="false">Mark passage read</button>
+</div>
+<details class="hdc-practice-details" data-reader-options><summary>Search, text size and more options</summary><div class="hdc-practice-controls">
+<label>Find on this reading page <input type="search" data-reader-query placeholder="Original text or passage number"></label>
+<label>Text size <select data-reader-size><option value="1">Comfortable</option><option value="1.25">Large</option><option value="1.5">Extra large</option></select></label>
+<label>Line spacing <select data-reader-spacing><option value="1.8">Comfortable</option><option value="2.2">Spacious</option></select></label>
 <button type="button" data-reader-share>Share passage link</button>
 <button type="button" data-reader-print>Print passage</button>
 <button type="button" data-reader-clear>Clear this page's progress and reader history</button>
-</div>
+</div></details>
 <p data-reader-progress role="status"></p>
 <p><a href="#" data-reader-global-continue hidden>Continue last saved reading page</a></p>
 <p><a href="#" data-reader-continue hidden>Continue saved passage on this page</a></p>
@@ -73,8 +86,8 @@ def controls():
 def render(book, page, all_pages):
     esc = html.escape
     relative = lambda path: posixpath.relpath(path, page["path"]) + "/"
-    out = [f'# {page["title"]}\n', '<p><a href="' + relative("reader") + '">Sacred Reader — all chapters and kāṇḍas</a></p>',
-           '<p>Original text. No automatic sacred-text translation is applied. Select or focus a passage before bookmarking or marking it read. Progress is local to this browser; the count below is for this reading page.</p>',
+    out = [f'# {page["title"]}\n', '<p><a href="' + relative("reader") + '">All books</a> · <a href="'+relative('reader/'+book['id'])+'">Choose another chapter</a></p>',
+           '<p>Original text · Select a passage to bookmark or mark read.</p>',
            '<section class="hdc-practice hdc-reader" data-reader aria-label="Original-language book reader">', controls()]
     for passage in page["passages"]:
         lines = '<br>'.join(esc(line) for line in passage["text"].split('\n'))
@@ -88,25 +101,32 @@ def render(book, page, all_pages):
         if 0 <= neighbour < len(all_pages):
             target = all_pages[neighbour]
             out.append(f'<li><a href="{relative(target["path"].rstrip("/"))}">{label}: {esc(target["title"])}</a></li>')
-    out.append('</ul></nav><h2>Text source and reuse</h2>')
+    out.append('</ul></nav><details class="hdc-practice-details"><summary>Text source, edition and reuse</summary>')
     manifest = json.loads((DATA / "manifest.json").read_text(encoding="utf-8"))
-    names = ['gita'] if book['id'] == 'bhagavad-gita' else ['manas', 'openings']
+    names = book.get('sourceKeys') or (['gita'] if book['id'] == 'bhagavad-gita' else ['manas', 'openings'])
     for name in names:
         source = manifest['sources'][name]
-        out.append(f'<p><a href="{source["repository"]}/tree/{source["commit"]}/{source["path"]}">{esc(name)} witness — pinned source and contributors</a></p>')
-    out.append(f'<p>{esc(manifest["editionNote"])}</p>')
+        url=source.get('url') or f'{source["repository"]}/tree/{source["commit"]}/{source["path"]}'
+        out.append(f'<p><a href="{esc(url,quote=True)}">{esc(source.get("label",name))} — source and contributors</a></p>')
+    chapter=page['chapter']
+    if chapter.get('sourceRevision'):
+        out.append(f'<p><a href="https://sa.wikisource.org/w/index.php?oldid={chapter["sourceRevision"]}">Exact source revision {chapter["sourceRevision"]}: {esc(chapter["sourceTitle"])}</a> — Sanskrit Wikisource contributors. Formatting adapted to this Reader.</p>')
+    if chapter.get('sourceUrl'):out.append(f'<p><a href="{chapter["sourceUrl"]}">This parva’s source and licence</a>. SLP1 transcribed into Devanagari; source encoding retained in the download.</p>')
+    out.append(f'<p>{esc(book.get("editionNote",manifest["editionNote"]))}</p>')
     out.append('<p>Underlying ancient text is public domain. Electronic source and assembled database terms are retained with the download. Only original-language text is included; no modern translation or commentary is copied.</p>')
     asset = relative('assets/reader-books').rstrip('/') + '/'
     out.append(f'<p><a href="{asset}{book["id"]}.json">Download this original-text database (JSON)</a> · <a href="{asset}manifest.json">Provenance, input/output hashes and transformations</a></p>')
-    licences = ['GITA-UNLICENSE.txt'] if book['id'] == 'bhagavad-gita' else ['MANAS-UNLICENSE.txt', 'MANAS-ODBL.txt']
+    licences = book.get('licences') or (['GITA-UNLICENSE.txt'] if book['id'] == 'bhagavad-gita' else ['MANAS-UNLICENSE.txt', 'MANAS-ODBL.txt'])
     out.append('<ul>' + ''.join(f'<li><a href="{asset}{name}">{name}</a></li>' for name in licences) + '</ul>')
     out.append('<p>Visited reading pages can be reopened offline after successful caching. Unvisited pages require a connection. Existing theme, text size, bookmarks and read flags are retained; no account synchronization is claimed.</p>')
     out.append('<noscript>The complete original text and reading-order links on this page work without JavaScript. Private progress controls require JavaScript.</noscript>')
+    out.append('</details>')
     return '\n'.join(out)
 
 
 def generated_pages():
     for book in load_books():
+        yield 'reader/'+book['id']+'/index.md',book['title'],contents(book)
         book_pages = pages(book)
         for page in book_pages:
             yield page['path'] + 'index.md', page['title'], render(book, page, book_pages)

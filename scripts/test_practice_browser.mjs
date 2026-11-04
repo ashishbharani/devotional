@@ -38,6 +38,7 @@ try{
   await checkContrast(page);
   await page.screenshot({path:`work/practice/sanctuary-${width}-${theme}.png`,fullPage:true});
   await page.getByRole('link',{name:'Read the Sacred Reader',exact:true}).click();await page.waitForURL(base+'reader/');
+  await page.locator('[data-legacy-reader] > summary').click();
   await page.locator('[data-bookmark]').click();await page.locator('[data-read]').click();
   await page.locator('[data-reader-size]').selectOption('1.5');await page.locator('[data-reader-spacing]').selectOption('2.2');
   assert.equal(await page.locator('[data-reader-progress]').textContent(),'1 of 1 passages marked read. Passage bookmarked.');
@@ -53,6 +54,7 @@ try{
   await page.locator('[data-reader-query]').fill('not-a-real-passage');assert.equal(await page.locator('[data-reader-empty]').isVisible(),true);
   await page.locator('[data-reader-query]').fill('2.47');assert.equal(await page.locator('[data-reader-passage]').isVisible(),true);
   await page.reload();assert.equal(await page.locator('[data-bookmark]').getAttribute('aria-pressed'),'true');
+  await page.locator('[data-legacy-reader] > summary').click();
   assert.equal(await page.locator('[data-reader-continue]').isVisible(),true);
   assert.equal(await page.locator('[data-reader-size]').inputValue(),'1.5');
   await page.evaluate(t=>document.body.setAttribute('data-md-color-scheme',t),theme);
@@ -88,13 +90,14 @@ try{
  await offlinePage.waitForFunction(()=>Boolean(navigator.serviceWorker.controller));
  for(const route of ['reader/','sanctuary/'])assert.ok(await offlinePage.evaluate(async url=>Boolean(await caches.match(url)),base+route),'new route precached');
  await offline.setOffline(true);await offlinePage.goto(base+'reader/');
+ await offlinePage.locator('[data-legacy-reader] > summary').click();
  await offlinePage.locator('[data-bookmark]').click();assert.equal(await offlinePage.locator('[data-bookmark]').getAttribute('aria-pressed'),'true');
   await offlinePage.locator('[data-reader-translation] summary').click();assert.equal(await offlinePage.locator('[data-reader-translation-text]').textContent(),english,'translation is part of the real offline Reader shell');
  await offlinePage.goto(base+'sanctuary/');await offlinePage.locator('[data-light]').click();
  assert.equal(await offlinePage.locator('[data-light]').getAttribute('aria-pressed'),'true');
  await offline.close();
  const noScript=await browser.newContext({javaScriptEnabled:false,serviceWorkers:'block'}),staticPage=await noScript.newPage();
- await staticPage.goto(base+'reader/');await staticPage.locator('[data-reader-translation] summary').click();assert.equal(await staticPage.locator('[data-reader-translation-text]').isVisible(),true);assert.equal(await staticPage.locator('[data-reader-translation-text]').textContent(),english);await noScript.close();
+ await staticPage.goto(base+'reader/');await staticPage.locator('[data-legacy-reader] > summary').click();await staticPage.locator('[data-reader-translation] summary').click();assert.equal(await staticPage.locator('[data-reader-translation-text]').isVisible(),true);assert.equal(await staticPage.locator('[data-reader-translation-text]').textContent(),english);await noScript.close();
  console.log('PASS real first-install offline Reader bookmark and Sanctuary diya interaction');
  console.log('PASS malformed/blocked storage, legacy Japa preservation, source and offline shell declarations');
 }finally{await browser.close();server.kill();}
