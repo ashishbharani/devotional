@@ -51,7 +51,7 @@ jobs:
           uv run python scripts/test_section_pager.py
           uv run python scripts/check_i18n.py
           uv run python scripts/check_project_pdfs.py
-      - name: Verify activated Sanctuary and source-attributed Reader controls
+      - name: Verify retired Sanctuary absence and source-attributed Reader controls
         run: node scripts/test_practice_browser.mjs
       - name: Verify deployed epic coverage and generated Reader links
         run: |

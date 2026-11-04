@@ -16,7 +16,7 @@ bundled = json.loads(bundle_file.read_text(encoding='utf-8')) if enabled else {'
 if enabled:
     assert bundled['bundle'] in home and bundled['bundle'] in shell
     assert (site / bundled['bundle']).is_file()
-for route in ('reader', 'sanctuary', 'journeys', 'explore'):
+for route in ('reader', 'journeys', 'explore'):
     assert (site / route / 'index.html').exists() == enabled, route
 for asset in ('javascripts/abp-local-state.js', 'stylesheets/practice.css', 'javascripts/abp-practice.js', 'stylesheets/festivals.css', 'javascripts/abp-festivals.js', 'javascripts/abp-journeys.js', 'javascripts/abp-discovery.js', 'javascripts/abp-sharing.js', 'javascripts/abp-japa-history.js', 'javascripts/abp-section-shortcuts.js'):
     if asset.startswith('stylesheets/'):
@@ -25,12 +25,17 @@ for asset in ('javascripts/abp-local-state.js', 'stylesheets/practice.css', 'jav
         assert (asset in home) == enabled, asset
     assert (asset in worker) == enabled, asset
 assert ('assets/festivals/themes.mjs' in worker) == enabled
-assert ('Enter the Devotional Sanctuary' in home) == enabled
+assert 'Devotional Sanctuary' not in home
+assert not (site / 'sanctuary/index.html').exists()
+assert 'sanctuary/' not in worker
+assert ('class="hdc-daily-reader-tab"' in home) == enabled
+assert 'Open the Sacred Reader' not in home
+assert 'Festival appearance (preview)' not in home
 assert ('data-festival-experience' in home) == enabled
 assert ('data-share-page' in home) == enabled
 assert ('data-daily-reader' in home) == enabled
 for minutes in (5,10,20):
-    assert (f'sanctuary/?minutes={minutes}' in worker) == enabled
+    assert f'sanctuary/?minutes={minutes}' not in worker
 for asset in ('sitemap.xml', 'search/search_index.json'):
     assert (asset in shell) == enabled, asset
 assert 'assets/i18n.json' in shell, 'PR56 base interface dictionary is available offline in both build modes'
