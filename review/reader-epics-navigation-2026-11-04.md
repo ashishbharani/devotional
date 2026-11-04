@@ -57,3 +57,18 @@ screenshots are in scripts/fixtures/reader-cleanup-review. Catalogue/engine diff
 is empty and the built Reader runtime matches its source. Remaining existing
 regressions and final exact-head GitHub CI must pass before merging; this note
 records that pre-merge checkpoint and does not claim production deployment.
+
+## Latest-main integration checkpoint
+
+Main advanced with the approved retirement of Sanctuary and festival-preview
+controls. That main state is preserved in merge head 69df1e4. Its local strict
+build passed in 298.33 seconds. Fresh six-viewport/theme epic navigation,
+endpoint, legacy-link, bookmark and real offline checks passed; cleanup checks
+passed at 375/1440px and the after screenshots were refreshed.
+
+The fresh CI upgrade test reached the intentionally collapsed Reader options
+panel without opening it, so its search fill correctly timed out. The test now
+clicks the visible summary before filling; its offline interactivity, failed
+update, successful update, cache retirement and saved-state assertions are
+unchanged. That focused regression passes locally. Full exact-head CI remains
+a merge gate. No production code or budget was changed to accommodate the test.
