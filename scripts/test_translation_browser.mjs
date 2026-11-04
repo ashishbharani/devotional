@@ -111,7 +111,8 @@ try {
  }
  const sourceText='Your business is with action alone; not by any means with fruit. Let not the fruit of action be your motive (to action). Let not your attachment be (fixed) on inaction.';
  const protectedReader=await browser.newContext({serviceWorkers:'block'}),readerPage=await protectedReader.newPage();
- const injected=structuredClone(catalogue);injected.textTranslations[sourceText]=Object.fromEntries(languages.filter(c=>c!=='en').map(c=>[c,'TEST_ONLY_REPLACEMENT']));
+ const originalSourceText=JSON.parse(await readFile('data/reader-books/bhagavad-gita.json','utf8')).chapters[1].passages.find(p=>p.id==='gita-2-47').text.split('\n').join('');
+ const injected=structuredClone(catalogue);injected.textTranslations[originalSourceText]=Object.fromEntries(languages.filter(c=>c!=='en').map(c=>[c,'TEST_ONLY_REPLACEMENT']));injected.textTranslations[sourceText]=Object.fromEntries(languages.filter(c=>c!=='en').map(c=>[c,'TEST_ONLY_REPLACEMENT']));
  await protectedReader.route('**/assets/i18n.json',r=>r.fulfill({body:JSON.stringify(injected),contentType:'application/json'}));
  await protectedReader.route('https://fonts.googleapis.com/**',r=>r.fulfill({body:'',contentType:'text/css'}));
  await readerPage.goto(base+'reader/bhagavad-gita/chapter-2/#gita-2-47');await readerPage.evaluate(()=>window.abpI18n.ready);
