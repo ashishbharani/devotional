@@ -11,6 +11,8 @@ base=draft(source)
 result=audit(source,base)
 assert result["approved"]==0
 assert result["unapproved"]==125*9
+assert result["wholeDocumentApproved"]==0
+assert result["wholeDocumentRequired"]==9
 assert result["status"]=="incomplete"
 sample=deepcopy(base)
 one=sample["clauses"][0]["reviews"]["hi"]
@@ -26,6 +28,15 @@ one.update({
 # presented as a real independent reviewer or this file as an approval.
 result=audit(source,sample)
 assert result["approved"]==1 and result["unapproved"]==1124
+assert result["wholeDocumentApproved"]==0
+sample["wholeDocumentReviews"]["hi"].update({
+  "status":"approved", "scope":"full-current-Disclaimer-including-all-four-appendices",
+  "linguisticReviewer":"SYNTHETIC TEST ONLY",
+  "legalReviewer":"SYNTHETIC TEST ONLY",
+  "reviewDate":"2026-11-05",
+  "evidence":"https://example.test/full-document-test"
+})
+assert audit(source,sample)["wholeDocumentApproved"]==1
 assert result["status"]=="incomplete"
 changed=deepcopy(sample)
 changed["sourceSha256"]="0"*64
