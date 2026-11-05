@@ -204,6 +204,8 @@ jobs:
         run: node scripts/test_translation_headings_browser.mjs
       - name: Test registered editorial translations, exact fallback and offline reuse
         run: node scripts/test_prose_translation_browser.mjs
+        env:
+          REQUIRE_COMPLETE_EDITORIAL_HI: '1'
       - name: Test English library handoffs and Vrat Katha / Parayan discovery
         run: node scripts/test_reading_links_browser.mjs
       - uses: actions/upload-artifact@v4
