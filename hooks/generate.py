@@ -1351,7 +1351,13 @@ def on_files(files, config, **kw):
         files.append(File.generated(config, src, content=front_matter(**meta) + body))
 
     if PRACTICE_PREVIEW:
-        from hooks.reader_books import DATA as reader_data, generated_pages
+        from hooks.reader_books import DATA as reader_data, generated_pages, load_books
+        from hooks.reader_translations import collect
+        reader_translation_index, reader_translation_assets = collect(load_books())
+        files.append(File.generated(config, "assets/reader-translations/index.json",
+                                    content=json.dumps(reader_translation_index, ensure_ascii=False, separators=(",", ":"))))
+        for target, value in sorted(reader_translation_assets.items()):
+            files.append(File.generated(config, target, content=value))
         for src, title, body in generated_pages():
             # Original books load on demand. Keep their full text out of the
             # first-install Material index; the chapter hub stays searchable,
@@ -1434,6 +1440,11 @@ def on_post_build(config, **kw):
         # provenance/content still advances the worker version when edited.
         for target in sorted((site / "assets" / "reader-books").glob("*")):
             signature.update(target.name.encode())
+            signature.update(target.read_bytes())
+        # Reviewed parallel translations are never precached at installation;
+        # their hashes invalidate old cached language/book combinations.
+        for target in sorted((site / "assets" / "reader-translations").rglob("*.json")):
+            signature.update(target.relative_to(site).as_posix().encode())
             signature.update(target.read_bytes())
     for name in ("works-index.json", "universal-search.json", *(("section-shortcuts.json",) if PRACTICE_PREVIEW else ())):
         signature.update((site / "assets" / name).read_bytes())

@@ -50,6 +50,8 @@ jobs:
           uv run python scripts/audit_hosted_translations.py --output work/translation-coverage.json
           uv run python scripts/test_translation_progress.py
           uv run python scripts/render_translation_progress.py --audit work/translation-coverage.json --output work/translation-summary.md
+          uv run python scripts/test_legal_translation_review.py
+          uv run python scripts/audit_legal_translation_review.py --output work/legal-125-review.json
           uv run python scripts/check_project_pdfs.py
           uv run python scripts/test_reading_links.py
       - name: Test owner-approved deity artwork and exact identity mappings
@@ -154,7 +156,12 @@ jobs:
         run: |
           uv run python scripts/test_reader_books.py enabled
           uv run python scripts/test_reader_epics.py
+          uv run python scripts/test_reader_translations.py
+          uv run python scripts/audit_reader_translations.py --output work/reader-translation-coverage.json
+          uv run python scripts/test_multilingual_release_readiness.py
+          uv run python scripts/multilingual_release_readiness.py --output work/multilingual-release-readiness.md
           node scripts/test_reader_books_browser.mjs
+          node scripts/test_reader_translations_browser.mjs
           node scripts/test_reader_cleanup_browser.mjs
       - name: Test festival dates, India-time boundaries and removed preview controls
         run: |
@@ -223,6 +230,9 @@ jobs:
             work/translation-browser
             work/translation-coverage.json
             work/translation-summary.md
+            work/reader-translation-coverage.json
+            work/legal-125-review.json
+            work/multilingual-release-readiness.md
             work/prose-translation
       - uses: actions/upload-artifact@v4
         if: always()

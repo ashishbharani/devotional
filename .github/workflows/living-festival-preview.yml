@@ -26,6 +26,7 @@ jobs:
       - run: node scripts/test_living_festival_scheduler.mjs
       - run: node scripts/test_living_festival_registry.mjs
       - run: uv run python scripts/test_festival_calendar_review.py
+      - run: uv run python scripts/test_living_festival_template.py
       - name: Report unresolved coverage, without treating it as release approval
         run: |
           mkdir -p work/living-festival
