@@ -71,6 +71,13 @@ def draft(source):
         "notice":"Translation quality and legal reviewer independence must be verified externally.",
         "clauses":extract(source),
     }
+    result["wholeDocumentReviews"] = {
+        code: {
+            "status":"unreviewed", "scope":"full-current-Disclaimer-including-all-four-appendices",
+            "linguisticReviewer":"", "legalReviewer":"",
+            "reviewDate":"", "evidence":"", "notes":""
+        } for code in CODES
+    }
     for clause in result["clauses"]:
         clause["reviews"] = {
             code:{
@@ -95,6 +102,32 @@ def audit(source, packet):
         return {"status":"invalid","approved":0,"total":125*len(CODES),
                 "issues":["Missing or extra legal clauses"]}
     approved=0
+    full_approved=0
+    whole=packet.get("wholeDocumentReviews")
+    if not isinstance(whole,dict) or set(whole)!=set(CODES):
+        return {"status":"invalid","approved":0,"total":125*len(CODES),
+                "issues":["Missing full-document and appendix review declarations"]}
+    for code,record in whole.items():
+        if not isinstance(record,dict) or record.get("status")!="approved":
+            continue
+        if record.get("scope")!="full-current-Disclaimer-including-all-four-appendices":
+            issues.append(f"{code}: incomplete legal review scope")
+            continue
+        if not all(isinstance(record.get(k),str) and record[k].strip()
+                   for k in ("linguisticReviewer","legalReviewer","reviewDate","evidence")):
+            issues.append(f"{code}: full-document reviewer metadata missing")
+            continue
+        try:
+            from datetime import date
+            date.fromisoformat(record["reviewDate"])
+        except ValueError:
+            issues.append(f"{code}: invalid full-document review date")
+            continue
+        target=urlsplit(record["evidence"])
+        if target.scheme!="https" or not target.netloc:
+            issues.append(f"{code}: invalid full-document evidence URL")
+            continue
+        full_approved+=1
     for original,record in zip(originals,entries):
         if not isinstance(record,dict) or any(record.get(k)!=original[k] for k in ("number","sourceSha256","sourceSegments")):
             return {"status":"invalid","approved":0,"total":125*len(CODES),
@@ -134,8 +167,10 @@ def audit(source, packet):
                 continue
             approved+=1
     return {
-        "status":"ready-for-independent-evidence-verification" if approved==125*len(CODES) and not issues else "incomplete",
+        "status":"ready-for-independent-evidence-verification" if approved==125*len(CODES) and full_approved==len(CODES) and not issues else "incomplete",
         "approved":approved,"total":125*len(CODES),"unapproved":125*len(CODES)-approved,
+        "wholeDocumentApproved":full_approved,"wholeDocumentRequired":len(CODES),
+        "fullDocumentScope":"Includes preamble, 18 parts, 125 clauses and all four appendices",
         "issues":issues[:40],
         "notice":"Metadata and source integrity validated only; human independence and legal accuracy not certified by this script."
     }
