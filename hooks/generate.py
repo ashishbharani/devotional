@@ -1432,6 +1432,11 @@ def on_post_build(config, **kw):
         for target in sorted((site / "assets" / "reader-books").glob("*")):
             signature.update(target.name.encode())
             signature.update(target.read_bytes())
+        # Reviewed parallel translations are never precached at installation;
+        # their hashes invalidate old cached language/book combinations.
+        for target in sorted((site / "assets" / "reader-translations").rglob("*.json")):
+            signature.update(target.relative_to(site).as_posix().encode())
+            signature.update(target.read_bytes())
     for name in ("works-index.json", "universal-search.json", *(("section-shortcuts.json",) if PRACTICE_PREVIEW else ())):
         signature.update((site / "assets" / name).read_bytes())
     # The large ephemeris assets affect the cache version but are never
