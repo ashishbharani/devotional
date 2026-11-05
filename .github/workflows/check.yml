@@ -48,6 +48,8 @@ jobs:
           uv run python scripts/test_translation_review_export.py
           uv run python scripts/test_translation_review_import.py
           uv run python scripts/audit_hosted_translations.py --output work/translation-coverage.json
+          uv run python scripts/test_translation_progress.py
+          uv run python scripts/render_translation_progress.py --audit work/translation-coverage.json --output work/translation-summary.md
           uv run python scripts/check_project_pdfs.py
           uv run python scripts/test_reading_links.py
       - name: Test owner-approved deity artwork and exact identity mappings
@@ -220,6 +222,7 @@ jobs:
           path: |
             work/translation-browser
             work/translation-coverage.json
+            work/translation-summary.md
             work/prose-translation
       - uses: actions/upload-artifact@v4
         if: always()
