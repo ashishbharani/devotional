@@ -30,7 +30,7 @@ try{
   await page.reload();assert.equal(await page.locator('[data-routine-library] option').count(),4,'older journey writer cannot erase the library');
   await page.locator('[data-routine-library]').selectOption(library.routines.find(r=>r.name==='Evening routine').id);
   assert.equal(await page.locator('[data-routine-name]').inputValue(),'Evening routine');
-  assert.equal(await page.locator('[data-routine-minutes]').inputValue(),'20');assert.match(await page.locator('[data-routine-start]').getAttribute('href'),/minutes=20$/);
+  assert.equal(await page.locator('[data-routine-minutes]').inputValue(),'20');assert.match(await page.locator('[data-routine-start]').getAttribute('href'),/reader\/$/);
   assert.equal(await page.locator('[data-journal]').inputValue(),legacy.journal);
   await page.locator('[data-routine-library-remove]').click();assert.equal(await page.locator('[data-routine-library] option').count(),3);
   assert.equal(await page.locator('[data-routine-name]').inputValue(),'Evening routine','removing a library entry keeps the active draft');

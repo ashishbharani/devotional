@@ -13,7 +13,8 @@
   let prefs={mode:'auto',region:'IN',effects:false},notice='';
   try{if(!record)throw new Error('Unavailable local record');prefs=record.get();if(record.dirty)notice=' Preferences remain for this visit only; the saved copy is unchanged.';}
   catch(_){prefs=record?.snapshot()||prefs;notice=' Saved preferences are unavailable or changed. Existing data has been kept; preference changes cannot be saved.';}
-  q('[data-festival-mode]').value=modes.includes(prefs.mode)?prefs.mode:'auto';
+  // Removed design-preview controls must not revive an old saved demo theme.
+  q('[data-festival-mode]').value=prefs.mode==='original'?'original':'auto';
   q('[data-festival-region]').value=regions.includes(prefs.region)?prefs.region:'IN';
   q('[data-festival-effects]').checked=prefs.effects===true;
   let tools;try{tools=await engine;}catch(_){q('[data-festival-status]').textContent='Festival preview unavailable; original theme retained.';return;}

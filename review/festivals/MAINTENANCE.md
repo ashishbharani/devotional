@@ -63,8 +63,10 @@ entries/signatures include V2 only in its review build. Normal builds exclude
 the new runtime and V2 shell additions.
 
 Preferences use a separate `hdc-living-festival-preferences-v2` record. Existing
-V1 records and unrelated storage are not rewritten. Auto, Original, Ganesha/Shiva,
-region and animation choices are read through; V2 is written only after an actual
+V1 records and unrelated storage are not rewritten. Auto, Original, region and
+animation choices are read through. Current main retired the old Ganesha/Shiva
+demo modes; those saved bytes remain intact and their effective mode is Auto,
+matching the approved cleanup. V2 is written only after an actual
 preference change. Unsupported records are preserved; Original is the safe default,
 and explicit session-only changes remain possible. Existing accessibility flags,
 system reduced motion, contrast and reported data/device capabilities reduce

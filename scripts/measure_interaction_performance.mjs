@@ -65,6 +65,7 @@ try{
   await page.waitForTimeout(3000);
   let taskError=null;
   try{if(route.startsWith('reader/')){
+   await page.locator('[data-reader-options] > summary').click();
    await page.locator('[data-bookmark]').click();await page.locator('[data-read]').click();
    await page.locator('[data-reader-query]').pressSequentially('2.47',{delay:80});await page.locator('[data-reader-query]').fill('');
    await page.locator('[data-reader-size]').selectOption('1.5');

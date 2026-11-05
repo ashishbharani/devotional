@@ -30,8 +30,10 @@ try{
  const failedRequests=[];page.on('requestfailed',r=>failedRequests.push({phase,type:r.resourceType(),url:r.url(),error:r.failure()?.errorText}));
  page.on('pageerror',e=>errors.push({phase,url:page.url(),message:e.message,stack:e.stack}));
  await context.route('https://fonts.googleapis.com/**',r=>r.fulfill({body:'',contentType:'text/css'}));
- await page.goto(base+'sanctuary/');await page.evaluate(()=>navigator.serviceWorker.ready);
+ await page.goto(base+'reader/bhagavad-gita/chapter-2/');await page.evaluate(()=>navigator.serviceWorker.ready);
  await page.waitForFunction(()=>Boolean(navigator.serviceWorker.controller));
+ await page.reload();
+ await page.waitForFunction(async url=>Boolean(await caches.match(url)),base+'reader/bhagavad-gita/chapter-2/');
  const cacheText=()=>page.evaluate(async url=>(await caches.match(url))?.text(),base+'stylesheets/practice.css');
  const bundleText=()=>page.evaluate(async url=>(await caches.match(url))?.text(),base+bundled);
  assert.ok((await cacheText()).includes(marker),'old release actually cached before update');
@@ -51,8 +53,8 @@ try{
  assert.equal(state,'redundant','missing shell asset rejects the incomplete update');
  assert.ok((await cacheText()).includes(marker),'failed update keeps old cached styling');
  assert.ok((await bundleText()).includes(marker),'failed bundle precache keeps the working linked CSS');
- await context.setOffline(true);await page.reload();await page.locator('[data-light]').click();
- assert.equal(await page.locator('[data-light]').getAttribute('aria-pressed'),'true','old shell remains interactive offline');
+ await context.setOffline(true);await page.reload();await page.locator('[data-reader-options] > summary').click();await page.locator('[data-reader-query]').fill('2.47');
+ assert.equal(await page.locator('[data-reader-passage]:visible').count(),1,'old reader shell remains interactive offline');
  await context.setOffline(false);phase='current';
  await page.evaluate(async()=>{
   const registration=await navigator.serviceWorker.getRegistration();
@@ -69,9 +71,10 @@ try{
  assert.ok(!(await cacheText()).includes(marker),'successful upgrade replaces old CSS bytes');
  assert.ok(!(await bundleText()).includes(marker),'successful upgrade replaces actual linked bundle bytes');
  assert.ok(await page.evaluate(async()=> (await caches.keys()).includes('unrelated-qa-cache')),'unrelated cache preserved');
- await context.setOffline(true);await page.goto(base+'sanctuary/?minutes=10');
- assert.equal(await page.locator('[data-duration]').inputValue(),'10');
- await page.locator('[data-start]').click();assert.match(await page.locator('[data-session]').textContent(),/remaining/);await page.locator('[data-stop]').click();
+ // Activation deliberately retires the old runtime cache. The Reader hub is
+ // in the new install shell; chapter caching remains visited-page, on demand.
+ await context.setOffline(true);await page.goto(base+'reader/');
+ await page.getByRole('heading',{name:'Sacred Reader',exact:true}).waitFor();
  await page.locator('[data-md-component="search-query"]').fill('Ganesha');
  await page.locator('.md-search-result__item').first().waitFor();
  assert.match(await page.locator('.md-search-result').textContent(),/Ganesha/i,'built-in Material search produces real offline results');

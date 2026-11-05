@@ -46,7 +46,10 @@ jobs:
           uv run python scripts/check_i18n.py
           uv run python scripts/test_local_translation_catalogue.py
           uv run python scripts/test_translation_review_export.py
+          uv run python scripts/test_translation_review_import.py
           uv run python scripts/audit_hosted_translations.py --output work/translation-coverage.json
+          uv run python scripts/test_translation_progress.py
+          uv run python scripts/render_translation_progress.py --audit work/translation-coverage.json --output work/translation-summary.md
           uv run python scripts/check_project_pdfs.py
           uv run python scripts/test_reading_links.py
       - name: Test owner-approved deity artwork and exact identity mappings
@@ -143,16 +146,17 @@ jobs:
         with:
           name: journey-discovery-screenshots
           path: work/journey-discovery
-      - name: Test optional Sanctuary and source-attributed Sacred Reader pilot
+      - name: Test retired Sanctuary absence and source-attributed Sacred Reader
         run: node scripts/test_practice_browser.mjs
       - name: Test extensible Reader passages, legacy progress and unavailable content
         run: node scripts/test_reader_model_browser.mjs
       - name: Verify complete original-language Reader books and visited-page offline reading
         run: |
           uv run python scripts/test_reader_books.py enabled
+          uv run python scripts/test_reader_epics.py
           node scripts/test_reader_books_browser.mjs
           node scripts/test_reader_cleanup_browser.mjs
-      - name: Test festival schedule validation, India-time boundaries and preview UI
+      - name: Test festival dates, India-time boundaries and removed preview controls
         run: |
           node scripts/test_festival_themes.mjs
           node scripts/test_festival_browser.mjs
@@ -198,8 +202,12 @@ jobs:
         with:
           name: mobile-keyboard-screenshots
           path: work/mobile-keyboard
+      - name: Verify current About and Foreword headings in all nine languages
+        run: node scripts/test_translation_headings_browser.mjs
       - name: Test registered editorial translations, exact fallback and offline reuse
         run: node scripts/test_prose_translation_browser.mjs
+        env:
+          REQUIRE_COMPLETE_EDITORIAL_HI: '1'
       - name: Test English library handoffs and Vrat Katha / Parayan discovery
         run: node scripts/test_reading_links_browser.mjs
       - uses: actions/upload-artifact@v4
@@ -214,6 +222,7 @@ jobs:
           path: |
             work/translation-browser
             work/translation-coverage.json
+            work/translation-summary.md
             work/prose-translation
       - uses: actions/upload-artifact@v4
         if: always()

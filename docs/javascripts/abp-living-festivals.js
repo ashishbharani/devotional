@@ -58,7 +58,10 @@
       if(!valid){prefs.mode='original';storageNote=' Existing appearance preference is unsupported; its saved record is unchanged.';}
       else{
        if(['auto','original'].includes(legacy.mode))prefs.mode=legacy.mode;
-       else if(['ganesha','shiva'].includes(legacy.mode)){prefs.mode='preview';prefs.previewTheme=legacy.mode==='shiva'?'shivaratri':'ganesha';}
+       // Current main retired the old saved demo modes. Preserve their bytes,
+       // region and effects, and follow its effective Auto behaviour rather
+       // than reviving a retired demo when this independent engine is enabled.
+       else if(['ganesha','shiva'].includes(legacy.mode))storageNote=' A retired design choice remains in saved data; automatic mode is used.';
        if(registry.regions.includes(legacy.region))prefs.region=legacy.region;
        if(typeof legacy.effects==='boolean')prefs.effects=legacy.effects?'auto':'none';
       }

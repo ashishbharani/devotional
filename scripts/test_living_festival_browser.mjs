@@ -127,7 +127,7 @@ try{
  await sync.page.waitForFunction(()=>document.querySelector('[data-living-region]')?.value==='IN-TN');
  assert.equal(await sync.page.evaluate(()=>localStorage.getItem('abp-panchang-place')),null);
  await sync.context.close();result.checks.push('real cross-tab storage events synchronize opt-out and festival region without changing Panchang location');
- for(const [legacyMode,expected] of [['auto','diwali'],['original',null],['ganesha','ganesha'],['shiva','shivaratri']]){
+ for(const [legacyMode,expected] of [['auto','diwali'],['original',null],['ganesha','diwali'],['shiva','diwali']]){
   const legacy=await contextFor(),saved=JSON.stringify({mode:legacyMode,region:'IN-MH',effects:false,ownerExtra:'preserve'});
   await legacy.page.addInitScript(saved=>localStorage.setItem('hdc-festival-preferences-v1',saved),saved);
   await legacy.page.goto(base);await legacy.page.waitForFunction(()=>document.querySelector('[data-living-region]')?.value==='IN-MH');
@@ -137,13 +137,13 @@ try{
   assert.equal(await legacy.page.evaluate(()=>localStorage.getItem('hdc-living-festival-preferences-v2')),null,'reading a legacy preference does not write a migration');
   await open(legacy.page);await legacy.page.locator('[data-living-effects]').selectOption('reduced');await legacy.page.reload();
   await legacy.page.waitForFunction(()=>document.querySelector('[data-living-effects]')?.value==='reduced');
-  assert.equal(await legacy.page.locator('html').getAttribute('data-hdc-festival'),expected,'new local settings keep the legacy manual identity');
+  assert.equal(await legacy.page.locator('html').getAttribute('data-hdc-festival'),expected,'new settings retain effective Auto/Original behaviour without reviving retired legacy demos');
   assert.equal(await legacy.page.evaluate(()=>localStorage.getItem('hdc-festival-preferences-v1')),saved);await legacy.context.close();
  }
  const kill=await contextFor();await kill.context.route('**/assets/festivals/living-policy.json',r=>r.fulfill({json:{schema:1,enabled:false,previewEnabled:false}}));
- await kill.page.addInitScript(()=>localStorage.setItem('hdc-festival-preferences-v1',JSON.stringify({mode:'ganesha',effects:true})));
+ await kill.page.addInitScript(()=>localStorage.setItem('hdc-living-festival-preferences-v2',JSON.stringify({schema:2,mode:'preview',previewTheme:'ganesha',region:'IN',effects:'auto'})));
  await kill.page.goto(base);await ready(kill.page);assert.equal(await kill.page.locator('[data-hdc-festival]').count(),0,'the administrator kill switch also suppresses saved/manual previews');await kill.context.close();
- result.checks.push('legacy Auto/Original/Ganesha/Shiva, region and effect choices retained without rewriting V1; administrator kill switch wins');
+ result.checks.push('legacy Auto/Original, region and effects retained without rewriting V1; retired Ganesha/Shiva demos stay retired; administrator kill switch also defeats an explicit V2 saved preview');
  const missing=await contextFor({fake:false,expectedAssetFailure:true});await missing.context.route('**/assets/festivals/living-registry.json',r=>r.fulfill({status:404,body:'Unavailable'}));
  await missing.page.goto(base);await missing.page.waitForFunction(()=>document.querySelector('[data-living-status]')?.textContent.includes('unavailable'));
  assert.equal(await missing.page.locator('[data-hdc-festival]').count(),0);await missing.context.close();

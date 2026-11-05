@@ -7,7 +7,7 @@ import {chromium} from 'playwright';
 const server=spawn(process.execPath,['scripts/serve_header_preview.mjs'],{env:{...process.env,HDC_PREVIEW_PORT:'4342'},stdio:['ignore','pipe','inherit']});
 await new Promise((resolve,reject)=>{server.stdout.once('data',resolve);server.once('error',reject);});
 const browser=await chromium.launch(),base='http://127.0.0.1:4342/devotional/';
-const routes=['library/','categories/01-deities-sub-deities-and-divine-forms/ganesha/','find/','panchang/','reader/','reader/bhagavad-gita/chapter-2/','journeys/','sanctuary/','explore/'];
+const routes=['library/','categories/01-deities-sub-deities-and-divine-forms/ganesha/','find/','panchang/','reader/','reader/bhagavad-gita/chapter-2/','journeys/','explore/'];
 const report=[];await mkdir('work/design-system',{recursive:true});
 try{
  for(const width of [320,768,1440])for(const theme of ['abp-light','abp-dark']){
@@ -52,14 +52,6 @@ try{
     if(!enhanced){if(!tokens)tokens=result.tokens;else assert.deepEqual(result.tokens,tokens,'one shared palette/type/radius contract across page types');}
     if(enhanced&&['reader/','library/','journeys/'].includes(route))await page.screenshot({path:`work/design-system/${route.replaceAll('/','_')}-${width}-${theme}-enhanced.png`});
     report.push({route,width,theme,enhanced,checkedText:result.checked});
-   }
-   if(route==='sanctuary/'){
-    await page.evaluate(()=>document.documentElement.classList.remove('abp-still'));
-    await page.locator('[data-light]').click();await page.locator('[data-effects]').check();
-    assert.equal(await page.locator('[data-diya]').evaluate(el=>getComputedStyle(el).animationName),'none','reduced-motion preference suppresses optional effect');
-    await page.emulateMedia({reducedMotion:'no-preference'});await page.evaluate(()=>document.documentElement.classList.add('abp-still'));
-    assert.equal(await page.locator('[data-diya]').evaluate(el=>getComputedStyle(el).animationName),'none','saved stop-animation preference also suppresses the effect');
-    await page.emulateMedia({reducedMotion:'reduce'});
    }
   }
   assert.deepEqual(errors,[]);await context.close();console.log(`PASS shared tokens, contrast, enlarged high contrast and focus: ${width}px ${theme}`);

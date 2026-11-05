@@ -1,0 +1,18 @@
+Valmiki Ramayana — Sanskrit Wikisource electronic witness
+
+Source: https://sa.wikisource.org/wiki/रामायणम्
+Attribution: Sanskrit Wikisource contributors. Each chapter record retains
+its exact page title and revision ID; follow that page's history for authors.
+
+Text is available under the Creative Commons Attribution-ShareAlike licence
+specified by the source. See:
+https://creativecommons.org/licenses/by-sa/4.0/
+https://creativecommons.org/licenses/by-sa/4.0/legalcode
+https://foundation.wikimedia.org/wiki/Policy:Terms_of_Use
+
+HDC adaptation: original poem blocks extracted from fixed source revisions;
+navigation, category links and presentation markup removed; line spacing
+normalized and text partitioned into sarga reading pages. No translation,
+audio, illustration or source-site navigation is reproduced. The adapted
+database is distributed under CC BY-SA 4.0 with the attribution above.
+This licence applies to this corpus, not unrelated website code.

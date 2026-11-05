@@ -109,14 +109,21 @@ try {
   await context.close();
   console.log('PASS '+width+'px: ten local languages, real labels, dynamic text updates, original restoration, markup/privacy/storage, routes and no Google translator');
  }
- const sourceText=JSON.parse(await readFile('data/reader-books/bhagavad-gita.json','utf8')).chapters[1].passages.find(p=>p.id==='gita-2-47').text.split('\n').join('');
+ const sourceText='Your business is with action alone; not by any means with fruit. Let not the fruit of action be your motive (to action). Let not your attachment be (fixed) on inaction.';
  const protectedReader=await browser.newContext({serviceWorkers:'block'}),readerPage=await protectedReader.newPage();
- const injected=structuredClone(catalogue);injected.textTranslations[sourceText]=Object.fromEntries(languages.filter(c=>c!=='en').map(c=>[c,'TEST_ONLY_REPLACEMENT']));
+ const originalSourceText=JSON.parse(await readFile('data/reader-books/bhagavad-gita.json','utf8')).chapters[1].passages.find(p=>p.id==='gita-2-47').text.split('\n').join('');
+ const injected=structuredClone(catalogue);injected.textTranslations[originalSourceText]=Object.fromEntries(languages.filter(c=>c!=='en').map(c=>[c,'TEST_ONLY_REPLACEMENT']));injected.textTranslations[sourceText]=Object.fromEntries(languages.filter(c=>c!=='en').map(c=>[c,'TEST_ONLY_REPLACEMENT']));
  await protectedReader.route('**/assets/i18n.json',r=>r.fulfill({body:JSON.stringify(injected),contentType:'application/json'}));
  await protectedReader.route('https://fonts.googleapis.com/**',r=>r.fulfill({body:'',contentType:'text/css'}));
- await readerPage.goto(base+'reader/bhagavad-gita/chapter-2/');await readerPage.evaluate(()=>window.abpI18n.ready);
- for(const code of languages){await readerPage.evaluate(code=>window.abpI18n.applyLanguage(code),code);assert.equal(await readerPage.locator('#gita-2-47 .hdc-verse').textContent(),sourceText,'sacred source remains exact even when a test-only matching dictionary phrase exists');}
- await protectedReader.close();console.log('PASS original Sanskrit source protection across ten language selections');
+ await readerPage.goto(base+'reader/bhagavad-gita/chapter-2/#gita-2-47');await readerPage.evaluate(()=>window.abpI18n.ready);
+ const originalVerse=await readerPage.locator('#gita-2-47 .hdc-verse').textContent();
+ for(const code of languages){await readerPage.evaluate(code=>window.abpI18n.applyLanguage(code),code);assert.equal(await readerPage.locator('#gita-2-47 .hdc-verse').textContent(),originalVerse,'published sacred text remains unchanged');}
+ // Historical translation protection is retained in an isolated test-only fixture.
+ const legacy=(await readFile('site/reader/index.html','utf8')).replace(' id="gita-2-47"','').replace('</article>',(await readFile('scripts/fixtures/reader-legacy-controls.html','utf8'))+'</article>');
+ await protectedReader.route(base+'reader/',r=>r.fulfill({body:legacy,contentType:'text/html'}));
+ await readerPage.goto(base+'reader/');await readerPage.evaluate(()=>window.abpI18n.ready);
+ for(const code of languages){await readerPage.evaluate(code=>window.abpI18n.applyLanguage(code),code);assert.equal(await readerPage.locator('[data-reader-translation-text]').textContent(),sourceText,'historical source remains exact even when a test-only matching dictionary phrase exists');}
+ await protectedReader.close();console.log('PASS historical English source protection across ten language selections');
  const unavailable=await browser.newContext({serviceWorkers:'block'});
  await unavailable.addInitScript(()=>localStorage.setItem('abp-language','ta'));
  await unavailable.route('**/assets/i18n.json',route=>route.abort());

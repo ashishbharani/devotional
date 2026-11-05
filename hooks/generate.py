@@ -1163,7 +1163,7 @@ def on_config(config, **kw):
         ]},
         {"SCRIPTURES & BOOKS": "library.md"},
         {"TOOLS": [
-            *([{"My Devotional Journey": "journeys.md"}, {"Explore the Collection": "explore.md"}, {"Devotional Sanctuary": "sanctuary.md"}, {"Sacred Reader": "reader/index.md"}] if PRACTICE_PREVIEW else []),
+            *([{"My Devotional Journey": "journeys.md"}, {"Explore the Collection": "explore.md"}, {"Sacred Reader": "reader/index.md"}] if PRACTICE_PREVIEW else []),
             {"Find a Work": "find.md"},
             {"A–Z Work Directory": "a-z.md"},
             {"Japa / Devotional Counter": "japa-counter.md"},
@@ -1273,7 +1273,7 @@ def on_page_markdown(markdown, page, config, **kw):
 
 def on_files(files, config, **kw):
     contributions_enabled = config.get("extra", {}).get("contributions_enabled", False)
-    withheld = set()
+    withheld = {"sanctuary.md"}  # Retired by owner; never publish this route.
     if not PRACTICE_PREVIEW:
         withheld.update({"sanctuary.md", "reader/index.md", "journeys.md", "explore.md"})
     if not contributions_enabled:
@@ -1405,7 +1405,7 @@ def on_post_build(config, **kw):
         # Public route metadata only. Loaded on demand; never duplicate work favourites.
         shortcut_registry = {"schema": 1, "sections": [{"path": url_of(p["src"]), "title": p["title"]} for p in _pages if "cat" in p]}
         (site / "assets" / "section-shortcuts.json").write_text(json.dumps(shortcut_registry, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
-        shell.extend(["stylesheets/practice.css", "stylesheets/festivals.css", "sanctuary/", "reader/", "journeys/", "explore/", "japa-counter/"])
+        shell.extend(["stylesheets/practice.css", "stylesheets/festivals.css", "reader/", "journeys/", "explore/", "japa-counter/"])
         # Material requests these even on an offline shell page. Keep its
         # built-in text search and instant-navigation bootstrap available;
         # the larger universal-search payload pair remains on demand.
@@ -1424,10 +1424,6 @@ def on_post_build(config, **kw):
         "assets/javascripts/bundle.*.min.js",
     ) for path in sorted(site.glob(pattern)))
     shell = [path for path in dict.fromkeys(shell) if path == "" or (site / path).exists()]
-    if PRACTICE_PREVIEW:
-        # Exact query aliases for the three supported presets. Preserve the
-        # existing worker strategy and avoid treating arbitrary queries as hits.
-        shell.extend(f"sanctuary/?minutes={minutes}" for minutes in (5, 10, 20))
     signature = hashlib.sha256()
     # Optional language packs and section metadata are versioned, not globally precached.
     for target in sorted((site / "assets" / "translations").glob("*.json")):
