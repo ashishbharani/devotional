@@ -3,7 +3,8 @@
 ## Current release boundary
 
 This branch is incomplete. Do not enable the preview in `deploy.yml`, merge,
-or deploy. The shipped V2 registry has no approved dates; its policy is OFF.
+or deploy. The registry contains source-checked city/tradition references; its
+release policy is OFF and comprehensive coverage remains incomplete.
 V1's owner-approved 2027 civil-day record is unchanged, not silently promoted
 to an overnight or multi-day religious period. Research candidates and claims
 live outside `docs/` and are never fetched by the runtime.
@@ -20,8 +21,9 @@ pnpm exec node scripts/test_living_festival_browser.mjs
 The independent flag replaces the V1 panel/engine only in that explicit build.
 The normal build/deployment keeps V1. Never load both engines together.
 `living-policy.json` remains disabled even in the preview; only explicit,
-labelled visual previews are available without approved dates. Browser tests
-mock fictional evidence; they do not modify published schedule records.
+labelled visual previews are available while release is disabled. Browser tests
+use fictional edge cases and actual bundled references in isolated offline tests;
+only a local test-server policy enables those references.
 
 ## Architecture and data contract
 
@@ -61,9 +63,9 @@ entries/signatures include V2 only in its review build. Normal builds exclude
 the new runtime and V2 shell additions.
 
 Preferences use a separate `hdc-living-festival-preferences-v2` record. Existing
-V1 records and unrelated storage are not rewritten. The previous Original opt-out
-is honoured. Full migration of legacy manual previews/region/effects is pending
-before release. Unsupported records are preserved; Original is the safe default,
+V1 records and unrelated storage are not rewritten. Auto, Original, Ganesha/Shiva,
+region and animation choices are read through; V2 is written only after an actual
+preference change. Unsupported records are preserved; Original is the safe default,
 and explicit session-only changes remain possible. Existing accessibility flags,
 system reduced motion, contrast and reported data/device capabilities reduce
 effects. No location permission, coordinates, analytics or autoplay audio.
@@ -77,6 +79,12 @@ Run `node scripts/audit_living_festival_coverage.mjs --write-tasks`.
 The scheduled November workflow uploads a matrix and research tasks, including
 the next-year gap. It has read-only repository permissions: it cannot approve,
 commit or publish date changes. `--require-ready` intentionally fails now.
+
+The owner accepted labelled, source-checked references for a specified city/tradition
+on 2026-11-05. This is a date-source standard, not merge/deploy permission. Record
+verification scope, explicit year/place URLs, fetched publication title/hash and
+review date; do not imply a temple-approved or nationwide ruling. Keep dates in
+the canonical registry and reference its IDs in review records.
 
 For each candidate: inspect current primary calendar/temple/organiser sources;
 record access date, place, calendar/tradition and exact civil period; corroborate
@@ -117,7 +125,7 @@ versioned shell caches; already-open/offline old clients need the normal update
 and reload flow. No claim of remotely disabling disconnected old clients.
 
 Before eventual release: finish coverage/cultural and artwork review, legacy
-preference/date migration, all remaining family directions and localization,
+date reconciliation, all remaining family directions and localization,
 matched performance acceptance and complete regression checks. Open one
 consolidated PR; keep it draft until those gates are met. Maintainer approval
 is required to merge/deploy.

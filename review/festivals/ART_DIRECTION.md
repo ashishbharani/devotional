@@ -14,7 +14,15 @@ a reversible atmospheric tint underneath the copy.
 | Chhath | Warm sunrise perimeter and horizontal river light | Solar gold | Abstract sun and water lines | Slow ornamental drift, no ritual simulation | Ornament fallback; no unlicensed riverbank photograph | Signposted preview, greeting and collection discovery |
 | Pongal | Harvest green and sunlit gold | Seasonal glow | Abstract grain; geometric kolam-inspired pattern | Gentle grain drift | Ornament fallback; no fabricated temple or deity | Signposted preview and harvest greeting |
 
-Stage progression increases atmospheric opacity from .4 to .65 to .85.
+Ganesha is an additional continuity study: saffron-gold floral points and an
+original abstract arch preserve the existing saved choice without creating a
+deity image. It does not approve a Visarjan period.
+
+Stage progression increases atmospheric opacity from .4 to .65 to .85, plus
+hero/reading-plane glow depth and strength. Tests compare three distinct computed
+hero shadows for every study. Allowlisted member-day variations retain the family:
+Diwali lotus/harvest light, Chhath sunset/dawn and Pongal harvest/warm accents.
+Unknown IDs fall back to the family; data cannot inject CSS or SVG paths.
 All stages apply the whole prototype, rather than a countdown alone. Motifs
 stay at reading-surface edges. Existing header, navigation, taskbar, typography,
 content surfaces and category colours keep their own tokens. At most twelve
@@ -33,6 +41,6 @@ committed. Their URLs and fetched-byte hashes are in `source-claims.json`.
 
 Not complete: dedicated final artwork/licence review, regional ornament review,
 and additional family-specific directions (including Navratri, Durga Puja,
-Ganeshotsav, Janmashtami, Onam and Ratha Jatra). These families cannot be
+the final Ganeshotsav direction, Janmashtami, Onam and Ratha Jatra). These families cannot be
 promoted merely by assigning one of the five prototype IDs. A family must
 explicitly declare its matching art direction in the activation registry.

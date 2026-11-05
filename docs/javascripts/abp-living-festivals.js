@@ -9,17 +9,25 @@
  modules.catch(()=>{});
  let release=()=>{},resources,epoch=0,visitPrefs;
  const restore=()=>{
-  for(const field of ['hdcFestival','hdcStage','hdcQuality'])delete document.documentElement.dataset[field];
+  for(const field of ['hdcFestival','hdcStage','hdcQuality','hdcVariant'])delete document.documentElement.dataset[field];
   document.querySelector('.hdc-living-scenery')?.remove();document.querySelector('.hdc-living-hero')?.remove();
  };
- const record=globalThis.hdcLocalState?.create({key,defaults:{schema:2,mode:'auto',region:'IN',effects:'auto'},validate:p=>p.schema===2&&['auto','original'].includes(p.mode)&&/^IN(?:-[A-Z]{2,3})?$/.test(p.region)&&['auto','reduced','none'].includes(p.effects)});
+ const slug=value=>typeof value==='string'&&/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(value);
+ const record=globalThis.hdcLocalState?.create({key,defaults:{schema:2,mode:'auto',region:'IN',effects:'auto'},validate:p=>p.schema===2&&['auto','original','preview'].includes(p.mode)&&(p.mode!=='preview'||slug(p.previewTheme))&&(!Object.hasOwn(p,'previewTheme')||slug(p.previewTheme))&&/^IN(?:-[A-Z]{2,3})?$/.test(p.region)&&['auto','reduced','none'].includes(p.effects)});
  async function init(){
   release();const own=++epoch,root=document.querySelector('[data-living-festival]');
   if(!root){restore();return;}
-  const controller=new AbortController(),{signal}=controller,q=s=>root.querySelector(s);let timer,preview=null,storageNote='';
+  const controller=new AbortController(),{signal}=controller,q=s=>root.querySelector(s);let timer,preview=null,storageNote='',ready=false;
   release=()=>{controller.abort();clearTimeout(timer);};
   const status=q('[data-living-status]');
-  q('[data-living-original]').addEventListener('click',restore,{signal});
+  q('[data-living-original]').addEventListener('click',()=>{
+   restore();
+   if(!ready){
+    visitPrefs={schema:2,mode:'original',region:'IN',effects:'none'};
+    try{const previous=record.get();record.write({...previous,mode:'original'});}catch(_){}
+    q('[data-living-mode]').value='original';
+   }
+  },{signal});
   let scheduler,presentation,data;
   try{
    [scheduler,presentation]=await modules;
@@ -37,17 +45,33 @@
    return;
   }
   if(own!==epoch||signal.aborted||!root.isConnected)return;
-  const [registry,policy]=data,{THEMES,ornament,quality}=presentation;
+  const [registry,policy]=data,{THEMES,ornament,quality,variationFor}=presentation;
   let prefs={schema:2,mode:'auto',region:'IN',effects:'auto'};
   try{
    if(!record)throw Error('Local preferences unavailable');prefs=record.get();
-   // Honour a previous Original selection without migrating or overwriting V1.
+   // Read through supported legacy choices, without writing or deleting V1.
    if(localStorage.getItem(key)===null){
-    try{if(JSON.parse(localStorage.getItem('hdc-festival-preferences-v1')||'null')?.mode==='original')prefs.mode='original';}catch(_){}
+    try{
+     const legacy=JSON.parse(localStorage.getItem('hdc-festival-preferences-v1')||'null');
+     if(legacy&&typeof legacy==='object'&&!Array.isArray(legacy)){
+      const valid=!Object.hasOwn(legacy,'schema')&&(!Object.hasOwn(legacy,'mode')||['auto','original','ganesha','shiva'].includes(legacy.mode))&&(!Object.hasOwn(legacy,'region')||registry.regions.includes(legacy.region))&&(!Object.hasOwn(legacy,'effects')||typeof legacy.effects==='boolean');
+      if(!valid){prefs.mode='original';storageNote=' Existing appearance preference is unsupported; its saved record is unchanged.';}
+      else{
+       if(['auto','original'].includes(legacy.mode))prefs.mode=legacy.mode;
+       else if(['ganesha','shiva'].includes(legacy.mode)){prefs.mode='preview';prefs.previewTheme=legacy.mode==='shiva'?'shivaratri':'ganesha';}
+       if(registry.regions.includes(legacy.region))prefs.region=legacy.region;
+       if(typeof legacy.effects==='boolean')prefs.effects=legacy.effects?'auto':'none';
+      }
+     }
+    }catch(_){prefs.mode='original';storageNote=' Existing appearance preference is unreadable; its saved record is unchanged.';}
    }
    if(record.dirty)storageNote=' Preferences apply only to this visit.';
   }catch(_){prefs=visitPrefs||{...(record?.snapshot()||prefs),mode:'original'};storageNote=' Saved preferences are unavailable or unsupported; existing data has been kept.';}
   if(!registry.regions.includes(prefs.region)){prefs={...prefs,mode:'original'};storageNote+=' Saved region is unsupported; original appearance retained.';}
+  if(prefs.mode==='preview'&&!Object.hasOwn(THEMES,prefs.previewTheme)){prefs={...prefs,mode:'original'};storageNote+=' Saved preview is unavailable; its saved record is unchanged.';}
+  const savedPreviewTheme=prefs.previewTheme;
+  q('[data-living-mode] option[value="preview"]')?.remove();
+  if(prefs.mode==='preview'){const option=document.createElement('option');option.value='preview';option.textContent=`${THEMES[savedPreviewTheme].name} — saved design preview`;q('[data-living-mode]').append(option);}
   q('[data-living-region]').replaceChildren(...registry.regions.map(value=>{const option=document.createElement('option');option.value=value;option.textContent=registry.regionNames?.[value]||value;return option;}));
   q('[data-living-mode]').value=prefs.mode;q('[data-living-effects]').value=prefs.effects;
   q('[data-living-region]').value=registry.regions.includes(prefs.region)?prefs.region:'IN';
@@ -61,30 +85,35 @@
   function render(){
    const mode=q('[data-living-mode]').value,region=q('[data-living-region]').value;
    const result=scheduler.selectExperience(registry,{mode,region,policy});
-   const themeId=preview||result.theme,theme=Object.hasOwn(THEMES,themeId)?THEMES[themeId]:null;
+   const manual=policy.previewEnabled===true?(preview||(mode==='preview'?savedPreviewTheme:null)):null,themeId=manual||result.theme,theme=Object.hasOwn(THEMES,themeId)?THEMES[themeId]:null;
+   const event=result.kind==='festival'?registry.windows.find(w=>w.id===result.id):null;
    const info=q('[data-living-info]'),sources=q('[data-living-sources]');sources.replaceChildren();
    if(!theme){
     restore();info.hidden=true;
     status.textContent=(result.reason==='visitor-opt-out'?'Original HDC appearance selected.':result.reason==='administrator-disabled'?'Automatic festival themes are disabled by the maintainer.':'No applicable verified festival period. Original HDC appearance retained.')+storageNote;
    }else{
-    const stage=preview?q('[data-living-stage]').value:result.stage;
+    const stage=manual?q('[data-living-stage]').value:result.stage;
     document.documentElement.dataset.hdcFestival=themeId;document.documentElement.dataset.hdcStage=stage;
+    const variant=manual?null:variationFor(themeId,result.variations);
+    if(variant)document.documentElement.dataset.hdcVariant=variant;else delete document.documentElement.dataset.hdcVariant;
+    const motif=variant==='lotus'?'lotus':theme.motif,ornamentKey=themeId+':'+(variant||'base');
     document.documentElement.dataset.hdcQuality=quality({effects:q('[data-living-effects]').value,reducedMotion:motion.matches||document.documentElement.classList.contains('abp-still'),highContrast:contrast.matches||document.documentElement.classList.contains('abp-hc'),dataSaver:navigator.connection?.saveData===true,cores:navigator.hardwareConcurrency??4,memory:navigator.deviceMemory??4});
     let scenery=document.querySelector('.hdc-living-scenery');
     if(!scenery){scenery=document.createElement('div');scenery.className='hdc-living-scenery';scenery.setAttribute('aria-hidden','true');document.body.append(scenery);}
-    if(scenery.dataset.theme!==themeId){scenery.dataset.theme=themeId;scenery.replaceChildren(...Array.from({length:8},()=>ornament(document,theme.motif)));}
+    if(scenery.dataset.theme!==ornamentKey){scenery.dataset.theme=ornamentKey;scenery.replaceChildren(...Array.from({length:8},()=>ornament(document,motif)));}
     const hero=document.querySelector('.udhc-hero');
     if(hero){
      let ornamentation=hero.querySelector('.hdc-living-hero');
      if(!ornamentation){ornamentation=document.createElement('div');ornamentation.className='hdc-living-hero';ornamentation.setAttribute('aria-hidden','true');hero.append(ornamentation);}
-     if(ornamentation.dataset.theme!==themeId){ornamentation.dataset.theme=themeId;ornamentation.replaceChildren(...Array.from({length:4},()=>ornament(document,theme.motif)));}
+     if(ornamentation.dataset.theme!==ornamentKey){ornamentation.dataset.theme=ornamentKey;ornamentation.replaceChildren(...Array.from({length:4},()=>ornament(document,motif)));}
     }
-    info.hidden=false;q('[data-living-title]').textContent=preview?`${theme.name} — design preview`:registry.windows.find(w=>w.id===result.id).name;
-    q('[data-living-note]').textContent=theme.summary;
-    q('[data-living-countdown]').textContent=preview?`Visual stage: ${stage}. No festival date is implied.`:result.stage==='celebration'?`Verified celebration period; Indian date ${result.day}. ${result.variations.map(v=>v.name).join(' · ')}`:`${result.daysUntil} Indian calendar days until the reviewed period. Stage: ${result.stage}.`;
+    info.hidden=false;q('[data-living-title]').textContent=manual?`${theme.name} — design preview`:event.name;
+    q('[data-living-note]').textContent=theme.summary+(!manual?` Calendar reference: ${event.tradition}. Published civil dates: ${event.start} through ${event.end}. This is not a ritual timetable.`:'');
+    q('[data-living-countdown]').textContent=manual?`Visual stage: ${stage}. No festival date is implied.`:result.stage==='celebration'?`Published reference celebration period; Indian date ${result.day}. ${result.variations.map(v=>v.name).join(' · ')}`:`${result.daysUntil} Indian calendar days until the published reference period. Stage: ${result.stage}.`;
+    q('[data-living-selection]').textContent=manual?'':result.reason==='approved-administrator-override'?'A reviewed maintainer presentation override is active.':'An ongoing celebration takes priority over an approaching festival. Your selected region and reviewed priorities resolve remaining overlaps.';
     q('[data-living-explore]').href=new URL(theme.path,base).href;
-    if(!preview)for(const source of registry.windows.find(w=>w.id===result.id).sources){const li=document.createElement('li'),a=document.createElement('a');a.href=source.url;a.textContent=source.label;li.append(a);sources.append(li);}
-    status.textContent=(preview?'Manual design preview. It ends on navigation or reload.':`Automatic reviewed festival appearance. ${result.reason}.`)+storageNote;
+    if(!manual)for(const source of event.sources){const li=document.createElement('li'),a=document.createElement('a');a.href=source.url;a.textContent=source.label;li.append(a);sources.append(li);}
+    status.textContent=(manual?(preview?'Manual design preview. It ends on navigation or reload.':'Your saved design preference is retained. No festival date is implied.'):'Automatic reviewed reference-calendar appearance applied; regional traditions may differ.')+storageNote;
    }
    const upcoming=q('[data-living-upcoming]');upcoming.replaceChildren();
    const day=scheduler.indiaDate(new Date());
@@ -95,8 +124,8 @@
   }
   function save(){
    preview=null;
-   visitPrefs={schema:2,mode:q('[data-living-mode]').value,region:q('[data-living-region]').value,effects:q('[data-living-effects]').value};
-   try{if(!record)throw Error('No local record');const previous=record.get();const value={...previous,mode:q('[data-living-mode]').value,region:q('[data-living-region]').value,effects:q('[data-living-effects]').value};storageNote=record.write(value).persisted?'':' Preferences apply only to this visit.';}
+   visitPrefs={schema:2,mode:q('[data-living-mode]').value,region:q('[data-living-region]').value,effects:q('[data-living-effects]').value,...(savedPreviewTheme?{previewTheme:savedPreviewTheme}:{})};
+   try{if(!record)throw Error('No local record');const previous=record.get();const value={...previous,...visitPrefs};storageNote=record.write(value).persisted?'':' Preferences apply only to this visit.';}
    catch(_){storageNote=' Preferences could not be saved; existing data has been kept.';}
    render();
   }
@@ -105,7 +134,7 @@
   q('[data-living-original]').addEventListener('click',()=>{q('[data-living-mode]').value='original';save();},{signal});
   q('[data-living-share]').addEventListener('click',async()=>{
    const theme=THEMES[preview||document.documentElement.dataset.hdcFestival];if(!theme)return;
-   const text=`${preview?'Design preview — ':''}${theme.greeting} | ${document.querySelector('meta[property="og:site_name"]')?.content||document.title}`;
+   const text=`${preview||q('[data-living-mode]').value==='preview'?'Design preview — ':''}${theme.greeting} | ${document.querySelector('meta[property="og:site_name"]')?.content||document.title}`;
    const message=q('[data-living-share-status]');
    try{if(navigator.share){await navigator.share({title:theme.name,text,url:new URL(theme.path,base).href});message.textContent='';}else if(navigator.clipboard){await navigator.clipboard.writeText(text);message.textContent='Greeting copied.';}else message.textContent=text;}
    catch(error){message.textContent=error.name==='AbortError'?'':'Sharing unavailable; '+text;}
@@ -114,7 +143,7 @@
   navigator.connection?.addEventListener('change',render,{signal});
   const observer=new MutationObserver(render);observer.observe(document.documentElement,{attributeFilter:['class']});
   const previousRelease=release;release=()=>{observer.disconnect();previousRelease();};
-  render();timer=setTimeout(init,Math.max(100,scheduler.nextMidnightDelay(Date.now())));
+  ready=true;render();timer=setTimeout(init,Math.max(100,scheduler.nextMidnightDelay(Date.now())));
  }
  window.addEventListener('storage',event=>{if(event.key===key||event.key==='hdc-festival-preferences-v1'||event.key===null){record?.changed();init();}});
  window.addEventListener('pagehide',()=>{release();restore();});window.addEventListener('pageshow',init);

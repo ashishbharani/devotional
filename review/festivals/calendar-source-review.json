@@ -1,0 +1,122 @@
+{
+  "schema": 1,
+  "reviewedOn": "2026-11-05",
+  "sourceStandard": "Owner accepted source-checked, clearly labelled calendar references for the specified city/tradition on 2026-11-05; no merge or deployment approval was given.",
+  "activationRegistry": "docs/assets/festivals/living-registry.json",
+  "scope": "This review links to canonical registry IDs; dates are maintained only in the activation registry.",
+  "records": [
+    {
+      "windowId": "diwali-2026-new-delhi",
+      "publicationTitle": "2026 Diwali Puja, Deepavali Puja Calendar for New Delhi, NCT, India",
+      "sha256": "745f85d9c2221ebb55b68016981346003f78c03b35cb0ac2995f0233c7e58aa4",
+      "reviewedOn": "2026-11-05",
+      "verificationScope": "published-calendar-reference"
+    },
+    {
+      "windowId": "diwali-2027-new-delhi",
+      "publicationTitle": "2027 Diwali Puja, Deepavali Puja Calendar for New Delhi, NCT, India",
+      "sha256": "45f10edb815cab8f72af6b0070af58dd3b2d29a43b0ee85c0d15404b42c6946f",
+      "reviewedOn": "2026-11-05",
+      "verificationScope": "published-calendar-reference"
+    },
+    {
+      "windowId": "diwali-2028-new-delhi",
+      "publicationTitle": "2028 Diwali Puja, Deepavali Puja Calendar for New Delhi, NCT, India",
+      "sha256": "a63a62d264196d7989b1673f2c1277e046331a288e35f9ba15766f0470373cd4",
+      "reviewedOn": "2026-11-05",
+      "verificationScope": "published-calendar-reference"
+    },
+    {
+      "windowId": "diwali-2029-new-delhi",
+      "publicationTitle": "2029 Diwali Puja, Deepavali Puja Calendar for New Delhi, NCT, India",
+      "sha256": "d5642af1e07541a73fb6bf955b6826a52b5be23894855c36f3c5cc6ed777151c",
+      "reviewedOn": "2026-11-05",
+      "verificationScope": "published-calendar-reference"
+    },
+    {
+      "windowId": "diwali-2030-new-delhi",
+      "publicationTitle": "2030 Diwali Puja, Deepavali Puja Calendar for New Delhi, NCT, India",
+      "sha256": "6b5c105bda36f98a9c68f3c37d3b2160a2239d4699c61f4995c6611b03c8b179",
+      "reviewedOn": "2026-11-05",
+      "verificationScope": "published-calendar-reference"
+    },
+    {
+      "windowId": "chhath-2026-new-delhi",
+      "publicationTitle": "2026 Chhath Calendar, Surya Shashthi Calendar for New Delhi, NCT, India",
+      "sha256": "377b470cf261e0f702e7c0bb9ba77da32ebd726cb32041fb4db9a16ce3765bdb",
+      "reviewedOn": "2026-11-05",
+      "verificationScope": "published-calendar-reference"
+    },
+    {
+      "windowId": "chhath-2027-new-delhi",
+      "publicationTitle": "2027 Chhath Calendar, Surya Shashthi Calendar for New Delhi, NCT, India",
+      "sha256": "0f75246201628c6689f83d577a71aa735dd765b5e0a4ba8bbcbfdaa4be610f53",
+      "reviewedOn": "2026-11-05",
+      "verificationScope": "published-calendar-reference"
+    },
+    {
+      "windowId": "chhath-2028-new-delhi",
+      "publicationTitle": "2028 Chhath Calendar, Surya Shashthi Calendar for New Delhi, NCT, India",
+      "sha256": "0c5bb240c24ef32b19358339ab4dbcfb63c4bf909b57202dbfb573f3c6d9f82e",
+      "reviewedOn": "2026-11-05",
+      "verificationScope": "published-calendar-reference"
+    },
+    {
+      "windowId": "chhath-2029-new-delhi",
+      "publicationTitle": "2029 Chhath Calendar, Surya Shashthi Calendar for New Delhi, NCT, India",
+      "sha256": "41e2bbc3549d1d10ec128f61418a6bbaa49a374f5b11316117168f002646b886",
+      "reviewedOn": "2026-11-05",
+      "verificationScope": "published-calendar-reference"
+    },
+    {
+      "windowId": "chhath-2030-new-delhi",
+      "publicationTitle": "2030 Chhath Calendar, Surya Shashthi Calendar for New Delhi, NCT, India",
+      "sha256": "0ef33c31a1bd36c72edd8ba9a83552876fb61ddf85b349502d1fe2e6c6683df5",
+      "reviewedOn": "2026-11-05",
+      "verificationScope": "published-calendar-reference"
+    },
+    {
+      "windowId": "pongal-2026-chennai",
+      "publicationTitle": "2026 Makar Sankranti Calendar for Chennai, Tamil Nadu, India",
+      "sha256": "9eeb6fa6c304d7efc6815dce67cada32928d0b302abb5704151e2266377d3fa8",
+      "reviewedOn": "2026-11-05",
+      "verificationScope": "published-calendar-reference"
+    },
+    {
+      "windowId": "pongal-2027-chennai",
+      "publicationTitle": "2027 Makar Sankranti Calendar for Chennai, Tamil Nadu, India",
+      "sha256": "1c1c5fb92b3e4fcc92292477f14baa4ad5026724f2f14003fb2d65131c6cb06b",
+      "reviewedOn": "2026-11-05",
+      "verificationScope": "published-calendar-reference"
+    },
+    {
+      "windowId": "pongal-2028-chennai",
+      "publicationTitle": "2028 Makar Sankranti Calendar for Chennai, Tamil Nadu, India",
+      "sha256": "efe7e8030623730da573ff3bbf5e29d8ed5d26d1c3e0dfc0adaa87b5c5f479fd",
+      "reviewedOn": "2026-11-05",
+      "verificationScope": "published-calendar-reference"
+    },
+    {
+      "windowId": "pongal-2029-chennai",
+      "publicationTitle": "2029 Makar Sankranti Calendar for Chennai, Tamil Nadu, India",
+      "sha256": "a9d332959d5f212c73038fb2dadf2b822330ddc842cf2c936309b651fc3f03bf",
+      "reviewedOn": "2026-11-05",
+      "verificationScope": "published-calendar-reference"
+    },
+    {
+      "windowId": "pongal-2030-chennai",
+      "publicationTitle": "2030 Makar Sankranti Calendar for Chennai, Tamil Nadu, India",
+      "sha256": "c98832e27e1b64f216d6ed0ab6f4d04fcebf9490548f9317dbb52883a7a7538b",
+      "reviewedOn": "2026-11-05",
+      "verificationScope": "published-calendar-reference"
+    }
+  ],
+  "limitations": [
+    "Explicit year/location queries were inspected; no dates were inferred from another Gregorian year.",
+    "The publisher's default location was inconsistent in cached search results. Each stored source was fetched with an explicit city ID and checked against the page title.",
+    "No tourism photographs, ritual prose, artwork or complete calendar compilation is redistributed. Records contain selected civil-date facts and source references.",
+    "No claim of temple/organiser confirmation or universal regional religious authority. Future uncertain periods remain excluded.",
+    "Sources were examined as explicit calendar day blocks. Repeated names in later descriptive prose were excluded; each requested constituent label occurs once in its family sequence.",
+    "This is an initial source-reviewed set within the wider Pan-India register, not a fixed coverage target or a completed coverage audit."
+  ]
+}

@@ -23,7 +23,7 @@
 | Punjab | initial-discovery-screen; completeness pending | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window |
 | Rajasthan | initial-discovery-screen; completeness pending | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window |
 | Sikkim | initial-discovery-screen; completeness pending | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window |
-| Tamil Nadu | initial-discovery-screen; completeness pending | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window |
+| Tamil Nadu | initial-discovery-screen; completeness pending | 1 reviewed records; completeness still requires audit | 1 reviewed records; completeness still requires audit | 1 reviewed records; completeness still requires audit | 1 reviewed records; completeness still requires audit | 1 reviewed records; completeness still requires audit |
 | Telangana | initial-discovery-screen; completeness pending | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window |
 | Tripura | initial-discovery-screen; completeness pending | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window |
 | Uttar Pradesh | initial-discovery-screen; completeness pending | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window |
@@ -32,12 +32,12 @@
 | Andaman and Nicobar Islands | evidence-gap; completeness pending | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window |
 | Chandigarh | initial-discovery-screen; completeness pending | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window |
 | Dadra and Nagar Haveli and Daman and Diu | initial-discovery-screen; completeness pending | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window |
-| Delhi | initial-discovery-screen; completeness pending | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window |
+| Delhi | initial-discovery-screen; completeness pending | 2 reviewed records; completeness still requires audit | 2 reviewed records; completeness still requires audit | 2 reviewed records; completeness still requires audit | 2 reviewed records; completeness still requires audit | 2 reviewed records; completeness still requires audit |
 | Jammu and Kashmir | initial-discovery-screen; completeness pending | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window |
 | Ladakh | initial-discovery-screen; completeness pending | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window |
 | Lakshadweep | evidence-gap; completeness pending | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window |
 | Puducherry | initial-discovery-screen; completeness pending | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window | GAP — no V2 verified window |
 
-Missing verified region-year cells: 180/180. A record count never certifies comprehensive coverage.
+Missing verified region-year cells: 170/180. A record count never certifies comprehensive coverage.
 Initial candidates: 151; incomplete jurisdiction audits: 36/36. No date proposals are automatically generated or published.
 Next-year maintenance: 2027 is in scope; verified regional coverage still requires the matrix review above.

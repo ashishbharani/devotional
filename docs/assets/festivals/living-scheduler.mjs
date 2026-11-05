@@ -114,7 +114,11 @@ export function selectExperience(registry,{clock=()=>new Date(),region='IN',mode
    if(!text(member.name))throw Error('Missing member label');
    if(!evidence(member))continue;
    if(ordinal(member.end)<ordinal(member.start)||ordinal(member.start)<ordinal(winner.record.start)||ordinal(member.end)>ordinal(winner.record.end))throw Error('Member outside reviewed family period');
-   if(ordinal(day)>=ordinal(member.start)&&ordinal(day)<=ordinal(member.end))variations.push({id:member.id,name:member.name});
+   if(ordinal(day)>=ordinal(member.start)&&ordinal(day)<=ordinal(member.end)){
+    const variation={id:member.id,name:member.name};
+    if(member.variant!==undefined){if(id(member.variant))variation.variant=member.variant;else warnings.push({id:member.id,message:'Invalid visual variant; base atmosphere retained'});}
+    variations.push(variation);
+   }
   }catch(error){warnings.push({id:member.id,message:error.message});}
  }
  variations.sort((a,b)=>compare(a.id,b.id));

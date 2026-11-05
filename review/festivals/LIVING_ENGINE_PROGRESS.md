@@ -1,79 +1,91 @@
-# Living Festival Experience V2 — work in progress
+# Living Festival Experience V2 — implementation checkpoint
 
-## Release status
+Updated 2026-11-05. **Incomplete; not ready for merge or deployment.**
+The catalogue, PDFs, Panchang calculations, approved images and deployment are intact.
 
-NOT review-ready. NOT approved for merge or deployment. No production hook,
-stylesheet, preference, catalogue, Panchang, PDF, icon or existing date record
-has changed. The new scheduling module is unimported and has no runtime cost.
-This is an initial implementation checkpoint, not fulfillment of the master prompt.
+## Gate status
 
-## Gate 1 findings
+| Gate | Current evidence | Remaining work |
+| --- | --- | --- |
+| Audit | MkDocs Material, existing V1, worker/preferences inspected; pre-change lab baseline | Final preservation diff |
+| Data | 36 jurisdiction worklists; 151 discovery candidates; 15 source-checked periods / 65 member days, 2026–2030 | All 36 completeness audits open; 170/180 region-year cells lack a period; more traditions/temple sources |
+| Scheduler | IST midnight, three stages, inclusive families, variants, active-first overlaps, regions, overrides and fail-closed tests | Expanded real-calendar reconciliation |
+| Prototypes | Five differentiated CSS/SVG studies plus Ganesha continuity study, phone/desktop screenshots and three lighting intensities | Cultural/owner review, richer visual directions; not final approved art |
+| Expansion | Diwali/Chhath/Pongal reference calendars | Remaining families, regional directions and assets |
+| Integration | Independent build flag, local preferences, V1 read-through, instant navigation, midnight/resume, adaptive effects, offline worker | Translation review; final release remains gated |
+| Validation | Current strict preview build, smoke, scheduler, registry, browser and targeted accessibility pass | Matched performance acceptance, physical-device/AT checks, final regressions |
+| Reconciliation | Release OFF, annual audit and rollback documented | Resolve outstanding gates; one consolidated PR, draft until complete |
 
-Architecture: MkDocs Material, shared `theme/main.html`, `hooks/generate.py`,
-instant navigation and versioned PWA shell. Existing `abp-festivals.js` owns
-preview preferences/lifecycle and dynamically imports `assets/festivals/themes.mjs`.
-Its CSS only changes a scoped panel; it is not full immersion. Region choices
-are only IN/UP/MH/DL. 2026 is empty; 2027 has one prior owner-reviewed reference
-civil day. The existing sort is regional-first rather than active-celebration-first.
-Keep its old preference schema/data intact during a future reviewed migration.
+## Sources and release boundary
 
-Baseline recorded before edits using the existing finite CDP lab: cold contexts,
-4× CPU, 150ms latency, 1.6Mbps download, gzip, worker/cache disabled, fonts loaded.
-No field CWV, physical-device or full INP certification is claimed.
+The owner accepted source-checked, clearly labelled published calendar references
+for the specified city/tradition on 2026-11-05. This is a verification standard,
+not merge/deploy permission or a universal religious ruling.
 
-| Page / width | LCP ms | Lab interaction candidate ms | CLS |
-| --- | ---: | ---: | ---: |
-| Home / 375 | 4148 | 160 | 0.00461 |
-| Find / 375 | 2284 | 24 | 0.02371 |
-| Home / 1440 | 2420 | 208 | 0.00304 |
-| Find / 1440 | 1644 | 24 | 0.00241 |
+The 15 periods currently cover Diwali and Chhath for New Delhi and Pongal for
+Chennai, each year 2026–2030. Explicit year/place URLs, publication title/hash,
+review date, scope and confidence are recorded. Dates live only in the canonical
+activation registry; review records reference its IDs. No Gregorian annual shifts
+or automatic promotion from calculated Panchang rules are used. Tourism/holiday
+calendars with incomplete, tentative or conflicting periods remain unapproved.
+V1's existing 2027 Shiva civil-day record remains unchanged; it does not establish
+an overnight period. Record counts never certify comprehensive coverage.
 
-The original baseline fails some lab targets. Preserve full raw report and
-request failures; never report this as passing field CWV. Candidate comparisons
-must repeat the exact transport, fixtures and task paths. Initial proposed
-enhancement budget: no new layout-shift sources; no third-party requests;
-deferred script ≤15 KiB gzip; theme CSS ≤12 KiB gzip; one optional ≤100 KiB
-decorative image; no image requests under data-saver; at most 12 animated
-decorative nodes; zero animation under reduced-motion/high-contrast. Proposed
-budgets are not measured approvals. Physical device motion QA remains pending.
+Normal builds retain V1. V2 replaces it only with both HDC_PRACTICE_PREVIEW=1 and
+HDC_LIVING_FESTIVAL_PREVIEW=1. living-policy.json is disabled; deploy.yml has no V2
+enablement. No public admin or runtime date-override URL exists.
 
-## Gate 2 — blocked from promotion, research incomplete
+## Current verification
 
-`living-coverage.json` inventories all 28 states / 8 UTs and the five requested
-years. All 180 V2 region-year cells are explicitly gaps. Do not confuse a
-complete list of jurisdictions with a completed festival coverage audit.
-Source discovery began through government tourism/holiday calendars and IMD.
-Holiday dates alone do not establish religious family durations. The IMD page
-itself contains apparent date/weekday inconsistencies; reconciliation is
-required. No newly researched event has been promoted to verified status.
+- Strict V2 preview build passed 2026-11-05 (113.38 seconds).
+- Smoke passed: 16 routes, 43,085 canonical IDs, Panchang, favourites and PWA.
+- Pure scheduler and source-registry consistency checks pass.
+- Expanded browser run passed 2026-11-05 at 320/360/390/414/768/1024/1440px:
+  three timezones, exact IST boundaries, three stages, family variants, saved V1
+  choices without rewriting V1, instant navigation/Back, quota failure, kill
+  switch, unavailable registry, real service worker and actual offline reference
+  Diwali/Chhath handover. Only an isolated test-server policy enables dates.
+- Original/restored viewport PNGs match byte-for-byte at 320/1440 in the fixed-clock,
+  reduced-motion lab. This is bounded evidence, not every-device certification.
+- Targeted accessibility passed 30 light/dark phone/tablet/desktop samples: native
+  labels, keyboard focus/restore, 44px targets, containment, hidden decorative SVGs,
+  and measured text contrast >=6.49:1. Not full WCAG or physical AT certification.
+- Panchang, ephemeris, universal/browser search, navigation, sacred-site and V1
+  festival suites passed earlier on this branch. Final reconciliation must
+  distinguish their tested revision from later changes.
 
-Run `node scripts/audit_living_festival_coverage.mjs` for the human-readable
-matrix; `--require-ready` must fail until reviewed coverage exists. This audit
-does not manufacture or automatically publish annual updates.
+Raw current browser/accessibility reports and screenshots are in work/living-festival;
+preview CI uploads them. Fixtures do not certify dates or cultural approval.
+V1 Auto/Original/Ganesha/Shiva, region and effects are read without writes. New
+choices use V2 storage; unsupported records stay untouched. Region never writes
+Panchang location. The administrator kill switch suppresses saved previews too.
 
-## Gate 3 — independent scheduler core started
+## Performance acceptance remains open
 
-`living-scheduler.mjs` separates explicit verified family windows from member-day
-variations. It implements IST civil days, -7…-4 anticipation, -3…-1 approach,
-inclusive celebration, active-before-approaching precedence, nationwide default,
-regional tie-breaking, priorities/stable IDs, owner/admin opt-out, timed reviewed
-overrides and explainable selection. Individual invalid records are skipped;
-ambiguous duplicate window IDs fail closed. Tests use fictional dates and
-`example.invalid`, never publication data. These tests do not certify dates.
+Cold CDP lab: 4x CPU, 150ms latency, 1.6Mbps download, gzip, real fonts, cache/worker
+disabled. baseline.json predates edits. No field CWV or physical-device INP claim.
 
-Lifecycle wiring, schema hardening, migration and integration remain pending.
-Old engine behavior is unchanged until the new system is complete and approved.
+| Run | 375 Home LCP / CLS | 375 Find LCP / CLS | 1440 Home LCP / CLS | 1440 Find LCP / CLS |
+| --- | --- | --- | --- | --- |
+| Pre-change baseline | 4148ms / .00461 | 2284ms / .02373 | 2420ms / .00299 | 1644ms / .00240 |
+| Initial V2 celebration | 1788ms / .00390 | 1280ms / .18372 | 1804ms / .00201 | 1140ms / .27876 |
+| V2 Original control | 1736ms / .00390 | 1672ms / .18372 | 2356ms / .00280 | 1128ms / .27876 |
+| Fresh legacy control | 9496ms / .00273 | 1620ms / .22823 | 2716ms / .00284 | 1392ms / .30881 |
 
-## Remaining mandatory gates
+These noisy single runs do not pass acceptance. Find result insertion shows large
+delayed shifts in Original and legacy controls too; this does not demonstrate an
+atmosphere-induced shift. The legacy run saved its complete report but old system
+Node shutdown was interrupted; do not call that command a passing process. Bundled
+Node 24 avoids the installed runtime issue. Search was not changed for scores.
 
-- Complete state-wise research, aliases/traditions/localization and year evidence.
-- Five distinct six-layer art directions, approved asset inventory and screenshots.
-- Full-site reversible CSS layer, preferences and adaptive-quality implementation.
-- PWA schedule/cache integration, instant-navigation lifecycle and midnight/resume tests.
-- Original/three-stage/restored screenshots, keyboard/contrast/a11y and missing-asset QA.
-- Matched before/after performance experiments and complete regression validation.
-- One consolidated review-ready PR only when gates pass; until then any PR is draft.
+Budgets: combined enhancement JS <=15KiB gzip, CSS <=12KiB, no new image requests,
+at most 12 animated decorative nodes, zero motion with reduced motion/high contrast.
+Current browser checks enforce byte/adaptive limits. Repeat matched measurements
+and resolve variability before acceptance.
 
-Rollback today: do not import the new module. Future release must have an
-independent administrator kill switch plus visitor Original mode which removes
-all festival attributes/decorations. No public admin or remote date API is planned.
+## Resume and rollback
+
+Continue source/state research, remaining family art, visual review, localization,
+performance and final regressions. Yearly audit emits gaps and null-date research
+tasks, never automatic calendar changes. See MAINTENANCE.md. Keep one feature
+branch and incremental commits; do not enable release or deploy unfinished gates.

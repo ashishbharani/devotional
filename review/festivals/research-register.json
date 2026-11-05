@@ -5506,8 +5506,8 @@
   "excluded": "Mixed-faith tourism inventories are discovery sources; unrelated Buddhist, Jain, Sikh, Christian, Islamic, indigenous and secular festivals are not automatically classified as Hindu.",
   "limitations": [
     "Every jurisdiction has an initial discovery attempt; none is certified complete. Candidate names are research leads, not approved content.",
-    "The year-specific date records array remains empty until explicit dates, traditions, family durations and evidence are corroborated.",
+    "Year-specific references, where actually reviewed, live in the activation registry and its source-review ID register; this discovery worklist does not maintain a second date list.",
     "Some named candidates still need direct source-body review; a search-index excerpt is not a verified calendar.",
-    "2029–2030 future-year dates remain gaps; no annual date shifting or inference is permitted."
+    "Missing 2026–2030 regional and temple dates remain gaps; selected published city-specific references do not establish universal observance dates."
   ]
 }

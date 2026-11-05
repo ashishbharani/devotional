@@ -9,10 +9,10 @@ import {layoutMetrics,interactionMetrics} from './lab_metrics.mjs';
 const server=spawn(process.execPath,['scripts/serve_header_preview.mjs'],{env:{...process.env,HDC_PREVIEW_PORT:'4360',HDC_PREVIEW_GZIP:'1'},stdio:['ignore','pipe','inherit']});
 await new Promise((resolve,reject)=>{server.stdout.once('data',resolve);server.once('error',reject);});
 const browser=await chromium.launch(),base='http://127.0.0.1:4360/devotional/';
-const baseline=process.env.HDC_PERFORMANCE_VARIANT==='baseline',living=process.env.HDC_PERFORMANCE_VARIANT==='living',siteDir=process.env.HDC_SITE_DIR||'site';
+const baseline=process.env.HDC_PERFORMANCE_VARIANT==='baseline',legacy=process.env.HDC_PERFORMANCE_VARIANT==='legacy-control',livingOriginal=process.env.HDC_PERFORMANCE_VARIANT==='living-original',living=process.env.HDC_PERFORMANCE_VARIANT==='living'||livingOriginal,siteDir=process.env.HDC_SITE_DIR||'site';
 const output=process.env.HDC_PERFORMANCE_OUTPUT||'work/performance-input/report.json';
 const report={method:'Chromium CDP: cold contexts, real font requests, gzip text transport matching public Pages, disabled HTTP cache and worker, 4x CPU, 150ms latency, 1.6Mbps download/750Kbps upload. Finite real click/key tasks; Event Timing p98 candidate, not field INP.',limitations:['One local host, not physical Android/iOS','No field RUM or CrUX','Separate baseline/candidate reports; no production-origin field comparison','External request failures are reported, not stubbed or treated as successful font loads'],samples:[]};
-report.variant=living?'living-festival-fixture':baseline?'baseline':'candidate';
+report.variant=legacy?'legacy-matched-control':livingOriginal?'living-original-control':living?'living-festival-fixture':baseline?'baseline':'candidate';
 if(living)report.limitations.push('Synthetic V2 celebration fixture, reduced motion to match the baseline; no religious date approval or physical-device animation certification. Single-run values are indicative, not a regression/CWV certificate.');
 report.benchmarkCommit=execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8'}).trim();
 report.sourceCommit=execFileSync('git',['-C',process.env.HDC_PERFORMANCE_SOURCE_DIR||'.','rev-parse','HEAD'],{encoding:'utf8'}).trim();
@@ -30,14 +30,15 @@ try{
 }catch(error){if(error.code!=='ENOENT')throw error;}
 await mkdir(path.dirname(output),{recursive:true});
 try{
- for(const width of [375,1440])for(const route of baseline||living?['','find/']:['','find/','reader/bhagavad-gita/chapter-2/','journeys/']){
+ for(const width of [375,1440])for(const route of baseline||living||legacy?['','find/']:['','find/','reader/bhagavad-gita/chapter-2/','journeys/']){
   const context=await browser.newContext({viewport:{width,height:1000},serviceWorkers:'block',reducedMotion:'reduce'}),page=await context.newPage(),failed=[],errors=[];
-  if(living){
+  if(living||legacy){
    await page.clock.setFixedTime(new Date('2026-11-11T06:30:00Z'));
    const registry=JSON.parse(await readFile('docs/assets/festivals/living-registry.json','utf8'));
    registry.windows=[{id:'synthetic-performance',family:'diwali',theme:'diwali',name:'Synthetic performance fixture — not a festival date',tradition:'Lab only',regions:['IN'],priority:1,start:'2026-11-11',end:'2026-11-13',status:'verified',approval:{approved:true,reviewer:'Lab fixture only',reviewedOn:'2026-01-01'},sources:[{url:'https://example.invalid/lab-only',label:'Synthetic performance evidence',reviewedOn:'2026-01-01'}]}];
    await context.route('**/assets/festivals/living-registry.json',r=>r.fulfill({json:registry}));
    await context.route('**/assets/festivals/living-policy.json',r=>r.fulfill({json:{schema:1,enabled:true,previewEnabled:false}}));
+   if(livingOriginal)await page.addInitScript(()=>localStorage.setItem('hdc-living-festival-preferences-v2',JSON.stringify({schema:2,mode:'original',region:'IN',effects:'auto'})));
   }
   page.on('requestfailed',request=>failed.push({url:request.url(),error:request.failure()?.errorText}));page.on('pageerror',error=>errors.push(error.message));
   const session=await context.newCDPSession(page);
@@ -45,14 +46,14 @@ try{
   await session.send('Network.emulateNetworkConditions',{offline:false,latency:150,downloadThroughput:1.6*1e6/8,uploadThroughput:750000/8});
   await session.send('Emulation.setCPUThrottlingRate',{rate:4});
   await page.addInitScript(()=>{
-   window.hdcLab={lcp:null,shifts:[],events:[],gestures:0,supported:PerformanceObserver.supportedEntryTypes};
-   for(const name of ['click','keydown'])document.addEventListener(name,e=>{if(e.isTrusted)hdcLab.gestures++;},{capture:true});
+   window.hdcLab={lcp:null,shifts:[],events:[],gestures:0,inputTimes:[],supported:PerformanceObserver.supportedEntryTypes};
+   for(const name of ['click','keydown'])document.addEventListener(name,e=>{if(e.isTrusted){hdcLab.gestures++;hdcLab.inputTimes.push(performance.now());}},{capture:true});
    try{new PerformanceObserver(list=>{for(const e of list.getEntries())hdcLab.lcp=e.startTime;}).observe({type:'largest-contentful-paint',buffered:true});}catch(_){}
    try{new PerformanceObserver(list=>{for(const e of list.getEntries())hdcLab.shifts.push({startTime:e.startTime,value:e.value,hadRecentInput:e.hadRecentInput,sources:e.sources?.map(s=>({node:s.node?.outerHTML?.slice(0,180),previous:s.previousRect.toJSON(),current:s.currentRect.toJSON()}))});}).observe({type:'layout-shift',buffered:true});}catch(_){}
    try{new PerformanceObserver(list=>{for(const e of list.getEntries())hdcLab.events.push({interactionId:e.interactionId,duration:e.duration,name:e.name});}).observe({type:'event',buffered:true,durationThreshold:16});}catch(_){}
   });
   await page.goto(base+route,{timeout:120000});await page.evaluate(()=>document.fonts.ready);
-  if(living)await page.waitForFunction(()=>document.documentElement.dataset.hdcStage==='celebration');
+  if(living)await page.waitForFunction(original=>original?document.querySelector('[data-living-status]')?.textContent.includes('appearance selected'):document.documentElement.dataset.hdcStage==='celebration',livingOriginal);
   if(!route)await page.locator('.udhc-hero-art img').evaluate(img=>img.decode());
   // Defined quiet observation period before input; not a substitute for readiness.
   await page.waitForTimeout(3000);
@@ -92,7 +93,7 @@ try{
   assert.ok(sample.gestures>0,'real browser gestures were required');assert.ok(sample.lcp!==null,'LCP must be observed');assert.deepEqual(errors,[]);
   const metrics={...layoutMetrics(sample.shifts),...interactionMetrics(sample.events,sample.interactionCount)};
   const inp=metrics.labInpCandidateMs??metrics.belowThresholdMs;
-  report.samples.push({width,route:route||'home',...metrics,lcpMs:sample.lcp,gestures:sample.gestures,nativeInteractionCount:sample.interactionCount,eventTimingSupported:sample.supported.includes('event'),fonts:sample.fonts,failedRequests:failed,taskError,targets:{task:taskError===null,lcp:sample.lcp<=2500,inpCandidate:sample.supported.includes('event')&&inp<=200,cls:metrics.labCls<=.1},events:sample.events,shifts:sample.shifts});
+  report.samples.push({width,route:route||'home',...metrics,lcpMs:sample.lcp,gestures:sample.gestures,inputTimes:sample.inputTimes,nativeInteractionCount:sample.interactionCount,eventTimingSupported:sample.supported.includes('event'),fonts:sample.fonts,failedRequests:failed,taskError,targets:{task:taskError===null,lcp:sample.lcp<=2500,inpCandidate:sample.supported.includes('event')&&inp<=200,cls:metrics.labCls<=.1},events:sample.events,shifts:sample.shifts});
   await writeFile(output,JSON.stringify(report,null,2));
   await context.close();console.log(`MEASURED ${width}px ${route||'home'} LCP ${sample.lcp.toFixed(0)}ms, INP candidate ${metrics.labInpCandidateMs??'<16'}ms, CLS ${metrics.labCls.toFixed(4)}`);
  }

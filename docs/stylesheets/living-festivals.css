@@ -21,6 +21,7 @@ html[data-hdc-festival="holi"] { --fest-night:#442147; --fest-light:#ca5989; --f
 html[data-hdc-festival="shivaratri"] { --fest-night:#101d3c; --fest-light:#a8c6e5; --fest-second:#4d7198; }
 html[data-hdc-festival="chhath"] { --fest-night:#48311e; --fest-light:#e5a13f; --fest-second:#b35426; }
 html[data-hdc-festival="pongal"] { --fest-night:#223b2d; --fest-light:#b99d49; --fest-second:#71844a; }
+html[data-hdc-festival="ganesha"] { --fest-night:#4c2113; --fest-light:#e7af42; --fest-second:#a54b21; }
 html[data-hdc-festival] body { isolation:isolate; background-color:var(--fest-night); background-image:radial-gradient(ellipse at 50% 12%,var(--fest-second),transparent 65%); }
 .hdc-living-scenery { position:fixed; inset:0; z-index:-1; overflow:hidden; pointer-events:none; user-select:none; color:var(--fest-light); opacity:var(--fest-strength); background:radial-gradient(ellipse at 50% 0%,var(--fest-light),transparent 54%); }
 .hdc-living-scenery::before { content:""; position:absolute; inset:0; background:repeating-radial-gradient(circle at 0 100%,transparent 0 2rem,currentColor 2.06rem 2.1rem,transparent 2.16rem 4rem); opacity:.18; }
@@ -37,9 +38,9 @@ html[data-hdc-festival] body { isolation:isolate; background-color:var(--fest-ni
 .hdc-living-hero svg:nth-child(even) { right:3px; }
 .hdc-living-hero svg:nth-child(1),.hdc-living-hero svg:nth-child(2) { top:35%; }
 .hdc-living-hero svg:nth-child(3),.hdc-living-hero svg:nth-child(4) { top:75%; }
-html[data-hdc-festival] .md-content { box-shadow:0 0 38px color-mix(in srgb,var(--fest-light) 32%,transparent); }
+html[data-hdc-festival] .md-content { box-shadow:0 0 38px color-mix(in srgb,var(--fest-light) calc(var(--fest-strength) * 40%),transparent); }
 html[data-hdc-festival] .md-sidebar--secondary { background:var(--abp-paper); }
-html[data-hdc-festival] .udhc-hero { box-shadow:inset 0 0 45px color-mix(in srgb,var(--fest-light) 40%,transparent); }
+html[data-hdc-festival] .udhc-hero { box-shadow:inset 0 0 calc(20px + var(--fest-strength) * 35px) color-mix(in srgb,var(--fest-light) calc(var(--fest-strength) * 50%),transparent); }
 html[data-hdc-festival] .udhc-hero::before { background:linear-gradient(90deg,color-mix(in srgb,var(--fest-night) 96%,transparent),color-mix(in srgb,var(--fest-night) 84%,transparent) 50%,color-mix(in srgb,var(--fest-night) 25%,transparent)); }
 html[data-hdc-festival] .udhc-hero::after { color:var(--fest-light); }
 html[data-hdc-festival="holi"] .hdc-living-scenery { background:radial-gradient(ellipse at 0 22%,#d186a7,transparent 48%),radial-gradient(ellipse at 100% 65%,#6c9564,transparent 50%),radial-gradient(ellipse at 80% 0,#d6b36a,transparent 45%); }
@@ -50,6 +51,14 @@ html[data-hdc-festival="chhath"] .hdc-living-scenery { background:radial-gradien
 html[data-hdc-festival="chhath"] .hdc-living-scenery::before { inset:45% 0 0; background:repeating-linear-gradient(0deg,transparent 0 13px,currentColor 14px,transparent 15px 31px); opacity:.35; }
 html[data-hdc-festival="pongal"] .hdc-living-scenery { background:radial-gradient(ellipse at 50% 15%,#c2a557,transparent 50%),linear-gradient(#344731,#5d6936); }
 html[data-hdc-festival="pongal"] .hdc-living-scenery::before { background:repeating-conic-gradient(from 45deg,transparent 0 20%,currentColor 20% 25%,transparent 25% 45%,currentColor 45% 50%) 0 0/140px 140px; opacity:.13; }
+html[data-hdc-festival="ganesha"] .hdc-living-scenery { background:radial-gradient(ellipse at 50% 0%,#f3bd5c,transparent 58%),linear-gradient(#522615,#8c411d); }
+html[data-hdc-festival="ganesha"] .hdc-living-scenery::before { background:radial-gradient(circle,currentColor 0 4px,transparent 5px) 12px 14px/70px 70px; opacity:.25; }
+html[data-hdc-festival="diwali"][data-hdc-variant="lotus"] { --fest-second:#9d4b42; --fest-light:#e6bf82; }
+html[data-hdc-festival="diwali"][data-hdc-variant="harvest"] { --fest-second:#7a6030; }
+html[data-hdc-festival="chhath"][data-hdc-variant="dawn"] .hdc-living-scenery { background:radial-gradient(circle at 50% 35%,#ffe4a0,transparent 55%),linear-gradient(#8d5e42,#d69d55 48%,#725b42); }
+html[data-hdc-festival="chhath"][data-hdc-variant="sunset"] .hdc-living-scenery { background:radial-gradient(circle at 50% 45%,#edae60,transparent 45%),linear-gradient(#56273d,#af5b38 48%,#603b30); }
+html[data-hdc-festival="pongal"][data-hdc-variant="harvest"] { --fest-light:#e0bd64; }
+html[data-hdc-festival="pongal"][data-hdc-variant="warm"] { --fest-second:#7d7847; }
 html[data-hdc-quality="full"] .hdc-living-scenery svg { animation:hdc-living-drift 9s ease-in-out infinite alternate; }
 html[data-hdc-quality="full"] .hdc-living-scenery svg:nth-child(even) { animation-delay:-4s; }
 html[data-hdc-quality="full"] .hdc-living-hero svg { animation:hdc-living-drift 9s ease-in-out infinite alternate; }

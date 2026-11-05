@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import {spawn} from 'node:child_process';
 import {mkdir,readFile,writeFile} from 'node:fs/promises';
 import {gzipSync} from 'node:zlib';
+import {createServer} from 'node:http';
 import {chromium} from 'playwright';
 import {THEMES,quality} from '../docs/assets/festivals/living-presentation.mjs';
 const server=spawn(process.execPath,['scripts/serve_header_preview.mjs'],{env:{...process.env,HDC_PREVIEW_PORT:'4380'},stdio:['ignore','pipe','inherit']});
@@ -46,10 +47,13 @@ try{
     assert.equal(await page.locator('.udhc-hero-art img').getAttribute('src'),originalHero);
     assert.match(await page.locator('[data-living-countdown]').textContent(),/No festival date is implied/);
     assert.equal((await page.request.get(await page.locator('[data-living-explore]').getAttribute('href'))).status(),200,'existing collection route');
+    const lighting=[];
     for(const stage of ['anticipation','approach','celebration']){
      await page.locator('[data-living-stage]').selectOption(stage);await page.evaluate(()=>scrollTo(0,0));
+     lighting.push(await page.locator('.udhc-hero').evaluate(e=>getComputedStyle(e).boxShadow));
      await page.screenshot({path:`${out}/${id}-${stage}-${width}.png`});result.screenshots.push(`${id}-${stage}-${width}.png`);
     }
+    assert.equal(new Set(lighting).size,3,'each stage has a distinct computed lighting intensity');
    }
    await page.locator('[data-living-original]').click();
    assert.deepEqual(await page.locator('body').evaluate(e=>({background:getComputedStyle(e).backgroundImage,color:getComputedStyle(e).color,font:getComputedStyle(e).fontFamily})),original);
@@ -90,6 +94,23 @@ try{
  }
  await repeated.page.goBack();await ready(repeated.page);assert.equal(await repeated.page.locator('.hdc-living-scenery').count(),1);
  await repeated.context.close();result.checks.push('instant navigation/repeated pages and browser Back have one decoration layer');
+ for(const [legacyMode,expected] of [['auto','diwali'],['original',null],['ganesha','ganesha'],['shiva','shivaratri']]){
+  const legacy=await contextFor(),saved=JSON.stringify({mode:legacyMode,region:'IN-MH',effects:false,ownerExtra:'preserve'});
+  await legacy.page.addInitScript(saved=>localStorage.setItem('hdc-festival-preferences-v1',saved),saved);
+  await legacy.page.goto(base);await legacy.page.waitForFunction(()=>document.querySelector('[data-living-region]')?.value==='IN-MH');
+  assert.equal(await legacy.page.locator('html').getAttribute('data-hdc-festival'),expected);
+  assert.equal(await legacy.page.locator('[data-living-effects]').inputValue(),'none');
+  assert.equal(await legacy.page.evaluate(()=>localStorage.getItem('hdc-festival-preferences-v1')),saved);
+  assert.equal(await legacy.page.evaluate(()=>localStorage.getItem('hdc-living-festival-preferences-v2')),null,'reading a legacy preference does not write a migration');
+  await open(legacy.page);await legacy.page.locator('[data-living-effects]').selectOption('reduced');await legacy.page.reload();
+  await legacy.page.waitForFunction(()=>document.querySelector('[data-living-effects]')?.value==='reduced');
+  assert.equal(await legacy.page.locator('html').getAttribute('data-hdc-festival'),expected,'new local settings keep the legacy manual identity');
+  assert.equal(await legacy.page.evaluate(()=>localStorage.getItem('hdc-festival-preferences-v1')),saved);await legacy.context.close();
+ }
+ const kill=await contextFor();await kill.context.route('**/assets/festivals/living-policy.json',r=>r.fulfill({json:{schema:1,enabled:false,previewEnabled:false}}));
+ await kill.page.addInitScript(()=>localStorage.setItem('hdc-festival-preferences-v1',JSON.stringify({mode:'ganesha',effects:true})));
+ await kill.page.goto(base);await ready(kill.page);assert.equal(await kill.page.locator('[data-hdc-festival]').count(),0,'the administrator kill switch also suppresses saved/manual previews');await kill.context.close();
+ result.checks.push('legacy Auto/Original/Ganesha/Shiva, region and effect choices retained without rewriting V1; administrator kill switch wins');
  const missing=await contextFor({fake:false});await missing.context.route('**/assets/festivals/living-registry.json',r=>r.fulfill({status:404,body:'Unavailable'}));
  await missing.page.goto(base);await missing.page.waitForFunction(()=>document.querySelector('[data-living-status]')?.textContent.includes('unavailable'));
  assert.equal(await missing.page.locator('[data-hdc-festival]').count(),0);await missing.context.close();
@@ -100,7 +121,39 @@ try{
  await offline.setOffline(true);await offlinePage.reload();await ready(offlinePage);assert.equal(await offlinePage.locator('[data-hdc-festival]').count(),0,'unapproved bundled schedule remains Original offline');
  await open(offlinePage);await offlinePage.locator('[data-living-previews] > summary').click();await offlinePage.getByRole('button',{name:'Pongal',exact:true}).click();
  assert.equal(await offlinePage.locator('html').getAttribute('data-hdc-festival'),'pongal');await offline.close();
- result.checks.push('real PWA shell caches local modules/policy/empty registry; offline Original and explicit design preview, NOT verified V2 observance availability');
+ result.checks.push('real PWA shell caches local modules/registry with production-disabled policy; offline Original and explicit design preview');
+ // An isolated local proxy enables ONLY the administrator policy for this test.
+ // Actual bundled source-checked records, worker, URLs and modules stay unchanged.
+ // No runtime URL parameter, date override or deployment switch is introduced.
+ const proxy=createServer(async(req,res)=>{
+  try{
+   if(req.url==='/devotional/assets/festivals/living-policy.json')return res.writeHead(200,{'Content-Type':'application/json'}).end(JSON.stringify({schema:1,enabled:true,previewEnabled:true,testOnly:true}));
+   const response=await fetch(new URL(req.url,'http://127.0.0.1:4380'));
+   res.writeHead(response.status,{'Content-Type':response.headers.get('content-type')||'application/octet-stream'}).end(Buffer.from(await response.arrayBuffer()));
+  }catch{res.writeHead(500).end('Local test proxy unavailable');}
+ });
+ await new Promise(resolve=>proxy.listen(0,'127.0.0.1',resolve));
+ const realBase=`http://127.0.0.1:${proxy.address().port}/devotional/`,realOffline=await browser.newContext({viewport:{width:320,height:1000},serviceWorkers:'allow',reducedMotion:'reduce',timezoneId:'America/Los_Angeles'});
+ try{
+  await realOffline.route('https://fonts.googleapis.com/**',r=>r.fulfill({body:'',contentType:'text/css'}));
+  const realPage=await realOffline.newPage(),realErrors=[];realPage.on('pageerror',e=>realErrors.push(e.message));
+  await realPage.clock.install({time:new Date('2026-11-04T06:00:00Z')});await realPage.clock.pauseAt(new Date('2026-11-05T06:00:00Z'));
+  await realPage.goto(realBase);await realPage.waitForFunction(()=>document.documentElement.dataset.hdcStage==='approach');
+  assert.match(await realPage.locator('[data-living-title]').textContent(),/New Delhi/);
+  await realPage.evaluate(()=>navigator.serviceWorker.ready);await realPage.waitForFunction(()=>Boolean(navigator.serviceWorker.controller));
+  const cachedRegistry=await realPage.evaluate(async url=>(await caches.match(url)).json(),realBase+'assets/festivals/living-registry.json');
+  assert.deepEqual(cachedRegistry.windows.map(w=>w.id),bundled.windows.map(w=>w.id),'actual published reference registry is cached, not synthetic date fixtures');
+  await realOffline.setOffline(true);await realPage.reload();await realPage.waitForFunction(()=>document.documentElement.dataset.hdcStage==='approach');
+  await realPage.clock.fastForward(3*86400000);await realPage.waitForFunction(()=>document.documentElement.dataset.hdcVariant==='lotus');
+  assert.equal(await realPage.locator('html').getAttribute('data-hdc-festival'),'diwali');
+  assert.match(await realPage.locator('[data-living-note]').textContent(),/not a ritual timetable/);
+  await realPage.clock.fastForward(4*86400000);await realPage.waitForFunction(()=>document.documentElement.dataset.hdcFestival==='chhath');
+  assert.equal(await realPage.locator('html').getAttribute('data-hdc-stage'),'approach');
+  await realPage.clock.fastForward(4*86400000);await realPage.waitForFunction(()=>document.documentElement.dataset.hdcVariant==='dawn');
+  await realPage.clock.fastForward(86400000);await realPage.waitForFunction(()=>!document.documentElement.dataset.hdcFestival);
+  assert.deepEqual(realErrors,[]);
+ }finally{await realOffline.close();await new Promise(resolve=>proxy.close(resolve));}
+ result.checks.push('actual city-scoped reference records through real offline worker: approach, Diwali lotus day, Chhath handover/dawn and expiry in a US browser timezone; only test-server policy enabled');
  const sizes={};for(const file of ['docs/javascripts/abp-living-festivals.js','docs/assets/festivals/living-scheduler.mjs','docs/assets/festivals/living-presentation.mjs','docs/stylesheets/living-festivals.css'])sizes[file]=gzipSync(await readFile(file)).byteLength;
  assert.ok(Object.entries(sizes).filter(([p])=>!p.endsWith('.css')).reduce((n,[,bytes])=>n+bytes,0)<=15*1024);assert.ok(sizes['docs/stylesheets/living-festivals.css']<=12*1024);
  assert.equal(quality({dataSaver:true}),'calm');assert.equal(quality({cores:2}),'calm');assert.equal(quality({memory:2}),'calm');
