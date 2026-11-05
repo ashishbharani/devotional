@@ -4,7 +4,10 @@ from __future__ import annotations
 import argparse
 import json
 from pathlib import Path
+import sys
 
+ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(ROOT))
 from hooks.reader_books import load_books
 from hooks.reader_translations import review_inventory
 
