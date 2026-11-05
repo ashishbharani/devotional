@@ -65,7 +65,7 @@ self.addEventListener("fetch", (event) => {
   if (request.method !== "GET" || !inScope(url)) return;
   // Full-text locale packs are optional, versioned with the site, and fetched
   // only when selected. Revalidate online; reuse that version's pack offline.
-  if (url.pathname.includes("/assets/translations/")) {
+  if (url.pathname.includes("/assets/translations/") || url.pathname.includes("/assets/reader-translations/")) {
     event.respondWith(fetch(request, { cache: "reload" }).then((response) => remember(request, response))
       .catch(async () => (await caches.match(request)) || Response.error()));
     return;
