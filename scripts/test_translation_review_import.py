@@ -25,7 +25,7 @@ assert staged["hi"][source] == record["translations"]["hi"]
 assert packs["hi"]["translations"] == {}, "dry run must not mutate the loaded pack"
 
 for defect in ("stale-source", "duplicate", "missing-language", "unapproved",
-               "unreviewed-with-content", "missing-reviewer", "lost-url", "collision"):
+               "unreviewed-with-content", "missing-reviewer", "lost-url", "lost-template", "collision"):
     broken_review = deepcopy(review)
     broken_packs = deepcopy(packs)
     row = broken_review["records"][0]
@@ -43,6 +43,8 @@ for defect in ("stale-source", "duplicate", "missing-language", "unapproved",
         row["reviewer"] = ""
     elif defect == "lost-url":
         row["translations"]["hi"] = "पढ़ें {name}, help@example.org"
+    elif defect == "lost-template":
+        row["translations"]["hi"] = "पढ़ें https://example.org और help@example.org"
     elif defect == "collision":
         broken_packs["hi"]["translations"][source.upper()] = "old value"
     try:
