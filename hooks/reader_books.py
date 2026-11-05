@@ -86,13 +86,15 @@ def controls():
 
 def render(book, page, all_pages):
     esc = html.escape
+    from hooks.reader_translations import digest
     relative = lambda path: posixpath.relpath(path, page["path"]) + "/"
     out = [f'# {page["title"]}\n', '<p><a href="' + relative("reader") + '">All books</a> · <a href="'+relative('reader/'+book['id'])+'">Choose another chapter</a></p>',
            '<p>Original text · Select a passage to bookmark or mark read.</p>',
-           '<section class="hdc-practice hdc-reader" data-reader aria-label="Original-language book reader">', controls()]
+           f'<section class="hdc-practice hdc-reader" data-reader data-reader-book="{esc(book["id"])}" aria-label="Original-language book reader">', controls(),
+           '<p data-reader-translation-status role="status" aria-live="polite">Original text is preserved. Additional reviewed translations may be unavailable.</p>']
     for passage in page["passages"]:
         lines = '<br>'.join(esc(line) for line in passage["text"].split('\n'))
-        out.append(f'<article id="{passage["id"]}" tabindex="-1" data-reader-passage><h2>{esc(passage["label"])}</h2><p class="hdc-verse notranslate" lang="{passage.get("language", book["language"])}" translate="no">{lines}</p><p><a href="#{passage["id"]}">Permanent passage link</a></p></article>')
+        out.append(f'<article id="{passage["id"]}" tabindex="-1" data-reader-passage data-reader-source-sha256="{digest(passage["text"])}"><h2>{esc(passage["label"])}</h2><p class="hdc-verse notranslate" lang="{passage.get("language", book["language"])}" translate="no">{lines}</p><details class="hdc-practice-details" data-reader-translation hidden><summary>Reviewed translation</summary><p data-reader-translation-text></p></details><p><a href="#{passage["id"]}">Permanent passage link</a></p></article>')
     out.extend(['<details class="hdc-practice-details"><summary>My local reading history</summary><p>Only explicit read marking adds an entry. Up to 50 entries stay in this browser. Clearing this page’s progress also clears that history; other pages’ flags remain.</p><ol data-reader-history-items class="notranslate" translate="no"></ol></details>',
                 '<p data-reader-status role="status" aria-live="polite"></p>',
                 '<label data-reader-link hidden>Passage link (copy manually if needed)<input type="text" readonly></label></section>'])
