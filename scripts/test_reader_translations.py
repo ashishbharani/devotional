@@ -9,7 +9,9 @@ import json
 from pathlib import Path
 from tempfile import TemporaryDirectory
 from unittest.mock import patch
+import sys
 
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from hooks.reader_books import load_books, render, pages
 from hooks import reader_translations as tr
 
