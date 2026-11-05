@@ -8,6 +8,19 @@
   if (!script) return;
   const rootUrl = new URL('../', script.src);
   const indexUrl = new URL('assets/reader-translations/index.json', rootUrl);
+  const fallback = {
+    readerOriginal: 'Original text is preserved. Select a language to see reviewed passage translations.',
+    readerLoading: 'Checking for reviewed translations…',
+    readerMissing: 'No reviewed translations are available for this book in the selected language. The original remains visible.',
+    readerShown: 'Showing reviewed translations; other passages remain in their original language.',
+    readerPageMissing: 'No reviewed translations are available on this page. The original remains visible.',
+    readerError: 'Reviewed translations could not be verified. The original remains visible.',
+    readerTranslationTitle: 'Reviewed translation',
+  };
+  const t = key => {
+    const value = window.abpI18n?.t(key);
+    return value && value !== key ? value : fallback[key];
+  };
   const cache = new Map();
   let indexPromise;
   let requestToken = 0;
@@ -75,16 +88,16 @@
     const status = root.querySelector('[data-reader-translation-status]');
     clear(root);
     if (!codes.has(code)) {
-      status.textContent = 'Original-language text. Choose another language to see any reviewed translations.';
+      status.textContent = t('readerOriginal');
       return;
     }
-    status.textContent = 'Checking reviewed passage translations…';
+    status.textContent = t('readerLoading');
     try {
       const books = await readIndex();
       if (token !== requestToken || !root.isConnected) return;
       const entry = books[book]?.languages?.[code];
       if (!entry) {
-        status.textContent = 'No reviewed ' + code.toUpperCase() + ' translations are published for this book. Original text remains available.';
+        status.textContent = t('readerMissing');
         return;
       }
       const units = await translation(entry.path, book, code, entry.sourceSha256);
@@ -100,17 +113,17 @@
         text.textContent = data.text;
         text.lang = code;
         text.setAttribute('translate', 'no'); // preserve the reviewed wording
-        details.querySelector('summary').textContent = 'Reviewed ' + code.toUpperCase() + ' translation';
+        details.querySelector('summary').textContent = t('readerTranslationTitle');
         details.hidden = false;
         details.open = true;
         shown++;
       }
       status.textContent = shown
-        ? 'Showing ' + shown + ' reviewed translations on this page; other passages retain the original.'
-        : 'No reviewed translations for passages on this page. Original text remains available.';
+        ? t('readerShown')
+        : t('readerPageMissing');
     } catch (error) {
       if (token !== requestToken || !root.isConnected) return;
-      status.textContent = 'Reviewed translations are unavailable or could not be verified. Original text remains available.';
+      status.textContent = t('readerError');
       console.warn('HDC Reader translations:', error);
     }
   }
