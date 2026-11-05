@@ -22,7 +22,11 @@ const currentIntro='I am an Advocate by profession, and that naturally influence
 const contributionSource=await readFile('docs/contribution.md','utf8');
 const withheldUpi=contributionSource.match(/[a-z0-9._-]+@okhdfcbank/i)?.[0];
 assert.ok(withheldUpi,'identify the withheld payment handle for the non-publication regression');
-assert.ok(!JSON.stringify(hi).includes(withheldUpi),'the published language pack must not republish the withheld payment handle');
+for(const code of ['hi','mr','gu','bn','pa','te','kn','ml','ta']) {
+  const pack=JSON.parse(await readFile(`docs/assets/translations/${code}.json`,'utf8'));
+  assert.ok(!JSON.stringify(pack).includes(withheldUpi),
+    `the published ${code} translation pack must not republish the withheld payment handle`);
+}
 const preview=spawn(process.execPath,['scripts/serve_header_preview.mjs'],{env:{...process.env,HDC_PREVIEW_PORT:'4331'},stdio:['ignore','pipe','inherit']});
 await new Promise((resolve,reject)=>{preview.stdout.once('data',resolve);preview.once('error',reject);});
 const browser=await chromium.launch({...(process.env.PANCHANG_BROWSER?{executablePath:process.env.PANCHANG_BROWSER}:{})});
