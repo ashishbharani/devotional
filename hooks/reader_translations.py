@@ -14,7 +14,7 @@ from urllib.parse import urlsplit
 
 ROOT = Path(__file__).resolve().parent.parent
 DATA = ROOT / "data" / "reader-translations"
-CODES = ("hi", "mr", "gu", "bn", "pa", "te", "kn", "ml", "ta")
+CODES = ("en", "hi", "mr", "gu", "bn", "pa", "te", "kn", "ml", "ta")
 
 
 def digest(text: str) -> str:

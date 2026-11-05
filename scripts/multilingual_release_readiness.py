@@ -17,14 +17,17 @@ def summarize(site, books, legal):
     legal_result=legal_audit(SOURCE.read_text(encoding="utf-8"),legal)
     blockers=[]
     report=["## HDC ten-language release readiness — NOT CERTIFIED","",
-            "English is the original source; Hindi plus eight other Indian languages are targets.",
+            "English is the hosted-site source language. All ten languages, including English, require translations of the original Sanskrit/Awadhi Reader books.",
             "",
             "| Language | Hosted/catalogue units unresolved | Reader passages unresolved |",
             "|---|---:|---:|"]
-    for code in CODES:
-        hosted=site["languages"].get(code,{}).get("allCandidatesMissing")
-        reader=sum(book["languages"].get(code,{}).get("missingPassages",0)
-                   for book in books["books"].values())
+    for code in ("en", *CODES):
+        hosted=0 if code=="en" else site["languages"].get(code,{}).get("allCandidatesMissing")
+        counts=[book.get("languages",{}).get(code,{}).get("missingPassages")
+                for book in books["books"].values()]
+        if not counts or any(type(count) is not int or count<0 for count in counts):
+            raise ValueError("Missing/invalid Reader source counts for "+code)
+        reader=sum(counts)
         if not isinstance(hosted,int) or not isinstance(reader,int) or hosted<0 or reader<0:
             raise ValueError("Invalid source counts for "+code)
         if hosted: blockers.append(f"{code}: {hosted} hosted/catalogue source units unresolved")
