@@ -1344,7 +1344,13 @@ def on_files(files, config, **kw):
         files.append(File.generated(config, src, content=front_matter(**meta) + body))
 
     if PRACTICE_PREVIEW:
-        from hooks.reader_books import DATA as reader_data, generated_pages
+        from hooks.reader_books import DATA as reader_data, generated_pages, load_books
+        from hooks.reader_translations import collect
+        reader_translation_index, reader_translation_assets = collect(load_books())
+        files.append(File.generated(config, "assets/reader-translations/index.json",
+                                    content=json.dumps(reader_translation_index, ensure_ascii=False, separators=(",", ":"))))
+        for target, value in sorted(reader_translation_assets.items()):
+            files.append(File.generated(config, target, content=value))
         for src, title, body in generated_pages():
             # Original books load on demand. Keep their full text out of the
             # first-install Material index; the chapter hub stays searchable,
