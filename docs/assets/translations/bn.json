@@ -1,5 +1,23 @@
 {
   "language": "bn",
   "status": "draft",
-  "translations": {}
+  "translations": {
+    "A Bridge Between Communities": "সম্প্রদায়ের মধ্যে সেতুবন্ধন",
+    "A Bridge Between Generations": "প্রজন্মের মধ্যে সেতুবন্ধন",
+    "A LIVING COLLECTION": "বিকাশমান একটি সংগ্রহ",
+    "A Living Project": "ক্রমবিকাশমান একটি প্রকল্প",
+    "An Advocate by Profession": "পেশায় আইনজীবী",
+    "BETWEEN REALISM AND FAITH": "বাস্তববাদ ও বিশ্বাসের মাঝখানে",
+    "Dedicated to My Parents": "আমার বাবা-মায়ের উদ্দেশে উৎসর্গিত",
+    "From my father,": "বাবার কাছ থেকে,",
+    "From my mother,": "মায়ের কাছ থেকে,",
+    "Helping People Become Better Partners": "আরও ভালো জীবনসঙ্গী হতে সাহায্য করা",
+    "How It All Began": "সবকিছুর শুরু যেভাবে",
+    "My Hope": "আমার আশা",
+    "PASS IT FORWARD": "পরবর্তী প্রজন্মের কাছে পৌঁছে দিন",
+    "The Influence of My Parents": "আমার বাবা-মায়ের প্রভাব",
+    "TO MY PARENTS": "আমার বাবা-মায়ের উদ্দেশে",
+    "Tradition and Technology Can Work Together": "ঐতিহ্য ও প্রযুক্তি একসঙ্গে চলতে পারে",
+    "WHAT IT BECAME": "এরপর এটি কী হয়ে উঠল"
+  }
 }
