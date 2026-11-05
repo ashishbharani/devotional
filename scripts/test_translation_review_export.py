@@ -99,6 +99,15 @@ document = json.loads(target.read_text(encoding='utf-8'))
 assert document['inputs']['catalogueSha256'] == hashlib.sha256((fixture / 'data/collection.json').read_bytes()).hexdigest()
 assert document['inputs']['i18nSha256'] == hashlib.sha256((fixture / 'docs/assets/i18n.json').read_bytes()).hexdigest()
 assert document['status'] == 'incomplete' and document['backlog']
+missing = {item['source']: set(item['languages']) for item in document['backlog']}
+for value in ['Untranslated public label', 'Sample Category', 'Known Section', 'devotional reading']:
+    assert value in missing and missing[value] == set(audit.CODES), (
+        'the completion gate must include dynamically rendered catalogue fields '
+        'and hierarchy labels, not just the HTML text inventory: ' + value
+    )
+assert document['uniqueHostedCandidates'] == 1
+assert document['uniqueCatalogueCandidates'] >= 3
+assert all(document['languages'][code]['catalogueCandidatesMissing'] >= 3 for code in audit.CODES)
 exported = write_pack(target.read_bytes(), (fixture / 'data/collection.json').read_bytes(), fixture / 'review')
 assert json.loads((exported / 'review.json').read_text(encoding='utf-8'))['releaseEligible'] is False
 print('PASS real audit fingerprints, incomplete release gate and isolated export handoff')
