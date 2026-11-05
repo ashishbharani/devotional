@@ -158,6 +158,8 @@ jobs:
           uv run python scripts/test_reader_epics.py
           uv run python scripts/test_reader_translations.py
           uv run python scripts/audit_reader_translations.py --output work/reader-translation-coverage.json
+          uv run python scripts/test_multilingual_release_readiness.py
+          uv run python scripts/multilingual_release_readiness.py --output work/multilingual-release-readiness.md
           node scripts/test_reader_books_browser.mjs
           node scripts/test_reader_translations_browser.mjs
           node scripts/test_reader_cleanup_browser.mjs
@@ -230,6 +232,7 @@ jobs:
             work/translation-summary.md
             work/reader-translation-coverage.json
             work/legal-125-review.json
+            work/multilingual-release-readiness.md
             work/prose-translation
       - uses: actions/upload-artifact@v4
         if: always()
