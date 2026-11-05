@@ -8,10 +8,10 @@ The catalogue, PDFs, Panchang calculations, approved images and deployment are i
 | Gate | Current evidence | Remaining work |
 | --- | --- | --- |
 | Audit | MkDocs Material, existing V1, worker/preferences inspected; pre-change lab baseline | Final preservation diff |
-| Data | 36 jurisdiction worklists; 151 discovery candidates; 15 source-checked periods / 65 member days, 2026–2030 | All 36 completeness audits open; 170/180 region-year cells lack a period; more traditions/temple sources |
+| Data | 36 jurisdiction worklists; 164 discovery candidates; 31 source-checked periods / 158 member days, 2026–2030 | All 36 initial source leads revisited with actual retrieval outcomes; completeness audits remain open; 159/180 region-year cells lack a period; more traditions/temple sources |
 | Scheduler | IST midnight, three stages, inclusive families, variants, active-first overlaps, regions, overrides and fail-closed tests | Expanded real-calendar reconciliation |
-| Prototypes | Five differentiated CSS/SVG studies plus Ganesha continuity study, phone/desktop screenshots and three lighting intensities | Cultural/owner review, richer visual directions; not final approved art |
-| Expansion | Diwali/Chhath/Pongal reference calendars | Remaining families, regional directions and assets |
+| Prototypes | Five initial CSS/SVG studies plus Ganesha, Navratri, Durga Puja and Ratha Jatra extensions, phone/desktop screenshots and three lighting intensities | Cultural/owner review, richer visual directions; not final approved art |
+| Expansion | Seven scoped festival families; 2026–2030 for six, 2026 only for Puri Ratha Jatra | Remaining families, regional directions and assets |
 | Integration | Independent build flag, local preferences, V1 read-through, instant navigation, midnight/resume, adaptive effects, offline worker | Translation review; final release remains gated |
 | Validation | Current strict preview build, smoke, scheduler, registry, browser and targeted accessibility pass | Matched performance acceptance, physical-device/AT checks, final regressions |
 | Reconciliation | Release OFF, annual audit and rollback documented | Resolve outstanding gates; one consolidated PR, draft until complete |
@@ -22,8 +22,9 @@ The owner accepted source-checked, clearly labelled published calendar reference
 for the specified city/tradition on 2026-11-05. This is a verification standard,
 not merge/deploy permission or a universal religious ruling.
 
-The 15 periods currently cover Diwali and Chhath for New Delhi and Pongal for
-Chennai, each year 2026–2030. Explicit year/place URLs, publication title/hash,
+The 31 periods cover Diwali, Chhath and Shardiya Navratri for New Delhi, Pongal
+for Chennai, Ganeshotsav for Mumbai and Durga Puja for Kolkata in 2026–2030,
+plus the official Odisha Tourism 2026 Puri Ratha Jatra reference. Explicit year/place URLs, publication title/hash,
 review date, scope and confidence are recorded. Dates live only in the canonical
 activation registry; review records reference its IDs. No Gregorian annual shifts
 or automatic promotion from calculated Panchang rules are used. Tourism/holiday
@@ -37,7 +38,7 @@ enablement. No public admin or runtime date-override URL exists.
 
 ## Current verification
 
-- Strict V2 preview build passed 2026-11-05 (113.38 seconds).
+- Strict V2 preview build passed 2026-11-05 (123.44 seconds; uv run mkdocs build --strict).
 - Smoke passed: 16 routes, 43,085 canonical IDs, Panchang, favourites and PWA.
 - Pure scheduler and source-registry consistency checks pass.
 - Expanded browser run passed 2026-11-05 at 320/360/390/414/768/1024/1440px:
@@ -47,14 +48,19 @@ enablement. No public admin or runtime date-override URL exists.
   Diwali/Chhath handover. Only an isolated test-server policy enables dates.
 - Original/restored viewport PNGs match byte-for-byte at 320/1440 in the fixed-clock,
   reduced-motion lab. This is bounded evidence, not every-device certification.
-- Targeted accessibility passed 30 light/dark phone/tablet/desktop samples: native
+- Targeted accessibility passed 54 light/dark phone/tablet/desktop samples (latest expanded run; raw report records the tested themes): native
   labels, keyboard focus/restore, 44px targets, containment, hidden decorative SVGs,
   and measured text contrast >=6.49:1. Not full WCAG or physical AT certification.
-- Panchang, ephemeris, universal/browser search, navigation, sacred-site and V1
-  festival suites passed earlier on this branch. Final reconciliation must
-  distinguish their tested revision from later changes.
+- Panchang (16/16 groups), source registry, V1 festival and site smoke checks
+  passed again after the current 31-period build. The sacred-site run completed
+  all layout assertions: 2353 HTML pages, 42 categories at 320/1440px, 28 routes
+  across phone/tablet/desktop and light/dark; its session expired before the
+  process-exit result could be retrieved, so only the completed assertions are claimed.
+- Ephemeris, universal/browser search and navigation suites passed earlier on
+  this branch; later changes do not alter those algorithms or navigation.
 
-Raw current browser/accessibility reports and screenshots are in work/living-festival;
+Current browser/accessibility reports are committed in evidence/ and representative
+screenshots in screenshots/. Full stage screenshots remain in work/living-festival;
 preview CI uploads them. Fixtures do not certify dates or cultural approval.
 V1 Auto/Original/Ganesha/Shiva, region and effects are read without writes. New
 choices use V2 storage; unsupported records stay untouched. Region never writes
@@ -86,6 +92,34 @@ and resolve variability before acceptance.
 ## Resume and rollback
 
 Continue source/state research, remaining family art, visual review, localization,
-performance and final regressions. Yearly audit emits gaps and null-date research
+performance and final regressions. Yearly audit emits gaps, candidate-specific inventory follow-ups and null-date research
 tasks, never automatic calendar changes. See MAINTENANCE.md. Keep one feature
 branch and incremental commits; do not enable release or deploy unfinished gates.
+
+## Additional reconciliation on 2026-11-05
+
+All 36 initial source leads now have explicit direct-body/PDF or fetch-failure
+records in DIRECT_SOURCE_AUDIT.md. This remains incomplete coverage, not a
+certification that all major festivals have been found. Four selected published
+calendar formats have a read-only yearly proposal helper; its eight offline
+safeguard tests pass. Twenty 2026–2030 Onam/Holi/Shivaratri/Janmashtami source
+proposals are retained as UNAPPROVED, outside runtime data. Overnight endpoints,
+tradition differences and appropriate presentation still require actual review.
+
+Expanded browser assertions pass with no ordinary console errors: explicit
+pageshow/visibility restoration after clock jumps, repeated bfcache cleanup,
+cross-tab preference synchronization and missing-module fallback. Virtual clock
+leaps run on shared content pages so they do not artificially expire the separate
+astronomy-worker watchdog before that real worker can respond. No Panchang code
+was modified.
+
+The fixed-Date performance fixture proved unsuitable for Material/RxJS focus
+scheduling. Its failed reports are preserved, not accepted as feature scores.
+Version 3 keeps the native advancing clock and places only a synthetic celebration
+window around the current IST day. In the first matched pair all real tasks pass
+with no failed requests: Original LCP 2052/1472/1896/1108ms and celebration
+2380/1580/2568/1420ms (375 Home/Find, then 1440 Home/Find). Original passes all
+finite targets; celebration exceeds 2500ms on desktop Home. CLS stays below .021
+in both. This single pair is NOT performance acceptance; repeated paired samples
+and LCP element/resource attribution are the next checks. No search algorithm,
+index, imagery or production UI was changed to improve scores.

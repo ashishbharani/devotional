@@ -38,6 +38,34 @@
     },
     {
       "width": 320,
+      "scheme": "abp-light",
+      "theme": "Ganesha",
+      "minimumMeasuredContrast": 10.234160302836846,
+      "controlsPassed": true
+    },
+    {
+      "width": 320,
+      "scheme": "abp-light",
+      "theme": "Shardiya Navratri",
+      "minimumMeasuredContrast": 10.234160302836846,
+      "controlsPassed": true
+    },
+    {
+      "width": 320,
+      "scheme": "abp-light",
+      "theme": "Durga Puja",
+      "minimumMeasuredContrast": 10.234160302836846,
+      "controlsPassed": true
+    },
+    {
+      "width": 320,
+      "scheme": "abp-light",
+      "theme": "Ratha Jatra",
+      "minimumMeasuredContrast": 10.234160302836846,
+      "controlsPassed": true
+    },
+    {
+      "width": 320,
       "scheme": "abp-dark",
       "theme": "Diwali",
       "minimumMeasuredContrast": 8.369478809150198,
@@ -68,6 +96,34 @@
       "width": 320,
       "scheme": "abp-dark",
       "theme": "Pongal",
+      "minimumMeasuredContrast": 7.965679061187977,
+      "controlsPassed": true
+    },
+    {
+      "width": 320,
+      "scheme": "abp-dark",
+      "theme": "Ganesha",
+      "minimumMeasuredContrast": 7.965679061187977,
+      "controlsPassed": true
+    },
+    {
+      "width": 320,
+      "scheme": "abp-dark",
+      "theme": "Shardiya Navratri",
+      "minimumMeasuredContrast": 7.965679061187977,
+      "controlsPassed": true
+    },
+    {
+      "width": 320,
+      "scheme": "abp-dark",
+      "theme": "Durga Puja",
+      "minimumMeasuredContrast": 7.965679061187977,
+      "controlsPassed": true
+    },
+    {
+      "width": 320,
+      "scheme": "abp-dark",
+      "theme": "Ratha Jatra",
       "minimumMeasuredContrast": 7.965679061187977,
       "controlsPassed": true
     },
@@ -108,6 +164,34 @@
     },
     {
       "width": 768,
+      "scheme": "abp-light",
+      "theme": "Ganesha",
+      "minimumMeasuredContrast": 10.234160302836846,
+      "controlsPassed": true
+    },
+    {
+      "width": 768,
+      "scheme": "abp-light",
+      "theme": "Shardiya Navratri",
+      "minimumMeasuredContrast": 10.234160302836846,
+      "controlsPassed": true
+    },
+    {
+      "width": 768,
+      "scheme": "abp-light",
+      "theme": "Durga Puja",
+      "minimumMeasuredContrast": 10.234160302836846,
+      "controlsPassed": true
+    },
+    {
+      "width": 768,
+      "scheme": "abp-light",
+      "theme": "Ratha Jatra",
+      "minimumMeasuredContrast": 10.234160302836846,
+      "controlsPassed": true
+    },
+    {
+      "width": 768,
       "scheme": "abp-dark",
       "theme": "Diwali",
       "minimumMeasuredContrast": 8.369478809150198,
@@ -138,6 +222,34 @@
       "width": 768,
       "scheme": "abp-dark",
       "theme": "Pongal",
+      "minimumMeasuredContrast": 7.965679061187977,
+      "controlsPassed": true
+    },
+    {
+      "width": 768,
+      "scheme": "abp-dark",
+      "theme": "Ganesha",
+      "minimumMeasuredContrast": 7.965679061187977,
+      "controlsPassed": true
+    },
+    {
+      "width": 768,
+      "scheme": "abp-dark",
+      "theme": "Shardiya Navratri",
+      "minimumMeasuredContrast": 7.965679061187977,
+      "controlsPassed": true
+    },
+    {
+      "width": 768,
+      "scheme": "abp-dark",
+      "theme": "Durga Puja",
+      "minimumMeasuredContrast": 7.965679061187977,
+      "controlsPassed": true
+    },
+    {
+      "width": 768,
+      "scheme": "abp-dark",
+      "theme": "Ratha Jatra",
       "minimumMeasuredContrast": 7.965679061187977,
       "controlsPassed": true
     },
@@ -178,6 +290,34 @@
     },
     {
       "width": 1440,
+      "scheme": "abp-light",
+      "theme": "Ganesha",
+      "minimumMeasuredContrast": 10.234160302836846,
+      "controlsPassed": true
+    },
+    {
+      "width": 1440,
+      "scheme": "abp-light",
+      "theme": "Shardiya Navratri",
+      "minimumMeasuredContrast": 10.234160302836846,
+      "controlsPassed": true
+    },
+    {
+      "width": 1440,
+      "scheme": "abp-light",
+      "theme": "Durga Puja",
+      "minimumMeasuredContrast": 10.234160302836846,
+      "controlsPassed": true
+    },
+    {
+      "width": 1440,
+      "scheme": "abp-light",
+      "theme": "Ratha Jatra",
+      "minimumMeasuredContrast": 10.234160302836846,
+      "controlsPassed": true
+    },
+    {
+      "width": 1440,
       "scheme": "abp-dark",
       "theme": "Diwali",
       "minimumMeasuredContrast": 8.369478809150198,
@@ -208,6 +348,34 @@
       "width": 1440,
       "scheme": "abp-dark",
       "theme": "Pongal",
+      "minimumMeasuredContrast": 7.965679061187977,
+      "controlsPassed": true
+    },
+    {
+      "width": 1440,
+      "scheme": "abp-dark",
+      "theme": "Ganesha",
+      "minimumMeasuredContrast": 7.965679061187977,
+      "controlsPassed": true
+    },
+    {
+      "width": 1440,
+      "scheme": "abp-dark",
+      "theme": "Shardiya Navratri",
+      "minimumMeasuredContrast": 7.965679061187977,
+      "controlsPassed": true
+    },
+    {
+      "width": 1440,
+      "scheme": "abp-dark",
+      "theme": "Durga Puja",
+      "minimumMeasuredContrast": 7.965679061187977,
+      "controlsPassed": true
+    },
+    {
+      "width": 1440,
+      "scheme": "abp-dark",
+      "theme": "Ratha Jatra",
       "minimumMeasuredContrast": 7.965679061187977,
       "controlsPassed": true
     }

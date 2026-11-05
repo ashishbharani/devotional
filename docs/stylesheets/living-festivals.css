@@ -22,6 +22,9 @@ html[data-hdc-festival="shivaratri"] { --fest-night:#101d3c; --fest-light:#a8c6e
 html[data-hdc-festival="chhath"] { --fest-night:#48311e; --fest-light:#e5a13f; --fest-second:#b35426; }
 html[data-hdc-festival="pongal"] { --fest-night:#223b2d; --fest-light:#b99d49; --fest-second:#71844a; }
 html[data-hdc-festival="ganesha"] { --fest-night:#4c2113; --fest-light:#e7af42; --fest-second:#a54b21; }
+html[data-hdc-festival="navratri"] { --fest-night:#42102b; --fest-light:#e7b956; --fest-second:#8e4628; }
+html[data-hdc-festival="durga-puja"] { --fest-night:#551b24; --fest-light:#f1d8a7; --fest-second:#9f4539; }
+html[data-hdc-festival="ratha-jatra"] { --fest-night:#153643; --fest-light:#e5be72; --fest-second:#70503b; }
 html[data-hdc-festival] body { isolation:isolate; background-color:var(--fest-night); background-image:radial-gradient(ellipse at 50% 12%,var(--fest-second),transparent 65%); }
 .hdc-living-scenery { position:fixed; inset:0; z-index:-1; overflow:hidden; pointer-events:none; user-select:none; color:var(--fest-light); opacity:var(--fest-strength); background:radial-gradient(ellipse at 50% 0%,var(--fest-light),transparent 54%); }
 .hdc-living-scenery::before { content:""; position:absolute; inset:0; background:repeating-radial-gradient(circle at 0 100%,transparent 0 2rem,currentColor 2.06rem 2.1rem,transparent 2.16rem 4rem); opacity:.18; }
@@ -53,12 +56,34 @@ html[data-hdc-festival="pongal"] .hdc-living-scenery { background:radial-gradien
 html[data-hdc-festival="pongal"] .hdc-living-scenery::before { background:repeating-conic-gradient(from 45deg,transparent 0 20%,currentColor 20% 25%,transparent 25% 45%,currentColor 45% 50%) 0 0/140px 140px; opacity:.13; }
 html[data-hdc-festival="ganesha"] .hdc-living-scenery { background:radial-gradient(ellipse at 50% 0%,#f3bd5c,transparent 58%),linear-gradient(#522615,#8c411d); }
 html[data-hdc-festival="ganesha"] .hdc-living-scenery::before { background:radial-gradient(circle,currentColor 0 4px,transparent 5px) 12px 14px/70px 70px; opacity:.25; }
+html[data-hdc-festival="navratri"] .hdc-living-scenery { background:radial-gradient(ellipse at 0 12%,#a66c33,transparent 45%),radial-gradient(ellipse at 100% 80%,#8f354b,transparent 55%),linear-gradient(#42102b,#632534); }
+html[data-hdc-festival="navratri"] .hdc-living-scenery::before { background:radial-gradient(ellipse at 50% 0,currentColor 0 7px,transparent 8px) 0 0/34px 58px,radial-gradient(ellipse at 50% 100%,currentColor 0 6px,transparent 7px) 17px 29px/34px 58px; opacity:.22; }
+html[data-hdc-festival="durga-puja"] .hdc-living-scenery { background:linear-gradient(90deg,#7c2430,transparent 12% 88%,#7c2430),radial-gradient(ellipse at 50% 10%,#c59a67,transparent 60%),#551b24; }
+html[data-hdc-festival="durga-puja"] .hdc-living-scenery::before { background:repeating-radial-gradient(ellipse at 0 50%,transparent 0 17px,currentColor 18px 19px,transparent 20px 37px); opacity:.23; }
+html[data-hdc-festival="durga-puja"] .hdc-living-hero { border-inline:3px double color-mix(in srgb,var(--fest-light) 45%,transparent); }
+html[data-hdc-festival="ratha-jatra"] .hdc-living-scenery { background:radial-gradient(ellipse at 50% 0,#bd8c53,transparent 60%),linear-gradient(#173c4b,#235461); }
+html[data-hdc-festival="ratha-jatra"] .hdc-living-scenery::before { background:repeating-conic-gradient(from 45deg at 50% 0,transparent 0 12.5%,currentColor 12.5% 25%) 0 0/90px 90px; opacity:.15; }
 html[data-hdc-festival="diwali"][data-hdc-variant="lotus"] { --fest-second:#9d4b42; --fest-light:#e6bf82; }
 html[data-hdc-festival="diwali"][data-hdc-variant="harvest"] { --fest-second:#7a6030; }
 html[data-hdc-festival="chhath"][data-hdc-variant="dawn"] .hdc-living-scenery { background:radial-gradient(circle at 50% 35%,#ffe4a0,transparent 55%),linear-gradient(#8d5e42,#d69d55 48%,#725b42); }
 html[data-hdc-festival="chhath"][data-hdc-variant="sunset"] .hdc-living-scenery { background:radial-gradient(circle at 50% 45%,#edae60,transparent 45%),linear-gradient(#56273d,#af5b38 48%,#603b30); }
 html[data-hdc-festival="pongal"][data-hdc-variant="harvest"] { --fest-light:#e0bd64; }
 html[data-hdc-festival="pongal"][data-hdc-variant="warm"] { --fest-second:#7d7847; }
+html[data-hdc-festival="ganesha"][data-hdc-variant="welcome"] { --fest-light:#f2c45d; }
+html[data-hdc-festival="ganesha"][data-hdc-variant="farewell"] .hdc-living-scenery::before { background:repeating-radial-gradient(ellipse at 50% 100%,transparent 0 17px,currentColor 18px 19px,transparent 20px 38px); }
+/* These accents reproduce only reviewed published colour references, never text
+   colours or a universal instruction about what visitors should wear. */
+html[data-hdc-festival="navratri"][data-hdc-variant="orange"] { --fest-light:#e7ad60; }
+html[data-hdc-festival="navratri"][data-hdc-variant="white"] { --fest-light:#eee1ca; }
+html[data-hdc-festival="navratri"][data-hdc-variant="red"] { --fest-light:#e78c83; }
+html[data-hdc-festival="navratri"][data-hdc-variant="royal-blue"] { --fest-light:#a4b8ec; }
+html[data-hdc-festival="navratri"][data-hdc-variant="yellow"] { --fest-light:#e9cc65; }
+html[data-hdc-festival="navratri"][data-hdc-variant="green"] { --fest-light:#b4c78b; }
+html[data-hdc-festival="navratri"][data-hdc-variant="grey"] { --fest-light:#c0c0c5; }
+html[data-hdc-festival="navratri"][data-hdc-variant="purple"] { --fest-light:#c5a3d5; }
+html[data-hdc-festival="navratri"][data-hdc-variant="pink"] { --fest-light:#e7acc9; }
+html[data-hdc-festival="navratri"][data-hdc-variant="peacock-green"] { --fest-light:#82c6b8; }
+html[data-hdc-festival="navratri"][data-hdc-variant="sky-blue"] { --fest-light:#b2d3eb; }
 html[data-hdc-quality="full"] .hdc-living-scenery svg { animation:hdc-living-drift 9s ease-in-out infinite alternate; }
 html[data-hdc-quality="full"] .hdc-living-scenery svg:nth-child(even) { animation-delay:-4s; }
 html[data-hdc-quality="full"] .hdc-living-hero svg { animation:hdc-living-drift 9s ease-in-out infinite alternate; }

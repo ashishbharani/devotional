@@ -80,6 +80,29 @@ The scheduled November workflow uploads a matrix and research tasks, including
 the next-year gap. It has read-only repository permissions: it cannot approve,
 commit or publish date changes. `--require-ready` intentionally fails now.
 
+The matrix tasks also list incomplete inventories and their candidate IDs even
+when a region already has some verified periods. One record cannot hide other
+missing festivals in the same region/year. Direct source-body follow-ups and
+retrieval failures are in `DIRECT_SOURCE_AUDIT.md` and its JSON register; these
+are not certified complete jurisdiction inventories.
+
+Optional, explicit source probe:
+
+```sh
+uv run python scripts/propose_festival_calendar_review.py --years 2031
+uv run python scripts/test_festival_calendar_review.py
+```
+
+The manual coverage workflow offers the same opt-in probe with an explicit year.
+It fetches actual publisher pages for selected supported calendar formats only,
+checks title year/city/country and selected civil dates, and writes **unapproved**
+facts/hashes under `work/festival-coverage/`. Wrong places/years, impossible dates,
+weekday conflicts, absent or changed markup and fetch failures produce gaps.
+No religious period is inferred from a single date; overnight endpoints,
+traditions, source conflicts, completeness and matching visual approval require
+actual review. This helper never edits `docs/`, sets approval true or deploys.
+Its four initial source formats are a maintenance aid, not a festival coverage cap.
+
 The owner accepted labelled, source-checked references for a specified city/tradition
 on 2026-11-05. This is a date-source standard, not merge/deploy permission. Record
 verification scope, explicit year/place URLs, fetched publication title/hash and

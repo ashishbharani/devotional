@@ -29,6 +29,15 @@
     "ganesha-anticipation-320.png",
     "ganesha-approach-320.png",
     "ganesha-celebration-320.png",
+    "navratri-anticipation-320.png",
+    "navratri-approach-320.png",
+    "navratri-celebration-320.png",
+    "durga-puja-anticipation-320.png",
+    "durga-puja-approach-320.png",
+    "durga-puja-celebration-320.png",
+    "ratha-jatra-anticipation-320.png",
+    "ratha-jatra-approach-320.png",
+    "ratha-jatra-celebration-320.png",
     "original-1440.png",
     "diwali-anticipation-1440.png",
     "diwali-approach-1440.png",
@@ -47,22 +56,35 @@
     "pongal-celebration-1440.png",
     "ganesha-anticipation-1440.png",
     "ganesha-approach-1440.png",
-    "ganesha-celebration-1440.png"
+    "ganesha-celebration-1440.png",
+    "navratri-anticipation-1440.png",
+    "navratri-approach-1440.png",
+    "navratri-celebration-1440.png",
+    "durga-puja-anticipation-1440.png",
+    "durga-puja-approach-1440.png",
+    "durga-puja-celebration-1440.png",
+    "ratha-jatra-anticipation-1440.png",
+    "ratha-jatra-approach-1440.png",
+    "ratha-jatra-celebration-1440.png"
   ],
   "errors": [],
+  "consoleErrors": [],
   "checks": [
     "IST midnight, all three stages, inclusive multi-day expiry, variation and refresh in three browser timezones",
+    "suspended-timer civil-clock jumps recompute on visible/pageshow restoration; repeated bfcache lifecycle leaves one layer and cleans on pagehide",
     "adaptive/high-contrast/reduced motion, regions independent of Panchang, blocked storage restores Original",
     "instant navigation/repeated pages and browser Back have one decoration layer",
+    "real cross-tab storage events synchronize opt-out and festival region without changing Panchang location",
     "legacy Auto/Original/Ganesha/Shiva, region and effect choices retained without rewriting V1; administrator kill switch wins",
+    "missing registry or presentation module fails to Original, with restore control still usable; expected 404 console messages excluded from ordinary-console assertion",
     "real PWA shell caches local modules/registry with production-disabled policy; offline Original and explicit design preview",
     "actual city-scoped reference records through real offline worker: approach, Diwali lotus day, Chhath handover/dawn and expiry in a US browser timezone; only test-server policy enabled"
   ],
   "gzipBytes": {
     "docs/javascripts/abp-living-festivals.js": 4659,
     "docs/assets/festivals/living-scheduler.mjs": 2986,
-    "docs/assets/festivals/living-presentation.mjs": 1781,
-    "docs/stylesheets/living-festivals.css": 2309
+    "docs/assets/festivals/living-presentation.mjs": 2508,
+    "docs/stylesheets/living-festivals.css": 2911
   },
   "passed": true
 }

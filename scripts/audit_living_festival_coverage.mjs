@@ -5,10 +5,14 @@ import {validateRegistry,validateWindow} from '../docs/assets/festivals/living-s
 const registry=JSON.parse(await readFile('review/festivals/living-coverage.json','utf8'));
 const activation=JSON.parse(await readFile(registry.activationRegistry,'utf8'));
 const research=JSON.parse(await readFile(registry.candidateRegister,'utf8'));
+const direct=JSON.parse(await readFile('review/festivals/direct-source-audit.json','utf8'));
 validateRegistry(activation);
 for(const record of activation.windows)if(record.status==='verified')assert.equal(validateWindow(record,activation),true,`invalid supposedly verified window ${record.id}`);
 assert.deepEqual(registry.regions.map(r=>r.id).sort(),activation.regions.filter(r=>r!=='IN').sort(),'coverage jurisdictions match the runtime registry');
 assert.deepEqual(research.jurisdictionAudits.map(r=>r.region).sort(),registry.regions.map(r=>r.id).sort());
+assert.deepEqual(direct.records.map(r=>r.region).sort(),registry.regions.map(r=>r.id).sort());
+assert.equal(direct.automaticActivationAllowed,false);
+for(const record of direct.records){assert.ok(record.finding&&record.accessStatus&&record.reviewedOn);assert.equal(record.inventoryComplete,false,'an attempted source fetch is not comprehensive coverage');}
 assert.equal(new Set(research.candidates.map(c=>c.id)).size,research.candidates.length,'unique research IDs');
 assert.equal(research.automaticActivationAllowed,false,'discovery is never an activation source');
 assert.equal(registry.regions.filter(r=>r.kind==='state').length,28);
@@ -30,10 +34,17 @@ for(const region of registry.regions){
 }
 console.log(`\nMissing verified region-year cells: ${missing}/180. A record count never certifies comprehensive coverage.`);
 const incomplete=research.jurisdictionAudits.filter(a=>!a.complete).length;
-console.log(`Initial candidates: ${research.candidates.length}; incomplete jurisdiction audits: ${incomplete}/36. No date proposals are automatically generated or published.`);
+console.log(`Research candidates: ${research.candidates.length}; incomplete jurisdiction audits: ${incomplete}/36. All 36 initial source leads have a direct follow-up or recorded retrieval failure; this is not a complete festival inventory. No date proposals are automatically generated or published.`);
 const nextYear=new Date().getUTCFullYear()+1,nextYearGap=!registry.years.includes(nextYear);
 console.log(`Next-year maintenance: ${nextYear}${nextYearGap?' is outside the supported register — add a reviewed year before activation.':' is in scope; verified regional coverage still requires the matrix review above.'}`);
 if(process.argv.includes('--write-tasks')){
+ // Existing records in a region must not hide its still-missing traditions.
+ for(const audit of research.jurisdictionAudits.filter(a=>!a.complete))tasks.push({
+  region:audit.region,status:'inventory-review-required',years:registry.years,
+  candidateIds:research.candidates.filter(c=>c.regions.includes(audit.region)||c.regions.includes('IN')).map(c=>c.id),
+  sourceFollowUp:direct.records.find(r=>r.region===audit.region),
+  required:['Review candidate-specific dates even when a region-year has some verified records','Identify omitted major local festivals; candidate list is not a cap','Resolve unavailable/conflicting sources and tradition scope'],automaticPublication:false
+ });
  await mkdir('work/festival-coverage',{recursive:true});
  await writeFile('work/festival-coverage/review-tasks.json',JSON.stringify({nextYear,nextYearGap,tasks},null,2));
 }

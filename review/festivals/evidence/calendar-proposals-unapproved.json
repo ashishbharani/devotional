@@ -1,0 +1,776 @@
+{
+  "schema": 1,
+  "automaticPublication": false,
+  "records": [
+    {
+      "family": "onam",
+      "year": 2026,
+      "city": "Thiruvananthapuram",
+      "url": "https://www.drikpanchang.com/festivals/onam/onam-calendar.html?year=2026&geoname-id=1254163&lang=en",
+      "retrievedOn": "2026-11-05",
+      "status": "unreviewed-proposal",
+      "approval": false,
+      "requiredReview": [
+        "Actual source facts and regional/tradition scope",
+        "Complete family endpoints, including overnight/Parana where relevant",
+        "Conflicting sources and matching approved art direction"
+      ],
+      "automaticActivation": false,
+      "publicationTitle": "2026 Onam Calendar, Thiruvonam Calendar for Thiruvananthapuram, Kerala, India",
+      "sha256": "77addf8cd6dda0375d64681c9faea3dc4bc68d1efdc19f4775c38626213216d4",
+      "dateClaims": [
+        {
+          "date": "2026-08-16",
+          "label": "Onam Day 1",
+          "publishedDayName": "Atham"
+        },
+        {
+          "date": "2026-08-17",
+          "label": "Onam Day 2",
+          "publishedDayName": "Chithira"
+        },
+        {
+          "date": "2026-08-18",
+          "label": "Onam Day 3",
+          "publishedDayName": "Chothi"
+        },
+        {
+          "date": "2026-08-19",
+          "label": "Onam Day 4",
+          "publishedDayName": "Vishakham"
+        },
+        {
+          "date": "2026-08-20",
+          "label": "Onam Day 5",
+          "publishedDayName": "Vishakham"
+        },
+        {
+          "date": "2026-08-21",
+          "label": "Onam Day 6",
+          "publishedDayName": "Anizham"
+        },
+        {
+          "date": "2026-08-22",
+          "label": "Onam Day 7",
+          "publishedDayName": "Thrikketta"
+        },
+        {
+          "date": "2026-08-23",
+          "label": "Onam Day 8",
+          "publishedDayName": "Moolam"
+        },
+        {
+          "date": "2026-08-24",
+          "label": "Onam Day 9",
+          "publishedDayName": "Pooradam"
+        },
+        {
+          "date": "2026-08-25",
+          "label": "Onam Day 10",
+          "publishedDayName": "Uthradam"
+        },
+        {
+          "date": "2026-08-26",
+          "label": "Onam Day 11",
+          "publishedDayName": "Thiruvonam"
+        },
+        {
+          "date": "2026-08-27",
+          "label": "Onam Day 12",
+          "publishedDayName": "Avittam"
+        },
+        {
+          "date": "2026-08-28",
+          "label": "Onam Day 13",
+          "publishedDayName": "Chathayam"
+        }
+      ]
+    },
+    {
+      "family": "onam",
+      "year": 2027,
+      "city": "Thiruvananthapuram",
+      "url": "https://www.drikpanchang.com/festivals/onam/onam-calendar.html?year=2027&geoname-id=1254163&lang=en",
+      "retrievedOn": "2026-11-05",
+      "status": "unreviewed-proposal",
+      "approval": false,
+      "requiredReview": [
+        "Actual source facts and regional/tradition scope",
+        "Complete family endpoints, including overnight/Parana where relevant",
+        "Conflicting sources and matching approved art direction"
+      ],
+      "automaticActivation": false,
+      "publicationTitle": "2027 Onam Calendar, Thiruvonam Calendar for Thiruvananthapuram, Kerala, India",
+      "sha256": "3e049cf4f0ee46a8ff6802e0a0bf5c61284fd6042888dd88d304f90b9ad93623",
+      "dateClaims": [
+        {
+          "date": "2027-09-03",
+          "label": "Onam Day 1",
+          "publishedDayName": "Atham"
+        },
+        {
+          "date": "2027-09-04",
+          "label": "Onam Day 2",
+          "publishedDayName": "Chithira"
+        },
+        {
+          "date": "2027-09-05",
+          "label": "Onam Day 3",
+          "publishedDayName": "Chothi"
+        },
+        {
+          "date": "2027-09-06",
+          "label": "Onam Day 4",
+          "publishedDayName": "Vishakham"
+        },
+        {
+          "date": "2027-09-07",
+          "label": "Onam Day 5",
+          "publishedDayName": "Anizham"
+        },
+        {
+          "date": "2027-09-08",
+          "label": "Onam Day 6",
+          "publishedDayName": "Thrikketta"
+        },
+        {
+          "date": "2027-09-09",
+          "label": "Onam Day 7",
+          "publishedDayName": "Moolam"
+        },
+        {
+          "date": "2027-09-10",
+          "label": "Onam Day 8",
+          "publishedDayName": "Pooradam"
+        },
+        {
+          "date": "2027-09-11",
+          "label": "Onam Day 9",
+          "publishedDayName": "Uthradam"
+        },
+        {
+          "date": "2027-09-12",
+          "label": "Onam Day 10",
+          "publishedDayName": "Thiruvonam"
+        },
+        {
+          "date": "2027-09-13",
+          "label": "Onam Day 11",
+          "publishedDayName": "Avittam"
+        },
+        {
+          "date": "2027-09-14",
+          "label": "Onam Day 12",
+          "publishedDayName": "Avittam"
+        },
+        {
+          "date": "2027-09-15",
+          "label": "Onam Day 13",
+          "publishedDayName": "Chathayam"
+        }
+      ]
+    },
+    {
+      "family": "onam",
+      "year": 2028,
+      "city": "Thiruvananthapuram",
+      "url": "https://www.drikpanchang.com/festivals/onam/onam-calendar.html?year=2028&geoname-id=1254163&lang=en",
+      "retrievedOn": "2026-11-05",
+      "status": "unreviewed-proposal",
+      "approval": false,
+      "requiredReview": [
+        "Actual source facts and regional/tradition scope",
+        "Complete family endpoints, including overnight/Parana where relevant",
+        "Conflicting sources and matching approved art direction"
+      ],
+      "automaticActivation": false,
+      "publicationTitle": "2028 Onam Calendar, Thiruvonam Calendar for Thiruvananthapuram, Kerala, India",
+      "sha256": "d58b973feb23e167e61f5628d3fa2eb76d12b2a271c269b36eb675373e88402a",
+      "dateClaims": [
+        {
+          "date": "2028-08-23",
+          "label": "Onam Day 1",
+          "publishedDayName": "Atham"
+        },
+        {
+          "date": "2028-08-24",
+          "label": "Onam Day 2",
+          "publishedDayName": "Chithira"
+        },
+        {
+          "date": "2028-08-25",
+          "label": "Onam Day 3",
+          "publishedDayName": "Chothi"
+        },
+        {
+          "date": "2028-08-26",
+          "label": "Onam Day 4",
+          "publishedDayName": "Vishakham"
+        },
+        {
+          "date": "2028-08-27",
+          "label": "Onam Day 5",
+          "publishedDayName": "Anizham"
+        },
+        {
+          "date": "2028-08-28",
+          "label": "Onam Day 6",
+          "publishedDayName": "Thrikketta"
+        },
+        {
+          "date": "2028-08-29",
+          "label": "Onam Day 7",
+          "publishedDayName": "Moolam"
+        },
+        {
+          "date": "2028-08-30",
+          "label": "Onam Day 8",
+          "publishedDayName": "Pooradam"
+        },
+        {
+          "date": "2028-08-31",
+          "label": "Onam Day 9",
+          "publishedDayName": "Uthradam"
+        },
+        {
+          "date": "2028-09-01",
+          "label": "Onam Day 10",
+          "publishedDayName": "Thiruvonam"
+        },
+        {
+          "date": "2028-09-02",
+          "label": "Onam Day 11",
+          "publishedDayName": "Avittam"
+        },
+        {
+          "date": "2028-09-03",
+          "label": "Onam Day 12",
+          "publishedDayName": "Chathayam"
+        }
+      ]
+    },
+    {
+      "family": "onam",
+      "year": 2029,
+      "city": "Thiruvananthapuram",
+      "url": "https://www.drikpanchang.com/festivals/onam/onam-calendar.html?year=2029&geoname-id=1254163&lang=en",
+      "retrievedOn": "2026-11-05",
+      "status": "unreviewed-proposal",
+      "approval": false,
+      "requiredReview": [
+        "Actual source facts and regional/tradition scope",
+        "Complete family endpoints, including overnight/Parana where relevant",
+        "Conflicting sources and matching approved art direction"
+      ],
+      "automaticActivation": false,
+      "publicationTitle": "2029 Onam Calendar, Thiruvonam Calendar for Thiruvananthapuram, Kerala, India",
+      "sha256": "8739567a9f7ed17c7300f4c9f51470bcc3a5bdfe79a5bb62cee0002b644fe942",
+      "dateClaims": [
+        {
+          "date": "2029-08-13",
+          "label": "Onam Day 1",
+          "publishedDayName": "Atham"
+        },
+        {
+          "date": "2029-08-14",
+          "label": "Onam Day 2",
+          "publishedDayName": "Chithira"
+        },
+        {
+          "date": "2029-08-15",
+          "label": "Onam Day 3",
+          "publishedDayName": "Chothi"
+        },
+        {
+          "date": "2029-08-16",
+          "label": "Onam Day 4",
+          "publishedDayName": "Vishakham"
+        },
+        {
+          "date": "2029-08-17",
+          "label": "Onam Day 5",
+          "publishedDayName": "Anizham"
+        },
+        {
+          "date": "2029-08-18",
+          "label": "Onam Day 6",
+          "publishedDayName": "Thrikketta"
+        },
+        {
+          "date": "2029-08-19",
+          "label": "Onam Day 7",
+          "publishedDayName": "Moolam"
+        },
+        {
+          "date": "2029-08-20",
+          "label": "Onam Day 8",
+          "publishedDayName": "Pooradam"
+        },
+        {
+          "date": "2029-08-21",
+          "label": "Onam Day 9",
+          "publishedDayName": "Uthradam"
+        },
+        {
+          "date": "2029-08-22",
+          "label": "Onam Day 10",
+          "publishedDayName": "Thiruvonam"
+        },
+        {
+          "date": "2029-08-23",
+          "label": "Onam Day 11",
+          "publishedDayName": "Avittam"
+        },
+        {
+          "date": "2029-08-24",
+          "label": "Onam Day 12",
+          "publishedDayName": "Chathayam"
+        }
+      ]
+    },
+    {
+      "family": "onam",
+      "year": 2030,
+      "city": "Thiruvananthapuram",
+      "url": "https://www.drikpanchang.com/festivals/onam/onam-calendar.html?year=2030&geoname-id=1254163&lang=en",
+      "retrievedOn": "2026-11-05",
+      "status": "unreviewed-proposal",
+      "approval": false,
+      "requiredReview": [
+        "Actual source facts and regional/tradition scope",
+        "Complete family endpoints, including overnight/Parana where relevant",
+        "Conflicting sources and matching approved art direction"
+      ],
+      "automaticActivation": false,
+      "publicationTitle": "2030 Onam Calendar, Thiruvonam Calendar for Thiruvananthapuram, Kerala, India",
+      "sha256": "be7dbf0959906caf383599a3ed48f00213317201444eb37fda8dd57639f3d7e2",
+      "dateClaims": [
+        {
+          "date": "2030-08-31",
+          "label": "Onam Day 1",
+          "publishedDayName": "Atham"
+        },
+        {
+          "date": "2030-09-01",
+          "label": "Onam Day 2",
+          "publishedDayName": "Chithira"
+        },
+        {
+          "date": "2030-09-02",
+          "label": "Onam Day 3",
+          "publishedDayName": "Chothi"
+        },
+        {
+          "date": "2030-09-03",
+          "label": "Onam Day 4",
+          "publishedDayName": "Vishakham"
+        },
+        {
+          "date": "2030-09-04",
+          "label": "Onam Day 5",
+          "publishedDayName": "Anizham"
+        },
+        {
+          "date": "2030-09-05",
+          "label": "Onam Day 6",
+          "publishedDayName": "Thrikketta"
+        },
+        {
+          "date": "2030-09-06",
+          "label": "Onam Day 7",
+          "publishedDayName": "Moolam"
+        },
+        {
+          "date": "2030-09-07",
+          "label": "Onam Day 8",
+          "publishedDayName": "Pooradam"
+        },
+        {
+          "date": "2030-09-08",
+          "label": "Onam Day 9",
+          "publishedDayName": "Uthradam"
+        },
+        {
+          "date": "2030-09-09",
+          "label": "Onam Day 10",
+          "publishedDayName": "Thiruvonam"
+        },
+        {
+          "date": "2030-09-10",
+          "label": "Onam Day 11",
+          "publishedDayName": "Avittam"
+        },
+        {
+          "date": "2030-09-11",
+          "label": "Onam Day 12",
+          "publishedDayName": "Chathayam"
+        }
+      ]
+    },
+    {
+      "family": "holi",
+      "year": 2026,
+      "city": "New Delhi",
+      "url": "https://www.drikpanchang.com/calendars/hindu/hinducalendar.html?year=2026&geoname-id=1261481&lang=en",
+      "retrievedOn": "2026-11-05",
+      "status": "unreviewed-proposal",
+      "approval": false,
+      "requiredReview": [
+        "Actual source facts and regional/tradition scope",
+        "Complete family endpoints, including overnight/Parana where relevant",
+        "Conflicting sources and matching approved art direction"
+      ],
+      "automaticActivation": false,
+      "publicationTitle": "2026 Hindu Festivals Calendar, Hindu Tyohar Calendar for New Delhi, NCT, India",
+      "sha256": "780c0375941dc0a41e606f511f87b940f91c0fe41e910427f4cdc5eb58c09bf5",
+      "dateClaims": [
+        {
+          "date": "2026-03-03",
+          "label": "Holika Dahan"
+        },
+        {
+          "date": "2026-03-04",
+          "label": "Holi"
+        }
+      ]
+    },
+    {
+      "family": "holi",
+      "year": 2027,
+      "city": "New Delhi",
+      "url": "https://www.drikpanchang.com/calendars/hindu/hinducalendar.html?year=2027&geoname-id=1261481&lang=en",
+      "retrievedOn": "2026-11-05",
+      "status": "unreviewed-proposal",
+      "approval": false,
+      "requiredReview": [
+        "Actual source facts and regional/tradition scope",
+        "Complete family endpoints, including overnight/Parana where relevant",
+        "Conflicting sources and matching approved art direction"
+      ],
+      "automaticActivation": false,
+      "publicationTitle": "2027 Hindu Festivals Calendar, Hindu Tyohar Calendar for New Delhi, NCT, India",
+      "sha256": "e331cf7229dbafbd451727654aa65d23342fe391dfec48d9306b0d735637a8e5",
+      "dateClaims": [
+        {
+          "date": "2027-03-21",
+          "label": "Holika Dahan"
+        },
+        {
+          "date": "2027-03-22",
+          "label": "Holi"
+        }
+      ]
+    },
+    {
+      "family": "holi",
+      "year": 2028,
+      "city": "New Delhi",
+      "url": "https://www.drikpanchang.com/calendars/hindu/hinducalendar.html?year=2028&geoname-id=1261481&lang=en",
+      "retrievedOn": "2026-11-05",
+      "status": "unreviewed-proposal",
+      "approval": false,
+      "requiredReview": [
+        "Actual source facts and regional/tradition scope",
+        "Complete family endpoints, including overnight/Parana where relevant",
+        "Conflicting sources and matching approved art direction"
+      ],
+      "automaticActivation": false,
+      "publicationTitle": "2028 Hindu Festivals Calendar, Hindu Tyohar Calendar for New Delhi, NCT, India",
+      "sha256": "d3e80b14af3d188fb40c830ebf6a35ff2d2e59b4acde1bac2b0b369227922159",
+      "dateClaims": [
+        {
+          "date": "2028-03-10",
+          "label": "Holika Dahan"
+        },
+        {
+          "date": "2028-03-11",
+          "label": "Holi"
+        }
+      ]
+    },
+    {
+      "family": "holi",
+      "year": 2029,
+      "city": "New Delhi",
+      "url": "https://www.drikpanchang.com/calendars/hindu/hinducalendar.html?year=2029&geoname-id=1261481&lang=en",
+      "retrievedOn": "2026-11-05",
+      "status": "unreviewed-proposal",
+      "approval": false,
+      "requiredReview": [
+        "Actual source facts and regional/tradition scope",
+        "Complete family endpoints, including overnight/Parana where relevant",
+        "Conflicting sources and matching approved art direction"
+      ],
+      "automaticActivation": false,
+      "publicationTitle": "2029 Hindu Festivals Calendar, Hindu Tyohar Calendar for New Delhi, NCT, India",
+      "sha256": "a51142da3c6a89a4b505509237a5db755ebc92ac39865ed6a5d07a085fecee74",
+      "dateClaims": [
+        {
+          "date": "2029-02-28",
+          "label": "Holika Dahan"
+        },
+        {
+          "date": "2029-03-01",
+          "label": "Holi"
+        }
+      ]
+    },
+    {
+      "family": "holi",
+      "year": 2030,
+      "city": "New Delhi",
+      "url": "https://www.drikpanchang.com/calendars/hindu/hinducalendar.html?year=2030&geoname-id=1261481&lang=en",
+      "retrievedOn": "2026-11-05",
+      "status": "unreviewed-proposal",
+      "approval": false,
+      "requiredReview": [
+        "Actual source facts and regional/tradition scope",
+        "Complete family endpoints, including overnight/Parana where relevant",
+        "Conflicting sources and matching approved art direction"
+      ],
+      "automaticActivation": false,
+      "publicationTitle": "2030 Hindu Festivals Calendar, Hindu Tyohar Calendar for New Delhi, NCT, India",
+      "sha256": "461c5c7ff48d22d5c75d85997eb72067b255dde3ff250a593146f5dfc4727a8e",
+      "dateClaims": [
+        {
+          "date": "2030-03-19",
+          "label": "Holika Dahan"
+        },
+        {
+          "date": "2030-03-20",
+          "label": "Holi"
+        }
+      ]
+    },
+    {
+      "family": "shivaratri",
+      "year": 2026,
+      "city": "New Delhi",
+      "url": "https://www.drikpanchang.com/festivals/maha-shivaratri/maha-shivaratri-date-time.html?year=2026&geoname-id=1261481&lang=en",
+      "retrievedOn": "2026-11-05",
+      "status": "unreviewed-proposal",
+      "approval": false,
+      "requiredReview": [
+        "Actual source facts and regional/tradition scope",
+        "Complete family endpoints, including overnight/Parana where relevant",
+        "Conflicting sources and matching approved art direction"
+      ],
+      "automaticActivation": false,
+      "publicationTitle": "2026 Maha Shivaratri | Shivratri Date and Time for New Delhi, NCT, India",
+      "sha256": "9c1eb723be8f5dce0e961888bede2af4b6b60546508a4e86c67e9ae7ad8e632e",
+      "dateClaims": [
+        {
+          "date": "2026-02-15",
+          "label": "Maha Shivaratri"
+        }
+      ]
+    },
+    {
+      "family": "shivaratri",
+      "year": 2027,
+      "city": "New Delhi",
+      "url": "https://www.drikpanchang.com/festivals/maha-shivaratri/maha-shivaratri-date-time.html?year=2027&geoname-id=1261481&lang=en",
+      "retrievedOn": "2026-11-05",
+      "status": "unreviewed-proposal",
+      "approval": false,
+      "requiredReview": [
+        "Actual source facts and regional/tradition scope",
+        "Complete family endpoints, including overnight/Parana where relevant",
+        "Conflicting sources and matching approved art direction"
+      ],
+      "automaticActivation": false,
+      "publicationTitle": "2027 Maha Shivaratri | Shivratri Date and Time for New Delhi, NCT, India",
+      "sha256": "6a4e3bb6a4e9d37049b3b9191a2de0ff65c06be913800bd4d1e410ae58318a34",
+      "dateClaims": [
+        {
+          "date": "2027-03-06",
+          "label": "Maha Shivaratri"
+        }
+      ]
+    },
+    {
+      "family": "shivaratri",
+      "year": 2028,
+      "city": "New Delhi",
+      "url": "https://www.drikpanchang.com/festivals/maha-shivaratri/maha-shivaratri-date-time.html?year=2028&geoname-id=1261481&lang=en",
+      "retrievedOn": "2026-11-05",
+      "status": "unreviewed-proposal",
+      "approval": false,
+      "requiredReview": [
+        "Actual source facts and regional/tradition scope",
+        "Complete family endpoints, including overnight/Parana where relevant",
+        "Conflicting sources and matching approved art direction"
+      ],
+      "automaticActivation": false,
+      "publicationTitle": "2028 Maha Shivaratri | Shivratri Date and Time for New Delhi, NCT, India",
+      "sha256": "781333f850584550634226ce451742d816b7d9d38b48ba62ed2e2bf1834472ad",
+      "dateClaims": [
+        {
+          "date": "2028-02-23",
+          "label": "Maha Shivaratri"
+        }
+      ]
+    },
+    {
+      "family": "shivaratri",
+      "year": 2029,
+      "city": "New Delhi",
+      "url": "https://www.drikpanchang.com/festivals/maha-shivaratri/maha-shivaratri-date-time.html?year=2029&geoname-id=1261481&lang=en",
+      "retrievedOn": "2026-11-05",
+      "status": "unreviewed-proposal",
+      "approval": false,
+      "requiredReview": [
+        "Actual source facts and regional/tradition scope",
+        "Complete family endpoints, including overnight/Parana where relevant",
+        "Conflicting sources and matching approved art direction"
+      ],
+      "automaticActivation": false,
+      "publicationTitle": "2029 Maha Shivaratri | Shivratri Date and Time for New Delhi, NCT, India",
+      "sha256": "1bfa945040ac1971bc76b4a339f81114594db3c20200414529e7055168441b66",
+      "dateClaims": [
+        {
+          "date": "2029-02-11",
+          "label": "Maha Shivaratri"
+        }
+      ]
+    },
+    {
+      "family": "shivaratri",
+      "year": 2030,
+      "city": "New Delhi",
+      "url": "https://www.drikpanchang.com/festivals/maha-shivaratri/maha-shivaratri-date-time.html?year=2030&geoname-id=1261481&lang=en",
+      "retrievedOn": "2026-11-05",
+      "status": "unreviewed-proposal",
+      "approval": false,
+      "requiredReview": [
+        "Actual source facts and regional/tradition scope",
+        "Complete family endpoints, including overnight/Parana where relevant",
+        "Conflicting sources and matching approved art direction"
+      ],
+      "automaticActivation": false,
+      "publicationTitle": "2030 Maha Shivaratri | Shivratri Date and Time for New Delhi, NCT, India",
+      "sha256": "daac478795e382feede1d4c8f1a400130358a8733a8dfdf6d86819cbbda073dc",
+      "dateClaims": [
+        {
+          "date": "2030-03-02",
+          "label": "Maha Shivaratri"
+        }
+      ]
+    },
+    {
+      "family": "janmashtami",
+      "year": 2026,
+      "city": "New Delhi",
+      "url": "https://www.drikpanchang.com/dashavatara/lord-krishna/krishna-janmashtami-date-time.html?year=2026&geoname-id=1261481&lang=en",
+      "retrievedOn": "2026-11-05",
+      "status": "unreviewed-proposal",
+      "approval": false,
+      "requiredReview": [
+        "Actual source facts and regional/tradition scope",
+        "Complete family endpoints, including overnight/Parana where relevant",
+        "Conflicting sources and matching approved art direction"
+      ],
+      "automaticActivation": false,
+      "publicationTitle": "2026 Krishna Janmashtami, Gokulashtami Puja Date and Fasting Time for New Delhi, NCT, India",
+      "sha256": "b8c9b8749e8f660dda9db99351a50eefd03b320fbcf85ce910e184584dc4e3ab",
+      "dateClaims": [
+        {
+          "date": "2026-09-04",
+          "label": "Krishna Janmashtami"
+        }
+      ]
+    },
+    {
+      "family": "janmashtami",
+      "year": 2027,
+      "city": "New Delhi",
+      "url": "https://www.drikpanchang.com/dashavatara/lord-krishna/krishna-janmashtami-date-time.html?year=2027&geoname-id=1261481&lang=en",
+      "retrievedOn": "2026-11-05",
+      "status": "unreviewed-proposal",
+      "approval": false,
+      "requiredReview": [
+        "Actual source facts and regional/tradition scope",
+        "Complete family endpoints, including overnight/Parana where relevant",
+        "Conflicting sources and matching approved art direction"
+      ],
+      "automaticActivation": false,
+      "publicationTitle": "2027 Krishna Janmashtami, Gokulashtami Puja Date and Fasting Time for New Delhi, NCT, India",
+      "sha256": "a7fc5df9f3a12965604464e7223337b9ee4b5d51bf48a5346601336a014a6e8e",
+      "dateClaims": [
+        {
+          "date": "2027-08-25",
+          "label": "Krishna Janmashtami"
+        }
+      ]
+    },
+    {
+      "family": "janmashtami",
+      "year": 2028,
+      "city": "New Delhi",
+      "url": "https://www.drikpanchang.com/dashavatara/lord-krishna/krishna-janmashtami-date-time.html?year=2028&geoname-id=1261481&lang=en",
+      "retrievedOn": "2026-11-05",
+      "status": "unreviewed-proposal",
+      "approval": false,
+      "requiredReview": [
+        "Actual source facts and regional/tradition scope",
+        "Complete family endpoints, including overnight/Parana where relevant",
+        "Conflicting sources and matching approved art direction"
+      ],
+      "automaticActivation": false,
+      "publicationTitle": "2028 Krishna Janmashtami, Gokulashtami Puja Date and Fasting Time for New Delhi, NCT, India",
+      "sha256": "e842393c8c2b6a89c07afe998aae1fc5df59b8c22f35522e5ce9f4c6965165fb",
+      "dateClaims": [
+        {
+          "date": "2028-08-13",
+          "label": "Krishna Janmashtami"
+        }
+      ]
+    },
+    {
+      "family": "janmashtami",
+      "year": 2029,
+      "city": "New Delhi",
+      "url": "https://www.drikpanchang.com/dashavatara/lord-krishna/krishna-janmashtami-date-time.html?year=2029&geoname-id=1261481&lang=en",
+      "retrievedOn": "2026-11-05",
+      "status": "unreviewed-proposal",
+      "approval": false,
+      "requiredReview": [
+        "Actual source facts and regional/tradition scope",
+        "Complete family endpoints, including overnight/Parana where relevant",
+        "Conflicting sources and matching approved art direction"
+      ],
+      "automaticActivation": false,
+      "publicationTitle": "2029 Krishna Janmashtami, Gokulashtami Puja Date and Fasting Time for New Delhi, NCT, India",
+      "sha256": "3a0afc15052d770e1497e0825173f26bf10b1c4a96905bbe0f4e766c8dc028e8",
+      "dateClaims": [
+        {
+          "date": "2029-09-01",
+          "label": "Krishna Janmashtami"
+        }
+      ]
+    },
+    {
+      "family": "janmashtami",
+      "year": 2030,
+      "city": "New Delhi",
+      "url": "https://www.drikpanchang.com/dashavatara/lord-krishna/krishna-janmashtami-date-time.html?year=2030&geoname-id=1261481&lang=en",
+      "retrievedOn": "2026-11-05",
+      "status": "unreviewed-proposal",
+      "approval": false,
+      "requiredReview": [
+        "Actual source facts and regional/tradition scope",
+        "Complete family endpoints, including overnight/Parana where relevant",
+        "Conflicting sources and matching approved art direction"
+      ],
+      "automaticActivation": false,
+      "publicationTitle": "2030 Krishna Janmashtami, Gokulashtami Puja Date and Fasting Time for New Delhi, NCT, India",
+      "sha256": "a6fda477b4ab63f5c50d918d7c0ba0221c931ce8cd339d14a767831fb626dbcd",
+      "dateClaims": [
+        {
+          "date": "2030-08-21",
+          "label": "Krishna Janmashtami"
+        }
+      ]
+    }
+  ]
+}

@@ -6,7 +6,7 @@ const approval={approved:true,reviewer:'Test fixture only',reviewedOn:'2026-01-0
 const window=(id,start,end,extra={})=>({id,name:id,family:'test-family',theme:'test-theme',start,end,priority:10,status:'verified',regions:['IN'],tradition:'Synthetic',approval,sources:[source],...extra});
 const registry={schema:2,regions:['IN','IN-MH'],themes:['test-theme'],families:[{id:'test-family',theme:'test-theme'}],windows:[window('test-window','2026-11-08','2026-11-10')],members:[]};
 const at=(date,extra={},r=registry)=>selectExperience(r,{clock:()=>date,policy:{enabled:true},...extra});
-for(const [date,stage] of [['2026-10-31',null],['2026-11-01','anticipation'],['2026-11-04','anticipation'],['2026-11-05','approach'],['2026-11-07','approach'],['2026-11-08','celebration'],['2026-11-10','celebration'],['2026-11-11',null]])assert.equal(stageFor('2026-11-08','2026-11-10',date),stage);
+for(const [date,stage] of [['2026-10-31',null],['2026-11-01','anticipation'],['2026-11-02','anticipation'],['2026-11-03','anticipation'],['2026-11-04','anticipation'],['2026-11-05','approach'],['2026-11-06','approach'],['2026-11-07','approach'],['2026-11-08','celebration'],['2026-11-09','celebration'],['2026-11-10','celebration'],['2026-11-11',null]])assert.equal(stageFor('2026-11-08','2026-11-10',date),stage,date);
 assert.equal(at('2026-10-31T18:29:59Z').kind,'original');
 assert.equal(at('2026-10-31T18:30:00Z').stage,'anticipation');
 assert.equal(indiaDate('2026-11-01T00:00:00+05:30'),'2026-11-01');
@@ -31,6 +31,8 @@ assert.equal(at('2026-11-08',{},family).family,at('2026-11-09',{},family).family
 const policy={enabled:true,overrides:[{windowId:'test-window',startsAt:'2026-10-01T00:00:00+05:30',expiresAt:'2026-10-02T00:00:00+05:30',stage:'approach',approved:true,reviewer:'Synthetic admin'}]};
 assert.equal(at('2026-10-01',{policy}).reason,'approved-administrator-override');
 assert.equal(at('2026-10-02',{policy}).kind,'original');
+assert.equal(at('2026-10-01T18:29:59Z',{policy}).reason,'approved-administrator-override');
+assert.equal(at('2026-10-01T18:30:00Z',{policy}).kind,'original','override expires at its exact reviewed instant, independently of browser timezone');
 assert.equal(selectExperience(registry,{clock:()=>new Date('invalid'),policy:{enabled:true}}).reason,'invalid-clock');
 assert.equal(at('2026-11-01',{},null).reason,'invalid-registry');
 for(const policy of [null,{},[],{enabled:true,disabledIds:3},{enabled:true,overrides:{}},{enabled:true,priorities:{active:101}}])assert.equal(at('2026-11-01',{policy}).kind,'original','malformed policy fails closed');

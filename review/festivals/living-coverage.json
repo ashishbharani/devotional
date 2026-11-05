@@ -317,13 +317,14 @@
   "activationRegistry": "docs/assets/festivals/living-registry.json",
   "candidateRegister": "review/festivals/research-register.json",
   "gaps": [
-    "170/180 region-year cells have no source-checked V2 period. All 36 completeness audits remain open, including regions with some published calendar references.",
+    "159/180 region-year cells have no source-checked V2 period. All 36 completeness audits remain open, including regions with some published calendar references.",
     "Family names are requirements supplied by the owner, not approvals of dates, pan-India uniformity or religious equivalence.",
     "Major festivals beyond these family examples require systematic discovery; this list is not a coverage cap.",
-    "151 initial candidates are recorded across 36 jurisdiction worklists. Fifteen source-checked city/tradition reference periods are in the canonical activation registry, not a completed pan-India audit.",
+    "164 source-led discovery candidates across 36 jurisdiction worklists. All 36 initial source leads have direct follow-up outcomes recorded, including retrieval failures; this does not certify completeness. Thirty-one scoped periods / 158 member days are in the canonical activation registry.",
     "Future-year official tables were found but are not sufficient for verification: Gujarat marks dates tentative; Rajasthan contains impossible dates including 28-30 February 2029 and apparent stale Holi rows. Do not extrapolate Gregorian dates.",
     "The old 2027 Shiva reference civil-day approval is retained in its original file; it is not approval of a full overnight family window.",
     "Official IMD page opened 2026-11-04 lists Rathayatra as 26 Jun 2026 (Thu), while official holiday listings surface 16 July 2026. Needs source-level reconciliation, not automatic promotion.",
     "Know India states/UT page returned 502; Chhath detail page timed out on direct open. Search snippets are discovery evidence only."
-  ]
+  ],
+  "directSourceAudit": "review/festivals/direct-source-audit.json"
 }

@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import {spawn} from 'node:child_process';
 import {writeFile} from 'node:fs/promises';
 import {chromium} from 'playwright';
+import {THEMES} from '../docs/assets/festivals/living-presentation.mjs';
 const server=spawn(process.execPath,['scripts/serve_header_preview.mjs'],{env:{...process.env,HDC_PREVIEW_PORT:'4382'},stdio:['ignore','pipe','inherit']});
 await new Promise((resolve,reject)=>{server.stdout.once('data',resolve);server.once('error',reject);});
 const browser=await chromium.launch(),base='http://127.0.0.1:4382/devotional/',report={scope:'Targeted lab: control names, keyboard restore, measured solid-surface text contrast, touch sizes and containment. Not complete WCAG 2.2 AA/physical AT certification.',samples:[]};
@@ -19,7 +20,7 @@ try{
    assert.equal(await control.evaluate(e=>e.labels.length),1,'one native label association');
   }
   await page.locator('[data-living-previews] > summary').click();
-  for(const name of ['Diwali','Holi','Maha Shivaratri','Chhath','Pongal']){
+  for(const name of Object.values(THEMES).map(theme=>theme.name)){
    await page.getByRole('button',{name,exact:true}).click();
    const readings=await page.locator('.hdc-living').evaluate(root=>{
     const rgb=value=>{const m=value.match(/^rgba?\(([^)]+)\)$/);if(!m)throw Error('Unsupported measured colour '+value);return m[1].split(',').map(Number);};

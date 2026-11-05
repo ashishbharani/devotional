@@ -1,7 +1,7 @@
 {
   "schema": 1,
-  "scope": "Non-exhaustive initial candidate discovery. Not a verified activation registry.",
-  "reviewedOn": "2026-11-04",
+  "scope": "Non-exhaustive source-led candidate discovery, expanded after direct jurisdiction follow-up; not the activation registry.",
+  "reviewedOn": "2026-11-05",
   "years": [
     2026,
     2027,
@@ -22,7 +22,13 @@
         }
       ],
       "note": "Temple source; visible year label is older; annual dates require current temple notice.",
-      "complete": false
+      "complete": false,
+      "directReview": {
+        "register": "review/festivals/direct-source-audit.json",
+        "region": "IN-AP",
+        "reviewedOn": "2026-11-05",
+        "accessStatus": "body-reviewed"
+      }
     },
     {
       "region": "IN-AR",
@@ -35,7 +41,13 @@
         }
       ],
       "note": "Do not classify unrelated indigenous or Buddhist festivals as Hindu.",
-      "complete": false
+      "complete": false,
+      "directReview": {
+        "register": "review/festivals/direct-source-audit.json",
+        "region": "IN-AR",
+        "reviewedOn": "2026-11-05",
+        "accessStatus": "body-reviewed"
+      }
     },
     {
       "region": "IN-AS",
@@ -48,7 +60,13 @@
         }
       ],
       "note": "Bihu is regional seasonal heritage; community-specific classifications need review.",
-      "complete": false
+      "complete": false,
+      "directReview": {
+        "register": "review/festivals/direct-source-audit.json",
+        "region": "IN-AS",
+        "reviewedOn": "2026-11-05",
+        "accessStatus": "404"
+      }
     },
     {
       "region": "IN-BR",
@@ -61,7 +79,13 @@
         }
       ],
       "note": "Cultural discovery, not annual date evidence.",
-      "complete": false
+      "complete": false,
+      "directReview": {
+        "register": "review/festivals/direct-source-audit.json",
+        "region": "IN-BR",
+        "reviewedOn": "2026-11-05",
+        "accessStatus": "body-too-large"
+      }
     },
     {
       "region": "IN-CT",
@@ -74,7 +98,13 @@
         }
       ],
       "note": "Bastar Dussehra has its own extended tradition; do not equate it with a one-day Ramayana observance.",
-      "complete": false
+      "complete": false,
+      "directReview": {
+        "register": "review/festivals/direct-source-audit.json",
+        "region": "IN-CT",
+        "reviewedOn": "2026-11-05",
+        "accessStatus": "body-reviewed"
+      }
     },
     {
       "region": "IN-GA",
@@ -87,7 +117,13 @@
         }
       ],
       "note": "Village and parade dates require regional verification.",
-      "complete": false
+      "complete": false,
+      "directReview": {
+        "register": "review/festivals/direct-source-audit.json",
+        "region": "IN-GA",
+        "reviewedOn": "2026-11-05",
+        "accessStatus": "timeout"
+      }
     },
     {
       "region": "IN-GJ",
@@ -100,7 +136,13 @@
         }
       ],
       "note": "Multi-year poster labels dates tentative.",
-      "complete": false
+      "complete": false,
+      "directReview": {
+        "register": "review/festivals/direct-source-audit.json",
+        "region": "IN-GJ",
+        "reviewedOn": "2026-11-05",
+        "accessStatus": "pdf-reviewed"
+      }
     },
     {
       "region": "IN-HR",
@@ -113,7 +155,13 @@
         }
       ],
       "note": "Tourism event window is distinct from the devotional civil day.",
-      "complete": false
+      "complete": false,
+      "directReview": {
+        "register": "review/festivals/direct-source-audit.json",
+        "region": "IN-HR",
+        "reviewedOn": "2026-11-05",
+        "accessStatus": "503"
+      }
     },
     {
       "region": "IN-HP",
@@ -126,7 +174,13 @@
         }
       ],
       "note": "Use separate reviewed family windows for each temple tradition.",
-      "complete": false
+      "complete": false,
+      "directReview": {
+        "register": "review/festivals/direct-source-audit.json",
+        "region": "IN-HP",
+        "reviewedOn": "2026-11-05",
+        "accessStatus": "timeout"
+      }
     },
     {
       "region": "IN-JH",
@@ -139,7 +193,13 @@
         }
       ],
       "note": "Tender publication/closing dates are NOT festival dates.",
-      "complete": false
+      "complete": false,
+      "directReview": {
+        "register": "review/festivals/direct-source-audit.json",
+        "region": "IN-JH",
+        "reviewedOn": "2026-11-05",
+        "accessStatus": "body-reviewed"
+      }
     },
     {
       "region": "IN-KA",
@@ -152,7 +212,13 @@
         }
       ],
       "note": "Additional temple festival inventory remains open.",
-      "complete": false
+      "complete": false,
+      "directReview": {
+        "register": "review/festivals/direct-source-audit.json",
+        "region": "IN-KA",
+        "reviewedOn": "2026-11-05",
+        "accessStatus": "body-reviewed"
+      }
     },
     {
       "region": "IN-KL",
@@ -165,7 +231,13 @@
         }
       ],
       "note": "Directory is mixed-faith; local authorities must confirm approximate dates.",
-      "complete": false
+      "complete": false,
+      "directReview": {
+        "register": "review/festivals/direct-source-audit.json",
+        "region": "IN-KL",
+        "reviewedOn": "2026-11-05",
+        "accessStatus": "body-reviewed"
+      }
     },
     {
       "region": "IN-MP",
@@ -178,7 +250,13 @@
         }
       ],
       "note": "Bhagoria cultural/community association requires review; do not automatically label all tribal festivals Hindu.",
-      "complete": false
+      "complete": false,
+      "directReview": {
+        "register": "review/festivals/direct-source-audit.json",
+        "region": "IN-MP",
+        "reviewedOn": "2026-11-05",
+        "accessStatus": "body-too-large"
+      }
     },
     {
       "region": "IN-MH",
@@ -191,7 +269,13 @@
         }
       ],
       "note": "Wari itinerary and Ekadashi date are different scopes.",
-      "complete": false
+      "complete": false,
+      "directReview": {
+        "register": "review/festivals/direct-source-audit.json",
+        "region": "IN-MH",
+        "reviewedOn": "2026-11-05",
+        "accessStatus": "body-reviewed"
+      }
     },
     {
       "region": "IN-MN",
@@ -204,7 +288,13 @@
         }
       ],
       "note": "Meitei, Vaishnava and community traditions must retain their own identity.",
-      "complete": false
+      "complete": false,
+      "directReview": {
+        "register": "review/festivals/direct-source-audit.json",
+        "region": "IN-MN",
+        "reviewedOn": "2026-11-05",
+        "accessStatus": "body-reviewed"
+      }
     },
     {
       "region": "IN-ML",
@@ -217,7 +307,13 @@
         }
       ],
       "note": "Source discovery only; do not relabel Khasi indigenous festivals.",
-      "complete": false
+      "complete": false,
+      "directReview": {
+        "register": "review/festivals/direct-source-audit.json",
+        "region": "IN-ML",
+        "reviewedOn": "2026-11-05",
+        "accessStatus": "403"
+      }
     },
     {
       "region": "IN-MZ",
@@ -230,7 +326,13 @@
         }
       ],
       "note": "Official tourism inventory found, but no verified Hindu-specific annual schedule established. Do not recast Kut or Christmas as Hindu festivals.",
-      "complete": false
+      "complete": false,
+      "directReview": {
+        "register": "review/festivals/direct-source-audit.json",
+        "region": "IN-MZ",
+        "reviewedOn": "2026-11-05",
+        "accessStatus": "403"
+      }
     },
     {
       "region": "IN-NL",
@@ -243,7 +345,13 @@
         }
       ],
       "note": "Secondary local report identifying organiser; organiser date notice still needed. Do not recast Naga festivals as Hindu.",
-      "complete": false
+      "complete": false,
+      "directReview": {
+        "register": "review/festivals/direct-source-audit.json",
+        "region": "IN-NL",
+        "reviewedOn": "2026-11-05",
+        "accessStatus": "secondary-body-reviewed"
+      }
     },
     {
       "region": "IN-OD",
@@ -256,7 +364,13 @@
         }
       ],
       "note": "Festival-family boundaries and local temple rulings need explicit review.",
-      "complete": false
+      "complete": false,
+      "directReview": {
+        "register": "review/festivals/direct-source-audit.json",
+        "region": "IN-OD",
+        "reviewedOn": "2026-11-05",
+        "accessStatus": "body-reviewed"
+      }
     },
     {
       "region": "IN-PB",
@@ -269,7 +383,13 @@
         }
       ],
       "note": "Keep Hindu, Sikh and shared seasonal observances distinct.",
-      "complete": false
+      "complete": false,
+      "directReview": {
+        "register": "review/festivals/direct-source-audit.json",
+        "region": "IN-PB",
+        "reviewedOn": "2026-11-05",
+        "accessStatus": "body-reviewed"
+      }
     },
     {
       "region": "IN-RJ",
@@ -282,7 +402,13 @@
         }
       ],
       "note": "Future PDF has invalid civil dates and apparent stale rows; not authoritative enough for automatic activation.",
-      "complete": false
+      "complete": false,
+      "directReview": {
+        "register": "review/festivals/direct-source-audit.json",
+        "region": "IN-RJ",
+        "reviewedOn": "2026-11-05",
+        "accessStatus": "pdf-reviewed"
+      }
     },
     {
       "region": "IN-SK",
@@ -295,7 +421,13 @@
         }
       ],
       "note": "Search index lists traditions; current page is dynamically loaded. Buddhist observances not relabelled Hindu.",
-      "complete": false
+      "complete": false,
+      "directReview": {
+        "register": "review/festivals/direct-source-audit.json",
+        "region": "IN-SK",
+        "reviewedOn": "2026-11-05",
+        "accessStatus": "body-reviewed"
+      }
     },
     {
       "region": "IN-TN",
@@ -308,7 +440,13 @@
         }
       ],
       "note": "Temple-specific dates and full four-day Pongal family require corroboration.",
-      "complete": false
+      "complete": false,
+      "directReview": {
+        "register": "review/festivals/direct-source-audit.json",
+        "region": "IN-TN",
+        "reviewedOn": "2026-11-05",
+        "accessStatus": "body-reviewed"
+      }
     },
     {
       "region": "IN-TG",
@@ -321,7 +459,13 @@
         }
       ],
       "note": "Bonalu varies by temple/locality; never infer a single statewide period.",
-      "complete": false
+      "complete": false,
+      "directReview": {
+        "register": "review/festivals/direct-source-audit.json",
+        "region": "IN-TG",
+        "reviewedOn": "2026-11-05",
+        "accessStatus": "502"
+      }
     },
     {
       "region": "IN-TR",
@@ -334,7 +478,13 @@
         }
       ],
       "note": "Preserve indigenous/community traditions and require local review.",
-      "complete": false
+      "complete": false,
+      "directReview": {
+        "register": "review/festivals/direct-source-audit.json",
+        "region": "IN-TR",
+        "reviewedOn": "2026-11-05",
+        "accessStatus": "body-reviewed"
+      }
     },
     {
       "region": "IN-UP",
@@ -347,7 +497,13 @@
         }
       ],
       "note": "Multi-week local celebrations require year-specific starts and ends.",
-      "complete": false
+      "complete": false,
+      "directReview": {
+        "register": "review/festivals/direct-source-audit.json",
+        "region": "IN-UP",
+        "reviewedOn": "2026-11-05",
+        "accessStatus": "body-reviewed"
+      }
     },
     {
       "region": "IN-UK",
@@ -360,7 +516,13 @@
         }
       ],
       "note": "Not every Nanda Devi fair is the periodic Raj Jat pilgrimage.",
-      "complete": false
+      "complete": false,
+      "directReview": {
+        "register": "review/festivals/direct-source-audit.json",
+        "region": "IN-UK",
+        "reviewedOn": "2026-11-05",
+        "accessStatus": "empty-script-shell"
+      }
     },
     {
       "region": "IN-WB",
@@ -373,7 +535,13 @@
         }
       ],
       "note": "Administrative permission windows must not be used as festival durations.",
-      "complete": false
+      "complete": false,
+      "directReview": {
+        "register": "review/festivals/direct-source-audit.json",
+        "region": "IN-WB",
+        "reviewedOn": "2026-11-05",
+        "accessStatus": "body-reviewed-conflicted"
+      }
     },
     {
       "region": "IN-AN",
@@ -386,7 +554,13 @@
         }
       ],
       "note": "Official culture discovery; no reviewed local Hindu festival dates obtained.",
-      "complete": false
+      "complete": false,
+      "directReview": {
+        "register": "review/festivals/direct-source-audit.json",
+        "region": "IN-AN",
+        "reviewedOn": "2026-11-05",
+        "accessStatus": "body-reviewed"
+      }
     },
     {
       "region": "IN-CH",
@@ -399,7 +573,13 @@
         }
       ],
       "note": "District festivals page is empty, not proof of absence; Janmashtami holiday corroboration exists.",
-      "complete": false
+      "complete": false,
+      "directReview": {
+        "register": "review/festivals/direct-source-audit.json",
+        "region": "IN-CH",
+        "reviewedOn": "2026-11-05",
+        "accessStatus": "timeout"
+      }
     },
     {
       "region": "IN-DH",
@@ -412,7 +592,13 @@
         }
       ],
       "note": "Historical procurement source identifies event, not current annual dates.",
-      "complete": false
+      "complete": false,
+      "directReview": {
+        "register": "review/festivals/direct-source-audit.json",
+        "region": "IN-DH",
+        "reviewedOn": "2026-11-05",
+        "accessStatus": "502"
+      }
     },
     {
       "region": "IN-DL",
@@ -425,7 +611,13 @@
         }
       ],
       "note": "Phool Walon Ki Sair is shared interfaith heritage, not exclusively Hindu.",
-      "complete": false
+      "complete": false,
+      "directReview": {
+        "register": "review/festivals/direct-source-audit.json",
+        "region": "IN-DL",
+        "reviewedOn": "2026-11-05",
+        "accessStatus": "body-reviewed"
+      }
     },
     {
       "region": "IN-JK",
@@ -438,7 +630,13 @@
         }
       ],
       "note": "Temple and Kashmiri Pandit tradition dates require local verification.",
-      "complete": false
+      "complete": false,
+      "directReview": {
+        "register": "review/festivals/direct-source-audit.json",
+        "region": "IN-JK",
+        "reviewedOn": "2026-11-05",
+        "accessStatus": "body-reviewed"
+      }
     },
     {
       "region": "IN-LA",
@@ -451,7 +649,13 @@
         }
       ],
       "note": "Shared river/cultural event; do not relabel Ladakhi Buddhist festivals.",
-      "complete": false
+      "complete": false,
+      "directReview": {
+        "register": "review/festivals/direct-source-audit.json",
+        "region": "IN-LA",
+        "reviewedOn": "2026-11-05",
+        "accessStatus": "timeout"
+      }
     },
     {
       "region": "IN-LD",
@@ -464,7 +668,13 @@
         }
       ],
       "note": "Official festivals page empty; no evidence of a unique regional Hindu festival established. Do not infer absence of Hindu residents/observance.",
-      "complete": false
+      "complete": false,
+      "directReview": {
+        "register": "review/festivals/direct-source-audit.json",
+        "region": "IN-LD",
+        "reviewedOn": "2026-11-05",
+        "accessStatus": "empty-listing"
+      }
     },
     {
       "region": "IN-PY",
@@ -477,7 +687,13 @@
         }
       ],
       "note": "Native regional festival discovery; annual temple notices needed.",
-      "complete": false
+      "complete": false,
+      "directReview": {
+        "register": "review/festivals/direct-source-audit.json",
+        "region": "IN-PY",
+        "reviewedOn": "2026-11-05",
+        "accessStatus": "body-reviewed"
+      }
     }
   ],
   "candidates": [
@@ -5500,6 +5716,435 @@
       "gaps": [
         "Tradition/subject/significance, aliases and regional scope need source review.",
         "No approved year-specific start/end; automatic activation prohibited."
+      ]
+    },
+    {
+      "id": "mannarasala-ayilyam",
+      "canonicalName": "Mannarasala Ayilyam",
+      "aliases": [],
+      "regions": [
+        "IN-KL"
+      ],
+      "tradition": null,
+      "devotionalSubject": null,
+      "significance": null,
+      "localization": {
+        "en": "Mannarasala Ayilyam",
+        "fallback": "English; regional-language review pending"
+      },
+      "confidence": "cultural-source-only",
+      "verificationStatus": "annual-dates-unverified",
+      "priority": null,
+      "overlapGroup": null,
+      "theme": null,
+      "assets": [],
+      "sources": [
+        {
+          "url": "https://www.keralatourism.org/1000festivals/index.php/Festival_directory",
+          "reviewedOn": "2026-11-05",
+          "reviewScope": "Named event identified in official cultural directory; not annual dates or religious rulings"
+        }
+      ],
+      "dates": [],
+      "gaps": [
+        "Exact local tradition, aliases and devotional association need detailed review.",
+        "Every 2026–2030 date and family endpoint remains unverified; no automatic activation."
+      ]
+    },
+    {
+      "id": "chettikulangara-kumbha-bharani",
+      "canonicalName": "Chettikulangara Kumbha Bharani",
+      "aliases": [],
+      "regions": [
+        "IN-KL"
+      ],
+      "tradition": null,
+      "devotionalSubject": null,
+      "significance": null,
+      "localization": {
+        "en": "Chettikulangara Kumbha Bharani",
+        "fallback": "English; regional-language review pending"
+      },
+      "confidence": "cultural-source-only",
+      "verificationStatus": "annual-dates-unverified",
+      "priority": null,
+      "overlapGroup": null,
+      "theme": null,
+      "assets": [],
+      "sources": [
+        {
+          "url": "https://www.keralatourism.org/1000festivals/index.php/Festival_directory",
+          "reviewedOn": "2026-11-05",
+          "reviewScope": "Named event identified in official cultural directory; not annual dates or religious rulings"
+        }
+      ],
+      "dates": [],
+      "gaps": [
+        "Exact local tradition, aliases and devotional association need detailed review.",
+        "Every 2026–2030 date and family endpoint remains unverified; no automatic activation."
+      ]
+    },
+    {
+      "id": "chakkulathukavu-pongala",
+      "canonicalName": "Chakkulathukavu Pongala",
+      "aliases": [],
+      "regions": [
+        "IN-KL"
+      ],
+      "tradition": null,
+      "devotionalSubject": null,
+      "significance": null,
+      "localization": {
+        "en": "Chakkulathukavu Pongala",
+        "fallback": "English; regional-language review pending"
+      },
+      "confidence": "cultural-source-only",
+      "verificationStatus": "annual-dates-unverified",
+      "priority": null,
+      "overlapGroup": null,
+      "theme": null,
+      "assets": [],
+      "sources": [
+        {
+          "url": "https://www.keralatourism.org/1000festivals/index.php/Festival_directory",
+          "reviewedOn": "2026-11-05",
+          "reviewScope": "Named event identified in official cultural directory; not annual dates or religious rulings"
+        }
+      ],
+      "dates": [],
+      "gaps": [
+        "Exact local tradition, aliases and devotional association need detailed review.",
+        "Every 2026–2030 date and family endpoint remains unverified; no automatic activation."
+      ]
+    },
+    {
+      "id": "haripad-thaipooyam",
+      "canonicalName": "Haripad Thaipooyam",
+      "aliases": [],
+      "regions": [
+        "IN-KL"
+      ],
+      "tradition": null,
+      "devotionalSubject": null,
+      "significance": null,
+      "localization": {
+        "en": "Haripad Thaipooyam",
+        "fallback": "English; regional-language review pending"
+      },
+      "confidence": "cultural-source-only",
+      "verificationStatus": "annual-dates-unverified",
+      "priority": null,
+      "overlapGroup": null,
+      "theme": null,
+      "assets": [],
+      "sources": [
+        {
+          "url": "https://www.keralatourism.org/1000festivals/index.php/Festival_directory",
+          "reviewedOn": "2026-11-05",
+          "reviewScope": "Named event identified in official cultural directory; not annual dates or religious rulings"
+        }
+      ],
+      "dates": [],
+      "gaps": [
+        "Exact local tradition, aliases and devotional association need detailed review.",
+        "Every 2026–2030 date and family endpoint remains unverified; no automatic activation."
+      ]
+    },
+    {
+      "id": "neelamperoor-pooram-padayani",
+      "canonicalName": "Neelamperoor Pooram Padayani",
+      "aliases": [],
+      "regions": [
+        "IN-KL"
+      ],
+      "tradition": null,
+      "devotionalSubject": null,
+      "significance": null,
+      "localization": {
+        "en": "Neelamperoor Pooram Padayani",
+        "fallback": "English; regional-language review pending"
+      },
+      "confidence": "cultural-source-only",
+      "verificationStatus": "annual-dates-unverified",
+      "priority": null,
+      "overlapGroup": null,
+      "theme": null,
+      "assets": [],
+      "sources": [
+        {
+          "url": "https://www.keralatourism.org/1000festivals/index.php/Festival_directory",
+          "reviewedOn": "2026-11-05",
+          "reviewScope": "Named event identified in official cultural directory; not annual dates or religious rulings"
+        }
+      ],
+      "dates": [],
+      "gaps": [
+        "Exact local tradition, aliases and devotional association need detailed review.",
+        "Every 2026–2030 date and family endpoint remains unverified; no automatic activation."
+      ]
+    },
+    {
+      "id": "kinni-radhothsavam",
+      "canonicalName": "Kinni Radhothsavam",
+      "aliases": [],
+      "regions": [
+        "IN-PY"
+      ],
+      "tradition": null,
+      "devotionalSubject": null,
+      "significance": null,
+      "localization": {
+        "en": "Kinni Radhothsavam",
+        "fallback": "English; regional-language review pending"
+      },
+      "confidence": "cultural-source-only",
+      "verificationStatus": "annual-dates-unverified",
+      "priority": null,
+      "overlapGroup": null,
+      "theme": null,
+      "assets": [],
+      "sources": [
+        {
+          "url": "https://www.py.gov.in/culture",
+          "reviewedOn": "2026-11-05",
+          "reviewScope": "Named event identified in official cultural directory; not annual dates or religious rulings"
+        }
+      ],
+      "dates": [],
+      "gaps": [
+        "Exact local tradition, aliases and devotional association need detailed review.",
+        "Every 2026–2030 date and family endpoint remains unverified; no automatic activation."
+      ]
+    },
+    {
+      "id": "draupadi-amman-festival",
+      "canonicalName": "Draupadi Amman Festival",
+      "aliases": [],
+      "regions": [
+        "IN-PY"
+      ],
+      "tradition": null,
+      "devotionalSubject": null,
+      "significance": null,
+      "localization": {
+        "en": "Draupadi Amman Festival",
+        "fallback": "English; regional-language review pending"
+      },
+      "confidence": "cultural-source-only",
+      "verificationStatus": "annual-dates-unverified",
+      "priority": null,
+      "overlapGroup": null,
+      "theme": null,
+      "assets": [],
+      "sources": [
+        {
+          "url": "https://www.py.gov.in/culture",
+          "reviewedOn": "2026-11-05",
+          "reviewScope": "Named event identified in official cultural directory; not annual dates or religious rulings"
+        }
+      ],
+      "dates": [],
+      "gaps": [
+        "Exact local tradition, aliases and devotional association need detailed review.",
+        "Every 2026–2030 date and family endpoint remains unverified; no automatic activation."
+      ]
+    },
+    {
+      "id": "bendur",
+      "canonicalName": "Bendur",
+      "aliases": [],
+      "regions": [
+        "IN-MH"
+      ],
+      "tradition": null,
+      "devotionalSubject": null,
+      "significance": null,
+      "localization": {
+        "en": "Bendur",
+        "fallback": "English; regional-language review pending"
+      },
+      "confidence": "cultural-source-only",
+      "verificationStatus": "annual-dates-unverified",
+      "priority": null,
+      "overlapGroup": null,
+      "theme": null,
+      "assets": [],
+      "sources": [
+        {
+          "url": "https://maharashtratourism.gov.in/sitemap/",
+          "reviewedOn": "2026-11-05",
+          "reviewScope": "Named event identified in official cultural directory; not annual dates or religious rulings"
+        }
+      ],
+      "dates": [],
+      "gaps": [
+        "Exact local tradition, aliases and devotional association need detailed review.",
+        "Every 2026–2030 date and family endpoint remains unverified; no automatic activation."
+      ]
+    },
+    {
+      "id": "gauri-aagman",
+      "canonicalName": "Gauri Aagman",
+      "aliases": [],
+      "regions": [
+        "IN-MH"
+      ],
+      "tradition": null,
+      "devotionalSubject": null,
+      "significance": null,
+      "localization": {
+        "en": "Gauri Aagman",
+        "fallback": "English; regional-language review pending"
+      },
+      "confidence": "cultural-source-only",
+      "verificationStatus": "annual-dates-unverified",
+      "priority": null,
+      "overlapGroup": null,
+      "theme": null,
+      "assets": [],
+      "sources": [
+        {
+          "url": "https://maharashtratourism.gov.in/sitemap/",
+          "reviewedOn": "2026-11-05",
+          "reviewScope": "Named event identified in official cultural directory; not annual dates or religious rulings"
+        }
+      ],
+      "dates": [],
+      "gaps": [
+        "Exact local tradition, aliases and devotional association need detailed review.",
+        "Every 2026–2030 date and family endpoint remains unverified; no automatic activation."
+      ]
+    },
+    {
+      "id": "jyotiba-jatra",
+      "canonicalName": "Jyotiba Jatra",
+      "aliases": [],
+      "regions": [
+        "IN-MH"
+      ],
+      "tradition": null,
+      "devotionalSubject": null,
+      "significance": null,
+      "localization": {
+        "en": "Jyotiba Jatra",
+        "fallback": "English; regional-language review pending"
+      },
+      "confidence": "cultural-source-only",
+      "verificationStatus": "annual-dates-unverified",
+      "priority": null,
+      "overlapGroup": null,
+      "theme": null,
+      "assets": [],
+      "sources": [
+        {
+          "url": "https://maharashtratourism.gov.in/sitemap/",
+          "reviewedOn": "2026-11-05",
+          "reviewScope": "Named event identified in official cultural directory; not annual dates or religious rulings"
+        }
+      ],
+      "dates": [],
+      "gaps": [
+        "Exact local tradition, aliases and devotional association need detailed review.",
+        "Every 2026–2030 date and family endpoint remains unverified; no automatic activation."
+      ]
+    },
+    {
+      "id": "khandoba-jatra",
+      "canonicalName": "Khandoba Jatra",
+      "aliases": [],
+      "regions": [
+        "IN-MH"
+      ],
+      "tradition": null,
+      "devotionalSubject": null,
+      "significance": null,
+      "localization": {
+        "en": "Khandoba Jatra",
+        "fallback": "English; regional-language review pending"
+      },
+      "confidence": "cultural-source-only",
+      "verificationStatus": "annual-dates-unverified",
+      "priority": null,
+      "overlapGroup": null,
+      "theme": null,
+      "assets": [],
+      "sources": [
+        {
+          "url": "https://maharashtratourism.gov.in/sitemap/",
+          "reviewedOn": "2026-11-05",
+          "reviewScope": "Named event identified in official cultural directory; not annual dates or religious rulings"
+        }
+      ],
+      "dates": [],
+      "gaps": [
+        "Exact local tradition, aliases and devotional association need detailed review.",
+        "Every 2026–2030 date and family endpoint remains unverified; no automatic activation."
+      ]
+    },
+    {
+      "id": "kojagiri-purnima",
+      "canonicalName": "Kojagiri Purnima",
+      "aliases": [],
+      "regions": [
+        "IN-MH"
+      ],
+      "tradition": null,
+      "devotionalSubject": null,
+      "significance": null,
+      "localization": {
+        "en": "Kojagiri Purnima",
+        "fallback": "English; regional-language review pending"
+      },
+      "confidence": "cultural-source-only",
+      "verificationStatus": "annual-dates-unverified",
+      "priority": null,
+      "overlapGroup": null,
+      "theme": null,
+      "assets": [],
+      "sources": [
+        {
+          "url": "https://maharashtratourism.gov.in/sitemap/",
+          "reviewedOn": "2026-11-05",
+          "reviewScope": "Named event identified in official cultural directory; not annual dates or religious rulings"
+        }
+      ],
+      "dates": [],
+      "gaps": [
+        "Exact local tradition, aliases and devotional association need detailed review.",
+        "Every 2026–2030 date and family endpoint remains unverified; no automatic activation."
+      ]
+    },
+    {
+      "id": "marbat-utsav",
+      "canonicalName": "Marbat Utsav",
+      "aliases": [],
+      "regions": [
+        "IN-MH"
+      ],
+      "tradition": null,
+      "devotionalSubject": null,
+      "significance": null,
+      "localization": {
+        "en": "Marbat Utsav",
+        "fallback": "English; regional-language review pending"
+      },
+      "confidence": "cultural-source-only",
+      "verificationStatus": "annual-dates-unverified",
+      "priority": null,
+      "overlapGroup": null,
+      "theme": null,
+      "assets": [],
+      "sources": [
+        {
+          "url": "https://maharashtratourism.gov.in/sitemap/",
+          "reviewedOn": "2026-11-05",
+          "reviewScope": "Named event identified in official cultural directory; not annual dates or religious rulings"
+        }
+      ],
+      "dates": [],
+      "gaps": [
+        "Exact local tradition, aliases and devotional association need detailed review.",
+        "Every 2026–2030 date and family endpoint remains unverified; no automatic activation."
       ]
     }
   ],

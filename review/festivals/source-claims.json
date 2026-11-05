@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "reviewedOn": "2026-11-04",
+  "reviewedOn": "2026-11-05",
   "automaticActivationAllowed": false,
   "scope": "Evidence reconciliation only; these claims are NOT activation records.",
   "sources": [
@@ -287,6 +287,22 @@
       ],
       "claims": [],
       "resolution": "Gujarat explicitly labels dates tentative. Rajasthan includes an impossible 28–30 February 2029 range. Later-year calendar publisher pages were discovered for New Delhi, not verified for regional temple observances. Review each claim independently; no blanket approval or calculated corrections."
+    }
+  ],
+  "followUp": [
+    {
+      "id": "puri-explicit-period",
+      "source": "https://odishatourism.gov.in/en/ratha-jatra-2026",
+      "reviewedOn": "2026-11-05",
+      "finding": "Official source body explicitly lists the July Ratha Jatra sequence through Niladri Bije. Canonical dates are in ratha-jatra-2026-puri, not the conflicting IMD row. Other listed preparatory dates are outside this window.",
+      "activationWindowId": "ratha-jatra-2026-puri"
+    },
+    {
+      "id": "west-bengal-government-label-conflict",
+      "source": "https://sahaj.wb.gov.in/SiteController",
+      "reviewedOn": "2026-11-05",
+      "finding": "SAHAJ has inconsistent Saptami labels and Jagaddhatri header/body dates. Permit application periods are not observance periods. Source-scoped Kolkata calendar references do not claim to resolve a universal religious ruling.",
+      "status": "conflict-retained"
     }
   ]
 }
