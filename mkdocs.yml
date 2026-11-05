@@ -59,6 +59,7 @@ extra_javascript:
   - javascripts/navigation.js
   - javascripts/abp-transliterate.js
   - javascripts/abp-i18n.js
+  - javascripts/reader-translations.js
   - javascripts/abp-firebase-config.js
   - javascripts/abp-firebase.js
   - javascripts/abp-favourites.js
