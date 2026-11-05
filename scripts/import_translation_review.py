@@ -16,7 +16,7 @@ from audit_hosted_translations import CODES, ROOT, norm
 
 PROTECTED = re.compile(
     r"https?://[^\s<>\"']+|[\w.+-]+@[\w.-]+\.[A-Za-z]{2,}|"
-    r"\{\{[^{}]+\}\}|\$\{[^{}]+\}"
+    r"\{\{[^{}]+\}\}|\$\{[^{}]+\}|\{[A-Za-z_][A-Za-z0-9_]*\}"
 )
 
 
