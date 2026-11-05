@@ -22,3 +22,5 @@ of the removed demo UI. Integration tests use the actual chapter 2 reader.
 phone and desktop; `test_reader_books.py enabled` audits all 65 generated
 book pages and unchanged source-data hashes. Existing book, practice, reader
 model and continuation suites cover saved state and offline navigation.
+
+Combined release note (4 November 2026): PR #59 is incorporated into the four-book Reader branch at the owner’s request. Final coverage is 2,709 book-index/reading pages including 1,995 Mahabharata chapters and 645 Ramayana sargas. New epic credits are retained in compact lines under their source-specific licences. The final four-card screenshots supersede the earlier two-book directory screenshots.

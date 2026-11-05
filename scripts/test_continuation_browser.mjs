@@ -19,15 +19,17 @@ try{
   await home.locator('.hdc-daily').screenshot({path:`work/continuation/daily-saved-reader-${width}.png`});
   await home.locator('[data-daily-reader] a').click();await home.waitForURL(/reader\/bhagavad-gita\/chapter-2\/#gita-2-47$/);
   await home.locator('#gita-2-47').waitFor();
-  await other.bringToFront();await other.locator('[data-reader-size]').selectOption('1.5');await other.locator('[data-reader-spacing]').selectOption('2.2');await other.locator('[data-read]').click();
+  await other.bringToFront();await other.locator('[data-reader-options] > summary').click();await other.locator('[data-reader-size]').selectOption('1.5');await other.locator('[data-reader-spacing]').selectOption('2.2');await other.locator('[data-read]').click();
   await home.bringToFront();await home.waitForFunction(()=>document.querySelector('[data-reader-size]').value==='1.5'&&document.querySelector('[data-read]').getAttribute('aria-pressed')==='true',null,{polling:100});
   assert.equal(await home.locator('[data-reader-spacing]').inputValue(),'2.2');
+  await home.locator('[data-reader-options] > summary').click();
   await home.locator('[data-reader-query]').fill('no matching passage');assert.equal(await home.locator('#gita-2-47').isVisible(),false);
   await home.locator('[data-reader-continue]').click();assert.equal(await home.locator('#gita-2-47').isVisible(),true);
   assert.equal(await home.locator('[data-reader-query]').inputValue(),'','same-hash continue clears a hiding filter');
   await home.goto(base+'reader/bhagavad-gita/chapter-2/?readerQuery=not-a-passage&privateToken=synthetic');
   assert.equal(await home.locator('[data-reader-empty]').isVisible(),true);
   await home.locator('[data-reader-continue]').click();assert.equal(await home.locator('#gita-2-47').isVisible(),true);
+  await home.locator('[data-reader-options] > summary').click();
   await home.evaluate(()=>{Object.defineProperty(navigator,'share',{value:undefined,configurable:true});Object.defineProperty(navigator,'clipboard',{value:{writeText:async()=>{throw new Error('blocked');}},configurable:true});});
   await home.locator('[data-reader-share]').click();await home.locator('[data-reader-link]:visible').waitFor();
   assert.equal(await home.locator('[data-reader-link] input').inputValue(),base+'reader/bhagavad-gita/chapter-2/#gita-2-47','public passage sharing excludes all query parameters');

@@ -1,6 +1,6 @@
 /* Browser-local, opt-in journey notes. Existing Japa/favourites/reader stores stay authoritative. */
 (() => {
- 'use strict';const key='hdc-journey-state-v1',routineKey='hdc-journey-routines-v1';let cleanup=()=>{};
+ 'use strict';const key='hdc-journey-state-v1',routineKey='hdc-journey-routines-v1';let cleanup=()=>{},activeRoot=null;
  const read=k=>{try{return JSON.parse(localStorage.getItem(k)||'{}')||{};}catch(_){return {};}};
  const normalize=value=>({name:typeof value.name==='string'?value.name.slice(0,120):'',minutes:[5,10,20].includes(value.minutes)?value.minutes:5,journal:typeof value.journal==='string'?value.journal.slice(0,5000):'',sessions:Array.isArray(value.sessions)?value.sessions.filter(s=>s&&typeof s.at==='string'&&Number.isFinite(Date.parse(s.at))&&[5,10,20].includes(s.minutes)).slice(-50):[]});
  const optional=(value,key,test)=>!Object.hasOwn(value,key)||test(value[key]);
@@ -12,9 +12,13 @@
  const readJourney=()=>{if(!journey)throw new Error('Unavailable local records');return journey.get();};
  const readLibrary=()=>{if(!library)throw new Error('Unavailable local records');return library.get().routines;};
  function init(){
-  cleanup();const root=document.querySelector('[data-journey]');if(!root)return;
+  const root=document.querySelector('[data-journey]');
+  // Material and pageshow can both announce the same document. Do not abort
+  // an in-flight search or reset a user's draft on a duplicate notification.
+  if(root&&root===activeRoot)return;
+  cleanup();activeRoot=root;if(!root)return;
   const controller=new AbortController(),q=s=>root.querySelector(s);let dayTimer;
-  cleanup=()=>{controller.abort();clearTimeout(dayTimer);};
+  cleanup=()=>{controller.abort();clearTimeout(dayTimer);root.removeAttribute('data-journey-ready');if(activeRoot===root)activeRoot=null;};
   let state=journey?.snapshot()||normalize({}),sessionOnly=false;const status=q('[data-journey-status]');
   try{state=readJourney();}catch(_){status.textContent='Saved journey is unavailable or has an unsupported format. Existing data has been kept; no changes will be saved.';}
   let draftReferences=(state.references||[]).map(r=>({...r})),referencesDirty=false;
@@ -94,7 +98,7 @@
    renderReferences();
   }
 
-  const start=()=>{const minutes=Number(q('[data-routine-minutes]').value);q('[data-routine-start]').href=new URL(`../sanctuary/?minutes=${[5,10,20].includes(minutes)?minutes:5}`,location.href).href;};
+  const start=()=>{q('[data-routine-start]').href=new URL('../reader/',location.href).href;};
   on('[data-routine-minutes]','change',start);start();
   function renderLibrary(selected=''){
    const select=q('[data-routine-library]');if(!select)return;
@@ -159,6 +163,8 @@
   },{signal:controller.signal});
   document.addEventListener('visibilitychange',()=>{if(!document.hidden&&root.isConnected)summary();},{signal:controller.signal});
   summary();
+  q('[data-routine-work-search]').disabled=false;
+  root.dataset.journeyReady='true';
  }
  window.addEventListener('pagehide',()=>cleanup());window.addEventListener('pageshow',init);
  if(window.document$?.subscribe)window.document$.subscribe(init);else if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();

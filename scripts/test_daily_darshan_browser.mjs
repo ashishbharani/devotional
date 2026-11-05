@@ -19,7 +19,12 @@ try {
     assert.equal(await page.locator('.hdc-daily [data-panchang-view="summary"]').count(),1);
     assert.equal(await page.locator('[data-panchang-view="summary"]').count(),1,'never duplicate settings/calculation instances');
     assert.equal(await page.locator('[data-daily-count]').textContent(),'27');
-    assert.equal(await page.locator('.hdc-daily-paths a').count(),6);
+    assert.equal(await page.locator('.hdc-daily-paths a').count(),7);
+    const reader=page.getByRole('link',{name:'Sacred Reader Read sacred texts with private reading controls',exact:true});
+    assert.equal(await reader.count(),1);
+    const centered=await reader.evaluate(el=>{const a=el.getBoundingClientRect(),b=el.parentElement.getBoundingClientRect();return Math.abs((a.left+a.right)-(b.left+b.right))<3;});
+    assert.ok(centered,'Reader card centered at every width');
+    assert.equal(await page.locator('a[href*="sanctuary/"]').count(),0);
     for(const link of await page.locator('.hdc-daily-paths a').all()){
       assert.ok((await link.boundingBox()).height>=44);
       const url=new URL(await link.getAttribute('href'),base);

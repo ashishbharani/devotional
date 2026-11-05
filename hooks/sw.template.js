@@ -65,7 +65,7 @@ self.addEventListener("fetch", (event) => {
   if (request.method !== "GET" || !inScope(url)) return;
   // Full-text locale packs are optional, versioned with the site, and fetched
   // only when selected. Revalidate online; reuse that version's pack offline.
-  if (url.pathname.includes("/assets/translations/")) {
+  if (url.pathname.includes("/assets/translations/") || url.pathname.includes("/assets/reader-translations/")) {
     event.respondWith(fetch(request, { cache: "reload" }).then((response) => remember(request, response))
       .catch(async () => (await caches.match(request)) || Response.error()));
     return;
@@ -85,7 +85,7 @@ self.addEventListener("fetch", (event) => {
   }
   // Material instant-navigation HTML requests also need to cache visited
   // book pages; they are not navigation-mode requests. Never prefetch books.
-  if (request.mode === "navigate" || /^reader\/(?:bhagavad-gita|ramcharitmanas)\//.test(url.pathname.slice(scopeUrl.pathname.length))) {
+  if (request.mode === "navigate" || /^reader\/(?:bhagavad-gita|ramcharitmanas|mahabharata|valmiki-ramayana)\//.test(url.pathname.slice(scopeUrl.pathname.length))) {
     event.respondWith(networkFirst(request));
     return;
   }

@@ -1,0 +1,22 @@
+Mahabharata electronic critical-edition witness
+
+Copyright (C) 2010 The Sanskrit Library.
+Editor: Peter M. Scharf. XML markup/header: Matthias H. Ahlborn and Peter M. Scharf.
+Source: TITUS version, Jost Gippert (2008), based on Muneo Tokunaga's
+machine-readable critical-edition text (1991, revised 1994/1995), based on
+the Bhandarkar Oriental Research Institute critical edition.
+
+Licensed under Creative Commons Attribution-NonCommercial-ShareAlike 3.0:
+https://creativecommons.org/licenses/by-nc-sa/3.0/
+https://creativecommons.org/licenses/by-nc-sa/3.0/legalcode
+
+Source catalogue and required attribution:
+https://sanskritlibrary.org/catalogsText/titus/mbh/mbh01.html
+Each chapter record links its own parva's catalogue entry.
+
+HDC adaptation: continuous-text rows extracted from the published electronic
+reader response; SLP1 transcribed deterministically into Devanagari and
+partitioned at source chapter boundaries. Source-encoded rows retained.
+Source hashes recorded in manifest.json. No new translation is asserted.
+This adapted text database is distributed under the same CC BY-NC-SA 3.0
+licence. This licence applies to this corpus, not unrelated website code.

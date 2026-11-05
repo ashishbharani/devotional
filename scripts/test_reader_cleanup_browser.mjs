@@ -18,7 +18,7 @@ try{
   if(!live){
    assert.equal(await page.locator('[data-reader]').count(),0);
    assert.equal(await page.getByRole('heading',{name:'Saved reading — Bhagavad Gita 2.47'}).count(),0);
-   assert.equal(await page.getByRole('link',{name:/^Chapter \d+$/}).count(),18);
+   assert.equal(await page.locator('.hdc-reader-books article').count(),4);
   }
   await page.screenshot({path:`${folder}/hub-${width}.png`,fullPage:true});
   await page.goto(base+'reader/ramcharitmanas/chapter-7/part-6/');

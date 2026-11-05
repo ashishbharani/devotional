@@ -66,6 +66,6 @@ try{
  const context=await browser.newContext({serviceWorkers:'block'}),page=await context.newPage();
  await context.route('https://fonts.googleapis.com/**',r=>r.fulfill({body:'',contentType:'text/css'}));
  await context.addInitScript(()=>{window.AudioContext=undefined;window.webkitAudioContext=undefined;});
- await page.goto(base+'sanctuary/');await page.locator('[data-sound]').check();await page.locator('[data-bell]').click();assert.match(await page.locator('[data-practice-status]').textContent(),/works silently/);await context.close();
- console.log('PASS actual unavailable AudioContext fallback');
+ assert.equal((await page.request.get(base+'sanctuary/')).status(),404,'retired Sanctuary is not published');await context.close();
+ console.log('PASS retired Sanctuary is absent');
 }finally{await browser.close();server.kill();}

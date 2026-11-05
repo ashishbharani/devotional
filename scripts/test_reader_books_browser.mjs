@@ -16,8 +16,13 @@ try{
   assert.equal(await page.locator('h1').textContent(),'Sacred Reader');
   assert.equal(await page.locator('[data-reader]').count(),0,'removed saved-reading area is absent');
   assert.equal(await page.getByRole('heading',{name:'Saved reading — Bhagavad Gita 2.47'}).count(),0);
+  assert.equal(await page.locator('.hdc-reader-books article').count(),4);
+  await page.getByRole('link',{name:'Bhagavad Gita',exact:true}).click();
+  await page.waitForURL(base+'reader/bhagavad-gita/');
+  await page.waitForFunction(()=>document.querySelectorAll('[data-book-contents] a').length===18);
   assert.equal(await page.getByRole('link',{name:/^Chapter \d+$/}).count(),18);
-  assert.equal(await page.locator('section[aria-label="Complete original-language books"] a').evaluateAll(links=>links.filter(a=>new URL(a.href).pathname.includes('/reader/ramcharitmanas/chapter-')).length),7);
+  await page.goto(base+'reader/ramcharitmanas/');
+  assert.equal(await page.locator('[data-book-contents] a').count(),7);
   await page.goto(base+'reader/bhagavad-gita/chapter-13/#gita-13-35');
   await page.evaluate(t=>document.body.setAttribute('data-md-color-scheme',t),theme);
   assert.equal(await page.locator('[data-reader-passage]').count(),35);
@@ -31,6 +36,7 @@ try{
   await page.evaluate(t=>document.body.setAttribute('data-md-color-scheme',t),theme);
   assert.match(await page.locator('#manas-7-130 .hdc-verse').textContent(),/श्रॆमद्रामचरितमानसमिदम/);
   await page.locator('[data-read]').click();
+  await page.locator('[data-reader-options] > summary').click();
   await page.evaluate(()=>{Object.defineProperty(navigator,'share',{value:undefined,configurable:true});Object.defineProperty(navigator,'clipboard',{value:undefined,configurable:true});});
   await page.locator('[data-reader-share]').click();
   assert.equal(await page.locator('[data-reader-link] input').inputValue(),base+'reader/ramcharitmanas/chapter-7/part-6/#manas-7-130');
@@ -48,6 +54,7 @@ try{
  await context.route('https://fonts.googleapis.com/**',r=>r.fulfill({body:'',contentType:'text/css'}));
  await page.goto(base+'reader/');await page.evaluate(()=>navigator.serviceWorker.ready);
  await page.waitForFunction(()=>!!navigator.serviceWorker.controller);
+ await page.getByRole('link',{name:'Bhagavad Gita',exact:true}).click();
  await page.getByRole('link',{name:'Chapter 1',exact:true}).click();await page.waitForURL(base+'reader/bhagavad-gita/chapter-1/');
  await page.waitForFunction(async url=>!!await caches.match(url),base+'reader/bhagavad-gita/chapter-1/');
  await page.locator('[data-bookmark]').click();
