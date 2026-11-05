@@ -52,6 +52,7 @@ try {
     assert.equal(await page.locator('#gita-1-1 [data-reader-translation-text]').getAttribute('lang'),'hi');
     assert.equal(await page.locator('#gita-1-2 [data-reader-translation]').isVisible(),false);
     assert.equal(await page.locator('#gita-1-1 .hdc-verse').innerText(),original);
+    await page.locator('[data-reader-options] > summary').click();
     await page.locator('[data-reader-query]').fill('परीक्षण-केवल');
     assert.equal(await page.locator('#gita-1-1').isVisible(),true);
     assert.equal(await page.locator('#gita-1-2').isVisible(),false);
