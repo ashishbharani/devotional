@@ -73,6 +73,8 @@ try {
    // Draft functionality supports exact English fallback. Completion is a
    // separate explicit gate, never inferred from a passing runtime regression.
    if(process.env.REQUIRE_COMPLETE_PROSE==='1')assert.deepEqual(missing,[],route+': full prose completion gate');
+   if(process.env.REQUIRE_COMPLETE_EDITORIAL_HI==='1' && route!=='disclaimer/')
+     assert.deepEqual(missing,[],route+': no unregistered current Hindi editorial source units');
    await page.evaluate(()=>window.abpI18n.applyLanguage('hi'));
    const translated=await page.locator('.abp-project-info').evaluate(el=>{const walker=document.createTreeWalker(el,NodeFilter.SHOW_TEXT),out=[];let node;while(node=walker.nextNode())if(node.textContent.trim())out.push(node.textContent);return out;});
    assert.equal(translated.length,originalUnits.length,'text translation preserves markup/node count');
