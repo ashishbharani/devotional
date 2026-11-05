@@ -48,6 +48,7 @@ try {
     await page.evaluate(()=>window.abpI18n.applyLanguage('hi'));
     await page.waitForFunction(()=>!document.querySelector('#gita-1-1 [data-reader-translation]').hidden);
     assert.equal(await page.locator('#gita-1-1 [data-reader-translation-text]').innerText(),sample);
+    assert.equal(await page.locator('#gita-1-1 [data-reader-translation] summary').innerText(),await page.evaluate(()=>window.abpI18n.t('readerTranslationTitle')));
     assert.equal(await page.locator('#gita-1-1 [data-reader-translation-text]').getAttribute('lang'),'hi');
     assert.equal(await page.locator('#gita-1-2 [data-reader-translation]').isVisible(),false);
     assert.equal(await page.locator('#gita-1-1 .hdc-verse').innerText(),original);
@@ -56,7 +57,7 @@ try {
     assert.equal(await page.locator('#gita-1-2').isVisible(),false);
     await page.locator('[data-reader-query]').fill('');
     await page.evaluate(()=>window.abpI18n.applyLanguage('mr'));
-    await page.waitForFunction(()=>document.querySelector('[data-reader-translation-status]')?.textContent.includes('No reviewed MR'));
+    await page.waitForFunction(()=>document.querySelector('[data-reader-translation-status]')?.textContent===window.abpI18n?.t('readerMissing'));
     assert.equal(await page.locator('#gita-1-1 [data-reader-translation]').isVisible(),false);
     await page.evaluate(()=>window.abpI18n.applyLanguage('hi'));
     await page.waitForFunction(()=>!document.querySelector('#gita-1-1 [data-reader-translation]').hidden);
@@ -77,7 +78,7 @@ try {
   await p.goto(root+'reader/bhagavad-gita/chapter-1/');
   await p.waitForFunction(()=>window.abpI18n&&document.querySelector('.abp-language-btn:not(:disabled)'));
   await p.evaluate(()=>window.abpI18n.applyLanguage('hi'));
-  await p.waitForFunction(()=>document.querySelector('[data-reader-translation-status]')?.textContent.includes('could not be verified'));
+  await p.waitForFunction(()=>document.querySelector('[data-reader-translation-status]')?.textContent===window.abpI18n?.t('readerError'));
   assert.equal(await p.locator('[data-reader-translation]:visible').count(),0);
   await bad.close();
   console.log('PASS Reader translated passages: protected originals, 9-language fallback, exact source hashes, search, 390/1440px and race-safe language restoration');
