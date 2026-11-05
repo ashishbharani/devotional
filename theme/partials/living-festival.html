@@ -1,0 +1,15 @@
+{# This partial is never rendered by the normal/deployment build. #}
+<aside class="hdc-living" data-living-festival lang="en" aria-label="Festival appearance">
+ <details>
+  <summary>Festival appearance — development preview</summary>
+  <p>These source-checked calendars identify their city and tradition; they are not universal religious rulings or ritual timetables. Region choices here do not change Panchang settings. English fallback is used for these development controls.</p>
+  <label>Appearance <select data-living-mode><option value="auto">Automatic verified festivals</option><option value="original">Original HDC appearance</option></select></label>
+  <button type="button" data-living-original>Restore original appearance now</button>
+  <label>Region <select data-living-region><option value="IN">Nationwide</option></select></label>
+  <label>Animation <select data-living-effects><option value="auto">Adaptive gentle motion</option><option value="reduced">Reduced festival motion</option><option value="none">No festival motion</option></select></label>
+  <p data-living-status role="status">Original appearance retained while the local schedule loads.</p>
+  <div class="hdc-living-info" data-living-info hidden><strong data-living-title></strong><p data-living-note></p><p data-living-countdown></p><p data-living-selection></p><a data-living-explore>Explore the existing devotional collection</a><ul data-living-sources></ul><button type="button" data-living-share>Share festival greeting</button><p data-living-share-status role="status"></p></div>
+  <details data-living-previews><summary>Preview festival designs</summary><p>Design only; no festival date is implied. Temporary previews end when you navigate or reload. Your saved appearance choice is then restored.</p><div class="hdc-living-preview" data-living-preview-buttons></div><label>Preview stage <select data-living-stage><option value="anticipation">Anticipation (Days −7 to −4)</option><option value="approach">Approach (Days −3 to −1)</option><option value="celebration">Celebration</option></select></label></details>
+  <details><summary>Upcoming verified festivals</summary><p>Only reviewed, approved presentation periods are listed. Regional traditions may differ.</p><ul data-living-upcoming></ul></details>
+ </details>
+</aside>

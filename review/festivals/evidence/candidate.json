@@ -1,0 +1,2528 @@
+{
+  "method": "Chromium CDP: cold contexts, real font requests, gzip text transport matching public Pages, disabled HTTP cache and worker, 4x CPU, 150ms latency, 1.6Mbps download/750Kbps upload. Finite real click/key tasks; Event Timing p98 candidate, not field INP.",
+  "limitations": [
+    "One local host, not physical Android/iOS",
+    "No field RUM or CrUX",
+    "Separate baseline/candidate reports; no production-origin field comparison",
+    "External request failures are reported, not stubbed or treated as successful font loads",
+    "Synthetic V2 celebration fixture, reduced motion to match the baseline; no religious date approval or physical-device animation certification. Single-run values are indicative, not a regression/CWV certificate."
+  ],
+  "samples": [
+    {
+      "width": 375,
+      "route": "home",
+      "layoutShiftSum": 0.003904904666666666,
+      "labCls": 0.003904904666666666,
+      "observedInteractions": 7,
+      "interactionCount": null,
+      "labInpCandidateMs": 72,
+      "belowThresholdMs": null,
+      "lcpMs": 1788,
+      "gestures": 12,
+      "eventTimingSupported": true,
+      "fonts": "loaded",
+      "failedRequests": [],
+      "taskError": null,
+      "targets": {
+        "task": true,
+        "lcp": true,
+        "inpCandidate": true,
+        "cls": true
+      },
+      "events": [
+        {
+          "interactionId": 0,
+          "duration": 72,
+          "name": "pointerover"
+        },
+        {
+          "interactionId": 0,
+          "duration": 72,
+          "name": "pointerenter"
+        },
+        {
+          "interactionId": 0,
+          "duration": 72,
+          "name": "pointerenter"
+        },
+        {
+          "interactionId": 0,
+          "duration": 72,
+          "name": "pointerenter"
+        },
+        {
+          "interactionId": 0,
+          "duration": 72,
+          "name": "pointerenter"
+        },
+        {
+          "interactionId": 0,
+          "duration": 72,
+          "name": "pointerenter"
+        },
+        {
+          "interactionId": 0,
+          "duration": 72,
+          "name": "pointerenter"
+        },
+        {
+          "interactionId": 0,
+          "duration": 72,
+          "name": "pointerenter"
+        },
+        {
+          "interactionId": 0,
+          "duration": 72,
+          "name": "pointerenter"
+        },
+        {
+          "interactionId": 0,
+          "duration": 72,
+          "name": "pointerenter"
+        },
+        {
+          "interactionId": 0,
+          "duration": 72,
+          "name": "pointerenter"
+        },
+        {
+          "interactionId": 0,
+          "duration": 72,
+          "name": "pointerenter"
+        },
+        {
+          "interactionId": 0,
+          "duration": 72,
+          "name": "pointerenter"
+        },
+        {
+          "interactionId": 0,
+          "duration": 72,
+          "name": "pointerenter"
+        },
+        {
+          "interactionId": 0,
+          "duration": 72,
+          "name": "mouseover"
+        },
+        {
+          "interactionId": 2353,
+          "duration": 72,
+          "name": "pointerdown"
+        },
+        {
+          "interactionId": 0,
+          "duration": 72,
+          "name": "mousedown"
+        },
+        {
+          "interactionId": 2353,
+          "duration": 72,
+          "name": "pointerup"
+        },
+        {
+          "interactionId": 0,
+          "duration": 72,
+          "name": "mouseup"
+        },
+        {
+          "interactionId": 2353,
+          "duration": 72,
+          "name": "click"
+        },
+        {
+          "interactionId": 2360,
+          "duration": 24,
+          "name": "pointerdown"
+        },
+        {
+          "interactionId": 0,
+          "duration": 24,
+          "name": "mousedown"
+        },
+        {
+          "interactionId": 2360,
+          "duration": 24,
+          "name": "pointerup"
+        },
+        {
+          "interactionId": 0,
+          "duration": 24,
+          "name": "mouseup"
+        },
+        {
+          "interactionId": 2360,
+          "duration": 24,
+          "name": "click"
+        },
+        {
+          "interactionId": 0,
+          "duration": 32,
+          "name": "pointerout"
+        },
+        {
+          "interactionId": 0,
+          "duration": 32,
+          "name": "pointerleave"
+        },
+        {
+          "interactionId": 0,
+          "duration": 32,
+          "name": "pointerleave"
+        },
+        {
+          "interactionId": 0,
+          "duration": 32,
+          "name": "pointerleave"
+        },
+        {
+          "interactionId": 0,
+          "duration": 32,
+          "name": "pointerleave"
+        },
+        {
+          "interactionId": 0,
+          "duration": 32,
+          "name": "pointerleave"
+        },
+        {
+          "interactionId": 0,
+          "duration": 32,
+          "name": "pointerleave"
+        },
+        {
+          "interactionId": 0,
+          "duration": 32,
+          "name": "pointerleave"
+        },
+        {
+          "interactionId": 0,
+          "duration": 32,
+          "name": "pointerleave"
+        },
+        {
+          "interactionId": 0,
+          "duration": 32,
+          "name": "pointerleave"
+        },
+        {
+          "interactionId": 0,
+          "duration": 32,
+          "name": "pointerleave"
+        },
+        {
+          "interactionId": 0,
+          "duration": 32,
+          "name": "pointerover"
+        },
+        {
+          "interactionId": 0,
+          "duration": 32,
+          "name": "pointerenter"
+        },
+        {
+          "interactionId": 0,
+          "duration": 32,
+          "name": "pointerenter"
+        },
+        {
+          "interactionId": 0,
+          "duration": 32,
+          "name": "pointerenter"
+        },
+        {
+          "interactionId": 0,
+          "duration": 32,
+          "name": "pointerenter"
+        },
+        {
+          "interactionId": 0,
+          "duration": 32,
+          "name": "pointerenter"
+        },
+        {
+          "interactionId": 0,
+          "duration": 32,
+          "name": "pointerenter"
+        },
+        {
+          "interactionId": 0,
+          "duration": 32,
+          "name": "mouseout"
+        },
+        {
+          "interactionId": 0,
+          "duration": 32,
+          "name": "mouseover"
+        },
+        {
+          "interactionId": 2367,
+          "duration": 32,
+          "name": "pointerdown"
+        },
+        {
+          "interactionId": 0,
+          "duration": 32,
+          "name": "mousedown"
+        },
+        {
+          "interactionId": 2367,
+          "duration": 32,
+          "name": "pointerup"
+        },
+        {
+          "interactionId": 0,
+          "duration": 32,
+          "name": "mouseup"
+        },
+        {
+          "interactionId": 2367,
+          "duration": 32,
+          "name": "click"
+        },
+        {
+          "interactionId": 0,
+          "duration": 32,
+          "name": "click"
+        },
+        {
+          "interactionId": 2388,
+          "duration": 16,
+          "name": "keydown"
+        },
+        {
+          "interactionId": 2388,
+          "duration": 16,
+          "name": "keypress"
+        },
+        {
+          "interactionId": 0,
+          "duration": 16,
+          "name": "beforeinput"
+        },
+        {
+          "interactionId": 2395,
+          "duration": 24,
+          "name": "keydown"
+        },
+        {
+          "interactionId": 2395,
+          "duration": 24,
+          "name": "keypress"
+        },
+        {
+          "interactionId": 2395,
+          "duration": 48,
+          "name": "keyup"
+        },
+        {
+          "interactionId": 2402,
+          "duration": 32,
+          "name": "keydown"
+        },
+        {
+          "interactionId": 2402,
+          "duration": 32,
+          "name": "keypress"
+        },
+        {
+          "interactionId": 0,
+          "duration": 16,
+          "name": "beforeinput"
+        },
+        {
+          "interactionId": 0,
+          "duration": 16,
+          "name": "input"
+        },
+        {
+          "interactionId": 2423,
+          "duration": 16,
+          "name": "keydown"
+        }
+      ],
+      "shifts": [
+        {
+          "startTime": 2436.7000000001863,
+          "value": 0.0005162666666666667,
+          "hadRecentInput": false,
+          "sources": [
+            {
+              "node": "<button id=\"hdc-install-header\" class=\"hdc-install-control hdc-install-header abp-install-btn md-header__button\" type=\"button\" data-install-app=\"\" data-install-state=\"unavailable\" ",
+              "previous": {
+                "x": 323,
+                "y": 10,
+                "width": 44,
+                "height": 44,
+                "top": 10,
+                "right": 367,
+                "bottom": 54,
+                "left": 323
+              },
+              "current": {
+                "x": 273,
+                "y": 10,
+                "width": 44,
+                "height": 44,
+                "top": 10,
+                "right": 317,
+                "bottom": 54,
+                "left": 273
+              }
+            }
+          ]
+        },
+        {
+          "startTime": 2528.100000000093,
+          "value": 0.001108799,
+          "hadRecentInput": false,
+          "sources": [
+            {
+              "node": "<label class=\"md-header__button md-icon\" title=\"Switch to dark (lamp-light) mode\" for=\"__palette_1\">\n        <svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\"><path d=\"m1",
+              "previous": {
+                "x": 226,
+                "y": 10,
+                "width": 44,
+                "height": 44,
+                "top": 10,
+                "right": 270,
+                "bottom": 54,
+                "left": 226
+              },
+              "current": {
+                "x": 174.875,
+                "y": 11.1875,
+                "width": 44,
+                "height": 44,
+                "top": 11.1875,
+                "right": 218.875,
+                "bottom": 55.1875,
+                "left": 174.875
+              }
+            },
+            {
+              "node": "<button id=\"hdc-install-header\" class=\"hdc-install-control hdc-install-header abp-install-btn md-header__button\" type=\"button\" data-install-app=\"\" data-install-state=\"unavailable\" ",
+              "previous": {
+                "x": 273,
+                "y": 10,
+                "width": 44,
+                "height": 44,
+                "top": 10,
+                "right": 317,
+                "bottom": 54,
+                "left": 273
+              },
+              "current": {
+                "x": 221.875,
+                "y": 11.1875,
+                "width": 44,
+                "height": 44,
+                "top": 11.1875,
+                "right": 265.875,
+                "bottom": 55.1875,
+                "left": 221.875
+              }
+            },
+            {
+              "node": "<label class=\"md-header__button md-icon\" for=\"__search\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\"><path d=\"M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.",
+              "previous": {
+                "x": 320,
+                "y": 10,
+                "width": 44,
+                "height": 44,
+                "top": 10,
+                "right": 364,
+                "bottom": 54,
+                "left": 320
+              },
+              "current": {
+                "x": 268.875,
+                "y": 11.1875,
+                "width": 44,
+                "height": 44,
+                "top": 11.1875,
+                "right": 312.875,
+                "bottom": 55.1875,
+                "left": 268.875
+              }
+            }
+          ]
+        },
+        {
+          "startTime": 2759.399999999907,
+          "value": 0.001108799,
+          "hadRecentInput": false,
+          "sources": [
+            {
+              "node": "<label class=\"md-header__button md-icon\" title=\"Switch to dark (lamp-light) mode\" for=\"__palette_1\">\n        <svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\"><path d=\"m1",
+              "previous": {
+                "x": 174.875,
+                "y": 11.1875,
+                "width": 44,
+                "height": 44,
+                "top": 11.1875,
+                "right": 218.875,
+                "bottom": 55.1875,
+                "left": 174.875
+              },
+              "current": {
+                "x": 226,
+                "y": 10,
+                "width": 44,
+                "height": 44,
+                "top": 10,
+                "right": 270,
+                "bottom": 54,
+                "left": 226
+              }
+            },
+            {
+              "node": "<button id=\"hdc-install-header\" class=\"hdc-install-control hdc-install-header abp-install-btn md-header__button\" type=\"button\" data-install-app=\"\" data-install-state=\"unavailable\" ",
+              "previous": {
+                "x": 221.875,
+                "y": 11.1875,
+                "width": 44,
+                "height": 44,
+                "top": 11.1875,
+                "right": 265.875,
+                "bottom": 55.1875,
+                "left": 221.875
+              },
+              "current": {
+                "x": 273,
+                "y": 10,
+                "width": 44,
+                "height": 44,
+                "top": 10,
+                "right": 317,
+                "bottom": 54,
+                "left": 273
+              }
+            },
+            {
+              "node": "<label class=\"md-header__button md-icon\" for=\"__search\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\"><path d=\"M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.",
+              "previous": {
+                "x": 268.875,
+                "y": 11.1875,
+                "width": 44,
+                "height": 44,
+                "top": 11.1875,
+                "right": 312.875,
+                "bottom": 55.1875,
+                "left": 268.875
+              },
+              "current": {
+                "x": 320,
+                "y": 10,
+                "width": 44,
+                "height": 44,
+                "top": 10,
+                "right": 364,
+                "bottom": 54,
+                "left": 320
+              }
+            }
+          ]
+        },
+        {
+          "startTime": 3299.2999999998137,
+          "value": 0.0011710400000000001,
+          "hadRecentInput": false,
+          "sources": [
+            {
+              "node": "<button type=\"button\" class=\"abp-feedback-float\" aria-haspopup=\"dialog\" aria-controls=\"abp-feedback-dialog\">💡 Suggestion / Report Issue</button>",
+              "previous": {
+                "x": 108.53125,
+                "y": 853,
+                "width": 266.46875,
+                "height": 84,
+                "top": 853,
+                "right": 375,
+                "bottom": 937,
+                "left": 108.53125
+              },
+              "current": {
+                "x": 96.53125,
+                "y": 853,
+                "width": 278.46875,
+                "height": 84,
+                "top": 853,
+                "right": 375,
+                "bottom": 937,
+                "left": 96.53125
+              }
+            },
+            {
+              "previous": {
+                "x": 26,
+                "y": 600.015625,
+                "width": 323,
+                "height": 22,
+                "top": 600.015625,
+                "right": 349,
+                "bottom": 622.015625,
+                "left": 26
+              },
+              "current": {
+                "x": 26,
+                "y": 597.015625,
+                "width": 323,
+                "height": 22,
+                "top": 597.015625,
+                "right": 349,
+                "bottom": 619.015625,
+                "left": 26
+              }
+            },
+            {
+              "previous": {
+                "x": 26,
+                "y": 130,
+                "width": 323,
+                "height": 15,
+                "top": 130,
+                "right": 349,
+                "bottom": 145,
+                "left": 26
+              },
+              "current": {
+                "x": 26,
+                "y": 129,
+                "width": 323,
+                "height": 15,
+                "top": 129,
+                "right": 349,
+                "bottom": 144,
+                "left": 26
+              }
+            }
+          ]
+        },
+        {
+          "startTime": 11536.700000000186,
+          "value": 0.059207413333333334,
+          "hadRecentInput": true,
+          "sources": [
+            {
+              "node": "<ul class=\"abp-stats\" aria-label=\"The collection in numbers\"><li><b>43,085</b> <span data-i18n=\"works\">works</span></li><li><b>42</b> <span data-i18n=\"categories\">categories</span>",
+              "previous": {
+                "x": 0,
+                "y": 514.40625,
+                "width": 375,
+                "height": 234.03125,
+                "top": 514.40625,
+                "right": 375,
+                "bottom": 748.4375,
+                "left": 0
+              },
+              "current": {
+                "x": 0,
+                "y": 636.40625,
+                "width": 375,
+                "height": 234.03125,
+                "top": 636.40625,
+                "right": 375,
+                "bottom": 870.4375,
+                "left": 0
+              }
+            },
+            {
+              "node": "<section class=\"udhc-section hdc-daily\" aria-labelledby=\"hdc-daily-title\"><p class=\"udhc-kicker\">Your daily devotional companion</p><h2 id=\"hdc-daily-title\">Daily Darshan</h2><p cl",
+              "previous": {
+                "x": 1,
+                "y": 671.4375,
+                "width": 373,
+                "height": 328.5625,
+                "top": 671.4375,
+                "right": 374,
+                "bottom": 1000,
+                "left": 1
+              },
+              "current": {
+                "x": 1,
+                "y": 793.4375,
+                "width": 373,
+                "height": 206.5625,
+                "top": 793.4375,
+                "right": 374,
+                "bottom": 1000,
+                "left": 1
+              }
+            },
+            {
+              "node": "<summary aria-expanded=\"false\"><span aria-hidden=\"true\">🕉</span><span>TODAY PANCHANG</span></summary>",
+              "previous": {
+                "x": 15.90625,
+                "y": 944.375,
+                "width": 343.1875,
+                "height": 55.625,
+                "top": 944.375,
+                "right": 359.09375,
+                "bottom": 1000,
+                "left": 15.90625
+              },
+              "current": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0,
+                "top": 0,
+                "right": 0,
+                "bottom": 0,
+                "left": 0
+              }
+            }
+          ]
+        },
+        {
+          "startTime": 11603.399999999907,
+          "value": 0.059207413333333334,
+          "hadRecentInput": true,
+          "sources": [
+            {
+              "node": "<ul class=\"abp-stats\" aria-label=\"The collection in numbers\"><li><b>43,085</b> <span data-i18n=\"works\">works</span></li><li><b>42</b> <span data-i18n=\"categories\">categories</span>",
+              "previous": {
+                "x": 0,
+                "y": 636.40625,
+                "width": 375,
+                "height": 234.03125,
+                "top": 636.40625,
+                "right": 375,
+                "bottom": 870.4375,
+                "left": 0
+              },
+              "current": {
+                "x": 0,
+                "y": 514.40625,
+                "width": 375,
+                "height": 234.03125,
+                "top": 514.40625,
+                "right": 375,
+                "bottom": 748.4375,
+                "left": 0
+              }
+            },
+            {
+              "node": "<section class=\"udhc-section hdc-daily\" aria-labelledby=\"hdc-daily-title\"><p class=\"udhc-kicker\">Your daily devotional companion</p><h2 id=\"hdc-daily-title\">Daily Darshan</h2><p cl",
+              "previous": {
+                "x": 1,
+                "y": 793.4375,
+                "width": 373,
+                "height": 206.5625,
+                "top": 793.4375,
+                "right": 374,
+                "bottom": 1000,
+                "left": 1
+              },
+              "current": {
+                "x": 1,
+                "y": 671.4375,
+                "width": 373,
+                "height": 328.5625,
+                "top": 671.4375,
+                "right": 374,
+                "bottom": 1000,
+                "left": 1
+              }
+            },
+            {
+              "node": "<summary aria-expanded=\"false\"><span aria-hidden=\"true\">🕉</span><span>TODAY PANCHANG</span></summary>",
+              "previous": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0,
+                "top": 0,
+                "right": 0,
+                "bottom": 0,
+                "left": 0
+              },
+              "current": {
+                "x": 15.90625,
+                "y": 944.375,
+                "width": 343.1875,
+                "height": 55.625,
+                "top": 944.375,
+                "right": 359.09375,
+                "bottom": 1000,
+                "left": 15.90625
+              }
+            }
+          ]
+        },
+        {
+          "startTime": 11679.399999999907,
+          "value": 0.0004543146666666667,
+          "hadRecentInput": true,
+          "sources": [
+            {
+              "node": "<button type=\"button\" class=\"abp-a11y-btn md-header__button\" title=\"Text size and accessibility settings\" aria-label=\"Text size and accessibility settings\" data-i18n-title=\"textSiz",
+              "previous": {
+                "x": 179,
+                "y": 10,
+                "width": 44,
+                "height": 44,
+                "top": 10,
+                "right": 223,
+                "bottom": 54,
+                "left": 179
+              },
+              "current": {
+                "x": 223,
+                "y": 10,
+                "width": 44,
+                "height": 44,
+                "top": 10,
+                "right": 267,
+                "bottom": 54,
+                "left": 223
+              }
+            }
+          ]
+        },
+        {
+          "startTime": 12511,
+          "value": 0.0004543146666666667,
+          "hadRecentInput": true,
+          "sources": [
+            {
+              "node": "<button type=\"button\" class=\"abp-a11y-btn md-header__button\" title=\"Text size and accessibility settings\" aria-label=\"Text size and accessibility settings\" data-i18n-title=\"textSiz",
+              "previous": {
+                "x": 223,
+                "y": 10,
+                "width": 44,
+                "height": 44,
+                "top": 10,
+                "right": 267,
+                "bottom": 54,
+                "left": 223
+              },
+              "current": {
+                "x": 179,
+                "y": 10,
+                "width": 44,
+                "height": 44,
+                "top": 10,
+                "right": 223,
+                "bottom": 54,
+                "left": 179
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "width": 375,
+      "route": "find/",
+      "layoutShiftSum": 0.18661365229166668,
+      "labCls": 0.18372266666666667,
+      "observedInteractions": 4,
+      "interactionCount": null,
+      "labInpCandidateMs": 16,
+      "belowThresholdMs": null,
+      "lcpMs": 1280,
+      "gestures": 7,
+      "eventTimingSupported": true,
+      "fonts": "loaded",
+      "failedRequests": [],
+      "taskError": null,
+      "targets": {
+        "task": true,
+        "lcp": true,
+        "inpCandidate": true,
+        "cls": false
+      },
+      "events": [
+        {
+          "interactionId": 5445,
+          "duration": 16,
+          "name": "keydown"
+        },
+        {
+          "interactionId": 5445,
+          "duration": 16,
+          "name": "keypress"
+        },
+        {
+          "interactionId": 0,
+          "duration": 16,
+          "name": "beforeinput"
+        },
+        {
+          "interactionId": 0,
+          "duration": 16,
+          "name": "input"
+        },
+        {
+          "interactionId": 5452,
+          "duration": 16,
+          "name": "keydown"
+        },
+        {
+          "interactionId": 5452,
+          "duration": 16,
+          "name": "keypress"
+        },
+        {
+          "interactionId": 0,
+          "duration": 16,
+          "name": "beforeinput"
+        },
+        {
+          "interactionId": 5459,
+          "duration": 16,
+          "name": "keydown"
+        },
+        {
+          "interactionId": 5459,
+          "duration": 16,
+          "name": "keypress"
+        },
+        {
+          "interactionId": 0,
+          "duration": 16,
+          "name": "beforeinput"
+        },
+        {
+          "interactionId": 5480,
+          "duration": 16,
+          "name": "keydown"
+        },
+        {
+          "interactionId": 5480,
+          "duration": 16,
+          "name": "keypress"
+        }
+      ],
+      "shifts": [
+        {
+          "startTime": 1503.1999999997206,
+          "value": 0.0005162666666666667,
+          "hadRecentInput": false,
+          "sources": [
+            {
+              "node": "<button id=\"hdc-install-header\" class=\"hdc-install-control hdc-install-header abp-install-btn md-header__button\" type=\"button\" data-install-app=\"\" data-install-state=\"unavailable\" ",
+              "previous": {
+                "x": 323,
+                "y": 10,
+                "width": 44,
+                "height": 44,
+                "top": 10,
+                "right": 367,
+                "bottom": 54,
+                "left": 323
+              },
+              "current": {
+                "x": 273,
+                "y": 10,
+                "width": 44,
+                "height": 44,
+                "top": 10,
+                "right": 317,
+                "bottom": 54,
+                "left": 273
+              }
+            }
+          ]
+        },
+        {
+          "startTime": 1609.5,
+          "value": 0.001108799,
+          "hadRecentInput": false,
+          "sources": [
+            {
+              "node": "<label class=\"md-header__button md-icon\" title=\"Switch to dark (lamp-light) mode\" for=\"__palette_1\">\n        <svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\"><path d=\"m1",
+              "previous": {
+                "x": 226,
+                "y": 10,
+                "width": 44,
+                "height": 44,
+                "top": 10,
+                "right": 270,
+                "bottom": 54,
+                "left": 226
+              },
+              "current": {
+                "x": 174.875,
+                "y": 11.1875,
+                "width": 44,
+                "height": 44,
+                "top": 11.1875,
+                "right": 218.875,
+                "bottom": 55.1875,
+                "left": 174.875
+              }
+            },
+            {
+              "node": "<button id=\"hdc-install-header\" class=\"hdc-install-control hdc-install-header abp-install-btn md-header__button\" type=\"button\" data-install-app=\"\" data-install-state=\"unavailable\" ",
+              "previous": {
+                "x": 273,
+                "y": 10,
+                "width": 44,
+                "height": 44,
+                "top": 10,
+                "right": 317,
+                "bottom": 54,
+                "left": 273
+              },
+              "current": {
+                "x": 221.875,
+                "y": 11.1875,
+                "width": 44,
+                "height": 44,
+                "top": 11.1875,
+                "right": 265.875,
+                "bottom": 55.1875,
+                "left": 221.875
+              }
+            },
+            {
+              "node": "<label class=\"md-header__button md-icon\" for=\"__search\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\"><path d=\"M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.",
+              "previous": {
+                "x": 320,
+                "y": 10,
+                "width": 44,
+                "height": 44,
+                "top": 10,
+                "right": 364,
+                "bottom": 54,
+                "left": 320
+              },
+              "current": {
+                "x": 268.875,
+                "y": 11.1875,
+                "width": 44,
+                "height": 44,
+                "top": 11.1875,
+                "right": 312.875,
+                "bottom": 55.1875,
+                "left": 268.875
+              }
+            }
+          ]
+        },
+        {
+          "startTime": 3063.399999999907,
+          "value": 0.000101561625,
+          "hadRecentInput": false,
+          "sources": [
+            {
+              "previous": {
+                "x": 46,
+                "y": 254.390625,
+                "width": 283,
+                "height": 26,
+                "top": 254.390625,
+                "right": 329,
+                "bottom": 280.390625,
+                "left": 46
+              },
+              "current": {
+                "x": 46,
+                "y": 251.390625,
+                "width": 283,
+                "height": 26,
+                "top": 251.390625,
+                "right": 329,
+                "bottom": 277.390625,
+                "left": 46
+              }
+            }
+          ]
+        },
+        {
+          "startTime": 3467.7999999998137,
+          "value": 0.0011643583333333333,
+          "hadRecentInput": false,
+          "sources": [
+            {
+              "node": "<label class=\"md-header__button md-icon\" title=\"Switch to dark (lamp-light) mode\" for=\"__palette_1\">\n        <svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\"><path d=\"m1",
+              "previous": {
+                "x": 172.875,
+                "y": 11.1875,
+                "width": 44,
+                "height": 44,
+                "top": 11.1875,
+                "right": 216.875,
+                "bottom": 55.1875,
+                "left": 172.875
+              },
+              "current": {
+                "x": 226,
+                "y": 10,
+                "width": 44,
+                "height": 44,
+                "top": 10,
+                "right": 270,
+                "bottom": 54,
+                "left": 226
+              }
+            },
+            {
+              "node": "<button id=\"hdc-install-header\" class=\"hdc-install-control hdc-install-header abp-install-btn md-header__button\" type=\"button\" data-install-app=\"\" data-install-state=\"unavailable\" ",
+              "previous": {
+                "x": 219.875,
+                "y": 11.1875,
+                "width": 44,
+                "height": 44,
+                "top": 11.1875,
+                "right": 263.875,
+                "bottom": 55.1875,
+                "left": 219.875
+              },
+              "current": {
+                "x": 273,
+                "y": 10,
+                "width": 44,
+                "height": 44,
+                "top": 10,
+                "right": 317,
+                "bottom": 54,
+                "left": 273
+              }
+            },
+            {
+              "node": "<label class=\"md-header__button md-icon\" for=\"__search\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\"><path d=\"M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.",
+              "previous": {
+                "x": 266.875,
+                "y": 11.1875,
+                "width": 44,
+                "height": 44,
+                "top": 11.1875,
+                "right": 310.875,
+                "bottom": 55.1875,
+                "left": 266.875
+              },
+              "current": {
+                "x": 320,
+                "y": 10,
+                "width": 44,
+                "height": 44,
+                "top": 10,
+                "right": 364,
+                "bottom": 54,
+                "left": 320
+              }
+            }
+          ]
+        },
+        {
+          "startTime": 32423.799999999814,
+          "value": 0.18372266666666667,
+          "hadRecentInput": false,
+          "sources": [
+            {
+              "node": "<aside class=\"hdc-living\" data-living-festival=\"\" lang=\"en\" aria-label=\"Festival appearance\">\n <details>\n  <summary>Festival appearance — development preview</summary>\n  <p>This pr",
+              "previous": {
+                "x": 27,
+                "y": 740.265625,
+                "width": 321,
+                "height": 131.5,
+                "top": 740.265625,
+                "right": 348,
+                "bottom": 871.765625,
+                "left": 27
+              },
+              "current": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0,
+                "top": 0,
+                "right": 0,
+                "bottom": 0,
+                "left": 0
+              }
+            },
+            {
+              "node": "<details class=\"hdc-practice hdc-page-share\" data-share-page=\"\"><summary>Share this public page</summary>\n<p>Shares the current address, including search filters or an anchor. Save",
+              "previous": {
+                "x": 27,
+                "y": 891.765625,
+                "width": 321,
+                "height": 46,
+                "top": 891.765625,
+                "right": 348,
+                "bottom": 937.765625,
+                "left": 27
+              },
+              "current": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0,
+                "top": 0,
+                "right": 0,
+                "bottom": 0,
+                "left": 0
+              }
+            },
+            {
+              "node": "<p class=\"abp-finder__status\" id=\"abp-status\" role=\"status\" aria-live=\"polite\" data-i18n=\"loading\">312 works · 60 shown</p>",
+              "previous": {
+                "x": 38,
+                "y": 661.4375,
+                "width": 299,
+                "height": 19.84375,
+                "top": 661.4375,
+                "right": 337,
+                "bottom": 681.28125,
+                "left": 38
+              },
+              "current": {
+                "x": 38,
+                "y": 997.4375,
+                "width": 299,
+                "height": 2.5625,
+                "top": 997.4375,
+                "right": 337,
+                "bottom": 1000,
+                "left": 38
+              }
+            },
+            {
+              "node": "<nav class=\"abp-pager\" aria-label=\"Canonical content navigation\" data-base=\"/devotional/\">\n  <a class=\"abp-btn abp-pager__p\" href=\"http://127.0.0.1:4360/devotional/categories/42-sa",
+              "previous": {
+                "x": 27,
+                "y": 981.765625,
+                "width": 321,
+                "height": 18.234375,
+                "top": 981.765625,
+                "right": 348,
+                "bottom": 1000,
+                "left": 27
+              },
+              "current": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0,
+                "top": 0,
+                "right": 0,
+                "bottom": 0,
+                "left": 0
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "width": 1440,
+      "route": "home",
+      "layoutShiftSum": 0.0028072530864197524,
+      "labCls": 0.0020138271604938267,
+      "observedInteractions": 3,
+      "interactionCount": null,
+      "labInpCandidateMs": 96,
+      "belowThresholdMs": null,
+      "lcpMs": 1804,
+      "gestures": 3,
+      "eventTimingSupported": true,
+      "fonts": "loaded",
+      "failedRequests": [],
+      "taskError": "page.waitForFunction: Timeout 30000ms exceeded.",
+      "targets": {
+        "task": false,
+        "lcp": true,
+        "inpCandidate": true,
+        "cls": true
+      },
+      "events": [
+        {
+          "interactionId": 0,
+          "duration": 96,
+          "name": "pointerover"
+        },
+        {
+          "interactionId": 0,
+          "duration": 96,
+          "name": "pointerenter"
+        },
+        {
+          "interactionId": 0,
+          "duration": 96,
+          "name": "pointerenter"
+        },
+        {
+          "interactionId": 0,
+          "duration": 96,
+          "name": "pointerenter"
+        },
+        {
+          "interactionId": 0,
+          "duration": 96,
+          "name": "pointerenter"
+        },
+        {
+          "interactionId": 0,
+          "duration": 96,
+          "name": "pointerenter"
+        },
+        {
+          "interactionId": 0,
+          "duration": 96,
+          "name": "pointerenter"
+        },
+        {
+          "interactionId": 0,
+          "duration": 96,
+          "name": "pointerenter"
+        },
+        {
+          "interactionId": 0,
+          "duration": 96,
+          "name": "pointerenter"
+        },
+        {
+          "interactionId": 0,
+          "duration": 96,
+          "name": "pointerenter"
+        },
+        {
+          "interactionId": 0,
+          "duration": 96,
+          "name": "pointerenter"
+        },
+        {
+          "interactionId": 0,
+          "duration": 96,
+          "name": "pointerenter"
+        },
+        {
+          "interactionId": 0,
+          "duration": 96,
+          "name": "pointerenter"
+        },
+        {
+          "interactionId": 0,
+          "duration": 96,
+          "name": "pointerenter"
+        },
+        {
+          "interactionId": 0,
+          "duration": 96,
+          "name": "mouseover"
+        },
+        {
+          "interactionId": 297,
+          "duration": 96,
+          "name": "pointerdown"
+        },
+        {
+          "interactionId": 0,
+          "duration": 96,
+          "name": "mousedown"
+        },
+        {
+          "interactionId": 297,
+          "duration": 96,
+          "name": "pointerup"
+        },
+        {
+          "interactionId": 0,
+          "duration": 96,
+          "name": "mouseup"
+        },
+        {
+          "interactionId": 297,
+          "duration": 96,
+          "name": "click"
+        },
+        {
+          "interactionId": 304,
+          "duration": 48,
+          "name": "pointerdown"
+        },
+        {
+          "interactionId": 0,
+          "duration": 48,
+          "name": "mousedown"
+        },
+        {
+          "interactionId": 304,
+          "duration": 48,
+          "name": "pointerup"
+        },
+        {
+          "interactionId": 0,
+          "duration": 48,
+          "name": "mouseup"
+        },
+        {
+          "interactionId": 304,
+          "duration": 48,
+          "name": "click"
+        },
+        {
+          "interactionId": 0,
+          "duration": 24,
+          "name": "pointerout"
+        },
+        {
+          "interactionId": 0,
+          "duration": 24,
+          "name": "pointerleave"
+        },
+        {
+          "interactionId": 0,
+          "duration": 24,
+          "name": "pointerleave"
+        },
+        {
+          "interactionId": 0,
+          "duration": 24,
+          "name": "pointerleave"
+        },
+        {
+          "interactionId": 0,
+          "duration": 24,
+          "name": "pointerover"
+        },
+        {
+          "interactionId": 0,
+          "duration": 24,
+          "name": "pointerenter"
+        },
+        {
+          "interactionId": 0,
+          "duration": 24,
+          "name": "pointerenter"
+        },
+        {
+          "interactionId": 0,
+          "duration": 24,
+          "name": "pointerenter"
+        },
+        {
+          "interactionId": 0,
+          "duration": 24,
+          "name": "mouseout"
+        },
+        {
+          "interactionId": 0,
+          "duration": 24,
+          "name": "mouseover"
+        },
+        {
+          "interactionId": 0,
+          "duration": 24,
+          "name": "pointerout"
+        },
+        {
+          "interactionId": 0,
+          "duration": 24,
+          "name": "pointerleave"
+        },
+        {
+          "interactionId": 0,
+          "duration": 24,
+          "name": "pointerleave"
+        },
+        {
+          "interactionId": 0,
+          "duration": 24,
+          "name": "pointerleave"
+        },
+        {
+          "interactionId": 0,
+          "duration": 24,
+          "name": "pointerleave"
+        },
+        {
+          "interactionId": 0,
+          "duration": 24,
+          "name": "pointerleave"
+        },
+        {
+          "interactionId": 0,
+          "duration": 24,
+          "name": "pointerleave"
+        },
+        {
+          "interactionId": 0,
+          "duration": 24,
+          "name": "pointerleave"
+        },
+        {
+          "interactionId": 0,
+          "duration": 24,
+          "name": "pointerleave"
+        },
+        {
+          "interactionId": 0,
+          "duration": 24,
+          "name": "pointerleave"
+        },
+        {
+          "interactionId": 0,
+          "duration": 24,
+          "name": "pointerleave"
+        },
+        {
+          "interactionId": 0,
+          "duration": 24,
+          "name": "pointerover"
+        },
+        {
+          "interactionId": 0,
+          "duration": 24,
+          "name": "pointerenter"
+        },
+        {
+          "interactionId": 0,
+          "duration": 24,
+          "name": "pointerenter"
+        },
+        {
+          "interactionId": 0,
+          "duration": 24,
+          "name": "pointerenter"
+        },
+        {
+          "interactionId": 0,
+          "duration": 24,
+          "name": "pointerenter"
+        },
+        {
+          "interactionId": 0,
+          "duration": 24,
+          "name": "pointerenter"
+        },
+        {
+          "interactionId": 0,
+          "duration": 24,
+          "name": "pointerenter"
+        },
+        {
+          "interactionId": 0,
+          "duration": 24,
+          "name": "pointerenter"
+        },
+        {
+          "interactionId": 0,
+          "duration": 24,
+          "name": "pointerenter"
+        },
+        {
+          "interactionId": 0,
+          "duration": 24,
+          "name": "mouseout"
+        },
+        {
+          "interactionId": 0,
+          "duration": 24,
+          "name": "mouseover"
+        },
+        {
+          "interactionId": 311,
+          "duration": 16,
+          "name": "pointerdown"
+        },
+        {
+          "interactionId": 0,
+          "duration": 16,
+          "name": "mousedown"
+        },
+        {
+          "interactionId": 311,
+          "duration": 16,
+          "name": "pointerup"
+        },
+        {
+          "interactionId": 0,
+          "duration": 16,
+          "name": "mouseup"
+        },
+        {
+          "interactionId": 311,
+          "duration": 16,
+          "name": "click"
+        }
+      ],
+      "shifts": [
+        {
+          "startTime": 2454.399999999907,
+          "value": 0.0011366666666666665,
+          "hadRecentInput": false,
+          "sources": [
+            {
+              "node": "<button id=\"hdc-install-header\" class=\"hdc-install-control hdc-install-header abp-install-btn md-header__button\" type=\"button\" data-install-app=\"\" data-install-state=\"unavailable\" ",
+              "previous": {
+                "x": 1285.03125,
+                "y": 21,
+                "width": 123.578125,
+                "height": 54,
+                "top": 21,
+                "right": 1408.609375,
+                "bottom": 75,
+                "left": 1285.03125
+              },
+              "current": {
+                "x": 1109.03125,
+                "y": 21,
+                "width": 123.578125,
+                "height": 54,
+                "top": 21,
+                "right": 1232.609375,
+                "bottom": 75,
+                "left": 1109.03125
+              }
+            }
+          ]
+        },
+        {
+          "startTime": 2616.5,
+          "value": 0.00038209876543209877,
+          "hadRecentInput": false,
+          "sources": [
+            {
+              "node": "<div class=\"udhc-actions\"><a class=\"udhc-button\" href=\"http://127.0.0.1:4360/devotional/master-index/\">Browse All Categories →</a><a class=\"udhc-button udhc-button--outline\" href=\"",
+              "previous": {
+                "x": 78,
+                "y": 951.171875,
+                "width": 706,
+                "height": 48.828125,
+                "top": 951.171875,
+                "right": 784,
+                "bottom": 1000,
+                "left": 78
+              },
+              "current": {
+                "x": 78,
+                "y": 959.171875,
+                "width": 706,
+                "height": 40.828125,
+                "top": 959.171875,
+                "right": 784,
+                "bottom": 1000,
+                "left": 78
+              }
+            },
+            {
+              "previous": {
+                "x": 77,
+                "y": 835.578125,
+                "width": 621,
+                "height": 22,
+                "top": 835.578125,
+                "right": 698,
+                "bottom": 857.578125,
+                "left": 77
+              },
+              "current": {
+                "x": 77,
+                "y": 832.578125,
+                "width": 621,
+                "height": 22,
+                "top": 832.578125,
+                "right": 698,
+                "bottom": 854.578125,
+                "left": 77
+              }
+            },
+            {
+              "node": "<button type=\"button\" class=\"abp-navigation__section\" aria-expanded=\"false\" aria-controls=\"abp-menu-3\">\n  <span class=\"hdc-icon\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/20",
+              "previous": {
+                "x": 506.71875,
+                "y": 87,
+                "width": 228.78125,
+                "height": 54,
+                "top": 87,
+                "right": 735.5,
+                "bottom": 141,
+                "left": 506.71875
+              },
+              "current": {
+                "x": 503.125,
+                "y": 87,
+                "width": 234.171875,
+                "height": 54,
+                "top": 87,
+                "right": 737.296875,
+                "bottom": 141,
+                "left": 503.125
+              }
+            },
+            {
+              "previous": {
+                "x": 91,
+                "y": 885.671875,
+                "width": 488.765625,
+                "height": 21,
+                "top": 885.671875,
+                "right": 579.765625,
+                "bottom": 906.671875,
+                "left": 91
+              },
+              "current": {
+                "x": 91,
+                "y": 889.171875,
+                "width": 488.921875,
+                "height": 22,
+                "top": 889.171875,
+                "right": 579.921875,
+                "bottom": 911.171875,
+                "left": 91
+              }
+            },
+            {
+              "node": "<button type=\"button\" class=\"abp-navigation__section\" aria-expanded=\"false\" aria-controls=\"abp-menu-2\">\n  <span class=\"hdc-icon\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/20",
+              "previous": {
+                "x": 253.75,
+                "y": 87,
+                "width": 214.953125,
+                "height": 54,
+                "top": 87,
+                "right": 468.703125,
+                "bottom": 141,
+                "left": 253.75
+              },
+              "current": {
+                "x": 249.890625,
+                "y": 87,
+                "width": 218.890625,
+                "height": 54,
+                "top": 87,
+                "right": 468.78125,
+                "bottom": 141,
+                "left": 249.890625
+              }
+            }
+          ]
+        },
+        {
+          "startTime": 2694.0999999996275,
+          "value": 0.0004950617283950617,
+          "hadRecentInput": false,
+          "sources": [
+            {
+              "node": "<button id=\"hdc-install-header\" class=\"hdc-install-control hdc-install-header abp-install-btn md-header__button\" type=\"button\" data-install-app=\"\" data-install-state=\"unavailable\" ",
+              "previous": {
+                "x": 1104.5625,
+                "y": 21,
+                "width": 128.046875,
+                "height": 54,
+                "top": 21,
+                "right": 1232.609375,
+                "bottom": 75,
+                "left": 1104.5625
+              },
+              "current": {
+                "x": 1024.5625,
+                "y": 21,
+                "width": 128.046875,
+                "height": 54,
+                "top": 21,
+                "right": 1152.609375,
+                "bottom": 75,
+                "left": 1024.5625
+              }
+            },
+            {
+              "node": "<label class=\"md-header__button md-icon\" title=\"Switch to dark (lamp-light) mode\" for=\"__palette_1\">\n        <svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\"><path d=\"m1",
+              "previous": {
+                "x": 1052.5625,
+                "y": 28,
+                "width": 40,
+                "height": 40,
+                "top": 28,
+                "right": 1092.5625,
+                "bottom": 68,
+                "left": 1052.5625
+              },
+              "current": {
+                "x": 972.5625,
+                "y": 28,
+                "width": 40,
+                "height": 40,
+                "top": 28,
+                "right": 1012.5625,
+                "bottom": 68,
+                "left": 972.5625
+              }
+            }
+          ]
+        },
+        {
+          "startTime": 6035.5,
+          "value": 0.0007934259259259259,
+          "hadRecentInput": false,
+          "sources": [
+            {
+              "node": "<button id=\"hdc-install-header\" class=\"hdc-install-control hdc-install-header abp-install-btn md-header__button\" type=\"button\" data-install-app=\"\" data-install-state=\"unavailable\" ",
+              "previous": {
+                "x": 1024.5625,
+                "y": 21,
+                "width": 128.046875,
+                "height": 54,
+                "top": 21,
+                "right": 1152.609375,
+                "bottom": 75,
+                "left": 1024.5625
+              },
+              "current": {
+                "x": 1104.5625,
+                "y": 21,
+                "width": 128.046875,
+                "height": 54,
+                "top": 21,
+                "right": 1232.609375,
+                "bottom": 75,
+                "left": 1104.5625
+              }
+            },
+            {
+              "node": "<label class=\"md-header__button md-icon\" title=\"Switch to dark (lamp-light) mode\" for=\"__palette_1\">\n        <svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\"><path d=\"m1",
+              "previous": {
+                "x": 972.5625,
+                "y": 28,
+                "width": 40,
+                "height": 40,
+                "top": 28,
+                "right": 1012.5625,
+                "bottom": 68,
+                "left": 972.5625
+              },
+              "current": {
+                "x": 858.5625,
+                "y": 28,
+                "width": 40,
+                "height": 40,
+                "top": 28,
+                "right": 898.5625,
+                "bottom": 68,
+                "left": 858.5625
+              }
+            }
+          ]
+        },
+        {
+          "startTime": 15014,
+          "value": 0.02431045138888889,
+          "hadRecentInput": true,
+          "sources": [
+            {
+              "node": "<ul class=\"abp-stats\" aria-label=\"The collection in numbers\"><li><b>43,085</b> <span data-i18n=\"works\">works</span></li><li><b>42</b> <span data-i18n=\"categories\">categories</span>",
+              "previous": {
+                "x": 0,
+                "y": 550.640625,
+                "width": 1440,
+                "height": 233.1875,
+                "top": 550.640625,
+                "right": 1440,
+                "bottom": 783.828125,
+                "left": 0
+              },
+              "current": {
+                "x": 0,
+                "y": 628.640625,
+                "width": 1440,
+                "height": 233.1875,
+                "top": 628.640625,
+                "right": 1440,
+                "bottom": 861.828125,
+                "left": 0
+              }
+            },
+            {
+              "node": "<section class=\"udhc-section hdc-daily\" aria-labelledby=\"hdc-daily-title\"><p class=\"udhc-kicker\">Your daily devotional companion</p><h2 id=\"hdc-daily-title\">Daily Darshan</h2><p cl",
+              "previous": {
+                "x": 1,
+                "y": 706.828125,
+                "width": 1438,
+                "height": 293.171875,
+                "top": 706.828125,
+                "right": 1439,
+                "bottom": 1000,
+                "left": 1
+              },
+              "current": {
+                "x": 1,
+                "y": 784.828125,
+                "width": 1438,
+                "height": 215.171875,
+                "top": 784.828125,
+                "right": 1439,
+                "bottom": 1000,
+                "left": 1
+              }
+            },
+            {
+              "node": "<summary aria-expanded=\"false\"><span aria-hidden=\"true\">🕉</span><span>TODAY PANCHANG</span></summary>",
+              "previous": {
+                "x": 58.515625,
+                "y": 981.734375,
+                "width": 1322.96875,
+                "height": 18.265625,
+                "top": 981.734375,
+                "right": 1381.484375,
+                "bottom": 1000,
+                "left": 58.515625
+              },
+              "current": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0,
+                "top": 0,
+                "right": 0,
+                "bottom": 0,
+                "left": 0
+              }
+            }
+          ]
+        },
+        {
+          "startTime": 15106.099999999627,
+          "value": 0.02431045138888889,
+          "hadRecentInput": true,
+          "sources": [
+            {
+              "node": "<ul class=\"abp-stats\" aria-label=\"The collection in numbers\"><li><b>43,085</b> <span data-i18n=\"works\">works</span></li><li><b>42</b> <span data-i18n=\"categories\">categories</span>",
+              "previous": {
+                "x": 0,
+                "y": 628.640625,
+                "width": 1440,
+                "height": 233.1875,
+                "top": 628.640625,
+                "right": 1440,
+                "bottom": 861.828125,
+                "left": 0
+              },
+              "current": {
+                "x": 0,
+                "y": 550.640625,
+                "width": 1440,
+                "height": 233.1875,
+                "top": 550.640625,
+                "right": 1440,
+                "bottom": 783.828125,
+                "left": 0
+              }
+            },
+            {
+              "node": "<section class=\"udhc-section hdc-daily\" aria-labelledby=\"hdc-daily-title\"><p class=\"udhc-kicker\">Your daily devotional companion</p><h2 id=\"hdc-daily-title\">Daily Darshan</h2><p cl",
+              "previous": {
+                "x": 1,
+                "y": 784.828125,
+                "width": 1438,
+                "height": 215.171875,
+                "top": 784.828125,
+                "right": 1439,
+                "bottom": 1000,
+                "left": 1
+              },
+              "current": {
+                "x": 1,
+                "y": 706.828125,
+                "width": 1438,
+                "height": 293.171875,
+                "top": 706.828125,
+                "right": 1439,
+                "bottom": 1000,
+                "left": 1
+              }
+            },
+            {
+              "node": "<summary aria-expanded=\"false\"><span aria-hidden=\"true\">🕉</span><span>TODAY PANCHANG</span></summary>",
+              "previous": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0,
+                "top": 0,
+                "right": 0,
+                "bottom": 0,
+                "left": 0
+              },
+              "current": {
+                "x": 58.515625,
+                "y": 981.734375,
+                "width": 1322.96875,
+                "height": 18.265625,
+                "top": 981.734375,
+                "right": 1381.484375,
+                "bottom": 1000,
+                "left": 58.515625
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "width": 1440,
+      "route": "find/",
+      "layoutShiftSum": 0.28466671642162183,
+      "labCls": 0.2787625,
+      "observedInteractions": 2,
+      "interactionCount": null,
+      "labInpCandidateMs": 16,
+      "belowThresholdMs": null,
+      "lcpMs": 1140,
+      "gestures": 7,
+      "eventTimingSupported": true,
+      "fonts": "loaded",
+      "failedRequests": [],
+      "taskError": null,
+      "targets": {
+        "task": true,
+        "lcp": true,
+        "inpCandidate": true,
+        "cls": false
+      },
+      "events": [
+        {
+          "interactionId": 4378,
+          "duration": 16,
+          "name": "keydown"
+        },
+        {
+          "interactionId": 4378,
+          "duration": 16,
+          "name": "keypress"
+        },
+        {
+          "interactionId": 4399,
+          "duration": 16,
+          "name": "keydown"
+        },
+        {
+          "interactionId": 4399,
+          "duration": 16,
+          "name": "keypress"
+        }
+      ],
+      "shifts": [
+        {
+          "startTime": 1676.8999999999069,
+          "value": 0.0011366666666666665,
+          "hadRecentInput": false,
+          "sources": [
+            {
+              "node": "<button id=\"hdc-install-header\" class=\"hdc-install-control hdc-install-header abp-install-btn md-header__button\" type=\"button\" data-install-app=\"\" data-install-state=\"unavailable\" ",
+              "previous": {
+                "x": 1285.03125,
+                "y": 21,
+                "width": 123.578125,
+                "height": 54,
+                "top": 21,
+                "right": 1408.609375,
+                "bottom": 75,
+                "left": 1285.03125
+              },
+              "current": {
+                "x": 1109.03125,
+                "y": 21,
+                "width": 123.578125,
+                "height": 54,
+                "top": 21,
+                "right": 1232.609375,
+                "bottom": 75,
+                "left": 1109.03125
+              }
+            }
+          ]
+        },
+        {
+          "startTime": 1932.1000000000931,
+          "value": 0.0027929354293258104,
+          "hadRecentInput": false,
+          "sources": [
+            {
+              "previous": {
+                "x": 72.796875,
+                "y": 383.796875,
+                "width": 1294.40625,
+                "height": 17,
+                "top": 383.796875,
+                "right": 1367.203125,
+                "bottom": 400.796875,
+                "left": 72.796875
+              },
+              "current": {
+                "x": 72.796875,
+                "y": 383.796875,
+                "width": 1294.40625,
+                "height": 17,
+                "top": 383.796875,
+                "right": 1367.203125,
+                "bottom": 400.796875,
+                "left": 72.796875
+              }
+            },
+            {
+              "node": "<button type=\"button\" class=\"abp-navigation__section\" aria-expanded=\"false\" aria-controls=\"abp-menu-3\">\n  <span class=\"hdc-icon\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/20",
+              "previous": {
+                "x": 506.71875,
+                "y": 87,
+                "width": 228.78125,
+                "height": 54,
+                "top": 87,
+                "right": 735.5,
+                "bottom": 141,
+                "left": 506.71875
+              },
+              "current": {
+                "x": 503.125,
+                "y": 87,
+                "width": 234.171875,
+                "height": 54,
+                "top": 87,
+                "right": 737.296875,
+                "bottom": 141,
+                "left": 503.125
+              }
+            },
+            {
+              "node": "<button type=\"button\" class=\"abp-navigation__section\" aria-expanded=\"false\" aria-controls=\"abp-menu-2\">\n  <span class=\"hdc-icon\" aria-hidden=\"true\"><svg xmlns=\"http://www.w3.org/20",
+              "previous": {
+                "x": 253.75,
+                "y": 87,
+                "width": 214.953125,
+                "height": 54,
+                "top": 87,
+                "right": 468.703125,
+                "bottom": 141,
+                "left": 253.75
+              },
+              "current": {
+                "x": 249.890625,
+                "y": 87,
+                "width": 218.890625,
+                "height": 54,
+                "top": 87,
+                "right": 468.78125,
+                "bottom": 141,
+                "left": 249.890625
+              }
+            },
+            {
+              "node": "<button id=\"hdc-install-header\" class=\"hdc-install-control hdc-install-header abp-install-btn md-header__button\" type=\"button\" data-install-app=\"\" data-install-state=\"unavailable\" ",
+              "previous": {
+                "x": 1109.03125,
+                "y": 21,
+                "width": 123.578125,
+                "height": 54,
+                "top": 21,
+                "right": 1232.609375,
+                "bottom": 75,
+                "left": 1109.03125
+              },
+              "current": {
+                "x": 1024.5625,
+                "y": 21,
+                "width": 128.046875,
+                "height": 54,
+                "top": 21,
+                "right": 1152.609375,
+                "bottom": 75,
+                "left": 1024.5625
+              }
+            },
+            {
+              "node": "<th role=\"columnheader\" scope=\"col\" class=\"lang\" data-i18n=\"language\">Language</th>",
+              "previous": {
+                "x": 523.234375,
+                "y": 579.875,
+                "width": 258.71875,
+                "height": 33.265625,
+                "top": 579.875,
+                "right": 781.953125,
+                "bottom": 613.140625,
+                "left": 523.234375
+              },
+              "current": {
+                "x": 519.265625,
+                "y": 580.875,
+                "width": 263.328125,
+                "height": 33.265625,
+                "top": 580.875,
+                "right": 782.59375,
+                "bottom": 614.140625,
+                "left": 519.265625
+              }
+            }
+          ]
+        },
+        {
+          "startTime": 2640.399999999907,
+          "value": 0.00031816177933304397,
+          "hadRecentInput": false,
+          "sources": [
+            {
+              "previous": {
+                "x": 72.796875,
+                "y": 350.796875,
+                "width": 1294.40625,
+                "height": 33,
+                "top": 350.796875,
+                "right": 1367.203125,
+                "bottom": 383.796875,
+                "left": 72.796875
+              },
+              "current": {
+                "x": 72.796875,
+                "y": 347.796875,
+                "width": 1294.40625,
+                "height": 33,
+                "top": 347.796875,
+                "right": 1367.203125,
+                "bottom": 380.796875,
+                "left": 72.796875
+              }
+            },
+            {
+              "node": "<th role=\"columnheader\" scope=\"col\" class=\"lang\" data-i18n=\"language\">Language</th>",
+              "previous": {
+                "x": 519.265625,
+                "y": 580.875,
+                "width": 263.328125,
+                "height": 33.265625,
+                "top": 580.875,
+                "right": 782.59375,
+                "bottom": 614.140625,
+                "left": 519.265625
+              },
+              "current": {
+                "x": 515.625,
+                "y": 580.875,
+                "width": 264.453125,
+                "height": 33.265625,
+                "top": 580.875,
+                "right": 780.078125,
+                "bottom": 614.140625,
+                "left": 515.625
+              }
+            },
+            {
+              "node": "<span class=\"abp-sacred-rule\" aria-hidden=\"true\"></span>",
+              "previous": {
+                "x": 427.71875,
+                "y": 253.296875,
+                "width": 966.484375,
+                "height": 1,
+                "top": 253.296875,
+                "right": 1394.203125,
+                "bottom": 254.296875,
+                "left": 427.71875
+              },
+              "current": {
+                "x": 416.015625,
+                "y": 253.296875,
+                "width": 978.1875,
+                "height": 1,
+                "top": 253.296875,
+                "right": 1394.203125,
+                "bottom": 254.296875,
+                "left": 416.015625
+              }
+            }
+          ]
+        },
+        {
+          "startTime": 3636.5,
+          "value": 0.0016564525462962963,
+          "hadRecentInput": false,
+          "sources": [
+            {
+              "node": "<button id=\"hdc-install-header\" class=\"hdc-install-control hdc-install-header abp-install-btn md-header__button\" type=\"button\" data-install-app=\"\" data-install-state=\"unavailable\" ",
+              "previous": {
+                "x": 1024.5625,
+                "y": 21,
+                "width": 128.046875,
+                "height": 54,
+                "top": 21,
+                "right": 1152.609375,
+                "bottom": 75,
+                "left": 1024.5625
+              },
+              "current": {
+                "x": 1104.5625,
+                "y": 21,
+                "width": 128.046875,
+                "height": 54,
+                "top": 21,
+                "right": 1232.609375,
+                "bottom": 75,
+                "left": 1104.5625
+              }
+            },
+            {
+              "node": "<th role=\"columnheader\" scope=\"col\" class=\"lang\" data-i18n=\"language\">Language</th>",
+              "previous": {
+                "x": 515.625,
+                "y": 580.875,
+                "width": 264.453125,
+                "height": 33.265625,
+                "top": 580.875,
+                "right": 780.078125,
+                "bottom": 614.140625,
+                "left": 515.625
+              },
+              "current": {
+                "x": 512.265625,
+                "y": 580.875,
+                "width": 265.484375,
+                "height": 33.265625,
+                "top": 580.875,
+                "right": 777.75,
+                "bottom": 614.140625,
+                "left": 512.265625
+              }
+            },
+            {
+              "node": "<a class=\"abp-btn abp-pager__p\" href=\"http://127.0.0.1:4360/devotional/categories/42-sacred-objects-implements-ayudhas-vessels-and-ritual-instrument-traditions/kalasha-sthapana-and",
+              "previous": {
+                "x": 500.046875,
+                "y": 917.734375,
+                "width": 148.859375,
+                "height": 46,
+                "top": 917.734375,
+                "right": 648.90625,
+                "bottom": 963.734375,
+                "left": 500.046875
+              },
+              "current": {
+                "x": 524.90625,
+                "y": 917.734375,
+                "width": 123.984375,
+                "height": 46,
+                "top": 917.734375,
+                "right": 648.890625,
+                "bottom": 963.734375,
+                "left": 524.90625
+              }
+            },
+            {
+              "node": "<label class=\"md-header__button md-icon\" title=\"Switch to dark (lamp-light) mode\" for=\"__palette_1\">\n        <svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\"><path d=\"m1",
+              "previous": {
+                "x": 972.5625,
+                "y": 28,
+                "width": 40,
+                "height": 40,
+                "top": 28,
+                "right": 1012.5625,
+                "bottom": 68,
+                "left": 972.5625
+              },
+              "current": {
+                "x": 858.5625,
+                "y": 28,
+                "width": 40,
+                "height": 40,
+                "top": 28,
+                "right": 898.5625,
+                "bottom": 68,
+                "left": 858.5625
+              }
+            }
+          ]
+        },
+        {
+          "startTime": 32901.59999999963,
+          "value": 0.2787625,
+          "hadRecentInput": false,
+          "sources": [
+            {
+              "node": "<aside class=\"hdc-living\" data-living-festival=\"\" lang=\"en\" aria-label=\"Festival appearance\">\n <details>\n  <summary>Festival appearance — development preview</summary>\n  <p>This pr",
+              "previous": {
+                "x": 45.796875,
+                "y": 670.734375,
+                "width": 1348.40625,
+                "height": 116,
+                "top": 670.734375,
+                "right": 1394.203125,
+                "bottom": 786.734375,
+                "left": 45.796875
+              },
+              "current": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0,
+                "top": 0,
+                "right": 0,
+                "bottom": 0,
+                "left": 0
+              }
+            },
+            {
+              "node": "<nav class=\"abp-pager\" aria-label=\"Canonical content navigation\" data-base=\"/devotional/\">\n  <a class=\"abp-btn abp-pager__p\" href=\"http://127.0.0.1:4360/devotional/categories/42-sa",
+              "previous": {
+                "x": 45.796875,
+                "y": 896.734375,
+                "width": 1348.40625,
+                "height": 67,
+                "top": 896.734375,
+                "right": 1394.203125,
+                "bottom": 963.734375,
+                "left": 45.796875
+              },
+              "current": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0,
+                "top": 0,
+                "right": 0,
+                "bottom": 0,
+                "left": 0
+              }
+            },
+            {
+              "node": "<details class=\"hdc-practice hdc-page-share\" data-share-page=\"\"><summary>Share this public page</summary>\n<p>Shares the current address, including search filters or an anchor. Save",
+              "previous": {
+                "x": 45.796875,
+                "y": 806.734375,
+                "width": 1348.40625,
+                "height": 46,
+                "top": 806.734375,
+                "right": 1394.203125,
+                "bottom": 852.734375,
+                "left": 45.796875
+              },
+              "current": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0,
+                "top": 0,
+                "right": 0,
+                "bottom": 0,
+                "left": 0
+              }
+            },
+            {
+              "node": "<p class=\"abp-finder__status\" id=\"abp-status\" role=\"status\" aria-live=\"polite\" data-i18n=\"loading\">312 works · 200 shown</p>",
+              "previous": {
+                "x": 66.796875,
+                "y": 548.640625,
+                "width": 1306.40625,
+                "height": 19.84375,
+                "top": 548.640625,
+                "right": 1373.203125,
+                "bottom": 568.484375,
+                "left": 66.796875
+              },
+              "current": {
+                "x": 66.796875,
+                "y": 646.640625,
+                "width": 1306.40625,
+                "height": 19.84375,
+                "top": 646.640625,
+                "right": 1373.203125,
+                "bottom": 666.484375,
+                "left": 66.796875
+              }
+            },
+            {
+              "node": "<div class=\"abp-sheet\"><table class=\"abp-table abp-table--finder\" role=\"table\" data-a11y=\"\"><caption class=\"abp-sr\" data-i18n=\"searchResults\">Search results</caption><thead role=\"r",
+              "previous": {
+                "x": 66.796875,
+                "y": 580.875,
+                "width": 1306.40625,
+                "height": 33.265625,
+                "top": 580.875,
+                "right": 1373.203125,
+                "bottom": 614.140625,
+                "left": 66.796875
+              },
+              "current": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0,
+                "top": 0,
+                "right": 0,
+                "bottom": 0,
+                "left": 0
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "variant": "living-festival-fixture",
+  "benchmarkCommit": "c22c8dc30ba1c5eee913fdbf4d769958742e843b",
+  "sourceCommit": "c22c8dc30ba1c5eee913fdbf4d769958742e843b",
+  "builtSourceCommit": "1eecdf2",
+  "sourceStatus": "",
+  "browser": "151.0.7922.34",
+  "builtAssets": {
+    "javascripts/abp-practice.js": "cf8c98227067d410a6ba9cabd25791c2b990d79afd195787922b1b3aaed393c7",
+    "javascripts/abp-journeys.js": "65d60ccd2e65271602547afbb51b96e54be74bf49226c3058f138ca6a299b92c",
+    "javascripts/abp-local-state.js": "6edef25efeb6852ee20cb1ebd25a7eef8e9d7614819498a64f538149ea059a85",
+    "sw.js": "40e1ea7984b801b424359a97b1be715122f05ca9354c7d1afb60fe220a16f3e4",
+    "javascripts/abp-living-festivals.js": "09549b855fd297fedb7d45030194f4ab2bee68f867e97f3871db97da1f1c221e",
+    "assets/festivals/living-scheduler.mjs": "ab2a480a7ddc6f1314806be1c436b3f64800885d5571660e682c26a8237f4232",
+    "assets/festivals/living-presentation.mjs": "5bde577f717d617e2e6b72eb53dd8d26429b8193fbb937eee87b64c21dc1d563",
+    "assets/festivals/living-registry.json": "08c75fedb48a2743ee2cc4267871b17472a687aa9a7b63f446e87584d15aebb1",
+    "assets/festivals/living-policy.json": "fa45e97e920963cbe47ca015ec6bf9c4a4a5c7a8f30a7cc5608610f94fdd9ecd"
+  },
+  "stylesheetBundle": {
+    "schema": 1,
+    "bundle": "stylesheets/hdc-preview-0135c51b248633ff.css",
+    "sitePath": "/devotional/",
+    "bytes": 296929,
+    "sources": [
+      {
+        "path": "assets/stylesheets/main.ec1eaa64.min.css",
+        "sha256": "ec1eaa640ab3790ea234d5a09da26015eb070222da8185a1e532d99cb022d68d"
+      },
+      {
+        "path": "assets/stylesheets/palette.ab4e12ef.min.css",
+        "sha256": "ab4e12ef511f9c36de818455892c5c57cc3f98a8c86c36fa609601a88a720da2"
+      },
+      {
+        "path": "stylesheets/abp.css",
+        "sha256": "382dd5a4c258a6fdf5109ebab20313a77df148bef76561898ef283f699c03222"
+      },
+      {
+        "path": "stylesheets/navigation.css",
+        "sha256": "951cfd0b1c08f0e38c046782d2bc1d06b439471409ea6ec9f87466fe717c848a"
+      },
+      {
+        "path": "stylesheets/feedback.css",
+        "sha256": "954105189fd4f2b7c1c86a77c806e2617f5b8faa3ba4342fcd06e4863ccece74"
+      },
+      {
+        "path": "stylesheets/project-info.css",
+        "sha256": "214a1a327aa75cd45be1079da348a7b1e7ae1c70e039971a85531a77c318a256"
+      },
+      {
+        "path": "stylesheets/search.css",
+        "sha256": "399eeb9b1791141c190df83c643ea07a781424526d88386afa20828a5c08a321"
+      },
+      {
+        "path": "stylesheets/royal-home.css",
+        "sha256": "8b40c0d551ba6d750a9de8c9aa04e2bbe949590a825605523d120bc6efc5161a"
+      },
+      {
+        "path": "stylesheets/sacred-site.css",
+        "sha256": "976facb199cb600b87aefaa363a28a6344c540d70992fed908d7b9eb99d8122e"
+      },
+      {
+        "path": "stylesheets/deity-art.css",
+        "sha256": "12432eeff41de8354d03c229bf3629ce9ff7a8afe10664e6460bf932a889c598"
+      },
+      {
+        "path": "stylesheets/hdc-header.css",
+        "sha256": "f0cda62c5c726b57c7197f95db9c41f0c9e83accfe4618da26ff8b1823dd2fb5"
+      },
+      {
+        "path": "stylesheets/practice.css",
+        "sha256": "2eb4ebd9664cafbdf10654e17ec3da36a8837e0042d1f499a60ad021b94e8476"
+      },
+      {
+        "path": "stylesheets/living-festivals.css",
+        "sha256": "8fa783b310beafdde871be3ad2d665129901e59fdb622231c6cdebc1cdf211c1"
+      }
+    ],
+    "sha256": "0135c51b248633ff870eddffcf5e33c83b12d22d61101b1682b0c7bcd434d811"
+  },
+  "allTargetsMet": false
+}

@@ -1,0 +1,127 @@
+{
+  "schema": 1,
+  "reviewedOn": "2026-11-05",
+  "status": "design-studies-cultural-approval-pending",
+  "codeLicenseReference": "LICENSE",
+  "additionalThirdPartyImages": [],
+  "existingArtReference": "DEITY_ARTWORK.md",
+  "themes": [
+    {
+      "id": "diwali",
+      "name": "Diwali",
+      "motif": "lamp",
+      "implementation": [
+        "docs/assets/festivals/living-presentation.mjs",
+        "docs/stylesheets/living-festivals.css"
+      ],
+      "provenance": "Original abstract code-authored SVG/CSS; no external image copied or deity image created",
+      "existingCollectionRoute": "categories/01-deities-sub-deities-and-divine-forms/lakshmi/",
+      "additionalImageRequests": 0,
+      "culturalApproval": "pending"
+    },
+    {
+      "id": "holi",
+      "name": "Holi",
+      "motif": "petal",
+      "implementation": [
+        "docs/assets/festivals/living-presentation.mjs",
+        "docs/stylesheets/living-festivals.css"
+      ],
+      "provenance": "Original abstract code-authored SVG/CSS; no external image copied or deity image created",
+      "existingCollectionRoute": "categories/01-deities-sub-deities-and-divine-forms/krishna/",
+      "additionalImageRequests": 0,
+      "culturalApproval": "pending"
+    },
+    {
+      "id": "shivaratri",
+      "name": "Maha Shivaratri",
+      "motif": "moon",
+      "implementation": [
+        "docs/assets/festivals/living-presentation.mjs",
+        "docs/stylesheets/living-festivals.css"
+      ],
+      "provenance": "Original abstract code-authored SVG/CSS; no external image copied or deity image created",
+      "existingCollectionRoute": "categories/01-deities-sub-deities-and-divine-forms/shiva-mahesh/",
+      "additionalImageRequests": 0,
+      "culturalApproval": "pending"
+    },
+    {
+      "id": "chhath",
+      "name": "Chhath",
+      "motif": "sun",
+      "implementation": [
+        "docs/assets/festivals/living-presentation.mjs",
+        "docs/stylesheets/living-festivals.css"
+      ],
+      "provenance": "Original abstract code-authored SVG/CSS; no external image copied or deity image created",
+      "existingCollectionRoute": "categories/01-deities-sub-deities-and-divine-forms/surya/",
+      "additionalImageRequests": 0,
+      "culturalApproval": "pending"
+    },
+    {
+      "id": "pongal",
+      "name": "Pongal",
+      "motif": "grain",
+      "implementation": [
+        "docs/assets/festivals/living-presentation.mjs",
+        "docs/stylesheets/living-festivals.css"
+      ],
+      "provenance": "Original abstract code-authored SVG/CSS; no external image copied or deity image created",
+      "existingCollectionRoute": "categories/01-deities-sub-deities-and-divine-forms/surya/",
+      "additionalImageRequests": 0,
+      "culturalApproval": "pending"
+    },
+    {
+      "id": "ganesha",
+      "name": "Ganesha",
+      "motif": "arch",
+      "implementation": [
+        "docs/assets/festivals/living-presentation.mjs",
+        "docs/stylesheets/living-festivals.css"
+      ],
+      "provenance": "Original abstract code-authored SVG/CSS; no external image copied or deity image created",
+      "existingCollectionRoute": "categories/01-deities-sub-deities-and-divine-forms/ganesha/",
+      "additionalImageRequests": 0,
+      "culturalApproval": "pending"
+    },
+    {
+      "id": "navratri",
+      "name": "Shardiya Navratri",
+      "motif": "garland",
+      "implementation": [
+        "docs/assets/festivals/living-presentation.mjs",
+        "docs/stylesheets/living-festivals.css"
+      ],
+      "provenance": "Original abstract code-authored SVG/CSS; no external image copied or deity image created",
+      "existingCollectionRoute": "categories/01-deities-sub-deities-and-divine-forms/durga/",
+      "additionalImageRequests": 0,
+      "culturalApproval": "pending"
+    },
+    {
+      "id": "durga-puja",
+      "name": "Durga Puja",
+      "motif": "alpana",
+      "implementation": [
+        "docs/assets/festivals/living-presentation.mjs",
+        "docs/stylesheets/living-festivals.css"
+      ],
+      "provenance": "Original abstract code-authored SVG/CSS; no external image copied or deity image created",
+      "existingCollectionRoute": "categories/01-deities-sub-deities-and-divine-forms/durga/",
+      "additionalImageRequests": 0,
+      "culturalApproval": "pending"
+    },
+    {
+      "id": "ratha-jatra",
+      "name": "Ratha Jatra",
+      "motif": "chariot",
+      "implementation": [
+        "docs/assets/festivals/living-presentation.mjs",
+        "docs/stylesheets/living-festivals.css"
+      ],
+      "provenance": "Original abstract code-authored SVG/CSS; no external image copied or deity image created",
+      "existingCollectionRoute": "categories/01-deities-sub-deities-and-divine-forms/jagannath/",
+      "additionalImageRequests": 0,
+      "culturalApproval": "pending"
+    }
+  ]
+}

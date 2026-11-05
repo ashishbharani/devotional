@@ -1,0 +1,5356 @@
+{
+  "schema": 2,
+  "status": "incomplete-review-build",
+  "years": [
+    2026,
+    2027,
+    2028,
+    2029,
+    2030
+  ],
+  "regions": [
+    "IN",
+    "IN-AP",
+    "IN-AR",
+    "IN-AS",
+    "IN-BR",
+    "IN-CT",
+    "IN-GA",
+    "IN-GJ",
+    "IN-HR",
+    "IN-HP",
+    "IN-JH",
+    "IN-KA",
+    "IN-KL",
+    "IN-MP",
+    "IN-MH",
+    "IN-MN",
+    "IN-ML",
+    "IN-MZ",
+    "IN-NL",
+    "IN-OD",
+    "IN-PB",
+    "IN-RJ",
+    "IN-SK",
+    "IN-TN",
+    "IN-TG",
+    "IN-TR",
+    "IN-UP",
+    "IN-UK",
+    "IN-WB",
+    "IN-AN",
+    "IN-CH",
+    "IN-DH",
+    "IN-DL",
+    "IN-JK",
+    "IN-LA",
+    "IN-LD",
+    "IN-PY"
+  ],
+  "regionNames": {
+    "IN": "Nationwide",
+    "IN-AP": "Andhra Pradesh",
+    "IN-AR": "Arunachal Pradesh",
+    "IN-AS": "Assam",
+    "IN-BR": "Bihar",
+    "IN-CT": "Chhattisgarh",
+    "IN-GA": "Goa",
+    "IN-GJ": "Gujarat",
+    "IN-HR": "Haryana",
+    "IN-HP": "Himachal Pradesh",
+    "IN-JH": "Jharkhand",
+    "IN-KA": "Karnataka",
+    "IN-KL": "Kerala",
+    "IN-MP": "Madhya Pradesh",
+    "IN-MH": "Maharashtra",
+    "IN-MN": "Manipur",
+    "IN-ML": "Meghalaya",
+    "IN-MZ": "Mizoram",
+    "IN-NL": "Nagaland",
+    "IN-OD": "Odisha",
+    "IN-PB": "Punjab",
+    "IN-RJ": "Rajasthan",
+    "IN-SK": "Sikkim",
+    "IN-TN": "Tamil Nadu",
+    "IN-TG": "Telangana",
+    "IN-TR": "Tripura",
+    "IN-UP": "Uttar Pradesh",
+    "IN-UK": "Uttarakhand",
+    "IN-WB": "West Bengal",
+    "IN-AN": "Andaman and Nicobar Islands",
+    "IN-CH": "Chandigarh",
+    "IN-DH": "Dadra and Nagar Haveli and Daman and Diu",
+    "IN-DL": "Delhi",
+    "IN-JK": "Jammu and Kashmir",
+    "IN-LA": "Ladakh",
+    "IN-LD": "Lakshadweep",
+    "IN-PY": "Puducherry"
+  },
+  "themes": [
+    "diwali",
+    "holi",
+    "shivaratri",
+    "chhath",
+    "pongal",
+    "ganesha",
+    "navratri",
+    "durga-puja",
+    "ratha-jatra"
+  ],
+  "families": [
+    {
+      "id": "diwali",
+      "theme": "diwali"
+    },
+    {
+      "id": "navratri",
+      "theme": "navratri"
+    },
+    {
+      "id": "ganeshotsav",
+      "theme": "ganesha"
+    },
+    {
+      "id": "durga-puja",
+      "theme": "durga-puja"
+    },
+    {
+      "id": "chhath",
+      "theme": "chhath"
+    },
+    {
+      "id": "pongal",
+      "theme": "pongal"
+    },
+    {
+      "id": "holi",
+      "theme": "holi"
+    },
+    {
+      "id": "shivaratri",
+      "theme": "shivaratri"
+    },
+    {
+      "id": "ratha-jatra",
+      "theme": "ratha-jatra"
+    }
+  ],
+  "windows": [
+    {
+      "id": "diwali-2026-new-delhi",
+      "name": "Diwali family — New Delhi, India calendar reference",
+      "family": "diwali",
+      "theme": "diwali",
+      "year": 2026,
+      "start": "2026-11-06",
+      "end": "2026-11-11",
+      "regions": [
+        "IN-DL"
+      ],
+      "location": "New Delhi, India",
+      "tradition": "Drik Panchang published New Delhi, India reference; regional observance conventions may differ",
+      "priority": 90,
+      "status": "verified",
+      "verificationScope": "published-calendar-reference",
+      "confidence": "source-checked-reference",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05",
+        "basis": "Source publication, explicit year and city checked; owner accepted this source standard on 2026-11-05. This is not a temple or universal regional ruling."
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/diwali/diwali-puja-calendar.html?year=2026&geoname-id=1261481",
+          "label": "Drik Panchang 2026 diwali reference for New Delhi, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ],
+      "sourceReview": {
+        "status": "publication-and-location-checked",
+        "reviewer": "Codex source review",
+        "reviewedOn": "2026-11-05",
+        "sourceTitle": "2026 Diwali Puja, Deepavali Puja Calendar for New Delhi, NCT, India",
+        "sha256": "745f85d9c2221ebb55b68016981346003f78c03b35cb0ac2995f0233c7e58aa4"
+      },
+      "aliases": [
+        "Deepavali",
+        "Deepawali"
+      ],
+      "significance": "The published northern reference sequence runs from Dhanteras through Bhaiya Dooj; the source describes different regional extensions.",
+      "localization": {
+        "en": "diwali",
+        "fallback": "English; regional-language review pending"
+      },
+      "devotionalSubject": "Lakshmi / festival of lights",
+      "overlapGroup": "diwali",
+      "assets": {
+        "type": "original-css-svg",
+        "theme": "diwali",
+        "additionalImages": []
+      }
+    },
+    {
+      "id": "diwali-2027-new-delhi",
+      "name": "Diwali family — New Delhi, India calendar reference",
+      "family": "diwali",
+      "theme": "diwali",
+      "year": 2027,
+      "start": "2027-10-27",
+      "end": "2027-10-31",
+      "regions": [
+        "IN-DL"
+      ],
+      "location": "New Delhi, India",
+      "tradition": "Drik Panchang published New Delhi, India reference; regional observance conventions may differ",
+      "priority": 90,
+      "status": "verified",
+      "verificationScope": "published-calendar-reference",
+      "confidence": "source-checked-reference",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05",
+        "basis": "Source publication, explicit year and city checked; owner accepted this source standard on 2026-11-05. This is not a temple or universal regional ruling."
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/diwali/diwali-puja-calendar.html?year=2027&geoname-id=1261481",
+          "label": "Drik Panchang 2027 diwali reference for New Delhi, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ],
+      "sourceReview": {
+        "status": "publication-and-location-checked",
+        "reviewer": "Codex source review",
+        "reviewedOn": "2026-11-05",
+        "sourceTitle": "2027 Diwali Puja, Deepavali Puja Calendar for New Delhi, NCT, India",
+        "sha256": "45f10edb815cab8f72af6b0070af58dd3b2d29a43b0ee85c0d15404b42c6946f"
+      },
+      "aliases": [
+        "Deepavali",
+        "Deepawali"
+      ],
+      "significance": "The published northern reference sequence runs from Dhanteras through Bhaiya Dooj; the source describes different regional extensions.",
+      "localization": {
+        "en": "diwali",
+        "fallback": "English; regional-language review pending"
+      },
+      "devotionalSubject": "Lakshmi / festival of lights",
+      "overlapGroup": "diwali",
+      "assets": {
+        "type": "original-css-svg",
+        "theme": "diwali",
+        "additionalImages": []
+      }
+    },
+    {
+      "id": "diwali-2028-new-delhi",
+      "name": "Diwali family — New Delhi, India calendar reference",
+      "family": "diwali",
+      "theme": "diwali",
+      "year": 2028,
+      "start": "2028-10-15",
+      "end": "2028-10-19",
+      "regions": [
+        "IN-DL"
+      ],
+      "location": "New Delhi, India",
+      "tradition": "Drik Panchang published New Delhi, India reference; regional observance conventions may differ",
+      "priority": 90,
+      "status": "verified",
+      "verificationScope": "published-calendar-reference",
+      "confidence": "source-checked-reference",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05",
+        "basis": "Source publication, explicit year and city checked; owner accepted this source standard on 2026-11-05. This is not a temple or universal regional ruling."
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/diwali/diwali-puja-calendar.html?year=2028&geoname-id=1261481",
+          "label": "Drik Panchang 2028 diwali reference for New Delhi, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ],
+      "sourceReview": {
+        "status": "publication-and-location-checked",
+        "reviewer": "Codex source review",
+        "reviewedOn": "2026-11-05",
+        "sourceTitle": "2028 Diwali Puja, Deepavali Puja Calendar for New Delhi, NCT, India",
+        "sha256": "a63a62d264196d7989b1673f2c1277e046331a288e35f9ba15766f0470373cd4"
+      },
+      "aliases": [
+        "Deepavali",
+        "Deepawali"
+      ],
+      "significance": "The published northern reference sequence runs from Dhanteras through Bhaiya Dooj; the source describes different regional extensions.",
+      "localization": {
+        "en": "diwali",
+        "fallback": "English; regional-language review pending"
+      },
+      "devotionalSubject": "Lakshmi / festival of lights",
+      "overlapGroup": "diwali",
+      "assets": {
+        "type": "original-css-svg",
+        "theme": "diwali",
+        "additionalImages": []
+      }
+    },
+    {
+      "id": "diwali-2029-new-delhi",
+      "name": "Diwali family — New Delhi, India calendar reference",
+      "family": "diwali",
+      "theme": "diwali",
+      "year": 2029,
+      "start": "2029-11-04",
+      "end": "2029-11-07",
+      "regions": [
+        "IN-DL"
+      ],
+      "location": "New Delhi, India",
+      "tradition": "Drik Panchang published New Delhi, India reference; regional observance conventions may differ",
+      "priority": 90,
+      "status": "verified",
+      "verificationScope": "published-calendar-reference",
+      "confidence": "source-checked-reference",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05",
+        "basis": "Source publication, explicit year and city checked; owner accepted this source standard on 2026-11-05. This is not a temple or universal regional ruling."
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/diwali/diwali-puja-calendar.html?year=2029&geoname-id=1261481",
+          "label": "Drik Panchang 2029 diwali reference for New Delhi, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ],
+      "sourceReview": {
+        "status": "publication-and-location-checked",
+        "reviewer": "Codex source review",
+        "reviewedOn": "2026-11-05",
+        "sourceTitle": "2029 Diwali Puja, Deepavali Puja Calendar for New Delhi, NCT, India",
+        "sha256": "d5642af1e07541a73fb6bf955b6826a52b5be23894855c36f3c5cc6ed777151c"
+      },
+      "aliases": [
+        "Deepavali",
+        "Deepawali"
+      ],
+      "significance": "The published northern reference sequence runs from Dhanteras through Bhaiya Dooj; the source describes different regional extensions.",
+      "localization": {
+        "en": "diwali",
+        "fallback": "English; regional-language review pending"
+      },
+      "devotionalSubject": "Lakshmi / festival of lights",
+      "overlapGroup": "diwali",
+      "assets": {
+        "type": "original-css-svg",
+        "theme": "diwali",
+        "additionalImages": []
+      }
+    },
+    {
+      "id": "diwali-2030-new-delhi",
+      "name": "Diwali family — New Delhi, India calendar reference",
+      "family": "diwali",
+      "theme": "diwali",
+      "year": 2030,
+      "start": "2030-10-24",
+      "end": "2030-10-28",
+      "regions": [
+        "IN-DL"
+      ],
+      "location": "New Delhi, India",
+      "tradition": "Drik Panchang published New Delhi, India reference; regional observance conventions may differ",
+      "priority": 90,
+      "status": "verified",
+      "verificationScope": "published-calendar-reference",
+      "confidence": "source-checked-reference",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05",
+        "basis": "Source publication, explicit year and city checked; owner accepted this source standard on 2026-11-05. This is not a temple or universal regional ruling."
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/diwali/diwali-puja-calendar.html?year=2030&geoname-id=1261481",
+          "label": "Drik Panchang 2030 diwali reference for New Delhi, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ],
+      "sourceReview": {
+        "status": "publication-and-location-checked",
+        "reviewer": "Codex source review",
+        "reviewedOn": "2026-11-05",
+        "sourceTitle": "2030 Diwali Puja, Deepavali Puja Calendar for New Delhi, NCT, India",
+        "sha256": "6b5c105bda36f98a9c68f3c37d3b2160a2239d4699c61f4995c6611b03c8b179"
+      },
+      "aliases": [
+        "Deepavali",
+        "Deepawali"
+      ],
+      "significance": "The published northern reference sequence runs from Dhanteras through Bhaiya Dooj; the source describes different regional extensions.",
+      "localization": {
+        "en": "diwali",
+        "fallback": "English; regional-language review pending"
+      },
+      "devotionalSubject": "Lakshmi / festival of lights",
+      "overlapGroup": "diwali",
+      "assets": {
+        "type": "original-css-svg",
+        "theme": "diwali",
+        "additionalImages": []
+      }
+    },
+    {
+      "id": "chhath-2026-new-delhi",
+      "name": "Chhath family — New Delhi, India calendar reference",
+      "family": "chhath",
+      "theme": "chhath",
+      "year": 2026,
+      "start": "2026-11-13",
+      "end": "2026-11-16",
+      "regions": [
+        "IN-DL"
+      ],
+      "location": "New Delhi, India",
+      "tradition": "Drik Panchang published New Delhi, India reference; regional observance conventions may differ",
+      "priority": 80,
+      "status": "verified",
+      "verificationScope": "published-calendar-reference",
+      "confidence": "source-checked-reference",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05",
+        "basis": "Source publication, explicit year and city checked; owner accepted this source standard on 2026-11-05. This is not a temple or universal regional ruling."
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/chhath/chhath-puja-calendar.html?year=2026&geoname-id=1261481",
+          "label": "Drik Panchang 2026 chhath reference for New Delhi, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ],
+      "sourceReview": {
+        "status": "publication-and-location-checked",
+        "reviewer": "Codex source review",
+        "reviewedOn": "2026-11-05",
+        "sourceTitle": "2026 Chhath Calendar, Surya Shashthi Calendar for New Delhi, NCT, India",
+        "sha256": "377b470cf261e0f702e7c0bb9ba77da32ebd726cb32041fb4db9a16ce3765bdb"
+      },
+      "aliases": [
+        "Surya Shashthi"
+      ],
+      "significance": "The source explicitly lists the four-day sequence from Nahay Khay through Usha Arghya. Dates here are for New Delhi, not an all-region religious ruling.",
+      "localization": {
+        "en": "chhath",
+        "fallback": "English; regional-language review pending"
+      },
+      "devotionalSubject": "Surya",
+      "overlapGroup": "chhath",
+      "assets": {
+        "type": "original-css-svg",
+        "theme": "chhath",
+        "additionalImages": []
+      }
+    },
+    {
+      "id": "chhath-2027-new-delhi",
+      "name": "Chhath family — New Delhi, India calendar reference",
+      "family": "chhath",
+      "theme": "chhath",
+      "year": 2027,
+      "start": "2027-11-02",
+      "end": "2027-11-05",
+      "regions": [
+        "IN-DL"
+      ],
+      "location": "New Delhi, India",
+      "tradition": "Drik Panchang published New Delhi, India reference; regional observance conventions may differ",
+      "priority": 80,
+      "status": "verified",
+      "verificationScope": "published-calendar-reference",
+      "confidence": "source-checked-reference",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05",
+        "basis": "Source publication, explicit year and city checked; owner accepted this source standard on 2026-11-05. This is not a temple or universal regional ruling."
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/chhath/chhath-puja-calendar.html?year=2027&geoname-id=1261481",
+          "label": "Drik Panchang 2027 chhath reference for New Delhi, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ],
+      "sourceReview": {
+        "status": "publication-and-location-checked",
+        "reviewer": "Codex source review",
+        "reviewedOn": "2026-11-05",
+        "sourceTitle": "2027 Chhath Calendar, Surya Shashthi Calendar for New Delhi, NCT, India",
+        "sha256": "0f75246201628c6689f83d577a71aa735dd765b5e0a4ba8bbcbfdaa4be610f53"
+      },
+      "aliases": [
+        "Surya Shashthi"
+      ],
+      "significance": "The source explicitly lists the four-day sequence from Nahay Khay through Usha Arghya. Dates here are for New Delhi, not an all-region religious ruling.",
+      "localization": {
+        "en": "chhath",
+        "fallback": "English; regional-language review pending"
+      },
+      "devotionalSubject": "Surya",
+      "overlapGroup": "chhath",
+      "assets": {
+        "type": "original-css-svg",
+        "theme": "chhath",
+        "additionalImages": []
+      }
+    },
+    {
+      "id": "chhath-2028-new-delhi",
+      "name": "Chhath family — New Delhi, India calendar reference",
+      "family": "chhath",
+      "theme": "chhath",
+      "year": 2028,
+      "start": "2028-10-21",
+      "end": "2028-10-24",
+      "regions": [
+        "IN-DL"
+      ],
+      "location": "New Delhi, India",
+      "tradition": "Drik Panchang published New Delhi, India reference; regional observance conventions may differ",
+      "priority": 80,
+      "status": "verified",
+      "verificationScope": "published-calendar-reference",
+      "confidence": "source-checked-reference",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05",
+        "basis": "Source publication, explicit year and city checked; owner accepted this source standard on 2026-11-05. This is not a temple or universal regional ruling."
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/chhath/chhath-puja-calendar.html?year=2028&geoname-id=1261481",
+          "label": "Drik Panchang 2028 chhath reference for New Delhi, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ],
+      "sourceReview": {
+        "status": "publication-and-location-checked",
+        "reviewer": "Codex source review",
+        "reviewedOn": "2026-11-05",
+        "sourceTitle": "2028 Chhath Calendar, Surya Shashthi Calendar for New Delhi, NCT, India",
+        "sha256": "0c5bb240c24ef32b19358339ab4dbcfb63c4bf909b57202dbfb573f3c6d9f82e"
+      },
+      "aliases": [
+        "Surya Shashthi"
+      ],
+      "significance": "The source explicitly lists the four-day sequence from Nahay Khay through Usha Arghya. Dates here are for New Delhi, not an all-region religious ruling.",
+      "localization": {
+        "en": "chhath",
+        "fallback": "English; regional-language review pending"
+      },
+      "devotionalSubject": "Surya",
+      "overlapGroup": "chhath",
+      "assets": {
+        "type": "original-css-svg",
+        "theme": "chhath",
+        "additionalImages": []
+      }
+    },
+    {
+      "id": "chhath-2029-new-delhi",
+      "name": "Chhath family — New Delhi, India calendar reference",
+      "family": "chhath",
+      "theme": "chhath",
+      "year": 2029,
+      "start": "2029-11-09",
+      "end": "2029-11-12",
+      "regions": [
+        "IN-DL"
+      ],
+      "location": "New Delhi, India",
+      "tradition": "Drik Panchang published New Delhi, India reference; regional observance conventions may differ",
+      "priority": 80,
+      "status": "verified",
+      "verificationScope": "published-calendar-reference",
+      "confidence": "source-checked-reference",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05",
+        "basis": "Source publication, explicit year and city checked; owner accepted this source standard on 2026-11-05. This is not a temple or universal regional ruling."
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/chhath/chhath-puja-calendar.html?year=2029&geoname-id=1261481",
+          "label": "Drik Panchang 2029 chhath reference for New Delhi, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ],
+      "sourceReview": {
+        "status": "publication-and-location-checked",
+        "reviewer": "Codex source review",
+        "reviewedOn": "2026-11-05",
+        "sourceTitle": "2029 Chhath Calendar, Surya Shashthi Calendar for New Delhi, NCT, India",
+        "sha256": "41e2bbc3549d1d10ec128f61418a6bbaa49a374f5b11316117168f002646b886"
+      },
+      "aliases": [
+        "Surya Shashthi"
+      ],
+      "significance": "The source explicitly lists the four-day sequence from Nahay Khay through Usha Arghya. Dates here are for New Delhi, not an all-region religious ruling.",
+      "localization": {
+        "en": "chhath",
+        "fallback": "English; regional-language review pending"
+      },
+      "devotionalSubject": "Surya",
+      "overlapGroup": "chhath",
+      "assets": {
+        "type": "original-css-svg",
+        "theme": "chhath",
+        "additionalImages": []
+      }
+    },
+    {
+      "id": "chhath-2030-new-delhi",
+      "name": "Chhath family — New Delhi, India calendar reference",
+      "family": "chhath",
+      "theme": "chhath",
+      "year": 2030,
+      "start": "2030-10-30",
+      "end": "2030-11-02",
+      "regions": [
+        "IN-DL"
+      ],
+      "location": "New Delhi, India",
+      "tradition": "Drik Panchang published New Delhi, India reference; regional observance conventions may differ",
+      "priority": 80,
+      "status": "verified",
+      "verificationScope": "published-calendar-reference",
+      "confidence": "source-checked-reference",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05",
+        "basis": "Source publication, explicit year and city checked; owner accepted this source standard on 2026-11-05. This is not a temple or universal regional ruling."
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/chhath/chhath-puja-calendar.html?year=2030&geoname-id=1261481",
+          "label": "Drik Panchang 2030 chhath reference for New Delhi, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ],
+      "sourceReview": {
+        "status": "publication-and-location-checked",
+        "reviewer": "Codex source review",
+        "reviewedOn": "2026-11-05",
+        "sourceTitle": "2030 Chhath Calendar, Surya Shashthi Calendar for New Delhi, NCT, India",
+        "sha256": "0ef33c31a1bd36c72edd8ba9a83552876fb61ddf85b349502d1fe2e6c6683df5"
+      },
+      "aliases": [
+        "Surya Shashthi"
+      ],
+      "significance": "The source explicitly lists the four-day sequence from Nahay Khay through Usha Arghya. Dates here are for New Delhi, not an all-region religious ruling.",
+      "localization": {
+        "en": "chhath",
+        "fallback": "English; regional-language review pending"
+      },
+      "devotionalSubject": "Surya",
+      "overlapGroup": "chhath",
+      "assets": {
+        "type": "original-css-svg",
+        "theme": "chhath",
+        "additionalImages": []
+      }
+    },
+    {
+      "id": "pongal-2026-chennai",
+      "name": "Pongal family — Chennai, India calendar reference",
+      "family": "pongal",
+      "theme": "pongal",
+      "year": 2026,
+      "start": "2026-01-13",
+      "end": "2026-01-16",
+      "regions": [
+        "IN-TN"
+      ],
+      "location": "Chennai, India",
+      "tradition": "Drik Panchang published Chennai, India reference; regional observance conventions may differ",
+      "priority": 80,
+      "status": "verified",
+      "verificationScope": "published-calendar-reference",
+      "confidence": "source-checked-reference",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05",
+        "basis": "Source publication, explicit year and city checked; owner accepted this source standard on 2026-11-05. This is not a temple or universal regional ruling."
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/festivals/sankranti/sankranti-calendar.html?year=2026&geoname-id=1264527",
+          "label": "Drik Panchang 2026 pongal reference for Chennai, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ],
+      "sourceReview": {
+        "status": "publication-and-location-checked",
+        "reviewer": "Codex source review",
+        "reviewedOn": "2026-11-05",
+        "sourceTitle": "2026 Makar Sankranti Calendar for Chennai, Tamil Nadu, India",
+        "sha256": "9eeb6fa6c304d7efc6815dce67cada32928d0b302abb5704151e2266377d3fa8"
+      },
+      "aliases": [
+        "Thai Pongal"
+      ],
+      "significance": "The Chennai source explicitly lists Bhogi, Pongal, Mattu Pongal and Kaanum Pongal. Other Sankranti traditions on the same page remain separate.",
+      "localization": {
+        "en": "pongal",
+        "fallback": "English; regional-language review pending"
+      },
+      "devotionalSubject": "Harvest / Surya",
+      "overlapGroup": "pongal",
+      "assets": {
+        "type": "original-css-svg",
+        "theme": "pongal",
+        "additionalImages": []
+      }
+    },
+    {
+      "id": "pongal-2027-chennai",
+      "name": "Pongal family — Chennai, India calendar reference",
+      "family": "pongal",
+      "theme": "pongal",
+      "year": 2027,
+      "start": "2027-01-14",
+      "end": "2027-01-17",
+      "regions": [
+        "IN-TN"
+      ],
+      "location": "Chennai, India",
+      "tradition": "Drik Panchang published Chennai, India reference; regional observance conventions may differ",
+      "priority": 80,
+      "status": "verified",
+      "verificationScope": "published-calendar-reference",
+      "confidence": "source-checked-reference",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05",
+        "basis": "Source publication, explicit year and city checked; owner accepted this source standard on 2026-11-05. This is not a temple or universal regional ruling."
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/festivals/sankranti/sankranti-calendar.html?year=2027&geoname-id=1264527",
+          "label": "Drik Panchang 2027 pongal reference for Chennai, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ],
+      "sourceReview": {
+        "status": "publication-and-location-checked",
+        "reviewer": "Codex source review",
+        "reviewedOn": "2026-11-05",
+        "sourceTitle": "2027 Makar Sankranti Calendar for Chennai, Tamil Nadu, India",
+        "sha256": "1c1c5fb92b3e4fcc92292477f14baa4ad5026724f2f14003fb2d65131c6cb06b"
+      },
+      "aliases": [
+        "Thai Pongal"
+      ],
+      "significance": "The Chennai source explicitly lists Bhogi, Pongal, Mattu Pongal and Kaanum Pongal. Other Sankranti traditions on the same page remain separate.",
+      "localization": {
+        "en": "pongal",
+        "fallback": "English; regional-language review pending"
+      },
+      "devotionalSubject": "Harvest / Surya",
+      "overlapGroup": "pongal",
+      "assets": {
+        "type": "original-css-svg",
+        "theme": "pongal",
+        "additionalImages": []
+      }
+    },
+    {
+      "id": "pongal-2028-chennai",
+      "name": "Pongal family — Chennai, India calendar reference",
+      "family": "pongal",
+      "theme": "pongal",
+      "year": 2028,
+      "start": "2028-01-14",
+      "end": "2028-01-17",
+      "regions": [
+        "IN-TN"
+      ],
+      "location": "Chennai, India",
+      "tradition": "Drik Panchang published Chennai, India reference; regional observance conventions may differ",
+      "priority": 80,
+      "status": "verified",
+      "verificationScope": "published-calendar-reference",
+      "confidence": "source-checked-reference",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05",
+        "basis": "Source publication, explicit year and city checked; owner accepted this source standard on 2026-11-05. This is not a temple or universal regional ruling."
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/festivals/sankranti/sankranti-calendar.html?year=2028&geoname-id=1264527",
+          "label": "Drik Panchang 2028 pongal reference for Chennai, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ],
+      "sourceReview": {
+        "status": "publication-and-location-checked",
+        "reviewer": "Codex source review",
+        "reviewedOn": "2026-11-05",
+        "sourceTitle": "2028 Makar Sankranti Calendar for Chennai, Tamil Nadu, India",
+        "sha256": "efe7e8030623730da573ff3bbf5e29d8ed5d26d1c3e0dfc0adaa87b5c5f479fd"
+      },
+      "aliases": [
+        "Thai Pongal"
+      ],
+      "significance": "The Chennai source explicitly lists Bhogi, Pongal, Mattu Pongal and Kaanum Pongal. Other Sankranti traditions on the same page remain separate.",
+      "localization": {
+        "en": "pongal",
+        "fallback": "English; regional-language review pending"
+      },
+      "devotionalSubject": "Harvest / Surya",
+      "overlapGroup": "pongal",
+      "assets": {
+        "type": "original-css-svg",
+        "theme": "pongal",
+        "additionalImages": []
+      }
+    },
+    {
+      "id": "pongal-2029-chennai",
+      "name": "Pongal family — Chennai, India calendar reference",
+      "family": "pongal",
+      "theme": "pongal",
+      "year": 2029,
+      "start": "2029-01-13",
+      "end": "2029-01-16",
+      "regions": [
+        "IN-TN"
+      ],
+      "location": "Chennai, India",
+      "tradition": "Drik Panchang published Chennai, India reference; regional observance conventions may differ",
+      "priority": 80,
+      "status": "verified",
+      "verificationScope": "published-calendar-reference",
+      "confidence": "source-checked-reference",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05",
+        "basis": "Source publication, explicit year and city checked; owner accepted this source standard on 2026-11-05. This is not a temple or universal regional ruling."
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/festivals/sankranti/sankranti-calendar.html?year=2029&geoname-id=1264527",
+          "label": "Drik Panchang 2029 pongal reference for Chennai, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ],
+      "sourceReview": {
+        "status": "publication-and-location-checked",
+        "reviewer": "Codex source review",
+        "reviewedOn": "2026-11-05",
+        "sourceTitle": "2029 Makar Sankranti Calendar for Chennai, Tamil Nadu, India",
+        "sha256": "a9d332959d5f212c73038fb2dadf2b822330ddc842cf2c936309b651fc3f03bf"
+      },
+      "aliases": [
+        "Thai Pongal"
+      ],
+      "significance": "The Chennai source explicitly lists Bhogi, Pongal, Mattu Pongal and Kaanum Pongal. Other Sankranti traditions on the same page remain separate.",
+      "localization": {
+        "en": "pongal",
+        "fallback": "English; regional-language review pending"
+      },
+      "devotionalSubject": "Harvest / Surya",
+      "overlapGroup": "pongal",
+      "assets": {
+        "type": "original-css-svg",
+        "theme": "pongal",
+        "additionalImages": []
+      }
+    },
+    {
+      "id": "pongal-2030-chennai",
+      "name": "Pongal family — Chennai, India calendar reference",
+      "family": "pongal",
+      "theme": "pongal",
+      "year": 2030,
+      "start": "2030-01-13",
+      "end": "2030-01-16",
+      "regions": [
+        "IN-TN"
+      ],
+      "location": "Chennai, India",
+      "tradition": "Drik Panchang published Chennai, India reference; regional observance conventions may differ",
+      "priority": 80,
+      "status": "verified",
+      "verificationScope": "published-calendar-reference",
+      "confidence": "source-checked-reference",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05",
+        "basis": "Source publication, explicit year and city checked; owner accepted this source standard on 2026-11-05. This is not a temple or universal regional ruling."
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/festivals/sankranti/sankranti-calendar.html?year=2030&geoname-id=1264527",
+          "label": "Drik Panchang 2030 pongal reference for Chennai, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ],
+      "sourceReview": {
+        "status": "publication-and-location-checked",
+        "reviewer": "Codex source review",
+        "reviewedOn": "2026-11-05",
+        "sourceTitle": "2030 Makar Sankranti Calendar for Chennai, Tamil Nadu, India",
+        "sha256": "c98832e27e1b64f216d6ed0ab6f4d04fcebf9490548f9317dbb52883a7a7538b"
+      },
+      "aliases": [
+        "Thai Pongal"
+      ],
+      "significance": "The Chennai source explicitly lists Bhogi, Pongal, Mattu Pongal and Kaanum Pongal. Other Sankranti traditions on the same page remain separate.",
+      "localization": {
+        "en": "pongal",
+        "fallback": "English; regional-language review pending"
+      },
+      "devotionalSubject": "Harvest / Surya",
+      "overlapGroup": "pongal",
+      "assets": {
+        "type": "original-css-svg",
+        "theme": "pongal",
+        "additionalImages": []
+      }
+    },
+    {
+      "id": "navratri-2026-new-delhi",
+      "name": "Shardiya Navratri — New Delhi, India calendar reference",
+      "family": "navratri",
+      "theme": "navratri",
+      "year": 2026,
+      "start": "2026-10-11",
+      "end": "2026-10-20",
+      "regions": [
+        "IN-DL"
+      ],
+      "location": "New Delhi, India",
+      "tradition": "Drik Panchang published New Delhi, India Shardiya Navratri reference; local religious conventions may differ",
+      "priority": 82,
+      "status": "verified",
+      "verificationScope": "published-calendar-reference",
+      "confidence": "source-checked-reference",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05",
+        "basis": "Actual explicit-year/city publication and family endpoints checked. Owner accepted this reference standard on 2026-11-05; not merge/deploy permission or a universal religious ruling."
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/navratri/ashwin-shardiya-navratri-dates.html?year=2026&geoname-id=1261481",
+          "label": "Drik Panchang 2026 Shardiya Navratri reference for New Delhi, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ],
+      "sourceReview": {
+        "status": "publication-and-location-checked",
+        "reviewer": "Codex source review",
+        "reviewedOn": "2026-11-05",
+        "sourceTitle": "2026 Shardiya Navratri Calendar for New Delhi, NCT, India",
+        "sha256": "8b0f45c56bd56a3dfaae4043b0873e9d1aa50f78ed6baa6ef75086a871a09ce1"
+      },
+      "aliases": [
+        "Sharadiya Navratri",
+        "Maha Navratri"
+      ],
+      "significance": "Published Shardiya sequence from Ghatasthapana through the listed final Visarjan day. Civil-day count varies with the source calendar; it is not forced into nine Gregorian dates.",
+      "devotionalSubject": "Durga / Devi",
+      "overlapGroup": "autumn-devi",
+      "assets": {
+        "type": "original-css-svg",
+        "theme": "navratri",
+        "additionalImages": []
+      },
+      "localization": {
+        "en": "Shardiya Navratri",
+        "fallback": "English; regional-language review pending"
+      }
+    },
+    {
+      "id": "navratri-2027-new-delhi",
+      "name": "Shardiya Navratri — New Delhi, India calendar reference",
+      "family": "navratri",
+      "theme": "navratri",
+      "year": 2027,
+      "start": "2027-09-30",
+      "end": "2027-10-10",
+      "regions": [
+        "IN-DL"
+      ],
+      "location": "New Delhi, India",
+      "tradition": "Drik Panchang published New Delhi, India Shardiya Navratri reference; local religious conventions may differ",
+      "priority": 82,
+      "status": "verified",
+      "verificationScope": "published-calendar-reference",
+      "confidence": "source-checked-reference",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05",
+        "basis": "Actual explicit-year/city publication and family endpoints checked. Owner accepted this reference standard on 2026-11-05; not merge/deploy permission or a universal religious ruling."
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/navratri/ashwin-shardiya-navratri-dates.html?year=2027&geoname-id=1261481",
+          "label": "Drik Panchang 2027 Shardiya Navratri reference for New Delhi, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ],
+      "sourceReview": {
+        "status": "publication-and-location-checked",
+        "reviewer": "Codex source review",
+        "reviewedOn": "2026-11-05",
+        "sourceTitle": "2027 Shardiya Navratri Calendar for New Delhi, NCT, India",
+        "sha256": "9592fb6bd4940adf62e7a76c1fd638081881d682b4f73aea66c0ffcccf095d33"
+      },
+      "aliases": [
+        "Sharadiya Navratri",
+        "Maha Navratri"
+      ],
+      "significance": "Published Shardiya sequence from Ghatasthapana through the listed final Visarjan day. Civil-day count varies with the source calendar; it is not forced into nine Gregorian dates.",
+      "devotionalSubject": "Durga / Devi",
+      "overlapGroup": "autumn-devi",
+      "assets": {
+        "type": "original-css-svg",
+        "theme": "navratri",
+        "additionalImages": []
+      },
+      "localization": {
+        "en": "Shardiya Navratri",
+        "fallback": "English; regional-language review pending"
+      }
+    },
+    {
+      "id": "navratri-2028-new-delhi",
+      "name": "Shardiya Navratri — New Delhi, India calendar reference",
+      "family": "navratri",
+      "theme": "navratri",
+      "year": 2028,
+      "start": "2028-09-19",
+      "end": "2028-09-28",
+      "regions": [
+        "IN-DL"
+      ],
+      "location": "New Delhi, India",
+      "tradition": "Drik Panchang published New Delhi, India Shardiya Navratri reference; local religious conventions may differ",
+      "priority": 82,
+      "status": "verified",
+      "verificationScope": "published-calendar-reference",
+      "confidence": "source-checked-reference",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05",
+        "basis": "Actual explicit-year/city publication and family endpoints checked. Owner accepted this reference standard on 2026-11-05; not merge/deploy permission or a universal religious ruling."
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/navratri/ashwin-shardiya-navratri-dates.html?year=2028&geoname-id=1261481",
+          "label": "Drik Panchang 2028 Shardiya Navratri reference for New Delhi, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ],
+      "sourceReview": {
+        "status": "publication-and-location-checked",
+        "reviewer": "Codex source review",
+        "reviewedOn": "2026-11-05",
+        "sourceTitle": "2028 Shardiya Navratri Calendar for New Delhi, NCT, India",
+        "sha256": "5abac910aab4f933508b29a0c2e44076383167a998ec5fc4735ce9f899549f88"
+      },
+      "aliases": [
+        "Sharadiya Navratri",
+        "Maha Navratri"
+      ],
+      "significance": "Published Shardiya sequence from Ghatasthapana through the listed final Visarjan day. Civil-day count varies with the source calendar; it is not forced into nine Gregorian dates.",
+      "devotionalSubject": "Durga / Devi",
+      "overlapGroup": "autumn-devi",
+      "assets": {
+        "type": "original-css-svg",
+        "theme": "navratri",
+        "additionalImages": []
+      },
+      "localization": {
+        "en": "Shardiya Navratri",
+        "fallback": "English; regional-language review pending"
+      }
+    },
+    {
+      "id": "navratri-2029-new-delhi",
+      "name": "Shardiya Navratri — New Delhi, India calendar reference",
+      "family": "navratri",
+      "theme": "navratri",
+      "year": 2029,
+      "start": "2029-10-08",
+      "end": "2029-10-16",
+      "regions": [
+        "IN-DL"
+      ],
+      "location": "New Delhi, India",
+      "tradition": "Drik Panchang published New Delhi, India Shardiya Navratri reference; local religious conventions may differ",
+      "priority": 82,
+      "status": "verified",
+      "verificationScope": "published-calendar-reference",
+      "confidence": "source-checked-reference",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05",
+        "basis": "Actual explicit-year/city publication and family endpoints checked. Owner accepted this reference standard on 2026-11-05; not merge/deploy permission or a universal religious ruling."
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/navratri/ashwin-shardiya-navratri-dates.html?year=2029&geoname-id=1261481",
+          "label": "Drik Panchang 2029 Shardiya Navratri reference for New Delhi, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ],
+      "sourceReview": {
+        "status": "publication-and-location-checked",
+        "reviewer": "Codex source review",
+        "reviewedOn": "2026-11-05",
+        "sourceTitle": "2029 Shardiya Navratri Calendar for New Delhi, NCT, India",
+        "sha256": "fbc3ce46d1e4953e1457ee3cf0796f8832d26783e6139874f350da3fb9e2cf51"
+      },
+      "aliases": [
+        "Sharadiya Navratri",
+        "Maha Navratri"
+      ],
+      "significance": "Published Shardiya sequence from Ghatasthapana through the listed final Visarjan day. Civil-day count varies with the source calendar; it is not forced into nine Gregorian dates.",
+      "devotionalSubject": "Durga / Devi",
+      "overlapGroup": "autumn-devi",
+      "assets": {
+        "type": "original-css-svg",
+        "theme": "navratri",
+        "additionalImages": []
+      },
+      "localization": {
+        "en": "Shardiya Navratri",
+        "fallback": "English; regional-language review pending"
+      }
+    },
+    {
+      "id": "navratri-2030-new-delhi",
+      "name": "Shardiya Navratri — New Delhi, India calendar reference",
+      "family": "navratri",
+      "theme": "navratri",
+      "year": 2030,
+      "start": "2030-09-28",
+      "end": "2030-10-06",
+      "regions": [
+        "IN-DL"
+      ],
+      "location": "New Delhi, India",
+      "tradition": "Drik Panchang published New Delhi, India Shardiya Navratri reference; local religious conventions may differ",
+      "priority": 82,
+      "status": "verified",
+      "verificationScope": "published-calendar-reference",
+      "confidence": "source-checked-reference",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05",
+        "basis": "Actual explicit-year/city publication and family endpoints checked. Owner accepted this reference standard on 2026-11-05; not merge/deploy permission or a universal religious ruling."
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/navratri/ashwin-shardiya-navratri-dates.html?year=2030&geoname-id=1261481",
+          "label": "Drik Panchang 2030 Shardiya Navratri reference for New Delhi, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ],
+      "sourceReview": {
+        "status": "publication-and-location-checked",
+        "reviewer": "Codex source review",
+        "reviewedOn": "2026-11-05",
+        "sourceTitle": "2030 Shardiya Navratri Calendar for New Delhi, NCT, India",
+        "sha256": "6854f302930d30a0252da3e20990aac6289623483de2caec80b70586081ed845"
+      },
+      "aliases": [
+        "Sharadiya Navratri",
+        "Maha Navratri"
+      ],
+      "significance": "Published Shardiya sequence from Ghatasthapana through the listed final Visarjan day. Civil-day count varies with the source calendar; it is not forced into nine Gregorian dates.",
+      "devotionalSubject": "Durga / Devi",
+      "overlapGroup": "autumn-devi",
+      "assets": {
+        "type": "original-css-svg",
+        "theme": "navratri",
+        "additionalImages": []
+      },
+      "localization": {
+        "en": "Shardiya Navratri",
+        "fallback": "English; regional-language review pending"
+      }
+    },
+    {
+      "id": "durga-puja-2026-kolkata",
+      "name": "Durga Puja — Kolkata, India calendar reference",
+      "family": "durga-puja",
+      "theme": "durga-puja",
+      "year": 2026,
+      "start": "2026-10-16",
+      "end": "2026-10-21",
+      "regions": [
+        "IN-WB"
+      ],
+      "location": "Kolkata, India",
+      "tradition": "Drik Panchang published Kolkata, India Durga Puja reference; local religious conventions may differ",
+      "priority": 86,
+      "status": "verified",
+      "verificationScope": "published-calendar-reference",
+      "confidence": "source-checked-reference",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05",
+        "basis": "Actual explicit-year/city publication and family endpoints checked. Owner accepted this reference standard on 2026-11-05; not merge/deploy permission or a universal religious ruling."
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/navratri/durga-puja/durga-puja-calendar.html?year=2026&geoname-id=1275004",
+          "label": "Drik Panchang 2026 Durga Puja reference for Kolkata, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ],
+      "sourceReview": {
+        "status": "publication-and-location-checked",
+        "reviewer": "Codex source review",
+        "reviewedOn": "2026-11-05",
+        "sourceTitle": "2026 Durga Puja Calendar for Kolkata, West Bengal, India",
+        "sha256": "b011530354b276d575f880f81b1a361d87466ce631828d760b183c74fe4099ac"
+      },
+      "aliases": [
+        "Durgotsava",
+        "Durga Pujo"
+      ],
+      "significance": "Kolkata calendar reference from Bilva Nimantran through the listed Bengal Vijayadashami/Visarjan. Mahalaya is not silently added to this period; regional observances differ.",
+      "devotionalSubject": "Durga / Devi",
+      "overlapGroup": "autumn-devi",
+      "assets": {
+        "type": "original-css-svg",
+        "theme": "durga-puja",
+        "additionalImages": []
+      },
+      "localization": {
+        "en": "Durga Puja",
+        "fallback": "English; regional-language review pending"
+      }
+    },
+    {
+      "id": "durga-puja-2027-kolkata",
+      "name": "Durga Puja — Kolkata, India calendar reference",
+      "family": "durga-puja",
+      "theme": "durga-puja",
+      "year": 2027,
+      "start": "2027-10-05",
+      "end": "2027-10-10",
+      "regions": [
+        "IN-WB"
+      ],
+      "location": "Kolkata, India",
+      "tradition": "Drik Panchang published Kolkata, India Durga Puja reference; local religious conventions may differ",
+      "priority": 86,
+      "status": "verified",
+      "verificationScope": "published-calendar-reference",
+      "confidence": "source-checked-reference",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05",
+        "basis": "Actual explicit-year/city publication and family endpoints checked. Owner accepted this reference standard on 2026-11-05; not merge/deploy permission or a universal religious ruling."
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/navratri/durga-puja/durga-puja-calendar.html?year=2027&geoname-id=1275004",
+          "label": "Drik Panchang 2027 Durga Puja reference for Kolkata, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ],
+      "sourceReview": {
+        "status": "publication-and-location-checked",
+        "reviewer": "Codex source review",
+        "reviewedOn": "2026-11-05",
+        "sourceTitle": "2027 Durga Puja Calendar for Kolkata, West Bengal, India",
+        "sha256": "8b5323c15747756488c0949599f76f77c3964b02095b6655a80eba46cd2514ea"
+      },
+      "aliases": [
+        "Durgotsava",
+        "Durga Pujo"
+      ],
+      "significance": "Kolkata calendar reference from Bilva Nimantran through the listed Bengal Vijayadashami/Visarjan. Mahalaya is not silently added to this period; regional observances differ.",
+      "devotionalSubject": "Durga / Devi",
+      "overlapGroup": "autumn-devi",
+      "assets": {
+        "type": "original-css-svg",
+        "theme": "durga-puja",
+        "additionalImages": []
+      },
+      "localization": {
+        "en": "Durga Puja",
+        "fallback": "English; regional-language review pending"
+      }
+    },
+    {
+      "id": "durga-puja-2028-kolkata",
+      "name": "Durga Puja — Kolkata, India calendar reference",
+      "family": "durga-puja",
+      "theme": "durga-puja",
+      "year": 2028,
+      "start": "2028-09-23",
+      "end": "2028-09-28",
+      "regions": [
+        "IN-WB"
+      ],
+      "location": "Kolkata, India",
+      "tradition": "Drik Panchang published Kolkata, India Durga Puja reference; local religious conventions may differ",
+      "priority": 86,
+      "status": "verified",
+      "verificationScope": "published-calendar-reference",
+      "confidence": "source-checked-reference",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05",
+        "basis": "Actual explicit-year/city publication and family endpoints checked. Owner accepted this reference standard on 2026-11-05; not merge/deploy permission or a universal religious ruling."
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/navratri/durga-puja/durga-puja-calendar.html?year=2028&geoname-id=1275004",
+          "label": "Drik Panchang 2028 Durga Puja reference for Kolkata, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ],
+      "sourceReview": {
+        "status": "publication-and-location-checked",
+        "reviewer": "Codex source review",
+        "reviewedOn": "2026-11-05",
+        "sourceTitle": "2028 Durga Puja Calendar for Kolkata, West Bengal, India",
+        "sha256": "897050515a75db7f5b7c2df037b49d118cde65616f4e2c60804b33fb1c7844c8"
+      },
+      "aliases": [
+        "Durgotsava",
+        "Durga Pujo"
+      ],
+      "significance": "Kolkata calendar reference from Bilva Nimantran through the listed Bengal Vijayadashami/Visarjan. Mahalaya is not silently added to this period; regional observances differ.",
+      "devotionalSubject": "Durga / Devi",
+      "overlapGroup": "autumn-devi",
+      "assets": {
+        "type": "original-css-svg",
+        "theme": "durga-puja",
+        "additionalImages": []
+      },
+      "localization": {
+        "en": "Durga Puja",
+        "fallback": "English; regional-language review pending"
+      }
+    },
+    {
+      "id": "durga-puja-2029-kolkata",
+      "name": "Durga Puja — Kolkata, India calendar reference",
+      "family": "durga-puja",
+      "theme": "durga-puja",
+      "year": 2029,
+      "start": "2029-10-12",
+      "end": "2029-10-16",
+      "regions": [
+        "IN-WB"
+      ],
+      "location": "Kolkata, India",
+      "tradition": "Drik Panchang published Kolkata, India Durga Puja reference; local religious conventions may differ",
+      "priority": 86,
+      "status": "verified",
+      "verificationScope": "published-calendar-reference",
+      "confidence": "source-checked-reference",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05",
+        "basis": "Actual explicit-year/city publication and family endpoints checked. Owner accepted this reference standard on 2026-11-05; not merge/deploy permission or a universal religious ruling."
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/navratri/durga-puja/durga-puja-calendar.html?year=2029&geoname-id=1275004",
+          "label": "Drik Panchang 2029 Durga Puja reference for Kolkata, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ],
+      "sourceReview": {
+        "status": "publication-and-location-checked",
+        "reviewer": "Codex source review",
+        "reviewedOn": "2026-11-05",
+        "sourceTitle": "2029 Durga Puja Calendar for Kolkata, West Bengal, India",
+        "sha256": "787363e291a8e27127357d54e11f5eb28a7bec602cf6aaf29b947ca21e917856"
+      },
+      "aliases": [
+        "Durgotsava",
+        "Durga Pujo"
+      ],
+      "significance": "Kolkata calendar reference from Bilva Nimantran through the listed Bengal Vijayadashami/Visarjan. Mahalaya is not silently added to this period; regional observances differ.",
+      "devotionalSubject": "Durga / Devi",
+      "overlapGroup": "autumn-devi",
+      "assets": {
+        "type": "original-css-svg",
+        "theme": "durga-puja",
+        "additionalImages": []
+      },
+      "localization": {
+        "en": "Durga Puja",
+        "fallback": "English; regional-language review pending"
+      }
+    },
+    {
+      "id": "durga-puja-2030-kolkata",
+      "name": "Durga Puja — Kolkata, India calendar reference",
+      "family": "durga-puja",
+      "theme": "durga-puja",
+      "year": 2030,
+      "start": "2030-10-02",
+      "end": "2030-10-06",
+      "regions": [
+        "IN-WB"
+      ],
+      "location": "Kolkata, India",
+      "tradition": "Drik Panchang published Kolkata, India Durga Puja reference; local religious conventions may differ",
+      "priority": 86,
+      "status": "verified",
+      "verificationScope": "published-calendar-reference",
+      "confidence": "source-checked-reference",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05",
+        "basis": "Actual explicit-year/city publication and family endpoints checked. Owner accepted this reference standard on 2026-11-05; not merge/deploy permission or a universal religious ruling."
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/navratri/durga-puja/durga-puja-calendar.html?year=2030&geoname-id=1275004",
+          "label": "Drik Panchang 2030 Durga Puja reference for Kolkata, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ],
+      "sourceReview": {
+        "status": "publication-and-location-checked",
+        "reviewer": "Codex source review",
+        "reviewedOn": "2026-11-05",
+        "sourceTitle": "2030 Durga Puja Calendar for Kolkata, West Bengal, India",
+        "sha256": "7c85de827bead7aea83d203f4c8c2c96b02df1b04331ddd959206dd5a26d0f2b"
+      },
+      "aliases": [
+        "Durgotsava",
+        "Durga Pujo"
+      ],
+      "significance": "Kolkata calendar reference from Bilva Nimantran through the listed Bengal Vijayadashami/Visarjan. Mahalaya is not silently added to this period; regional observances differ.",
+      "devotionalSubject": "Durga / Devi",
+      "overlapGroup": "autumn-devi",
+      "assets": {
+        "type": "original-css-svg",
+        "theme": "durga-puja",
+        "additionalImages": []
+      },
+      "localization": {
+        "en": "Durga Puja",
+        "fallback": "English; regional-language review pending"
+      }
+    },
+    {
+      "id": "ganeshotsav-2026-mumbai",
+      "name": "Ganeshotsav — Mumbai, India calendar reference",
+      "family": "ganeshotsav",
+      "theme": "ganesha",
+      "year": 2026,
+      "start": "2026-09-14",
+      "end": "2026-09-25",
+      "regions": [
+        "IN-MH"
+      ],
+      "location": "Mumbai, India",
+      "tradition": "Drik Panchang published Mumbai, India Ganeshotsav reference; local religious conventions may differ",
+      "priority": 85,
+      "status": "verified",
+      "verificationScope": "published-calendar-reference",
+      "confidence": "source-checked-reference",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05",
+        "basis": "Actual explicit-year/city publication and family endpoints checked. Owner accepted this reference standard on 2026-11-05; not merge/deploy permission or a universal religious ruling."
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/festivals/ganesh-chaturthi/ganesh-chaturthi-date-time.html?year=2026&geoname-id=1275339",
+          "label": "Drik Panchang 2026 Ganeshotsav reference for Mumbai, India",
+          "reviewedOn": "2026-11-05"
+        },
+        {
+          "url": "https://www.drikpanchang.com/festivals/ganesh-visarjan/ganesh-visarjan-date-time.html?year=2026&geoname-id=1275339",
+          "label": "Drik Panchang 2026 Mumbai Anant Chaturdashi Visarjan reference and alternative durations",
+          "reviewedOn": "2026-11-05"
+        }
+      ],
+      "sourceReview": {
+        "status": "publication-and-location-checked",
+        "reviewer": "Codex source review",
+        "reviewedOn": "2026-11-05",
+        "sourceTitle": "2026 Ganesh Chaturthi | Ganesh Chauth Vrat | Ganeshotsav Puja Date and Time for Mumbai, Maharashtra, India",
+        "sha256": "edd4ba316421611ba6cdd7f8782b300d67343dc764430fbc6bcfb92a35c2be51",
+        "endpointPublication": {
+          "title": "2026 Ganesh Visarjan Date and Time on Anant Chaturdashi for Mumbai, Maharashtra, India",
+          "sha256": "bcc1f1800ab34751220d2d3201332dee48a078a1df9a6a355f351c24629f1ad2"
+        }
+      },
+      "aliases": [
+        "Ganesh Utsav",
+        "Ganesh Chaturthi"
+      ],
+      "significance": "Mumbai Chaturthi–Anant Chaturdashi presentation reference. This does not prescribe a universal immersion day: households and local traditions use other durations.",
+      "devotionalSubject": "Ganesha",
+      "overlapGroup": "ganeshotsav",
+      "assets": {
+        "type": "original-css-svg",
+        "theme": "ganesha",
+        "additionalImages": []
+      },
+      "localization": {
+        "en": "Ganeshotsav",
+        "fallback": "English; regional-language review pending"
+      }
+    },
+    {
+      "id": "ganeshotsav-2027-mumbai",
+      "name": "Ganeshotsav — Mumbai, India calendar reference",
+      "family": "ganeshotsav",
+      "theme": "ganesha",
+      "year": 2027,
+      "start": "2027-09-04",
+      "end": "2027-09-14",
+      "regions": [
+        "IN-MH"
+      ],
+      "location": "Mumbai, India",
+      "tradition": "Drik Panchang published Mumbai, India Ganeshotsav reference; local religious conventions may differ",
+      "priority": 85,
+      "status": "verified",
+      "verificationScope": "published-calendar-reference",
+      "confidence": "source-checked-reference",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05",
+        "basis": "Actual explicit-year/city publication and family endpoints checked. Owner accepted this reference standard on 2026-11-05; not merge/deploy permission or a universal religious ruling."
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/festivals/ganesh-chaturthi/ganesh-chaturthi-date-time.html?year=2027&geoname-id=1275339",
+          "label": "Drik Panchang 2027 Ganeshotsav reference for Mumbai, India",
+          "reviewedOn": "2026-11-05"
+        },
+        {
+          "url": "https://www.drikpanchang.com/festivals/ganesh-visarjan/ganesh-visarjan-date-time.html?year=2027&geoname-id=1275339",
+          "label": "Drik Panchang 2027 Mumbai Anant Chaturdashi Visarjan reference and alternative durations",
+          "reviewedOn": "2026-11-05"
+        }
+      ],
+      "sourceReview": {
+        "status": "publication-and-location-checked",
+        "reviewer": "Codex source review",
+        "reviewedOn": "2026-11-05",
+        "sourceTitle": "2027 Ganesh Chaturthi | Ganesh Chauth Vrat | Ganeshotsav Puja Date and Time for Mumbai, Maharashtra, India",
+        "sha256": "ff23072f792e4dc465e3c249eceb4f15b5aeefb372109574c3ef622e9da88881",
+        "endpointPublication": {
+          "title": "2027 Ganesh Visarjan Date and Time on Anant Chaturdashi for Mumbai, Maharashtra, India",
+          "sha256": "5adc9aef216d007a6775ee583e62feb976feaacff82b6cffefb837516cca968c"
+        }
+      },
+      "aliases": [
+        "Ganesh Utsav",
+        "Ganesh Chaturthi"
+      ],
+      "significance": "Mumbai Chaturthi–Anant Chaturdashi presentation reference. This does not prescribe a universal immersion day: households and local traditions use other durations.",
+      "devotionalSubject": "Ganesha",
+      "overlapGroup": "ganeshotsav",
+      "assets": {
+        "type": "original-css-svg",
+        "theme": "ganesha",
+        "additionalImages": []
+      },
+      "localization": {
+        "en": "Ganeshotsav",
+        "fallback": "English; regional-language review pending"
+      }
+    },
+    {
+      "id": "ganeshotsav-2028-mumbai",
+      "name": "Ganeshotsav — Mumbai, India calendar reference",
+      "family": "ganeshotsav",
+      "theme": "ganesha",
+      "year": 2028,
+      "start": "2028-08-23",
+      "end": "2028-09-02",
+      "regions": [
+        "IN-MH"
+      ],
+      "location": "Mumbai, India",
+      "tradition": "Drik Panchang published Mumbai, India Ganeshotsav reference; local religious conventions may differ",
+      "priority": 85,
+      "status": "verified",
+      "verificationScope": "published-calendar-reference",
+      "confidence": "source-checked-reference",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05",
+        "basis": "Actual explicit-year/city publication and family endpoints checked. Owner accepted this reference standard on 2026-11-05; not merge/deploy permission or a universal religious ruling."
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/festivals/ganesh-chaturthi/ganesh-chaturthi-date-time.html?year=2028&geoname-id=1275339",
+          "label": "Drik Panchang 2028 Ganeshotsav reference for Mumbai, India",
+          "reviewedOn": "2026-11-05"
+        },
+        {
+          "url": "https://www.drikpanchang.com/festivals/ganesh-visarjan/ganesh-visarjan-date-time.html?year=2028&geoname-id=1275339",
+          "label": "Drik Panchang 2028 Mumbai Anant Chaturdashi Visarjan reference and alternative durations",
+          "reviewedOn": "2026-11-05"
+        }
+      ],
+      "sourceReview": {
+        "status": "publication-and-location-checked",
+        "reviewer": "Codex source review",
+        "reviewedOn": "2026-11-05",
+        "sourceTitle": "2028 Ganesh Chaturthi | Ganesh Chauth Vrat | Ganeshotsav Puja Date and Time for Mumbai, Maharashtra, India",
+        "sha256": "76b2a5fca9d067515329131912273c84d6911c7510d8e89583d901761677ef8a",
+        "endpointPublication": {
+          "title": "2028 Ganesh Visarjan Date and Time on Anant Chaturdashi for Mumbai, Maharashtra, India",
+          "sha256": "920bc5c63fa667c0622ff7523a4f239cfa2c4cae9cf753f2bf92a6130714a75e"
+        }
+      },
+      "aliases": [
+        "Ganesh Utsav",
+        "Ganesh Chaturthi"
+      ],
+      "significance": "Mumbai Chaturthi–Anant Chaturdashi presentation reference. This does not prescribe a universal immersion day: households and local traditions use other durations.",
+      "devotionalSubject": "Ganesha",
+      "overlapGroup": "ganeshotsav",
+      "assets": {
+        "type": "original-css-svg",
+        "theme": "ganesha",
+        "additionalImages": []
+      },
+      "localization": {
+        "en": "Ganeshotsav",
+        "fallback": "English; regional-language review pending"
+      }
+    },
+    {
+      "id": "ganeshotsav-2029-mumbai",
+      "name": "Ganeshotsav — Mumbai, India calendar reference",
+      "family": "ganeshotsav",
+      "theme": "ganesha",
+      "year": 2029,
+      "start": "2029-09-11",
+      "end": "2029-09-21",
+      "regions": [
+        "IN-MH"
+      ],
+      "location": "Mumbai, India",
+      "tradition": "Drik Panchang published Mumbai, India Ganeshotsav reference; local religious conventions may differ",
+      "priority": 85,
+      "status": "verified",
+      "verificationScope": "published-calendar-reference",
+      "confidence": "source-checked-reference",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05",
+        "basis": "Actual explicit-year/city publication and family endpoints checked. Owner accepted this reference standard on 2026-11-05; not merge/deploy permission or a universal religious ruling."
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/festivals/ganesh-chaturthi/ganesh-chaturthi-date-time.html?year=2029&geoname-id=1275339",
+          "label": "Drik Panchang 2029 Ganeshotsav reference for Mumbai, India",
+          "reviewedOn": "2026-11-05"
+        },
+        {
+          "url": "https://www.drikpanchang.com/festivals/ganesh-visarjan/ganesh-visarjan-date-time.html?year=2029&geoname-id=1275339",
+          "label": "Drik Panchang 2029 Mumbai Anant Chaturdashi Visarjan reference and alternative durations",
+          "reviewedOn": "2026-11-05"
+        }
+      ],
+      "sourceReview": {
+        "status": "publication-and-location-checked",
+        "reviewer": "Codex source review",
+        "reviewedOn": "2026-11-05",
+        "sourceTitle": "2029 Ganesh Chaturthi | Ganesh Chauth Vrat | Ganeshotsav Puja Date and Time for Mumbai, Maharashtra, India",
+        "sha256": "f6e2b27f319996df80f6b729dbf0da4023da739c58eb140211e0a6ca60f92e1d",
+        "endpointPublication": {
+          "title": "2029 Ganesh Visarjan Date and Time on Anant Chaturdashi for Mumbai, Maharashtra, India",
+          "sha256": "36e75a67b015e253d88dddfd777449cb8798cde23ecb5c056fb3225ad9bb060f"
+        }
+      },
+      "aliases": [
+        "Ganesh Utsav",
+        "Ganesh Chaturthi"
+      ],
+      "significance": "Mumbai Chaturthi–Anant Chaturdashi presentation reference. This does not prescribe a universal immersion day: households and local traditions use other durations.",
+      "devotionalSubject": "Ganesha",
+      "overlapGroup": "ganeshotsav",
+      "assets": {
+        "type": "original-css-svg",
+        "theme": "ganesha",
+        "additionalImages": []
+      },
+      "localization": {
+        "en": "Ganeshotsav",
+        "fallback": "English; regional-language review pending"
+      }
+    },
+    {
+      "id": "ganeshotsav-2030-mumbai",
+      "name": "Ganeshotsav — Mumbai, India calendar reference",
+      "family": "ganeshotsav",
+      "theme": "ganesha",
+      "year": 2030,
+      "start": "2030-09-01",
+      "end": "2030-09-10",
+      "regions": [
+        "IN-MH"
+      ],
+      "location": "Mumbai, India",
+      "tradition": "Drik Panchang published Mumbai, India Ganeshotsav reference; local religious conventions may differ",
+      "priority": 85,
+      "status": "verified",
+      "verificationScope": "published-calendar-reference",
+      "confidence": "source-checked-reference",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05",
+        "basis": "Actual explicit-year/city publication and family endpoints checked. Owner accepted this reference standard on 2026-11-05; not merge/deploy permission or a universal religious ruling."
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/festivals/ganesh-chaturthi/ganesh-chaturthi-date-time.html?year=2030&geoname-id=1275339",
+          "label": "Drik Panchang 2030 Ganeshotsav reference for Mumbai, India",
+          "reviewedOn": "2026-11-05"
+        },
+        {
+          "url": "https://www.drikpanchang.com/festivals/ganesh-visarjan/ganesh-visarjan-date-time.html?year=2030&geoname-id=1275339",
+          "label": "Drik Panchang 2030 Mumbai Anant Chaturdashi Visarjan reference and alternative durations",
+          "reviewedOn": "2026-11-05"
+        }
+      ],
+      "sourceReview": {
+        "status": "publication-and-location-checked",
+        "reviewer": "Codex source review",
+        "reviewedOn": "2026-11-05",
+        "sourceTitle": "2030 Ganesh Chaturthi | Ganesh Chauth Vrat | Ganeshotsav Puja Date and Time for Mumbai, Maharashtra, India",
+        "sha256": "7b660a990888b035ab061a38a7651b7fc65459d85cfe50509909b8d9d5b54a24",
+        "endpointPublication": {
+          "title": "2030 Ganesh Visarjan Date and Time on Anant Chaturdashi for Mumbai, Maharashtra, India",
+          "sha256": "6498859efc0087bb84993f5cdeddc137b80f9d3021ca128e543a4ab1f7e6b1e0"
+        }
+      },
+      "aliases": [
+        "Ganesh Utsav",
+        "Ganesh Chaturthi"
+      ],
+      "significance": "Mumbai Chaturthi–Anant Chaturdashi presentation reference. This does not prescribe a universal immersion day: households and local traditions use other durations.",
+      "devotionalSubject": "Ganesha",
+      "overlapGroup": "ganeshotsav",
+      "assets": {
+        "type": "original-css-svg",
+        "theme": "ganesha",
+        "additionalImages": []
+      },
+      "localization": {
+        "en": "Ganeshotsav",
+        "fallback": "English; regional-language review pending"
+      }
+    },
+    {
+      "id": "ratha-jatra-2026-puri",
+      "name": "Ratha Jatra — Puri, India calendar reference",
+      "family": "ratha-jatra",
+      "theme": "ratha-jatra",
+      "year": 2026,
+      "start": "2026-07-16",
+      "end": "2026-07-27",
+      "regions": [
+        "IN-OD"
+      ],
+      "location": "Puri, India",
+      "tradition": "Odisha Tourism published Puri Ratha Jatra 2026 reference; other temples and traditions may differ",
+      "priority": 85,
+      "status": "verified",
+      "verificationScope": "published-calendar-reference",
+      "confidence": "source-checked-reference",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05",
+        "basis": "Official regional publisher explicitly lists Ratha Jatra through Niladri Bije. Source body and date rows reviewed; not a claim of ritual timetable authority or deployment approval."
+      },
+      "sources": [
+        {
+          "url": "https://odishatourism.gov.in/en/ratha-jatra-2026",
+          "label": "Odisha Tourism 2026 Puri Ratha Jatra festival calendar",
+          "reviewedOn": "2026-11-05"
+        }
+      ],
+      "sourceReview": {
+        "status": "publication-and-location-checked",
+        "reviewer": "Codex source review",
+        "reviewedOn": "2026-11-05",
+        "sourceTitle": "Odisha Tourism: Puri Ratha Jatra 2026 &amp; Chariot Festival",
+        "sha256": "bab64e8e9ae3828bbcc982107cbefb1a902029ef00a77f7812cea5a0fca44cb5"
+      },
+      "aliases": [
+        "Rath Yatra",
+        "Ratha Yatra",
+        "Gundicha Jatra"
+      ],
+      "significance": "Puri chariot-festival presentation through the explicitly listed concluding Niladri Bije. Earlier preparations and Snana Purnima are not silently included. The IMD conflicting row is not used.",
+      "devotionalSubject": "Jagannath, Balabhadra and Subhadra",
+      "overlapGroup": "puri-ratha-jatra",
+      "assets": {
+        "type": "original-css-svg",
+        "theme": "ratha-jatra",
+        "additionalImages": []
+      },
+      "localization": {
+        "en": "Ratha Jatra",
+        "fallback": "English; Odia review pending"
+      }
+    }
+  ],
+  "members": [
+    {
+      "id": "diwali-2026-new-delhi-dhanteras",
+      "windowId": "diwali-2026-new-delhi",
+      "family": "diwali",
+      "name": "Dhantrayodashi",
+      "start": "2026-11-06",
+      "end": "2026-11-06",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/diwali/diwali-puja-calendar.html?year=2026&geoname-id=1261481",
+          "label": "Drik Panchang 2026 diwali reference for New Delhi, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ]
+    },
+    {
+      "id": "diwali-2026-new-delhi-naraka-chaturdashi",
+      "windowId": "diwali-2026-new-delhi",
+      "family": "diwali",
+      "name": "Narak Chaturdashi",
+      "start": "2026-11-08",
+      "end": "2026-11-08",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/diwali/diwali-puja-calendar.html?year=2026&geoname-id=1261481",
+          "label": "Drik Panchang 2026 diwali reference for New Delhi, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ]
+    },
+    {
+      "id": "diwali-2026-new-delhi-lakshmi-puja",
+      "windowId": "diwali-2026-new-delhi",
+      "family": "diwali",
+      "name": "Lakshmi Puja",
+      "start": "2026-11-08",
+      "end": "2026-11-08",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/diwali/diwali-puja-calendar.html?year=2026&geoname-id=1261481",
+          "label": "Drik Panchang 2026 diwali reference for New Delhi, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ],
+      "variant": "lotus"
+    },
+    {
+      "id": "diwali-2026-new-delhi-govardhan-puja",
+      "windowId": "diwali-2026-new-delhi",
+      "family": "diwali",
+      "name": "Govardhan Puja",
+      "start": "2026-11-10",
+      "end": "2026-11-10",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/diwali/diwali-puja-calendar.html?year=2026&geoname-id=1261481",
+          "label": "Drik Panchang 2026 diwali reference for New Delhi, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ],
+      "variant": "harvest"
+    },
+    {
+      "id": "diwali-2026-new-delhi-bhai-dooj",
+      "windowId": "diwali-2026-new-delhi",
+      "family": "diwali",
+      "name": "Bhaiya Dooj",
+      "start": "2026-11-11",
+      "end": "2026-11-11",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/diwali/diwali-puja-calendar.html?year=2026&geoname-id=1261481",
+          "label": "Drik Panchang 2026 diwali reference for New Delhi, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ]
+    },
+    {
+      "id": "diwali-2027-new-delhi-dhanteras",
+      "windowId": "diwali-2027-new-delhi",
+      "family": "diwali",
+      "name": "Dhantrayodashi",
+      "start": "2027-10-27",
+      "end": "2027-10-27",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/diwali/diwali-puja-calendar.html?year=2027&geoname-id=1261481",
+          "label": "Drik Panchang 2027 diwali reference for New Delhi, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ]
+    },
+    {
+      "id": "diwali-2027-new-delhi-naraka-chaturdashi",
+      "windowId": "diwali-2027-new-delhi",
+      "family": "diwali",
+      "name": "Narak Chaturdashi",
+      "start": "2027-10-28",
+      "end": "2027-10-28",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/diwali/diwali-puja-calendar.html?year=2027&geoname-id=1261481",
+          "label": "Drik Panchang 2027 diwali reference for New Delhi, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ]
+    },
+    {
+      "id": "diwali-2027-new-delhi-lakshmi-puja",
+      "windowId": "diwali-2027-new-delhi",
+      "family": "diwali",
+      "name": "Lakshmi Puja",
+      "start": "2027-10-29",
+      "end": "2027-10-29",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/diwali/diwali-puja-calendar.html?year=2027&geoname-id=1261481",
+          "label": "Drik Panchang 2027 diwali reference for New Delhi, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ],
+      "variant": "lotus"
+    },
+    {
+      "id": "diwali-2027-new-delhi-govardhan-puja",
+      "windowId": "diwali-2027-new-delhi",
+      "family": "diwali",
+      "name": "Govardhan Puja",
+      "start": "2027-10-30",
+      "end": "2027-10-30",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/diwali/diwali-puja-calendar.html?year=2027&geoname-id=1261481",
+          "label": "Drik Panchang 2027 diwali reference for New Delhi, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ],
+      "variant": "harvest"
+    },
+    {
+      "id": "diwali-2027-new-delhi-bhai-dooj",
+      "windowId": "diwali-2027-new-delhi",
+      "family": "diwali",
+      "name": "Bhaiya Dooj",
+      "start": "2027-10-31",
+      "end": "2027-10-31",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/diwali/diwali-puja-calendar.html?year=2027&geoname-id=1261481",
+          "label": "Drik Panchang 2027 diwali reference for New Delhi, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ]
+    },
+    {
+      "id": "diwali-2028-new-delhi-dhanteras",
+      "windowId": "diwali-2028-new-delhi",
+      "family": "diwali",
+      "name": "Dhantrayodashi",
+      "start": "2028-10-15",
+      "end": "2028-10-15",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/diwali/diwali-puja-calendar.html?year=2028&geoname-id=1261481",
+          "label": "Drik Panchang 2028 diwali reference for New Delhi, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ]
+    },
+    {
+      "id": "diwali-2028-new-delhi-naraka-chaturdashi",
+      "windowId": "diwali-2028-new-delhi",
+      "family": "diwali",
+      "name": "Narak Chaturdashi",
+      "start": "2028-10-17",
+      "end": "2028-10-17",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/diwali/diwali-puja-calendar.html?year=2028&geoname-id=1261481",
+          "label": "Drik Panchang 2028 diwali reference for New Delhi, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ]
+    },
+    {
+      "id": "diwali-2028-new-delhi-lakshmi-puja",
+      "windowId": "diwali-2028-new-delhi",
+      "family": "diwali",
+      "name": "Lakshmi Puja",
+      "start": "2028-10-17",
+      "end": "2028-10-17",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/diwali/diwali-puja-calendar.html?year=2028&geoname-id=1261481",
+          "label": "Drik Panchang 2028 diwali reference for New Delhi, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ],
+      "variant": "lotus"
+    },
+    {
+      "id": "diwali-2028-new-delhi-govardhan-puja",
+      "windowId": "diwali-2028-new-delhi",
+      "family": "diwali",
+      "name": "Govardhan Puja",
+      "start": "2028-10-18",
+      "end": "2028-10-18",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/diwali/diwali-puja-calendar.html?year=2028&geoname-id=1261481",
+          "label": "Drik Panchang 2028 diwali reference for New Delhi, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ],
+      "variant": "harvest"
+    },
+    {
+      "id": "diwali-2028-new-delhi-bhai-dooj",
+      "windowId": "diwali-2028-new-delhi",
+      "family": "diwali",
+      "name": "Bhaiya Dooj",
+      "start": "2028-10-19",
+      "end": "2028-10-19",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/diwali/diwali-puja-calendar.html?year=2028&geoname-id=1261481",
+          "label": "Drik Panchang 2028 diwali reference for New Delhi, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ]
+    },
+    {
+      "id": "diwali-2029-new-delhi-dhanteras",
+      "windowId": "diwali-2029-new-delhi",
+      "family": "diwali",
+      "name": "Dhantrayodashi",
+      "start": "2029-11-04",
+      "end": "2029-11-04",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/diwali/diwali-puja-calendar.html?year=2029&geoname-id=1261481",
+          "label": "Drik Panchang 2029 diwali reference for New Delhi, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ]
+    },
+    {
+      "id": "diwali-2029-new-delhi-naraka-chaturdashi",
+      "windowId": "diwali-2029-new-delhi",
+      "family": "diwali",
+      "name": "Narak Chaturdashi",
+      "start": "2029-11-05",
+      "end": "2029-11-05",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/diwali/diwali-puja-calendar.html?year=2029&geoname-id=1261481",
+          "label": "Drik Panchang 2029 diwali reference for New Delhi, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ]
+    },
+    {
+      "id": "diwali-2029-new-delhi-lakshmi-puja",
+      "windowId": "diwali-2029-new-delhi",
+      "family": "diwali",
+      "name": "Lakshmi Puja",
+      "start": "2029-11-05",
+      "end": "2029-11-05",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/diwali/diwali-puja-calendar.html?year=2029&geoname-id=1261481",
+          "label": "Drik Panchang 2029 diwali reference for New Delhi, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ],
+      "variant": "lotus"
+    },
+    {
+      "id": "diwali-2029-new-delhi-govardhan-puja",
+      "windowId": "diwali-2029-new-delhi",
+      "family": "diwali",
+      "name": "Govardhan Puja",
+      "start": "2029-11-06",
+      "end": "2029-11-06",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/diwali/diwali-puja-calendar.html?year=2029&geoname-id=1261481",
+          "label": "Drik Panchang 2029 diwali reference for New Delhi, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ],
+      "variant": "harvest"
+    },
+    {
+      "id": "diwali-2029-new-delhi-bhai-dooj",
+      "windowId": "diwali-2029-new-delhi",
+      "family": "diwali",
+      "name": "Bhaiya Dooj",
+      "start": "2029-11-07",
+      "end": "2029-11-07",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/diwali/diwali-puja-calendar.html?year=2029&geoname-id=1261481",
+          "label": "Drik Panchang 2029 diwali reference for New Delhi, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ]
+    },
+    {
+      "id": "diwali-2030-new-delhi-dhanteras",
+      "windowId": "diwali-2030-new-delhi",
+      "family": "diwali",
+      "name": "Dhantrayodashi",
+      "start": "2030-10-24",
+      "end": "2030-10-24",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/diwali/diwali-puja-calendar.html?year=2030&geoname-id=1261481",
+          "label": "Drik Panchang 2030 diwali reference for New Delhi, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ]
+    },
+    {
+      "id": "diwali-2030-new-delhi-naraka-chaturdashi",
+      "windowId": "diwali-2030-new-delhi",
+      "family": "diwali",
+      "name": "Narak Chaturdashi",
+      "start": "2030-10-26",
+      "end": "2030-10-26",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/diwali/diwali-puja-calendar.html?year=2030&geoname-id=1261481",
+          "label": "Drik Panchang 2030 diwali reference for New Delhi, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ]
+    },
+    {
+      "id": "diwali-2030-new-delhi-lakshmi-puja",
+      "windowId": "diwali-2030-new-delhi",
+      "family": "diwali",
+      "name": "Lakshmi Puja",
+      "start": "2030-10-26",
+      "end": "2030-10-26",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/diwali/diwali-puja-calendar.html?year=2030&geoname-id=1261481",
+          "label": "Drik Panchang 2030 diwali reference for New Delhi, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ],
+      "variant": "lotus"
+    },
+    {
+      "id": "diwali-2030-new-delhi-govardhan-puja",
+      "windowId": "diwali-2030-new-delhi",
+      "family": "diwali",
+      "name": "Govardhan Puja",
+      "start": "2030-10-27",
+      "end": "2030-10-27",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/diwali/diwali-puja-calendar.html?year=2030&geoname-id=1261481",
+          "label": "Drik Panchang 2030 diwali reference for New Delhi, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ],
+      "variant": "harvest"
+    },
+    {
+      "id": "diwali-2030-new-delhi-bhai-dooj",
+      "windowId": "diwali-2030-new-delhi",
+      "family": "diwali",
+      "name": "Bhaiya Dooj",
+      "start": "2030-10-28",
+      "end": "2030-10-28",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/diwali/diwali-puja-calendar.html?year=2030&geoname-id=1261481",
+          "label": "Drik Panchang 2030 diwali reference for New Delhi, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ]
+    },
+    {
+      "id": "chhath-2026-new-delhi-nahay-khay",
+      "windowId": "chhath-2026-new-delhi",
+      "family": "chhath",
+      "name": "Nahay Khay",
+      "start": "2026-11-13",
+      "end": "2026-11-13",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/chhath/chhath-puja-calendar.html?year=2026&geoname-id=1261481",
+          "label": "Drik Panchang 2026 chhath reference for New Delhi, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ]
+    },
+    {
+      "id": "chhath-2026-new-delhi-kharna",
+      "windowId": "chhath-2026-new-delhi",
+      "family": "chhath",
+      "name": "Lohanda and Kharna",
+      "start": "2026-11-14",
+      "end": "2026-11-14",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/chhath/chhath-puja-calendar.html?year=2026&geoname-id=1261481",
+          "label": "Drik Panchang 2026 chhath reference for New Delhi, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ]
+    },
+    {
+      "id": "chhath-2026-new-delhi-sandhya-arghya",
+      "windowId": "chhath-2026-new-delhi",
+      "family": "chhath",
+      "name": "Sandhya Arghya",
+      "start": "2026-11-15",
+      "end": "2026-11-15",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/chhath/chhath-puja-calendar.html?year=2026&geoname-id=1261481",
+          "label": "Drik Panchang 2026 chhath reference for New Delhi, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ],
+      "variant": "sunset"
+    },
+    {
+      "id": "chhath-2026-new-delhi-usha-arghya",
+      "windowId": "chhath-2026-new-delhi",
+      "family": "chhath",
+      "name": "Usha Arghya",
+      "start": "2026-11-16",
+      "end": "2026-11-16",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/chhath/chhath-puja-calendar.html?year=2026&geoname-id=1261481",
+          "label": "Drik Panchang 2026 chhath reference for New Delhi, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ],
+      "variant": "dawn"
+    },
+    {
+      "id": "chhath-2027-new-delhi-nahay-khay",
+      "windowId": "chhath-2027-new-delhi",
+      "family": "chhath",
+      "name": "Nahay Khay",
+      "start": "2027-11-02",
+      "end": "2027-11-02",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/chhath/chhath-puja-calendar.html?year=2027&geoname-id=1261481",
+          "label": "Drik Panchang 2027 chhath reference for New Delhi, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ]
+    },
+    {
+      "id": "chhath-2027-new-delhi-kharna",
+      "windowId": "chhath-2027-new-delhi",
+      "family": "chhath",
+      "name": "Lohanda and Kharna",
+      "start": "2027-11-03",
+      "end": "2027-11-03",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/chhath/chhath-puja-calendar.html?year=2027&geoname-id=1261481",
+          "label": "Drik Panchang 2027 chhath reference for New Delhi, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ]
+    },
+    {
+      "id": "chhath-2027-new-delhi-sandhya-arghya",
+      "windowId": "chhath-2027-new-delhi",
+      "family": "chhath",
+      "name": "Sandhya Arghya",
+      "start": "2027-11-04",
+      "end": "2027-11-04",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/chhath/chhath-puja-calendar.html?year=2027&geoname-id=1261481",
+          "label": "Drik Panchang 2027 chhath reference for New Delhi, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ],
+      "variant": "sunset"
+    },
+    {
+      "id": "chhath-2027-new-delhi-usha-arghya",
+      "windowId": "chhath-2027-new-delhi",
+      "family": "chhath",
+      "name": "Usha Arghya",
+      "start": "2027-11-05",
+      "end": "2027-11-05",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/chhath/chhath-puja-calendar.html?year=2027&geoname-id=1261481",
+          "label": "Drik Panchang 2027 chhath reference for New Delhi, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ],
+      "variant": "dawn"
+    },
+    {
+      "id": "chhath-2028-new-delhi-nahay-khay",
+      "windowId": "chhath-2028-new-delhi",
+      "family": "chhath",
+      "name": "Nahay Khay",
+      "start": "2028-10-21",
+      "end": "2028-10-21",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/chhath/chhath-puja-calendar.html?year=2028&geoname-id=1261481",
+          "label": "Drik Panchang 2028 chhath reference for New Delhi, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ]
+    },
+    {
+      "id": "chhath-2028-new-delhi-kharna",
+      "windowId": "chhath-2028-new-delhi",
+      "family": "chhath",
+      "name": "Lohanda and Kharna",
+      "start": "2028-10-22",
+      "end": "2028-10-22",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/chhath/chhath-puja-calendar.html?year=2028&geoname-id=1261481",
+          "label": "Drik Panchang 2028 chhath reference for New Delhi, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ]
+    },
+    {
+      "id": "chhath-2028-new-delhi-sandhya-arghya",
+      "windowId": "chhath-2028-new-delhi",
+      "family": "chhath",
+      "name": "Sandhya Arghya",
+      "start": "2028-10-23",
+      "end": "2028-10-23",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/chhath/chhath-puja-calendar.html?year=2028&geoname-id=1261481",
+          "label": "Drik Panchang 2028 chhath reference for New Delhi, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ],
+      "variant": "sunset"
+    },
+    {
+      "id": "chhath-2028-new-delhi-usha-arghya",
+      "windowId": "chhath-2028-new-delhi",
+      "family": "chhath",
+      "name": "Usha Arghya",
+      "start": "2028-10-24",
+      "end": "2028-10-24",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/chhath/chhath-puja-calendar.html?year=2028&geoname-id=1261481",
+          "label": "Drik Panchang 2028 chhath reference for New Delhi, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ],
+      "variant": "dawn"
+    },
+    {
+      "id": "chhath-2029-new-delhi-nahay-khay",
+      "windowId": "chhath-2029-new-delhi",
+      "family": "chhath",
+      "name": "Nahay Khay",
+      "start": "2029-11-09",
+      "end": "2029-11-09",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/chhath/chhath-puja-calendar.html?year=2029&geoname-id=1261481",
+          "label": "Drik Panchang 2029 chhath reference for New Delhi, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ]
+    },
+    {
+      "id": "chhath-2029-new-delhi-kharna",
+      "windowId": "chhath-2029-new-delhi",
+      "family": "chhath",
+      "name": "Lohanda and Kharna",
+      "start": "2029-11-10",
+      "end": "2029-11-10",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/chhath/chhath-puja-calendar.html?year=2029&geoname-id=1261481",
+          "label": "Drik Panchang 2029 chhath reference for New Delhi, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ]
+    },
+    {
+      "id": "chhath-2029-new-delhi-sandhya-arghya",
+      "windowId": "chhath-2029-new-delhi",
+      "family": "chhath",
+      "name": "Sandhya Arghya",
+      "start": "2029-11-11",
+      "end": "2029-11-11",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/chhath/chhath-puja-calendar.html?year=2029&geoname-id=1261481",
+          "label": "Drik Panchang 2029 chhath reference for New Delhi, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ],
+      "variant": "sunset"
+    },
+    {
+      "id": "chhath-2029-new-delhi-usha-arghya",
+      "windowId": "chhath-2029-new-delhi",
+      "family": "chhath",
+      "name": "Usha Arghya",
+      "start": "2029-11-12",
+      "end": "2029-11-12",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/chhath/chhath-puja-calendar.html?year=2029&geoname-id=1261481",
+          "label": "Drik Panchang 2029 chhath reference for New Delhi, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ],
+      "variant": "dawn"
+    },
+    {
+      "id": "chhath-2030-new-delhi-nahay-khay",
+      "windowId": "chhath-2030-new-delhi",
+      "family": "chhath",
+      "name": "Nahay Khay",
+      "start": "2030-10-30",
+      "end": "2030-10-30",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/chhath/chhath-puja-calendar.html?year=2030&geoname-id=1261481",
+          "label": "Drik Panchang 2030 chhath reference for New Delhi, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ]
+    },
+    {
+      "id": "chhath-2030-new-delhi-kharna",
+      "windowId": "chhath-2030-new-delhi",
+      "family": "chhath",
+      "name": "Lohanda and Kharna",
+      "start": "2030-10-31",
+      "end": "2030-10-31",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/chhath/chhath-puja-calendar.html?year=2030&geoname-id=1261481",
+          "label": "Drik Panchang 2030 chhath reference for New Delhi, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ]
+    },
+    {
+      "id": "chhath-2030-new-delhi-sandhya-arghya",
+      "windowId": "chhath-2030-new-delhi",
+      "family": "chhath",
+      "name": "Sandhya Arghya",
+      "start": "2030-11-01",
+      "end": "2030-11-01",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/chhath/chhath-puja-calendar.html?year=2030&geoname-id=1261481",
+          "label": "Drik Panchang 2030 chhath reference for New Delhi, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ],
+      "variant": "sunset"
+    },
+    {
+      "id": "chhath-2030-new-delhi-usha-arghya",
+      "windowId": "chhath-2030-new-delhi",
+      "family": "chhath",
+      "name": "Usha Arghya",
+      "start": "2030-11-02",
+      "end": "2030-11-02",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/chhath/chhath-puja-calendar.html?year=2030&geoname-id=1261481",
+          "label": "Drik Panchang 2030 chhath reference for New Delhi, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ],
+      "variant": "dawn"
+    },
+    {
+      "id": "pongal-2026-chennai-bhogi",
+      "windowId": "pongal-2026-chennai",
+      "family": "pongal",
+      "name": "Bhogi Pandigai",
+      "start": "2026-01-13",
+      "end": "2026-01-13",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/festivals/sankranti/sankranti-calendar.html?year=2026&geoname-id=1264527",
+          "label": "Drik Panchang 2026 pongal reference for Chennai, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ]
+    },
+    {
+      "id": "pongal-2026-chennai-thai-pongal",
+      "windowId": "pongal-2026-chennai",
+      "family": "pongal",
+      "name": "Pongal",
+      "start": "2026-01-14",
+      "end": "2026-01-14",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/festivals/sankranti/sankranti-calendar.html?year=2026&geoname-id=1264527",
+          "label": "Drik Panchang 2026 pongal reference for Chennai, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ],
+      "variant": "harvest"
+    },
+    {
+      "id": "pongal-2026-chennai-mattu-pongal",
+      "windowId": "pongal-2026-chennai",
+      "family": "pongal",
+      "name": "Mattu Pongal",
+      "start": "2026-01-15",
+      "end": "2026-01-15",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/festivals/sankranti/sankranti-calendar.html?year=2026&geoname-id=1264527",
+          "label": "Drik Panchang 2026 pongal reference for Chennai, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ],
+      "variant": "harvest"
+    },
+    {
+      "id": "pongal-2026-chennai-kaanum-pongal",
+      "windowId": "pongal-2026-chennai",
+      "family": "pongal",
+      "name": "Kaanum Pongal",
+      "start": "2026-01-16",
+      "end": "2026-01-16",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/festivals/sankranti/sankranti-calendar.html?year=2026&geoname-id=1264527",
+          "label": "Drik Panchang 2026 pongal reference for Chennai, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ],
+      "variant": "warm"
+    },
+    {
+      "id": "pongal-2027-chennai-bhogi",
+      "windowId": "pongal-2027-chennai",
+      "family": "pongal",
+      "name": "Bhogi Pandigai",
+      "start": "2027-01-14",
+      "end": "2027-01-14",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/festivals/sankranti/sankranti-calendar.html?year=2027&geoname-id=1264527",
+          "label": "Drik Panchang 2027 pongal reference for Chennai, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ]
+    },
+    {
+      "id": "pongal-2027-chennai-thai-pongal",
+      "windowId": "pongal-2027-chennai",
+      "family": "pongal",
+      "name": "Pongal",
+      "start": "2027-01-15",
+      "end": "2027-01-15",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/festivals/sankranti/sankranti-calendar.html?year=2027&geoname-id=1264527",
+          "label": "Drik Panchang 2027 pongal reference for Chennai, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ],
+      "variant": "harvest"
+    },
+    {
+      "id": "pongal-2027-chennai-mattu-pongal",
+      "windowId": "pongal-2027-chennai",
+      "family": "pongal",
+      "name": "Mattu Pongal",
+      "start": "2027-01-16",
+      "end": "2027-01-16",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/festivals/sankranti/sankranti-calendar.html?year=2027&geoname-id=1264527",
+          "label": "Drik Panchang 2027 pongal reference for Chennai, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ],
+      "variant": "harvest"
+    },
+    {
+      "id": "pongal-2027-chennai-kaanum-pongal",
+      "windowId": "pongal-2027-chennai",
+      "family": "pongal",
+      "name": "Kaanum Pongal",
+      "start": "2027-01-17",
+      "end": "2027-01-17",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/festivals/sankranti/sankranti-calendar.html?year=2027&geoname-id=1264527",
+          "label": "Drik Panchang 2027 pongal reference for Chennai, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ],
+      "variant": "warm"
+    },
+    {
+      "id": "pongal-2028-chennai-bhogi",
+      "windowId": "pongal-2028-chennai",
+      "family": "pongal",
+      "name": "Bhogi Pandigai",
+      "start": "2028-01-14",
+      "end": "2028-01-14",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/festivals/sankranti/sankranti-calendar.html?year=2028&geoname-id=1264527",
+          "label": "Drik Panchang 2028 pongal reference for Chennai, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ]
+    },
+    {
+      "id": "pongal-2028-chennai-thai-pongal",
+      "windowId": "pongal-2028-chennai",
+      "family": "pongal",
+      "name": "Pongal",
+      "start": "2028-01-15",
+      "end": "2028-01-15",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/festivals/sankranti/sankranti-calendar.html?year=2028&geoname-id=1264527",
+          "label": "Drik Panchang 2028 pongal reference for Chennai, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ],
+      "variant": "harvest"
+    },
+    {
+      "id": "pongal-2028-chennai-mattu-pongal",
+      "windowId": "pongal-2028-chennai",
+      "family": "pongal",
+      "name": "Mattu Pongal",
+      "start": "2028-01-16",
+      "end": "2028-01-16",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/festivals/sankranti/sankranti-calendar.html?year=2028&geoname-id=1264527",
+          "label": "Drik Panchang 2028 pongal reference for Chennai, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ],
+      "variant": "harvest"
+    },
+    {
+      "id": "pongal-2028-chennai-kaanum-pongal",
+      "windowId": "pongal-2028-chennai",
+      "family": "pongal",
+      "name": "Kaanum Pongal",
+      "start": "2028-01-17",
+      "end": "2028-01-17",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/festivals/sankranti/sankranti-calendar.html?year=2028&geoname-id=1264527",
+          "label": "Drik Panchang 2028 pongal reference for Chennai, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ],
+      "variant": "warm"
+    },
+    {
+      "id": "pongal-2029-chennai-bhogi",
+      "windowId": "pongal-2029-chennai",
+      "family": "pongal",
+      "name": "Bhogi Pandigai",
+      "start": "2029-01-13",
+      "end": "2029-01-13",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/festivals/sankranti/sankranti-calendar.html?year=2029&geoname-id=1264527",
+          "label": "Drik Panchang 2029 pongal reference for Chennai, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ]
+    },
+    {
+      "id": "pongal-2029-chennai-thai-pongal",
+      "windowId": "pongal-2029-chennai",
+      "family": "pongal",
+      "name": "Pongal",
+      "start": "2029-01-14",
+      "end": "2029-01-14",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/festivals/sankranti/sankranti-calendar.html?year=2029&geoname-id=1264527",
+          "label": "Drik Panchang 2029 pongal reference for Chennai, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ],
+      "variant": "harvest"
+    },
+    {
+      "id": "pongal-2029-chennai-mattu-pongal",
+      "windowId": "pongal-2029-chennai",
+      "family": "pongal",
+      "name": "Mattu Pongal",
+      "start": "2029-01-15",
+      "end": "2029-01-15",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/festivals/sankranti/sankranti-calendar.html?year=2029&geoname-id=1264527",
+          "label": "Drik Panchang 2029 pongal reference for Chennai, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ],
+      "variant": "harvest"
+    },
+    {
+      "id": "pongal-2029-chennai-kaanum-pongal",
+      "windowId": "pongal-2029-chennai",
+      "family": "pongal",
+      "name": "Kaanum Pongal",
+      "start": "2029-01-16",
+      "end": "2029-01-16",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/festivals/sankranti/sankranti-calendar.html?year=2029&geoname-id=1264527",
+          "label": "Drik Panchang 2029 pongal reference for Chennai, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ],
+      "variant": "warm"
+    },
+    {
+      "id": "pongal-2030-chennai-bhogi",
+      "windowId": "pongal-2030-chennai",
+      "family": "pongal",
+      "name": "Bhogi Pandigai",
+      "start": "2030-01-13",
+      "end": "2030-01-13",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/festivals/sankranti/sankranti-calendar.html?year=2030&geoname-id=1264527",
+          "label": "Drik Panchang 2030 pongal reference for Chennai, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ]
+    },
+    {
+      "id": "pongal-2030-chennai-thai-pongal",
+      "windowId": "pongal-2030-chennai",
+      "family": "pongal",
+      "name": "Pongal",
+      "start": "2030-01-14",
+      "end": "2030-01-14",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/festivals/sankranti/sankranti-calendar.html?year=2030&geoname-id=1264527",
+          "label": "Drik Panchang 2030 pongal reference for Chennai, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ],
+      "variant": "harvest"
+    },
+    {
+      "id": "pongal-2030-chennai-mattu-pongal",
+      "windowId": "pongal-2030-chennai",
+      "family": "pongal",
+      "name": "Mattu Pongal",
+      "start": "2030-01-15",
+      "end": "2030-01-15",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/festivals/sankranti/sankranti-calendar.html?year=2030&geoname-id=1264527",
+          "label": "Drik Panchang 2030 pongal reference for Chennai, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ],
+      "variant": "harvest"
+    },
+    {
+      "id": "pongal-2030-chennai-kaanum-pongal",
+      "windowId": "pongal-2030-chennai",
+      "family": "pongal",
+      "name": "Kaanum Pongal",
+      "start": "2030-01-16",
+      "end": "2030-01-16",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/festivals/sankranti/sankranti-calendar.html?year=2030&geoname-id=1264527",
+          "label": "Drik Panchang 2030 pongal reference for Chennai, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ],
+      "variant": "warm"
+    },
+    {
+      "id": "navratri-2026-new-delhi-reference-day-1",
+      "windowId": "navratri-2026-new-delhi",
+      "family": "navratri",
+      "name": "Navratri Day 1 — Ghatasthapana",
+      "start": "2026-10-11",
+      "end": "2026-10-11",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/navratri/ashwin-shardiya-navratri-dates.html?year=2026&geoname-id=1261481",
+          "label": "Drik Panchang 2026 Shardiya Navratri reference for New Delhi, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ],
+      "variant": "orange",
+      "variantScope": "Published colour reference only, not a universal clothing/ritual instruction"
+    },
+    {
+      "id": "navratri-2026-new-delhi-reference-day-2",
+      "windowId": "navratri-2026-new-delhi",
+      "family": "navratri",
+      "name": "Navratri Day 2",
+      "start": "2026-10-12",
+      "end": "2026-10-12",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/navratri/ashwin-shardiya-navratri-dates.html?year=2026&geoname-id=1261481",
+          "label": "Drik Panchang 2026 Shardiya Navratri reference for New Delhi, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ],
+      "variant": "white",
+      "variantScope": "Published colour reference only, not a universal clothing/ritual instruction"
+    },
+    {
+      "id": "navratri-2026-new-delhi-reference-day-3",
+      "windowId": "navratri-2026-new-delhi",
+      "family": "navratri",
+      "name": "Navratri Day 3",
+      "start": "2026-10-13",
+      "end": "2026-10-13",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/navratri/ashwin-shardiya-navratri-dates.html?year=2026&geoname-id=1261481",
+          "label": "Drik Panchang 2026 Shardiya Navratri reference for New Delhi, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ],
+      "variant": "red",
+      "variantScope": "Published colour reference only, not a universal clothing/ritual instruction"
+    },
+    {
+      "id": "navratri-2026-new-delhi-reference-day-4",
+      "windowId": "navratri-2026-new-delhi",
+      "family": "navratri",
+      "name": "Navratri Day 4",
+      "start": "2026-10-14",
+      "end": "2026-10-14",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/navratri/ashwin-shardiya-navratri-dates.html?year=2026&geoname-id=1261481",
+          "label": "Drik Panchang 2026 Shardiya Navratri reference for New Delhi, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ],
+      "variant": "royal-blue",
+      "variantScope": "Published colour reference only, not a universal clothing/ritual instruction"
+    },
+    {
+      "id": "navratri-2026-new-delhi-reference-day-5",
+      "windowId": "navratri-2026-new-delhi",
+      "family": "navratri",
+      "name": "Navratri Day 5",
+      "start": "2026-10-15",
+      "end": "2026-10-15",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/navratri/ashwin-shardiya-navratri-dates.html?year=2026&geoname-id=1261481",
+          "label": "Drik Panchang 2026 Shardiya Navratri reference for New Delhi, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ],
+      "variant": "yellow",
+      "variantScope": "Published colour reference only, not a universal clothing/ritual instruction"
+    },
+    {
+      "id": "navratri-2026-new-delhi-reference-day-6",
+      "windowId": "navratri-2026-new-delhi",
+      "family": "navratri",
+      "name": "Navratri Day 6",
+      "start": "2026-10-16",
+      "end": "2026-10-16",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/navratri/ashwin-shardiya-navratri-dates.html?year=2026&geoname-id=1261481",
+          "label": "Drik Panchang 2026 Shardiya Navratri reference for New Delhi, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ],
+      "variant": "green",
+      "variantScope": "Published colour reference only, not a universal clothing/ritual instruction"
+    },
+    {
+      "id": "navratri-2026-new-delhi-reference-day-7",
+      "windowId": "navratri-2026-new-delhi",
+      "family": "navratri",
+      "name": "Navratri Day 7",
+      "start": "2026-10-17",
+      "end": "2026-10-17",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/navratri/ashwin-shardiya-navratri-dates.html?year=2026&geoname-id=1261481",
+          "label": "Drik Panchang 2026 Shardiya Navratri reference for New Delhi, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ],
+      "variant": "grey",
+      "variantScope": "Published colour reference only, not a universal clothing/ritual instruction"
+    },
+    {
+      "id": "navratri-2026-new-delhi-reference-day-8",
+      "windowId": "navratri-2026-new-delhi",
+      "family": "navratri",
+      "name": "Navratri Day 8",
+      "start": "2026-10-18",
+      "end": "2026-10-18",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/navratri/ashwin-shardiya-navratri-dates.html?year=2026&geoname-id=1261481",
+          "label": "Drik Panchang 2026 Shardiya Navratri reference for New Delhi, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ],
+      "variant": "purple",
+      "variantScope": "Published colour reference only, not a universal clothing/ritual instruction"
+    },
+    {
+      "id": "navratri-2026-new-delhi-reference-day-9",
+      "windowId": "navratri-2026-new-delhi",
+      "family": "navratri",
+      "name": "Navratri Day 9 — Durga Ashtami, Maha Navami",
+      "start": "2026-10-19",
+      "end": "2026-10-19",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/navratri/ashwin-shardiya-navratri-dates.html?year=2026&geoname-id=1261481",
+          "label": "Drik Panchang 2026 Shardiya Navratri reference for New Delhi, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ],
+      "variant": "peacock-green",
+      "variantScope": "Published colour reference only, not a universal clothing/ritual instruction"
+    },
+    {
+      "id": "navratri-2026-new-delhi-reference-day-10",
+      "windowId": "navratri-2026-new-delhi",
+      "family": "navratri",
+      "name": "Navratri Day 10 — Durga Visarjan, Vijayadashami",
+      "start": "2026-10-20",
+      "end": "2026-10-20",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/navratri/ashwin-shardiya-navratri-dates.html?year=2026&geoname-id=1261481",
+          "label": "Drik Panchang 2026 Shardiya Navratri reference for New Delhi, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ]
+    },
+    {
+      "id": "navratri-2027-new-delhi-reference-day-1",
+      "windowId": "navratri-2027-new-delhi",
+      "family": "navratri",
+      "name": "Navratri Day 1 — Ghatasthapana",
+      "start": "2027-09-30",
+      "end": "2027-09-30",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/navratri/ashwin-shardiya-navratri-dates.html?year=2027&geoname-id=1261481",
+          "label": "Drik Panchang 2027 Shardiya Navratri reference for New Delhi, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ],
+      "variant": "yellow",
+      "variantScope": "Published colour reference only, not a universal clothing/ritual instruction"
+    },
+    {
+      "id": "navratri-2027-new-delhi-reference-day-2",
+      "windowId": "navratri-2027-new-delhi",
+      "family": "navratri",
+      "name": "Navratri Day 2",
+      "start": "2027-10-01",
+      "end": "2027-10-01",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/navratri/ashwin-shardiya-navratri-dates.html?year=2027&geoname-id=1261481",
+          "label": "Drik Panchang 2027 Shardiya Navratri reference for New Delhi, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ],
+      "variant": "green",
+      "variantScope": "Published colour reference only, not a universal clothing/ritual instruction"
+    },
+    {
+      "id": "navratri-2027-new-delhi-reference-day-3",
+      "windowId": "navratri-2027-new-delhi",
+      "family": "navratri",
+      "name": "Navratri Day 3",
+      "start": "2027-10-02",
+      "end": "2027-10-02",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/navratri/ashwin-shardiya-navratri-dates.html?year=2027&geoname-id=1261481",
+          "label": "Drik Panchang 2027 Shardiya Navratri reference for New Delhi, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ],
+      "variant": "grey",
+      "variantScope": "Published colour reference only, not a universal clothing/ritual instruction"
+    },
+    {
+      "id": "navratri-2027-new-delhi-reference-day-4",
+      "windowId": "navratri-2027-new-delhi",
+      "family": "navratri",
+      "name": "Navratri Day 4",
+      "start": "2027-10-03",
+      "end": "2027-10-03",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/navratri/ashwin-shardiya-navratri-dates.html?year=2027&geoname-id=1261481",
+          "label": "Drik Panchang 2027 Shardiya Navratri reference for New Delhi, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ],
+      "variant": "orange",
+      "variantScope": "Published colour reference only, not a universal clothing/ritual instruction"
+    },
+    {
+      "id": "navratri-2027-new-delhi-reference-day-5",
+      "windowId": "navratri-2027-new-delhi",
+      "family": "navratri",
+      "name": "Navratri Day 5",
+      "start": "2027-10-04",
+      "end": "2027-10-04",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/navratri/ashwin-shardiya-navratri-dates.html?year=2027&geoname-id=1261481",
+          "label": "Drik Panchang 2027 Shardiya Navratri reference for New Delhi, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ],
+      "variant": "white",
+      "variantScope": "Published colour reference only, not a universal clothing/ritual instruction"
+    },
+    {
+      "id": "navratri-2027-new-delhi-reference-day-6",
+      "windowId": "navratri-2027-new-delhi",
+      "family": "navratri",
+      "name": "Navratri Day 6",
+      "start": "2027-10-05",
+      "end": "2027-10-05",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/navratri/ashwin-shardiya-navratri-dates.html?year=2027&geoname-id=1261481",
+          "label": "Drik Panchang 2027 Shardiya Navratri reference for New Delhi, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ],
+      "variant": "red",
+      "variantScope": "Published colour reference only, not a universal clothing/ritual instruction"
+    },
+    {
+      "id": "navratri-2027-new-delhi-reference-day-7",
+      "windowId": "navratri-2027-new-delhi",
+      "family": "navratri",
+      "name": "Navratri Day 7",
+      "start": "2027-10-06",
+      "end": "2027-10-06",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/navratri/ashwin-shardiya-navratri-dates.html?year=2027&geoname-id=1261481",
+          "label": "Drik Panchang 2027 Shardiya Navratri reference for New Delhi, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ],
+      "variant": "royal-blue",
+      "variantScope": "Published colour reference only, not a universal clothing/ritual instruction"
+    },
+    {
+      "id": "navratri-2027-new-delhi-reference-day-8",
+      "windowId": "navratri-2027-new-delhi",
+      "family": "navratri",
+      "name": "Navratri Day 8 — Durga Ashtami",
+      "start": "2027-10-07",
+      "end": "2027-10-07",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/navratri/ashwin-shardiya-navratri-dates.html?year=2027&geoname-id=1261481",
+          "label": "Drik Panchang 2027 Shardiya Navratri reference for New Delhi, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ],
+      "variant": "pink",
+      "variantScope": "Published colour reference only, not a universal clothing/ritual instruction"
+    },
+    {
+      "id": "navratri-2027-new-delhi-reference-day-9",
+      "windowId": "navratri-2027-new-delhi",
+      "family": "navratri",
+      "name": "Navratri Day 9 — Maha Navami",
+      "start": "2027-10-08",
+      "end": "2027-10-08",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/navratri/ashwin-shardiya-navratri-dates.html?year=2027&geoname-id=1261481",
+          "label": "Drik Panchang 2027 Shardiya Navratri reference for New Delhi, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ],
+      "variant": "purple",
+      "variantScope": "Published colour reference only, not a universal clothing/ritual instruction"
+    },
+    {
+      "id": "navratri-2027-new-delhi-reference-day-10",
+      "windowId": "navratri-2027-new-delhi",
+      "family": "navratri",
+      "name": "Navratri Day 10 — Vijayadashami",
+      "start": "2027-10-09",
+      "end": "2027-10-09",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/navratri/ashwin-shardiya-navratri-dates.html?year=2027&geoname-id=1261481",
+          "label": "Drik Panchang 2027 Shardiya Navratri reference for New Delhi, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ]
+    },
+    {
+      "id": "navratri-2027-new-delhi-reference-day-11",
+      "windowId": "navratri-2027-new-delhi",
+      "family": "navratri",
+      "name": "Navratri Day 11 — Durga Visarjan",
+      "start": "2027-10-10",
+      "end": "2027-10-10",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/navratri/ashwin-shardiya-navratri-dates.html?year=2027&geoname-id=1261481",
+          "label": "Drik Panchang 2027 Shardiya Navratri reference for New Delhi, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ]
+    },
+    {
+      "id": "navratri-2028-new-delhi-reference-day-1",
+      "windowId": "navratri-2028-new-delhi",
+      "family": "navratri",
+      "name": "Navratri Day 1 — Ghatasthapana",
+      "start": "2028-09-19",
+      "end": "2028-09-19",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/navratri/ashwin-shardiya-navratri-dates.html?year=2028&geoname-id=1261481",
+          "label": "Drik Panchang 2028 Shardiya Navratri reference for New Delhi, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ],
+      "variant": "red",
+      "variantScope": "Published colour reference only, not a universal clothing/ritual instruction"
+    },
+    {
+      "id": "navratri-2028-new-delhi-reference-day-2",
+      "windowId": "navratri-2028-new-delhi",
+      "family": "navratri",
+      "name": "Navratri Day 2",
+      "start": "2028-09-20",
+      "end": "2028-09-20",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/navratri/ashwin-shardiya-navratri-dates.html?year=2028&geoname-id=1261481",
+          "label": "Drik Panchang 2028 Shardiya Navratri reference for New Delhi, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ],
+      "variant": "royal-blue",
+      "variantScope": "Published colour reference only, not a universal clothing/ritual instruction"
+    },
+    {
+      "id": "navratri-2028-new-delhi-reference-day-3",
+      "windowId": "navratri-2028-new-delhi",
+      "family": "navratri",
+      "name": "Navratri Day 3",
+      "start": "2028-09-21",
+      "end": "2028-09-21",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/navratri/ashwin-shardiya-navratri-dates.html?year=2028&geoname-id=1261481",
+          "label": "Drik Panchang 2028 Shardiya Navratri reference for New Delhi, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ],
+      "variant": "yellow",
+      "variantScope": "Published colour reference only, not a universal clothing/ritual instruction"
+    },
+    {
+      "id": "navratri-2028-new-delhi-reference-day-4",
+      "windowId": "navratri-2028-new-delhi",
+      "family": "navratri",
+      "name": "Navratri Day 4",
+      "start": "2028-09-22",
+      "end": "2028-09-22",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/navratri/ashwin-shardiya-navratri-dates.html?year=2028&geoname-id=1261481",
+          "label": "Drik Panchang 2028 Shardiya Navratri reference for New Delhi, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ],
+      "variant": "green",
+      "variantScope": "Published colour reference only, not a universal clothing/ritual instruction"
+    },
+    {
+      "id": "navratri-2028-new-delhi-reference-day-5",
+      "windowId": "navratri-2028-new-delhi",
+      "family": "navratri",
+      "name": "Navratri Day 5",
+      "start": "2028-09-23",
+      "end": "2028-09-23",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/navratri/ashwin-shardiya-navratri-dates.html?year=2028&geoname-id=1261481",
+          "label": "Drik Panchang 2028 Shardiya Navratri reference for New Delhi, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ],
+      "variant": "grey",
+      "variantScope": "Published colour reference only, not a universal clothing/ritual instruction"
+    },
+    {
+      "id": "navratri-2028-new-delhi-reference-day-6",
+      "windowId": "navratri-2028-new-delhi",
+      "family": "navratri",
+      "name": "Navratri Day 6",
+      "start": "2028-09-24",
+      "end": "2028-09-24",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/navratri/ashwin-shardiya-navratri-dates.html?year=2028&geoname-id=1261481",
+          "label": "Drik Panchang 2028 Shardiya Navratri reference for New Delhi, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ],
+      "variant": "orange",
+      "variantScope": "Published colour reference only, not a universal clothing/ritual instruction"
+    },
+    {
+      "id": "navratri-2028-new-delhi-reference-day-7",
+      "windowId": "navratri-2028-new-delhi",
+      "family": "navratri",
+      "name": "Navratri Day 7",
+      "start": "2028-09-25",
+      "end": "2028-09-25",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/navratri/ashwin-shardiya-navratri-dates.html?year=2028&geoname-id=1261481",
+          "label": "Drik Panchang 2028 Shardiya Navratri reference for New Delhi, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ],
+      "variant": "white",
+      "variantScope": "Published colour reference only, not a universal clothing/ritual instruction"
+    },
+    {
+      "id": "navratri-2028-new-delhi-reference-day-8",
+      "windowId": "navratri-2028-new-delhi",
+      "family": "navratri",
+      "name": "Navratri Day 8 — Durga Ashtami, Maha Navami",
+      "start": "2028-09-26",
+      "end": "2028-09-26",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/navratri/ashwin-shardiya-navratri-dates.html?year=2028&geoname-id=1261481",
+          "label": "Drik Panchang 2028 Shardiya Navratri reference for New Delhi, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ],
+      "variant": "pink",
+      "variantScope": "Published colour reference only, not a universal clothing/ritual instruction"
+    },
+    {
+      "id": "navratri-2028-new-delhi-reference-day-9",
+      "windowId": "navratri-2028-new-delhi",
+      "family": "navratri",
+      "name": "Navratri Day 9 — Vijayadashami",
+      "start": "2028-09-27",
+      "end": "2028-09-27",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/navratri/ashwin-shardiya-navratri-dates.html?year=2028&geoname-id=1261481",
+          "label": "Drik Panchang 2028 Shardiya Navratri reference for New Delhi, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ],
+      "variant": "sky-blue",
+      "variantScope": "Published colour reference only, not a universal clothing/ritual instruction"
+    },
+    {
+      "id": "navratri-2028-new-delhi-reference-day-10",
+      "windowId": "navratri-2028-new-delhi",
+      "family": "navratri",
+      "name": "Navratri Day 10 — Durga Visarjan",
+      "start": "2028-09-28",
+      "end": "2028-09-28",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/navratri/ashwin-shardiya-navratri-dates.html?year=2028&geoname-id=1261481",
+          "label": "Drik Panchang 2028 Shardiya Navratri reference for New Delhi, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ]
+    },
+    {
+      "id": "navratri-2029-new-delhi-reference-day-1",
+      "windowId": "navratri-2029-new-delhi",
+      "family": "navratri",
+      "name": "Navratri Day 1 — Ghatasthapana",
+      "start": "2029-10-08",
+      "end": "2029-10-08",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/navratri/ashwin-shardiya-navratri-dates.html?year=2029&geoname-id=1261481",
+          "label": "Drik Panchang 2029 Shardiya Navratri reference for New Delhi, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ],
+      "variant": "white",
+      "variantScope": "Published colour reference only, not a universal clothing/ritual instruction"
+    },
+    {
+      "id": "navratri-2029-new-delhi-reference-day-2",
+      "windowId": "navratri-2029-new-delhi",
+      "family": "navratri",
+      "name": "Navratri Day 2",
+      "start": "2029-10-09",
+      "end": "2029-10-09",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/navratri/ashwin-shardiya-navratri-dates.html?year=2029&geoname-id=1261481",
+          "label": "Drik Panchang 2029 Shardiya Navratri reference for New Delhi, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ],
+      "variant": "red",
+      "variantScope": "Published colour reference only, not a universal clothing/ritual instruction"
+    },
+    {
+      "id": "navratri-2029-new-delhi-reference-day-3",
+      "windowId": "navratri-2029-new-delhi",
+      "family": "navratri",
+      "name": "Navratri Day 3",
+      "start": "2029-10-10",
+      "end": "2029-10-10",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/navratri/ashwin-shardiya-navratri-dates.html?year=2029&geoname-id=1261481",
+          "label": "Drik Panchang 2029 Shardiya Navratri reference for New Delhi, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ],
+      "variant": "royal-blue",
+      "variantScope": "Published colour reference only, not a universal clothing/ritual instruction"
+    },
+    {
+      "id": "navratri-2029-new-delhi-reference-day-4",
+      "windowId": "navratri-2029-new-delhi",
+      "family": "navratri",
+      "name": "Navratri Day 4",
+      "start": "2029-10-11",
+      "end": "2029-10-11",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/navratri/ashwin-shardiya-navratri-dates.html?year=2029&geoname-id=1261481",
+          "label": "Drik Panchang 2029 Shardiya Navratri reference for New Delhi, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ],
+      "variant": "yellow",
+      "variantScope": "Published colour reference only, not a universal clothing/ritual instruction"
+    },
+    {
+      "id": "navratri-2029-new-delhi-reference-day-5",
+      "windowId": "navratri-2029-new-delhi",
+      "family": "navratri",
+      "name": "Navratri Day 5",
+      "start": "2029-10-12",
+      "end": "2029-10-12",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/navratri/ashwin-shardiya-navratri-dates.html?year=2029&geoname-id=1261481",
+          "label": "Drik Panchang 2029 Shardiya Navratri reference for New Delhi, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ],
+      "variant": "green",
+      "variantScope": "Published colour reference only, not a universal clothing/ritual instruction"
+    },
+    {
+      "id": "navratri-2029-new-delhi-reference-day-6",
+      "windowId": "navratri-2029-new-delhi",
+      "family": "navratri",
+      "name": "Navratri Day 6",
+      "start": "2029-10-13",
+      "end": "2029-10-13",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/navratri/ashwin-shardiya-navratri-dates.html?year=2029&geoname-id=1261481",
+          "label": "Drik Panchang 2029 Shardiya Navratri reference for New Delhi, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ],
+      "variant": "grey",
+      "variantScope": "Published colour reference only, not a universal clothing/ritual instruction"
+    },
+    {
+      "id": "navratri-2029-new-delhi-reference-day-7",
+      "windowId": "navratri-2029-new-delhi",
+      "family": "navratri",
+      "name": "Navratri Day 7 — Durga Ashtami",
+      "start": "2029-10-14",
+      "end": "2029-10-14",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/navratri/ashwin-shardiya-navratri-dates.html?year=2029&geoname-id=1261481",
+          "label": "Drik Panchang 2029 Shardiya Navratri reference for New Delhi, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ],
+      "variant": "orange",
+      "variantScope": "Published colour reference only, not a universal clothing/ritual instruction"
+    },
+    {
+      "id": "navratri-2029-new-delhi-reference-day-8",
+      "windowId": "navratri-2029-new-delhi",
+      "family": "navratri",
+      "name": "Navratri Day 8 — Maha Navami",
+      "start": "2029-10-15",
+      "end": "2029-10-15",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/navratri/ashwin-shardiya-navratri-dates.html?year=2029&geoname-id=1261481",
+          "label": "Drik Panchang 2029 Shardiya Navratri reference for New Delhi, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ],
+      "variant": "peacock-green",
+      "variantScope": "Published colour reference only, not a universal clothing/ritual instruction"
+    },
+    {
+      "id": "navratri-2029-new-delhi-reference-day-9",
+      "windowId": "navratri-2029-new-delhi",
+      "family": "navratri",
+      "name": "Navratri Day 9 — Durga Visarjan, Vijayadashami",
+      "start": "2029-10-16",
+      "end": "2029-10-16",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/navratri/ashwin-shardiya-navratri-dates.html?year=2029&geoname-id=1261481",
+          "label": "Drik Panchang 2029 Shardiya Navratri reference for New Delhi, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ],
+      "variant": "pink",
+      "variantScope": "Published colour reference only, not a universal clothing/ritual instruction"
+    },
+    {
+      "id": "navratri-2030-new-delhi-reference-day-1",
+      "windowId": "navratri-2030-new-delhi",
+      "family": "navratri",
+      "name": "Navratri Day 1 — Ghatasthapana",
+      "start": "2030-09-28",
+      "end": "2030-09-28",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/navratri/ashwin-shardiya-navratri-dates.html?year=2030&geoname-id=1261481",
+          "label": "Drik Panchang 2030 Shardiya Navratri reference for New Delhi, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ],
+      "variant": "grey",
+      "variantScope": "Published colour reference only, not a universal clothing/ritual instruction"
+    },
+    {
+      "id": "navratri-2030-new-delhi-reference-day-2",
+      "windowId": "navratri-2030-new-delhi",
+      "family": "navratri",
+      "name": "Navratri Day 2",
+      "start": "2030-09-29",
+      "end": "2030-09-29",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/navratri/ashwin-shardiya-navratri-dates.html?year=2030&geoname-id=1261481",
+          "label": "Drik Panchang 2030 Shardiya Navratri reference for New Delhi, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ],
+      "variant": "orange",
+      "variantScope": "Published colour reference only, not a universal clothing/ritual instruction"
+    },
+    {
+      "id": "navratri-2030-new-delhi-reference-day-3",
+      "windowId": "navratri-2030-new-delhi",
+      "family": "navratri",
+      "name": "Navratri Day 3",
+      "start": "2030-09-30",
+      "end": "2030-09-30",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/navratri/ashwin-shardiya-navratri-dates.html?year=2030&geoname-id=1261481",
+          "label": "Drik Panchang 2030 Shardiya Navratri reference for New Delhi, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ],
+      "variant": "white",
+      "variantScope": "Published colour reference only, not a universal clothing/ritual instruction"
+    },
+    {
+      "id": "navratri-2030-new-delhi-reference-day-4",
+      "windowId": "navratri-2030-new-delhi",
+      "family": "navratri",
+      "name": "Navratri Day 4",
+      "start": "2030-10-01",
+      "end": "2030-10-01",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/navratri/ashwin-shardiya-navratri-dates.html?year=2030&geoname-id=1261481",
+          "label": "Drik Panchang 2030 Shardiya Navratri reference for New Delhi, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ],
+      "variant": "red",
+      "variantScope": "Published colour reference only, not a universal clothing/ritual instruction"
+    },
+    {
+      "id": "navratri-2030-new-delhi-reference-day-5",
+      "windowId": "navratri-2030-new-delhi",
+      "family": "navratri",
+      "name": "Navratri Day 5",
+      "start": "2030-10-02",
+      "end": "2030-10-02",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/navratri/ashwin-shardiya-navratri-dates.html?year=2030&geoname-id=1261481",
+          "label": "Drik Panchang 2030 Shardiya Navratri reference for New Delhi, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ],
+      "variant": "royal-blue",
+      "variantScope": "Published colour reference only, not a universal clothing/ritual instruction"
+    },
+    {
+      "id": "navratri-2030-new-delhi-reference-day-6",
+      "windowId": "navratri-2030-new-delhi",
+      "family": "navratri",
+      "name": "Navratri Day 6",
+      "start": "2030-10-03",
+      "end": "2030-10-03",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/navratri/ashwin-shardiya-navratri-dates.html?year=2030&geoname-id=1261481",
+          "label": "Drik Panchang 2030 Shardiya Navratri reference for New Delhi, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ],
+      "variant": "yellow",
+      "variantScope": "Published colour reference only, not a universal clothing/ritual instruction"
+    },
+    {
+      "id": "navratri-2030-new-delhi-reference-day-7",
+      "windowId": "navratri-2030-new-delhi",
+      "family": "navratri",
+      "name": "Navratri Day 7 — Durga Ashtami",
+      "start": "2030-10-04",
+      "end": "2030-10-04",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/navratri/ashwin-shardiya-navratri-dates.html?year=2030&geoname-id=1261481",
+          "label": "Drik Panchang 2030 Shardiya Navratri reference for New Delhi, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ],
+      "variant": "green",
+      "variantScope": "Published colour reference only, not a universal clothing/ritual instruction"
+    },
+    {
+      "id": "navratri-2030-new-delhi-reference-day-8",
+      "windowId": "navratri-2030-new-delhi",
+      "family": "navratri",
+      "name": "Navratri Day 8 — Maha Navami",
+      "start": "2030-10-05",
+      "end": "2030-10-05",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/navratri/ashwin-shardiya-navratri-dates.html?year=2030&geoname-id=1261481",
+          "label": "Drik Panchang 2030 Shardiya Navratri reference for New Delhi, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ],
+      "variant": "peacock-green",
+      "variantScope": "Published colour reference only, not a universal clothing/ritual instruction"
+    },
+    {
+      "id": "navratri-2030-new-delhi-reference-day-9",
+      "windowId": "navratri-2030-new-delhi",
+      "family": "navratri",
+      "name": "Navratri Day 9 — Durga Visarjan, Vijayadashami",
+      "start": "2030-10-06",
+      "end": "2030-10-06",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/navratri/ashwin-shardiya-navratri-dates.html?year=2030&geoname-id=1261481",
+          "label": "Drik Panchang 2030 Shardiya Navratri reference for New Delhi, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ],
+      "variant": "purple",
+      "variantScope": "Published colour reference only, not a universal clothing/ritual instruction"
+    },
+    {
+      "id": "durga-puja-2026-kolkata-reference-day-1",
+      "windowId": "durga-puja-2026-kolkata",
+      "family": "durga-puja",
+      "name": "Durga Puja Day 1 — Bilva Nimantran",
+      "start": "2026-10-16",
+      "end": "2026-10-16",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/navratri/durga-puja/durga-puja-calendar.html?year=2026&geoname-id=1275004",
+          "label": "Drik Panchang 2026 Durga Puja reference for Kolkata, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ]
+    },
+    {
+      "id": "durga-puja-2026-kolkata-reference-day-2",
+      "windowId": "durga-puja-2026-kolkata",
+      "family": "durga-puja",
+      "name": "Durga Puja Day 2 — Akal Bodhon",
+      "start": "2026-10-17",
+      "end": "2026-10-17",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/navratri/durga-puja/durga-puja-calendar.html?year=2026&geoname-id=1275004",
+          "label": "Drik Panchang 2026 Durga Puja reference for Kolkata, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ]
+    },
+    {
+      "id": "durga-puja-2026-kolkata-reference-day-3",
+      "windowId": "durga-puja-2026-kolkata",
+      "family": "durga-puja",
+      "name": "Durga Puja Day 3 — Durga Saptami",
+      "start": "2026-10-18",
+      "end": "2026-10-18",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/navratri/durga-puja/durga-puja-calendar.html?year=2026&geoname-id=1275004",
+          "label": "Drik Panchang 2026 Durga Puja reference for Kolkata, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ]
+    },
+    {
+      "id": "durga-puja-2026-kolkata-reference-day-4",
+      "windowId": "durga-puja-2026-kolkata",
+      "family": "durga-puja",
+      "name": "Durga Puja Day 4 — Durga Ashtami, Maha Navami",
+      "start": "2026-10-19",
+      "end": "2026-10-19",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/navratri/durga-puja/durga-puja-calendar.html?year=2026&geoname-id=1275004",
+          "label": "Drik Panchang 2026 Durga Puja reference for Kolkata, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ]
+    },
+    {
+      "id": "durga-puja-2026-kolkata-reference-day-5",
+      "windowId": "durga-puja-2026-kolkata",
+      "family": "durga-puja",
+      "name": "Durga Puja Day 5 — Maha Navami, Durga Visarjan, Vijayadashami",
+      "start": "2026-10-20",
+      "end": "2026-10-20",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/navratri/durga-puja/durga-puja-calendar.html?year=2026&geoname-id=1275004",
+          "label": "Drik Panchang 2026 Durga Puja reference for Kolkata, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ]
+    },
+    {
+      "id": "durga-puja-2026-kolkata-reference-day-6",
+      "windowId": "durga-puja-2026-kolkata",
+      "family": "durga-puja",
+      "name": "Durga Puja Day 6 — Vijayadashami, Bengal Durga Visarjan",
+      "start": "2026-10-21",
+      "end": "2026-10-21",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/navratri/durga-puja/durga-puja-calendar.html?year=2026&geoname-id=1275004",
+          "label": "Drik Panchang 2026 Durga Puja reference for Kolkata, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ]
+    },
+    {
+      "id": "durga-puja-2027-kolkata-reference-day-1",
+      "windowId": "durga-puja-2027-kolkata",
+      "family": "durga-puja",
+      "name": "Durga Puja Day 1 — Bilva Nimantran, Akal Bodhon",
+      "start": "2027-10-05",
+      "end": "2027-10-05",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/navratri/durga-puja/durga-puja-calendar.html?year=2027&geoname-id=1275004",
+          "label": "Drik Panchang 2027 Durga Puja reference for Kolkata, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ]
+    },
+    {
+      "id": "durga-puja-2027-kolkata-reference-day-2",
+      "windowId": "durga-puja-2027-kolkata",
+      "family": "durga-puja",
+      "name": "Durga Puja Day 2 — Durga Saptami",
+      "start": "2027-10-06",
+      "end": "2027-10-06",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/navratri/durga-puja/durga-puja-calendar.html?year=2027&geoname-id=1275004",
+          "label": "Drik Panchang 2027 Durga Puja reference for Kolkata, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ]
+    },
+    {
+      "id": "durga-puja-2027-kolkata-reference-day-3",
+      "windowId": "durga-puja-2027-kolkata",
+      "family": "durga-puja",
+      "name": "Durga Puja Day 3 — Durga Ashtami",
+      "start": "2027-10-07",
+      "end": "2027-10-07",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/navratri/durga-puja/durga-puja-calendar.html?year=2027&geoname-id=1275004",
+          "label": "Drik Panchang 2027 Durga Puja reference for Kolkata, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ]
+    },
+    {
+      "id": "durga-puja-2027-kolkata-reference-day-4",
+      "windowId": "durga-puja-2027-kolkata",
+      "family": "durga-puja",
+      "name": "Durga Puja Day 4 — Maha Navami",
+      "start": "2027-10-08",
+      "end": "2027-10-08",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/navratri/durga-puja/durga-puja-calendar.html?year=2027&geoname-id=1275004",
+          "label": "Drik Panchang 2027 Durga Puja reference for Kolkata, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ]
+    },
+    {
+      "id": "durga-puja-2027-kolkata-reference-day-5",
+      "windowId": "durga-puja-2027-kolkata",
+      "family": "durga-puja",
+      "name": "Durga Puja Day 5 — Maha Navami, Vijayadashami",
+      "start": "2027-10-09",
+      "end": "2027-10-09",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/navratri/durga-puja/durga-puja-calendar.html?year=2027&geoname-id=1275004",
+          "label": "Drik Panchang 2027 Durga Puja reference for Kolkata, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ]
+    },
+    {
+      "id": "durga-puja-2027-kolkata-reference-day-6",
+      "windowId": "durga-puja-2027-kolkata",
+      "family": "durga-puja",
+      "name": "Durga Puja Day 6 — Durga Visarjan, Vijayadashami",
+      "start": "2027-10-10",
+      "end": "2027-10-10",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/navratri/durga-puja/durga-puja-calendar.html?year=2027&geoname-id=1275004",
+          "label": "Drik Panchang 2027 Durga Puja reference for Kolkata, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ]
+    },
+    {
+      "id": "durga-puja-2028-kolkata-reference-day-1",
+      "windowId": "durga-puja-2028-kolkata",
+      "family": "durga-puja",
+      "name": "Durga Puja Day 1 — Bilva Nimantran",
+      "start": "2028-09-23",
+      "end": "2028-09-23",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/navratri/durga-puja/durga-puja-calendar.html?year=2028&geoname-id=1275004",
+          "label": "Drik Panchang 2028 Durga Puja reference for Kolkata, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ]
+    },
+    {
+      "id": "durga-puja-2028-kolkata-reference-day-2",
+      "windowId": "durga-puja-2028-kolkata",
+      "family": "durga-puja",
+      "name": "Durga Puja Day 2 — Akal Bodhon",
+      "start": "2028-09-24",
+      "end": "2028-09-24",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/navratri/durga-puja/durga-puja-calendar.html?year=2028&geoname-id=1275004",
+          "label": "Drik Panchang 2028 Durga Puja reference for Kolkata, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ]
+    },
+    {
+      "id": "durga-puja-2028-kolkata-reference-day-3",
+      "windowId": "durga-puja-2028-kolkata",
+      "family": "durga-puja",
+      "name": "Durga Puja Day 3 — Durga Saptami",
+      "start": "2028-09-25",
+      "end": "2028-09-25",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/navratri/durga-puja/durga-puja-calendar.html?year=2028&geoname-id=1275004",
+          "label": "Drik Panchang 2028 Durga Puja reference for Kolkata, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ]
+    },
+    {
+      "id": "durga-puja-2028-kolkata-reference-day-4",
+      "windowId": "durga-puja-2028-kolkata",
+      "family": "durga-puja",
+      "name": "Durga Puja Day 4 — Durga Ashtami, Maha Navami",
+      "start": "2028-09-26",
+      "end": "2028-09-26",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/navratri/durga-puja/durga-puja-calendar.html?year=2028&geoname-id=1275004",
+          "label": "Drik Panchang 2028 Durga Puja reference for Kolkata, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ]
+    },
+    {
+      "id": "durga-puja-2028-kolkata-reference-day-5",
+      "windowId": "durga-puja-2028-kolkata",
+      "family": "durga-puja",
+      "name": "Durga Puja Day 5 — Maha Navami, Vijayadashami",
+      "start": "2028-09-27",
+      "end": "2028-09-27",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/navratri/durga-puja/durga-puja-calendar.html?year=2028&geoname-id=1275004",
+          "label": "Drik Panchang 2028 Durga Puja reference for Kolkata, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ]
+    },
+    {
+      "id": "durga-puja-2028-kolkata-reference-day-6",
+      "windowId": "durga-puja-2028-kolkata",
+      "family": "durga-puja",
+      "name": "Durga Puja Day 6 — Durga Visarjan, Vijayadashami",
+      "start": "2028-09-28",
+      "end": "2028-09-28",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/navratri/durga-puja/durga-puja-calendar.html?year=2028&geoname-id=1275004",
+          "label": "Drik Panchang 2028 Durga Puja reference for Kolkata, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ]
+    },
+    {
+      "id": "durga-puja-2029-kolkata-reference-day-1",
+      "windowId": "durga-puja-2029-kolkata",
+      "family": "durga-puja",
+      "name": "Durga Puja Day 1 — Bilva Nimantran, Akal Bodhon",
+      "start": "2029-10-12",
+      "end": "2029-10-12",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/navratri/durga-puja/durga-puja-calendar.html?year=2029&geoname-id=1275004",
+          "label": "Drik Panchang 2029 Durga Puja reference for Kolkata, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ]
+    },
+    {
+      "id": "durga-puja-2029-kolkata-reference-day-2",
+      "windowId": "durga-puja-2029-kolkata",
+      "family": "durga-puja",
+      "name": "Durga Puja Day 2 — Durga Saptami",
+      "start": "2029-10-13",
+      "end": "2029-10-13",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/navratri/durga-puja/durga-puja-calendar.html?year=2029&geoname-id=1275004",
+          "label": "Drik Panchang 2029 Durga Puja reference for Kolkata, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ]
+    },
+    {
+      "id": "durga-puja-2029-kolkata-reference-day-3",
+      "windowId": "durga-puja-2029-kolkata",
+      "family": "durga-puja",
+      "name": "Durga Puja Day 3 — Durga Ashtami",
+      "start": "2029-10-14",
+      "end": "2029-10-14",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/navratri/durga-puja/durga-puja-calendar.html?year=2029&geoname-id=1275004",
+          "label": "Drik Panchang 2029 Durga Puja reference for Kolkata, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ]
+    },
+    {
+      "id": "durga-puja-2029-kolkata-reference-day-4",
+      "windowId": "durga-puja-2029-kolkata",
+      "family": "durga-puja",
+      "name": "Durga Puja Day 4 — Maha Navami",
+      "start": "2029-10-15",
+      "end": "2029-10-15",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/navratri/durga-puja/durga-puja-calendar.html?year=2029&geoname-id=1275004",
+          "label": "Drik Panchang 2029 Durga Puja reference for Kolkata, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ]
+    },
+    {
+      "id": "durga-puja-2029-kolkata-reference-day-5",
+      "windowId": "durga-puja-2029-kolkata",
+      "family": "durga-puja",
+      "name": "Durga Puja Day 5 — Durga Visarjan, Vijayadashami",
+      "start": "2029-10-16",
+      "end": "2029-10-16",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/navratri/durga-puja/durga-puja-calendar.html?year=2029&geoname-id=1275004",
+          "label": "Drik Panchang 2029 Durga Puja reference for Kolkata, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ]
+    },
+    {
+      "id": "durga-puja-2030-kolkata-reference-day-1",
+      "windowId": "durga-puja-2030-kolkata",
+      "family": "durga-puja",
+      "name": "Durga Puja Day 1 — Bilva Nimantran, Akal Bodhon",
+      "start": "2030-10-02",
+      "end": "2030-10-02",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/navratri/durga-puja/durga-puja-calendar.html?year=2030&geoname-id=1275004",
+          "label": "Drik Panchang 2030 Durga Puja reference for Kolkata, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ]
+    },
+    {
+      "id": "durga-puja-2030-kolkata-reference-day-2",
+      "windowId": "durga-puja-2030-kolkata",
+      "family": "durga-puja",
+      "name": "Durga Puja Day 2 — Durga Saptami",
+      "start": "2030-10-03",
+      "end": "2030-10-03",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/navratri/durga-puja/durga-puja-calendar.html?year=2030&geoname-id=1275004",
+          "label": "Drik Panchang 2030 Durga Puja reference for Kolkata, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ]
+    },
+    {
+      "id": "durga-puja-2030-kolkata-reference-day-3",
+      "windowId": "durga-puja-2030-kolkata",
+      "family": "durga-puja",
+      "name": "Durga Puja Day 3 — Durga Ashtami",
+      "start": "2030-10-04",
+      "end": "2030-10-04",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/navratri/durga-puja/durga-puja-calendar.html?year=2030&geoname-id=1275004",
+          "label": "Drik Panchang 2030 Durga Puja reference for Kolkata, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ]
+    },
+    {
+      "id": "durga-puja-2030-kolkata-reference-day-4",
+      "windowId": "durga-puja-2030-kolkata",
+      "family": "durga-puja",
+      "name": "Durga Puja Day 4 — Maha Navami",
+      "start": "2030-10-05",
+      "end": "2030-10-05",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/navratri/durga-puja/durga-puja-calendar.html?year=2030&geoname-id=1275004",
+          "label": "Drik Panchang 2030 Durga Puja reference for Kolkata, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ]
+    },
+    {
+      "id": "durga-puja-2030-kolkata-reference-day-5",
+      "windowId": "durga-puja-2030-kolkata",
+      "family": "durga-puja",
+      "name": "Durga Puja Day 5 — Durga Visarjan, Vijayadashami",
+      "start": "2030-10-06",
+      "end": "2030-10-06",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/navratri/durga-puja/durga-puja-calendar.html?year=2030&geoname-id=1275004",
+          "label": "Drik Panchang 2030 Durga Puja reference for Kolkata, India",
+          "reviewedOn": "2026-11-05"
+        }
+      ]
+    },
+    {
+      "id": "ganeshotsav-2026-mumbai-reference-day-1",
+      "windowId": "ganeshotsav-2026-mumbai",
+      "family": "ganeshotsav",
+      "name": "Ganesh Chaturthi",
+      "start": "2026-09-14",
+      "end": "2026-09-14",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/festivals/ganesh-chaturthi/ganesh-chaturthi-date-time.html?year=2026&geoname-id=1275339",
+          "label": "Drik Panchang 2026 Ganeshotsav reference for Mumbai, India",
+          "reviewedOn": "2026-11-05"
+        },
+        {
+          "url": "https://www.drikpanchang.com/festivals/ganesh-visarjan/ganesh-visarjan-date-time.html?year=2026&geoname-id=1275339",
+          "label": "Drik Panchang 2026 Mumbai Anant Chaturdashi Visarjan reference and alternative durations",
+          "reviewedOn": "2026-11-05"
+        }
+      ],
+      "variant": "welcome"
+    },
+    {
+      "id": "ganeshotsav-2026-mumbai-reference-day-2",
+      "windowId": "ganeshotsav-2026-mumbai",
+      "family": "ganeshotsav",
+      "name": "Anant Chaturdashi Visarjan reference",
+      "start": "2026-09-25",
+      "end": "2026-09-25",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/festivals/ganesh-chaturthi/ganesh-chaturthi-date-time.html?year=2026&geoname-id=1275339",
+          "label": "Drik Panchang 2026 Ganeshotsav reference for Mumbai, India",
+          "reviewedOn": "2026-11-05"
+        },
+        {
+          "url": "https://www.drikpanchang.com/festivals/ganesh-visarjan/ganesh-visarjan-date-time.html?year=2026&geoname-id=1275339",
+          "label": "Drik Panchang 2026 Mumbai Anant Chaturdashi Visarjan reference and alternative durations",
+          "reviewedOn": "2026-11-05"
+        }
+      ],
+      "variant": "farewell"
+    },
+    {
+      "id": "ganeshotsav-2027-mumbai-reference-day-1",
+      "windowId": "ganeshotsav-2027-mumbai",
+      "family": "ganeshotsav",
+      "name": "Ganesh Chaturthi",
+      "start": "2027-09-04",
+      "end": "2027-09-04",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/festivals/ganesh-chaturthi/ganesh-chaturthi-date-time.html?year=2027&geoname-id=1275339",
+          "label": "Drik Panchang 2027 Ganeshotsav reference for Mumbai, India",
+          "reviewedOn": "2026-11-05"
+        },
+        {
+          "url": "https://www.drikpanchang.com/festivals/ganesh-visarjan/ganesh-visarjan-date-time.html?year=2027&geoname-id=1275339",
+          "label": "Drik Panchang 2027 Mumbai Anant Chaturdashi Visarjan reference and alternative durations",
+          "reviewedOn": "2026-11-05"
+        }
+      ],
+      "variant": "welcome"
+    },
+    {
+      "id": "ganeshotsav-2027-mumbai-reference-day-2",
+      "windowId": "ganeshotsav-2027-mumbai",
+      "family": "ganeshotsav",
+      "name": "Anant Chaturdashi Visarjan reference",
+      "start": "2027-09-14",
+      "end": "2027-09-14",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/festivals/ganesh-chaturthi/ganesh-chaturthi-date-time.html?year=2027&geoname-id=1275339",
+          "label": "Drik Panchang 2027 Ganeshotsav reference for Mumbai, India",
+          "reviewedOn": "2026-11-05"
+        },
+        {
+          "url": "https://www.drikpanchang.com/festivals/ganesh-visarjan/ganesh-visarjan-date-time.html?year=2027&geoname-id=1275339",
+          "label": "Drik Panchang 2027 Mumbai Anant Chaturdashi Visarjan reference and alternative durations",
+          "reviewedOn": "2026-11-05"
+        }
+      ],
+      "variant": "farewell"
+    },
+    {
+      "id": "ganeshotsav-2028-mumbai-reference-day-1",
+      "windowId": "ganeshotsav-2028-mumbai",
+      "family": "ganeshotsav",
+      "name": "Ganesh Chaturthi",
+      "start": "2028-08-23",
+      "end": "2028-08-23",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/festivals/ganesh-chaturthi/ganesh-chaturthi-date-time.html?year=2028&geoname-id=1275339",
+          "label": "Drik Panchang 2028 Ganeshotsav reference for Mumbai, India",
+          "reviewedOn": "2026-11-05"
+        },
+        {
+          "url": "https://www.drikpanchang.com/festivals/ganesh-visarjan/ganesh-visarjan-date-time.html?year=2028&geoname-id=1275339",
+          "label": "Drik Panchang 2028 Mumbai Anant Chaturdashi Visarjan reference and alternative durations",
+          "reviewedOn": "2026-11-05"
+        }
+      ],
+      "variant": "welcome"
+    },
+    {
+      "id": "ganeshotsav-2028-mumbai-reference-day-2",
+      "windowId": "ganeshotsav-2028-mumbai",
+      "family": "ganeshotsav",
+      "name": "Anant Chaturdashi Visarjan reference",
+      "start": "2028-09-02",
+      "end": "2028-09-02",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/festivals/ganesh-chaturthi/ganesh-chaturthi-date-time.html?year=2028&geoname-id=1275339",
+          "label": "Drik Panchang 2028 Ganeshotsav reference for Mumbai, India",
+          "reviewedOn": "2026-11-05"
+        },
+        {
+          "url": "https://www.drikpanchang.com/festivals/ganesh-visarjan/ganesh-visarjan-date-time.html?year=2028&geoname-id=1275339",
+          "label": "Drik Panchang 2028 Mumbai Anant Chaturdashi Visarjan reference and alternative durations",
+          "reviewedOn": "2026-11-05"
+        }
+      ],
+      "variant": "farewell"
+    },
+    {
+      "id": "ganeshotsav-2029-mumbai-reference-day-1",
+      "windowId": "ganeshotsav-2029-mumbai",
+      "family": "ganeshotsav",
+      "name": "Ganesh Chaturthi",
+      "start": "2029-09-11",
+      "end": "2029-09-11",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/festivals/ganesh-chaturthi/ganesh-chaturthi-date-time.html?year=2029&geoname-id=1275339",
+          "label": "Drik Panchang 2029 Ganeshotsav reference for Mumbai, India",
+          "reviewedOn": "2026-11-05"
+        },
+        {
+          "url": "https://www.drikpanchang.com/festivals/ganesh-visarjan/ganesh-visarjan-date-time.html?year=2029&geoname-id=1275339",
+          "label": "Drik Panchang 2029 Mumbai Anant Chaturdashi Visarjan reference and alternative durations",
+          "reviewedOn": "2026-11-05"
+        }
+      ],
+      "variant": "welcome"
+    },
+    {
+      "id": "ganeshotsav-2029-mumbai-reference-day-2",
+      "windowId": "ganeshotsav-2029-mumbai",
+      "family": "ganeshotsav",
+      "name": "Anant Chaturdashi Visarjan reference",
+      "start": "2029-09-21",
+      "end": "2029-09-21",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/festivals/ganesh-chaturthi/ganesh-chaturthi-date-time.html?year=2029&geoname-id=1275339",
+          "label": "Drik Panchang 2029 Ganeshotsav reference for Mumbai, India",
+          "reviewedOn": "2026-11-05"
+        },
+        {
+          "url": "https://www.drikpanchang.com/festivals/ganesh-visarjan/ganesh-visarjan-date-time.html?year=2029&geoname-id=1275339",
+          "label": "Drik Panchang 2029 Mumbai Anant Chaturdashi Visarjan reference and alternative durations",
+          "reviewedOn": "2026-11-05"
+        }
+      ],
+      "variant": "farewell"
+    },
+    {
+      "id": "ganeshotsav-2030-mumbai-reference-day-1",
+      "windowId": "ganeshotsav-2030-mumbai",
+      "family": "ganeshotsav",
+      "name": "Ganesh Chaturthi",
+      "start": "2030-09-01",
+      "end": "2030-09-01",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/festivals/ganesh-chaturthi/ganesh-chaturthi-date-time.html?year=2030&geoname-id=1275339",
+          "label": "Drik Panchang 2030 Ganeshotsav reference for Mumbai, India",
+          "reviewedOn": "2026-11-05"
+        },
+        {
+          "url": "https://www.drikpanchang.com/festivals/ganesh-visarjan/ganesh-visarjan-date-time.html?year=2030&geoname-id=1275339",
+          "label": "Drik Panchang 2030 Mumbai Anant Chaturdashi Visarjan reference and alternative durations",
+          "reviewedOn": "2026-11-05"
+        }
+      ],
+      "variant": "welcome"
+    },
+    {
+      "id": "ganeshotsav-2030-mumbai-reference-day-2",
+      "windowId": "ganeshotsav-2030-mumbai",
+      "family": "ganeshotsav",
+      "name": "Anant Chaturdashi Visarjan reference",
+      "start": "2030-09-10",
+      "end": "2030-09-10",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://www.drikpanchang.com/festivals/ganesh-chaturthi/ganesh-chaturthi-date-time.html?year=2030&geoname-id=1275339",
+          "label": "Drik Panchang 2030 Ganeshotsav reference for Mumbai, India",
+          "reviewedOn": "2026-11-05"
+        },
+        {
+          "url": "https://www.drikpanchang.com/festivals/ganesh-visarjan/ganesh-visarjan-date-time.html?year=2030&geoname-id=1275339",
+          "label": "Drik Panchang 2030 Mumbai Anant Chaturdashi Visarjan reference and alternative durations",
+          "reviewedOn": "2026-11-05"
+        }
+      ],
+      "variant": "farewell"
+    },
+    {
+      "id": "ratha-jatra-2026-puri-day-1",
+      "windowId": "ratha-jatra-2026-puri",
+      "family": "ratha-jatra",
+      "name": "Ratha Jatra",
+      "start": "2026-07-16",
+      "end": "2026-07-16",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://odishatourism.gov.in/en/ratha-jatra-2026",
+          "label": "Odisha Tourism 2026 Puri Ratha Jatra festival calendar",
+          "reviewedOn": "2026-11-05"
+        }
+      ]
+    },
+    {
+      "id": "ratha-jatra-2026-puri-day-2",
+      "windowId": "ratha-jatra-2026-puri",
+      "family": "ratha-jatra",
+      "name": "Sandhya Darshana",
+      "start": "2026-07-23",
+      "end": "2026-07-23",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://odishatourism.gov.in/en/ratha-jatra-2026",
+          "label": "Odisha Tourism 2026 Puri Ratha Jatra festival calendar",
+          "reviewedOn": "2026-11-05"
+        }
+      ]
+    },
+    {
+      "id": "ratha-jatra-2026-puri-day-3",
+      "windowId": "ratha-jatra-2026-puri",
+      "family": "ratha-jatra",
+      "name": "Bahuda Jatra",
+      "start": "2026-07-24",
+      "end": "2026-07-24",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://odishatourism.gov.in/en/ratha-jatra-2026",
+          "label": "Odisha Tourism 2026 Puri Ratha Jatra festival calendar",
+          "reviewedOn": "2026-11-05"
+        }
+      ]
+    },
+    {
+      "id": "ratha-jatra-2026-puri-day-4",
+      "windowId": "ratha-jatra-2026-puri",
+      "family": "ratha-jatra",
+      "name": "Suna Besha",
+      "start": "2026-07-25",
+      "end": "2026-07-25",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://odishatourism.gov.in/en/ratha-jatra-2026",
+          "label": "Odisha Tourism 2026 Puri Ratha Jatra festival calendar",
+          "reviewedOn": "2026-11-05"
+        }
+      ]
+    },
+    {
+      "id": "ratha-jatra-2026-puri-day-5",
+      "windowId": "ratha-jatra-2026-puri",
+      "family": "ratha-jatra",
+      "name": "Adharapana",
+      "start": "2026-07-26",
+      "end": "2026-07-26",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://odishatourism.gov.in/en/ratha-jatra-2026",
+          "label": "Odisha Tourism 2026 Puri Ratha Jatra festival calendar",
+          "reviewedOn": "2026-11-05"
+        }
+      ]
+    },
+    {
+      "id": "ratha-jatra-2026-puri-day-6",
+      "windowId": "ratha-jatra-2026-puri",
+      "family": "ratha-jatra",
+      "name": "Niladri Bije",
+      "start": "2026-07-27",
+      "end": "2026-07-27",
+      "status": "verified",
+      "approval": {
+        "approved": true,
+        "reviewer": "Codex source verification",
+        "reviewedOn": "2026-11-05"
+      },
+      "sources": [
+        {
+          "url": "https://odishatourism.gov.in/en/ratha-jatra-2026",
+          "label": "Odisha Tourism 2026 Puri Ratha Jatra festival calendar",
+          "reviewedOn": "2026-11-05"
+        }
+      ]
+    }
+  ],
+  "note": "Source-checked city/tradition-specific reference calendars, accepted as an eligibility standard by the owner on 2026-11-05. These are not universal religious rulings. Regional and temple coverage gaps remain. Policy stays off pending complete validation and explicit merge/deployment approval."
+}

@@ -16,6 +16,18 @@ const savedWorks=page=>page.evaluate(async()=>{
 });
 async function pin(page){const details=page.locator('[data-section-shortcut-control] details');if(!await details.evaluate(el=>el.open))await details.locator('summary').click();await page.locator('[data-shortcut-save]').click();}
 try{
+ // A duplicate lifecycle notification must not cancel a user's Save while
+ // the first registry request is still in flight (the CI first-save race).
+ const startup=await browser.newContext({serviceWorkers:'block'}),startupPage=await startup.newPage();
+ await startup.route('https://fonts.googleapis.com/**',r=>r.fulfill({body:'',contentType:'text/css'}));
+ let releaseRegistry,seenRegistry;
+ const registryGate=new Promise(resolve=>{releaseRegistry=resolve;}),registryRequested=new Promise(resolve=>{seenRegistry=resolve;});
+ await startup.route('**/assets/section-shortcuts.json',async route=>{seenRegistry();await registryGate;await route.fulfill({json:data});});
+ await startupPage.goto(base+ganesha);await pin(startupPage);await registryRequested;
+ await startupPage.evaluate(()=>window.dispatchEvent(new Event('pageshow')));releaseRegistry();
+ await startupPage.waitForFunction(key=>JSON.parse(localStorage.getItem(key))?.paths.includes('categories/01-deities-sub-deities-and-divine-forms/ganesha/'),key,{timeout:5000});
+ assert.deepEqual(JSON.parse(await stored(startupPage)),{schema:1,paths:[ganesha]});await startup.close();
+ console.log('PASS duplicate pageshow preserves a pending first section save');
  for(const [width,theme] of [[375,'abp-light'],[1440,'abp-dark']]){
   const context=await browser.newContext({viewport:{width,height:1000},serviceWorkers:'block',reducedMotion:'reduce'}),page=await context.newPage(),errors=[];
   page.on('pageerror',e=>errors.push(e.message));context.on('page',p=>p.on('pageerror',e=>errors.push(e.message)));await context.route('https://fonts.googleapis.com/**',r=>r.fulfill({body:'',contentType:'text/css'}));

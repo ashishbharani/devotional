@@ -1,0 +1,43 @@
+name: Living festival development preview
+on:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  preview:
+    runs-on: ubuntu-latest
+    env:
+      HDC_PRACTICE_PREVIEW: '1'
+      HDC_LIVING_FESTIVAL_PREVIEW: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.19.0
+      - run: pnpm install --frozen-lockfile --ignore-scripts
+      - run: pnpm exec playwright install --with-deps chromium
+      - uses: astral-sh/setup-uv@v6
+        with:
+          enable-cache: true
+      - run: node scripts/test_living_festival_scheduler.mjs
+      - run: node scripts/test_living_festival_registry.mjs
+      - run: uv run python scripts/test_festival_calendar_review.py
+      - run: uv run python scripts/test_living_festival_template.py
+      - name: Report unresolved coverage, without treating it as release approval
+        run: |
+          mkdir -p work/living-festival
+          node scripts/audit_living_festival_coverage.mjs > work/living-festival/COVERAGE_MATRIX.md
+      - run: uv run mkdocs build --strict
+      - run: uv run python scripts/check_site.py
+      - run: node scripts/test_living_festival_browser.mjs
+      - run: node scripts/test_living_festival_accessibility.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: living-festival-development-evidence
+          path: work/living-festival
+      # No Pages permission, merge, date approval or deployment action.

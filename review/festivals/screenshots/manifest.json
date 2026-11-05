@@ -1,0 +1,25 @@
+{
+  "scope": "Design studies only, fixed-clock reduced-motion Chromium. Original approved homepage art preserved. Calendar fixture screenshots do not certify observance dates. No final visual/cultural approval claimed.",
+  "sourceRun": "../evidence/browser-results.json",
+  "images": [
+    "original-320.png",
+    "original-1440.png",
+    "restored-320.png",
+    "restored-1440.png",
+    "diwali-celebration-320.png",
+    "diwali-celebration-1440.png",
+    "holi-celebration-320.png",
+    "holi-celebration-1440.png",
+    "shivaratri-celebration-320.png",
+    "shivaratri-celebration-1440.png",
+    "chhath-celebration-320.png",
+    "chhath-celebration-1440.png",
+    "pongal-celebration-320.png",
+    "pongal-celebration-1440.png",
+    "navratri-celebration-1440.png",
+    "durga-puja-celebration-1440.png",
+    "ratha-jatra-celebration-1440.png"
+  ],
+  "reviewedOn": "2026-11-05",
+  "visualInspection": "Initial five studies and additional family studies inspected for preserved header/art, readable content, distinct atmosphere and no viewport clipping. Still restrained prototypes; richer visual/cultural acceptance remains open."
+}

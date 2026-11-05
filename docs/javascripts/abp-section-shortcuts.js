@@ -1,7 +1,7 @@
 /* Optional browser-local section navigation. Work favourites remain authoritative. */
 (() => {
  'use strict';
- const key='hdc-section-shortcuts-v1',base=new URL('../',document.currentScript.src);let cleanup=()=>{},registry;
+ const key='hdc-section-shortcuts-v1',base=new URL('../',document.currentScript.src);let cleanup=()=>{},registry,activeRoot=null;
  const safePath=path=>typeof path==='string'&&/^categories\/[a-z0-9-]+\/(?:[a-z0-9-]+\/)*$/.test(path);
  async function sections(){
   if(!registry)registry=fetch(new URL('assets/section-shortcuts.json',base)).then(async response=>{
@@ -14,8 +14,12 @@
  const record=globalThis.hdcLocalState?.create({key,defaults:{schema:1,paths:[]},validate:value=>value.schema===1&&Array.isArray(value.paths)&&value.paths.length<=10&&!value.paths.some(p=>!safePath(p))&&new Set(value.paths).size===value.paths.length});
  const read=()=>{if(!record)throw new Error('Unavailable local record');return record.get();};
  function init(){
-  cleanup();const root=document.querySelector('[data-section-shortcut-control],[data-section-shortcut-list]');if(!root)return;
-  const controller=new AbortController();cleanup=()=>controller.abort();const status=root.querySelector('[data-shortcut-status]'),list=root.querySelector('[data-shortcut-items]');
+  const root=document.querySelector('[data-section-shortcut-control],[data-section-shortcut-list]');
+  // Material and pageshow can report the same connected page twice. Keep its
+  // listener and pending user action alive; a new root still gets fresh state.
+  if(root&&root===activeRoot)return;
+  cleanup();if(!root)return;activeRoot=root;
+  const controller=new AbortController();cleanup=()=>{controller.abort();if(activeRoot===root)activeRoot=null;};const status=root.querySelector('[data-shortcut-status]'),list=root.querySelector('[data-shortcut-items]');
   let generation=0;
   const current=()=>root.isConnected&&!controller.signal.aborted;
   const latest=read;

@@ -48,6 +48,7 @@ CORRECTIONS_FILE = ROOT / "data" / "corrections.csv"  # community fixes (see CON
 ADDITIONS_FILE = ROOT / "data" / "additions.csv"  # community additions
 SITE_NAME = ""  # populated from the canonical site_name in mkdocs.yml
 PRACTICE_PREVIEW = False  # no partial public launch; explicitly enabled in staging only
+LIVING_FESTIVAL_PREVIEW = False  # independent, never enabled by the deployment workflow
 EDITABLE = {
     "title": "title", "language": "language", "form": "form", "tier": "tier",
     "singer": "singer", "preferred singer": "singer", "recitation": "singer",
@@ -1090,10 +1091,16 @@ def works_index(d) -> str:
 
 
 def on_config(config, **kw):
-    global SITE_NAME, PRACTICE_PREVIEW
+    global SITE_NAME, PRACTICE_PREVIEW, LIVING_FESTIVAL_PREVIEW
     SITE_NAME = config["site_name"]
     PRACTICE_PREVIEW = os.environ.get("HDC_PRACTICE_PREVIEW") == "1"
     config["extra"]["hdc_practice_preview"] = PRACTICE_PREVIEW
+    LIVING_FESTIVAL_PREVIEW = PRACTICE_PREVIEW and os.environ.get("HDC_LIVING_FESTIVAL_PREVIEW") == "1"
+    config["extra"]["hdc_living_festival_preview"] = LIVING_FESTIVAL_PREVIEW
+    if LIVING_FESTIVAL_PREVIEW:
+        # Replace the old panel in an explicit local review build, never run two engines.
+        config["extra_css"] = [p for p in config["extra_css"] if p != "stylesheets/festivals.css"] + ["stylesheets/living-festivals.css"]
+        config["extra_javascript"] = [p for p in config["extra_javascript"] if str(p) != "javascripts/abp-festivals.js"] + ["javascripts/abp-living-festivals.js"]
     if not PRACTICE_PREVIEW:
         config["extra_css"] = [p for p in config["extra_css"] if p not in {"stylesheets/practice.css", "stylesheets/festivals.css"}]
         config["extra_javascript"] = [p for p in config["extra_javascript"] if str(p) not in {"javascripts/abp-local-state.js", "javascripts/abp-practice.js", "javascripts/abp-festivals.js", "javascripts/abp-journeys.js", "javascripts/abp-discovery.js", "javascripts/abp-sharing.js", "javascripts/abp-section-shortcuts.js", "javascripts/abp-japa-history.js"}]
@@ -1411,9 +1418,11 @@ def on_post_build(config, **kw):
         shell.extend(["sitemap.xml", "assets/i18n.json", "search/search_index.json"])
         shell.extend(path.relative_to(site).as_posix() for path in sorted((site / "assets" / "javascripts" / "workers").glob("search.*.min.js")))
         shell.extend(["assets/images/deities/ganesha-640.webp", "assets/images/deities/shiva-640.webp"])
-        shell.extend(path.relative_to(site).as_posix() for path in sorted((site / "assets" / "festivals").glob("*")) if path.is_file())
+        shell.extend(path.relative_to(site).as_posix() for path in sorted((site / "assets" / "festivals").glob("*")) if path.is_file() and (LIVING_FESTIVAL_PREVIEW or not path.name.startswith("living-")))
+        if LIVING_FESTIVAL_PREVIEW:
+            shell.append("stylesheets/living-festivals.css")
     shell.extend(f"javascripts/{path.name}" for path in sorted((site / "javascripts").glob("*.js"))
-                 if PRACTICE_PREVIEW or path.name not in {"abp-local-state.js", "abp-practice.js", "abp-festivals.js", "abp-journeys.js", "abp-discovery.js", "abp-sharing.js", "abp-section-shortcuts.js", "abp-japa-history.js"})
+                 if (PRACTICE_PREVIEW or path.name not in {"abp-local-state.js", "abp-practice.js", "abp-festivals.js", "abp-journeys.js", "abp-discovery.js", "abp-sharing.js", "abp-section-shortcuts.js", "abp-japa-history.js"}) and (LIVING_FESTIVAL_PREVIEW or path.name != "abp-living-festivals.js"))
     shell.extend(f"javascripts/{path.name}" for path in sorted((site / "javascripts").glob("search-*.mjs")))
     shell.extend(path.relative_to(site).as_posix() for path in sorted((site / "assets" / "panchang").glob("*.mjs")))
     shell.extend(path.relative_to(site).as_posix() for pattern in (
