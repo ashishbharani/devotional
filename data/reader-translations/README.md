@@ -24,7 +24,9 @@ additional text.
 
 Place a JSON file at `data/reader-translations/<book-id>/<language>.json`
 only after human review and source/rights clearance. The builder accepts
-the nine codes `hi,mr,gu,bn,pa,te,kn,ml,ta`. Example below is **illustrative
+the ten codes `en,hi,mr,gu,bn,pa,te,kn,ml,ta`. English is a translation of
+the Sanskrit/Awadhi originals too; the English interface is not a book
+translation. Example below is **illustrative
 syntax only** (hashes and text must be replaced with exact reviewed content):
 
 ```json
@@ -65,7 +67,7 @@ translation, and do not copy copyrighted contemporary commentaries.
 ## Whole-site completion is a separate release gate
 
 `python scripts/audit_reader_translations.py --require-complete` reports
-**zero unresolved passages only when all nine book-language pairs have every
+**zero unresolved passages only when all ten languages for each book have every
 source passage represented**. This is still not a linguistic certificate.
 Record native-language reviews, Sanskrit/Awadhi subject-matter review,
 legal/licence approval and owner approval for each entire edition.

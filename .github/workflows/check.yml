@@ -157,6 +157,7 @@ jobs:
           uv run python scripts/test_reader_books.py enabled
           uv run python scripts/test_reader_epics.py
           uv run python scripts/test_reader_translations.py
+          uv run python scripts/test_reader_translation_drafts.py
           uv run python scripts/audit_reader_translations.py --output work/reader-translation-coverage.json
           uv run python scripts/test_multilingual_release_readiness.py
           uv run python scripts/multilingual_release_readiness.py --output work/multilingual-release-readiness.md

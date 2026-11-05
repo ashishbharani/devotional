@@ -3,7 +3,8 @@
  */
 (() => {
   'use strict';
-  const codes = new Set(['hi','mr','gu','bn','pa','te','kn','ml','ta']);
+  // English is also a translation of Sanskrit/Awadhi, not the original text.
+  const codes = new Set(['en','hi','mr','gu','bn','pa','te','kn','ml','ta']);
   const script = document.querySelector('script[src*="javascripts/reader-translations.js"]');
   if (!script) return;
   const rootUrl = new URL('../', script.src);

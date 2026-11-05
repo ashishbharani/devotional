@@ -54,6 +54,18 @@ with TemporaryDirectory() as temporary:
         inventory=tr.review_inventory(books)
         assert inventory["books"][book["id"]]["languages"]["hi"]["missingPassages"]==700
         assert inventory["books"][book["id"]]["languages"]["mr"]["missingPassages"]==701
+        assert inventory["books"][book["id"]]["languages"]["en"]["missingPassages"]==701
+        # English must be accepted and audited as a translation, just like Hindi.
+        english=deepcopy(draft)
+        english["language"]="en"
+        english["translations"][passage["id"]]["text"]="Synthetic English test translation."
+        english_path=location/"en.json"
+        english_path.write_text(json.dumps(english),encoding="utf-8")
+        english_index,english_assets=tr.collect(books)
+        assert english_index["books"][book["id"]]["languages"]["en"]["reviewedPassages"]==1
+        assert "assets/reader-translations/"+book["id"]+"/en.json" in english_assets
+        assert tr.review_inventory(books)["books"][book["id"]]["languages"]["en"]["missingPassages"]==700
+        english_path.unlink()
         assert "data-reader-source-sha256" in render(book,pages(book)[0],pages(book))
         assert 'translate="no"' in render(book,pages(book)[0],pages(book))
         cases={
@@ -74,4 +86,4 @@ with TemporaryDirectory() as temporary:
             try:tr.collect(books)
             except ValueError:pass
             else:raise AssertionError("Wrongly accepted "+name)
-print("PASS sourced book passages, protection and nine-language absence/strict rejection fixtures")
+print("PASS sourced book passages, protection and ten-language absence/strict rejection fixtures")

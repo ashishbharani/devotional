@@ -20,6 +20,14 @@ const pack={schema:1,book:'bhagavad-gita',language:'hi',status:'reviewed',source
     evidence:'https://example.test/test',rightsNote:'Synthetic test'},
   translations:{[first.id]:{sourceSha256:sourceHash(first.text),text:sample}}
 };
+const englishSample='Synthetic English fixture: Dhritarashtra asked Sanjaya.';
+const englishPack={...pack,language:'en',translations:{
+  [first.id]:{sourceSha256:sourceHash(first.text),text:englishSample}
+}};
+index.books['bhagavad-gita'].languages.en={
+  path:'assets/reader-translations/bhagavad-gita/en.json',sourceSha256,
+  reviewedPassages:1,totalPassages:701
+};
 const server=spawn(process.execPath,['scripts/serve_header_preview.mjs'],{
   env:{...process.env,HDC_PREVIEW_PORT:'4354'},stdio:['ignore','pipe','inherit']
 });
@@ -30,7 +38,7 @@ const browser=await chromium.launch({
   ...(process.env.PANCHANG_BROWSER?{executablePath:process.env.PANCHANG_BROWSER}:{})
 });
 try {
-  for(const width of [390,1440]) {
+  for(const width of [320,1440]) {
     const context=await browser.newContext({viewport:{width,height:940},serviceWorkers:'block'});
     const page=await context.newPage(),errors=[],packRequests=[];
     page.on('pageerror',error=>errors.push(error.message));
@@ -40,11 +48,14 @@ try {
       packRequests.push(route.request().url());
       return route.fulfill({contentType:'application/json',body:JSON.stringify(pack)});
     });
+    await context.route('**/assets/reader-translations/bhagavad-gita/en.json',route=>
+      route.fulfill({contentType:'application/json',body:JSON.stringify(englishPack)}));
     await page.goto(root+'reader/bhagavad-gita/chapter-1/#gita-1-1');
     await page.waitForFunction(()=>window.abpI18n&&document.querySelector('.abp-language-btn:not(:disabled)'));
     const original=await page.locator('#gita-1-1 .hdc-verse').innerText();
     assert.equal(await page.locator('#gita-1-1 .hdc-verse').getAttribute('translate'),'no');
-    assert.equal(await page.locator('#gita-1-1 [data-reader-translation]').isVisible(),false);
+    await page.waitForFunction(()=>document.querySelector('#gita-1-1 [data-reader-translation-text]')?.textContent==='Synthetic English fixture: Dhritarashtra asked Sanjaya.');
+    assert.equal(await page.locator('#gita-1-1 [data-reader-translation-text]').getAttribute('lang'),'en');
     await page.evaluate(()=>window.abpI18n.applyLanguage('hi'));
     await page.waitForFunction(()=>!document.querySelector('#gita-1-1 [data-reader-translation]').hidden);
     assert.equal(await page.locator('#gita-1-1 [data-reader-translation-text]').innerText(),sample);
@@ -64,7 +75,11 @@ try {
     await page.waitForFunction(()=>!document.querySelector('#gita-1-1 [data-reader-translation]').hidden);
     assert.equal(packRequests.length,1,'one selected pack, reused across language switches');
     await page.evaluate(()=>window.abpI18n.applyLanguage('en'));
-    await page.waitForFunction(()=>document.querySelector('#gita-1-1 [data-reader-translation]').hidden);
+    await page.waitForFunction(()=>document.querySelector('#gita-1-1 [data-reader-translation-text]')?.textContent==='Synthetic English fixture: Dhritarashtra asked Sanjaya.');
+    assert.equal(await page.locator('#gita-1-1 [data-reader-translation-text]').innerText(),englishSample);
+    assert.equal(await page.locator('#gita-1-1 [data-reader-translation-text]').getAttribute('lang'),'en');
+    assert.equal(await page.locator('#gita-1-2 [data-reader-translation]').isVisible(),false);
+    assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true);
     assert.equal(await page.locator('#gita-1-1 .hdc-verse').innerText(),original);
     assert.deepEqual(errors,[]);
     await context.close();
@@ -82,7 +97,7 @@ try {
   await p.waitForFunction(()=>document.querySelector('[data-reader-translation-status]')?.textContent===window.abpI18n?.t('readerError'));
   assert.equal(await p.locator('[data-reader-translation]:visible').count(),0);
   await bad.close();
-  console.log('PASS Reader translated passages: protected originals, 9-language fallback, exact source hashes, search, 390/1440px and race-safe language restoration');
+  console.log('PASS Reader translated passages: Hindi and English packs, protected originals, missing-language fallback, exact source hashes, search, 320/1440px and language restoration');
 } finally {
   await browser.close();
   server.kill();
