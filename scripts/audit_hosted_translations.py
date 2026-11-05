@@ -110,20 +110,77 @@ def main():
             original_sources.setdefault(key, " ".join(text.split()))
             if len(origins[key]) < 5:
                 origins[key].add(page.relative_to(args.site).as_posix())
+    # A generated HTML inventory is not the whole public catalogue: values in
+    # collection.json are rendered by JavaScript and can be absent from a static
+    # HTML crawl. Every distinct metadata value must also be accounted for.
+    hosted_candidates = set(candidates)
+    catalogue_candidates = set()
+    catalogue_kinds = defaultdict(set)
+
+    def register_catalogue(source, kind, occurrences=1):
+        if not isinstance(source, str) or not source.strip():
+            return
+        key = norm(source)
+        if sum(char.isalpha() for char in key) < 2:
+            return
+        catalogue_candidates.add(key)
+        catalogue_kinds[key].add(kind)
+        original_sources.setdefault(key, " ".join(source.split()))
+        if key not in candidates:
+            candidates[key] = occurrences
+        if len(origins[key]) < 5:
+            origins[key].add("data/collection.json:" + kind)
+
+    for field, counts in fields.items():
+        for source, frequency in counts.items():
+            register_catalogue(source, field, frequency)
+    for category in raw["categories"]:
+        register_catalogue(category.get("title"), "category.title")
+        for group in category["groups"]:
+            register_catalogue(group.get("name"), "group.name")
+            for form in group["forms"]:
+                register_catalogue(form.get("name"), "form.name")
+
+    def is_translated(key, code):
+        value = translations.get(key, {}).get(code)
+        # A missing, empty, or unchanged English entry is not full-text coverage.
+        # Proper names that should remain literal need an explicit review rather
+        # than an unexamined implicit "100%" exemption.
+        return isinstance(value, str) and bool(value.strip()) and norm(value) != key
+
     report = {
         "status": "incomplete",
         "inputs": {"catalogueSha256": hashlib.sha256(catalogue_bytes).hexdigest(),
                    "i18nSha256": hashlib.sha256((ROOT / "docs/assets/i18n.json").read_bytes()).hexdigest()},
-        "scope": "Hosted HTML text/attributes and every canonical catalogue metadata field, excluding sacred work titles/code. Unknown proper names require review. Runtime-only message variants and translation quality also require browser/native-language review.",
-        "pages": len(pages), "canonicalRows": len(works), "uniqueHostedCandidates": len(candidates),
+        "scope": "Hosted HTML text/attributes PLUS canonical catalogue fields/category/group/form labels, excluding sacred work titles/code. Unknown proper names require review. Runtime-only message variants and translation quality still require browser/native-language review.",
+        "pages": len(pages), "canonicalRows": len(works),
+        "uniqueHostedCandidates": len(hosted_candidates),
+        "uniqueCatalogueCandidates": len(catalogue_candidates),
+        "uniqueCombinedCandidates": len(candidates),
         "languages": {}, "backlog": [],
     }
     missing_languages = defaultdict(list)
     for code in CODES:
-        missing = [key for key in candidates if not translations.get(key, {}).get(code)]
+        missing = [key for key in candidates if not is_translated(key, code)]
         report["languages"][code] = {
-            "hostedCandidatesMissing": len(missing),
-            "catalogue": {field: {"unique": len(counts), "translatedUnique": sum(bool(translations.get(norm(source), {}).get(code)) for source in counts), "rowsWithTranslation": sum(count for source, count in counts.items() if translations.get(norm(source), {}).get(code))} for field, counts in fields.items()},
+            "allCandidatesMissing": len(missing),
+            "hostedCandidatesMissing": sum(key in hosted_candidates for key in missing),
+            "catalogueCandidatesMissing": sum(key in catalogue_candidates for key in missing),
+            "catalogue": {
+                field: {
+                    "unique": len(counts),
+                    "translatedUnique": sum(is_translated(norm(source), code) for source in counts),
+                    "rowsWithTranslation": sum(count for source, count in counts.items()
+                                               if is_translated(norm(source), code)),
+                } for field, counts in fields.items()
+            },
+            "catalogueLabels": {
+                kind: {
+                    "unique": sum(kind in kinds for kinds in catalogue_kinds.values()),
+                    "missing": sum(kind in kinds and not is_translated(key, code)
+                                   for key, kinds in catalogue_kinds.items()),
+                } for kind in ("category.title", "group.name", "form.name")
+            },
         }
         for key in missing:
             missing_languages[key].append(code)
