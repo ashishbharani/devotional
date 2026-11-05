@@ -200,6 +200,8 @@ jobs:
         with:
           name: mobile-keyboard-screenshots
           path: work/mobile-keyboard
+      - name: Verify current About and Foreword headings in all nine languages
+        run: node scripts/test_translation_headings_browser.mjs
       - name: Test registered editorial translations, exact fallback and offline reuse
         run: node scripts/test_prose_translation_browser.mjs
       - name: Test English library handoffs and Vrat Katha / Parayan discovery
