@@ -16,11 +16,11 @@ PDFS = {
     "foreword": "36517e5dfde0528206016671924328af45fd3d48de567a9f66a2ab14b60c6dad",
 }
 # Normalised full native article text, verified against the source documents.
-# The legal contact page follows its visible correction, not hidden older text.
+# The published disclaimer removes mobile numbers; source PDF remains unchanged.
 NATIVE_TEXT_SHA = {
     "about": "dd5e784028a0a41473e898f5e2e24d2616bbd9a2488eebfcfd1ddddcdd3f3265",
     "foreword": "25ff19cefd11b9e1c672631e0654ea5bd60eaf31a833e9dd15041aeca827c480",
-    "disclaimer": "d4ed60e6a88a1fe70b61e7ef4e7e51da29902529750152a671aeeddeace33e02",
+    "disclaimer": "683441ef6e5989101e08c088f7878b185ca2371ee40ad572e0ca0f0f3d033cd0",
 }
 
 
